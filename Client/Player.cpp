@@ -33,21 +33,14 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	Key_Input(fTimeDelta);
 
 	// m_planeVec
+
+	Fix_Mouse();
+	Mouse_Move(fTimeDelta);
+
 	__super::Update_GameObject(fTimeDelta);
 
-	_matrix viewMatrix;
-	_vec3 myPos, cameraPos, up;
-
-	up = { 0.f,1.f,0.f };
-
-	m_pTransform->m_vInfo[INFO_POS].y -= 1.f * fTimeDelta;
-
-	myPos = m_pTransform->m_vInfo[INFO_POS];
-
 	//카메라가 없어서 여기서 카메라인척함.
-	cameraPos = { 0.f ,0.f,-5.f };
-	D3DXMatrixLookAtLH(&viewMatrix, &cameraPos, &_vec3(3.f,0.f,0.f), &up);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &viewMatrix);
+	
 
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -124,9 +117,15 @@ HRESULT CPlayer::Add_Component(void)
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Collider", pComponent });
 	m_pCollider->Set_BoundingBox({3.f,3.f,3.f});
 
-	pComponent = m_pRigid = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"Rigidbody", this));
+	/*pComponent = m_pRigid = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"Rigidbody", this));
 	NULL_CHECK_RETURN(m_pRigid, E_FAIL);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Rigidbody", pComponent });
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Rigidbody", pComponent });*/
+
+	pComponent = m_pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
+	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Camera", pComponent });
+	m_pCamera->Set_LandMode();
+
 	return S_OK;
 }
 
@@ -157,18 +156,42 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	m_pTransform->Get_Info(INFO_LOOK, &vDir);
 	m_pTransform->Get_Info(INFO_RIGHT, &vRight);
 
-	if (GetAsyncKeyState(VK_UP))	m_pTransform->Move_Pos(&vDir, fTimeDelta, m_fSpeed);
-	if (GetAsyncKeyState(VK_DOWN))	m_pTransform->Move_Pos(&vDir, fTimeDelta, -m_fSpeed);
-	if (GetAsyncKeyState(VK_LEFT))	m_pTransform->Move_Pos(&vRight, fTimeDelta, -m_fSpeed);
-	if (GetAsyncKeyState(VK_RIGHT))	m_pTransform->Move_Pos(&vRight, fTimeDelta, m_fSpeed);
+	if (GetAsyncKeyState(VK_UP))	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState(VK_DOWN))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState(VK_LEFT))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState(VK_RIGHT))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
 	
-	if (GetAsyncKeyState('Q'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
-	if (GetAsyncKeyState('A'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
+	//if (GetAsyncKeyState('Q'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
+	//if (GetAsyncKeyState('A'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
+	//
+	if (GetAsyncKeyState('W'))	m_pTransform->Rot_Yaw(10.f, fTimeDelta);
+	if (GetAsyncKeyState('S'))	m_pTransform->Rot_Yaw(-10.f, fTimeDelta);
+	//
+	//if (GetAsyncKeyState('E'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(180.f * fTimeDelta));
+	//if (GetAsyncKeyState('D'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(-180.f * fTimeDelta));
 
-	if (GetAsyncKeyState('W'))	m_pTransform->Rotation(ROT_Y, D3DXToRadian(180.f * fTimeDelta));
-	if (GetAsyncKeyState('S'))	m_pTransform->Rotation(ROT_Y, D3DXToRadian(-180.f * fTimeDelta));
+}
 
-	if (GetAsyncKeyState('E'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(180.f * fTimeDelta));
-	if (GetAsyncKeyState('D'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(-180.f * fTimeDelta));
 
+void CPlayer::Mouse_Move(const _float& fTimeDelta)
+{
+	_long dwMouseMove = 0;
+
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
+	{
+		m_pTransform->m_vInfo[INFO_LOOK] += _vec3(0.f, 1.f, 0.f) * -dwMouseMove * fTimeDelta / 10.f;
+	}
+
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
+	{
+		m_pTransform->Rot_Yaw(dwMouseMove * 5.f, fTimeDelta);
+	}
+}
+
+void CPlayer::Fix_Mouse()
+{
+	POINT ptMouse{ WINCX >> 1, WINCY >> 1 };
+
+	ClientToScreen(g_hWnd, &ptMouse);
+	SetCursorPos(ptMouse.x, ptMouse.y);
 }
