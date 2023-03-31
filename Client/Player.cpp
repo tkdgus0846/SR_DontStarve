@@ -18,13 +18,13 @@ HRESULT CPlayer::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
-	m_pTransform->m_vInfo[INFO_POS] = _vec3(10.f, 7.f, 30.f);
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(10.f, 0.f, 30.f);
 
 	_matrix projMatrix;
 	
-	//투영임
-	D3DXMatrixPerspectiveFovLH(&projMatrix, D3DXToRadian(60.f), (float)WINCX/WINCY, 1.f, 1000.f);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &projMatrix);
+	////투영임
+	//D3DXMatrixPerspectiveFovLH(&projMatrix, D3DXToRadian(60.f), (float)WINCX/WINCY, 1.f, 1000.f);
+	//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &projMatrix);
 
 	return S_OK;
 }
@@ -40,36 +40,19 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	up = { 0.f,1.f,0.f };
 
-	m_pTransform->m_vInfo[INFO_POS].y -= 1.f * fTimeDelta;
+	//m_pTransform->m_vInfo[INFO_POS].y -= 1.f * fTimeDelta;
 
-	myPos = m_pTransform->m_vInfo[INFO_POS];
-
-	//카메라가 없어서 여기서 카메라인척함.
-	cameraPos = { 0.f ,0.f,-5.f };
-	D3DXMatrixLookAtLH(&viewMatrix, &cameraPos, &_vec3(3.f,0.f,0.f), &up);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &viewMatrix);
+	//myPos = m_pTransform->m_vInfo[INFO_POS];
 
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+
+
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
 void CPlayer::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
-
-	CTerrainTex* terrainTex = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"TerrainTex", ID_STATIC));
-	NULL_CHECK_MSG(terrainTex, L"터레인 텍스 널..");
-
-	const vector<D3DXPLANE>& PlaneVec = terrainTex->m_PlaneVec;
-
-	for (int i = 0; i < PlaneVec.size(); i++)
-	{
-		_vec3 playerFootPos = m_pTransform->m_vInfo[INFO_POS] - _vec3(0.f, 0.7f, 0.f);
-		//_vec3 playerFootPos = m_pTransform->m_vInfo[INFO_POS];
-
-		float fDot = D3DXPlaneDotCoord(&PlaneVec[i], &playerFootPos);
-		bool bIsIn = terrainTex->IsInPlane(m_pTransform->m_vInfo[INFO_POS], i);
-	}
 	
 	// 충돌 처리 부분.
 }
@@ -124,9 +107,13 @@ HRESULT CPlayer::Add_Component(void)
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Collider", pComponent });
 	m_pCollider->Set_BoundingBox({3.f,3.f,3.f});
 
-	pComponent = m_pRigid = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"Rigidbody", this));
+	/*pComponent = m_pRigid = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"Rigidbody", this));
 	NULL_CHECK_RETURN(m_pRigid, E_FAIL);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Rigidbody", pComponent });
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Rigidbody", pComponent });*/
+
+	pComponent = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Camera", pComponent });
 	return S_OK;
 }
 

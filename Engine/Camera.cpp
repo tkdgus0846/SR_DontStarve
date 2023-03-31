@@ -21,6 +21,8 @@ CCamera::CCamera(const CCamera & rhs)
 	m_tProjParams = rhs.m_tProjParams;
 	m_matView = rhs.m_matView;
 	m_matProj = rhs.m_matProj;
+
+	m_bFix = true;
 }
 
 CCamera::~CCamera()
@@ -44,7 +46,7 @@ HRESULT CCamera::Ready_Camera(VIEWPARAMS& tViewParam, PROJPARAMS& tProjParam, HW
 
 _int CCamera::Update_Component(const _float & fTimeDelta)
 {
-	Key_Input(fTimeDelta);
+	//Key_Input(fTimeDelta);
 
 	if (m_bFix)
 	{
@@ -57,6 +59,8 @@ _int CCamera::Update_Component(const _float & fTimeDelta)
 
 	_vec3 vDir = pTransform->m_vInfo[INFO_LOOK] + (-pTransform->m_vInfo[INFO_UP]);
 	m_tViewParams.vEye = (pTransform->m_vInfo[INFO_POS] - vDir * 10.f);
+
+	//cout << vLook.x << " " << vLook.y << " " << vLook.z << endl;
 
 	m_tViewParams.LookAtLH(&m_matView);
 
@@ -142,6 +146,7 @@ void CCamera::Mouse_Move()
 
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
 	{
+		
 		_matrix matRot;
 		_vec3 vUp = { 0.f, 1.f, 0.f };
 
@@ -149,7 +154,7 @@ void CCamera::Mouse_Move()
 
 		_vec3 vLook = m_tViewParams.vAt - m_tViewParams.vEye;
 		D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
-
+		
 		m_tViewParams.vAt = m_tViewParams.vEye + vLook;
 	}
 }

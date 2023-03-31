@@ -48,34 +48,17 @@ void Engine::CTransform::Chase_Target(const _vec3* pTargetPos, const _float& fSp
 
 }
 
-const _matrix* Engine::CTransform::Compute_Lookattarget(const _vec3* pTargetPos)
+_matrix* Engine::CTransform::Compute_Lookattarget(const _vec3* pTargetPos)
 {
 	_vec3	vDir = *pTargetPos - m_vInfo[INFO_POS];
-
-	/*_vec3	vAxis = *D3DXVec3Cross(&vAxis, &m_vInfo[INFO_UP], &vDir);
-
-	_vec3	vUp;
-
-	D3DXVec3Normalize(&vDir, &vDir);
-	D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]);
-
-	_float	fDot = D3DXVec3Dot(&vDir, &vUp);
-
-	_float	fAngle = acosf(fDot);
-
-	_matrix		matRot;
-
-	D3DXMatrixRotationAxis(&matRot, &vAxis, fAngle);
-
-	return &matRot;*/
 
 	_matrix	matRot;
 	_vec3	vAxis, vUp;
 
-	return D3DXMatrixRotationAxis(&matRot, 
+	return reinterpret_cast<_matrix*>(D3DXMatrixRotationAxis(&matRot, 
 								  D3DXVec3Cross(&vAxis, &m_vInfo[INFO_UP], &vDir),
 								  acosf(D3DXVec3Dot(D3DXVec3Normalize(&vDir, &vDir), 
-												    D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
+												    D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP])))));
 }
 
 HRESULT CTransform::Ready_Transform(void)
