@@ -22,7 +22,7 @@ HRESULT CPlayer::Ready_GameObject(void)
 
 	_matrix projMatrix;
 	
-	////≈ıøµ¿”
+	////Ìà¨ÏòÅÏûÑ
 	//D3DXMatrixPerspectiveFovLH(&projMatrix, D3DXToRadian(60.f), (float)WINCX/WINCY, 1.f, 1000.f);
 	//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &projMatrix);
 
@@ -33,18 +33,12 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	Key_Input(fTimeDelta);
 
 	// m_planeVec
+
+
+	Fix_Mouse();
+	Mouse_Move(fTimeDelta);
+
 	__super::Update_GameObject(fTimeDelta);
-
-	_matrix viewMatrix;
-	_vec3 myPos, cameraPos, up;
-
-	up = { 0.f,1.f,0.f };
-
-	//m_pTransform->m_vInfo[INFO_POS].y -= 1.f * fTimeDelta;
-
-	//myPos = m_pTransform->m_vInfo[INFO_POS];
-
-
 
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
@@ -54,7 +48,7 @@ void CPlayer::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
 	
-	// √Êµπ √≥∏Æ ∫Œ∫–.
+	// Ï∂©Îèå Ï≤òÎ¶¨ Î∂ÄÎ∂Ñ.
 }
 
 void CPlayer::Render_GameObject(void)
@@ -87,7 +81,7 @@ void CPlayer::Render_GameObject(void)
 void CPlayer::OnTriggerStay(const CCollider * other)
 {
 	static int i = 0;
-	cout << "√Êµπ ≈◊Ω∫∆Æ «√∑π¿ÃæÓ" << ++i <<endl;
+	cout << "Ï∂©Îèå ÌÖåÏä§Ìä∏ ÌîåÎ†àÏù¥Ïñ¥" << ++i <<endl;
 }
 
 HRESULT CPlayer::Add_Component(void)
@@ -111,9 +105,11 @@ HRESULT CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(m_pRigid, E_FAIL);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Rigidbody", pComponent });*/
 
-	pComponent = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	pComponent = m_pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
+	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Camera", pComponent });
+	m_pCamera->Set_LandMode();
+
 	return S_OK;
 }
 
@@ -144,18 +140,42 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	m_pTransform->Get_Info(INFO_LOOK, &vDir);
 	m_pTransform->Get_Info(INFO_RIGHT, &vRight);
 
-	if (GetAsyncKeyState(VK_UP))	m_pTransform->Move_Pos(&vDir, fTimeDelta, m_fSpeed);
-	if (GetAsyncKeyState(VK_DOWN))	m_pTransform->Move_Pos(&vDir, fTimeDelta, -m_fSpeed);
-	if (GetAsyncKeyState(VK_LEFT))	m_pTransform->Move_Pos(&vRight, fTimeDelta, -m_fSpeed);
-	if (GetAsyncKeyState(VK_RIGHT))	m_pTransform->Move_Pos(&vRight, fTimeDelta, m_fSpeed);
+	if (GetAsyncKeyState(VK_UP))	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState(VK_DOWN))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState(VK_LEFT))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState(VK_RIGHT))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
 	
-	if (GetAsyncKeyState('Q'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
-	if (GetAsyncKeyState('A'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
+	//if (GetAsyncKeyState('Q'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
+	//if (GetAsyncKeyState('A'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
+	//
+	if (GetAsyncKeyState('W'))	m_pTransform->Rot_Yaw(10.f, fTimeDelta);
+	if (GetAsyncKeyState('S'))	m_pTransform->Rot_Yaw(-10.f, fTimeDelta);
+	//
+	//if (GetAsyncKeyState('E'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(180.f * fTimeDelta));
+	//if (GetAsyncKeyState('D'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(-180.f * fTimeDelta));
 
-	if (GetAsyncKeyState('W'))	m_pTransform->Rotation(ROT_Y, D3DXToRadian(180.f * fTimeDelta));
-	if (GetAsyncKeyState('S'))	m_pTransform->Rotation(ROT_Y, D3DXToRadian(-180.f * fTimeDelta));
+}
 
-	if (GetAsyncKeyState('E'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(180.f * fTimeDelta));
-	if (GetAsyncKeyState('D'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(-180.f * fTimeDelta));
 
+void CPlayer::Mouse_Move(const _float& fTimeDelta)
+{
+	_long dwMouseMove = 0;
+
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
+	{
+		m_pTransform->m_vInfo[INFO_LOOK] += _vec3(0.f, 1.f, 0.f) * -dwMouseMove * fTimeDelta / 10.f;
+	}
+
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
+	{
+		m_pTransform->Rot_Yaw(dwMouseMove * 5.f, fTimeDelta);
+	}
+}
+
+void CPlayer::Fix_Mouse()
+{
+	POINT ptMouse{ WINCX >> 1, WINCY >> 1 };
+
+	ClientToScreen(g_hWnd, &ptMouse);
+	SetCursorPos(ptMouse.x, ptMouse.y);
 }

@@ -9,6 +9,7 @@ class CRcTex;
 class CTexture;
 class CCollider;
 class CRigidbody;
+class CCamera;
 END
 class CPlayer : public Engine::CGameObject
 {
@@ -27,12 +28,15 @@ public:
 private:
 	HRESULT		Add_Component(void);
 	void		Key_Input(const _float& fTimeDelta);
+	void		Mouse_Move(const _float& fTimeDelta);
+	void		Fix_Mouse();
 
 private:
 	Engine::CRcTex*			m_pBufferCom;
 	Engine::CTexture*		m_pTextureCom;
 	Engine::CCollider*		m_pCollider;
 	Engine::CRigidbody*		m_pRigid;
+	Engine::CCamera*		m_pCamera;
 
 	_float					m_fSpeed = 10.f;
 
