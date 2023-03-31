@@ -130,6 +130,15 @@
     <ClInclude Include="Rigidbody.h">
       <Filter>Componnent\Rigidbody</Filter>
     </ClInclude>
+    <ClInclude Include="Calculator.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomTex.h">
+      <Filter>Componnent\VIBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -227,6 +236,15 @@
     </ClCompile>
     <ClCompile Include="Rigidbody.cpp">
       <Filter>Componnent\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculator.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomTex.cpp">
+      <Filter>Componnent\VIBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

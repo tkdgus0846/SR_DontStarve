@@ -136,5 +136,6 @@ CComponent * CCollider::Clone(void)
 void CCollider::Free(void)
 {
 	Safe_Delete(m_pBoundingBox);
+	Safe_Release(m_pMesh);
 	__super::Free();
 }

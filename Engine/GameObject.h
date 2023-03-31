@@ -13,6 +13,7 @@ protected:
 
 public:
 	CComponent*			Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
+	_float				Get_ViewZ(void) { return m_fViewZ; }
 
 public:
 	virtual HRESULT		Ready_GameObject(void)PURE;
@@ -28,12 +29,16 @@ public:
 	virtual void OnTriggerStay(const class CCollider* other) {}
 	virtual void OnTirggerExit(const class CCollider* other) {}
 
+	void			Compute_ViewZ(const _vec3* pPos);
+
 private:
 	CComponent*			Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
+	
 
 protected:
 	unordered_map<const _tchar*, CComponent*>			m_uMapComponent[ID_END];
 	LPDIRECT3DDEVICE9		m_pGraphicDev;
+	_float					m_fViewZ = 0.f;
 
 public:
 	class CTransform* m_pTransform;

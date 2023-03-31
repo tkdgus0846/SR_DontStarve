@@ -9,6 +9,7 @@
 #include <string>
 #include <algorithm>
 #include <unordered_map>
+#include <iostream>
 #include <process.h>
 
 #define DIRECTINPUT_VERSION		0x0800
