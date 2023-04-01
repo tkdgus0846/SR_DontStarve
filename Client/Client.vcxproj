@@ -160,6 +160,9 @@
     <ClInclude Include="imgui_impl_dx9.h" />
     <ClInclude Include="imgui_impl_win32.h" />
     <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="ImManager.h" />
+    <ClInclude Include="ImTest.h" />
+    <ClInclude Include="ImWindow.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainApp.h" />
@@ -182,6 +185,9 @@
     <ClCompile Include="imgui_impl_win32.cpp" />
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
+    <ClCompile Include="ImManager.cpp" />
+    <ClCompile Include="ImTest.cpp" />
+    <ClCompile Include="ImWindow.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainApp.cpp" />

@@ -23,6 +23,12 @@
     <Filter Include="imgui\core">
       <UniqueIdentifier>{d20b1ca2-961d-4805-9bbf-48dcada5d533}</UniqueIdentifier>
     </Filter>
+    <Filter Include="imgui\ImWindow">
+      <UniqueIdentifier>{03928814-698e-468d-9a8b-211edf7b6c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\ImManager">
+      <UniqueIdentifier>{3ce43516-b38f-46c0-886d-b8476ec0afb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -92,6 +98,15 @@
     <ClInclude Include="ObjCamera.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="ImWindow.h">
+      <Filter>imgui\ImWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="ImManager.h">
+      <Filter>imgui\ImManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ImTest.h">
+      <Filter>imgui\ImWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Monster.cpp">
@@ -144,6 +159,15 @@
     </ClCompile>
     <ClCompile Include="imgui_impl_win32.cpp">
       <Filter>imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="ImWindow.cpp">
+      <Filter>imgui\ImWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="ImManager.cpp">
+      <Filter>imgui\ImManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ImTest.cpp">
+      <Filter>imgui\ImWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
