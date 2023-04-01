@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="Base.h">
@@ -130,6 +130,9 @@
     <ClInclude Include="Rigidbody.h">
       <Filter>Componnent\Rigidbody</Filter>
     </ClInclude>
+    <ClInclude Include="CameraMgr.h">
+      <Filter>Componnent\Camera\CameraMgr</Filter>
+    </ClInclude>
     <ClInclude Include="Calculator.h">
       <Filter>Manager</Filter>
     </ClInclude>
@@ -138,6 +141,15 @@
     </ClInclude>
     <ClInclude Include="Room.h">
       <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Componnent\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Manager\LightMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="LightMgr.h">
+      <Filter>Manager\LightMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +249,9 @@
     <ClCompile Include="Rigidbody.cpp">
       <Filter>Componnent\Rigidbody</Filter>
     </ClCompile>
+    <ClCompile Include="CameraMgr.cpp">
+      <Filter>Componnent\Camera\CameraMgr</Filter>
+    </ClCompile> 
     <ClCompile Include="Calculator.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
@@ -245,6 +260,15 @@
     </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Componnent\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Manager\LightMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="LightMgr.cpp">
+      <Filter>Manager\LightMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -309,6 +333,15 @@
     </Filter>
     <Filter Include="Componnent\Rigidbody">
       <UniqueIdentifier>{75c32bce-c51b-4c0f-a13e-1f9a8ba0489a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Componnent\Camera\CameraMgr">
+      <UniqueIdentifier>{8837ae5c-4dfc-4814-b3ed-37a6340a1005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Componnent\Mesh">
+      <UniqueIdentifier>{b8aaf3e3-df2d-47b7-94b4-4ec1c66b425e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\LightMgr">
+      <UniqueIdentifier>{03a779a1-89ab-427a-8a24-08ff54f59ae1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

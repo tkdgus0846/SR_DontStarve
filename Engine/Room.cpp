@@ -17,8 +17,8 @@ HRESULT CRoom::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransform->m_vScale = { 30.f, 10.f, 30.f };
-
+	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
+	m_pTransform->m_vInfo[INFO_POS] = { 10.f, -4.f, 10.f };
 	
 	return S_OK;
 }
@@ -39,15 +39,24 @@ void CRoom::LateUpdate_GameObject(void)
 
 void CRoom::Render_GameObject(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-	m_pTextureCom->Set_Texture(0);
-	m_pBufferCom->Render_Buffer();
 
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	//m_pTextureCom->Set_Texture(0);
+	__super::Render_GameObject();
+	
+
+	
+
+	
+	//m_pBufferCom->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -64,6 +73,10 @@ HRESULT CRoom::Add_Component(void)
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Room_Texture", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Room_Texture", pComponent });
+
+	pComponent  = dynamic_cast<CMesh*>(Engine::Clone_Proto(L"AirplaneMesh", this));
+	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"AirplaneMesh", pComponent });
 
 	return S_OK;
 }
