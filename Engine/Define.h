@@ -6,6 +6,7 @@
 #define		VTXCNTX		129
 #define		VTXCNTZ		129
 #define		VTXITV		1
+#define		MAX_DIK		256
 
 #ifndef			MSG_BOX
 #define			MSG_BOX(_message)			MessageBox(NULL, TEXT(_message), L"System Message", MB_OK)

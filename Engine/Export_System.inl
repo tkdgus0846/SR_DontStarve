@@ -74,6 +74,18 @@ _long		Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveID)
 {
 	return CDInputMgr::GetInstance()->Get_DIMouseMove(eMouseMoveID);
 }
+bool		Key_Pressing(_ubyte ubyKey)
+{
+	return CDInputMgr::GetInstance()->Key_Pressing(ubyKey);
+}
+bool		Key_Down(_ubyte ubyKey)
+{
+	return CDInputMgr::GetInstance()->Key_Down(ubyKey);
+}
+bool		Key_Up(_ubyte ubyKey)
+{
+	return CDInputMgr::GetInstance()->Key_Up(ubyKey);
+}
 HRESULT		Ready_DInput(HINSTANCE hInst, HWND hWnd)
 {
 	return CDInputMgr::GetInstance()->Ready_DInput(hInst, hWnd);
