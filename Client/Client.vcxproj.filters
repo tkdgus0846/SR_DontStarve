@@ -88,6 +88,8 @@
     </ClInclude>
     <ClInclude Include="imgui_impl_win32.h">
       <Filter>imgui\backends</Filter>
+    <ClInclude Include="ObjCamera.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,5 +154,8 @@
     <Natvis Include="imgui.natvis">
       <Filter>imgui\core</Filter>
     </Natvis>
+    <ClCompile Include="ObjCamera.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

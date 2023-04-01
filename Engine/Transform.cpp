@@ -4,7 +4,7 @@
 CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev)
 	, m_vScale(1.f, 1.f, 1.f)
-	, m_eMoveType(LANDOBJECT)
+	, m_eMoveType(AIRCRAFT)
 {
 	ZeroMemory(&m_vInfo, sizeof(m_vInfo));
 	ZeroMemory(&m_vAngle, sizeof(_vec3));

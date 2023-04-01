@@ -18,7 +18,12 @@
 #include "Camera.h"
 #include "CubeTex.h"
 #include "Rigidbody.h"
+#include "CameraMgr.h"
 #include "RoomTex.h"
+#include "Mesh.h"
+
+#include "LightMgr.h"
+
 
 BEGIN(Engine)
 
@@ -44,6 +49,14 @@ inline void		Clear_RenderGroup(void);
 inline void		Add_Collider(COLGROUP eID, CCollider* pCollider);
 inline void		Check_Collision();
 inline void		Clear_Collision();
+
+
+inline void		On_Camera(const _tchar* pCamTag);
+inline void		Shake_Camera();
+
+
+inline HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex);
+
 
 inline void						Release_Utility(void);
 
