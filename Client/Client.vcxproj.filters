@@ -68,6 +68,9 @@
     <ClInclude Include="ObjCamera.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Nice.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Monster.cpp">
@@ -101,6 +104,9 @@
       <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="ObjCamera.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Nice.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
