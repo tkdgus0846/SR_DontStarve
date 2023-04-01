@@ -11,9 +11,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{2A1D8683-C0C0-40A9-9E0E-53E0A9D3B9C8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMGUI", "IMGUI\example_win32_directx9.vcxproj", "{4165A294-21F2-44CA-9B38-E3F935ABADF5}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2A1D8683-C0C0-40A9-9E0E-53E0A9D3B9C8} = {2A1D8683-C0C0-40A9-9E0E-53E0A9D3B9C8}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
