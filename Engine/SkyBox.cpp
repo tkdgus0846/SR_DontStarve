@@ -38,7 +38,7 @@ _int CSkyBox::Update_GameObject(const _float& fTimeDelta)
 }
 void CSkyBox::LateUpdate_GameObject(void)
 {
-	__super::LateUpdate_GameObject();
+	
 }
 
 // D3DRS_ZENABLE			: Z버퍼에 Z값을 무조건 기록은 하되 정렬을 수행할지 말지 결정하는 옵션
