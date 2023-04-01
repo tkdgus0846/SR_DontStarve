@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
+    <ClInclude Include="Calculator.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraMgr.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -43,7 +44,10 @@
     <ClInclude Include="GraphicDev.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="Layer.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="LightMgr.h" />
     <ClInclude Include="Management.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="MyFont.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="ProtoMgr.h" />
@@ -51,6 +55,8 @@
     <ClInclude Include="RcTex.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Rigidbody.h" />
+    <ClInclude Include="Room.h" />
+    <ClInclude Include="RoomTex.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="Snow.h" />
@@ -67,6 +73,7 @@
     <ClInclude Include="VIBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraMgr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -83,7 +90,10 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicDev.cpp" />
     <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LightMgr.cpp" />
     <ClCompile Include="Management.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MyFont.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="ProtoMgr.cpp" />
@@ -91,6 +101,8 @@
     <ClCompile Include="RcTex.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="RoomTex.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="Snow.cpp" />

@@ -5,8 +5,9 @@
 
 // 테스트용 주석
 
-CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
-	: m_pGraphicDev(pGraphicDev)
+CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev) : 
+	m_pGraphicDev(pGraphicDev),
+	m_fViewZ(0.f)
 {
 	m_pGraphicDev->AddRef();
 
@@ -45,6 +46,19 @@ void CGameObject::Render_GameObject(void)
 {
 	for (auto& iter : m_uMapComponent[ID_DYNAMIC])
 		iter.second->Render_Component();
+}
+
+void CGameObject::Compute_ViewZ(const _vec3 * pPos)
+{
+	_matrix		matCamWorld;
+
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
+	D3DXMatrixInverse(&matCamWorld, 0, &matCamWorld);
+
+	_vec3	vCamPos;
+	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
+
+	m_fViewZ = D3DXVec3Length(&(vCamPos - *pPos));
 }
 
 CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENTID eID)

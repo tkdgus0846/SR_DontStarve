@@ -18,7 +18,7 @@ HRESULT CPlayer::Ready_GameObject(void)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
-	m_pTransform->m_vInfo[INFO_POS] = _vec3(10.f, 7.f, 30.f);
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(10.f, -5.f, 30.f);
 
 	return S_OK;
 }
@@ -28,37 +28,21 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	// m_planeVec
 
+
 	Fix_Mouse();
 	Mouse_Move(fTimeDelta);
 
 	__super::Update_GameObject(fTimeDelta);
 
-	//ƒ´∏ﬁ∂Û∞° æ¯æÓº≠ ø©±‚º≠ ƒ´∏ﬁ∂Û¿Œ√¥«‘.
-	
 
-
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
 void CPlayer::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
-
-	CTerrainTex* terrainTex = dynamic_cast<CTerrainTex*>(Engine::Get_Component(L"Layer_Environment", L"Terrain", L"TerrainTex", ID_STATIC));
-	NULL_CHECK_MSG(terrainTex, L"≈Õ∑π¿Œ ≈ÿΩ∫ ≥Œ..");
-
-	const vector<D3DXPLANE>& PlaneVec = terrainTex->m_PlaneVec;
-
-	for (int i = 0; i < PlaneVec.size(); i++)
-	{
-		_vec3 playerFootPos = m_pTransform->m_vInfo[INFO_POS] - _vec3(0.f, 0.7f, 0.f);
-		//_vec3 playerFootPos = m_pTransform->m_vInfo[INFO_POS];
-
-		float fDot = D3DXPlaneDotCoord(&PlaneVec[i], &playerFootPos);
-		bool bIsIn = terrainTex->IsInPlane(m_pTransform->m_vInfo[INFO_POS], i);
-	}
 	
-	// √Êµπ √≥∏Æ ∫Œ∫–.
+	// Ï∂©Îèå Ï≤òÎ¶¨ Î∂ÄÎ∂Ñ.
 }
 
 void CPlayer::Render_GameObject(void)
@@ -91,7 +75,7 @@ void CPlayer::Render_GameObject(void)
 void CPlayer::OnTriggerStay(const CCollider * other)
 {
 	static int i = 0;
-	cout << "√Êµπ ≈◊Ω∫∆Æ «√∑π¿ÃæÓ" << ++i <<endl;
+	cout << "Ï∂©Îèå ÌÖåÏä§Ìä∏ ÌîåÎ†àÏù¥Ïñ¥" << ++i <<endl;
 }
 
 HRESULT CPlayer::Add_Component(void)
@@ -117,8 +101,10 @@ HRESULT CPlayer::Add_Component(void)
 
 	pComponent = m_pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
+
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Camera", pComponent });
 	m_pCamera->Set_CameraName(L"Player_Camera");
+
 
 	return S_OK;
 }
@@ -150,19 +136,14 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	m_pTransform->Get_Info(INFO_LOOK, &vDir);
 	m_pTransform->Get_Info(INFO_RIGHT, &vRight);
 
-	if (GetAsyncKeyState(VK_UP))	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState(VK_DOWN))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState(VK_LEFT))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState(VK_RIGHT))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState('W'))	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState('S'))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState('A'))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState('D'))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
+
+	if (GetAsyncKeyState('Q'))	m_pTransform->Move_Fly(m_fSpeed, fTimeDelta);
+	if (GetAsyncKeyState('E'))	m_pTransform->Move_Fly(-m_fSpeed, fTimeDelta);
 	
-	//if (GetAsyncKeyState('Q'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
-	//if (GetAsyncKeyState('A'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
-	
-	if (GetAsyncKeyState('W'))	m_pTransform->Rot_Yaw(10.f, fTimeDelta);
-	if (GetAsyncKeyState('S'))	m_pTransform->Rot_Yaw(-10.f, fTimeDelta);
-	
-	//if (GetAsyncKeyState('E'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(180.f * fTimeDelta));
-	//if (GetAsyncKeyState('D'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(-180.f * fTimeDelta));
 
 	if (GetAsyncKeyState(VK_F1)) Engine::On_Camera(L"Player_Camera");
 }

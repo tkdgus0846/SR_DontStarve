@@ -66,6 +66,7 @@ void		Clear_Collision()
 	CCollisionMgr::GetInstance()->Clear_Collision();
 }
 
+
 void		On_Camera(const _tchar* pCamTag)
 {
 	CCameraMgr::GetInstance()->On_Camera(pCamTag);
@@ -74,11 +75,16 @@ void		On_Camera(const _tchar* pCamTag)
 void Shake_Camera()
 {
 	CCameraMgr::GetInstance()->Shake_Camera();
+
+HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex)
+{
+	return CLightMgr::GetInstance()->Ready_Light(pGraphicDev, pLightInfo, iIndex);
 }
 
 void						Release_Utility(void)
 {
 	CCameraMgr::GetInstance()->DestroyInstance();
+	CLightMgr::GetInstance()->DestroyInstance();
 	CCollisionMgr::GetInstance()->DestroyInstance();
 	CRenderer::GetInstance()->DestroyInstance();
 	CProtoMgr::GetInstance()->DestroyInstance();

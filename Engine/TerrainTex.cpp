@@ -90,7 +90,7 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 
 			pVertex[dwIndex].vPos = { 
 				_float(j * dwVtxItv), 
-				_float(pPixel[dwIndex] & 0x000000ff) / 20.f,
+				0.f,
 				_float(i * dwVtxItv) };
 
 			pVertex[dwIndex].vTexUV = { _float(j) / (dwCntX - 1) * 20.f,

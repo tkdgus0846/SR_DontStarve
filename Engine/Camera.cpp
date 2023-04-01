@@ -24,6 +24,8 @@ CCamera::CCamera(const CCamera & rhs)
 	m_tProjParams = rhs.m_tProjParams;
 	m_matView = rhs.m_matView;
 	m_matProj = rhs.m_matProj;
+
+	m_bFix = true;
 }
 
 CCamera::~CCamera()
@@ -49,12 +51,17 @@ _int CCamera::Update_Component(const _float & fTimeDelta)
 	if (!m_bSwitch)
 		return 0;
 
+
 	m_tViewParams.vEye = m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
 
 	m_tViewParams.vAt = m_tViewParams.vEye + m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK];
 
+
 	if (m_bShack)
 		Shake(fTimeDelta);
+
+	//cout << vLook.x << " " << vLook.y << " " << vLook.z << endl;
+
 
 	m_tViewParams.LookAtLH(&m_matView);
 
@@ -114,7 +121,7 @@ CComponent * CCamera::Clone(void)
 	CCamera* pInstance = new CCamera(*this);
 	NULL_CHECK_RETURN(pInstance, nullptr);
 
-	// ¿©±â¼­ Ä«¸Þ¶ó ¸Å´ÏÀú¿¡ Ãß°¡.
+	// ï¿½ï¿½ï¿½â¼­ Ä«ï¿½Þ¶ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ ï¿½ß°ï¿½.
 	Engine::CCameraMgr::GetInstance()->Add_Camera(m_pName, pInstance);
 	
 	return pInstance;

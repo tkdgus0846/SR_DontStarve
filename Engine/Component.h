@@ -21,6 +21,7 @@ public:
 	virtual			void	Render_Component() {}
 
 	CComponent*			Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
+	class CGameObject*	Get_GameObject() const { return m_pGameObject; }
 
 protected:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
