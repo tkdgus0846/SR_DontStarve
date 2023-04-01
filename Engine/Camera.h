@@ -4,10 +4,10 @@
 
 BEGIN(Engine)
 
+class CCameraMgr;
 class CCamera : public CComponent
 {
-public:
-	enum CAMERA_TYPE { CAM_LAND, CAM_FLY, CAM_END };
+	friend CCameraMgr;
 
 private:
 	explicit CCamera(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -15,55 +15,40 @@ private:
 	virtual ~CCamera();
 
 public:
-	HRESULT			Ready_Camera(VIEWPARAMS& tViewParam, PROJPARAMS& tProjParam, HWND& hWnd);
+	HRESULT			Ready_Camera(VIEWPARAMS& tViewParam, PROJPARAMS& tProjParam);
 	virtual	_int	Update_Component(const _float& fTimeDelta);
 	virtual	void	LateUpdate_Component() {}
-	void			Set_LandMode() { m_eType = CAM_LAND; }
-	void			Set_FlyMode() { m_eType = CAM_FLY; }
+
+	void			Set_CameraName(const _tchar* pName) { m_pName = pName; }
 
 private:
-	void		Key_Input(const _float & fTimeDelta);
-	void		Mouse_Move();
-	void		Fix_Mouse();
-
-	void	Move_Strafe(const _float& fUnits, const _float& fTimeDelta);// Move-Right
-	void	Move_Fly(const _float& fUnits, const _float& fTimeDelta);	// Move-Up
-	void	Move_Walk(const _float& fUnits, const _float& fTimeDelta);  // Move-Look
-
-	//void	Rot_Pitch(const _float& fAngle, const _float& fTimeDelta);// Rot-Right
-	//void	Rot_Yaw(const _float& fAngle, const _float& fTimeDelta);  // Rot-Up
-	//void	Rot_Roll(const _float& fAngle, const _float& fTimeDelta); // Rot-Look
+	void			On_Camera() { m_bSwitch = true; }
+	void			Off_Camera() { m_bSwitch = false; }
+	void			Shake_Camera() { m_bShack = true; }
+	void			Shake(const _float & fTimeDelta);
 
 private:
-	CAMERA_TYPE	m_eType;
+	VIEWPARAMS		m_tViewParams;
+	PROJPARAMS		m_tProjParams;
 
-	VIEWPARAMS	m_tViewParams;
-	PROJPARAMS	m_tProjParams;
+	_matrix			m_matView;
+	_matrix			m_matProj;
 
-	_vec3		m_vLook;
-	_float		m_fLength;
-
-	_matrix		m_matView;
-	_matrix		m_matProj;
-
-	_bool		m_bFix;
-	_bool		m_bClick;
-
-	HWND		m_hWnd;
+	const _tchar*	m_pName;
+	_bool			m_bSwitch;
+	_bool			m_bShack;
 
 public:
 	static CCamera* Create(LPDIRECT3DDEVICE9 pGraphicDev, 
 		VIEWPARAMS& tViewParam = VIEWPARAMS(
-	{10.f, 7.f, 29.f},
-	{0.f, 0.f, 0.f},
-	{ 0.f, 1.f, 0.f }),
+			{0.f, 0.f, 0.f},
+			{0.f, 0.f, 0.f},
+			{ 0.f, 1.f, 0.f }),
 
 		PROJPARAMS& tProjParam = PROJPARAMS(
 			D3DXToRadian(60.f),
 			(_float)WINCX / WINCY,
-			1.f, 1000.f),
-
-		HWND hWnd = g_hWnd);
+			1.f, 1000.f));
 
 	virtual CComponent * Clone(void) override;
 

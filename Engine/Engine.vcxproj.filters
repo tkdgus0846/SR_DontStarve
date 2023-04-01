@@ -130,6 +130,9 @@
     <ClInclude Include="Rigidbody.h">
       <Filter>Componnent\Rigidbody</Filter>
     </ClInclude>
+    <ClInclude Include="CameraMgr.h">
+      <Filter>Componnent\Camera\CameraMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -228,6 +231,9 @@
     <ClCompile Include="Rigidbody.cpp">
       <Filter>Componnent\Rigidbody</Filter>
     </ClCompile>
+    <ClCompile Include="CameraMgr.cpp">
+      <Filter>Componnent\Camera\CameraMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Base.inl">
@@ -291,6 +297,9 @@
     </Filter>
     <Filter Include="Componnent\Rigidbody">
       <UniqueIdentifier>{75c32bce-c51b-4c0f-a13e-1f9a8ba0489a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Componnent\Camera\CameraMgr">
+      <UniqueIdentifier>{8837ae5c-4dfc-4814-b3ed-37a6340a1005}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

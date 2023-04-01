@@ -66,8 +66,19 @@ void		Clear_Collision()
 	CCollisionMgr::GetInstance()->Clear_Collision();
 }
 
+void		On_Camera(const _tchar* pCamTag)
+{
+	CCameraMgr::GetInstance()->On_Camera(pCamTag);
+}
+
+void Shake_Camera()
+{
+	CCameraMgr::GetInstance()->Shake_Camera();
+}
+
 void						Release_Utility(void)
 {
+	CCameraMgr::GetInstance()->DestroyInstance();
 	CCollisionMgr::GetInstance()->DestroyInstance();
 	CRenderer::GetInstance()->DestroyInstance();
 	CProtoMgr::GetInstance()->DestroyInstance();

@@ -65,6 +65,9 @@
     <ClInclude Include="targetver.h">
       <Filter>Main</Filter>
     </ClInclude>
+    <ClInclude Include="ObjCamera.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Monster.cpp">
@@ -96,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjCamera.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

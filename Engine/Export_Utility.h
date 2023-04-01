@@ -18,6 +18,7 @@
 #include "Camera.h"
 #include "CubeTex.h"
 #include "Rigidbody.h"
+#include "CameraMgr.h"
 
 BEGIN(Engine)
 
@@ -43,6 +44,9 @@ inline void		Clear_RenderGroup(void);
 inline void		Add_Collider(COLGROUP eID, CCollider* pCollider);
 inline void		Check_Collision();
 inline void		Clear_Collision();
+
+inline void		On_Camera(const _tchar* pCamTag);
+inline void		Shake_Camera();
 
 inline void						Release_Utility(void);
 
