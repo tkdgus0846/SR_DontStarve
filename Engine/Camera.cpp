@@ -25,7 +25,6 @@ CCamera::CCamera(const CCamera & rhs)
 	m_matView = rhs.m_matView;
 	m_matProj = rhs.m_matProj;
 
-	m_bFix = true;
 }
 
 CCamera::~CCamera()
@@ -75,10 +74,10 @@ void CCamera::Shake(const _float & fTimeDelta)
 	fTime += fTimeDelta;
 
 	fY = sinf(fX * 3.f) * powf(0.4f, fX);
-	fY *= (rand() % 2);
+	//fY *= (rand() % 2);
 
 	m_tViewParams.vEye.y += fY;
-
+	m_tViewParams.vAt.y += fY;
 	fX += fTimeDelta * 5.f;
 
 	if (fX > 5.f)

@@ -132,6 +132,7 @@
     </ClInclude>
     <ClInclude Include="CameraMgr.h">
       <Filter>Componnent\Camera\CameraMgr</Filter>
+    </ClInclude>
     <ClInclude Include="Calculator.h">
       <Filter>Manager</Filter>
     </ClInclude>
@@ -250,6 +251,7 @@
     </ClCompile>
     <ClCompile Include="CameraMgr.cpp">
       <Filter>Componnent\Camera\CameraMgr</Filter>
+    </ClCompile> 
     <ClCompile Include="Calculator.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
@@ -334,6 +336,7 @@
     </Filter>
     <Filter Include="Componnent\Camera\CameraMgr">
       <UniqueIdentifier>{8837ae5c-4dfc-4814-b3ed-37a6340a1005}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Componnent\Mesh">
       <UniqueIdentifier>{b8aaf3e3-df2d-47b7-94b4-4ec1c66b425e}</UniqueIdentifier>
     </Filter>
