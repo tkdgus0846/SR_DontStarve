@@ -4,7 +4,8 @@
 #include "Export_Function.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+	: CGameObject(pGraphicDev), m_fSpeed(0.f)
+	, m_bFix(false)
 {
 	
 }
@@ -20,6 +21,8 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = _vec3(10.f, -5.f, 30.f);
 
+	m_fSpeed = 10.f;
+
 	return S_OK;
 }
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
@@ -28,9 +31,11 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	// m_planeVec
 
-
-	//Fix_Mouse();
-	Mouse_Move(fTimeDelta);
+	if (m_bFix)
+	{
+		Fix_Mouse();
+		Mouse_Move(fTimeDelta);
+	}
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -108,8 +113,6 @@ HRESULT CPlayer::Add_Component(void)
 	return S_OK;
 }
 
-
-
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CPlayer*		pInstance = new CPlayer(pGraphicDev);
@@ -135,17 +138,18 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	m_pTransform->Get_Info(INFO_LOOK, &vDir);
 	m_pTransform->Get_Info(INFO_RIGHT, &vRight);
 
-	if (GetAsyncKeyState('W'))	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState('S'))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState('A'))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState('D'))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_W))	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_S))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_A))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_D))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_Q))	m_pTransform->Move_Fly(m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_E))	m_pTransform->Move_Fly(-m_fSpeed, fTimeDelta);
 
-	if (GetAsyncKeyState('Q'))	m_pTransform->Move_Fly(m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState('E'))	m_pTransform->Move_Fly(-m_fSpeed, fTimeDelta);
+	if (Engine::Key_Down((DIK_F1))) 	Engine::On_Camera(L"Player_Camera");
+	if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
 
-	if (GetAsyncKeyState(VK_F1)) Engine::On_Camera(L"Player_Camera");
+
 }
-
 
 void CPlayer::Mouse_Move(const _float& fTimeDelta)
 {

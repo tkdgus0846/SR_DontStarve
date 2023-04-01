@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="Base.h">
@@ -131,7 +131,7 @@
       <Filter>Component\Rigidbody</Filter>
     </ClInclude>
     <ClInclude Include="CameraMgr.h">
-      <Filter>Component\Camera\CameraMgr</Filter>
+      <Filter>Manager\CameraMgr</Filter>
     </ClInclude>
     <ClInclude Include="Calculator.h">
       <Filter>Manager</Filter>
@@ -250,7 +250,7 @@
       <Filter>Component\Rigidbody</Filter>
     </ClCompile>
     <ClCompile Include="CameraMgr.cpp">
-      <Filter>Component\Camera\CameraMgr</Filter>
+      <Filter>Manager\CameraMgr</Filter>
     </ClCompile>
     <ClCompile Include="Calculator.cpp">
       <Filter>Manager</Filter>
@@ -313,6 +313,9 @@
     <Filter Include="Manager\LightMgr">
       <UniqueIdentifier>{03a779a1-89ab-427a-8a24-08ff54f59ae1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Componnent\Mesh">
+      <UniqueIdentifier>{b8aaf3e3-df2d-47b7-94b4-4ec1c66b425e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Component">
       <UniqueIdentifier>{f61d561a-522d-49e9-b924-0a38e62a3ee9}</UniqueIdentifier>
     </Filter>
@@ -342,6 +345,9 @@
     </Filter>
     <Filter Include="Component\Mesh">
       <UniqueIdentifier>{b8aaf3e3-df2d-47b7-94b4-4ec1c66b425e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\CameraMgr">
+      <UniqueIdentifier>{8837ae5c-4dfc-4814-b3ed-37a6340a1005}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
