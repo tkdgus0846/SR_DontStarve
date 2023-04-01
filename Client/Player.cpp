@@ -20,11 +20,6 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = _vec3(10.f, -5.f, 30.f);
 
-	m_fSpeed = 100.f;
-	////투영임
-	//D3DXMatrixPerspectiveFovLH(&projMatrix, D3DXToRadian(60.f), (float)WINCX/WINCY, 1.f, 1000.f);
-	//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &projMatrix);
-
 	return S_OK;
 }
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
@@ -106,8 +101,9 @@ HRESULT CPlayer::Add_Component(void)
 
 	pComponent = m_pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Camera", pComponent });
-	m_pCamera->Set_LandMode();
+
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Camera", pComponent });
+	m_pCamera->Set_CameraName(L"Player_Camera");
 
 	return S_OK;
 }
@@ -149,13 +145,20 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	//if (GetAsyncKeyState('Q'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
 	//if (GetAsyncKeyState('A'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
+
+	
+	if (GetAsyncKeyState('W'))	m_pTransform->Rot_Yaw(10.f, fTimeDelta);
+	if (GetAsyncKeyState('S'))	m_pTransform->Rot_Yaw(-10.f, fTimeDelta);
+	
 	//
 	/*if (GetAsyncKeyState('W'))	m_pTransform->Rot_Yaw(10.f, fTimeDelta);
 	if (GetAsyncKeyState('S'))	m_pTransform->Rot_Yaw(-10.f, fTimeDelta);*/
 	//
+
 	//if (GetAsyncKeyState('E'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(180.f * fTimeDelta));
 	//if (GetAsyncKeyState('D'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(-180.f * fTimeDelta));
 
+	if (GetAsyncKeyState(VK_F1)) Engine::On_Camera(L"Player_Camera");
 }
 
 
