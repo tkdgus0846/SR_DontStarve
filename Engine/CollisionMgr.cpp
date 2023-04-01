@@ -24,7 +24,8 @@ void CCollisionMgr::Check_Collision()
 {
 	if (m_ColliderList[COL_OBJ].empty())
 		return;
-	for (auto& iter = m_ColliderList[COL_OBJ].begin();
+
+	for (auto iter = m_ColliderList[COL_OBJ].begin();
 	iter != m_ColliderList[COL_OBJ].end() - 1; ++iter)
 	{
 		for (auto& iter2 = iter + 1; iter2 != m_ColliderList[COL_OBJ].end(); ++iter2)

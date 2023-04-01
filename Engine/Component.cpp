@@ -44,3 +44,44 @@ void Engine::CComponent::Free(void)
 {
 	Safe_Release(m_pGraphicDev);
 }
+
+_int CComposite::Update_Component(const _float & fTimeDelta)
+{
+	for (auto& iter : m_VecComponents[ID_DYNAMIC])
+	{
+		FAILED_CHECK_RETURN(iter->Update_Component(fTimeDelta), E_FAIL);
+	}	
+
+	return 0;
+}
+
+void CComposite::LateUpdate_Component(void)
+{
+	for (auto& iter : m_VecComponents[ID_DYNAMIC])
+	{
+		iter->LateUpdate_Component();
+	}
+}
+
+void CComposite::Render_Component(void)
+{
+	for (auto& iter : m_VecComponents[ID_DYNAMIC])
+	{
+		iter->Render_Component();
+	}
+}
+
+void Engine::CComposite::Free(void)
+{
+	__super::Free();
+
+	for (int i = 0; i < ID_END; i++)
+	{
+		for (auto& comp : m_VecComponents[i])
+		{
+			Safe_Release(comp);
+		}
+	}
+
+	
+}

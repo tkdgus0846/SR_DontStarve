@@ -36,4 +36,18 @@ private:
 	void SetOwner(class CGameObject* gameObject);
 };
 
+class CComposite : public CComponent
+{
+public:
+	virtual HRESULT		Ready_Composite(void) PURE;
+	virtual _int		Update_Component(const _float& fTimeDelta);
+	virtual void		LateUpdate_Component(void);
+	virtual void		Render_Component(void);
+
+	virtual void		Free(void) override;
+
+private:
+	vector<CComponent*> m_VecComponents[ID_END];
+};
+
 END

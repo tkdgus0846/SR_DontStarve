@@ -42,6 +42,8 @@ public:
 	void OnTirggerExit(const CCollider* other);
 
 	void Set_Enable(_bool bEnabled) { m_bEnabled = bEnabled; }
+	_bool Get_Enable() const { return m_bEnabled; }
+
 	void Set_BoundingBox(const _vec3& vSize = {2.f, 2.f, 2.f});
 
 public:

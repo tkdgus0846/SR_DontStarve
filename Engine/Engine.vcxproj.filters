@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="Base.h">
       <Filter>Reference</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Componnent</Filter>
+      <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="Define.h">
       <Filter>Reference</Filter>
@@ -59,46 +59,46 @@
       <Filter>Reference</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Componnent\Camera</Filter>
+      <Filter>Component\Camera</Filter>
     </ClInclude>
     <ClInclude Include="GraphicDev.h">
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
-      <Filter>Componnent\Collider</Filter>
+      <Filter>Component\Collider</Filter>
     </ClInclude>
     <ClInclude Include="CubeTex.h">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClInclude>
     <ClInclude Include="RcCol.h">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClInclude>
     <ClInclude Include="RcTex.h">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClInclude>
     <ClInclude Include="TerrainTex.h">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClInclude>
     <ClInclude Include="TriCol.h">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClInclude>
     <ClInclude Include="VIBuffer.h">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClInclude>
     <ClInclude Include="Firework.h">
-      <Filter>Componnent\ParticleSystem</Filter>
+      <Filter>Component\ParticleSystem</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
-      <Filter>Componnent\ParticleSystem</Filter>
+      <Filter>Component\ParticleSystem</Filter>
     </ClInclude>
     <ClInclude Include="Snow.h">
-      <Filter>Componnent\ParticleSystem</Filter>
+      <Filter>Component\ParticleSystem</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>Componnent\Transform</Filter>
+      <Filter>Component\Transform</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>Componnent\Texture</Filter>
+      <Filter>Component\Texture</Filter>
     </ClInclude>
     <ClInclude Include="CollisionMgr.h">
       <Filter>Manager\CollisionMgr</Filter>
@@ -128,22 +128,22 @@
       <Filter>Manager\ProtoMgr</Filter>
     </ClInclude>
     <ClInclude Include="Rigidbody.h">
-      <Filter>Componnent\Rigidbody</Filter>
+      <Filter>Component\Rigidbody</Filter>
     </ClInclude>
     <ClInclude Include="CameraMgr.h">
-      <Filter>Componnent\Camera\CameraMgr</Filter>
+      <Filter>Component\Camera\CameraMgr</Filter>
     </ClInclude>
     <ClInclude Include="Calculator.h">
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="RoomTex.h">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>Componnent\Mesh</Filter>
+      <Filter>Component\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>Manager\LightMgr</Filter>
@@ -154,7 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
-      <Filter>Componnent</Filter>
+      <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>GameObject</Filter>
@@ -178,46 +178,46 @@
       <Filter>Reference</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Componnent\Camera</Filter>
+      <Filter>Component\Camera</Filter>
     </ClCompile>
     <ClCompile Include="GraphicDev.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
-      <Filter>Componnent\Collider</Filter>
+      <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="CubeTex.cpp">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="RcCol.cpp">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="RcTex.cpp">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="TerrainTex.cpp">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="TriCol.cpp">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="VIBuffer.cpp">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="Firework.cpp">
-      <Filter>Componnent\ParticleSystem</Filter>
+      <Filter>Component\ParticleSystem</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Componnent\ParticleSystem</Filter>
+      <Filter>Component\ParticleSystem</Filter>
     </ClCompile>
     <ClCompile Include="Snow.cpp">
-      <Filter>Componnent\ParticleSystem</Filter>
+      <Filter>Component\ParticleSystem</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Componnent\Transform</Filter>
+      <Filter>Component\Transform</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>Componnent\Texture</Filter>
+      <Filter>Component\Texture</Filter>
     </ClCompile>
     <ClCompile Include="CollisionMgr.cpp">
       <Filter>Manager\CollisionMgr</Filter>
@@ -247,22 +247,22 @@
       <Filter>Manager\ProtoMgr</Filter>
     </ClCompile>
     <ClCompile Include="Rigidbody.cpp">
-      <Filter>Componnent\Rigidbody</Filter>
+      <Filter>Component\Rigidbody</Filter>
     </ClCompile>
     <ClCompile Include="CameraMgr.cpp">
-      <Filter>Componnent\Camera\CameraMgr</Filter>
-    </ClCompile> 
+      <Filter>Component\Camera\CameraMgr</Filter>
+    </ClCompile>
     <ClCompile Include="Calculator.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="RoomTex.cpp">
-      <Filter>Componnent\VIBuffer</Filter>
+      <Filter>Component\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>Componnent\Mesh</Filter>
+      <Filter>Component\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>Manager\LightMgr</Filter>
@@ -286,9 +286,6 @@
     <Filter Include="GameObject">
       <UniqueIdentifier>{762f7423-f0af-47e2-b111-5b95cf282be2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Componnent">
-      <UniqueIdentifier>{f61d561a-522d-49e9-b924-0a38e62a3ee9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Manager">
       <UniqueIdentifier>{a9a6cae6-55df-4998-8162-6add0c2121cb}</UniqueIdentifier>
     </Filter>
@@ -297,24 +294,6 @@
     </Filter>
     <Filter Include="Framework">
       <UniqueIdentifier>{18f0efa2-d6ec-43ea-a20b-62f879697839}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Componnent\VIBuffer">
-      <UniqueIdentifier>{15a5e433-be7a-4eb4-86ff-ab48e69ea59f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Componnent\Camera">
-      <UniqueIdentifier>{065bbc3e-0e6e-47fa-a149-ffd0a512d54c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Componnent\ParticleSystem">
-      <UniqueIdentifier>{57b55658-92fb-4281-bd32-840a79a5aba0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Componnent\Collider">
-      <UniqueIdentifier>{22b78abf-07fe-4458-b091-6c9fa6f830b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Componnent\Texture">
-      <UniqueIdentifier>{3923373d-3387-4c2b-b8fe-d8d82a24d934}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Componnent\Transform">
-      <UniqueIdentifier>{5863d0d2-b596-4b09-94e2-85040dd09eed}</UniqueIdentifier>
     </Filter>
     <Filter Include="Manager\CollisionMgr">
       <UniqueIdentifier>{94e84c0d-baa8-42ea-b5f4-74fdeb443fb7}</UniqueIdentifier>
@@ -331,17 +310,38 @@
     <Filter Include="Manager\ProtoMgr">
       <UniqueIdentifier>{9390663d-146d-4aec-b311-0f86e79be166}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Componnent\Rigidbody">
-      <UniqueIdentifier>{75c32bce-c51b-4c0f-a13e-1f9a8ba0489a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Componnent\Camera\CameraMgr">
-      <UniqueIdentifier>{8837ae5c-4dfc-4814-b3ed-37a6340a1005}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Componnent\Mesh">
-      <UniqueIdentifier>{b8aaf3e3-df2d-47b7-94b4-4ec1c66b425e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Manager\LightMgr">
       <UniqueIdentifier>{03a779a1-89ab-427a-8a24-08ff54f59ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{f61d561a-522d-49e9-b924-0a38e62a3ee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\VIBuffer">
+      <UniqueIdentifier>{15a5e433-be7a-4eb4-86ff-ab48e69ea59f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Camera">
+      <UniqueIdentifier>{065bbc3e-0e6e-47fa-a149-ffd0a512d54c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Camera\CameraMgr">
+      <UniqueIdentifier>{8837ae5c-4dfc-4814-b3ed-37a6340a1005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ParticleSystem">
+      <UniqueIdentifier>{57b55658-92fb-4281-bd32-840a79a5aba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Collider">
+      <UniqueIdentifier>{22b78abf-07fe-4458-b091-6c9fa6f830b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Texture">
+      <UniqueIdentifier>{3923373d-3387-4c2b-b8fe-d8d82a24d934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Transform">
+      <UniqueIdentifier>{5863d0d2-b596-4b09-94e2-85040dd09eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Rigidbody">
+      <UniqueIdentifier>{75c32bce-c51b-4c0f-a13e-1f9a8ba0489a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Mesh">
+      <UniqueIdentifier>{b8aaf3e3-df2d-47b7-94b4-4ec1c66b425e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

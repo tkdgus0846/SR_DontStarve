@@ -143,21 +143,6 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (GetAsyncKeyState('Q'))	m_pTransform->Move_Fly(m_fSpeed, fTimeDelta);
 	if (GetAsyncKeyState('E'))	m_pTransform->Move_Fly(-m_fSpeed, fTimeDelta);
 
-	//if (GetAsyncKeyState('Q'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
-	//if (GetAsyncKeyState('A'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
-
-	
-	if (GetAsyncKeyState('W'))	m_pTransform->Rot_Yaw(10.f, fTimeDelta);
-	if (GetAsyncKeyState('S'))	m_pTransform->Rot_Yaw(-10.f, fTimeDelta);
-	
-	//
-	/*if (GetAsyncKeyState('W'))	m_pTransform->Rot_Yaw(10.f, fTimeDelta);
-	if (GetAsyncKeyState('S'))	m_pTransform->Rot_Yaw(-10.f, fTimeDelta);*/
-	//
-
-	//if (GetAsyncKeyState('E'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(180.f * fTimeDelta));
-	//if (GetAsyncKeyState('D'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(-180.f * fTimeDelta));
-
 	if (GetAsyncKeyState(VK_F1)) Engine::On_Camera(L"Player_Camera");
 }
 
