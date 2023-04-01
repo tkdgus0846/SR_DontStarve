@@ -147,6 +147,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Key_Down((DIK_F1))) 	Engine::On_Camera(L"Player_Camera");
 	if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
+
+
 }
 
 void CPlayer::Mouse_Move(const _float& fTimeDelta)
