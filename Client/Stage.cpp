@@ -5,7 +5,10 @@
 #include "Monster.h"
 #include "Terrain.h"
 #include "SkyBox.h"
+
+#include "ObjCamera.h"
 #include "Room.h"
+
 
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -63,11 +66,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	CGameObject*		pGameObject = nullptr;
-
-	//// CDynamicCamera
-	/*pGameObject = CDynamicCamera::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);*/
 	
 	// Terrain
 	pGameObject = CRoom::Create(m_pGraphicDev);
@@ -77,8 +75,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
-
-
 
 	m_uMapLayer.insert({ pLayerTag, pLayer });
 
@@ -97,6 +93,10 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
 	pGameObject = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
+
+	pGameObject = CObjCamera::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ObjCamera", pGameObject), E_FAIL);
 
 	/*pGameObject = CMonster::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
