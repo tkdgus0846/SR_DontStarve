@@ -1,8 +1,9 @@
 // Client.cpp : 응용 프로그램에 대한 진입점을 정의합니다.
 //
 
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "Client.h"
+
 #include "MainApp.h"
 
 #define MAX_LOADSTRING 100
@@ -59,14 +60,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	if (nullptr == pMainApp)
 		return FALSE;
 
-	::ShowCursor(false);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_Immediate"), FALSE);
 	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_FPS60"), FALSE);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame60", 60.f), FALSE);
 
-	ShowCursor(false);
     // 기본 메시지 루프입니다.
     while (true)
     {
@@ -89,14 +88,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			// 60프레임 제한을 걸고싶다.
 			if (Engine::IsPermit_Call(L"Frame60", fTimer_Immediate))
 			{
-				// 60분의 1초 에 들어오겠죠
+				// Start the Dear ImGui frame
+				ImGui_ImplDX9_NewFrame();
+				ImGui_ImplWin32_NewFrame();
+				ImGui::NewFrame();
 
 				Engine::Set_Timer(L"Timer_FPS60");
 				_float fTimer_FPS60 = Engine::Get_Timer(L"Timer_FPS60");
-
 				pMainApp->Update_MainApp(fTimer_FPS60);
 				pMainApp->LateUpdate_MainApp();
+
+				ImGui::EndFrame();
+
 				pMainApp->Render_MainApp();
+
 			}
 			
 		}        
@@ -110,7 +115,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return FALSE;
 	}
 
-
+	ImGui_ImplDX9_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
     return (int) msg.wParam;
 }
 
@@ -187,8 +194,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+		return true;
+
     switch (message)
     {
     case WM_COMMAND:

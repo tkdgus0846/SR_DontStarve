@@ -35,7 +35,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	// m_planeVec
 
 
-	Fix_Mouse();
+	//Fix_Mouse();
 	Mouse_Move(fTimeDelta);
 
 	__super::Update_GameObject(fTimeDelta);

@@ -3,7 +3,9 @@
 #include "Include.h"
 #include "Base.h"
 #include "Export_Function.h"
-
+#include "imgui_impl_dx9.h"
+#include "imgui_impl_win32.h"
+#include "imgui.h"
 BEGIN(Engine)
 
 class CGraphicDev;

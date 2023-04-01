@@ -9,6 +9,7 @@
 #include <tchar.h>
 #include <D3dx9tex.h>
 
+
 // Simple helper function to load an image into a DX9 texture with common settings
 bool LoadTextureFromFile(const char* filename, PDIRECT3DTEXTURE9* out_texture, int* out_width, int* out_height);
 
@@ -82,9 +83,9 @@ int main(int, char**)
     //IM_ASSERT(font != NULL);
 
     // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+
+
 
     // Main loop
     bool done = false;
@@ -108,18 +109,9 @@ int main(int, char**)
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
-
-		{
-			ImGui::Begin("DirectX9 Texture Test");
-			ImGui::Text("pointer = %p", my_texture);
-			ImGui::Text("size = %d x %d", my_image_width, my_image_height);
-			ImGui::Image((void*)my_texture, ImVec2(my_image_width, my_image_height));
-			ImGui::End();
-		}
-
+		bool show_demo_window = true;
+		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+		bool show_another_window = false;
         // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {
             static float f = 0.0f;
@@ -139,7 +131,6 @@ int main(int, char**)
             ImGui::SameLine();
             ImGui::Text("counter = %d", counter);
 
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
             ImGui::End();
         }
 
