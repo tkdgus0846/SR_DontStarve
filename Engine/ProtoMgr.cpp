@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ProtoMgr.h"
 #include "GameObject.h"
+#include "Behavior.h"
 
 IMPLEMENT_SINGLETON(CProtoMgr)
 
@@ -25,13 +26,16 @@ HRESULT CProtoMgr::Ready_Proto(const _tchar * pProtoTag, CComponent * pComponent
 	return S_OK;
 }
 
-CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject* pGameObject)
+CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject* pGameObject, class CBlackBoard* pBlackBoard)
 {
 	CComponent*		pPrototype = Find_Proto(pProtoTag);
 	NULL_CHECK_RETURN(pPrototype, nullptr);
 	
 	CComponent* pClone = pPrototype->Clone();
 	pClone->SetOwner(pGameObject);
+
+	if (pBlackBoard)
+		dynamic_cast<CBehavior*>(pClone)->Set_BlackBoard(pBlackBoard);
 
 	return pClone;
 }

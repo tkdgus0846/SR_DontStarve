@@ -24,6 +24,12 @@
 
 #include "LightMgr.h"
 
+#include "Root.h"
+#include "AIRoot.h"
+#include "ChasePlayer.h"
+#include "MoveLook.h"
+#include "BlackBoard.h"
+
 BEGIN(Engine)
 
 inline HRESULT			Create_Management(CManagement** ppManagement);
@@ -40,7 +46,7 @@ inline void			Render_Management(LPDIRECT3DDEVICE9 pGraphicDev);
 
 
 inline HRESULT		Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);
-inline CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject);
+inline CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject, class CBlackBoard* pBlackBoard = nullptr);
 
 
 inline void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);

@@ -12,6 +12,10 @@
 #define		VTXITV		1
 #define		MAX_DIK		256
 
+#define		RUNNING			1
+#define		BEHAVIOR_TRUE	2
+#define		BEHAVIOR_FALSE	3
+
 #ifndef			MSG_BOX
 #define			MSG_BOX(_message)			MessageBox(NULL, TEXT(_message), L"System Message", MB_OK)
 #endif

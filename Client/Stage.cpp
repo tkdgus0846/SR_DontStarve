@@ -58,7 +58,6 @@ void CStage::Render_Scene(void)
 
 }
 
-
 CStage * CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CStage *	pInstance = new CStage(pGraphicDev);

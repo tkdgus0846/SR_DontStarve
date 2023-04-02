@@ -40,9 +40,9 @@ HRESULT		Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 {
 	return CProtoMgr::GetInstance()->Ready_Proto(pProtoTag, pComponent);
 }
-CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject)
+CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject, class CBlackBoard* pBlackBoard)
 {
-	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject);
+	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject, pBlackBoard);
 }
 
 void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)
