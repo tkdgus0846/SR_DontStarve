@@ -31,6 +31,4 @@ private:
 
 protected:
 	CGameObject* m_pTarget;
-
-
 };

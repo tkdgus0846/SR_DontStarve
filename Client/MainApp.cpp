@@ -1,6 +1,6 @@
 //#include "stdafx.h"
 #include "MainApp.h"
-
+#include "ImManager.h"
 #include "Scene.h"
 #include "Logo.h"
 
@@ -17,7 +17,7 @@ CMainApp::~CMainApp()
 
 HRESULT CMainApp::Ready_MainApp(void)
 {
-	ImTest::Create(nullptr);
+
 #ifdef _DEBUG
 
 	/*if (::AllocConsole() == TRUE)
@@ -34,7 +34,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 	//srand((unsigned int)time(NULL));
 	FAILED_CHECK_RETURN(Ready_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
-
+	CImManager::GetInstance()->Ready_IMGUI(m_pGraphicDev);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;

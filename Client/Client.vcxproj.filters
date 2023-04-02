@@ -104,9 +104,6 @@
     <ClInclude Include="ImManager.h">
       <Filter>imgui\ImManager</Filter>
     </ClInclude>
-    <ClInclude Include="ImTest.h">
-      <Filter>imgui\ImWindow</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Monster.cpp">
@@ -165,9 +162,6 @@
     </ClCompile>
     <ClCompile Include="ImManager.cpp">
       <Filter>imgui\ImManager</Filter>
-    </ClCompile>
-    <ClCompile Include="ImTest.cpp">
-      <Filter>imgui\ImWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

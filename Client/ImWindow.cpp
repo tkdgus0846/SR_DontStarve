@@ -16,4 +16,3 @@ HRESULT CImWindow::Ready_ImWindow(CGameObject* pGameObject)
 
 	return S_OK;
 }
-
