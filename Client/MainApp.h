@@ -6,6 +6,8 @@
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
 #include "imgui.h"
+#include "ImManager.h"
+
 BEGIN(Engine)
 
 class CGraphicDev;
@@ -34,6 +36,7 @@ private:
 	Engine::CManagement*		m_pManagementClass;
 
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
+
 
 public:
 	static CMainApp*		Create(void);

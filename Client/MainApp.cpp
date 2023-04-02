@@ -1,6 +1,6 @@
 //#include "stdafx.h"
 #include "MainApp.h"
-
+#include "ImManager.h"
 #include "Scene.h"
 #include "Logo.h"
 #include "BulletMgr.h"
@@ -18,6 +18,7 @@ CMainApp::~CMainApp()
 
 HRESULT CMainApp::Ready_MainApp(void)
 {
+
 #ifdef _DEBUG
 
 	/*if (::AllocConsole() == TRUE)
@@ -34,7 +35,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 	//srand((unsigned int)time(NULL));
 	FAILED_CHECK_RETURN(Ready_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
-
+	CImManager::GetInstance()->Ready_IMGUI(m_pGraphicDev);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -51,6 +52,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 int CMainApp::Update_MainApp(const _float & fTimeDelta)
 {
+	CImManager::GetInstance()->Update(fTimeDelta);
 	Engine::Update_DInput();
 
 	_long	dwMouse = 0;
@@ -62,31 +64,6 @@ int CMainApp::Update_MainApp(const _float & fTimeDelta)
 
 
 	m_pManagementClass->Update_Management(fTimeDelta);
-
-	bool show_demo_window = true;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-	bool show_another_window = false;
-	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
-	{
-		static float f = 0.0f;
-		static int counter = 0;
-
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-		ImGui::Checkbox("Another Window", &show_another_window);
-
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-			counter++;
-		ImGui::SameLine();
-		ImGui::Text("counter = %d", counter);
-
-		ImGui::End();
-	}
 
 	return 0;
 }
@@ -100,17 +77,9 @@ void CMainApp::Render_MainApp(void)
 {
 	Engine::Render_Begin(D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f));
 	
+	CImManager::GetInstance()->Render(m_pGraphicDev);
 	m_pManagementClass->Render_Management(m_pGraphicDev);
-	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	m_pGraphicDev->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
 
-	ImGui::Render();
-	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
-
-	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
 	Engine::Render_End();
 }
 
@@ -164,6 +133,7 @@ CMainApp * CMainApp::Create(void)
 
 void CMainApp::Free(void)
 {
+	CImManager::DestroyInstance();
 	FreeConsole();
 	Safe_Release(m_pGraphicDev);
 

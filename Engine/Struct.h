@@ -198,4 +198,9 @@ typedef struct tagProjParams
 	}
 }PROJPARAMS;
 
+typedef struct tagRay
+{
+	_vec3 _origin;
+	_vec3 _direction;
+}Ray;
 END
