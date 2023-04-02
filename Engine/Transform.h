@@ -26,18 +26,29 @@ public:
 	{
 		return m_vScale;
 	}
-	void		Rotation(ROTATION eRot, const _float& fAngle)
-	{
-		*(((_float*)&m_vAngle) + eRot) += fAngle;
-	}
 
 	void Set_Pos(const _float& x, const _float& y, const _float& z)
 	{	
 		m_vInfo[INFO_POS] = { x,y,z };
 	}
+	void Set_Pos(const _vec3& pos)
+	{
+		m_vInfo[INFO_POS] = pos;
+	}
 
+	// 제대로 돌아가는지 확인 해봐야함.
+	void Set_Dir(const _vec3& dir);
+
+	// 해당 위치를 바라보게끔 만드는 함수.
+	void Set_Target(const _vec3& targetPos);
+
+	// 오른쪽 벡터로 움직이는거
 	void	Move_Strafe(const _float& fUnits, const _float& fTimeDelta);// Move-Right
+
+	// 업 벡터로 움직이는거
 	void	Move_Fly(const _float& fUnits, const _float& fTimeDelta);	// Move-Up
+
+	// 룩 벡터로 움직이는거
 	void	Move_Walk(const _float& fUnits, const _float& fTimeDelta);  // Move-Look
 
 	void	Rot_Pitch(const _float& fAngle, const _float& fTimeDelta);// Rot-Right
@@ -56,7 +67,7 @@ public:
 	}
 
 	void			Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
-	_matrix*	Compute_Lookattarget(const _vec3* pTargetPos);
+	
 
 public:
 	HRESULT		Ready_Transform(void);
@@ -70,7 +81,6 @@ public:
 	_vec3		m_vInfo[INFO_END];
 	_vec3		m_vScale;
 
-	_vec3		m_vAngle;
 	_matrix		m_matWorld;
 	_matrix		m_matBill;
 
@@ -79,6 +89,7 @@ public:
 	virtual CComponent*		Clone(void);
 
 private:
+	_matrix*	Compute_Lookattarget(const _vec3* pTargetPos);
 	virtual void	Free(void) override;
 
 };

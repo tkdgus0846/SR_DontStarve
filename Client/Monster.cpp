@@ -22,7 +22,7 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	CTransform*	pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Transform", ID_DYNAMIC));
+	CTransform*	pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_PLAYER, L"Player", L"Transform", ID_DYNAMIC));
 	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
 
 	_vec3	vPlayerPos;

@@ -26,7 +26,7 @@ _int CObjCamera::Update_GameObject(const _float & fTimeDelta)
 {
 	Key_Input(fTimeDelta);
 
-	CTransform*	pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Transform", ID_DYNAMIC));
+	CTransform*	pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_PLAYER, L"Player", L"Transform", ID_DYNAMIC));
 
 	m_pTransform->m_vInfo[INFO_LOOK] = 
 		pPlayerTransformCom->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];

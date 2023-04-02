@@ -30,6 +30,11 @@ HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pGameObject
 	return S_OK;
 }
 
+//CGameObject* CLayer::Get_GameObject(const _tchar* pObjTag)
+//{
+//	return *(m_uMapObject.find(pObjTag)->second);
+//}
+
 HRESULT CLayer::Ready_Layer(void)
 {
 	return S_OK;
@@ -37,16 +42,26 @@ HRESULT CLayer::Ready_Layer(void)
 
 _int CLayer::Update_Layer(const _float & fTimeDelta)
 {
-	for (auto& iter : m_uMapObject)
-		iter.second->Update_GameObject(fTimeDelta);
+	for (auto iter = m_uMapObject.begin(); iter != m_uMapObject.end(); )
+	{
+		_int result = iter->second->Update_GameObject(fTimeDelta);
 
+		if (result == OBJ_DEAD) Safe_Release(iter->second);
+
+		if (result != OBJ_NOEVENT) iter = m_uMapObject.erase(iter);
+		else ++iter;
+	}
 	return 0;
 }
 
 void CLayer::LateUpdate_Layer(void)
 {
+	
 	for (auto& iter : m_uMapObject)
+	{
 		iter.second->LateUpdate_GameObject();
+	}
+		
 }
 
 

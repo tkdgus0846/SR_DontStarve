@@ -23,6 +23,15 @@
     <Filter Include="imgui\core">
       <UniqueIdentifier>{d20b1ca2-961d-4805-9bbf-48dcada5d533}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{7b58fff8-80c7-46ee-b1e8-d86f9d615377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Bullet">
+      <UniqueIdentifier>{a0e5ad6c-cb46-4588-95ca-bbf2fee75a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Monster">
+      <UniqueIdentifier>{a8e8f643-7eb0-4382-b79b-3af3b0fd3cbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -38,9 +47,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Monster.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Terrain.h">
       <Filter>GameObject</Filter>
     </ClInclude>
@@ -92,11 +98,20 @@
     <ClInclude Include="ObjCamera.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="BulletMgr.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Monster.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Terrain.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -144,6 +159,18 @@
     </ClCompile>
     <ClCompile Include="imgui_impl_win32.cpp">
       <Filter>imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
