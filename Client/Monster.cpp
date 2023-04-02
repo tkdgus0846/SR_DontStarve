@@ -4,7 +4,7 @@
 #include "Export_Function.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+	: CGameObject(pGraphicDev), m_fSpeed(0.f)
 {
 }
 
@@ -16,24 +16,20 @@ HRESULT CMonster::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_fSpeed = 5.f;
+
 	return S_OK;
 }
+
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
-
-	CTransform*	pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(L"Layer_GameLogic", L"Player", L"Transform", ID_DYNAMIC));
-	NULL_CHECK_RETURN(pPlayerTransformCom, -1);
-
-	_vec3	vPlayerPos;
-	pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
-
-	m_pTransform->Chase_Target(&vPlayerPos, m_fSpeed, fTimeDelta);
 	
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }
+
 void CMonster::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
@@ -67,10 +63,13 @@ HRESULT CMonster::Add_Component(void)
 	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Monster_Collider", pComponent });
+
+	pComponent = m_pRoot = dynamic_cast<CRoot*>(Engine::Clone_Proto(L"Root", this));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_uMapComponent[ID_DYNAMIC].emplace(L"Root", pComponent);
+
 	return S_OK;
 }
-
-
 
 CMonster* CMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
@@ -87,6 +86,7 @@ CMonster* CMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CMonster::Free(void)
 {
+	Safe_Release(m_pRoot);
 	__super::Free();
 }
 

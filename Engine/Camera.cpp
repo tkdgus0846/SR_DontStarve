@@ -116,7 +116,6 @@ CComponent * CCamera::Clone(void)
 	CCamera* pInstance = new CCamera(*this);
 	NULL_CHECK_RETURN(pInstance, nullptr);
 
-	// ���⼭ ī�޶� �Ŵ��� �߰�.
 	Engine::CCameraMgr::GetInstance()->Add_Camera(m_pName, pInstance);
 	
 	return pInstance;
