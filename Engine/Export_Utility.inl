@@ -8,9 +8,14 @@ HRESULT			Create_Management(CManagement** ppManagement)
 	return S_OK;
 }
 
-CComponent*			Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID)
+CComponent*			Get_Component(LAYERID LayerID, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID)
 {
-	return CManagement::GetInstance()->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
+	return CManagement::GetInstance()->Get_Component(LayerID, pObjTag, pComponentTag, eID);
+}
+
+void Engine::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj)
+{
+	CManagement::GetInstance()->Add_GameObject(LayerID, pObjTag, pObj);
 }
 
 HRESULT			Set_Scene(CScene* pScene)
@@ -35,9 +40,9 @@ HRESULT		Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 {
 	return CProtoMgr::GetInstance()->Ready_Proto(pProtoTag, pComponent);
 }
-CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject)
+CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject, class CBlackBoard* pBlackBoard)
 {
-	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject);
+	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject, pBlackBoard);
 }
 
 void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)

@@ -2,9 +2,12 @@
 #include "Player.h"
 
 #include "Export_Function.h"
+#include "BulletMgr.h"
+#include "NormalBullet.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+	: CGameObject(pGraphicDev), m_fSpeed(0.f)
+	, m_bFix(false)
 {
 	
 }
@@ -20,6 +23,8 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = _vec3(10.f, -5.f, 30.f);
 
+	m_fSpeed = 10.f;
+
 	return S_OK;
 }
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
@@ -28,15 +33,17 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	// m_planeVec
 
-
-	//Fix_Mouse();
-	Mouse_Move(fTimeDelta);
+	if (m_bFix)
+	{
+		Fix_Mouse();
+		Mouse_Move(fTimeDelta);
+	}
 
 	__super::Update_GameObject(fTimeDelta);
 
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-	return 0;
+	return OBJ_NOEVENT;
 }
 void CPlayer::LateUpdate_GameObject(void)
 {
@@ -75,7 +82,7 @@ void CPlayer::Render_GameObject(void)
 void CPlayer::OnTriggerStay(const CCollider * other)
 {
 	static int i = 0;
-	cout << "충돌 테스트 플레이어" << ++i <<endl;
+	//cout << "충돌 테스트 플레이어" << ++i <<endl;
 }
 
 HRESULT CPlayer::Add_Component(void)
@@ -108,8 +115,6 @@ HRESULT CPlayer::Add_Component(void)
 	return S_OK;
 }
 
-
-
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CPlayer*		pInstance = new CPlayer(pGraphicDev);
@@ -135,32 +140,30 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	m_pTransform->Get_Info(INFO_LOOK, &vDir);
 	m_pTransform->Get_Info(INFO_RIGHT, &vRight);
 
-	if (GetAsyncKeyState('W'))	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState('S'))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState('A'))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState('D'))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_W))	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_S))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_A))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_D))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_Q))	m_pTransform->Move_Fly(m_fSpeed, fTimeDelta);
+	if (Engine::Key_Pressing(DIK_E))	m_pTransform->Move_Fly(-m_fSpeed, fTimeDelta);
 
-	if (GetAsyncKeyState('Q'))	m_pTransform->Move_Fly(m_fSpeed, fTimeDelta);
-	if (GetAsyncKeyState('E'))	m_pTransform->Move_Fly(-m_fSpeed, fTimeDelta);
+	if (Engine::Key_Down((DIK_F1))) 	Engine::On_Camera(L"Player_Camera");
+	if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
 
-	//if (GetAsyncKeyState('Q'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(180.f * fTimeDelta));
-	//if (GetAsyncKeyState('A'))	m_pTransform->Rotation(ROT_X, D3DXToRadian(-180.f * fTimeDelta));
+	static float ShootCoolTime = 0.f;
+	ShootCoolTime += fTimeDelta;
+	if (ShootCoolTime > 0.2f)
+	{
+		if (Engine::Get_DIMouseState(DIM_LB))
+		{
 
+			CNormalBullet* bullet = CBulletMgr::GetInstance()->Pop<CNormalBullet>(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], vDir, false);
+			Add_GameObject(LAYER_BULLET, L"Bullet", bullet);
+			ShootCoolTime = 0.f;
+		}
+	}
 	
-	if (GetAsyncKeyState('W'))	m_pTransform->Rot_Yaw(10.f, fTimeDelta);
-	if (GetAsyncKeyState('S'))	m_pTransform->Rot_Yaw(-10.f, fTimeDelta);
-	
-	//
-	/*if (GetAsyncKeyState('W'))	m_pTransform->Rot_Yaw(10.f, fTimeDelta);
-	if (GetAsyncKeyState('S'))	m_pTransform->Rot_Yaw(-10.f, fTimeDelta);*/
-	//
-
-	//if (GetAsyncKeyState('E'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(180.f * fTimeDelta));
-	//if (GetAsyncKeyState('D'))	m_pTransform->Rotation(ROT_Z, D3DXToRadian(-180.f * fTimeDelta));
-
-	if (GetAsyncKeyState(VK_F1)) Engine::On_Camera(L"Player_Camera");
 }
-
 
 void CPlayer::Mouse_Move(const _float& fTimeDelta)
 {

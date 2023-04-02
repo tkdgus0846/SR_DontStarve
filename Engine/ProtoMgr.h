@@ -15,7 +15,7 @@ private:
 
 public:
 	HRESULT		Ready_Proto(const _tchar* pProtoTag, class CComponent* pComponent);
-	class CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject);
+	class CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, class CBlackBoard* pBlackBoard = nullptr);
 
 private:
 	class CComponent*	Find_Proto(const _tchar* pProtoTag);

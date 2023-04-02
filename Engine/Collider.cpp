@@ -10,7 +10,8 @@ CCollider::CCollider(LPDIRECT3DDEVICE9 pGraphicDev) :
 	m_bEnabled(true),
 	m_bIsTrigger(false),
 	m_bIsCollision(false),
-	m_pMesh(nullptr)
+	m_pMesh(nullptr),
+	m_bIsRender(true)
 {
 }
 
@@ -19,8 +20,9 @@ CCollider::CCollider(const CCollider & rhs) :
 	m_bEnabled(rhs.m_bEnabled),
 	m_bIsTrigger(rhs.m_bIsTrigger),
 	m_pBoundingBox(rhs.m_pBoundingBox),
-	m_bIsCollision(rhs.m_bIsCollision)
-	,m_pMesh(rhs.m_pMesh)
+	m_bIsCollision(rhs.m_bIsCollision),
+	m_pMesh(rhs.m_pMesh),
+	m_bIsRender(rhs.m_bIsRender)
 {
 }
 
@@ -55,6 +57,17 @@ void CCollider::LateUpdate_Component()
 
 void CCollider::Render_Component()
 {
+	if (m_bIsRender == false) return;
+
+	_vec3 offsetPoint;
+	m_pGameObject->m_pTransform->Get_Info(INFO_POS, &offsetPoint);
+
+	_matrix worldMatrix;
+
+	worldMatrix.Translation(offsetPoint.x, offsetPoint.y, offsetPoint.z);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &worldMatrix);
+
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pMesh->DrawSubset(0);

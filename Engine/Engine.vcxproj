@@ -19,12 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIRoot.h" />
     <ClInclude Include="Base.h" />
+    <ClInclude Include="Behavior.h" />
+    <ClInclude Include="BlackBoard.h" />
     <ClInclude Include="Calculator.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraMgr.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="ChasePlayer.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Component.h" />
@@ -48,6 +52,7 @@
     <ClInclude Include="LightMgr.h" />
     <ClInclude Include="Management.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MoveLook.h" />
     <ClInclude Include="MyFont.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="ProtoMgr.h" />
@@ -57,7 +62,10 @@
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomTex.h" />
+    <ClInclude Include="Root.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Selector.h" />
+    <ClInclude Include="Sequence.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="Snow.h" />
     <ClInclude Include="stdafx.h" />
@@ -71,13 +79,18 @@
     <ClInclude Include="TriCol.h" />
     <ClInclude Include="Typedef.h" />
     <ClInclude Include="VIBuffer.h" />
+    <ClInclude Include="Wait.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIRoot.cpp" />
+    <ClCompile Include="Behavior.cpp" />
+    <ClCompile Include="BlackBoard.cpp" />
     <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraMgr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="ChasePlayer.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -94,6 +107,7 @@
     <ClCompile Include="LightMgr.cpp" />
     <ClCompile Include="Management.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="MyFont.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="ProtoMgr.cpp" />
@@ -103,7 +117,10 @@
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomTex.cpp" />
+    <ClCompile Include="Root.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Selector.cpp" />
+    <ClCompile Include="Sequence.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="Snow.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -116,6 +133,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TriCol.cpp" />
     <ClCompile Include="VIBuffer.cpp" />
+    <ClCompile Include="Wait.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Base.inl" />

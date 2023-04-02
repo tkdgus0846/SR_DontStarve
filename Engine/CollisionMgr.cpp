@@ -24,7 +24,8 @@ void CCollisionMgr::Check_Collision()
 {
 	if (m_ColliderList[COL_OBJ].empty())
 		return;
-	for (auto& iter = m_ColliderList[COL_OBJ].begin();
+
+	for (auto iter = m_ColliderList[COL_OBJ].begin();
 	iter != m_ColliderList[COL_OBJ].end() - 1; ++iter)
 	{
 		for (auto& iter2 = iter + 1; iter2 != m_ColliderList[COL_OBJ].end(); ++iter2)
@@ -102,6 +103,17 @@ void CCollisionMgr::Clear_Collision()
 	{
 		for_each(m_ColliderList[i].begin(), m_ColliderList[i].end(), CDeleteObj());
 		m_ColliderList[i].clear();
+	}
+}
+
+void Engine::CCollisionMgr::Toggle_ColliderRender()
+{
+	for (int i = 0; i < COL_END; i++)
+	{
+		for (auto col : m_ColliderList[i])
+		{
+			col->Toggle_IsRender();
+		}
 	}
 }
 

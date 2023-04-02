@@ -60,6 +60,16 @@ void CGameObject::Compute_ViewZ(const _vec3 * pPos)
 	m_fViewZ = D3DXVec3Length(&(vCamPos - *pPos));
 }
 
+void CGameObject::Set_Pos(const _vec3 & pos)
+{
+	m_pTransform->Set_Pos(pos.x, pos.y, pos.z);
+}
+
+void CGameObject::Set_Dir(const _vec3 & dir)
+{
+	m_pTransform->Set_Dir(dir);
+}
+
 CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENTID eID)
 {
 	auto	iter = find_if(m_uMapComponent[eID].begin(), m_uMapComponent[eID].end(), CTag_Finder(pComponentTag));

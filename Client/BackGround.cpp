@@ -16,18 +16,18 @@ HRESULT CBackGround::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-
 	return S_OK;
 }
+
 _int CBackGround::Update_GameObject(const _float& fTimeDelta)
 {
-
 	__super::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_PRIORITY, this);
 
 	return 0;
 }
+
 void CBackGround::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();

@@ -28,19 +28,23 @@ public:
 		return *(((_long*)&m_MouseState) + eMouseMoveID);
 	}
 
-
 public:
-	HRESULT			Ready_DInput(HINSTANCE hInst, HWND hWnd);
-	void			Update_DInput(void);
+	HRESULT	Ready_DInput(HINSTANCE hInst, HWND hWnd);
+	void	Update_DInput(void);
+
+	bool	Key_Pressing(_ubyte ubyKey);
+	bool	Key_Down(_ubyte ubyKey);
+	bool	Key_Up(_ubyte ubyKey);
 
 private:
-	LPDIRECTINPUT8				m_pInputSDK;
+	LPDIRECTINPUT8			m_pInputSDK;
 
-	LPDIRECTINPUTDEVICE8		m_pKeyBoard;
-	LPDIRECTINPUTDEVICE8		m_pMouse;
+	LPDIRECTINPUTDEVICE8	m_pKeyBoard;
+	LPDIRECTINPUTDEVICE8	m_pMouse;
 
 private:
-	_byte					m_byKeyState[256];
+	_byte					m_byKeyState[MAX_DIK];
+	_byte					m_byPreKeyState[MAX_DIK];
 	 DIMOUSESTATE			m_MouseState;
 
 public:

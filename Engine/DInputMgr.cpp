@@ -52,8 +52,33 @@ HRESULT CDInputMgr::Ready_DInput(HINSTANCE hInst, HWND hWnd)
 
 void CDInputMgr::Update_DInput(void)
 {
+	memcpy(m_byPreKeyState, m_byKeyState, sizeof(_byte) * MAX_DIK);
 	m_pKeyBoard->GetDeviceState(256, m_byKeyState);
 	m_pMouse->GetDeviceState(sizeof(m_MouseState), &m_MouseState);
+}
+
+bool CDInputMgr::Key_Pressing(_ubyte ubyKey)
+{
+	if ((m_byPreKeyState[ubyKey] & 0x80) && (m_byKeyState[ubyKey] & 0x80))
+		return true;
+
+	return false;
+}
+
+bool CDInputMgr::Key_Down(_ubyte ubyKey)
+{
+	if (!(m_byPreKeyState[ubyKey] & 0x80) && (m_byKeyState[ubyKey] & 0x80))
+		return true;
+
+	return false;
+}
+
+bool CDInputMgr::Key_Up(_ubyte ubyKey)
+{
+	if ((m_byPreKeyState[ubyKey] & 0x80) && !(m_byKeyState[ubyKey] & 0x80))
+		return true;
+
+	return false;
 }
 
 void Engine::CDInputMgr::Free(void)

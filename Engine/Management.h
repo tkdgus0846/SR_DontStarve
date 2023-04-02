@@ -14,7 +14,7 @@ private:
 	virtual ~CManagement();
 
 public:
-	CComponent*			Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
+	CComponent*			Get_Component(LAYERID LayerID, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
 
 public:
 	HRESULT			Set_Scene(CScene* pScene);
@@ -22,6 +22,11 @@ public:
 	_int			Update_Management(const _float& fTimeDelta);
 	void			LateUpdate_Management();
 	void			Render_Management(LPDIRECT3DDEVICE9 pGraphicDev);
+
+	void			Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj);
+
+	// ÀÛ¼ºÇØ¾ßµÊ.
+	class CPlayer*	Get_Player();
 
 private:
 	CScene*			m_pScene = nullptr;

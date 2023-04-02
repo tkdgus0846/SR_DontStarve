@@ -3,6 +3,7 @@
 #include "ImManager.h"
 #include "Scene.h"
 #include "Logo.h"
+#include "BulletMgr.h"
 
 // 주석 테스트용
 CMainApp::CMainApp()
@@ -141,4 +142,8 @@ void CMainApp::Free(void)
 
 	Engine::Release_Utility();
 	Engine::Release_System();
+
+	CBulletMgr::DestroyInstance();
+
+	
 }

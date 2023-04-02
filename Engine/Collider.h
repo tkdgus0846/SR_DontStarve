@@ -18,6 +18,7 @@ protected:
 	bool m_bEnabled;
 	bool m_bIsTrigger;
 	bool m_bIsCollision;
+	bool m_bIsRender;
 	
 public:
 	HRESULT	Ready_Collider(_bool bIsTrigger);
@@ -42,6 +43,13 @@ public:
 	void OnTirggerExit(const CCollider* other);
 
 	void Set_Enable(_bool bEnabled) { m_bEnabled = bEnabled; }
+	_bool Get_Enable() const { return m_bEnabled; }
+
+	void Toggle_IsRender() 
+	{
+		m_bIsRender = (m_bIsRender == true) ? false : true;
+	}
+
 	void Set_BoundingBox(const _vec3& vSize = {2.f, 2.f, 2.f});
 
 public:

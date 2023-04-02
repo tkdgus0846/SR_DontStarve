@@ -8,7 +8,10 @@ BEGIN(Engine)
 class CTriCol;
 class CTransform;
 class CCollider;
+class CRoot;
+
 END
+
 class CMonster : public Engine::CGameObject
 {
 private:
@@ -25,12 +28,14 @@ private:
 	HRESULT		Add_Component(void);
 
 private:
-	Engine::CTriCol*		m_pBufferCom;
-	Engine::CCollider*		m_pCollider;
-	_float					m_fSpeed = 5.f;
+	Engine::CTriCol*	m_pBufferCom;
+	Engine::CCollider*	m_pCollider;
+	Engine::CRoot*		m_pRoot;
+
+	_float				m_fSpeed;
 
 public:
-	static CMonster*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CMonster*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;

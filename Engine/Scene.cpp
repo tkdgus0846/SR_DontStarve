@@ -5,20 +5,20 @@ CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 {
 	m_pGraphicDev->AddRef();
+
+	for (int i = 0; i < LAYER_END; i++)
+	{
+		m_arrLayer[i] = CLayer::Create();
+	}
 }
 
 CScene::~CScene()
 {
 }
 
-CComponent * CScene::Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
+CComponent * CScene::Get_Component(LAYERID LayerID, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
 {
-	auto	iter = find_if(m_uMapLayer.begin(), m_uMapLayer.end(), CTag_Finder(pLayerTag));
-
-	if (iter == m_uMapLayer.end())
-		return nullptr;
-
-	return iter->second->Get_Component(pObjTag, pComponentTag, eID);
+	return m_arrLayer[LayerID]->Get_Component(pObjTag, pComponentTag, eID);
 }
 
 HRESULT CScene::Ready_Scene(void)
@@ -30,9 +30,9 @@ _int CScene::Update_Scene(const _float & fTimeDelta)
 {
 	_int iResult = 0;
 
-	for (auto& iter : m_uMapLayer)
+	for (CLayer* iter : m_arrLayer)
 	{
-		iResult = iter.second->Update_Layer(fTimeDelta);
+		iResult = iter->Update_Layer(fTimeDelta);
 
 		if (iResult & 0x80000000)
 			return iResult;
@@ -43,14 +43,18 @@ _int CScene::Update_Scene(const _float & fTimeDelta)
 
 void CScene::LateUpdate_Scene(void)
 {
-	for (auto& iter : m_uMapLayer)
-		iter.second->LateUpdate_Layer();
+	for (CLayer* iter : m_arrLayer)
+		iter->LateUpdate_Layer();
+}
+
+HRESULT Engine::CScene::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj)
+{
+	FAILED_CHECK_RETURN(m_arrLayer[LayerID]->Add_GameObject(pObjTag, pObj), E_FAIL);
+	return S_OK;
 }
 
 void Engine::CScene::Free(void)
 {
-	for_each(m_uMapLayer.begin(), m_uMapLayer.end(), CDeleteMap());
-	m_uMapLayer.clear();
-
+	for_each(m_arrLayer.begin(), m_arrLayer.end(), CDeleteObj());	
 	Safe_Release(m_pGraphicDev);
 }

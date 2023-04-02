@@ -38,6 +38,9 @@ unsigned int CLoading::Thread_Main(void * pArg)
 
 	//_endthreadex(0);
 
+	if (iFlag == E_FAIL)
+		exit(-1);
+
 	return iFlag;
 }
 
@@ -85,6 +88,12 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"AirplaneMesh", CMesh::Create(m_pGraphicDev, L"../Resource/Mesh/bigship1.x")), E_FAIL);
 
 	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);*/
+
+	Set_String(L"AI Loading..........");
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Move", CMoveLook::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SQ_ChasePlayer", CChasePlayer::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SL_AIRoot", CAIRoot::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Root", CRoot::Create(m_pGraphicDev)), E_FAIL);
 
 	m_bFinish = true;
 

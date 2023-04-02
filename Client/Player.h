@@ -38,7 +38,9 @@ private:
 	Engine::CRigidbody*		m_pRigid;
 	Engine::CCamera*		m_pCamera;
 
-	_float					m_fSpeed = 10.f;
+	_float					m_fSpeed;
+
+	_bool					m_bFix;
 
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

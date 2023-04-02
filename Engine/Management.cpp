@@ -12,10 +12,10 @@ CManagement::~CManagement()
 	Free();
 }
 
-CComponent * CManagement::Get_Component(const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
+CComponent * CManagement::Get_Component(LAYERID LayerID, const _tchar * pObjTag, const _tchar * pComponentTag, COMPONENTID eID)
 {
 	NULL_CHECK_RETURN(m_pScene, nullptr);
-	return m_pScene->Get_Component(pLayerTag, pObjTag, pComponentTag, eID);
+	return m_pScene->Get_Component(LayerID, pObjTag, pComponentTag, eID);
 }
 
 HRESULT CManagement::Set_Scene(CScene * pScene)
@@ -49,6 +49,16 @@ void CManagement::Render_Management(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	NULL_CHECK(m_pScene);
 	m_pScene->Render_Scene();
+}
+
+void CManagement::Add_GameObject(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj)
+{
+	m_pScene->Add_GameObject(LayerID, pObjTag, pObj);
+}
+
+CPlayer * CManagement::Get_Player()
+{
+	return nullptr;
 }
 
 void CManagement::Free(void)

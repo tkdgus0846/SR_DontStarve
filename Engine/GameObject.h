@@ -31,6 +31,11 @@ public:
 
 	void			Compute_ViewZ(const _vec3* pPos);
 
+	// 위치 지정 함수
+	void			Set_Pos(const _vec3& pos);
+	// 쳐다보는 방향 바꾸는 함수
+	void			Set_Dir(const _vec3& dir);
+
 private:
 	CComponent*			Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	
@@ -39,6 +44,7 @@ protected:
 	unordered_map<const _tchar*, CComponent*>			m_uMapComponent[ID_END];
 	LPDIRECT3DDEVICE9		m_pGraphicDev;
 	_float					m_fViewZ = 0.f;
+	string					m_Name;
 
 public:
 	class CTransform* m_pTransform;
