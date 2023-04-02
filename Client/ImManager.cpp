@@ -16,16 +16,14 @@ HRESULT CImManager::Ready_IMGUI(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_pGraphicDev = pGraphicDev;
 	m_pGraphicDev->AddRef();
 
-
 	return S_OK;
 }
 
-void CImManager::Update(float fTimeDelta)
+void CImManager::Update(_float fTimeDelta)
 {
-	cout << "a" << endl;
 	for (auto& iter: m_vecImWindow)
 	{
-		int iResult = iter->Update(fTimeDelta);
+		_int iResult = iter->Update(fTimeDelta);
 	}
 }
 
@@ -49,14 +47,21 @@ void CImManager::Release()
 	for_each(m_vecImWindow.begin(), m_vecImWindow.end(), Safe_Delete<CImWindow*>);
 }
 
-void CImManager::PickingOnMesh(HWND hWnd, ID3DXMesh * pMesh)
+void CImManager::PickingOnMesh(HWND hWnd, ID3DXMesh * pMesh, /*Out*/DWORD& dwFaceIndex)
 {
+	Ray mouseRay;
+	_bool bSuccess = MouseClickRay(hWnd, mouseRay);
+
+	if (FALSE == bSuccess)
+		return;
+
+	//_bool bHit = IntersectRayMesh(mouseRay, pMesh, _matrix ,dwFaceIndex)
 }
 
-Ray CImManager::CalcPickingRay(int x, int y)
+Ray CImManager::CalcPickingRay(_int x, _int y)
 {
-	float px = 0.f;
-	float py = 0.f;
+	_float px = 0.f;
+	_float py = 0.f;
 
 	D3DVIEWPORT9 vp;
 	m_pGraphicDev->GetViewport(&vp);
@@ -72,6 +77,19 @@ Ray CImManager::CalcPickingRay(int x, int y)
 	ray._direction = D3DXVECTOR3(px, py, 1.f);
 
 	return ray;
+}
+
+_bool CImManager::MouseClickRay(HWND hWnd, /*Out*/ Ray& ray)
+{
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		POINT	ptMouse{};
+		GetCursorPos(&ptMouse);
+		ScreenToClient(g_hWnd, &ptMouse);
+		ray = CalcPickingRay(ptMouse.x, ptMouse.y);
+		return true;
+	}
+	return false;
 }
 
 void CImManager::TransformRay(Ray * ray, _matrix * T)
@@ -92,16 +110,16 @@ void CImManager::TransformRay(Ray * ray, _matrix * T)
 	D3DXVec3Normalize(&ray->_direction, &ray->_direction);
 }
 
-bool CImManager::IntersectRayMesh(const Ray & ray, ID3DXMesh * mesh, _matrix & worldMatrix, DWORD & faceIndex)
+_bool CImManager::IntersectRayMesh(const Ray & ray, ID3DXMesh * mesh, _matrix & worldMatrix, DWORD & faceIndex)
 {
-	bool hit = false;
+	_bool hit = false;
 	DWORD numFaces = mesh->GetNumFaces();
 	IDirect3DVertexBuffer9* vertexBuffer = nullptr;
 	IDirect3DIndexBuffer9* indexBuffer = nullptr;
 	_vec3* vertices = nullptr;
 	DWORD* indices = nullptr;
-	float u, v, dist;
-	float closestDist = FLT_MAX;
+	_float u, v, dist;
+	_float closestDist = FLT_MAX;
 
 	mesh->GetVertexBuffer(&vertexBuffer);
 	mesh->GetIndexBuffer(&indexBuffer);
