@@ -15,6 +15,7 @@ private:
 public:
 	HRESULT			Ready_Texture(TEXTYPE eTextype, const _tchar* pPath, const _uint& iCnt = 1);
 	void			Set_Texture(const _uint& iIndex = 0);
+	_int			Get_Size() const { return m_vecTexture.size(); }
 
 private:
 	vector<IDirect3DBaseTexture9*>		m_vecTexture;

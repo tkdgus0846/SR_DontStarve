@@ -34,7 +34,9 @@ BEGIN(Engine)
 
 inline HRESULT			Create_Management(CManagement** ppManagement);
 
-inline CComponent*			Get_Component(const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
+inline CComponent*			Get_Component(LAYERID LayerID, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
+
+inline void			Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj);
 
 inline HRESULT			Set_Scene(CScene* pScene);
 

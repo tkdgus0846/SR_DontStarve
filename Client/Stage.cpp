@@ -20,10 +20,12 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
-	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Layer_Environment"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"Layer_GameLogic"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_UI(L"Layer_UI"), E_FAIL);
-	
+	Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
+
+	Add_GameObject(LAYER_PLAYER, L"Player", CPlayer::Create(m_pGraphicDev));
+
+	Add_GameObject(LAYER_CAMERA, L"ObjCamera", CObjCamera::Create(m_pGraphicDev));
 
 	D3DLIGHT9		tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
@@ -54,66 +56,6 @@ void CStage::LateUpdate_Scene(void)
 void CStage::Render_Scene(void)
 {
 
-}
-
-
-HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
-{
-	CLayer*		pLayer = CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	CGameObject*		pGameObject = nullptr;
-	
-	// Terrain
-	pGameObject = CRoom::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Room", pGameObject), E_FAIL);
-
-	pGameObject = CSkyBox::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
-
-	m_uMapLayer.insert({ pLayerTag, pLayer });
-
-	return S_OK;
-}
-
-HRESULT CStage::Ready_Layer_GameLogic(const _tchar * pLayerTag)
-{
-
-	CLayer*		pLayer = CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	CGameObject*		pGameObject = nullptr;
-
-	// PLAYER
-	pGameObject = CPlayer::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
-
-	pGameObject = CObjCamera::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"ObjCamera", pGameObject), E_FAIL);
-
-	pGameObject = CMonster::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Monster", pGameObject), E_FAIL);
-
-
-	m_uMapLayer.insert({ pLayerTag, pLayer });
-	return S_OK;
-}
-
-HRESULT CStage::Ready_Layer_UI(const _tchar * pLayerTag)
-{
-	CLayer*		pLayer = CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	CGameObject*		pGameObject = nullptr;
-
-
-	m_uMapLayer.insert({ pLayerTag, pLayer });
-	return S_OK;
 }
 
 CStage * CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)

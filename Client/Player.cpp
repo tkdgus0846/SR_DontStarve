@@ -2,6 +2,8 @@
 #include "Player.h"
 
 #include "Export_Function.h"
+#include "BulletMgr.h"
+#include "NormalBullet.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fSpeed(0.f)
@@ -41,7 +43,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-	return 0;
+	return OBJ_NOEVENT;
 }
 void CPlayer::LateUpdate_GameObject(void)
 {
@@ -80,7 +82,7 @@ void CPlayer::Render_GameObject(void)
 void CPlayer::OnTriggerStay(const CCollider * other)
 {
 	static int i = 0;
-	cout << "충돌 테스트 플레이어" << ++i <<endl;
+	//cout << "충돌 테스트 플레이어" << ++i <<endl;
 }
 
 HRESULT CPlayer::Add_Component(void)
@@ -148,7 +150,19 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (Engine::Key_Down((DIK_F1))) 	Engine::On_Camera(L"Player_Camera");
 	if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
 
+	static float ShootCoolTime = 0.f;
+	ShootCoolTime += fTimeDelta;
+	if (ShootCoolTime > 0.2f)
+	{
+		if (Engine::Get_DIMouseState(DIM_LB))
+		{
 
+			CNormalBullet* bullet = CBulletMgr::GetInstance()->Pop<CNormalBullet>(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], vDir, false);
+			Add_GameObject(LAYER_BULLET, L"Bullet", bullet);
+			ShootCoolTime = 0.f;
+		}
+	}
+	
 }
 
 void CPlayer::Mouse_Move(const _float& fTimeDelta)

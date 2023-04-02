@@ -19,8 +19,8 @@ HRESULT CLogo::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 
-	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Layer_Environment"), E_FAIL);
-	
+	Add_GameObject(LAYER_ENVIRONMENT, L"BackGround", CBackGround::Create(m_pGraphicDev));
+
 	m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
 
@@ -67,22 +67,6 @@ HRESULT CLogo::Ready_Proto(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Logo_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture/Logo/IU.jpg")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
-
-	return S_OK;
-}
-
-HRESULT CLogo::Ready_Layer_Environment(const _tchar* pLayerTag)
-{
-	CLayer*		pLayer = CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	CGameObject*		pGameObject = nullptr;
-
-	pGameObject = CBackGround::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"BackGround", pGameObject), E_FAIL);
-
-	m_uMapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
 }

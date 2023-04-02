@@ -7,7 +7,6 @@ CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_eMoveType(AIRCRAFT)
 {
 	ZeroMemory(&m_vInfo, sizeof(m_vInfo));
-	ZeroMemory(&m_vAngle, sizeof(_vec3));
 	D3DXMatrixIdentity(&m_matWorld);
 	D3DXMatrixIdentity(&m_matBill);
 }
@@ -15,7 +14,6 @@ CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
 CTransform::CTransform(const CTransform & rhs)
 	: CComponent(rhs)
 	, m_vScale(rhs.m_vScale)
-	, m_vAngle(rhs.m_vAngle)
 	, m_matWorld(rhs.m_matWorld)
 	, m_matBill(rhs.m_matBill)
 	, m_eMoveType(rhs.m_eMoveType)
@@ -26,6 +24,38 @@ CTransform::CTransform(const CTransform & rhs)
 
 CTransform::~CTransform()
 {
+}
+
+void Engine::CTransform::Set_Dir(const _vec3& dir)
+{
+	_vec3 vDir = dir;
+	_vec3 vUp, vRight;
+
+	vUp = { 0.f, 1.f, 0.f };
+	vDir.Normalize();
+
+	vRight = vUp.Cross(vDir);
+	vUp = vDir.Cross(vRight);
+
+	m_vInfo[INFO_LOOK] = vDir;
+	m_vInfo[INFO_RIGHT] = vRight;
+	m_vInfo[INFO_UP] = vUp;
+}
+
+void Engine::CTransform::Set_Target(const _vec3& targetPos)
+{
+	_vec3 vDir = targetPos - m_vInfo[INFO_POS];
+	_vec3 vUp, vRight;
+
+	vUp = { 0.f, 1.f, 0.f };
+	vDir.Normalize();
+
+	vRight = vUp.Cross(vDir);
+	vUp = vDir.Cross(vRight);
+
+	m_vInfo[INFO_LOOK] = vDir;
+	m_vInfo[INFO_RIGHT] = vRight;
+	m_vInfo[INFO_UP] = vUp;
 }
 
 void CTransform::Move_Strafe(const _float & fUnits, const _float& fTimeDelta)
@@ -195,7 +225,6 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 
 	_matrix	matRotation;
 	D3DXMatrixIdentity(&matRotation);
-
 
 	D3DXVec3Normalize(&vRight, &m_vInfo[INFO_RIGHT]);
 	D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]);

@@ -5,6 +5,7 @@
 
 BEGIN(Engine)
 
+
 class  CLayer : public CBase
 {
 private:
@@ -16,13 +17,15 @@ public:
 
 public:
 	HRESULT				Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject);
+	/*CGameObject*		Get_GameObject(const _tchar* pObjTag); */
 
 	HRESULT				Ready_Layer(void);
 	_int				Update_Layer(const _float& fTimeDelta);
 	void				LateUpdate_Layer(void);
 
 private:
-	unordered_map<const _tchar*, CGameObject*>			m_uMapObject;
+	// 이름 중복이 문제였으니까 이렇게하면 이름중복 삽입 문제는 없지만 고유 식별값이 없어서 찾아오진 못한다.
+	multimap<const _tchar*, CGameObject*>			m_uMapObject;
 
 public:
 	static CLayer*		Create(void);

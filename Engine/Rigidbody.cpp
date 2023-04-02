@@ -66,18 +66,18 @@ _int CRigidbody::Update_Component(const _float & fTimeDelta)
 	///////////회전//////////
 	_vec3 rot = _vec3(0,0,0), originRot = _vec3(0, 0, 0);
 	//입력받은 axis를 xyz로 나눌거임.
-	originRot = m_pGameObject->m_pTransform->m_vAngle;
+	//originRot = m_pGameObject->m_pTransform->m_vAngle;
 	//가속도
 	m_AngularAccele = m_AngularForce * (1 / m_fMass);
 	//속도
 	m_AngularVelocity += m_AngularAccele * fTimeDelta;
 	//x축 기준 회전
-	rot += originRot + fTimeDelta * m_AngularVelocity;
+	/*rot += originRot + fTimeDelta * m_AngularVelocity;
 	m_pGameObject->m_pTransform->m_vAngle = _vec3(
 		  (!m_bFreezeRot_X) ? (rot.x) : (originRot.x)
 		, (!m_bFreezeRot_Y) ? (rot.y) : (originRot.y)
 		, (!m_bFreezeRot_Z) ? (rot.z) : (originRot.z)
-		);
+		);*/
 
 	///////////이동//////////////////
 	//중력 f= m*g

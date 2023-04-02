@@ -106,6 +106,17 @@ void CCollisionMgr::Clear_Collision()
 	}
 }
 
+void Engine::CCollisionMgr::Toggle_ColliderRender()
+{
+	for (int i = 0; i < COL_END; i++)
+	{
+		for (auto col : m_ColliderList[i])
+		{
+			col->Toggle_IsRender();
+		}
+	}
+}
+
 void CCollisionMgr::Free(void)
 {
 	Clear_Collision();

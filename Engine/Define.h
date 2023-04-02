@@ -1,5 +1,9 @@
 #pragma once
 
+#define		OBJ_NOEVENT		0
+#define		OBJ_DEAD		1
+#define		OBJ_RETPOOL		2
+
 #define		WINCX		800
 #define		WINCY		600
 
