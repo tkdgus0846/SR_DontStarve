@@ -1,10 +1,7 @@
 #pragma once
 
 #include "Include.h"
-#include "ImWindow.h"
-#include "imgui_impl_dx9.h"
-#include "imgui_impl_win32.h"
-#include "imgui.h"
+
 
 BEGIN(Engine)
 
@@ -12,6 +9,8 @@ class CTerrainTex;
 class CTransform;
 
 END
+
+class CImWindow;
 
 class CImManager
 {
@@ -26,7 +25,10 @@ public:
 	void Release();
 
 public:
-	void PickingOnMesh(HWND hWnd, ID3DXMesh* pMesh, /*Out*/DWORD& dwFaceIndex);
+
+	_vec3		Picking_OnTerrain(HWND hWnd);
+	void		IndexTranslation2DTo1D(_ulong Index, _ulong row, _ulong col);
+	void		IndexTranslation1DTo2D(_ulong Index, _ulong row, _ulong col);
 
 private:
 	// x,y 좌표에 대해 광선을 만드는 메서드

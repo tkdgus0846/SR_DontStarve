@@ -51,6 +51,8 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightMgr.h" />
     <ClInclude Include="Management.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="MaterialMgr.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MoveLook.h" />
     <ClInclude Include="MyFont.h" />
@@ -106,6 +108,8 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightMgr.cpp" />
     <ClCompile Include="Management.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="MaterialMgr.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="MyFont.cpp" />

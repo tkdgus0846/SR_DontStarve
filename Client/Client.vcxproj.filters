@@ -14,21 +14,6 @@
     <Filter Include="Main">
       <UniqueIdentifier>{e3cfa13b-ee92-4c4f-8a26-3baf0aefc692}</UniqueIdentifier>
     </Filter>
-    <Filter Include="imgui">
-      <UniqueIdentifier>{e7df5923-5bbb-4ddf-b8a3-0dd60d955223}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="imgui\backends">
-      <UniqueIdentifier>{43a9f1a4-d4f5-44d4-8e80-a16b7004af8c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="imgui\core">
-      <UniqueIdentifier>{d20b1ca2-961d-4805-9bbf-48dcada5d533}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="imgui\ImWindow">
-      <UniqueIdentifier>{03928814-698e-468d-9a8b-211edf7b6c4c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="imgui\ImManager">
-      <UniqueIdentifier>{3ce43516-b38f-46c0-886d-b8476ec0afb5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Manager">
       <UniqueIdentifier>{7b58fff8-80c7-46ee-b1e8-d86f9d615377}</UniqueIdentifier>
     </Filter>
@@ -37,6 +22,21 @@
     </Filter>
     <Filter Include="GameObject\Monster">
       <UniqueIdentifier>{a8e8f643-7eb0-4382-b79b-3af3b0fd3cbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI">
+      <UniqueIdentifier>{e7df5923-5bbb-4ddf-b8a3-0dd60d955223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\backends">
+      <UniqueIdentifier>{43a9f1a4-d4f5-44d4-8e80-a16b7004af8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\core">
+      <UniqueIdentifier>{d20b1ca2-961d-4805-9bbf-48dcada5d533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\ImWindow">
+      <UniqueIdentifier>{03928814-698e-468d-9a8b-211edf7b6c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\ImManager">
+      <UniqueIdentifier>{3ce43516-b38f-46c0-886d-b8476ec0afb5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,28 +87,28 @@
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="imconfig.h">
-      <Filter>imgui\core</Filter>
+      <Filter>IMGUI\core</Filter>
     </ClInclude>
     <ClInclude Include="imgui.h">
-      <Filter>imgui\core</Filter>
+      <Filter>IMGUI\core</Filter>
     </ClInclude>
     <ClInclude Include="imgui_internal.h">
-      <Filter>imgui\core</Filter>
+      <Filter>IMGUI\core</Filter>
     </ClInclude>
     <ClInclude Include="imgui_impl_dx9.h">
-      <Filter>imgui\backends</Filter>
+      <Filter>IMGUI\backends</Filter>
     </ClInclude>
     <ClInclude Include="imgui_impl_win32.h">
-      <Filter>imgui\backends</Filter>
+      <Filter>IMGUI\backends</Filter>
     </ClInclude>
     <ClInclude Include="ObjCamera.h">
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="ImWindow.h">
-      <Filter>imgui\ImWindow</Filter>
+      <Filter>IMGUI\ImWindow</Filter>
     </ClInclude>
     <ClInclude Include="ImManager.h">
-      <Filter>imgui\ImManager</Filter>
+      <Filter>IMGUI\ImManager</Filter>
     </ClInclude>
     <ClInclude Include="BulletMgr.h">
       <Filter>Manager</Filter>
@@ -152,31 +152,31 @@
       <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="imgui_widgets.cpp">
-      <Filter>imgui\core</Filter>
+      <Filter>IMGUI\core</Filter>
     </ClCompile>
     <ClCompile Include="imgui.cpp">
-      <Filter>imgui\core</Filter>
+      <Filter>IMGUI\core</Filter>
     </ClCompile>
     <ClCompile Include="imgui_demo.cpp">
-      <Filter>imgui\core</Filter>
+      <Filter>IMGUI\core</Filter>
     </ClCompile>
     <ClCompile Include="imgui_draw.cpp">
-      <Filter>imgui\core</Filter>
+      <Filter>IMGUI\core</Filter>
     </ClCompile>
     <ClCompile Include="imgui_tables.cpp">
-      <Filter>imgui\core</Filter>
+      <Filter>IMGUI\core</Filter>
     </ClCompile>
     <ClCompile Include="imgui_impl_dx9.cpp">
-      <Filter>imgui\backends</Filter>
+      <Filter>IMGUI\backends</Filter>
     </ClCompile>
     <ClCompile Include="imgui_impl_win32.cpp">
-      <Filter>imgui\backends</Filter>
+      <Filter>IMGUI\backends</Filter>
     </ClCompile>
     <ClCompile Include="ImWindow.cpp">
-      <Filter>imgui\ImWindow</Filter>
+      <Filter>IMGUI\ImWindow</Filter>
     </ClCompile>
     <ClCompile Include="ImManager.cpp">
-      <Filter>imgui\ImManager</Filter>
+      <Filter>IMGUI\ImManager</Filter>
     </ClCompile>
     <ClCompile Include="BulletMgr.cpp">
       <Filter>Manager</Filter>
@@ -193,12 +193,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">
-      <Filter>imgui\core</Filter>
+      <Filter>IMGUI\core</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="imgui.natvis">
-      <Filter>imgui\core</Filter>
+      <Filter>IMGUI\core</Filter>
     </Natvis>
     <ClCompile Include="ObjCamera.cpp">
       <Filter>GameObject</Filter>

@@ -35,6 +35,9 @@ HRESULT CMainApp::Ready_MainApp(void)
 	//srand((unsigned int)time(NULL));
 	FAILED_CHECK_RETURN(Ready_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
+
+
+#ifdef _DEBUG // IMGUI 초기화
 	CImManager::GetInstance()->Ready_IMGUI(m_pGraphicDev);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -46,13 +49,16 @@ HRESULT CMainApp::Ready_MainApp(void)
 	ImGui::StyleColorsDark();
 	ImGui_ImplWin32_Init(g_hWnd);
 	ImGui_ImplDX9_Init(m_pGraphicDev);
+#endif
 
 	return S_OK;
 }
 
 int CMainApp::Update_MainApp(const _float & fTimeDelta)
 {
+#ifdef _DEBUG // IMGUI 업데이트(LateUpdate는 없음)
 	CImManager::GetInstance()->Update(fTimeDelta);
+#endif
 	Engine::Update_DInput();
 
 	_long	dwMouse = 0;
@@ -76,8 +82,9 @@ void CMainApp::LateUpdate_MainApp(void)
 void CMainApp::Render_MainApp(void)
 {
 	Engine::Render_Begin(D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f));
-	
+#ifdef _DEBUG // IMGUI 랜더
 	CImManager::GetInstance()->Render(m_pGraphicDev);
+#endif
 	m_pManagementClass->Render_Management(m_pGraphicDev);
 
 	Engine::Render_End();
@@ -144,6 +151,4 @@ void CMainApp::Free(void)
 	Engine::Release_System();
 
 	CBulletMgr::DestroyInstance();
-
-	
 }

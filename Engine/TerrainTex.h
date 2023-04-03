@@ -18,6 +18,9 @@ private:
 	virtual ~CTerrainTex();
 
 public:
+	const _vec3*		Get_VtxPos(void) { return m_pPos; }
+
+public:
 	HRESULT		Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv );
 	void		Render_Buffer(void);
 	bool IsInPlane(const _vec3& playerPos, const int& iIndex);
@@ -29,6 +32,7 @@ private:
 	HANDLE				m_hFile;
 	BITMAPFILEHEADER	m_fH;
 	BITMAPINFOHEADER	m_iH;
+	_vec3*				m_pPos;
 
 public:
 	static CTerrainTex*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& dwCntX = VTXCNTX, const _ulong& dwCntZ = VTXCNTZ, const _ulong& dwVtxItv = VTXITV);

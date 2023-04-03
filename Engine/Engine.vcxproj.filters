@@ -178,6 +178,12 @@
     <ClInclude Include="Root.h">
       <Filter>Component\Behavior\Root</Filter>
     </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Manager\MaterialMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialMgr.h">
+      <Filter>Manager\MaterialMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -324,6 +330,12 @@
     <ClCompile Include="Root.cpp">
       <Filter>Component\Behavior\Root</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Manager\MaterialMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialMgr.cpp">
+      <Filter>Manager\MaterialMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Base.inl">
@@ -417,6 +429,9 @@
     </Filter>
     <Filter Include="Component\Behavior\Root">
       <UniqueIdentifier>{90eddf15-2023-4e27-92fb-173d9293a4ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\MaterialMgr">
+      <UniqueIdentifier>{47b38da4-3ed4-4dc5-b86e-9fc1469f1b1f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

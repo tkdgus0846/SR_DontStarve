@@ -4,6 +4,7 @@
 
 CTerrainTex::CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CVIBuffer(pGraphicDev)
+	, m_pPos(nullptr)
 {
 }
 
@@ -14,6 +15,7 @@ CTerrainTex::CTerrainTex(const CTerrainTex & rhs)
 	, m_hFile(rhs.m_hFile)
 	, m_PlaneVec(rhs.m_PlaneVec)
 	, m_VertexPoints(rhs.m_VertexPoints)
+	, m_pPos(rhs.m_pPos)
 {
 }
 
@@ -52,6 +54,8 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 	m_dwVtxSize = sizeof(VTXTEX);
 	m_dwVtxCnt = dwCntX * dwCntZ;
 	m_dwTriCnt = (dwCntX - 1) * (dwCntZ - 1) * 2;
+
+	m_pPos = new _vec3[m_dwVtxCnt];
 
 	m_PlaneVec.reserve(m_dwTriCnt);
 	m_VertexPoints.reserve(m_dwTriCnt);
@@ -92,9 +96,10 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 				_float(j * dwVtxItv), 
 				0.f,
 				_float(i * dwVtxItv) };
+			m_pPos[dwIndex] = pVertex[dwIndex].vPos;
 
-			pVertex[dwIndex].vTexUV = { _float(j) / (dwCntX - 1) * 20.f,
-										_float(i) / (dwCntZ - 1) * 20.f };
+			pVertex[dwIndex].vTexUV = { _float(j) / (dwCntX - 1) * (_float)dwCntX,
+										_float(i) / (dwCntZ - 1) * (_float)dwCntZ};
 		}
 	}
 
@@ -173,6 +178,9 @@ CComponent * CTerrainTex::Clone(void)
 
 void CTerrainTex::Free(void)
 {
+	if (false == m_bClone)
+		Safe_Delete_Array(m_pPos);
+
 	__super::Free();
 }
 
