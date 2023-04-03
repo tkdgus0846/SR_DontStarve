@@ -12,7 +12,6 @@ private:
 
 public:
 	HRESULT		Ready_Buffer(void);
-	void		Render_Buffer(void);
 
 public:
 	static CRcTex*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

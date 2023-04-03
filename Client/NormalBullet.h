@@ -17,13 +17,14 @@ public:
 	virtual void Render_GameObject(void) override;
 
 
-	virtual void OnCollisionEnter(const class Collision* collsion) override;
-	virtual void OnCollisionStay(const class Collision* collision) override;
-	virtual void OnCollisionExit(const class Collision* collision) override;
-	virtual void OnTriggerEnter(const class CCollider* other) override;
-	virtual void OnTriggerStay(const class CCollider* other) override;
-	virtual void OnTirggerExit(const class CCollider* other) override;
+	virtual void OnCollisionEnter(const Collision* collsion) override;
+	virtual void OnCollisionStay(const Collision* collision) override;
+	virtual void OnCollisionExit(const Collision* collision) override;
+	virtual void OnTriggerEnter(const CCollider* other) override;
+	virtual void OnTriggerStay(const CCollider* other) override;
+	virtual void OnTirggerExit(const CCollider* other) override;
 
+	virtual HRESULT Add_Component() override;
 protected:
 	virtual void Free(void) override;
 

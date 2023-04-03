@@ -126,11 +126,6 @@ HRESULT CCubeTex::Ready_Buffer(void)
 	return S_OK;
 }
 
-void CCubeTex::Render_Buffer(void)
-{
-	__super::Render_Buffer();
-}
-
 CCubeTex * CCubeTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CCubeTex *	pInstance = new CCubeTex(pGraphicDev);

@@ -23,18 +23,29 @@ void CNormalBullet::SetDead()
 
 HRESULT CNormalBullet::Ready_GameObject(void)
 {
-	
-	return S_OK;
+	HRESULT result = __super::Ready_GameObject();
+
+
+	return result;
 }
 
 _int CNormalBullet::Update_GameObject(const _float& fTimeDelta)
 {
 	if (Aging(fTimeDelta) == OBJ_RETPOOL) return OBJ_RETPOOL;
+
+	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());*/
+
+	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 	
+	_matrix view;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
+	//m_pTransform->Set_Billboard(&view);
+
 	__super::Update_GameObject(fTimeDelta);
+	
 	m_pTransform->Move_Walk(m_fSpeed*2.f, fTimeDelta);
 
-	Add_RenderGroup(RENDER_PRIORITY, this);
+	Add_RenderGroup(RENDER_ALPHA, this);
 
 	return OBJ_NOEVENT;
 }
@@ -46,37 +57,58 @@ void CNormalBullet::LateUpdate_GameObject(void)
 
 void CNormalBullet::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
-void CNormalBullet::OnCollisionEnter(const class Collision* collsion)
+void CNormalBullet::OnCollisionEnter(const Collision* collsion)
 {
 	
 }
 
-void CNormalBullet::OnCollisionStay(const class Collision* collision)
+void CNormalBullet::OnCollisionStay(const Collision* collision)
 {
 	
 }
 
-void CNormalBullet::OnCollisionExit(const class Collision* collision)
+void CNormalBullet::OnCollisionExit(const Collision* collision)
 {
 	
 }
 
-void CNormalBullet::OnTriggerEnter(const class CCollider* other)
+void CNormalBullet::OnTriggerEnter(const CCollider* other)
 {
 	
 }
 
-void CNormalBullet::OnTriggerStay(const class CCollider* other)
+void CNormalBullet::OnTriggerStay(const CCollider* other)
 {
 	
 }
 
-void CNormalBullet::OnTirggerExit(const class CCollider* other)
+void CNormalBullet::OnTirggerExit(const CCollider* other)
 {
 	
+}
+
+HRESULT CNormalBullet::Add_Component()
+{
+	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"NormalBullet_Texture", this));
+	NULL_CHECK_RETURN(texture, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"NormalBullet_Texture", texture });
+
+	CAnimation* animation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
+	NULL_CHECK_RETURN(animation, E_FAIL);
+
+	animation->BindAnimation(ANIM_SHOT, texture, 0.1f);
+	animation->SelectState(ANIM_SHOT);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"Animation", animation });
+
+	CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
+	NULL_CHECK_RETURN(rcTex, E_FAIL);
+	m_uMapComponent[ID_DYNAMIC].insert({ L"RcTex", rcTex });
+
+	return S_OK;
 }
 
 void CNormalBullet::Free(void)

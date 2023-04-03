@@ -25,7 +25,7 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	HRESULT		Add_Component(void);
+	virtual HRESULT Add_Component() override;
 
 private:
 	Engine::CTriCol*	m_pBufferCom;

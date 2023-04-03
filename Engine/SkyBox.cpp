@@ -54,7 +54,7 @@ void CSkyBox::Render_GameObject(void)
 
 	m_pTextureCom->Set_Texture(3);
 
-	m_pBufferCom->Render_Buffer();
+	__super::Render_GameObject();
 
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
@@ -68,7 +68,7 @@ HRESULT CSkyBox::Add_Component(void)
 
 	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(Engine::Clone_Proto(L"CubeTex",this));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"CubeTex", pComponent });
+	m_uMapComponent[ID_DYNAMIC].insert({ L"CubeTex", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"SkyBox_Texture",this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);

@@ -238,6 +238,7 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	_matrix			matTrans;
 	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
 
+	// 초기화값은 항등행렬이고 방금 SetBillBoard를 부르면 뷰의 역행렬
 	m_matWorld = matScale * m_matBill * matRotation * matTrans;
 
 	return 0;

@@ -57,11 +57,6 @@ HRESULT CTriCol::Ready_Buffer(void)
 	return S_OK;
 }
 
-void CTriCol::Render_Buffer(void)
-{
-	__super::Render_Buffer();
-}
-
 CTriCol * CTriCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CTriCol *	pInstance = new CTriCol(pGraphicDev);

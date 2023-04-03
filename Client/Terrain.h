@@ -23,7 +23,7 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	HRESULT		Add_Component(void);
+	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);
 
 private:
