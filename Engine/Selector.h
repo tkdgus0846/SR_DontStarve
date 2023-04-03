@@ -6,21 +6,22 @@ BEGIN(Engine)
 class CBlackBoard;
 class CSelector : public CBehavior
 {
-protected:
+private:
 	explicit CSelector(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CSelector(const CSelector& rhs);
 	virtual ~CSelector();
 
 public:
-	virtual HRESULT Ready_Behavior() PURE;
+	virtual HRESULT Ready_Behavior() override;
 	virtual _int Update_Component(const _float & fTimeDelta) override;
 	virtual void LateUpdate_Component(void) override;
 	virtual void Render_Component(void) override;
 
 public:
-	virtual CComponent * Clone(void) PURE;
+	static CSelector* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual CComponent * Clone(void) override;
 
-protected:
+private:
 	virtual void Free() override;
 };
 

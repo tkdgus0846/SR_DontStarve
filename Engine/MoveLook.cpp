@@ -4,12 +4,14 @@
 #include "Export_Utility.h"
 
 CMoveLook::CMoveLook(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CBehavior(pGraphicDev)
+	: CBehavior(pGraphicDev)
+	, m_fTimer(0.f), m_fLimit(0.f)
 {
 }
 
 CMoveLook::CMoveLook(const CMoveLook & rhs)
-	:CBehavior(rhs)
+	: CBehavior(rhs), m_fTimer(rhs.m_fTimer)
+	, m_fLimit(rhs.m_fLimit)
 {
 }
 
@@ -26,8 +28,20 @@ HRESULT CMoveLook::Ready_Behavior()
 
 _int CMoveLook::Update_Component(const _float & fTimeDelta)
 {
-	
-	return 0;
+	m_fTimer += fTimeDelta;
+
+	_float fSpeed = 0.f;
+	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FALSE);
+
+	m_pGameObject->m_pTransform->Move_Walk(fSpeed, fTimeDelta);
+
+	if (m_fTimer >= m_fLimit)
+	{
+		m_fTimer = 0.f;
+		return BEHAVIOR_TRUE;
+	}
+	else
+		return RUNNING;
 }
 
 void CMoveLook::Render_Component(void)

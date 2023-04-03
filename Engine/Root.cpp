@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Root.h"
-#include "AIRoot.h"
 
 #include "Export_Utility.h"
 
@@ -22,7 +21,16 @@ HRESULT CRoot::Ready_Behavior(void)
 {
 	m_pBlackBoard = new CBlackBoard;
 
-	m_pBlackBoard->Add_Type(L"fSpeed", 10.f);
+	m_pBlackBoard->Add_Type(L"fSpeed", 5.f);
+
+	for (_uint i = 0; i < ID_END; ++i)
+	{
+		for (auto iter : m_VecComponents[i])
+		{
+			dynamic_cast<CBehavior*>(iter.pComponent)->Set_BlackBoard(m_pBlackBoard);
+			dynamic_cast<CBehavior*>(iter.pComponent)->Ready_Behavior();
+		}
+	}
 
 	__super::Ready_Composite();
 	return S_OK;
@@ -48,11 +56,8 @@ CRoot * CRoot::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CRoot* pInstance = new CRoot(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Behavior()))
-	{
-		Safe_Release(pInstance);
+	if (!pInstance)
 		return nullptr;
-	}
 
 	return pInstance;
 }

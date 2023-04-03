@@ -124,8 +124,6 @@ HRESULT CComposite::Add_Component(COMPONENTID eID,
 	{
 		return Src.iPriority < Dest.iPriority;
 	});
-
-	pComponent->SetOwner(m_pGameObject);
 }
 
 void Engine::CComposite::Free(void)

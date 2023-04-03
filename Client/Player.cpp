@@ -156,13 +156,11 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	{
 		if (Engine::Get_DIMouseState(DIM_LB))
 		{
-
 			CNormalBullet* bullet = CBulletMgr::GetInstance()->Pop<CNormalBullet>(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], vDir, false);
 			Add_GameObject(LAYER_BULLET, L"Bullet", bullet);
 			ShootCoolTime = 0.f;
 		}
 	}
-	
 }
 
 void CPlayer::Mouse_Move(const _float& fTimeDelta)
