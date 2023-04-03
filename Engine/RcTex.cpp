@@ -65,11 +65,6 @@ HRESULT CRcTex::Ready_Buffer(void)
 	return S_OK;
 }
 
-void CRcTex::Render_Buffer(void)
-{
-	__super::Render_Buffer();
-}
-
 CRcTex * CRcTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CRcTex *	pInstance = new CRcTex(pGraphicDev);

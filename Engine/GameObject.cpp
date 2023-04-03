@@ -27,6 +27,12 @@ CComponent * CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTI
 	return pComponent;
 }
 
+HRESULT CGameObject::Ready_GameObject(void)
+{
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	return S_OK;
+}
+
 _int CGameObject::Update_GameObject(const _float & fTimeDelta)
 {
 	for (auto& iter : m_uMapComponent[ID_DYNAMIC])

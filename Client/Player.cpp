@@ -18,14 +18,14 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::Ready_GameObject(void)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	HRESULT result = __super::Ready_GameObject();
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = _vec3(10.f, -5.f, 30.f);
 
 	m_fSpeed = 10.f;
 
-	return S_OK;
+	return result;
 }
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
@@ -54,6 +54,8 @@ void CPlayer::LateUpdate_GameObject(void)
 
 void CPlayer::Render_GameObject(void)
 {
+	__super::Render_GameObject();
+
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
@@ -69,14 +71,14 @@ void CPlayer::Render_GameObject(void)
 
 	m_pTextureCom->Set_Texture(0);
 
-	m_pBufferCom->Render_Buffer();
+	__super::Render_GameObject();
 
 	//m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	__super::Render_GameObject();
+	
 }
 
 void CPlayer::OnTriggerStay(const CCollider * other)

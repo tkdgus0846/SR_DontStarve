@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "VIBuffer.h"
+#include "Component.h"
+#include "Transform.h"
+#include "GameObject.h"
 
 
 CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -61,7 +64,7 @@ HRESULT CVIBuffer::Ready_Buffer(void)
 	return S_OK;
 }
 
-void CVIBuffer::Render_Buffer(void)
+void CVIBuffer::Render_Component()
 {
 	// SetStreamSource: 그리기 장치에 현재 그리고자 하는 버텍스 정보를 전달하는 함수
 	// 1. 몇 번째 슬롯에 전달할 것인가
@@ -69,8 +72,12 @@ void CVIBuffer::Render_Buffer(void)
 	// 3. 어디서부터 그리기 연산을 수행할 것인가
 	// 4. 어떤 단위로 그리기 연산을 수행할 것인가
 
+	const _matrix* mat = m_pGameObject->m_pTransform->Get_WorldMatrixPointer();
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, mat);
+
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);
-	
+
 	m_pGraphicDev->SetFVF(m_dwFVF);
 
 	m_pGraphicDev->SetIndices(m_pIB);
@@ -82,7 +89,6 @@ void CVIBuffer::Render_Buffer(void)
 	/*1. 삼각형을 그리는 방법
 	2. 몇 번째 버텍스부터 그릴 것인가
 	3. 그릴 삼각형의 개수*/
-
 }
 
 void Engine::CVIBuffer::Free(void)

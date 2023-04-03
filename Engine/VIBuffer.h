@@ -12,7 +12,7 @@ protected:
 
 public:
 	HRESULT		Ready_Buffer(void);
-	void		Render_Buffer(void);
+	virtual void Render_Component() override;
 
 protected:
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;

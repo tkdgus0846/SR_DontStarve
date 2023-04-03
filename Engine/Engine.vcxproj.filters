@@ -64,9 +64,6 @@
     <ClInclude Include="GraphicDev.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Component\Collider</Filter>
-    </ClInclude>
     <ClInclude Include="CubeTex.h">
       <Filter>Component\VIBuffer</Filter>
     </ClInclude>
@@ -99,9 +96,6 @@
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Component\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionMgr.h">
-      <Filter>Manager\CollisionMgr</Filter>
     </ClInclude>
     <ClInclude Include="DInputMgr.h">
       <Filter>Manager\InputMgr</Filter>
@@ -178,6 +172,15 @@
     <ClInclude Include="RandomLook.h">
       <Filter>Component\Behavior\Tasks</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Component\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>Manager\CollisionMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -209,9 +212,6 @@
     </ClCompile>
     <ClCompile Include="GraphicDev.cpp">
       <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="CubeTex.cpp">
       <Filter>Component\VIBuffer</Filter>
@@ -245,9 +245,6 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Component\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionMgr.cpp">
-      <Filter>Manager\CollisionMgr</Filter>
     </ClCompile>
     <ClCompile Include="DInputMgr.cpp">
       <Filter>Manager\InputMgr</Filter>
@@ -323,6 +320,15 @@
     </ClCompile>
     <ClCompile Include="RandomLook.cpp">
       <Filter>Component\Behavior\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Component\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>Manager\CollisionMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -411,6 +417,9 @@
     </Filter>
     <Filter Include="Component\Behavior\Root">
       <UniqueIdentifier>{90eddf15-2023-4e27-92fb-173d9293a4ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Animation">
+      <UniqueIdentifier>{18c6d12c-4c88-4d42-b9d6-ba23e3ab4e0f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

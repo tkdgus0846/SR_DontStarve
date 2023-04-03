@@ -26,7 +26,7 @@ public:
 
 	virtual void OnTriggerStay(const class CCollider* other);
 private:
-	HRESULT		Add_Component(void);
+	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Move(const _float& fTimeDelta);
 	void		Fix_Mouse();

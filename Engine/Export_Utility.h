@@ -32,6 +32,7 @@
 #include "RotToFace.h"
 #include "RandomLook.h"	
 #include "BlackBoard.h"
+#include "Animation.h"
 
 BEGIN(Engine)
 
@@ -56,9 +57,10 @@ inline void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);
 inline void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
 inline void		Clear_RenderGroup(void);
 
-inline void		Add_Collider(COLGROUP eID, CCollider* pCollider);
-inline void		Check_Collision();
+inline void		Add_Collider(CCollider * pCollider);
+inline void		Check_Collision(COLGROUP eGroup1, COLGROUP eGroup2);
 inline void		Clear_Collision();
+inline void		Set_Collider(COLGROUP eGroup, CCollider* pCollider);
 
 inline void		On_Camera(const _tchar* pCamTag);
 inline void		Shake_Camera();

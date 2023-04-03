@@ -14,12 +14,12 @@ CObjCamera::~CObjCamera()
 
 HRESULT CObjCamera::Ready_GameObject(void)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	HRESULT result = __super::Ready_GameObject();
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = _vec3(15.f, 20.f, 30.f);
 
-	return S_OK;
+	return result;
 }
 
 _int CObjCamera::Update_GameObject(const _float & fTimeDelta)

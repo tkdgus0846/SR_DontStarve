@@ -148,12 +148,6 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 	return S_OK;
 }
 
-void CTerrainTex::Render_Buffer(void)
-{
-	
-	__super::Render_Buffer();
-}
-
 CTerrainTex * CTerrainTex::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)
 {
 	CTerrainTex *	pInstance = new CTerrainTex(pGraphicDev);

@@ -14,11 +14,11 @@ CMonster::~CMonster()
 
 HRESULT CMonster::Ready_GameObject(void)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	HRESULT result = __super::Ready_GameObject();
 
 	m_fSpeed = 5.f;
 
-	return S_OK;
+	return result;
 }
 
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
@@ -43,11 +43,9 @@ void CMonster::Render_GameObject(void)
 	cout << mat->_41 << " | " << mat->_42 << " | " << mat->_43 << endl;
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
-	m_pBufferCom->Render_Buffer();
+	__super::Render_GameObject();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
-	__super::Render_GameObject();
 }
 
 HRESULT CMonster::Add_Component(void)
