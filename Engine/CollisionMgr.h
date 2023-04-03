@@ -13,6 +13,7 @@ class CCollisionMgr : public CBase
 private:
 	explicit CCollisionMgr();
 	virtual ~CCollisionMgr();
+
 public:
 	void		Add_Collider(CCollider* pCollider);
 	void		Check_Collision(COLGROUP eGroup1, COLGROUP eGroup2);

@@ -22,7 +22,7 @@ public:
 
 private:
 	_float m_fLimit;
-	_float m_fTime;
+	_float m_fTimer;
 
 public:
 	static CWait* Create(LPDIRECT3DDEVICE9 pGraphicDev);

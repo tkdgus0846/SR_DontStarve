@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AIRoot.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Base.h" />
     <ClInclude Include="Behavior.h" />
@@ -29,7 +28,6 @@
     <ClInclude Include="CameraMgr.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="ChasePlayer.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Component.h" />
@@ -57,6 +55,7 @@
     <ClInclude Include="MyFont.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="ProtoMgr.h" />
+    <ClInclude Include="RandomLook.h" />
     <ClInclude Include="RcCol.h" />
     <ClInclude Include="RcTex.h" />
     <ClInclude Include="Renderer.h" />
@@ -64,6 +63,7 @@
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomTex.h" />
     <ClInclude Include="Root.h" />
+    <ClInclude Include="RotToFace.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Selector.h" />
     <ClInclude Include="Sequence.h" />
@@ -83,7 +83,6 @@
     <ClInclude Include="Wait.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AIRoot.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Behavior.cpp" />
     <ClCompile Include="BlackBoard.cpp" />
@@ -92,7 +91,6 @@
     <ClCompile Include="CameraMgr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="ChasePlayer.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -113,6 +111,7 @@
     <ClCompile Include="MyFont.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="ProtoMgr.cpp" />
+    <ClCompile Include="RandomLook.cpp" />
     <ClCompile Include="RcCol.cpp" />
     <ClCompile Include="RcTex.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -120,6 +119,7 @@
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomTex.cpp" />
     <ClCompile Include="Root.cpp" />
+    <ClCompile Include="RotToFace.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Selector.cpp" />
     <ClCompile Include="Sequence.cpp" />
