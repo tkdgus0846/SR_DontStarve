@@ -8,7 +8,6 @@ BEGIN(Engine)
 class CTriCol;
 class CTransform;
 class CCollider;
-class CRoot;
 
 END
 
@@ -25,12 +24,15 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	HRESULT		Add_Component(void);
+	virtual HRESULT Add_Component() override;
+
+protected:
+	HRESULT		Set_Patrol_AI();
 
 private:
 	Engine::CTriCol*	m_pBufferCom;
 	Engine::CCollider*	m_pCollider;
-	Engine::CRoot*		m_pRoot;
+	Engine::CCollider*	m_pRange;
 
 	_float				m_fSpeed;
 

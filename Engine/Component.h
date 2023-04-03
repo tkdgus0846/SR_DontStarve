@@ -27,6 +27,8 @@ public:
 protected:
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 	_bool				m_bClone;
+
+public:
 	class CGameObject*	m_pGameObject;
 
 public:
@@ -37,12 +39,13 @@ private:
 	void SetOwner(class CGameObject* gameObject);
 };
 
-typedef struct tagComponent
+// 비해비어 트리에 우선순위를 정하기 위한 구조체
+typedef struct PriComp
 {
 	_int			iPriority;
 	const _tchar*	pTag;
 	CComponent*		pComponent;
-}COMPONENT;
+}PRICOMP;
 
 class CComposite : public CComponent
 {
@@ -66,9 +69,9 @@ public:
 	virtual void		Free(void) override;
 
 protected:
-	vector<COMPONENT>			m_VecComponents[ID_END];
-	vector<COMPONENT>::iterator m_iterCurComponent;
-	vector<COMPONENT>::iterator m_iterPreComponent;
+	vector<PRICOMP>			m_VecComponents[ID_END];
+	vector<PRICOMP>::iterator m_iterCurComponent;
+	vector<PRICOMP>::iterator m_iterPreComponent;
 };
 
 END

@@ -102,11 +102,6 @@ HRESULT CRcCol::Ready_Buffer(void)
 	return S_OK;
 }
 
-void CRcCol::Render_Buffer(void)
-{
-	__super::Render_Buffer();
-}
-
 CRcCol * CRcCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CRcCol *	pInstance = new CRcCol(pGraphicDev);

@@ -22,7 +22,7 @@ public:
 
 public:
 	HRESULT		Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv );
-	void		Render_Buffer(void);
+
 	bool IsInPlane(const _vec3& playerPos, const int& iIndex);
 
 	vector<D3DXPLANE>	m_PlaneVec;

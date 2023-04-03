@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "Sequence.h"
 
+#include "Export_Utility.h"
 
-CSequence::CSequence(LPDIRECT3DDEVICE9 pGraphicDev)\
+CSequence::CSequence(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CBehavior(pGraphicDev)
 {
 }
@@ -14,6 +15,22 @@ CSequence::CSequence(const CSequence & rhs)
 
 CSequence::~CSequence()
 {
+}
+
+HRESULT CSequence::Ready_Behavior()
+{
+	for (_uint i = 0; i < ID_END; ++i)
+	{
+		for (auto iter : m_VecComponents[i])
+		{
+			dynamic_cast<CBehavior*>(iter.pComponent)->Set_BlackBoard(m_pBlackBoard);
+			dynamic_cast<CBehavior*>(iter.pComponent)->Ready_Behavior();
+		}
+	}
+
+	__super::Ready_Composite();
+
+	return S_OK;
 }
 
 _int CSequence::Update_Component(const _float & fTimeDelta)
@@ -36,6 +53,8 @@ _int CSequence::Update_Component(const _float & fTimeDelta)
 			m_iterPreComponent = m_VecComponents[ID_DYNAMIC].begin();
 			return BEHAVIOR_TRUE;
 		}
+		else
+			return RUNNING;
 
 	case BEHAVIOR_FALSE:
 		m_iterPreComponent = m_VecComponents[ID_DYNAMIC].begin();
@@ -57,6 +76,21 @@ void CSequence::LateUpdate_Component(void)
 void CSequence::Render_Component(void)
 {
 	__super::Render_Component();
+}
+
+CSequence * CSequence::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CSequence* pInstance = new CSequence(pGraphicDev);
+
+	if (!pInstance)
+		return nullptr;
+
+	return pInstance;
+}
+
+CComponent * CSequence::Clone(void)
+{
+	return new CSequence(*this);
 }
 
 void CSequence::Free()

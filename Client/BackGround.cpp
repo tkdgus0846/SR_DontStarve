@@ -14,9 +14,9 @@ CBackGround::~CBackGround()
 
 HRESULT CBackGround::Ready_GameObject(void)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	HRESULT result = __super::Ready_GameObject();
 
-	return S_OK;
+	return result;
 }
 
 _int CBackGround::Update_GameObject(const _float& fTimeDelta)
@@ -36,8 +36,7 @@ void CBackGround::LateUpdate_GameObject(void)
 void CBackGround::Render_GameObject(void)
 {
 	m_pTextureCom->Set_Texture(0);
-
-	m_pBufferCom->Render_Buffer();
+	__super::Render_GameObject();
 }
 
 HRESULT CBackGround::Add_Component(void)

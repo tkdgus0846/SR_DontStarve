@@ -17,6 +17,12 @@ public:
 	virtual void LateUpdate_Component(void) override {}
 	virtual void Render_Component(void) override;
 
+	void Set_MoveTimer(const _float& fTimer) { m_fLimit = fTimer; }
+
+private:
+	_float m_fTimer;
+	_float m_fLimit;
+
 public:
 	static CComponent* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;

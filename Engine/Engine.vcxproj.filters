@@ -64,9 +64,6 @@
     <ClInclude Include="GraphicDev.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>Component\Collider</Filter>
-    </ClInclude>
     <ClInclude Include="CubeTex.h">
       <Filter>Component\VIBuffer</Filter>
     </ClInclude>
@@ -99,9 +96,6 @@
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Component\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionMgr.h">
-      <Filter>Manager\CollisionMgr</Filter>
     </ClInclude>
     <ClInclude Include="DInputMgr.h">
       <Filter>Manager\InputMgr</Filter>
@@ -166,14 +160,8 @@
     <ClInclude Include="Sequence.h">
       <Filter>Component\Behavior\Sequence</Filter>
     </ClInclude>
-    <ClInclude Include="ChasePlayer.h">
-      <Filter>Component\Behavior\Sequence\Sequences</Filter>
-    </ClInclude>
     <ClInclude Include="BlackBoard.h">
       <Filter>Component\Behavior</Filter>
-    </ClInclude>
-    <ClInclude Include="AIRoot.h">
-      <Filter>Component\Behavior\Selector\Selectors</Filter>
     </ClInclude>
     <ClInclude Include="Root.h">
       <Filter>Component\Behavior\Root</Filter>
@@ -183,6 +171,21 @@
     </ClInclude>
     <ClInclude Include="MaterialMgr.h">
       <Filter>Manager\MaterialMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="RotToFace.h">
+      <Filter>Component\Behavior\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomLook.h">
+      <Filter>Component\Behavior\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Component\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>Manager\CollisionMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -216,9 +219,6 @@
     <ClCompile Include="GraphicDev.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>Component\Collider</Filter>
-    </ClCompile>
     <ClCompile Include="CubeTex.cpp">
       <Filter>Component\VIBuffer</Filter>
     </ClCompile>
@@ -251,9 +251,6 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>Component\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionMgr.cpp">
-      <Filter>Manager\CollisionMgr</Filter>
     </ClCompile>
     <ClCompile Include="DInputMgr.cpp">
       <Filter>Manager\InputMgr</Filter>
@@ -318,14 +315,8 @@
     <ClCompile Include="Sequence.cpp">
       <Filter>Component\Behavior\Sequence</Filter>
     </ClCompile>
-    <ClCompile Include="ChasePlayer.cpp">
-      <Filter>Component\Behavior\Sequence\Sequences</Filter>
-    </ClCompile>
     <ClCompile Include="BlackBoard.cpp">
       <Filter>Component\Behavior</Filter>
-    </ClCompile>
-    <ClCompile Include="AIRoot.cpp">
-      <Filter>Component\Behavior\Selector\Selectors</Filter>
     </ClCompile>
     <ClCompile Include="Root.cpp">
       <Filter>Component\Behavior\Root</Filter>
@@ -335,6 +326,21 @@
     </ClCompile>
     <ClCompile Include="MaterialMgr.cpp">
       <Filter>Manager\MaterialMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="RotToFace.cpp">
+      <Filter>Component\Behavior\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomLook.cpp">
+      <Filter>Component\Behavior\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Component\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>Manager\CollisionMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -421,17 +427,14 @@
     <Filter Include="Component\Behavior\Sequence">
       <UniqueIdentifier>{11bb1771-9fea-4ac7-b055-25367485050d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\Behavior\Sequence\Sequences">
-      <UniqueIdentifier>{2832110c-0e3f-462b-83e9-744e514722eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component\Behavior\Selector\Selectors">
-      <UniqueIdentifier>{32f0fdb7-295d-417f-a46f-668d3451aed7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Component\Behavior\Root">
       <UniqueIdentifier>{90eddf15-2023-4e27-92fb-173d9293a4ee}</UniqueIdentifier>
     </Filter>
     <Filter Include="Manager\MaterialMgr">
       <UniqueIdentifier>{47b38da4-3ed4-4dc5-b86e-9fc1469f1b1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Animation">
+      <UniqueIdentifier>{18c6d12c-4c88-4d42-b9d6-ba23e3ab4e0f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

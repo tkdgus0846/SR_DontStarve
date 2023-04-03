@@ -126,11 +126,6 @@ HRESULT CRoomTex::Ready_Buffer(void)
 	return S_OK;
 }
 
-void CRoomTex::Render_Buffer(void)
-{
-	__super::Render_Buffer();
-}
-
 CRoomTex * CRoomTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CRoomTex *	pInstance = new CRoomTex(pGraphicDev);

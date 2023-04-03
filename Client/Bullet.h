@@ -10,7 +10,9 @@ protected:
 public:
 
 protected:
+	// 적 총알인지 우리 총알인지 판단하기 위한 변수
 	_bool		m_bIsEnemy;
+	// 스피드값.
 	_float		m_fSpeed;
 
 	// 살아있을 수 있는 시간

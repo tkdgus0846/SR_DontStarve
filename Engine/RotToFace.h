@@ -1,16 +1,12 @@
 #pragma once
-#include "Sequence.h"
-
-BEGIN(Engine)
-
-class CBlackBoard;
-class CChasePlayer : public CSequence
+#include "Behavior.h"
+class CRotToFace : public CBehavior
 {
 private:
-	explicit CChasePlayer(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CChasePlayer(const CChasePlayer& rhs);
-	virtual ~CChasePlayer();
-
+	explicit CRotToFace(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CRotToFace(const CRotToFace& rhs);
+	virtual ~CRotToFace();
+	
 public:
 	virtual HRESULT Ready_Behavior() override;
 	virtual _int Update_Component(const _float & fTimeDelta) override;
@@ -18,11 +14,10 @@ public:
 	virtual void Render_Component(void) override;
 
 public:
-	static CChasePlayer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CRotToFace* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
 
 private:
 	virtual void Free() override;
 };
 
-END

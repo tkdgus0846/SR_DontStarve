@@ -48,12 +48,12 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 {
 	InitializeCriticalSection(&m_Crt);
 
-	// 1. º¸¾È ¼Ó¼º
-	// 2. ½ºÅÃ ¸Ş¸ğ¸®ÀÇ Å©±â, 0ÀÎ °æ¿ì ¾²·¹µå°¡ ¿ä±¸ÇÏ´Â Å©±â¸¸Å­ ÇÒ´ç
-	// 3. ¾²·¹µå ÇÔ¼öÀÇ ÀÌ¸§(ÇÔ¼ö Æ÷ÀÎÅÍ)
-	// 4. ¾²·¹µå ÇÔ¼ö¸¦ ÅëÇØ °¡°øÇÏ°íÀÚ ÇÏ´Â µ¥ÀÌÅÍÀÇ ÁÖ¼Ò
-	// 5. ¾²·¹µåÀÇ »ı¼º ¹× ½ÇÇàÀ» Á¶ÀıÇÏ±â À§ÇÑ FLAG °ª, ±âº» °ªÀ¸·Î 0
-	// 6. ¾²·¹µå ID¹İÈ¯
+	// 1. ë³´ì•ˆ ì†ì„±
+	// 2. ìŠ¤íƒ ë©”ëª¨ë¦¬ì˜ í¬ê¸°, 0ì¸ ê²½ìš° ì“°ë ˆë“œê°€ ìš”êµ¬í•˜ëŠ” í¬ê¸°ë§Œí¼ í• ë‹¹
+	// 3. ì“°ë ˆë“œ í•¨ìˆ˜ì˜ ì´ë¦„(í•¨ìˆ˜ í¬ì¸í„°)
+	// 4. ì“°ë ˆë“œ í•¨ìˆ˜ë¥¼ í†µí•´ ê°€ê³µí•˜ê³ ì í•˜ëŠ” ë°ì´í„°ì˜ ì£¼ì†Œ
+	// 5. ì“°ë ˆë“œì˜ ìƒì„± ë° ì‹¤í–‰ì„ ì¡°ì ˆí•˜ê¸° ìœ„í•œ FLAG ê°’, ê¸°ë³¸ ê°’ìœ¼ë¡œ 0
+	// 6. ì“°ë ˆë“œ IDë°˜í™˜
 	
 	m_hThread = (HANDLE)_beginthreadex(nullptr, 0, Thread_Main, this, 0, nullptr);
 
@@ -68,6 +68,8 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Player_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture/Player/Sonic.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Terrain_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"NormalBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/bigbullet_%d.png", 2)), E_FAIL);
+
 
 	Set_String(L"Buffer Loading.......");
 
@@ -77,6 +79,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collider", CCollider::Create(m_pGraphicDev, true)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Rigidbody", CRigidbody::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Animation", CAnimation::Create(m_pGraphicDev)), E_FAIL);
 
 	Set_String(L"Buffer Loading..........");
 
@@ -89,12 +92,16 @@ _uint CLoading::Loading_ForStage(void)
 	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"AirplaneMesh", CMesh::Create(m_pGraphicDev, L"../Resource/Mesh/bigship1.x")), E_FAIL);
 	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TerrainMesh", CMesh::Create(m_pGraphicDev, L"Temp.x")), E_FAIL);
 
-	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);*/
+	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 
 	Set_String(L"AI Loading..........");
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Move", CMoveLook::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SQ_ChasePlayer", CChasePlayer::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SL_AIRoot", CAIRoot::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Rot", CRotToFace::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Wait", CWait::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_RandomLook", CRandomLook::Create(m_pGraphicDev)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Sequence", CSequence::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Selector", CSelector::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Root", CRoot::Create(m_pGraphicDev)), E_FAIL);
 
 	m_bFinish = true;

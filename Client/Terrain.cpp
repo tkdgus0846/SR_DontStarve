@@ -14,10 +14,11 @@ CTerrain::~CTerrain()
 
 HRESULT CTerrain::Ready_GameObject(void)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	HRESULT result = __super::Ready_GameObject();
 
-	return S_OK;
+	return result;
 }
+
 _int CTerrain::Update_GameObject(const _float& fTimeDelta)
 {
 	Key_Input(fTimeDelta);
@@ -43,7 +44,7 @@ void CTerrain::Render_GameObject(void)
 
 	m_pTextureCom->Set_Texture(0);
 
-	m_pBufferCom->Render_Buffer();
+	__super::Render_GameObject();
 
 }
 

@@ -16,54 +16,66 @@ CBlackBoard::~CBlackBoard()
 
 void CBlackBoard::Add_Type(const _tchar * pTypename, const _int & iType)
 {
-	auto iter = find_if(m_matInt.begin(), m_matInt.end(), CTag_Finder(pTypename));
+	auto iter = find_if(m_mapInt.begin(), m_mapInt.end(), CTag_Finder(pTypename));
 
-	if (iter == m_matInt.end())
-		m_matInt.emplace(pTypename, iType);
+	if (iter == m_mapInt.end())
+		m_mapInt.emplace(pTypename, iType);
 }
 
 void CBlackBoard::Add_Type(const _tchar * pTypename, const _float & fType)
 {
-	auto iter = find_if(m_matFloat.begin(), m_matFloat.end(), CTag_Finder(pTypename));
+	auto iter = find_if(m_mapFloat.begin(), m_mapFloat.end(), CTag_Finder(pTypename));
 
-	if (iter == m_matFloat.end())
-		m_matFloat.emplace(pTypename, fType);
+	if (iter == m_mapFloat.end())
+		m_mapFloat.emplace(pTypename, fType);
 }
 
 void CBlackBoard::Add_Type(const _tchar * pTypename, const _bool & bType)
 {
-	auto iter = find_if(m_matBool.begin(), m_matBool.end(), CTag_Finder(pTypename));
+	auto iter = find_if(m_mapBool.begin(), m_mapBool.end(), CTag_Finder(pTypename));
 
-	if (iter == m_matBool.end())
-		m_matBool.emplace(pTypename, bType);
+	if (iter == m_mapBool.end())
+		m_mapBool.emplace(pTypename, bType);
 }
 
-void CBlackBoard::Get_Type(const _tchar * pTypename, _int * pType)
+HRESULT CBlackBoard::Get_Type(const _tchar * pTypename, _int * pType)
 {
-	auto iter = find_if(m_matInt.begin(), m_matInt.end(), CTag_Finder(pTypename));
+	auto iter = find_if(m_mapInt.begin(), m_mapInt.end(), CTag_Finder(pTypename));
 
-	if (iter == m_matInt.end())
+	if (iter == m_mapInt.end())
+	{
 		pType = nullptr;
+		return E_FAIL;
+	}
 
 	pType = &iter->second;
+	return S_OK;
 }
 
-void CBlackBoard::Get_Type(const _tchar * pTypename, _float * pType)
+HRESULT CBlackBoard::Get_Type(const _tchar * pTypename, _float * pType)
 {
-	auto iter = find_if(m_matFloat.begin(), m_matFloat.end(), CTag_Finder(pTypename));
+	auto iter = find_if(m_mapFloat.begin(), m_mapFloat.end(), CTag_Finder(pTypename));
 
-	if (iter == m_matFloat.end())
+	if (iter == m_mapFloat.end())
+	{
 		pType = nullptr;
+		return E_FAIL;
+	}
 
-	pType = &iter->second;
+	*pType = iter->second;
+	return S_OK;
 }
 
-void CBlackBoard::Get_Type(const _tchar * pTypename, _bool * pType)
+HRESULT CBlackBoard::Get_Type(const _tchar * pTypename, _bool * pType)
 {
-	auto iter = find_if(m_matBool.begin(), m_matBool.end(), CTag_Finder(pTypename));
+	auto iter = find_if(m_mapBool.begin(), m_mapBool.end(), CTag_Finder(pTypename));
 
-	if (iter == m_matBool.end())
+	if (iter == m_mapBool.end())
+	{
 		pType = nullptr;
+		return E_FAIL;
+	}
 
 	pType = &iter->second;
+	return S_OK;
 }

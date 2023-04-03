@@ -1,15 +1,16 @@
 #include "stdafx.h"
 #include "Wait.h"
 
+#include "Export_Utility.h"
 
 CWait::CWait(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CBehavior(pGraphicDev), m_fTime(0.f)
+	: CBehavior(pGraphicDev), m_fTimer(0.f)
 	, m_fLimit(0.f)
 {
 }
 
 CWait::CWait(const CWait & rhs)
-	: CBehavior(rhs), m_fTime(rhs.m_fTime)
+	: CBehavior(rhs), m_fTimer(rhs.m_fTimer)
 	, m_fLimit(rhs.m_fLimit)
 {
 }
@@ -27,10 +28,13 @@ HRESULT CWait::Ready_Behavior()
 
 _int CWait::Update_Component(const _float & fTimeDelta)
 {
-	m_fTime += fTimeDelta;
+	m_fTimer += fTimeDelta;
 
-	if (m_fTime >= m_fLimit)
+	if (m_fTimer >= m_fLimit)
+	{
+		m_fTimer = 0.f;
 		return BEHAVIOR_FALSE;
+	}
 
 	return RUNNING;
 }
