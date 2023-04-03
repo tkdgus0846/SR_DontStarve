@@ -88,18 +88,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			// 60프레임 제한을 걸고싶다.
 			if (Engine::IsPermit_Call(L"Frame60", fTimer_Immediate))
 			{
+#ifdef _DEBUG // IMGUI 준비
 				// Start the Dear ImGui frame
 				ImGui_ImplDX9_NewFrame();
 				ImGui_ImplWin32_NewFrame();
 				ImGui::NewFrame();
-
+#endif
 				Engine::Set_Timer(L"Timer_FPS60");
 				_float fTimer_FPS60 = Engine::Get_Timer(L"Timer_FPS60");
 				pMainApp->Update_MainApp(fTimer_FPS60);
 				pMainApp->LateUpdate_MainApp();
 
+#ifdef _DEBUG // IMGUI 종료
 				ImGui::EndFrame();
-
+#endif
 				pMainApp->Render_MainApp();
 
 			}
@@ -115,9 +117,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return FALSE;
 	}
 
+#ifdef _DEBUG // IMGUI 릴리즈
 	ImGui_ImplDX9_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+#endif
     return (int) msg.wParam;
 }
 
@@ -194,13 +198,15 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
-
+#ifdef _DEBUG
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+#endif
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+#ifdef _DEBUG
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
 		return true;
-
+#endif
     switch (message)
     {
     case WM_COMMAND:

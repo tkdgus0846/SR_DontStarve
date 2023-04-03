@@ -1,4 +1,8 @@
 #include "ImManager.h"
+#include "ImWindow.h"
+#include "imgui_impl_dx9.h"
+#include "imgui_impl_win32.h"
+#include "imgui.h"
 #include "Export_Function.h"
 IMPLEMENT_SINGLETON(CImManager)
 
@@ -25,6 +29,9 @@ void CImManager::Update(_float fTimeDelta)
 	{
 		_int iResult = iter->Update(fTimeDelta);
 	}
+
+	_vec3 tmp = Picking_OnTerrain(g_hWnd);
+	cout << (_int)tmp.x << "\t" << (_int)tmp.z << endl;
 }
 
 void CImManager::Render(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -36,9 +43,7 @@ void CImManager::Render(LPDIRECT3DDEVICE9 pGraphicDev)
 	ImGui::Render();
 	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
-	pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
-	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	pGraphicDev->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
+
 }
 
 void CImManager::Release()
@@ -47,16 +52,105 @@ void CImManager::Release()
 	for_each(m_vecImWindow.begin(), m_vecImWindow.end(), Safe_Delete<CImWindow*>);
 }
 
-void CImManager::PickingOnMesh(HWND hWnd, ID3DXMesh * pMesh, /*Out*/DWORD& dwFaceIndex)
+_vec3 CImManager::Picking_OnTerrain(HWND hWnd)
 {
-	Ray mouseRay;
-	_bool bSuccess = MouseClickRay(hWnd, mouseRay);
+	CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(LAYER_ENVIRONMENT, L"Terrain", L"TerrainTex", ID_STATIC));
+	if (!pTerrainBufferCom)
+		return _vec3();
 
-	if (FALSE == bSuccess)
-		return;
+	CTransform*	pTerrainTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_ENVIRONMENT, L"Terrain", L"Transform", ID_DYNAMIC));
+	NULL_CHECK_RETURN(pTerrainTransCom, _vec3());
 
-	//_bool bHit = IntersectRayMesh(mouseRay, pMesh, _matrix ,dwFaceIndex)
+	POINT	ptMouse{};
+	GetCursorPos(&ptMouse);
+	ScreenToClient(hWnd, &ptMouse);
+
+	D3DVIEWPORT9		ViewPort;
+	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
+	m_pGraphicDev->GetViewport(&ViewPort);
+
+	_vec3	vMouse;
+
+	vMouse.x = ptMouse.x / (ViewPort.Width * 0.5f) - 1.f;
+	vMouse.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
+	vMouse.z = 0.f;
+
+	//  투영 -> 뷰 스페이스
+	_matrix		matProj;
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXMatrixInverse(&matProj, 0, &matProj);
+	D3DXVec3TransformCoord(&vMouse, &vMouse, &matProj);
+
+	// 뷰 스페이스 -> 월드
+	_matrix		matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, 0, &matView);
+
+	_vec3	vRayPos, vRayDir;
+
+	vRayPos = { 0.f,0.f,0.f };
+	vRayDir = vMouse - vRayPos;
+
+	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
+	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matView);
+
+	// 월드 -> 로컬
+
+	_matrix		matWorld = *pTerrainTransCom->Get_WorldMatrixPointer();
+	D3DXMatrixInverse(&matWorld, 0, &matWorld);
+
+	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matWorld);
+	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matWorld);
+
+	_ulong	dwVtxIdx[3]{};
+	_float	fU, fV, fDist;
+
+	const _vec3*		pTerrainPos = pTerrainBufferCom->Get_VtxPos();
+
+	for (_ulong i = 0; i < VTXCNTZ; ++i)
+	{
+		for (_ulong j = 0; j < VTXCNTX; ++j)
+		{
+			_ulong dwIndex = i * VTXCNTX + j;
+
+			// 오른쪽 위
+			dwVtxIdx[0] = dwIndex + VTXCNTX;
+			dwVtxIdx[1] = dwIndex + VTXCNTX + 1;
+			dwVtxIdx[2] = dwIndex + 1;
+
+			// V1 + U(V2 - V1) + V(V3 - V1)
+			if (D3DXIntersectTri(&pTerrainPos[dwVtxIdx[1]],
+				&pTerrainPos[dwVtxIdx[0]],
+				&pTerrainPos[dwVtxIdx[2]],
+				&vRayPos, &vRayDir, &fU, &fV, &fDist))
+			{
+				return _vec3(pTerrainPos[dwVtxIdx[1]].x + fU * (pTerrainPos[dwVtxIdx[0]].x - pTerrainPos[dwVtxIdx[1]].x),
+					0.f,
+					pTerrainPos[dwVtxIdx[1]].z + fV * (pTerrainPos[dwVtxIdx[2]].z - pTerrainPos[dwVtxIdx[1]].z));
+			}
+
+			// 왼쪽 아래
+			dwVtxIdx[0] = dwIndex + VTXCNTX;
+			dwVtxIdx[1] = dwIndex + 1;
+			dwVtxIdx[2] = dwIndex;
+
+			// V1 + U(V2 - V1) + V(V3 - V1)
+			if (D3DXIntersectTri(&pTerrainPos[dwVtxIdx[2]],
+				&pTerrainPos[dwVtxIdx[1]],
+				&pTerrainPos[dwVtxIdx[0]],
+				&vRayPos, &vRayDir, &fU, &fV, &fDist))
+			{
+				return _vec3(pTerrainPos[dwVtxIdx[2]].x + fU * (pTerrainPos[dwVtxIdx[1]].x - pTerrainPos[dwVtxIdx[2]].x),
+					0.f,
+					pTerrainPos[dwVtxIdx[2]].z + fV * (pTerrainPos[dwVtxIdx[0]].z - pTerrainPos[dwVtxIdx[2]].z));
+			}
+		}
+	}
+
+	return _vec3();
 }
+
+
 
 Ray CImManager::CalcPickingRay(_int x, _int y)
 {
@@ -66,15 +160,15 @@ Ray CImManager::CalcPickingRay(_int x, _int y)
 	D3DVIEWPORT9 vp;
 	m_pGraphicDev->GetViewport(&vp);
 
-	D3DXMATRIX proj;
+	_matrix proj;
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &proj);
 
 	px = (((2.f * x) / vp.Width) - 1.0f) / proj(0, 0);
 	py = (((-2.f * y) / vp.Height) + 1.0f) / proj(1, 1);
 
 	Ray ray;
-	ray._origin = D3DXVECTOR3(0.f, 0.f, 0.f);
-	ray._direction = D3DXVECTOR3(px, py, 1.f);
+	ray._origin = _vec3(0.f, 0.f, 0.f);
+	ray._direction = _vec3(px, py, 1.f);
 
 	return ray;
 }
@@ -87,6 +181,13 @@ _bool CImManager::MouseClickRay(HWND hWnd, /*Out*/ Ray& ray)
 		GetCursorPos(&ptMouse);
 		ScreenToClient(g_hWnd, &ptMouse);
 		ray = CalcPickingRay(ptMouse.x, ptMouse.y);
+
+		_matrix		matProj;
+		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+		D3DXMatrixInverse(&matProj, 0, &matProj);
+
+		//  투영 -> 뷰 스페이스
+
 		return true;
 	}
 	return false;

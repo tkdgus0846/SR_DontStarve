@@ -7,6 +7,8 @@
 #include "SkyBox.h"
 #include "ObjCamera.h"
 #include "Room.h"
+#include "Terrain.h"
+#include "ImManager.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -19,13 +21,16 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
-	Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_ENVIRONMENT, L"Terrain", CTerrain::Create(m_pGraphicDev));
+
+	//Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
 
 	Add_GameObject(LAYER_PLAYER, L"Player", CPlayer::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_MONSTER, L"Monster", CMonster::Create(m_pGraphicDev));
 
 	Add_GameObject(LAYER_CAMERA, L"ObjCamera", CObjCamera::Create(m_pGraphicDev));
+
 
 	D3DLIGHT9		tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));

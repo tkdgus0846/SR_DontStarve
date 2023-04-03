@@ -166,6 +166,12 @@
     <ClInclude Include="Root.h">
       <Filter>Component\Behavior\Root</Filter>
     </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Manager\MaterialMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialMgr.h">
+      <Filter>Manager\MaterialMgr</Filter>
+    </ClInclude>
     <ClInclude Include="RotToFace.h">
       <Filter>Component\Behavior\Tasks</Filter>
     </ClInclude>
@@ -315,6 +321,12 @@
     <ClCompile Include="Root.cpp">
       <Filter>Component\Behavior\Root</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Manager\MaterialMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialMgr.cpp">
+      <Filter>Manager\MaterialMgr</Filter>
+    </ClCompile>
     <ClCompile Include="RotToFace.cpp">
       <Filter>Component\Behavior\Tasks</Filter>
     </ClCompile>
@@ -417,6 +429,9 @@
     </Filter>
     <Filter Include="Component\Behavior\Root">
       <UniqueIdentifier>{90eddf15-2023-4e27-92fb-173d9293a4ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\MaterialMgr">
+      <UniqueIdentifier>{47b38da4-3ed4-4dc5-b86e-9fc1469f1b1f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Component\Animation">
       <UniqueIdentifier>{18c6d12c-4c88-4d42-b9d6-ba23e3ab4e0f}</UniqueIdentifier>

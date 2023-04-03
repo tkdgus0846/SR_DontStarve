@@ -3,10 +3,13 @@
 #include "Include.h"
 #include "Base.h"
 #include "Export_Function.h"
+
+#ifdef _DEBUG // IMGUI 헤더파일
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
 #include "imgui.h"
 #include "ImManager.h"
+#endif
 
 BEGIN(Engine)
 
