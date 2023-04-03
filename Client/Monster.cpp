@@ -54,7 +54,7 @@ HRESULT CMonster::Add_Component(void)
 
 	pComponent = m_pBufferCom = dynamic_cast<CTriCol*>(Engine::Clone_Proto(L"TriCol",this));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"TriCol", pComponent });
+	m_uMapComponent[ID_DYNAMIC].insert({ L"TriCol", pComponent });
 
 	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);

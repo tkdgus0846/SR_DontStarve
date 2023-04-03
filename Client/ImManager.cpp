@@ -54,7 +54,7 @@ void CImManager::Release()
 
 _vec3 CImManager::Picking_OnTerrain(HWND hWnd)
 {
-	CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(LAYER_ENVIRONMENT, L"Terrain", L"TerrainTex", ID_STATIC));
+	CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(LAYER_ENVIRONMENT, L"Terrain", L"TerrainTex", ID_DYNAMIC));
 	if (!pTerrainBufferCom)
 		return _vec3();
 
