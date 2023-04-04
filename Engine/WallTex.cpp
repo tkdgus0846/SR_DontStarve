@@ -54,7 +54,7 @@ HRESULT CWallTex::Ready_Buffer()
 
 			pVertex[dwIndex].vTexUV = {
 				_float(j) / (dwCntX - 1) * (_float)X,
-				_float(i) / (dwCntY - 1) * (_float)Z };
+				1.f - _float(i) / (dwCntY - 1) * (_float)Z };
 		}
 	}
 

@@ -5,7 +5,7 @@
 #include "Logo.h"
 #include "BulletMgr.h"
 
-// ¡÷ºÆ ≈◊Ω∫∆ÆøÎ
+// Ï£ºÏÑù ÌÖåÏä§Ìä∏Ïö©
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pManagementClass(nullptr), m_pGraphicDev(nullptr)
 {
@@ -37,7 +37,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
 
-#ifdef _DEBUG // IMGUI √ ±‚»≠
+#ifdef _DEBUG // IMGUI Ï¥àÍ∏∞Ìôî
 	CImManager::GetInstance()->Ready_IMGUI(m_pGraphicDev);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -56,7 +56,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 int CMainApp::Update_MainApp(const _float & fTimeDelta)
 {
-#ifdef _DEBUG // IMGUI æ˜µ•¿Ã∆Æ(LateUpdate¥¬ æ¯¿Ω)
+#ifdef _DEBUG // IMGUI ÏóÖÎç∞Ïù¥Ìä∏(LateUpdateÎäî ÏóÜÏùå)
 	CImManager::GetInstance()->Update(fTimeDelta);
 #endif
 	Engine::Update_DInput();
@@ -67,7 +67,6 @@ int CMainApp::Update_MainApp(const _float & fTimeDelta)
 	{
 		int a = 0;
 	}*/
-
 
 	m_pManagementClass->Update_Management(fTimeDelta);
 
@@ -82,7 +81,7 @@ void CMainApp::LateUpdate_MainApp(void)
 void CMainApp::Render_MainApp(void)
 {
 	Engine::Render_Begin(D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f));
-#ifdef _DEBUG // IMGUI ∑£¥ı
+#ifdef _DEBUG // IMGUI ÎûúÎçî
 	CImManager::GetInstance()->Render(m_pGraphicDev);
 #endif
 	m_pManagementClass->Render_Management(m_pGraphicDev);
@@ -98,9 +97,9 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	(*ppGraphicDev) = m_pDeviceClass->Get_GraphicDev();
 	(*ppGraphicDev)->AddRef();
 
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"πŸ≈¡", 15, 20, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"±√º≠", 15, 20, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Ganji", L"∞ﬂ∞ÌµÒ", 15, 20, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"Î∞îÌÉï", 15, 20, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"Í∂ÅÏÑú", 15, 20, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Ganji", L"Í≤¨Í≥†Îîï", 15, 20, FW_HEAVY), E_FAIL);
 
 	// dinput
 	FAILED_CHECK_RETURN(Engine::Ready_DInput(g_hInst, g_hWnd), E_FAIL);
