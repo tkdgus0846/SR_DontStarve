@@ -415,5 +415,8 @@
     <Filter Include="Component\VIBuffer">
       <UniqueIdentifier>{15a5e433-be7a-4eb4-86ff-ab48e69ea59f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\UIComponent">
+      <UniqueIdentifier>{01ceebb4-0a9e-4d59-bd77-bcc5daffd18c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

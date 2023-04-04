@@ -11,6 +11,8 @@ private:
 	explicit CWait(const CWait& rhs);
 	virtual ~CWait();
 
+	
+
 public:
 	virtual HRESULT Ready_Behavior() override;
 	virtual _int Update_Component(const _float & fTimeDelta) override;
