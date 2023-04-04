@@ -7,8 +7,8 @@
 #define		WINCX		800
 #define		WINCY		600
 
-#define		VTXCNTX		5
-#define		VTXCNTZ		5
+#define		VTXCNTX		6
+#define		VTXCNTZ		6
 #define		VTXITV		10
 #define		MAX_DIK		256
 

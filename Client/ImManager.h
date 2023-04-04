@@ -26,7 +26,7 @@ public:
 
 public:
 
-	_vec3		Picking_OnTerrain(HWND hWnd);
+
 	void		IndexTranslation2DTo1D(_ulong Index, _ulong row, _ulong col);
 	void		IndexTranslation1DTo2D(_ulong Index, _ulong row, _ulong col);
 

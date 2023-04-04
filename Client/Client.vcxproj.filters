@@ -38,6 +38,9 @@
     <Filter Include="IMGUI\ImManager">
       <UniqueIdentifier>{3ce43516-b38f-46c0-886d-b8476ec0afb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Room">
+      <UniqueIdentifier>{d53ab2d1-8167-4ef5-b101-2ce8c0ce1569}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GameObject\MonoBehaviors">
       <UniqueIdentifier>{0585166a-ee3f-4639-9ec9-27c7dd623b88}</UniqueIdentifier>
     </Filter>
@@ -56,9 +59,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Terrain.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>GameObject</Filter>
     </ClInclude>
@@ -125,6 +125,15 @@
     <ClInclude Include="NormalBullet.h">
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>GameObject\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>GameObject\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>GameObject\Room</Filter>
+    </ClInclude>
     <ClInclude Include="Attack.h">
       <Filter>GameObject\MonoBehaviors</Filter>
     </ClInclude>
@@ -151,9 +160,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Terrain.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -216,6 +222,15 @@
     </ClCompile>
     <ClCompile Include="NormalBullet.cpp">
       <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>GameObject\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>GameObject\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>GameObject\Room</Filter>
     </ClCompile>
     <ClCompile Include="Attack.cpp">
       <Filter>GameObject\MonoBehaviors</Filter>
