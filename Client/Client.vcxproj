@@ -153,10 +153,12 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Attack.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="Evasion.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="imgui_impl_dx9.h" />
@@ -164,26 +166,34 @@
     <ClInclude Include="imgui_internal.h" />
     <ClInclude Include="ImManager.h" />
     <ClInclude Include="ImWindow.h" />
+    <ClInclude Include="Jump.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainApp.h" />
+    <ClInclude Include="MonoBehaviors.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MoveLook.h" />
     <ClInclude Include="NormalBullet.h" />
     <ClInclude Include="ObjCamera.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="BulletMgr.h" />
+    <ClInclude Include="RandomLook.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Wall.h" />
+    <ClInclude Include="RotToFace.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Wall.h" />
+    <ClInclude Include="Wait.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="Evasion.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
@@ -193,20 +203,25 @@
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="ImManager.cpp" />
     <ClCompile Include="ImWindow.cpp" />
+    <ClCompile Include="Jump.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainApp.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="NormalBullet.cpp" />
     <ClCompile Include="ObjCamera.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="BulletMgr.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="RandomLook.cpp" />
+    <ClCompile Include="RotToFace.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Wait.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter" />

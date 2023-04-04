@@ -55,11 +55,9 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="MaterialMgr.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="MoveLook.h" />
     <ClInclude Include="MyFont.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="ProtoMgr.h" />
-    <ClInclude Include="RandomLook.h" />
     <ClInclude Include="RcCol.h" />
     <ClInclude Include="RcTex.h" />
     <ClInclude Include="Renderer.h" />
@@ -67,7 +65,6 @@
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomTex.h" />
     <ClInclude Include="Root.h" />
-    <ClInclude Include="RotToFace.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Selector.h" />
     <ClInclude Include="Sequence.h" />
@@ -115,11 +112,9 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialMgr.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="MyFont.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="ProtoMgr.cpp" />
-    <ClCompile Include="RandomLook.cpp" />
     <ClCompile Include="RcCol.cpp" />
     <ClCompile Include="RcTex.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -127,7 +122,6 @@
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomTex.cpp" />
     <ClCompile Include="Root.cpp" />
-    <ClCompile Include="RotToFace.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Selector.cpp" />
     <ClCompile Include="Sequence.cpp" />

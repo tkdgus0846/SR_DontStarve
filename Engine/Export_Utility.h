@@ -29,10 +29,6 @@
 #include "Root.h"
 #include "Sequence.h"
 #include "Selector.h"
-#include "Wait.h"
-#include "MoveLook.h"
-#include "RotToFace.h"
-#include "RandomLook.h"	
 #include "BlackBoard.h"
 #include "Animation.h"
 
