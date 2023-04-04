@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "RotToFace.h"
 
-#include "Export_Utility.h"
+#include "Export_Function.h"
 
 CRotToFace::CRotToFace(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CBehavior(pGraphicDev)
@@ -68,11 +68,8 @@ CRotToFace * CRotToFace::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CRotToFace* pInstance = new CRotToFace(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Behavior()))
-	{
-		Safe_Release(pInstance);
+	if (!pInstance)
 		return nullptr;
-	}
 
 	return pInstance;
 }

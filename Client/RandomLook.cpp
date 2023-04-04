@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "RandomLook.h"
 
-#include "Export_Utility.h"
+#include "Export_Function.h"
 
 CRandomLook::CRandomLook(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBehavior(pGraphicDev)
@@ -55,11 +55,8 @@ CRandomLook * CRandomLook::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CRandomLook* pInstance = new CRandomLook(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Behavior()))
-	{
-		Safe_Release(pInstance);
+	if (!pInstance)
 		return nullptr;
-	}
 
 	return pInstance;
 }

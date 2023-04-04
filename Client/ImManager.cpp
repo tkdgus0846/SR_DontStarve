@@ -43,7 +43,9 @@ void CImManager::Render(LPDIRECT3DDEVICE9 pGraphicDev)
 	ImGui::Render();
 	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
-
+	pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
 }
 
 void CImManager::Release()

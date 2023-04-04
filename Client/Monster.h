@@ -27,7 +27,7 @@ private:
 	virtual HRESULT Add_Component() override;
 
 protected:
-	HRESULT		Set_Patrol_AI();
+	HRESULT		Set_Patrol_AI(CGameObject* pGameObject);
 
 private:
 	Engine::CTriCol*	m_pBufferCom;

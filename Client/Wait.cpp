@@ -43,11 +43,8 @@ CWait * CWait::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CWait* pInstance = new CWait(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Behavior()))
-	{
-		Safe_Release(pInstance);
+	if (!pInstance)
 		return nullptr;
-	}
 
 	return pInstance;
 }

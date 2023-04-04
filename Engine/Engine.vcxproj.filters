@@ -148,12 +148,6 @@
     <ClInclude Include="Behavior.h">
       <Filter>Component\Behavior</Filter>
     </ClInclude>
-    <ClInclude Include="Wait.h">
-      <Filter>Component\Behavior\Tasks</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveLook.h">
-      <Filter>Component\Behavior\Tasks</Filter>
-    </ClInclude>
     <ClInclude Include="Selector.h">
       <Filter>Component\Behavior\Selector</Filter>
     </ClInclude>
@@ -171,12 +165,6 @@
     </ClInclude>
     <ClInclude Include="MaterialMgr.h">
       <Filter>Manager\MaterialMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="RotToFace.h">
-      <Filter>Component\Behavior\Tasks</Filter>
-    </ClInclude>
-    <ClInclude Include="RandomLook.h">
-      <Filter>Component\Behavior\Tasks</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Component\Animation</Filter>
@@ -303,12 +291,6 @@
     <ClCompile Include="Behavior.cpp">
       <Filter>Component\Behavior</Filter>
     </ClCompile>
-    <ClCompile Include="Wait.cpp">
-      <Filter>Component\Behavior\Tasks</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveLook.cpp">
-      <Filter>Component\Behavior\Tasks</Filter>
-    </ClCompile>
     <ClCompile Include="Selector.cpp">
       <Filter>Component\Behavior\Selector</Filter>
     </ClCompile>
@@ -326,12 +308,6 @@
     </ClCompile>
     <ClCompile Include="MaterialMgr.cpp">
       <Filter>Manager\MaterialMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="RotToFace.cpp">
-      <Filter>Component\Behavior\Tasks</Filter>
-    </ClCompile>
-    <ClCompile Include="RandomLook.cpp">
-      <Filter>Component\Behavior\Tasks</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Component\Animation</Filter>
@@ -417,9 +393,6 @@
     </Filter>
     <Filter Include="Component\Behavior">
       <UniqueIdentifier>{66da9a20-2280-4ea1-987e-b689ced50831}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Component\Behavior\Tasks">
-      <UniqueIdentifier>{3c703f81-89a0-401e-baac-cebe43c14f23}</UniqueIdentifier>
     </Filter>
     <Filter Include="Component\Behavior\Selector">
       <UniqueIdentifier>{608ea136-afea-4a90-8d29-73ac48f955f2}</UniqueIdentifier>

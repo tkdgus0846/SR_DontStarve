@@ -62,6 +62,7 @@ public:
 	virtual void		Render_Component(void);
 
 public:
+	// 컴포넌트 추가함수(id값, 우선순위(중복 키값 적용 안됌.), 컴포넌트 이름(구분용), 컴포넌트 포인트)
 	HRESULT				Add_Component(COMPONENTID eID, 
 										const _int& iPriority, 
 										const _tchar* pComponentTag, 
@@ -69,9 +70,9 @@ public:
 	virtual void		Free(void) override;
 
 protected:
-	vector<PRICOMP>			m_VecComponents[ID_END];
-	vector<PRICOMP>::iterator m_iterCurComponent;
-	vector<PRICOMP>::iterator m_iterPreComponent;
+	vector<PRICOMP>				m_VecComponents[ID_END];
+	vector<PRICOMP>::iterator	m_iterCurComponent;
+	vector<PRICOMP>::iterator	m_iterPreComponent;
 };
 
 END

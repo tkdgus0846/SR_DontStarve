@@ -38,6 +38,9 @@
     <Filter Include="IMGUI\ImManager">
       <UniqueIdentifier>{3ce43516-b38f-46c0-886d-b8476ec0afb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tasks">
+      <UniqueIdentifier>{f1986011-3b00-4e0a-8940-24f2346e32ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -122,6 +125,27 @@
     <ClInclude Include="NormalBullet.h">
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveLook.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Jump.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomLook.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="RotToFace.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Wait.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoBehaviors.h">
+      <Filter>Tasks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Terrain.cpp">
@@ -189,6 +213,24 @@
     </ClCompile>
     <ClCompile Include="NormalBullet.cpp">
       <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveLook.cpp">
+      <Filter>Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="Jump.cpp">
+      <Filter>Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomLook.cpp">
+      <Filter>Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="RotToFace.cpp">
+      <Filter>Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="Wait.cpp">
+      <Filter>Tasks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

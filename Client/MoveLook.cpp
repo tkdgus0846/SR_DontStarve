@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "MoveLook.h"
 
-#include "Export_Utility.h"
+#include "Export_Function.h"
 
 CMoveLook::CMoveLook(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBehavior(pGraphicDev)
@@ -53,11 +53,8 @@ CComponent * CMoveLook::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CMoveLook* pInstance = new CMoveLook(pGraphicDev);
 	
-	if (FAILED(pInstance->Ready_Behavior()))
-	{
-		Safe_Release(pInstance);
+	if (!pInstance)
 		return nullptr;
-	}
 
 	return pInstance;
 }

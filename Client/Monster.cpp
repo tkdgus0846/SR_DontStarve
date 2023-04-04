@@ -2,6 +2,7 @@
 #include "Monster.h"
 
 #include "Export_Function.h"
+#include "MonoBehaviors.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fSpeed(0.f)
@@ -63,14 +64,14 @@ HRESULT CMonster::Add_Component(void)
 	pComponent = m_pRange = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Monster_Range", pComponent });
-	m_pRange->Set_BoundingBox({ 15.f, 15.f, 15.f });
+	m_pRange->Set_BoundingBox({ 50.f, 50.f, 50.f });
 
-	FAILED_CHECK_RETURN(Set_Patrol_AI(), E_FAIL);
+	FAILED_CHECK_RETURN(Set_Patrol_AI(this), E_FAIL);
 
 	return S_OK;
 }
 
-HRESULT CMonster::Set_Patrol_AI()
+HRESULT CMonster::Set_Patrol_AI(CGameObject* pGameObject)
 {
 	// 何前 积己
 	CComponent* pRoot = dynamic_cast<CRoot*>(Engine::Clone_Proto(L"Root", this));
@@ -94,6 +95,8 @@ HRESULT CMonster::Set_Patrol_AI()
 	NULL_CHECK_RETURN(pTaskRandomLook, E_FAIL);
 	CComponent* pTaskWait = dynamic_cast<CWait*>(Engine::Clone_Proto(L"TSK_Wait", this));
 	NULL_CHECK_RETURN(pTaskWait, E_FAIL);
+	CComponent* pTaskAttack = dynamic_cast<CAttack*>(Engine::Clone_Proto(L"TSK_Attack", this));
+	NULL_CHECK_RETURN(pTaskAttack, E_FAIL);
 
 	// 何前 檬扁汲沥
 	dynamic_cast<CWait*>(pTaskWait)->Set_Limit(1.f);
@@ -105,8 +108,9 @@ HRESULT CMonster::Set_Patrol_AI()
 	FAILED_CHECK_RETURN(dynamic_cast<CSelector*>(pSelector)->Add_Component(ID_DYNAMIC, 1, L"SQ_Chase", pSQChase), E_FAIL);
 	FAILED_CHECK_RETURN(dynamic_cast<CSelector*>(pSelector)->Add_Component(ID_DYNAMIC, 2, L"SQ_Patrol", pSQPatrol), E_FAIL);
 	
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_DYNAMIC, 2, L"TSK_Rot", pTaskRot), E_FAIL);
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_DYNAMIC, 3, L"TSK_MovePlayer", pTaskMovePlayer), E_FAIL);
+	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_DYNAMIC, 1, L"TSK_Rot", pTaskRot), E_FAIL);
+	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_DYNAMIC, 2, L"TSK_MovePlayer", pTaskMovePlayer), E_FAIL);
+	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_DYNAMIC, 3, L"TSK_Attack", pTaskAttack), E_FAIL);
 
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_DYNAMIC, 1, L"TSK_RandomLook", pTaskRandomLook), E_FAIL);
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_DYNAMIC, 2, L"TSK_MovePatrol", pTaskMovePatrol), E_FAIL);
