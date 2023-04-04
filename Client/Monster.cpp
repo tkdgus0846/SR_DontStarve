@@ -2,6 +2,7 @@
 #include "Monster.h"
 
 #include "Export_Function.h"
+#include "MonoBehaviors.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fSpeed(0.f)
@@ -94,6 +95,8 @@ HRESULT CMonster::Set_Patrol_AI()
 	NULL_CHECK_RETURN(pTaskRandomLook, E_FAIL);
 	CComponent* pTaskWait = dynamic_cast<CWait*>(Engine::Clone_Proto(L"TSK_Wait", this));
 	NULL_CHECK_RETURN(pTaskWait, E_FAIL);
+	CComponent* pTaskAttack = dynamic_cast<CAttack*>(Engine::Clone_Proto(L"TSK_Attack", this));
+	NULL_CHECK_RETURN(pTaskAttack, E_FAIL);
 
 	// 부품 초기설정
 	dynamic_cast<CWait*>(pTaskWait)->Set_Limit(1.f);
@@ -105,8 +108,9 @@ HRESULT CMonster::Set_Patrol_AI()
 	FAILED_CHECK_RETURN(dynamic_cast<CSelector*>(pSelector)->Add_Component(ID_UPDATE, 1, L"SQ_Chase", pSQChase), E_FAIL);
 	FAILED_CHECK_RETURN(dynamic_cast<CSelector*>(pSelector)->Add_Component(ID_UPDATE, 2, L"SQ_Patrol", pSQPatrol), E_FAIL);
 	
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 2, L"TSK_Rot", pTaskRot), E_FAIL);
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 3, L"TSK_MovePlayer", pTaskMovePlayer), E_FAIL);
+	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 1, L"TSK_Rot", pTaskRot), E_FAIL);
+	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 2, L"TSK_MovePlayer", pTaskMovePlayer), E_FAIL);
+	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 3, L"TSK_Attack", pTaskAttack), E_FAIL);
 
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_UPDATE, 1, L"TSK_RandomLook", pTaskRandomLook), E_FAIL);
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_UPDATE, 2, L"TSK_MovePatrol", pTaskMovePatrol), E_FAIL);
