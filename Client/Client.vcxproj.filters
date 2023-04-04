@@ -41,7 +41,7 @@
     <Filter Include="GameObject\Room">
       <UniqueIdentifier>{d53ab2d1-8167-4ef5-b101-2ce8c0ce1569}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\MonoBehaviors">
+    <Filter Include="MonoBehaviors">
       <UniqueIdentifier>{0585166a-ee3f-4639-9ec9-27c7dd623b88}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -135,28 +135,28 @@
       <Filter>GameObject\Room</Filter>
     </ClInclude>
     <ClInclude Include="Attack.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="Jump.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="MonoBehaviors.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="MoveLook.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="RandomLook.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="RotToFace.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="Wait.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="Evasion.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -233,25 +233,25 @@
       <Filter>GameObject\Room</Filter>
     </ClCompile>
     <ClCompile Include="Attack.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="Jump.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="MoveLook.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="RandomLook.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="RotToFace.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="Wait.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="Evasion.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>MonoBehaviors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -130,9 +130,6 @@
     <ClInclude Include="RoomTex.h">
       <Filter>Component\VIBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="Room.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Component\Mesh</Filter>
     </ClInclude>
@@ -278,9 +275,6 @@
     </ClCompile>
     <ClCompile Include="RoomTex.cpp">
       <Filter>Component\VIBuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="Room.cpp">
-      <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Component\Mesh</Filter>

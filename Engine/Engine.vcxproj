@@ -62,7 +62,6 @@
     <ClInclude Include="RcTex.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Rigidbody.h" />
-    <ClInclude Include="Room.h" />
     <ClInclude Include="RoomTex.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="Scene.h" />
@@ -80,7 +79,6 @@
     <ClInclude Include="TriCol.h" />
     <ClInclude Include="Typedef.h" />
     <ClInclude Include="VIBuffer.h" />
-    <ClInclude Include="Wait.h" />
     <ClInclude Include="WallTex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -119,7 +117,6 @@
     <ClCompile Include="RcTex.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
-    <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomTex.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -136,7 +133,6 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TriCol.cpp" />
     <ClCompile Include="VIBuffer.cpp" />
-    <ClCompile Include="Wait.cpp" />
     <ClCompile Include="WallTex.cpp" />
   </ItemGroup>
   <ItemGroup>
