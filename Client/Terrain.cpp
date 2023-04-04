@@ -33,18 +33,16 @@ _int CTerrain::Update_GameObject(const _float& fTimeDelta)
 }
 void CTerrain::LateUpdate_GameObject(void)
 {
-	__super::LateUpdate_GameObject();
-
-	
+	__super::LateUpdate_GameObject();	
 }
 
 void CTerrain::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
-	m_pTextureCom->Set_Texture(0);
-
 	__super::Render_GameObject();
+
+	m_pGraphicDev->SetTexture(0, nullptr);
 
 }
 
@@ -54,11 +52,12 @@ HRESULT CTerrain::Add_Component(void)
 
 	pComponent = m_pBufferCom = dynamic_cast<CTerrainTex*>(Engine::Clone_Proto(L"TerrainTex",this));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"TerrainTex", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"TerrainTex", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Terrain_Texture",this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Terrain_Texture", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"Terrain_Texture", pComponent });
+	m_pTextureCom->Set_Texture_Num(0);
 
 	return S_OK;
 }

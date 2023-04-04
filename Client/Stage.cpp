@@ -28,7 +28,6 @@ HRESULT CStage::Ready_Scene(void)
 
 	Add_GameObject(LAYER_PLAYER, L"Player", CPlayer::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_MONSTER, L"Monster", CMonster::Create(m_pGraphicDev));
-
 	Add_GameObject(LAYER_CAMERA, L"ObjCamera", CObjCamera::Create(m_pGraphicDev));
 
 

@@ -68,15 +68,15 @@ HRESULT CRoom::Add_Component(void)
 
 	pComponent = m_pBufferCom = dynamic_cast<CRoomTex*>(Engine::Clone_Proto(L"RoomTex", this));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"RoomTex", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"RoomTex", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Room_Texture", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Room_Texture", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"Room_Texture", pComponent });
 
-	pComponent  = dynamic_cast<CMesh*>(Engine::Clone_Proto(L"AirplaneMesh", this));
+	pComponent = dynamic_cast<CMesh*>(Engine::Clone_Proto(L"AirplaneMesh", this));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"AirplaneMesh", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"AirplaneMesh", pComponent });
 
 	return S_OK;
 }

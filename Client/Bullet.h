@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "GameObject.h"
 
 class CBullet : public CGameObject
@@ -7,17 +7,14 @@ protected:
 	explicit CBullet(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CBullet();
 
-public:
-
 protected:
-	// Àû ÃÑ¾ËÀÎÁö ¿ì¸® ÃÑ¾ËÀÎÁö ÆÇ´ÜÇÏ±â À§ÇÑ º¯¼ö
+	// ì  ì´ì•Œì¸ì§€ ìš°ë¦¬ ì´ì•Œì¸ì§€ íŒë‹¨í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 	_bool		m_bIsEnemy;
-	// ½ºÇÇµå°ª.
+	// ìŠ¤í”¼ë“œê°’.
 	_float		m_fSpeed;
-
-	// »ì¾ÆÀÖÀ» ¼ö ÀÖ´Â ½Ã°£
+	// ì‚´ì•„ìˆì„ ìˆ˜ ìˆëŠ” ì‹œê°„
 	_float		m_fLifeSpan;
-	// »ì°í ÀÖ´Â ½Ã°£
+	// ì‚´ê³  ìˆëŠ” ì‹œê°„
 	_float		m_fAge;
 
 public:

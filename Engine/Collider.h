@@ -1,56 +1,66 @@
-#pragma once
+ï»¿#pragma once
 #include "Component.h"
 
 BEGIN(Engine)
 
 class CCollider : public CComponent
 {
+	friend class CCollisionMgr;
+
 protected:
 	explicit CCollider(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CCollider(const CCollider& rhs);
 	virtual ~CCollider();
 
-protected:
-	// °¨Áö ¿µ¿ª
-	BoundingBox* m_pBoundingBox;
-	// »ç°¢Çü ·»´õ¸µ
+private:
+	// ê°ì§€ ì˜ì—­
+	BoundingBox*		m_pBoundingBox;
+	// ì‚¬ê°í˜• ë Œë”ë§
 	LPD3DXMESH			m_pMesh;
-	COLGROUP			m_eGroup;
-	// ÇöÀç Ãæµ¹ÁßÀÎ »ó´ë Äİ¶óÀÌ´õ¿ÍÀÇ Á¤º¸ -> º¹»ç»ı¼º½Ã º¹»çÇÒ ÇÊ¿ä ¾øÀ½. ½Ç½Ã°£ Á¤º¸
-	map<CCollider*, Collision*>	m_Colmap;
+	// í˜„ì¬ ì¶©ëŒ ì¤‘ì¸ ì½œë¦¬ì ¼ë“¤ì„ ì²´í¬í•œë‹¤.
+	unordered_map<CCollider*, Collision>	m_CollisionList;
+
+	_bool				m_bEnabled;
+	_bool				m_bIsRender;
+
+	// ì•„ë˜ ë‘ê°œ í…ìŠ¤ì³ëŠ” ë””ë²„ê¹… ìš©ë„ë¡œ ë„£ì—ˆìŒ. ë‚˜ì¤‘ì— ì§€ìš¸ê±°ì„.
+	IDirect3DBaseTexture9*			m_GreenTexture;
+	IDirect3DBaseTexture9*			m_RedTexture;
+
+	
 public:
-	HRESULT	Ready_Collider();
-	virtual _int Update_Component(const _float& fTimeDelta) override;
-	virtual void LateUpdate_Component() override;
-	virtual void Render_Component() override;
+	HRESULT			Ready_Collider();
+	virtual _int	Update_Component(const _float& fTimeDelta) override;
+	virtual void	LateUpdate_Component() override;
+	virtual void	Render_Component() override;
+
 public:
-	void Set_Group(COLGROUP eGroup);
-	COLGROUP Get_Group() { return m_eGroup; }
 	void Get_Point(_vec3* MinPoint, _vec3* MaxPoint)
 	{
 		*MinPoint = m_pBoundingBox->_min;
 		*MaxPoint = m_pBoundingBox->_max;
 	}
-	// ÇöÀç Ãæµ¹ÀÌ ÀÏ¾î³­ »ó´ë Äİ¶óÀÌ´õ, »óÅÂ°ª ÀúÀå
-	void Insert_Collider(CCollider* pCollider, COL_DIR eDir);
-	// ¸Ê¾È¿¡ ÇØ´çÇÏ´Â Äİ¶óÀÌ´õÀÇ »óÅÂ°ªÀ» ¹İÈ¯
-	Collision* Find_ColState(class CCollider* pOtherCol);
-	// ÀÌ¹Ì ¸®½ºÆ®¿¡ ÀÖ´ÂÁö Ã¼Å©ÇÏ´Â ÇÔ¼ö
-	_bool	Check_AlreadyCol(class CCollider* pOtherCol);
-	_bool Delete_OtherCollider(CCollider* pOtherCol);
-
 	bool Intersect(const _vec3& point) { return m_pBoundingBox->Intersect(point); }
 	_vec3 Get_BoundCenter() { return m_pBoundingBox->Get_Center(); }
 	_vec3 Get_BoundSize() { return m_pBoundingBox->Get_Size();}
+
 	void OnCollisionEnter(const Collision* collision);
 	void OnCollisionStay(const Collision* collision);
 	void OnCollisionExit(const Collision* collision);
 
+	void Set_Enable(_bool bEnabled) { m_bEnabled = bEnabled; }
+	_bool Get_Enable() const { return m_bEnabled; }
+	void Toggle_IsRender() 
+	{
+		m_bIsRender = (m_bIsRender == true) ? false : true;
+	}
+
 	void Set_BoundingBox(const _vec3& vSize = {2.f, 2.f, 2.f});
 
 public:
-	static CCollider* Create(LPDIRECT3DDEVICE9 pGraphicDev, _bool bIsTrigger);
+	static CCollider* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
+
 private:
 	virtual void Free(void) override;
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include "Base.h"
-
-class CBullet;
+#include "Bullet.h"
+#include "Export_Function.h"
 
 class CBulletPool : public CBase
 {
@@ -20,7 +20,7 @@ private:
 		{
 			pBullet = T::Create(pDevice);
 			++m_iCreateCnt;
-			cout << m_iCreateCnt << endl;
+			//cout << m_iCreateCnt << endl;
 		}
 
 		else
@@ -36,6 +36,15 @@ private:
 		(pBullet)->Set_Dir(vDir);
 		(pBullet)->SetIsEnemy(bIsEnemyBullet);
 		(pBullet)->SetAge();
+
+		if (bIsEnemyBullet == true)
+		{
+			Engine::Change_ColGroup(dynamic_cast<CCollider*>(pBullet->Get_Component(L"Collider", ID_ALL)), COL_ENEMYBULLET);
+		}
+		else
+		{
+			Engine::Change_ColGroup(dynamic_cast<CCollider*>(pBullet->Get_Component(L"Collider", ID_ALL)), COL_PLAYERBULLET);
+		}
 
 		return pBullet;
 	}

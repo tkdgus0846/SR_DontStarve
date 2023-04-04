@@ -1,9 +1,16 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "Export_Function.h"
 
-// �׽�Ʈ�� �ּ�
+// 테스트용 주석
+
+// 여기는 안보셔도 됩니다. 굳이 안봐도 돼요.
+bool Compare_Component_Priority(pair<const _tchar*, CComponent*>& a, pair<const _tchar*, CComponent*>& b)
+{
+	return a.second->m_RenderOrder < b.second->m_RenderOrder; // Value로 정렬
+}
+
 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev) : 
 	m_pGraphicDev(pGraphicDev),
@@ -12,7 +19,7 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev) :
 	m_pGraphicDev->AddRef();
 
 	m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Transform", this));
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Transform", m_pTransform });
+	m_uMapComponent[ID_UPDATE].insert({ L"Transform", m_pTransform });
 }
 
 CGameObject::~CGameObject()
@@ -30,12 +37,28 @@ CComponent * CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTI
 HRESULT CGameObject::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	// 여기 아래 부분은 굳이 안봐도 됩니다.
+	vector <pair<const _tchar*, CComponent*>> VecRender(m_uMapComponent[ID_RENDER].begin(), m_uMapComponent[ID_RENDER].end());
+	vector <pair<const _tchar*, CComponent*>> VecAll(m_uMapComponent[ID_ALL].begin(), m_uMapComponent[ID_ALL].end());
+
+	vector <pair<const _tchar*, CComponent*>> sortVec;
+
+	sortVec.insert(sortVec.begin(), VecRender.begin(), VecRender.end());
+	sortVec.insert(sortVec.end(), VecAll.begin(), VecAll.end());
+
+	sort(sortVec.begin(), sortVec.end(), Compare_Component_Priority);
+
+	m_RenderComponent = sortVec;
 	return S_OK;
 }
 
 _int CGameObject::Update_GameObject(const _float & fTimeDelta)
 {
-	for (auto& iter : m_uMapComponent[ID_DYNAMIC])
+	for (auto& iter : m_uMapComponent[ID_UPDATE])
+		iter.second->Update_Component(fTimeDelta);
+
+	for (auto& iter : m_uMapComponent[ID_ALL])
 		iter.second->Update_Component(fTimeDelta);
 
 	return 0;
@@ -43,14 +66,19 @@ _int CGameObject::Update_GameObject(const _float & fTimeDelta)
 
 void CGameObject::LateUpdate_GameObject(void)
 {
-	for (auto& iter : m_uMapComponent[ID_DYNAMIC])
+	for (auto& iter : m_uMapComponent[ID_UPDATE])
+		iter.second->LateUpdate_Component();
+
+	for (auto& iter : m_uMapComponent[ID_ALL])
 		iter.second->LateUpdate_Component();
 }
 
 void CGameObject::Render_GameObject(void)
 {
-	for (auto& iter : m_uMapComponent[ID_DYNAMIC])
+	for (auto& iter : m_RenderComponent)
 		iter.second->Render_Component();
+
+	m_pGraphicDev->SetTexture(0, nullptr);
 }
 
 void CGameObject::Compute_ViewZ(const _vec3 * pPos)

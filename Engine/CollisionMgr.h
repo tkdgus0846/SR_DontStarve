@@ -1,10 +1,8 @@
-#pragma once
+ï»¿#pragma once
 #include "Base.h"
 #include "Collider.h"
 
 BEGIN(Engine)
-
-
 
 class CCollisionMgr : public CBase
 {
@@ -15,21 +13,20 @@ private:
 	virtual ~CCollisionMgr();
 
 public:
-	void		Add_Collider(CCollider* pCollider);
-	void		Check_Collision(COLGROUP eGroup1, COLGROUP eGroup2);
+	// ì‹¤ì§ˆì ìœ¼ë¡œ ì½œë¦¬ì ¼ì„ ì²´í¬í•´ì£¼ëŠ” í•¨ìˆ˜.
+	void		Check_Collision(COLGROUP ID1, COLGROUP ID2);
+	void		Add_Collider(COLGROUP eID, CCollider* pCollider);
+	// ì½œë¼ì´ë”ë“¤ì˜ ë Œë”ë¥¼ êº¼ì£¼ëŠ” í•¨ìˆ˜.
+	void		Toggle_ColliderRender();
+	void		Change_ColGroup(CCollider* collider, COLGROUP changeID);
 
-	_bool		Collision_Range(CCollider* pSrc, CCollider* pDest);
-	_bool		Collision_Box(CCollider* pSrc, CCollider* pDest);
-	_bool		Check_BoundingBox(CCollider * pSrc, CCollider * pDest, _float * pX, _float * pY, _float * pZ);
-	void		Delete_Collider(CGameObject* pGameObject);
-
-
-	void		Set_Collider(COLGROUP eGroup, CCollider* pCollider);
-	void		Clear_Collision();
 private:
-	vector<CCollider*>	m_ColliderList[COL_END];
-	// Ãæµ¹ °¨Áö ¹üÀ§ ¼³Á¤ (Äİ¶óÀÌ´õ ¹Ú½ºÁß °¡Àå Å« ±æÀÌ¿¡ °öÇØÁÖ¾î »ç¿ëÇÔ)
-	_float				m_fRangeOffset;
+	bool		Collision_Box(CCollider* pSrc, CCollider* pDest, COL_DIR& colDir, BoundingBox& bound, _vec3& amountVec);
+	_bool		Check_BoundingBox(CCollider * pSrc, CCollider * pDest, _float * pX, _float * pY, _float * pZ);
+	
+private:
+	list<CCollider*>	m_ColliderList[COL_END];
+
 private:
 	virtual void Free(void) override;
 };

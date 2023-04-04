@@ -18,7 +18,7 @@ CAnimation::CAnimation(const CAnimation & rhs) :
 	m_ePrevState(rhs.m_ePrevState),
 	m_eCurState(rhs.m_eCurState)
 {
-
+	m_RenderOrder = 2;
 }
 
 CAnimation::~CAnimation()
@@ -60,7 +60,7 @@ void CAnimation::Render_Component()
 {
 	if (m_CurFrame == nullptr) return;
 
-	m_CurFrame->pTexture->Set_Texture(m_CurFrame->iFrame);
+	m_CurFrame->pTexture->Render_Texture(m_CurFrame->iFrame);
 }
 
 CAnimation* CAnimation::Create(LPDIRECT3DDEVICE9 pGraphicDev)

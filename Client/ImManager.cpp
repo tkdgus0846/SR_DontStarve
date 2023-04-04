@@ -31,14 +31,14 @@ void CImManager::Update(_float fTimeDelta)
 	}
 
 	_vec3 tmp = Picking_OnTerrain(g_hWnd);
-	cout << (_int)tmp.x << "\t" << (_int)tmp.z << endl;
+	//cout << (_int)tmp.x << "\t" << (_int)tmp.z << endl;
 }
 
 void CImManager::Render(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+	/*pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	pGraphicDev->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
+	pGraphicDev->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);*/
 	
 	ImGui::Render();
 	ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
@@ -54,11 +54,11 @@ void CImManager::Release()
 
 _vec3 CImManager::Picking_OnTerrain(HWND hWnd)
 {
-	CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(LAYER_ENVIRONMENT, L"Terrain", L"TerrainTex", ID_DYNAMIC));
+	CTerrainTex*	pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(LAYER_ENVIRONMENT, L"Terrain", L"TerrainTex", ID_RENDER));
 	if (!pTerrainBufferCom)
 		return _vec3();
 
-	CTransform*	pTerrainTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_ENVIRONMENT, L"Terrain", L"Transform", ID_DYNAMIC));
+	CTransform*	pTerrainTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_ENVIRONMENT, L"Terrain", L"Transform", ID_UPDATE));
 	NULL_CHECK_RETURN(pTerrainTransCom, _vec3());
 
 	POINT	ptMouse{};

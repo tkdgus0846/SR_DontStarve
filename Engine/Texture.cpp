@@ -12,6 +12,9 @@ CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
 CTexture::CTexture(const CTexture & rhs)
 	:CComponent(rhs)
 {
+	m_RenderOrder = 2;
+	m_TextureNum = 0;
+
 	_uint	iSize = rhs.m_vecTexture.size();
 	m_vecTexture.reserve(iSize);
 
@@ -19,7 +22,6 @@ CTexture::CTexture(const CTexture & rhs)
 
 	for (auto& iter : m_vecTexture)
 		iter->AddRef();
-
 }
 
 CTexture::~CTexture()
@@ -56,12 +58,20 @@ HRESULT CTexture::Ready_Texture(TEXTYPE eTextype, const _tchar * pPath, const _u
 	return S_OK;
 }
 
-void CTexture::Set_Texture(const _uint & iIndex)
+void CTexture::Render_Texture(const _uint& iIndex)
 {
 	if (m_vecTexture.size() <= iIndex)
 		return;
 
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
+}
+
+void CTexture::Render_Component()
+{
+	if (m_vecTexture.size() <= m_TextureNum)
+		return;
+
+	m_pGraphicDev->SetTexture(0, m_vecTexture[m_TextureNum]);
 }
 
 CTexture * CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTYPE eTextype, const _tchar * pPath, const _uint & iCnt)

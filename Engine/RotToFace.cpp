@@ -28,7 +28,7 @@ _int CRotToFace::Update_Component(const _float & fTimeDelta)
 	if (GetAsyncKeyState(VK_SPACE))
 		return BEHAVIOR_FALSE;
 	//
-	CTransform* pTargetTransform = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_PLAYER, L"Player", L"Transform", ID_DYNAMIC));
+	CTransform* pTargetTransform = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_PLAYER, L"Player", L"Transform", ID_UPDATE));
 
 	_float fSpeed = 0.f;
 	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FALSE);

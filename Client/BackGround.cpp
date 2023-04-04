@@ -35,7 +35,6 @@ void CBackGround::LateUpdate_GameObject(void)
 
 void CBackGround::Render_GameObject(void)
 {
-	m_pTextureCom->Set_Texture(0);
 	__super::Render_GameObject();
 }
 
@@ -45,12 +44,12 @@ HRESULT CBackGround::Add_Component(void)
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex",this));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"RcTex", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pComponent });
 
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Logo_Texture",this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Logo_Texture", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"Logo_Texture", pComponent });
 
 	return S_OK;
 }

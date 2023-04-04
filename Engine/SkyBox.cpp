@@ -14,12 +14,12 @@ CSkyBox::~CSkyBox()
 
 HRESULT CSkyBox::Ready_GameObject(void)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	HRESULT result = __super::Ready_GameObject();
 
 	m_pTransform->m_vScale = { 40.f, 40.f, 40.f };
 
 
-	return S_OK;
+	return result;
 }
 _int CSkyBox::Update_GameObject(const _float& fTimeDelta)
 {
@@ -52,8 +52,6 @@ void CSkyBox::Render_GameObject(void)
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-	m_pTextureCom->Set_Texture(3);
-
 	__super::Render_GameObject();
 
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -68,11 +66,12 @@ HRESULT CSkyBox::Add_Component(void)
 
 	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(Engine::Clone_Proto(L"CubeTex",this));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"CubeTex", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"CubeTex", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"SkyBox_Texture",this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"SkyBox_Texture", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"SkyBox_Texture", pComponent });
+	m_pTextureCom->Set_Texture_Num(3);
 
 	return S_OK;
 }

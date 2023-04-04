@@ -40,9 +40,20 @@ HRESULT		Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 {
 	return CProtoMgr::GetInstance()->Ready_Proto(pProtoTag, pComponent);
 }
-CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject, class CBlackBoard* pBlackBoard)
+
+CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject)
+{
+	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject);
+}
+
+CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject, CBlackBoard* pBlackBoard)
 {
 	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject, pBlackBoard);
+}
+
+CComponent*	Clone_Proto(const _tchar * pProtoTag, CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize)
+{
+	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject, eColGroup, boundSize);
 }
 
 void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)
@@ -58,23 +69,30 @@ void		Clear_RenderGroup(void)
 	CRenderer::GetInstance()->Clear_RenderGroup();
 }
 
-void		Add_Collider(CCollider * pCollider)
+void		Add_Collider(COLGROUP eID, CCollider * pCollider)
 {
-	CCollisionMgr::GetInstance()->Add_Collider(pCollider);
+	CCollisionMgr::GetInstance()->Add_Collider(eID, pCollider);
 }
+
 void		Check_Collision(COLGROUP eGroup1, COLGROUP eGroup2)
 {
 	CCollisionMgr::GetInstance()->Check_Collision(eGroup1, eGroup2);
 }
-void		Clear_Collision()
+
+void		Toggle_ColliderRender()
 {
-	CCollisionMgr::GetInstance()->Clear_Collision();
+	CCollisionMgr::GetInstance()->Toggle_ColliderRender();
 }
 
-void		Set_Collider(COLGROUP eGroup, CCollider* pCollider)
+void		Change_ColGroup(CCollider* collider, COLGROUP changeID)
 {
-	CCollisionMgr::GetInstance()->Set_Collider(eGroup, pCollider);
+	CCollisionMgr::GetInstance()->Change_ColGroup(collider, changeID);
 }
+
+//void		Set_Collider(COLGROUP eGroup, CCollider* pCollider)
+//{
+//	CCollisionMgr::GetInstance()->Set_Collider(eGroup, pCollider);
+//}
 
 void		On_Camera(const _tchar* pCamTag)
 {

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Component.h"
 #include "Include.h"
@@ -8,7 +8,7 @@ BEGIN(Engine)
 class  CTransform : public CComponent
 {
 public:
-	// Áö»óÀÎÁö	  °øÁßÀÎÁö
+	// ì§€ìƒì¸ì§€	  ê³µì¤‘ì¸ì§€
 	enum MOVETYPE { LANDOBJECT, AIRCRAFT, MOVE_END };
 
 private:
@@ -36,19 +36,19 @@ public:
 		m_vInfo[INFO_POS] = pos;
 	}
 
-	// Á¦´ë·Î µ¹¾Æ°¡´ÂÁö È®ÀÎ ÇØºÁ¾ßÇÔ.
+	// ì œëŒ€ë¡œ ëŒì•„ê°€ëŠ”ì§€ í™•ì¸ í•´ë´ì•¼í•¨.
 	void Set_Dir(const _vec3& dir);
 
-	// ÇØ´ç À§Ä¡¸¦ ¹Ù¶óº¸°Ô²û ¸¸µå´Â ÇÔ¼ö.
+	// í•´ë‹¹ ìœ„ì¹˜ë¥¼ ë°”ë¼ë³´ê²Œë” ë§Œë“œëŠ” í•¨ìˆ˜.
 	void Set_Target(const _vec3& targetPos);
 
-	// ¿À¸¥ÂÊ º¤ÅÍ·Î ¿òÁ÷ÀÌ´Â°Å
+	// ì˜¤ë¥¸ìª½ ë²¡í„°ë¡œ ì›€ì§ì´ëŠ”ê±°
 	void	Move_Strafe(const _float& fUnits, const _float& fTimeDelta);// Move-Right
 
-	// ¾÷ º¤ÅÍ·Î ¿òÁ÷ÀÌ´Â°Å
+	// ì—… ë²¡í„°ë¡œ ì›€ì§ì´ëŠ”ê±°
 	void	Move_Fly(const _float& fUnits, const _float& fTimeDelta);	// Move-Up
 
-	// ·è º¤ÅÍ·Î ¿òÁ÷ÀÌ´Â°Å
+	// ë£© ë²¡í„°ë¡œ ì›€ì§ì´ëŠ”ê±°
 	void	Move_Walk(const _float& fUnits, const _float& fTimeDelta);  // Move-Look
 
 	void	Rot_Pitch(const _float& fAngle, const _float& fTimeDelta);// Rot-Right

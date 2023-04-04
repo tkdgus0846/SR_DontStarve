@@ -23,6 +23,7 @@ CComponent::CComponent(const CComponent & rhs)
 	, m_pGameObject(rhs.m_pGameObject)
 	, m_bClone(true)
 {
+	m_RenderOrder = 0;
 	m_pGraphicDev->AddRef();
 }
 
@@ -58,8 +59,8 @@ CComposite::CComposite()
 
 CComposite::CComposite(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev)
-	, m_iterCurComponent(m_VecComponents[ID_DYNAMIC].begin())
-	, m_iterPreComponent(m_VecComponents[ID_DYNAMIC].begin())
+	, m_iterCurComponent(m_VecComponents[ID_UPDATE].begin())
+	, m_iterPreComponent(m_VecComponents[ID_UPDATE].begin())
 {
 }
 
@@ -76,15 +77,15 @@ CComposite::~CComposite()
 
 HRESULT CComposite::Ready_Composite(void)
 {
-	m_iterCurComponent = m_VecComponents[ID_DYNAMIC].begin();
-	m_iterPreComponent = m_VecComponents[ID_DYNAMIC].begin();
+	m_iterCurComponent = m_VecComponents[ID_UPDATE].begin();
+	m_iterPreComponent = m_VecComponents[ID_UPDATE].begin();
 
 	return S_OK;
 }
 
 _int CComposite::Update_Component(const _float & fTimeDelta)
 {
-	for (auto& iter : m_VecComponents[ID_DYNAMIC])
+	for (auto& iter : m_VecComponents[ID_UPDATE])
 	{
 		_int iResult = iter.pComponent->Update_Component(fTimeDelta);
 	}
@@ -93,7 +94,7 @@ _int CComposite::Update_Component(const _float & fTimeDelta)
 
 void CComposite::LateUpdate_Component(void)
 {
-	for (auto& iter : m_VecComponents[ID_DYNAMIC])
+	for (auto& iter : m_VecComponents[ID_UPDATE])
 	{
 		iter.pComponent->LateUpdate_Component();
 	}
@@ -101,10 +102,10 @@ void CComposite::LateUpdate_Component(void)
 
 void CComposite::Render_Component(void)
 {
-	for (auto& iter : m_VecComponents[ID_DYNAMIC])
+	/*for (auto& iter : m_VecComponents[ID_UPDATE])
 	{
 		iter.pComponent->Render_Component();
-	}
+	}*/
 }
 
 HRESULT CComposite::Add_Component(COMPONENTID eID, 

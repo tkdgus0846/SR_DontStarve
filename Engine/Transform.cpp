@@ -18,6 +18,7 @@ CTransform::CTransform(const CTransform & rhs)
 	, m_matBill(rhs.m_matBill)
 	, m_eMoveType(rhs.m_eMoveType)
 {
+	m_RenderOrder = 0;
 	for (size_t i = 0; i < INFO_END; ++i)
 		m_vInfo[i] = rhs.m_vInfo[i];
 }

@@ -30,6 +30,7 @@ CVIBuffer::CVIBuffer(const CVIBuffer & rhs)
 {
 	m_pVB->AddRef();
 	m_pIB->AddRef();
+	m_RenderOrder = 3;
 }
 
 CVIBuffer::~CVIBuffer()

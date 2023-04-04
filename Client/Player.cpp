@@ -54,8 +54,6 @@ void CPlayer::LateUpdate_GameObject(void)
 
 void CPlayer::Render_GameObject(void)
 {
-	__super::Render_GameObject();
-
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
@@ -68,8 +66,6 @@ void CPlayer::Render_GameObject(void)
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 0xc0);*/
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-
-	m_pTextureCom->Set_Texture(0);
 
 	__super::Render_GameObject();
 
@@ -89,29 +85,27 @@ void CPlayer::OnTriggerStay(const CCollider * other)
 
 HRESULT CPlayer::Add_Component(void)
 {
-	CComponent*		pComponent = nullptr;
-
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex",this));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"RcTex", pComponent });
+	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex",this));
+	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pBufferCom });
 		
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Player_Texture",this));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Player_Texture", pComponent });
+	CTexture* pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Player_Texture",this));
+	NULL_CHECK_RETURN(pTextureCom, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"Player_Texture", pTextureCom });
+	pTextureCom->Set_Texture_Num(0);
 
-	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this));
-	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Collider", pComponent });
-	m_pCollider->Set_BoundingBox({3.f,3.f,3.f});
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_PLAYER));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"Player_Collider", pCollider });
+	pCollider->Set_BoundingBox({3.f,3.f,3.f});
 
 	/*pComponent = m_pRigid = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"Rigidbody", this));
 	NULL_CHECK_RETURN(m_pRigid, E_FAIL);
 	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Rigidbody", pComponent });*/
 
-	pComponent = m_pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
+	CCamera* m_pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
-
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Camera", pComponent });
+	m_uMapComponent[ID_UPDATE].insert({ L"Player_Camera", m_pCamera });
 	m_pCamera->Set_CameraName(L"Player_Camera");
 
 	return S_OK;
@@ -151,6 +145,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Key_Down((DIK_F1))) 	Engine::On_Camera(L"Player_Camera");
 	if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
+	if (Engine::Key_Down((DIK_C))) Engine::Toggle_ColliderRender();
 
 	static float ShootCoolTime = 0.f;
 	ShootCoolTime += fTimeDelta;

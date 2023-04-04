@@ -20,9 +20,6 @@ public:
 	virtual void OnCollisionEnter(const Collision* collsion) override;
 	virtual void OnCollisionStay(const Collision* collision) override;
 	virtual void OnCollisionExit(const Collision* collision) override;
-	virtual void OnTriggerEnter(const CCollider* other) override;
-	virtual void OnTriggerStay(const CCollider* other) override;
-	virtual void OnTirggerExit(const CCollider* other) override;
 
 	virtual HRESULT Add_Component() override;
 protected:

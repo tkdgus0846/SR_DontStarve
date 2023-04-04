@@ -32,14 +32,7 @@ private:
 	void		Fix_Mouse();
 
 private:
-	Engine::CRcTex*			m_pBufferCom;
-	Engine::CTexture*		m_pTextureCom;
-	Engine::CCollider*		m_pCollider;
-	Engine::CRigidbody*		m_pRigid;
-	Engine::CCamera*		m_pCamera;
-
 	_float					m_fSpeed;
-
 	_bool					m_bFix;
 
 public:

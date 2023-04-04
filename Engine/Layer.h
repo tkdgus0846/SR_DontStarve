@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Base.h"
 #include "GameObject.h"
@@ -24,7 +24,7 @@ public:
 	void				LateUpdate_Layer(void);
 
 private:
-	// ÀÌ¸§ Áßº¹ÀÌ ¹®Á¦¿´À¸´Ï±î ÀÌ·¸°ÔÇÏ¸é ÀÌ¸§Áßº¹ »ğÀÔ ¹®Á¦´Â ¾øÁö¸¸ °íÀ¯ ½Äº°°ªÀÌ ¾ø¾î¼­ Ã£¾Æ¿ÀÁø ¸øÇÑ´Ù.
+	// ì´ë¦„ ì¤‘ë³µì´ ë¬¸ì œì˜€ìœ¼ë‹ˆê¹Œ ì´ë ‡ê²Œí•˜ë©´ ì´ë¦„ì¤‘ë³µ ì‚½ì… ë¬¸ì œëŠ” ì—†ì§€ë§Œ ê³ ìœ  ì‹ë³„ê°’ì´ ì—†ì–´ì„œ ì°¾ì•„ì˜¤ì§„ ëª»í•œë‹¤.
 	multimap<const _tchar*, CGameObject*>			m_uMapObject;
 
 public:

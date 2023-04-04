@@ -31,6 +31,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="CubeCol.h" />
     <ClInclude Include="CubeTex.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="DInputMgr.h" />
@@ -96,6 +97,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="CubeCol.cpp" />
     <ClCompile Include="CubeTex.cpp" />
     <ClCompile Include="DInputMgr.cpp" />
     <ClCompile Include="Firework.cpp" />

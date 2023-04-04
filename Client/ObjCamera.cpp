@@ -26,7 +26,7 @@ _int CObjCamera::Update_GameObject(const _float & fTimeDelta)
 {
 	Key_Input(fTimeDelta);
 
-	CTransform*	pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_PLAYER, L"Player", L"Transform", ID_DYNAMIC));
+	CTransform*	pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_PLAYER, L"Player", L"Transform", ID_UPDATE));
 
 	m_pTransform->m_vInfo[INFO_LOOK] = 
 		pPlayerTransformCom->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
@@ -50,7 +50,7 @@ HRESULT CObjCamera::Add_Component(void)
 
 	pComponent = m_pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Obj_Camera", pComponent });
+	m_uMapComponent[ID_UPDATE].insert({ L"Obj_Camera", pComponent });
 	m_pCamera->Set_CameraName(L"Obj_Camera");
 
 	return S_OK;

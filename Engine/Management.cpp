@@ -39,10 +39,11 @@ void CManagement::LateUpdate_Management()
 {
 	NULL_CHECK(m_pScene);
 	m_pScene->LateUpdate_Scene();
-	// 충돌체크
 
-	// 그룹끼리만 충돌검사하는 코드 ㅇㅇ 
-	//Engine::Check_Collision(COL_ENV, COL_OBJ);
+	// 그룹핑 하여 충돌검사하게끔 만들었음. 
+	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
+	Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
+	Engine::Check_Collision(COL_DETECTION, COL_PLAYER);
 }
 
 void CManagement::Render_Management(LPDIRECT3DDEVICE9 pGraphicDev)

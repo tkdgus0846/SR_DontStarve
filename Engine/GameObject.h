@@ -1,9 +1,17 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Component.h"
 #include "Base.h"
 
 BEGIN(Engine)
+
+struct ComponentCmp 
+{
+	bool operator()(const pair<const _tchar*, CComponent*>* a, const pair<const _tchar*, CComponent*>* b) const
+	{
+		return a->second->m_RenderOrder < b->second->m_RenderOrder;
+	}
+};
 
 class  CGameObject : public CBase
 {
@@ -16,7 +24,7 @@ public:
 	_float				Get_ViewZ(void) { return m_fViewZ; }
 
 
-	// ¼ø¼ö °¡»óÇÔ¼ö ¿Ö³ÄÇÏ¸é °ÔÀÓ¿ÀºêÁ§Æ®¿¡ ÄÄÆ÷³ÍÆ®°¡ Ãß°¡µÇÁö ¾ÊÀ»ÀÏÀº ¾øÀ¸´Ï±î
+	// ìˆœìˆ˜ ê°€ìƒí•¨ìˆ˜ ì™œëƒí•˜ë©´ ê²Œì„ì˜¤ë¸Œì íŠ¸ì— ì»´í¬ë„ŒíŠ¸ê°€ ì¶”ê°€ë˜ì§€ ì•Šì„ì¼ì€ ì—†ìœ¼ë‹ˆê¹Œ
 	virtual HRESULT		Add_Component() PURE;
 
 public:
@@ -29,15 +37,11 @@ public:
 	virtual void OnCollisionStay(const class Collision* collision) {}
 	virtual void OnCollisionExit(const class Collision* collision) {}
 
-	virtual void OnTriggerEnter(const class CCollider* other) {}
-	virtual void OnTriggerStay(const class CCollider* other) {}
-	virtual void OnTirggerExit(const class CCollider* other) {}
-
 	void			Compute_ViewZ(const _vec3* pPos);
 
-	// À§Ä¡ ÁöÁ¤ ÇÔ¼ö
+	// ìœ„ì¹˜ ì§€ì • í•¨ìˆ˜
 	void			Set_Pos(const _vec3& pos);
-	// ÃÄ´Ùº¸´Â ¹æÇâ ¹Ù²Ù´Â ÇÔ¼ö
+	// ì³ë‹¤ë³´ëŠ” ë°©í–¥ ë°”ê¾¸ëŠ” í•¨ìˆ˜
 	void			Set_Dir(const _vec3& dir);
 
 private:
@@ -45,15 +49,21 @@ private:
 	
 
 protected:
-	unordered_map<const _tchar*, CComponent*>			m_uMapComponent[ID_END];
+	unordered_map<const _tchar*, CComponent*>			m_uMapComponent[ID_END];	
 	LPDIRECT3DDEVICE9		m_pGraphicDev;
 	_float					m_fViewZ = 0.f;
+
+private:
+	// ì»´í¬ë„ŒíŠ¸ë“¤ì˜ ë Œë”ìˆœì„œë¥¼ ì •í•´ì£¼ëŠ” ë²¡í„° ì»¨í…Œì´ë„ˆ
+	vector<pair<const _tchar*, CComponent*>> m_RenderComponent;
 
 public:
 	class CTransform* m_pTransform;
 
 protected:
 	virtual void		Free(void);
+
+
 };
 
 END

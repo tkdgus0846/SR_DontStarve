@@ -30,6 +30,7 @@ protected:
 
 public:
 	class CGameObject*	m_pGameObject;
+	_uint				m_RenderOrder;
 
 public:
 	virtual	CComponent*	Clone(void) PURE;

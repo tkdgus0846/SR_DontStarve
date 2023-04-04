@@ -35,6 +35,8 @@ _int CNormalBullet::Update_GameObject(const _float& fTimeDelta)
 
 	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());*/
 
+	
+
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 	
 	_matrix view;
@@ -76,21 +78,6 @@ void CNormalBullet::OnCollisionExit(const Collision* collision)
 	
 }
 
-void CNormalBullet::OnTriggerEnter(const CCollider* other)
-{
-	
-}
-
-void CNormalBullet::OnTriggerStay(const CCollider* other)
-{
-	
-}
-
-void CNormalBullet::OnTirggerExit(const CCollider* other)
-{
-	
-}
-
 HRESULT CNormalBullet::Add_Component()
 {
 	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"NormalBullet_Texture", this));
@@ -102,11 +89,11 @@ HRESULT CNormalBullet::Add_Component()
 
 	animation->BindAnimation(ANIM_SHOT, texture, 0.1f);
 	animation->SelectState(ANIM_SHOT);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Animation", animation });
+	m_uMapComponent[ID_ALL].insert({ L"Animation", animation });
 
 	CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"RcTex", rcTex });
+	m_uMapComponent[ID_RENDER].insert({ L"RcTex", rcTex });
 
 	return S_OK;
 }

@@ -50,18 +50,25 @@ inline void			Render_Management(LPDIRECT3DDEVICE9 pGraphicDev);
 
 
 inline HRESULT		Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);
-inline CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject, class CBlackBoard* pBlackBoard = nullptr);
+
+inline CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject);
+// AI 클론용
+inline CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, class CBlackBoard* pBlackBoard);
+
+// Collider 클론용
+inline CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize = { 2.f,2.f,2.f });
 
 
 inline void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);
 inline void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
 inline void		Clear_RenderGroup(void);
 
-inline void		Add_Collider(CCollider * pCollider);
+inline void		Add_Collider(COLGROUP eID, CCollider * pCollider);
 inline void		Check_Collision(COLGROUP eGroup1, COLGROUP eGroup2);
-inline void		Clear_Collision();
-inline void		Set_Collider(COLGROUP eGroup, CCollider* pCollider);
-
+inline void		Toggle_ColliderRender();
+inline void		Change_ColGroup(CCollider* collider, COLGROUP changeID);
+//inline void		Set_Collider(COLGROUP eGroup, CCollider* pCollider);
+//
 inline void		On_Camera(const _tchar* pCamTag);
 inline void		Shake_Camera();
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Typedef.h"
 
@@ -6,8 +6,8 @@ BEGIN(Engine)
 
 typedef	 struct tagVertexColor
 {
-	_vec3			vPos;		// À§Ä¡
-	_ulong			dwColor;	// »ö»ó
+	_vec3			vPos;		// ìœ„ì¹˜
+	_ulong			dwColor;	// ìƒ‰ìƒ
 
 }VTXCOL;
 
@@ -15,8 +15,8 @@ const	_ulong		FVF_COL = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX0;
 
 typedef	 struct tagVertexTexture
 {
-	_vec3			vPos;		// À§Ä¡
-	_vec2			vTexUV;		// »ö»ó
+	_vec3			vPos;		// ìœ„ì¹˜
+	_vec2			vTexUV;		// ìƒ‰ìƒ
 
 }VTXTEX;
 
@@ -24,8 +24,8 @@ const	_ulong		FVF_TEX = D3DFVF_XYZ | D3DFVF_TEX1;
 
 typedef	 struct tagVertexCube
 {
-	_vec3			vPos;		// À§Ä¡
-	_vec3			vTexUV;		// »ö»ó
+	_vec3			vPos;		// ìœ„ì¹˜
+	_vec3			vTexUV;		// ìƒ‰ìƒ
 
 }VTXCUBE;
 
@@ -34,7 +34,7 @@ const	_ulong		FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);
 typedef VTXCOL PTCCOL;
 typedef VTXTEX PTCTEX;
 
-// D3DFVF_TEXCOORDSIZE3 : ÅØ½ºÃ³ÀÇ UV°ªÀÌ FLOATÇü 3°³ÀÇ Å©±â ¸¸Å­ÀÌ¸ç °ýÈ£ ¾È ¼ýÀÚÀÇ ÀÇ¹Ì´Â º»·¡ ¹öÅØ½ºÀÇ UV °ªÀÌ ¿©·¯°³ ÀÖÀ» ¼ö ÀÕ´Âµ¥ ±× Áß Ã¹ ¹øÂ° °ªÀ» »ç¿ëÇÏ°Ú´Ù´Â ÀÇ¹Ì
+// D3DFVF_TEXCOORDSIZE3 : í…ìŠ¤ì²˜ì˜ UVê°’ì´ FLOATí˜• 3ê°œì˜ í¬ê¸° ë§Œí¼ì´ë©° ê´„í˜¸ ì•ˆ ìˆ«ìžì˜ ì˜ë¯¸ëŠ” ë³¸ëž˜ ë²„í…ìŠ¤ì˜ UV ê°’ì´ ì—¬ëŸ¬ê°œ ìžˆì„ ìˆ˜ ìž‡ëŠ”ë° ê·¸ ì¤‘ ì²« ë²ˆì§¸ ê°’ì„ ì‚¬ìš©í•˜ê² ë‹¤ëŠ” ì˜ë¯¸
 
 typedef	struct tagIndex16
 {
@@ -64,23 +64,8 @@ struct Particle
 	bool bIsAlive;
 };
 
-struct Bound
+struct BoundingBox
 {
-	// Ãæµ¹Çß´ÂÁö ¾Æ´ÑÁö ¿©ºÎ °Ë»ç
-	virtual bool Intersect(const _vec3& point) PURE;
-	// °ÔÀÓ¿ÀºêÁ§Æ®°¡ ÀÌµ¿ÇÒ¶§ °°ÀÌ ¿òÁ÷ÀÌ°Ô ÇÏ´Â ÇÔ¼ö
-	virtual void Offset(const _vec3& origin) PURE;
-};
-
-
-
-struct BoundingBox : public Bound
-{
-	enum COLDIR
-	{
-		COLDIR_TOP, BC_BOTTOM, BC_LEFT, BC_RIGHT
-	};
-
 	BoundingBox(const _vec3& offsetMin = { -1.f, -1.f, -1.f }, const _vec3& offsetMax = { 1.f, 1.f, 1.f })
 	{
 		_offsetMin = offsetMin;
@@ -99,8 +84,8 @@ struct BoundingBox : public Bound
 		return _offsetMax - _offsetMin;
 	}
 
-	// Áö±ÝÀº Å¥ºê¿Í Á¡ÀÇ Ãæµ¹ÀÓ
-	virtual bool Intersect(const _vec3& point) override
+	// ì§€ê¸ˆì€ íë¸Œì™€ ì ì˜ ì¶©ëŒ ê²€ì‚¬
+	virtual bool Intersect(const _vec3& point)
 	{
 		if (point.x >= _min.x && point.y >= _min.y && point.z >= _min.z &&
 			point.x <= _max.x && point.y <= _max.y && point.z <= _max.z)
@@ -113,54 +98,45 @@ struct BoundingBox : public Bound
 		}
 	}
 
-	// ¿À¸®Áø À§Ä¡¸¦ ¹Þ¾Æ¿Í¼­ offsetMin ÀÌ¶û offsetMax¸¸Å­ ´õÇØÁÜ ±× ÀÌÀ¯´Â °ÔÀÓ¿ÀºêÁ§Æ®°¡ ¿òÁ÷¿´À»¶§ ¹üÀ§°¡ ´Þ¶óÁ®¾ß ÇÏ±â¶§¹®.
-	virtual void Offset(const _vec3& origin) override
+	// ì˜¤ë¦¬ì§„ ìœ„ì¹˜ë¥¼ ë°›ì•„ì™€ì„œ offsetMin ì´ëž‘ offsetMaxë§Œí¼ ë”í•´ì¤Œ ê·¸ ì´ìœ ëŠ” ê²Œìž„ì˜¤ë¸Œì íŠ¸ê°€ ì›€ì§ì˜€ì„ë•Œ ë²”ìœ„ê°€ ë‹¬ë¼ì ¸ì•¼ í•˜ê¸°ë•Œë¬¸.
+	virtual void Offset(const _vec3& origin)
 	{
 		_min = origin + _offsetMin;
 		_max = origin + _offsetMax;
 	}
 
-	// origin + Å¥ºêÀÇ Å©±â (Å¥ºê ¿ùµå ÁÂÇ¥)
+	// origin + íë¸Œì˜ í¬ê¸° (íë¸Œ ì›”ë“œ ì¢Œí‘œ)
 	_vec3 _min;
 	_vec3 _max;
 
-	// Å¥ºêÀÇ Å©±â (Å¥ºê ·ÎÄÃ ÁÂÇ¥)
+	// íë¸Œì˜ í¬ê¸° (íë¸Œ ë¡œì»¬ ì¢Œí‘œ)
 	_vec3 _offsetMin;
 	_vec3 _offsetMax;
 };
 
 struct Collision
 {
-	void Set_ColDir(COL_DIR dir) { _dir = dir; }
-	COL_DIR Get_ColDir() { return _dir; }
-	COL_STATE Set_Curcol(_bool curcol) {
-		if (false == _bPreCol && true == curcol)
-		{
-			_CurState = COLSTATE_ENTER;
-		}
-		else if (true == _bPreCol && true == curcol)
-		{
-			_CurState = COLSTATE_STAY;
-		}
-		else if (true == _bPreCol && false == curcol)
-		{
-			_CurState = COLSTATE_EXIT;
-		}
-		_bCurCol = curcol;
-		return _CurState;
-	}
-	// ´ÙÀ½ÇÁ·¹ÀÓ °¡±âÀü ÇöÀç »óÅÂ¸¦ ÀÌÀü°ª¿¡ ÀúÀå
-	void Set_PreCol() { _bPreCol = _bCurCol; }
-	_bool Get_PreCol() { return _bPreCol; }
-	//        ÀÌÀüÇÁ·¹ÀÓ¿¡ Ãæµ¹ÁßÀÌ¿´´ÂÁö È®ÀÎ
-	_bool    _bPreCol = false;
-	_bool    _bCurCol = false;
-	// Ãæµ¹ÇÑ ¹æÇâ
-	COL_DIR        _dir;
-	// ÇöÀç enter, stay, exit ÆÇ´Ü
-	COL_STATE    _CurState;
-	class CCollider*    otherCol;
-	class CGameObject* otherObj;
+	Collision() : 
+		CollisionDir(DIR_END),
+		MyCollider(nullptr),
+		OtherCollider(nullptr),
+		OtherGameObject(nullptr),
+		intersectBox(BoundingBox())
+	{}
+
+	// ì¶©ëŒí•œ ë°©í–¥
+	COL_DIR				CollisionDir;
+	// ë‚´ ì½œë¼ì´ë”
+	class CCollider*	MyCollider; 
+	// ìƒëŒ€ ì½œë¼ì´ë”
+	class CCollider*    OtherCollider;
+	// ìƒëŒ€ ê²Œìž„ì˜¤ë¸Œì íŠ¸
+	class CGameObject*	OtherGameObject; 
+	// ì¶©ëŒí•œ ì§€ì 
+	BoundingBox			intersectBox;
+	// ì–¼ë§ˆë‚˜ ì¶©ëŒí–ˆëŠ”ì§€ì— ëŒ€í•œ ë²¡í„° (xë§Œí¼ ê²¹ì¹¨, yë§Œí¼ ê²¹ì¹¨, zë§Œí¼ ê²¹ì¹¨)
+	_vec3				amountVec;
+	
 };
 
 typedef struct tagViewParams

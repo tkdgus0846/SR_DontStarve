@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ProtoMgr.h"
-#include "GameObject.h"
-#include "Behavior.h"
+
+#include "Export_Function.h"
 
 IMPLEMENT_SINGLETON(CProtoMgr)
 
@@ -26,19 +26,35 @@ HRESULT CProtoMgr::Ready_Proto(const _tchar * pProtoTag, CComponent * pComponent
 	return S_OK;
 }
 
-CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject* pGameObject, class CBlackBoard* pBlackBoard)
+CComponent* CProtoMgr::Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject)
 {
 	CComponent*		pPrototype = Find_Proto(pProtoTag);
 	NULL_CHECK_RETURN(pPrototype, nullptr);
-	
+
 	CComponent* pClone = pPrototype->Clone();
 	pClone->SetOwner(pGameObject);
 
-	if (pBlackBoard)
-		dynamic_cast<CBehavior*>(pClone)->Set_BlackBoard(pBlackBoard);
-
 	return pClone;
 }
+
+CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject* pGameObject, CBlackBoard* pBlackBoard)
+{
+	
+	CComponent* pClone = Clone_Proto(pProtoTag, pGameObject);
+	dynamic_cast<CBehavior*>(pClone)->Set_BlackBoard(pBlackBoard);
+	return pClone;
+}
+
+CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize)
+{
+	CComponent* pClone = Clone_Proto(pProtoTag, pGameObject);
+	CCollider* pCollider = dynamic_cast<CCollider*>(pClone);
+	Engine::Add_Collider(eColGroup, pCollider);
+	pCollider->Set_BoundingBox(boundSize);
+	return pCollider;
+}
+
+
 
 CComponent * CProtoMgr::Find_Proto(const _tchar * pProtoTag)
 {
