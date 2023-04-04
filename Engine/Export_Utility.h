@@ -8,7 +8,7 @@
 #include "TriCol.h"
 #include "RcCol.h"
 #include "RcTex.h"
-#include "TerrainTex.h"
+
 #include "Collider.h"
 
 #include "GameObject.h"
@@ -21,6 +21,8 @@
 #include "CameraMgr.h"
 #include "RoomTex.h"
 #include "Mesh.h"
+#include "FloorTex.h"
+#include "WallTex.h"
 
 #include "LightMgr.h"
 

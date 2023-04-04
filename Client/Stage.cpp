@@ -3,11 +3,11 @@
 
 #include "Export_Function.h"
 #include "Monster.h"
-#include "Terrain.h"
+
 #include "SkyBox.h"
 #include "ObjCamera.h"
 #include "Room.h"
-#include "Terrain.h"
+
 #include "ImManager.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -21,8 +21,8 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
-	Add_GameObject(LAYER_ENVIRONMENT, L"Terrain", CTerrain::Create(m_pGraphicDev));
-
+	
+	Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
 	//Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
 

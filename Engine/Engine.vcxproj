@@ -40,6 +40,7 @@
     <ClInclude Include="Export_System.h" />
     <ClInclude Include="Export_Utility.h" />
     <ClInclude Include="Firework.h" />
+    <ClInclude Include="FloorTex.h" />
     <ClInclude Include="FontMgr.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="FrameMgr.h" />
@@ -75,7 +76,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TerrainTex.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerMgr.h" />
@@ -84,6 +84,7 @@
     <ClInclude Include="Typedef.h" />
     <ClInclude Include="VIBuffer.h" />
     <ClInclude Include="Wait.h" />
+    <ClInclude Include="WallTex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -101,6 +102,7 @@
     <ClCompile Include="CubeTex.cpp" />
     <ClCompile Include="DInputMgr.cpp" />
     <ClCompile Include="Firework.cpp" />
+    <ClCompile Include="FloorTex.cpp" />
     <ClCompile Include="FontMgr.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="FrameMgr.cpp" />
@@ -134,7 +136,6 @@
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TerrainTex.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerMgr.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="TriCol.cpp" />
     <ClCompile Include="VIBuffer.cpp" />
     <ClCompile Include="Wait.cpp" />
+    <ClCompile Include="WallTex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Base.inl" />

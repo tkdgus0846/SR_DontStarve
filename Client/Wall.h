@@ -5,16 +5,17 @@
 
 BEGIN(Engine)
 
-class CTerrainTex;
+class CWallTex;
 class CTransform;
 class CTexture;
 
 END
-class CTerrain : public Engine::CGameObject
+
+class CWall : public Engine::CGameObject
 {
-private:
-	explicit CTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CTerrain();
+public:
+	explicit CWall(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CWall();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -24,18 +25,14 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
-	void		Key_Input(const _float& fTimeDelta);
 
 private:
-	Engine::CTerrainTex*	m_pBufferCom;
-	Engine::CTexture*		m_pTextureCom;
-
-	_float					m_fSpeed = 10.f;
+	Engine::CWallTex*	m_pBufferCom;
+	Engine::CTexture*	m_pTextureCom;
 
 public:
-	static CTerrain*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CWall*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;
 };
-

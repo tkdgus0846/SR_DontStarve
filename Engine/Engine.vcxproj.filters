@@ -73,9 +73,6 @@
     <ClInclude Include="RcTex.h">
       <Filter>Component\VIBuffer</Filter>
     </ClInclude>
-    <ClInclude Include="TerrainTex.h">
-      <Filter>Component\VIBuffer</Filter>
-    </ClInclude>
     <ClInclude Include="TriCol.h">
       <Filter>Component\VIBuffer</Filter>
     </ClInclude>
@@ -190,6 +187,12 @@
     <ClInclude Include="CollisionMgr.h">
       <Filter>Manager\CollisionMgr</Filter>
     </ClInclude>
+    <ClInclude Include="FloorTex.h">
+      <Filter>Component\VIBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="WallTex.h">
+      <Filter>Component\VIBuffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -229,9 +232,6 @@
       <Filter>Component\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="RcTex.cpp">
-      <Filter>Component\VIBuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="TerrainTex.cpp">
       <Filter>Component\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="TriCol.cpp">
@@ -347,6 +347,12 @@
     </ClCompile>
     <ClCompile Include="CollisionMgr.cpp">
       <Filter>Manager\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorTex.cpp">
+      <Filter>Component\VIBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="WallTex.cpp">
+      <Filter>Component\VIBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

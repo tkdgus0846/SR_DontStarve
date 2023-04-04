@@ -1,14 +1,14 @@
 #include "stdafx.h"
-#include "TerrainTex.h"
+#include "FloorTex.h"
 
 
-CTerrainTex::CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev)
+CFloorTex::CFloorTex(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CVIBuffer(pGraphicDev)
 	, m_pPos(nullptr)
 {
 }
 
-CTerrainTex::CTerrainTex(const CTerrainTex & rhs)
+CFloorTex::CFloorTex(const CFloorTex & rhs)
 	: CVIBuffer(rhs)
 	, m_fH(rhs.m_fH)
 	, m_iH(rhs.m_iH)
@@ -19,11 +19,11 @@ CTerrainTex::CTerrainTex(const CTerrainTex & rhs)
 {
 }
 
-CTerrainTex::~CTerrainTex()
+CFloorTex::~CFloorTex()
 {
 }
 
-HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX, 
+HRESULT CFloorTex::Ready_Buffer(const _ulong& dwCntX, 
 	const _ulong& dwCntZ, 
 	const _ulong& dwVtxItv)
 {
@@ -48,12 +48,14 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 	
 	pTexture->UnlockRect(0);
 	
-	D3DXSaveTextureToFile(L"../Bin/Resource/Texture/Terrain/MyHeight.bmp", D3DXIFF_BMP, pTexture, nullptr);*/
+	D3DXSaveTextureToFile(L"../Bin/Resource/Texture/Floor/MyHeight.bmp", D3DXIFF_BMP, pTexture, nullptr);*/
 	
 	m_dwFVF = FVF_TEX;
 	m_dwVtxSize = sizeof(VTXTEX);
 	m_dwVtxCnt = dwCntX * dwCntZ;
 	m_dwTriCnt = (dwCntX - 1) * (dwCntZ - 1) * 2;
+	_ulong X = 5; // °¡·Î ¼¿ÀÇ ¼ö
+	_ulong Z = 5; // ¼¼·Î ¼¿ÀÇ ¼ö
 
 	m_pPos = new _vec3[m_dwVtxCnt];
 
@@ -66,7 +68,7 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 	FAILED_CHECK_RETURN(__super::Ready_Buffer(), E_FAIL);
 
 
-	m_hFile = CreateFile(L"../Resource/Texture/Terrain/Height1.bmp", GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+	m_hFile = CreateFile(L"../Resource/Texture/Floor/Height1.bmp", GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
 	_ulong dwByte = 0;
 
@@ -98,8 +100,8 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 				_float(i * dwVtxItv) };
 			m_pPos[dwIndex] = pVertex[dwIndex].vPos;
 
-			pVertex[dwIndex].vTexUV = { _float(j) / (dwCntX - 1) * (_float)dwCntX,
-										_float(i) / (dwCntZ - 1) * (_float)dwCntZ};
+			pVertex[dwIndex].vTexUV = { _float(j) / (dwCntX - 1) * X,
+										_float(i) / (dwCntZ - 1) * Z };
 		}
 	}
 
@@ -153,9 +155,9 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 	return S_OK;
 }
 
-CTerrainTex * CTerrainTex::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)
+CFloorTex * CFloorTex::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)
 {
-	CTerrainTex *	pInstance = new CTerrainTex(pGraphicDev);
+	CFloorTex *	pInstance = new CFloorTex(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Buffer(dwCntX, dwCntZ, dwVtxItv)))
 	{
@@ -165,12 +167,12 @@ CTerrainTex * CTerrainTex::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _ulong& d
 
 	return pInstance;
 }
-CComponent * CTerrainTex::Clone(void)
+CComponent * CFloorTex::Clone(void)
 {
-	return new CTerrainTex(*this);
+	return new CFloorTex(*this);
 }
 
-void CTerrainTex::Free(void)
+void CFloorTex::Free(void)
 {
 	if (false == m_bClone)
 		Safe_Delete_Array(m_pPos);
@@ -178,7 +180,7 @@ void CTerrainTex::Free(void)
 	__super::Free();
 }
 
-bool CTerrainTex::IsInPlane(const _vec3& playerPos, const int& iIndex)
+bool CFloorTex::IsInPlane(const _vec3& playerPos, const int& iIndex)
 {
 	_vec3		vPoint[3] = {
 
