@@ -2,11 +2,11 @@
 
 #include "Include.h"
 
-
 BEGIN(Engine)
 
-class CTerrainTex;
+class CFloorTex;
 class CTransform;
+class CPickingSphere;
 
 END
 
@@ -24,14 +24,14 @@ public:
 	void Render(LPDIRECT3DDEVICE9 pGraphicDev);
 	void Release();
 
-public:
+private:
+	_bool Compute_RayCastHitFloor(_vec3* result, const Ray* pRay);
 
+	Ray CalcRaycast(POINT ptMouse);
+	POINT GetMousePos();
 
-	void		IndexTranslation2DTo1D(_ulong Index, _ulong row, _ulong col);
-	void		IndexTranslation1DTo2D(_ulong Index, _ulong row, _ulong col);
-
-private:     
-	_vec3 GetRayFromMouse();
+	_vec3 PickingFloor();
+	_bool PickingWall(class CWall* pWall);
 
 public:
 	void AddList(CImWindow* pImWindow)

@@ -31,6 +31,7 @@
 #include "Selector.h"
 #include "BlackBoard.h"
 #include "Animation.h"
+#include "PickingSphere.h"
 
 BEGIN(Engine)
 

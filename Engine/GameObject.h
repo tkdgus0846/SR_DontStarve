@@ -22,7 +22,7 @@ protected:
 public:
 	CComponent*			Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	_float				Get_ViewZ(void) { return m_fViewZ; }
-
+	class CVIBuffer*	Get_VIBuffer();
 
 	// 순수 가상함수 왜냐하면 게임오브젝트에 컴포넌트가 추가되지 않을일은 없으니까
 	virtual HRESULT		Add_Component() PURE;
@@ -47,23 +47,21 @@ public:
 private:
 	CComponent*			Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	
-
 protected:
 	unordered_map<const _tchar*, CComponent*>			m_uMapComponent[ID_END];	
 	LPDIRECT3DDEVICE9		m_pGraphicDev;
 	_float					m_fViewZ = 0.f;
-
+	
 private:
 	// 컴포넌트들의 렌더순서를 정해주는 벡터 컨테이너
 	vector<pair<const _tchar*, CComponent*>> m_RenderComponent;
 
 public:
-	class CTransform* m_pTransform;
+	class CTransform*		m_pTransform;
+	class CPickingSphere*	m_pPickingSphere;
 
 protected:
 	virtual void		Free(void);
-
-
 };
 
 END

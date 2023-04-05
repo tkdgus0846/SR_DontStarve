@@ -97,12 +97,14 @@ void Engine::CMesh::Render_Component()
 
 void Engine::CMesh::Free(void)
 {
-	__super::Free();
+
 
 	Safe_Release(m_pMesh);
 	m_Mtrls.clear();
 	//for_each(m_Textures.begin(), m_Textures.end(), CDeleteObj());
 	m_Textures.clear();
+
+	__super::Free();
 }
 
 CMesh * CMesh::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar * pPath)

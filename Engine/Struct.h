@@ -200,9 +200,22 @@ typedef struct tagProjParams
 
 typedef struct tagRay
 {
-	_vec3 _origin;
-	_vec3 _direction;
+	_vec3 vOrigin;
+	_vec3 vDirection;
 }Ray;
 
+struct BoundingSphere
+{
+	_vec3 vCenter;
+	float fRadius;
+
+	BoundingSphere(float _fRadius)
+		: fRadius(_fRadius) {};
+
+	virtual void Offset(const _vec3& origin)
+	{
+		vCenter = origin + vCenter;
+	}
+};
 
 END

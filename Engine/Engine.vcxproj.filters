@@ -178,6 +178,9 @@
     <ClInclude Include="WallTex.h">
       <Filter>Component\VIBuffer</Filter>
     </ClInclude>
+    <ClInclude Include="PickingSphere.h">
+      <Filter>Component\UIComponent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -323,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="WallTex.cpp">
       <Filter>Component\VIBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="PickingSphere.cpp">
+      <Filter>Component\UIComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
