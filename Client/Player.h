@@ -11,6 +11,7 @@ class CCollider;
 class CRigidbody;
 class CCamera;
 END
+
 class CPlayer : public Engine::CGameObject
 {
 private:
@@ -24,7 +25,10 @@ public:
 	virtual void Render_GameObject(void) override;
 
 
-	virtual void OnTriggerStay(const class CCollider* other);
+	virtual void OnCollisionEnter(const Collision* collsion) override;
+	virtual void OnCollisionStay(const Collision* collision) override;
+	virtual void OnCollisionExit(const Collision* collision) override;
+
 private:
 	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);
@@ -34,6 +38,7 @@ private:
 private:
 	_float					m_fSpeed;
 	_bool					m_bFix;
+	class CWeapon*			m_pCurWeapon;
 
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

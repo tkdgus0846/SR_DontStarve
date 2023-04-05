@@ -62,6 +62,7 @@ _int CCamera::Update_Component(const _float & fTimeDelta)
 	m_tViewParams.LookAtLH(&m_matView);
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
 	return 0;
 }
