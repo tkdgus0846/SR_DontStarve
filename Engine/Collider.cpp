@@ -85,7 +85,7 @@ void CCollider::OnCollisionStay(const Collision * collision)
 {
 	if (m_bEnabled == false) return;
 
-	cout << this << ": OnCollisionStay!" << " dir: " << collision->CollisionDir << endl;
+	//cout << this << ": OnCollisionStay!" << " dir: " << collision->CollisionDir << endl;
 	m_pGameObject->OnCollisionStay(collision);
 }
 
@@ -93,7 +93,7 @@ void CCollider::OnCollisionExit(const Collision * collision)
 {
 	if (m_bEnabled == false) return;
 
-	cout << this << ": OnCollisionExit!" << endl;
+	//cout << this << ": OnCollisionExit!" << endl;
 	m_pGameObject->OnCollisionExit(collision);
 }
 

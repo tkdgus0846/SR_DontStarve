@@ -127,11 +127,11 @@ struct Collision
 	// 충돌한 방향
 	COL_DIR				CollisionDir;
 	// 내 콜라이더
-	class CCollider*	MyCollider; 
+	class CCollider*	MyCollider;
 	// 상대 콜라이더
 	class CCollider*    OtherCollider;
 	// 상대 게임오브젝트
-	class CGameObject*	OtherGameObject; 
+	class CGameObject*	OtherGameObject;
 	// 충돌한 지점
 	BoundingBox			intersectBox;
 	// 얼마나 충돌했는지에 대한 벡터 (x만큼 겹침, y만큼 겹침, z만큼 겹침)

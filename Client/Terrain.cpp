@@ -31,6 +31,7 @@ _int CTerrain::Update_GameObject(const _float& fTimeDelta)
 
 	return 0;
 }
+
 void CTerrain::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();	
@@ -61,8 +62,6 @@ HRESULT CTerrain::Add_Component(void)
 
 	return S_OK;
 }
-
-
 
 CTerrain* CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

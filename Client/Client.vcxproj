@@ -155,9 +155,12 @@
   <ItemGroup>
     <ClInclude Include="Attack.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Baller.h" />
+    <ClInclude Include="Bub.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Evasion.h" />
+    <ClInclude Include="Guppi.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="imgui_impl_dx9.h" />
@@ -166,6 +169,7 @@
     <ClInclude Include="ImManager.h" />
     <ClInclude Include="ImWindow.h" />
     <ClInclude Include="Jump.h" />
+    <ClInclude Include="LeapJump.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainApp.h" />
@@ -177,20 +181,28 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="BulletMgr.h" />
     <ClInclude Include="RandomLook.h" />
+    <ClInclude Include="RangeCheck.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RotToFace.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Turret.h" />
     <ClInclude Include="Wait.h" />
+    <ClInclude Include="Walker.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Baller.cpp" />
+    <ClCompile Include="Bub.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Evasion.cpp" />
+    <ClCompile Include="Guppi.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
@@ -201,6 +213,7 @@
     <ClCompile Include="ImManager.cpp" />
     <ClCompile Include="ImWindow.cpp" />
     <ClCompile Include="Jump.cpp" />
+    <ClCompile Include="LeapJump.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainApp.cpp" />
@@ -211,13 +224,18 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="BulletMgr.cpp" />
     <ClCompile Include="RandomLook.cpp" />
+    <ClCompile Include="RangeCheck.cpp" />
     <ClCompile Include="RotToFace.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Turret.cpp" />
     <ClCompile Include="Wait.cpp" />
+    <ClCompile Include="Walker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter" />

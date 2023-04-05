@@ -38,7 +38,7 @@
     <Filter Include="IMGUI\ImManager">
       <UniqueIdentifier>{3ce43516-b38f-46c0-886d-b8476ec0afb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\MonoBehaviors">
+    <Filter Include="GameObject\Tasks">
       <UniqueIdentifier>{0585166a-ee3f-4639-9ec9-27c7dd623b88}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -126,34 +126,52 @@
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Attack.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClInclude>
     <ClInclude Include="Jump.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClInclude>
     <ClInclude Include="MonoBehaviors.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClInclude>
     <ClInclude Include="MoveLook.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClInclude>
     <ClInclude Include="RandomLook.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClInclude>
     <ClInclude Include="RotToFace.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClInclude>
     <ClInclude Include="Wait.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClInclude>
     <ClInclude Include="Evasion.h">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="RangeCheck.h">
+      <Filter>GameObject\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Bub.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Guppi.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="LeapJump.h">
+      <Filter>GameObject\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="Baller.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Walker.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Turret.h">
+      <Filter>GameObject\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Terrain.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -218,25 +236,49 @@
       <Filter>GameObject\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Attack.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClCompile>
     <ClCompile Include="Jump.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClCompile>
     <ClCompile Include="MoveLook.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClCompile>
     <ClCompile Include="RandomLook.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClCompile>
     <ClCompile Include="RotToFace.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClCompile>
     <ClCompile Include="Wait.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
     </ClCompile>
     <ClCompile Include="Evasion.cpp">
-      <Filter>GameObject\MonoBehaviors</Filter>
+      <Filter>GameObject\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="RangeCheck.cpp">
+      <Filter>GameObject\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="Bub.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Guppi.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="LeapJump.cpp">
+      <Filter>GameObject\Tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="Baller.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Walker.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Turret.cpp">
+      <Filter>GameObject\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

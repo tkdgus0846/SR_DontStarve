@@ -23,7 +23,7 @@ HRESULT CSequence::Ready_Behavior()
 	{
 		for (auto iter : m_VecComponents[i])
 		{
-			dynamic_cast<CBehavior*>(iter.pComponent)->Set_BlackBoard(m_pBlackBoard);
+			dynamic_cast<CBehavior*>(iter.pComponent)->m_pBlackBoard = m_pBlackBoard;
 			dynamic_cast<CBehavior*>(iter.pComponent)->Ready_Behavior();
 		}
 	}
@@ -36,7 +36,10 @@ HRESULT CSequence::Ready_Behavior()
 _int CSequence::Update_Component(const _float & fTimeDelta)
 {
 	if (0 == m_VecComponents[ID_UPDATE].size())
-		return 0;
+		return BEHAVIOR_FALSE;
+
+	if (BEHAVIOR_FALSE == update_Decorator(fTimeDelta))
+		return BEHAVIOR_FALSE;
 
 	_int iResult = m_iterCurComponent->pComponent->Update_Component(fTimeDelta);
 

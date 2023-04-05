@@ -1,24 +1,21 @@
 #pragma once
 #include "Behavior.h"
 
-class CAttack : public CBehavior
+class CRangeCheck : public CBehavior
 {
 private:
-	explicit CAttack(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CAttack(const CAttack& rhs);
-	virtual ~CAttack();
+	explicit CRangeCheck(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CRangeCheck(const CRangeCheck& rhs);
+	virtual ~CRangeCheck();
 
 public:
 	virtual HRESULT Ready_Behavior() override;
 	virtual _int Update_Component(const _float & fTimeDelta) override;
-	virtual void LateUpdate_Component(void) override {}
+	virtual void LateUpdate_Component(void) override;
 	virtual void Render_Component(void) override;
-	
-private:
-	_float m_fCoolTime;
 
 public:
-	static CAttack* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CRangeCheck* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
 
 private:

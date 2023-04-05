@@ -178,6 +178,9 @@
     <ClInclude Include="CollisionMgr.h">
       <Filter>Manager\CollisionMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Creature.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -323,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="CollisionMgr.cpp">
       <Filter>Manager\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Creature.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

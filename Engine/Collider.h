@@ -17,7 +17,7 @@ private:
 	BoundingBox*		m_pBoundingBox;
 	// 사각형 렌더링
 	LPD3DXMESH			m_pMesh;
-	// 현재 충돌 중인 콜리젼들을 체크한다.
+	// 현재 충돌 중인 콜리젼들을 체크한다. 충돌이 발생한 경우 리스트에 추가된다.
 	unordered_map<CCollider*, Collision>	m_CollisionList;
 
 	_bool				m_bEnabled;
@@ -26,7 +26,6 @@ private:
 	// 아래 두개 텍스쳐는 디버깅 용도로 넣었음. 나중에 지울거임.
 	IDirect3DBaseTexture9*			m_GreenTexture;
 	IDirect3DBaseTexture9*			m_RedTexture;
-
 	
 public:
 	HRESULT			Ready_Collider();
@@ -40,9 +39,10 @@ public:
 		*MinPoint = m_pBoundingBox->_min;
 		*MaxPoint = m_pBoundingBox->_max;
 	}
+	unordered_map<CCollider*, Collision>& Get_ColliderList() { return m_CollisionList; }
 	bool Intersect(const _vec3& point) { return m_pBoundingBox->Intersect(point); }
 	_vec3 Get_BoundCenter() { return m_pBoundingBox->Get_Center(); }
-	_vec3 Get_BoundSize() { return m_pBoundingBox->Get_Size();}
+	_vec3 Get_BoundSize() { return m_pBoundingBox->Get_Size(); }
 
 	void OnCollisionEnter(const Collision* collision);
 	void OnCollisionStay(const Collision* collision);

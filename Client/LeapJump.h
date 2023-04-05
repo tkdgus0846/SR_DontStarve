@@ -1,12 +1,11 @@
 #pragma once
 #include "Behavior.h"
-
-class CJump : public CBehavior
+class CLeapJump : public CBehavior
 {
 private:
-	explicit CJump(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CJump(const CJump& rhs);
-	virtual ~CJump();
+	explicit CLeapJump(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CLeapJump(const CLeapJump& rhs);
+	virtual ~CLeapJump();
 
 public:
 	virtual HRESULT Ready_Behavior() override;
@@ -19,7 +18,7 @@ private:
 	_float m_fInit;
 
 public:
-	static CJump* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CLeapJump* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
 
 private:

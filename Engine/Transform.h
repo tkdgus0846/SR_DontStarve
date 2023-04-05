@@ -42,6 +42,9 @@ public:
 	// 해당 위치를 바라보게끔 만드는 함수.
 	void Set_Target(const _vec3& targetPos);
 
+	// 오브젝트의 위치쪽으로 look이 돌아가게 만드는 함수
+	void Rot_To_TargetPos(const _vec3& vTargetPos, const _float& fTimeDelta);
+
 	// 오른쪽 벡터로 움직이는거
 	void	Move_Strafe(const _float& fUnits, const _float& fTimeDelta);// Move-Right
 
@@ -66,8 +69,9 @@ public:
 		D3DXMatrixInverse(&m_matBill, 0, &m_matBill);
 	}
 
-	void			Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
+	void	Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
 	
+	void	Set_MoveType(MOVETYPE eType) { m_eMoveType = eType; }
 
 public:
 	HRESULT		Ready_Transform(void);

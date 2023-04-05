@@ -25,8 +25,8 @@ HRESULT CRandomLook::Ready_Behavior()
 _int CRandomLook::Update_Component(const _float & fTimeDelta)
 {
 	_vec3 vRandomLook;
-	_vec3 vMin(-180.f, -180.f, -180.f);
-	_vec3 vMax(180.f, 180.f, 180.f);
+	_vec3 vMin(-180.f, 0.f, -180.f);
+	_vec3 vMax(180.f, 0.f, 180.f);
 
 	GetRandomVector(&vRandomLook, &vMin, &vMax);
 	vRandomLook.Normalize();

@@ -1,8 +1,6 @@
 #pragma once
 #include "Behavior.h"
 
-BEGIN(Engine)
-
 class CBlackBoard;
 class CMoveLook : public CBehavior
 {
@@ -30,5 +28,3 @@ public:
 private:
 	virtual void Free() override;
 };
-
-END

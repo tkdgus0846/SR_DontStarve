@@ -1,21 +1,10 @@
-﻿#pragma once
-
-#include "Include.h"
-#include "GameObject.h"
-
-BEGIN(Engine)
-
-class CTriCol;
-class CTransform;
-class CCollider;
-
-END
-
-class CMonster : public Engine::CGameObject
+#pragma once
+#include "Monster.h"
+class CWalker : public CMonster
 {
-protected:
-	explicit CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CMonster();
+private:
+	explicit CWalker(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CWalker();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -29,17 +18,10 @@ private:
 	virtual void OnCollisionStay(const class Collision* collision) override {}
 	virtual void OnCollisionExit(const class Collision* collision) override {}
 
-protected:
-	HRESULT		Set_PatrolAndFollow_AI();
-	HRESULT		Set_TurretAI();
-
-protected:
-	_float		m_fSpeed;
-
 public:
-	static CMonster*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CWalker*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-protected:
+private:
 	virtual void Free(void) override;
 };
 

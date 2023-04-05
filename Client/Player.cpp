@@ -21,7 +21,8 @@ HRESULT CPlayer::Ready_GameObject(void)
 	HRESULT result = __super::Ready_GameObject();
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
-	m_pTransform->m_vInfo[INFO_POS] = _vec3(10.f, -5.f, 30.f);
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(50.f, 5.f, 50.f);
+	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	m_fSpeed = 10.f;
 
@@ -30,8 +31,6 @@ HRESULT CPlayer::Ready_GameObject(void)
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
 	Key_Input(fTimeDelta);
-
-	// m_planeVec
 
 	if (m_bFix)
 	{
@@ -99,10 +98,6 @@ HRESULT CPlayer::Add_Component(void)
 	m_uMapComponent[ID_ALL].insert({ L"Player_Collider", pCollider });
 	pCollider->Set_BoundingBox({3.f,3.f,3.f});
 
-	/*pComponent = m_pRigid = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"Rigidbody", this));
-	NULL_CHECK_RETURN(m_pRigid, E_FAIL);
-	m_uMapComponent[ID_DYNAMIC].insert({ L"Player_Rigidbody", pComponent });*/
-
 	CCamera* m_pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 	m_uMapComponent[ID_UPDATE].insert({ L"Player_Camera", m_pCamera });
@@ -144,8 +139,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (Engine::Key_Pressing(DIK_E))	m_pTransform->Move_Fly(-m_fSpeed, fTimeDelta);
 
 	if (Engine::Key_Down((DIK_F1))) 	Engine::On_Camera(L"Player_Camera");
-	if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
-	if (Engine::Key_Down((DIK_C))) Engine::Toggle_ColliderRender();
+	if (Engine::Key_Down(DIK_1))		m_bFix = !m_bFix;
+	if (Engine::Key_Down((DIK_C)))		Engine::Toggle_ColliderRender();
 
 	static float ShootCoolTime = 0.f;
 	ShootCoolTime += fTimeDelta;

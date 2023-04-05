@@ -36,8 +36,13 @@ public:
 	virtual void	LateUpdate_Component(void);
 	virtual void	Render_Component(void);
 
-public:
-	void Set_BlackBoard(CBlackBoard* pBlackBoard) { m_pBlackBoard = pBlackBoard; }
+	HRESULT			Add_Decorator(CComponent* pComponent);
+
+protected:
+	_int			update_Decorator(const _float& fTimeDelta);
+
+protected:
+	list<PRICOMP> m_DecoratorList;
 
 public:
 	CBlackBoard* m_pBlackBoard;

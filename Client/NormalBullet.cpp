@@ -59,8 +59,14 @@ void CNormalBullet::LateUpdate_GameObject(void)
 
 void CNormalBullet::Render_GameObject(void)
 {
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
+
+	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void CNormalBullet::OnCollisionEnter(const Collision* collsion)
