@@ -85,7 +85,6 @@ void CAnimation::Free(void)
 {
 	Safe_Delete(m_CurFrame);
 	__super::Free();
-	
 }
 
 void CAnimation::SelectState(ANIMSTATE state)

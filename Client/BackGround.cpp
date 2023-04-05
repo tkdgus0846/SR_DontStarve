@@ -54,8 +54,6 @@ HRESULT CBackGround::Add_Component(void)
 	return S_OK;
 }
 
-
-
 CBackGround* CBackGround::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CBackGround*		pInstance = new CBackGround(pGraphicDev);

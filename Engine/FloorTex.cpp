@@ -126,7 +126,6 @@ HRESULT CFloorTex::Ready_Buffer(const _ulong& dwCntX,
 			pIndex[dwTriCnt]._0 = dwIndex + dwCntX;
 			pIndex[dwTriCnt]._1 = dwIndex + dwCntX + 1;
 			pIndex[dwTriCnt]._2 = dwIndex + 1;
-			
 
 			D3DXPLANE plane;
 			D3DXPlaneFromPoints(&plane, &pVertex[pIndex[dwTriCnt]._0].vPos, &pVertex[pIndex[dwTriCnt]._1].vPos, &pVertex[pIndex[dwTriCnt]._2].vPos);

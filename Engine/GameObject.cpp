@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Export_Function.h"
 
+
 // 테스트용 주석
 
 // 여기는 안보셔도 됩니다. 굳이 안봐도 돼요.
@@ -34,6 +35,21 @@ CComponent * CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTI
 	return pComponent;
 }
 
+CVIBuffer* CGameObject::Get_VIBuffer()
+{
+	CVIBuffer* pBuffer = nullptr;
+	for (_ulong i = 0; i < ID_END; ++i)
+	{
+		for (auto& Component : m_uMapComponent[i])
+		{
+			if (pBuffer = dynamic_cast<CVIBuffer*>(Component.second))
+				return pBuffer;
+		}
+	}
+
+	return nullptr;
+}
+
 HRESULT CGameObject::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -50,6 +66,7 @@ HRESULT CGameObject::Ready_GameObject(void)
 	sort(sortVec.begin(), sortVec.end(), Compare_Component_Priority);
 
 	m_RenderComponent = sortVec;
+
 	return S_OK;
 }
 
@@ -113,6 +130,7 @@ CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENT
 
 	return iter->second;
 }
+
 
 void CGameObject::Free(void)
 {
