@@ -87,9 +87,9 @@ _int CComposite::Update_Component(const _float & fTimeDelta)
 {
 	for (auto& iter : m_VecComponents[ID_UPDATE])
 	{
-		_int iResult = iter.pComponent->Update_Component(fTimeDelta);
+		iter.pComponent->Update_Component(fTimeDelta);
 	}
-	return 0;
+	return S_OK;
 }
 
 void CComposite::LateUpdate_Component(void)
@@ -125,6 +125,7 @@ HRESULT CComposite::Add_Component(COMPONENTID eID,
 	{
 		return Src.iPriority < Dest.iPriority;
 	});
+	return S_OK;
 }
 
 void Engine::CComposite::Free(void)

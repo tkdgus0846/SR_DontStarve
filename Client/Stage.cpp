@@ -3,11 +3,16 @@
 
 #include "Export_Function.h"
 #include "Monster.h"
-
+#include "Bub.h"
+#include "Guppi.h"
+#include "Baller.h"
+#include "Walker.h"
+#include "Turret.h"
+#include "Terrain.h"
 #include "SkyBox.h"
 #include "ObjCamera.h"
 #include "Room.h"
-
+#include "Terrain.h"
 #include "ImManager.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -21,13 +26,20 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
-	
-	Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_ENVIRONMENT, L"Terrain", CTerrain::Create(m_pGraphicDev));
+
 	//Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
 
 	Add_GameObject(LAYER_PLAYER, L"Player", CPlayer::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_MONSTER, L"Monster", CMonster::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_MONSTER, L"Monster_Baller", CBaller::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Walker", CWalker::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Turret", CTurret::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Guppi_Blue_Texture", CGuppi::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_CAMERA, L"ObjCamera", CObjCamera::Create(m_pGraphicDev));
 
 

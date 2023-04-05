@@ -59,6 +59,25 @@ void Engine::CTransform::Set_Target(const _vec3& targetPos)
 	m_vInfo[INFO_UP] = vUp;
 }
 
+void CTransform::Rot_To_TargetPos(const _vec3 & vTargetPos, const _float& fTimeDelta)
+{
+	_vec3 vLook = m_vInfo[INFO_LOOK];
+	_vec3 vLookToTarget = vTargetPos - m_vInfo[INFO_POS];
+
+	vLook.Normalize();
+	vLookToTarget.Normalize();
+
+	_float fAngle = vLook.Degree(vLookToTarget);
+	_vec3 vDir = vLookToTarget - vLook;
+	_vec3 vAxis = vLook.Cross(vDir);
+
+	_matrix matRot;
+
+	D3DXMatrixRotationAxis(&matRot, &vAxis, D3DXToRadian(fAngle) * fTimeDelta * 2.f);
+	D3DXVec3TransformCoord(&m_vInfo[INFO_LOOK],
+		&m_vInfo[INFO_LOOK], &matRot);
+}
+
 void CTransform::Move_Strafe(const _float & fUnits, const _float& fTimeDelta)
 {
 	_vec3 vDir;

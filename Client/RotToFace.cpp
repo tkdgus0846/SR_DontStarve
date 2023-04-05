@@ -24,30 +24,9 @@ HRESULT CRotToFace::Ready_Behavior()
 
 _int CRotToFace::Update_Component(const _float & fTimeDelta)
 {
-	// 임시코드
-	if (GetAsyncKeyState(VK_SPACE))
-		return BEHAVIOR_FALSE;
-	//
 	CTransform* pTargetTransform = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_PLAYER, L"Player", L"Transform", ID_UPDATE));
 
-	_float fSpeed = 0.f;
-	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FALSE);
-
-	_vec3 vLook = m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK];
-	_vec3 vLookToTarget = pTargetTransform->m_vInfo[INFO_POS] - m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
-
-	vLook.Normalize();
-	vLookToTarget.Normalize();
-
-	_float fAngle = vLook.Degree(vLookToTarget);
-	_vec3 vDir = vLookToTarget - vLook;
-	_vec3 vAxis = vLook.Cross(vDir);
-
-	_matrix matRot;
-
-	D3DXMatrixRotationAxis(&matRot, &vAxis, D3DXToRadian(fAngle) * fTimeDelta * 2.f);
-	D3DXVec3TransformCoord(&m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK], 
-		&m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK], &matRot);
+	m_pGameObject->m_pTransform->Rot_To_TargetPos(pTargetTransform->m_vInfo[INFO_POS], fTimeDelta);
 
 	m_pGameObject->m_pTransform->Set_Target(pTargetTransform->m_vInfo[INFO_POS]);
 

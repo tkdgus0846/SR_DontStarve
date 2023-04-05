@@ -1,5 +1,6 @@
 #pragma once
 #include "Behavior.h"
+
 class CRandomLook : public CBehavior
 {
 private:

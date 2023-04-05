@@ -70,17 +70,28 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Player_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture/Player/Sonic.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Terrain_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"NormalBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/bigbullet_%d.png", 2)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Bub_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/bub_%d.png", 2)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Blue_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_blue_%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_green_%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Baller_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/baller_%d.png", 14)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Walker_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/walker_%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Turret_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/sprTurret_strip8_0.png")), E_FAIL);
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_green_%d.png", 4)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_green_%d.png", 4)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_green_%d.png", 4)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_green_%d.png", 4)), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_green_%d.png", 4)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Red_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Green.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Red.png")), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallPanels #420377", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420377.png")), E_FAIL);
 
 	Set_String(L"Buffer Loading.......");
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TriCol", CTriCol::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcCol", CRcCol::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collider", CCollider::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Rigidbody", CRigidbody::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
@@ -92,8 +103,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SkyBox_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture/SkyBox/burger%d.dds", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RoomTex", CRoomTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Room_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture/Room.dds")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorTex", CFloorTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallTex", CWallTex::Create(m_pGraphicDev)), E_FAIL);
+
 	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"AirplaneMesh", CMesh::Create(m_pGraphicDev, L"Temp.x")), E_FAIL);*/
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"AirplaneMesh", CMesh::Create(m_pGraphicDev, L"../Resource/Mesh/bigship1.x")), E_FAIL);
 	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TerrainMesh", CMesh::Create(m_pGraphicDev, L"Temp.x")), E_FAIL);
@@ -107,12 +117,16 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_RandomLook", CRandomLook::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Jump", CJump::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Attack", CAttack::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Evasion", CEvasion::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_LeapJump", CLeapJump::Create(m_pGraphicDev)), E_FAIL);
+	
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_RangeCheck", CRangeCheck::Create(m_pGraphicDev)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Sequence", CSequence::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Selector", CSelector::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Root", CRoot::Create(m_pGraphicDev)), E_FAIL);
 
-	m_bFinish = true;
+	m_bFinish = true;	
 
 	Set_String(L"Loading Complete!!!!!!!!");
 
