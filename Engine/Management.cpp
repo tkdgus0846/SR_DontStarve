@@ -65,7 +65,7 @@ void CManagement::Add_GameObject(LAYERID LayerID, const _tchar * pObjTag, CGameO
 
 CGameObject * CManagement::Get_Player()
 {
-	NULL_CHECK_RETURN_MSG(m_pPlayer, nullptr, L"플레이어가 아직 추가된 적 없음.");
+	//NULL_CHECK_RETURN_MSG(m_pPlayer, nullptr, L"플레이어가 아직 추가된 적 없음.");
 	return m_pPlayer;
 }
 

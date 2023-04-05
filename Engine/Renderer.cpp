@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Renderer.h"
+#include "Export_Function.h"
 
 IMPLEMENT_SINGLETON(CRenderer)
 
@@ -73,8 +74,38 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
+	float left = 0.0f;
+	float right = (float)WINCX;
+	float bottom = (float)WINCY;
+	float top = 0.0f;
+
+	float nearPlane = 0.0f;
+	float farPlane = 1.0f;
+
+	D3DXMATRIX orthoProjectionMatrix;
+	D3DXMatrixOrthoOffCenterLH(&orthoProjectionMatrix, left, right, bottom, top, nearPlane, farPlane);
+
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &orthoProjectionMatrix);
+
+	// 직교투영 적용
+
 	for (auto& iter : m_RenderGroup[RENDER_UI])
 		iter->Render_GameObject();
+
+
+	_matrix projMatrix;
+
+	projMatrix.PerspectiveFovLH(D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
+	
+	_matrix* viewMatrix = nullptr;
+	if (Get_Player() != nullptr)
+		viewMatrix = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE))->Get_Camera_ViewMatrix();
+
+	if (viewMatrix != nullptr)
+		pGraphicDev->SetTransform(D3DTS_VIEW, viewMatrix);
+	// 원근투영 적용
+	// 플레이어 카메라의 뷰행렬을 디바이스에 등록
+
 }
 
 void CRenderer::Free(void)

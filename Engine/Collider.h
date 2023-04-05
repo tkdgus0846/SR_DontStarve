@@ -35,6 +35,7 @@ public:
 	virtual void	Render_Component() override;
 
 public:
+	unordered_map<CCollider*, Collision>& Get_ColliderList() { return m_CollisionList; }
 	void Get_Point(_vec3* MinPoint, _vec3* MaxPoint)
 	{
 		*MinPoint = m_pBoundingBox->_min;

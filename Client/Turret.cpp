@@ -28,9 +28,11 @@ _int CTurret::Update_GameObject(const _float & fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
+	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
+
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
-	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
+	
 
 	return S_OK;
 }
@@ -42,15 +44,10 @@ void CTurret::LateUpdate_GameObject(void)
 
 void CTurret::Render_GameObject(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
 	__super::Render_GameObject();
-
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 HRESULT CTurret::Add_Component()

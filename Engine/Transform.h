@@ -71,8 +71,7 @@ public:
 	}
 
 	void	Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
-	
-	void	Set_MoveType(MOVETYPE eType) { m_eMoveType = eType; }
+
 
 public:
 	HRESULT		Ready_Transform(void);

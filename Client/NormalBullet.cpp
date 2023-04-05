@@ -33,22 +33,13 @@ _int CNormalBullet::Update_GameObject(const _float& fTimeDelta)
 {
 	if (Aging(fTimeDelta) == OBJ_RETPOOL) return OBJ_RETPOOL;
 
-	/*m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());*/
-
-	
-
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 	
-	_matrix view;
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
-	//m_pTransform->Set_Billboard(&view);
-
 	__super::Update_GameObject(fTimeDelta);
 	
 	m_pTransform->Move_Walk(m_fSpeed*2.f, fTimeDelta);
-
 	Add_RenderGroup(RENDER_ALPHA, this);
-
+	
 	return OBJ_NOEVENT;
 }
 

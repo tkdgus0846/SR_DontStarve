@@ -46,25 +46,7 @@ void CNormalWeapon::LateUpdate_GameObject(void)
 
 void CNormalWeapon::Render_GameObject(void)
 {
-	_matrix viewMatrix;
-	viewMatrix.Identity();
-
-	float left = 0.0f;
-	float right = 800.f;
-	float bottom = 600.f;
-	float top = 0.0f;
-
-	// Define the near and far clipping planes for the orthographic projection
-	float nearPlane = 0.0f;
-	float farPlane = 1.0f;
-
-	// Create the orthographic projection matrix
-	D3DXMATRIX orthoProjectionMatrix;
-	D3DXMatrixOrthoOffCenterLH(&orthoProjectionMatrix, left, right, bottom, top, nearPlane, farPlane);
-
-	// Set the projection matrix to the orthographic projection matrix
-	/*m_pGraphicDev->SetTransform(D3DTS_VIEW, &viewMatrix);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &orthoProjectionMatrix);*/
+	
 	__super::Render_GameObject();
 }
 

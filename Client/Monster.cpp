@@ -25,9 +25,6 @@ HRESULT CMonster::Ready_GameObject(void)
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
-	
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-
 	return 0;
 }
 

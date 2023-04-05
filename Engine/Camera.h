@@ -19,6 +19,8 @@ public:
 	virtual	_int	Update_Component(const _float& fTimeDelta);
 	virtual	void	LateUpdate_Component() {}
 
+	_matrix*		Get_Camera_ViewMatrix() { return &m_matView; }
+
 	void			Set_CameraName(const _tchar* pName) { m_pName = pName; }
 
 private:

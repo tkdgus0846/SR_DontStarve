@@ -181,6 +181,9 @@
     <ClInclude Include="PickingSphere.h">
       <Filter>Component\UIComponent</Filter>
     </ClInclude>
+    <ClInclude Include="Creature.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -329,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="PickingSphere.cpp">
       <Filter>Component\UIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Creature.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

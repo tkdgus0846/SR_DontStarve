@@ -49,8 +49,8 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	m_pCurWeapon->Update_GameObject(fTimeDelta);
 
-
-	Engine::Add_RenderGroup(RENDER_PRIORITY, this);
+	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 	return OBJ_NOEVENT;
 }
 void CPlayer::LateUpdate_GameObject(void)
