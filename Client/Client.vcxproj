@@ -174,18 +174,21 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MoveLook.h" />
     <ClInclude Include="NormalBullet.h" />
+    <ClInclude Include="NormalWeapon.h" />
     <ClInclude Include="ObjCamera.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="BulletMgr.h" />
     <ClInclude Include="RandomLook.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="RotToFace.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Wait.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attack.cpp" />
@@ -210,6 +213,7 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="NormalBullet.cpp" />
+    <ClCompile Include="NormalWeapon.cpp" />
     <ClCompile Include="ObjCamera.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="BulletMgr.cpp" />
@@ -220,8 +224,10 @@
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Wait.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter" />

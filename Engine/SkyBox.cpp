@@ -16,7 +16,7 @@ HRESULT CSkyBox::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
 
-	m_pTransform->m_vScale = { 40.f, 40.f, 40.f };
+	m_pTransform->m_vScale = { 10.f, 10.f, 10.f };
 
 
 	return result;
@@ -29,6 +29,10 @@ _int CSkyBox::Update_GameObject(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matCamWorld, 0, &matCamWorld);
 
 	m_pTransform->Set_Pos(matCamWorld._41, matCamWorld._42 + 3.f, matCamWorld._43);
+
+	m_pTransform->Rot_Pitch(1.f, fTimeDelta);
+	m_pTransform->Rot_Roll(2.f, fTimeDelta);
+	m_pTransform->Rot_Yaw(1.f, fTimeDelta);
 	
 	__super::Update_GameObject(fTimeDelta);
 
@@ -71,7 +75,7 @@ HRESULT CSkyBox::Add_Component(void)
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"SkyBox_Texture",this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"SkyBox_Texture", pComponent });
-	m_pTextureCom->Set_Texture_Num(3);
+	//m_pTextureCom->Set_Texture_Num(3);
 
 	return S_OK;
 }

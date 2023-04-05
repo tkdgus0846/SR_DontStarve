@@ -5,6 +5,7 @@ IMPLEMENT_SINGLETON(CCollisionMgr)
 
 CCollisionMgr::CCollisionMgr()
 {
+	m_bIsRender = false;
 }
 
 
@@ -97,6 +98,9 @@ void CCollisionMgr::Add_Collider(COLGROUP eID, CCollider * pCollider)
 	if (COL_END <= eID || nullptr == pCollider)
 		return;
 	m_ColliderList[eID].push_back(pCollider);
+
+	if (m_bIsRender != pCollider->m_bIsRender)
+		m_bIsRender = pCollider->m_bIsRender;
 }
 
 void CCollisionMgr::Change_ColGroup(CCollider* collider, COLGROUP changeID)
@@ -127,7 +131,7 @@ void Engine::CCollisionMgr::Toggle_ColliderRender()
 {
 	for (int i = 0; i < COL_END; i++)
 		for (auto col : m_ColliderList[i])
-			col->Toggle_IsRender();
+			m_bIsRender = col->Toggle_IsRender();
 }
 
 bool CCollisionMgr::Collision_Box(CCollider* pSrc, CCollider* pDest, COL_DIR& colDir, BoundingBox& bound, _vec3& amountVec)
