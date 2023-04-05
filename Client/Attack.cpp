@@ -28,7 +28,7 @@ _int CAttack::Update_Component(const _float & fTimeDelta)
 {
 	m_fCoolTime += fTimeDelta;
 
-	if (m_fCoolTime > 0.2f)
+	if (m_fCoolTime > 0.5f)
 	{
 		CNormalBullet* bullet = CBulletMgr::GetInstance()->Pop<CNormalBullet>(
 			L"NormalBullet", m_pGraphicDev, 

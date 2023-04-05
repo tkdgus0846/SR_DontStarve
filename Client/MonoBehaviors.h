@@ -6,3 +6,6 @@
 #include "RandomLook.h"
 #include "RotToFace.h"
 #include "Wait.h"
+#include "RangeCheck.h"
+#include "Evasion.h"
+#include "LeapJump.h"

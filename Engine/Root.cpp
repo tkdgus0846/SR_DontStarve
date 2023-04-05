@@ -21,13 +21,11 @@ HRESULT CRoot::Ready_Behavior(void)
 {
 	m_pBlackBoard = new CBlackBoard;
 
-	m_pBlackBoard->Add_Type(L"fSpeed", 5.f);
-
 	for (_uint i = 0; i < ID_END; ++i)
 	{
 		for (auto iter : m_VecComponents[i])
 		{
-			dynamic_cast<CBehavior*>(iter.pComponent)->Set_BlackBoard(m_pBlackBoard);
+			dynamic_cast<CBehavior*>(iter.pComponent)->m_pBlackBoard = m_pBlackBoard;
 			dynamic_cast<CBehavior*>(iter.pComponent)->Ready_Behavior();
 		}
 	}

@@ -1,13 +1,11 @@
 #pragma once
 #include "Behavior.h"
-
-class CBlackBoard;
-class CMoveLook : public CBehavior
+class CLeapJump : public CBehavior
 {
 private:
-	explicit CMoveLook(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CMoveLook(const CMoveLook& rhs);
-	virtual ~CMoveLook();
+	explicit CLeapJump(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CLeapJump(const CLeapJump& rhs);
+	virtual ~CLeapJump();
 
 public:
 	virtual HRESULT Ready_Behavior() override;
@@ -15,16 +13,15 @@ public:
 	virtual void LateUpdate_Component(void) override {}
 	virtual void Render_Component(void) override;
 
-	void Set_MoveTimer(const _float& fTimer) { m_fLimit = fTimer; }
-
 private:
-	_float m_fTimer;
-	_float m_fLimit;
+	_float m_fTime;
+	_float m_fInit;
 
 public:
-	static CComponent* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CLeapJump* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
 
 private:
 	virtual void Free() override;
 };
+
