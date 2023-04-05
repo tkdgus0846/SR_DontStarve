@@ -44,7 +44,7 @@ private:
 typedef struct PriComp
 {
 	_int			iPriority;
-	const _tchar*	pTag;
+	const _tchar*	pTag;		// 컴포넌트 태그인데 아직 사용처가 불분명함.
 	CComponent*		pComponent;
 }PRICOMP;
 
@@ -70,7 +70,7 @@ public:
 	virtual void		Free(void) override;
 
 protected:
-	vector<PRICOMP>			m_VecComponents[ID_END];
+	vector<PRICOMP>			  m_VecComponents[ID_END];
 	vector<PRICOMP>::iterator m_iterCurComponent;
 	vector<PRICOMP>::iterator m_iterPreComponent;
 };

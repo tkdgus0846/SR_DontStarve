@@ -83,7 +83,7 @@ CComponent* CAnimation::Clone(void)
 
 void CAnimation::Free(void)
 {
-	delete m_CurFrame;
+	Safe_Delete(m_CurFrame);
 	__super::Free();
 }
 

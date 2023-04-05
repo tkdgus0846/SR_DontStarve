@@ -37,7 +37,7 @@ HRESULT CMesh::Ready_Mesh(const _tchar * pPath)
 		
 		for (int i = 0; i < numMtrls; i++)
 		{
-			//MatD3D ¼Ó¼ºÀº ambient °ªÀ» °¡ÁöÁö ¾ÊÀ¸¹Ç·Î Áö±Ý ÀÌ¸¦ ÀúÀåÇÑ´Ù.
+			//MatD3D ì†ì„±ì€ ambient ê°’ì„ ê°€ì§€ì§€ ì•Šìœ¼ë¯€ë¡œ ì§€ê¸ˆ ì´ë¥¼ ì €ìž¥í•œë‹¤.
 			mtrls[i].MatD3D.Ambient = mtrls[i].MatD3D.Diffuse;
 			m_Mtrls.push_back(mtrls[i].MatD3D);
 
@@ -97,8 +97,6 @@ void Engine::CMesh::Render_Component()
 
 void Engine::CMesh::Free(void)
 {
-
-
 	Safe_Release(m_pMesh);
 	m_Mtrls.clear();
 	//for_each(m_Textures.begin(), m_Textures.end(), CDeleteObj());

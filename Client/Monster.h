@@ -13,7 +13,7 @@ END
 
 class CMonster : public Engine::CGameObject
 {
-private:
+protected:
 	explicit CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CMonster();
 
@@ -25,22 +25,21 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
+	virtual void OnCollisionEnter(const class Collision* collsion) override {}
+	virtual void OnCollisionStay(const class Collision* collision) override {}
+	virtual void OnCollisionExit(const class Collision* collision) override {}
 
 protected:
-	HRESULT		Set_Patrol_AI();
+	HRESULT		Set_PatrolAndFollow_AI();
+	HRESULT		Set_TurretAI();
 
-private:
-	Engine::CTriCol*	m_pBufferCom;
-	Engine::CCollider*	m_pCollider;
-	Engine::CCollider*	m_pRange;
-
-	_float				m_fSpeed;
+protected:
+	_float		m_fSpeed;
 
 public:
 	static CMonster*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-private:
+protected:
 	virtual void Free(void) override;
-
 };
 

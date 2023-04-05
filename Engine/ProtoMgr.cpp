@@ -41,7 +41,7 @@ CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject* pGame
 {
 	
 	CComponent* pClone = Clone_Proto(pProtoTag, pGameObject);
-	dynamic_cast<CBehavior*>(pClone)->Set_BlackBoard(pBlackBoard);
+	dynamic_cast<CBehavior*>(pClone)->m_pBlackBoard = pBlackBoard;
 	return pClone;
 }
 

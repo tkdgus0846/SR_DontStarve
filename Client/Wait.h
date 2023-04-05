@@ -1,8 +1,6 @@
 #pragma once
 #include "Behavior.h"
 
-BEGIN(Engine)
-
 class CBlackBoard;
 class CWait : public CBehavior
 {
@@ -10,8 +8,6 @@ private:
 	explicit CWait(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CWait(const CWait& rhs);
 	virtual ~CWait();
-
-	
 
 public:
 	virtual HRESULT Ready_Behavior() override;
@@ -33,5 +29,3 @@ public:
 private:
 	virtual void Free() override;
 };
-
-END
