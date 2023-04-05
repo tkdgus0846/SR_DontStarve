@@ -25,13 +25,11 @@ public:
 
 	void			Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj);
 
-	// 플레이어를 전역적으로 불러옴.
-	class CGameObject*	Get_Player();
-	void				Set_Player(CGameObject* player);
+	// 작성해야됨.
+	class CPlayer*	Get_Player();
 
 private:
 	CScene*			m_pScene = nullptr;
-	class CGameObject*	m_pPlayer;
 
 private:
 	virtual void	Free(void);

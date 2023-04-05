@@ -50,11 +50,10 @@ public:
 
 	void Set_Enable(_bool bEnabled) { m_bEnabled = bEnabled; }
 	_bool Get_Enable() const { return m_bEnabled; }
-	bool Toggle_IsRender() 
+	void Toggle_IsRender() 
 	{
-		return m_bIsRender = (m_bIsRender == true) ? false : true;
+		m_bIsRender = (m_bIsRender == true) ? false : true;
 	}
-	void Set_IsRender(_bool bIsRender) { m_bIsRender = bIsRender; }
 
 	void Set_BoundingBox(const _vec3& vSize = {2.f, 2.f, 2.f});
 

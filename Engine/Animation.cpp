@@ -83,9 +83,8 @@ CComponent* CAnimation::Clone(void)
 
 void CAnimation::Free(void)
 {
-	Safe_Delete(m_CurFrame);
 	__super::Free();
-	
+	delete m_CurFrame;
 }
 
 void CAnimation::SelectState(ANIMSTATE state)

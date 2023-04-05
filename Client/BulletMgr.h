@@ -37,18 +37,13 @@ private:
 		(pBullet)->SetIsEnemy(bIsEnemyBullet);
 		(pBullet)->SetAge();
 
-		CCollider* collider = dynamic_cast<CCollider*>(pBullet->Get_Component(L"Collider", ID_ALL));
-		if (collider == nullptr) return pBullet;
-		_bool bIsRender = Engine::Collider_GetIsRender();
-		collider->Set_IsRender(bIsRender);
-
 		if (bIsEnemyBullet == true)
 		{
-			Engine::Change_ColGroup(collider, COL_ENEMYBULLET);
+			Engine::Change_ColGroup(dynamic_cast<CCollider*>(pBullet->Get_Component(L"Collider", ID_ALL)), COL_ENEMYBULLET);
 		}
 		else
 		{
-			Engine::Change_ColGroup(collider, COL_PLAYERBULLET);
+			Engine::Change_ColGroup(dynamic_cast<CCollider*>(pBullet->Get_Component(L"Collider", ID_ALL)), COL_PLAYERBULLET);
 		}
 
 		return pBullet;

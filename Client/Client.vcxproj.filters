@@ -44,21 +44,6 @@
     <Filter Include="MonoBehaviors">
       <UniqueIdentifier>{0585166a-ee3f-4639-9ec9-27c7dd623b88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Weapon">
-      <UniqueIdentifier>{432920f3-d7e9-4a00-b543-57a52176b347}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\BackGround">
-      <UniqueIdentifier>{5ba41007-e1a4-4574-9a69-7494fceab6df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\ObjCamera">
-      <UniqueIdentifier>{f71e35ad-3d7d-45a7-bca7-036311e8ca80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Player">
-      <UniqueIdentifier>{1f54bba7-419e-4f5a-9d48-f0679b58ab17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\UI">
-      <UniqueIdentifier>{32636d53-2dee-4bbd-89c2-e6eb1ddd7c8e}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -74,6 +59,12 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Player.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
@@ -112,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="imgui_impl_win32.h">
       <Filter>IMGUI\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjCamera.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="ImWindow.h">
       <Filter>IMGUI\ImWindow</Filter>
@@ -164,26 +158,14 @@
     <ClInclude Include="Evasion.h">
       <Filter>MonoBehaviors</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>GameObject\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="NormalWeapon.h">
-      <Filter>GameObject\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="BackGround.h">
-      <Filter>GameObject\BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjCamera.h">
-      <Filter>GameObject\ObjCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>GameObject\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>GameObject\UI</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
     <ClCompile Include="Loading.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -271,24 +253,6 @@
     <ClCompile Include="Evasion.cpp">
       <Filter>MonoBehaviors</Filter>
     </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>GameObject\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="NormalWeapon.cpp">
-      <Filter>GameObject\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="BackGround.cpp">
-      <Filter>GameObject\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjCamera.cpp">
-      <Filter>GameObject\ObjCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>GameObject\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>GameObject\UI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">
@@ -299,5 +263,8 @@
     <Natvis Include="imgui.natvis">
       <Filter>IMGUI\core</Filter>
     </Natvis>
+    <ClCompile Include="ObjCamera.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

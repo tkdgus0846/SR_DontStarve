@@ -47,7 +47,7 @@ void CScene::LateUpdate_Scene(void)
 		iter->LateUpdate_Layer();
 }
 
-HRESULT CScene::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj)
+HRESULT Engine::CScene::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj)
 {
 	FAILED_CHECK_RETURN(m_arrLayer[LayerID]->Add_GameObject(pObjTag, pObj), E_FAIL);
 	return S_OK;

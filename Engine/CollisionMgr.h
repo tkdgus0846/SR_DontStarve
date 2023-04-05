@@ -19,7 +19,6 @@ public:
 	// 콜라이더들의 렌더를 꺼주는 함수.
 	void		Toggle_ColliderRender();
 	void		Change_ColGroup(CCollider* collider, COLGROUP changeID);
-	_bool		GetIsRender() const { return m_bIsRender; }
 
 private:
 	bool		Collision_Box(CCollider* pSrc, CCollider* pDest, COL_DIR& colDir, BoundingBox& bound, _vec3& amountVec);
@@ -27,7 +26,6 @@ private:
 	
 private:
 	list<CCollider*>	m_ColliderList[COL_END];
-	_bool				m_bIsRender;
 
 private:
 	virtual void Free(void) override;

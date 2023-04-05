@@ -1,14 +1,3 @@
-
-CGameObject* Get_Player()
-{
-	return CManagement::GetInstance()->Get_Player();
-}
-
-void			Set_Player(CGameObject* player)
-{
-	CManagement::GetInstance()->Set_Player(player);
-}
-
 HRESULT			Create_Management(CManagement** ppManagement)
 {
 	CManagement*		pManagement = CManagement::GetInstance();
@@ -98,10 +87,6 @@ void		Toggle_ColliderRender()
 void		Change_ColGroup(CCollider* collider, COLGROUP changeID)
 {
 	CCollisionMgr::GetInstance()->Change_ColGroup(collider, changeID);
-}
-_bool		Collider_GetIsRender()
-{
-	return CCollisionMgr::GetInstance()->GetIsRender();
 }
 
 //void		Set_Collider(COLGROUP eGroup, CCollider* pCollider)

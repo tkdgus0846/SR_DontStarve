@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include "Export_Utility.h"
 
-
 IMPLEMENT_SINGLETON(CManagement)
 
-CManagement::CManagement() :
-	m_pPlayer(nullptr)
+CManagement::CManagement()
 {
 }
 
@@ -58,21 +56,12 @@ void CManagement::Render_Management(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CManagement::Add_GameObject(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj)
 {
-	NULL_CHECK(pObj);
-
-	m_pScene->Add_GameObject(LayerID, pObjTag, pObj);	
+	m_pScene->Add_GameObject(LayerID, pObjTag, pObj);
 }
 
-CGameObject * CManagement::Get_Player()
+CPlayer * CManagement::Get_Player()
 {
-	NULL_CHECK_RETURN_MSG(m_pPlayer, nullptr, L"플레이어가 아직 추가된 적 없음.");
-	return m_pPlayer;
-}
-
-void CManagement::Set_Player(CGameObject* player)
-{
-	if (m_pPlayer) MessageBox(NULL, L"이미 플레이어가 지정되어 있음", L"System Message", MB_OK);
-	m_pPlayer = player;
+	return nullptr;
 }
 
 void CManagement::Free(void)

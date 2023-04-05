@@ -17,7 +17,6 @@ private:
 	virtual ~CTransform();
 
 public:
-	void Set_MoveType(MOVETYPE eType = LANDOBJECT) { m_eMoveType = eType; }
 	const _matrix*		Get_WorldMatrixPointer() { return &m_matWorld; }
 	void				Get_Info(INFO eType, _vec3* pInfo)
 	{

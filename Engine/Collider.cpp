@@ -9,7 +9,7 @@ CCollider::CCollider(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CComponent(pGraphicDev),
 	m_bEnabled(true),
 	m_pMesh(nullptr),
-	m_bIsRender(false)
+	m_bIsRender(true)
 {
 }
 
