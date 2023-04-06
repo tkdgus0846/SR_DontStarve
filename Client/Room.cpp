@@ -111,7 +111,7 @@ void CRoom::PlaceSubSet()
 HRESULT CRoom::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
-
+	
 	return S_OK;
 }
 
@@ -121,7 +121,7 @@ HRESULT CRoom::Add_Component(void)
 CRoom* CRoom::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CRoom*		pInstance = new CRoom(pGraphicDev);
-
+	
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
@@ -137,7 +137,7 @@ void CRoom::Free(void)
 
 	for (auto& iter : m_apWall)
 		Safe_Release(iter);
-
+	
 	__super::Free();
 }
 

@@ -16,6 +16,7 @@ public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
+	CFloor* GetFloor() { return m_pFloor; }
 
 private:
 	void Update_Subset(const _float& fTimeDelta);
