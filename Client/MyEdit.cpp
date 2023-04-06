@@ -13,6 +13,7 @@
 #include "MyMap.h"
 #include "ImManager.h"
 #include "Export_Function.h"
+#include "FloorTile.h"
 
 CMyEdit::CMyEdit(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -44,6 +45,8 @@ HRESULT CMyEdit::Ready_Scene(void)
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
+
+	ShowCursor(TRUE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 

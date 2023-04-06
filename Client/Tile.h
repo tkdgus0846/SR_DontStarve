@@ -15,5 +15,5 @@ protected:
 	virtual void Render_GameObject(void) override;
 
 protected:
-	void Free(void) override;
+	virtual void Free(void) override;
 };

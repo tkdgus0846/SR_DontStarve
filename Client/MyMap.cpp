@@ -119,6 +119,7 @@ void CMyMap::Free()
 {
 	for (auto iter : m_arrRoom)
 		Safe_Release(iter);
+	Safe_Release(m_pTennel);
 
 	__super::Free();
 }

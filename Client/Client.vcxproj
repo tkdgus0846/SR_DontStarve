@@ -165,6 +165,7 @@
     <ClInclude Include="EditCamera.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Evasion.h" />
+    <ClInclude Include="FloorTile.h" />
     <ClInclude Include="GunUI.h" />
     <ClInclude Include="Guppi.h" />
     <ClInclude Include="Hp.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="EditCamera.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Evasion.cpp" />
+    <ClCompile Include="FloorTile.cpp" />
     <ClCompile Include="GunUI.cpp" />
     <ClCompile Include="Guppi.cpp" />
     <ClCompile Include="Hp.cpp" />
