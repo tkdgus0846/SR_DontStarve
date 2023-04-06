@@ -178,7 +178,12 @@
     <ClInclude Include="MonoBehaviors.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MoveLook.h" />
-    <ClInclude Include="MyEdit.h" />
+    <ClInclude Include="MyEdit.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="MyMap.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="NormalBullet.h" />
     <ClInclude Include="NormalWeapon.h" />
     <ClInclude Include="ObjCamera.h" />
@@ -226,7 +231,12 @@
     <ClCompile Include="MainApp.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MoveLook.cpp" />
-    <ClCompile Include="MyEdit.cpp" />
+    <ClCompile Include="MyEdit.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="MyMap.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="NormalBullet.cpp" />
     <ClCompile Include="NormalWeapon.cpp" />
     <ClCompile Include="ObjCamera.cpp" />

@@ -18,10 +18,10 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	virtual HRESULT Add_Component() override;
-	void		Key_Input(const _float& fTimeDelta);
-	void		Mouse_Move(const _float& fTimeDelta);
-	void		Fix_Mouse();
+	virtual	HRESULT Add_Component() override;
+	void	Key_Input(const _float& fTimeDelta);
+	void	Mouse_Move(const _float& fTimeDelta);
+	void	Fix_Mouse();
 
 private:
 	_float				m_fSpeed;

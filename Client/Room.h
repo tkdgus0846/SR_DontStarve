@@ -22,6 +22,7 @@ private:
 	void LateUpdate_SubSet();
 	void Render_SubSet();
 	HRESULT CreateSubset();
+	void FloorSubSet();
 	void PlaceSubSet();
 
 private:

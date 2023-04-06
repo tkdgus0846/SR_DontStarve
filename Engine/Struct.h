@@ -16,6 +16,7 @@ const	_ulong		FVF_COL = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX0;
 typedef	 struct tagVertexTexture
 {
 	_vec3			vPos;		// 위치
+	//_vec3			vNormal;	// 법선
 	_vec2			vTexUV;		// 색상
 
 }VTXTEX;

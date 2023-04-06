@@ -10,6 +10,7 @@
 #include "ObjCamera.h"
 #include "EditCamera.h"
 #include "Room.h"
+#include "MyMap.h"
 #include "ImManager.h"
 #include "Export_Function.h"
 
@@ -26,9 +27,9 @@ HRESULT CMyEdit::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
 
-	Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_ENVIRONMENT, L"Map", CMyMap::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
-
 
 	Add_GameObject(LAYER_CAMERA, L"Edit_Camera", CEditCamera::Create(m_pGraphicDev));
 	Engine::On_Camera(L"Edit_Camera");
@@ -61,6 +62,7 @@ void CMyEdit::LateUpdate_Scene(void)
 
 void CMyEdit::Render_Scene(void)
 {
+
 }
 
 CMyEdit * CMyEdit::Create(LPDIRECT3DDEVICE9 pGraphicDev)

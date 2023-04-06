@@ -28,8 +28,6 @@ void CBulletPool::Free(void)
 	m_BulletPool.clear();
 }
 
-
-
 CBulletPool* CBulletPool::Create()
 {
 	CBulletPool*		pInstance = new CBulletPool();

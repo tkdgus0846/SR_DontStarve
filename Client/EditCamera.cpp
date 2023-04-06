@@ -19,7 +19,7 @@ HRESULT CEditCamera::Ready_GameObject(void)
 	m_pTransform->m_vInfo[INFO_POS] = _vec3(15.f, 20.f, 30.f);
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 
-	m_fSpeed = 20.f;
+	m_fSpeed = 40.f;
 
 	return result;
 }
@@ -73,6 +73,7 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Get_DIMouseState(DIM_LB))
 	{
+
 	}
 }
 
@@ -98,6 +99,20 @@ void CEditCamera::Fix_Mouse()
 	ClientToScreen(g_hWnd, &ptMouse);
 	SetCursorPos(ptMouse.x, ptMouse.y);
 }
+
+/*
+Ray PickingRay(POINT pt);
+1. 카메라 위치에서 마우스로 광선을 쏨.
+-> 뷰포트 to 투영
+-> 투영 to 뷰 스페이스
+-> 뷰 스페이스 to 월드
+-> ray객체 반환.
+
+
+_bool IntersectRayTri(Ray ray, CVIBuffer _pVB, OUT float& distance, OUT _vec3& _InterPos)
+2. 현재 room안에 있는 모든 객체들의 버텍스 버퍼와 광선이 교차하는지 검사한다.
+-> VIBuffer컴포넌트를 매개 변수의 인자로 받는다.
+-> 광선과 VIBuffer의 삼각형들이 교차하는지 검사한다.*/
 
 CEditCamera * CEditCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
