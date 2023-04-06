@@ -239,6 +239,9 @@
     <ClInclude Include="FloorTile.h">
       <Filter>GameObject\Map\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="ImBaseWindow.h">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -396,6 +399,9 @@
     </ClCompile>
     <ClCompile Include="FloorTile.cpp">
       <Filter>GameObject\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="ImBaseWindow.cpp">
+      <Filter>IMGUI\ImWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

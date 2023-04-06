@@ -86,9 +86,6 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 			vPos.z = (tri.v[0].z + tri.v[2].z) / 2.f;
 			Add_GameObject(LAYER_ENVIRONMENT, L"CFloorTile", CFloorTile::Create(m_pGraphicDev, vPos));
 		}
-		
-		D3DXPLANE p;
-		D3DXPlaneFromPoints(&p, )
 
 		cout << fixed;
 		cout.precision(0);

@@ -33,6 +33,9 @@ private:
 
 	CRITICAL_SECTION			m_Crt;
 
+	// 임시 코드
+	list<const _tchar*>			m_listTags;
+
 public:
 	static CLoading*		Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eID);
 
