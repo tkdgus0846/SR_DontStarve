@@ -24,8 +24,6 @@ HRESULT CFloorTile::Ready_GameObject(void)
 
 _int CFloorTile::Update_GameObject(const _float & fTimeDelta)
 {
-	
-
 	CTile::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -66,7 +64,7 @@ void CFloorTile::Free(void)
 	CTile::Free();
 }
 
-HRESULT CFloorTile::Add_Component(const _tchar* tag)
+HRESULT CFloorTile::Add_Component()
 {
 	m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);

@@ -81,14 +81,10 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 		if (IntersectRayRoom(pMap->Get_CurRoom(m_pTransform->m_vInfo[INFO_POS]), tri))
 		{
 			_vec3 vPos{0.f, 0.f, 0.f};
-			vPos.x = (tri.v[1].x + tri.v[2].x) / 2.f;
+			vPos = CalcMiddlePoint(tri);
 			vPos.y += 1.f;
-			vPos.z = (tri.v[0].z + tri.v[2].z) / 2.f;
 			Add_GameObject(LAYER_ENVIRONMENT, L"CFloorTile", CFloorTile::Create(m_pGraphicDev, vPos));
 		}
-		
-		D3DXPLANE p;
-		D3DXPlaneFromPoints(&p, )
 
 		cout << fixed;
 		cout.precision(0);
@@ -282,4 +278,52 @@ POINT CEditCamera::GetMousePos()
 	ScreenToClient(g_hWnd, &ptMouse);
 
 	return ptMouse;
+}
+
+_vec3 CEditCamera::CalcMiddlePoint(Triangle & tri)
+{
+	_vec3 standard;
+	_vec3 a;
+	_vec3 b;
+	_vec3 A;
+	_vec3 B;
+	_vec3 result;
+	standard = tri.v[0];
+	a = tri.v[1];
+	b = tri.v[2];
+	A = a - standard;
+	B = b - standard;
+
+	if (fabs(A.Dot(B)) < 0.1f)
+	{
+		result = (a + b) / 2.f;
+		return result;
+	}
+
+	standard = tri.v[1];
+	a = tri.v[0];
+	b = tri.v[2];
+	A = a - standard;
+	B = b - standard;
+
+	if (fabs(A.Dot(B)) < 0.1f)
+	{
+		result = (a + b) / 2.f;
+		return result;
+	}
+		 
+	
+	standard = tri.v[2];
+	a = tri.v[1];
+	b = tri.v[0];
+	A = a - standard;
+	B = b - standard;
+
+	if (fabs(A.Dot(B)) < 0.1f)
+	{
+		result = (a + b) / 2.f;
+		return result;
+	}
+
+	return _vec3();
 }

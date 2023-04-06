@@ -31,6 +31,7 @@ private:
 	_bool Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri);
 	Ray CalcRaycast(POINT ptMouse);
 	POINT GetMousePos();
+	_vec3 CalcMiddlePoint(Triangle& tri);
 
 private:
 	_float				m_fSpeed;
