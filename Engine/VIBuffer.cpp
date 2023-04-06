@@ -37,19 +37,38 @@ CVIBuffer::~CVIBuffer()
 {
 }
 
-HRESULT CVIBuffer::Ready_Buffer(void)
+HRESULT CVIBuffer::Ready_Buffer(VIBUFFER_FLAG flag)
 {
 	
-	if (FAILED(m_pGraphicDev->CreateVertexBuffer(m_dwVtxCnt * m_dwVtxSize,  // 정점 버퍼의 크기
-													0,						// 버퍼를 만드는 방식(0인 경우 정적 버퍼,  D3DUSAGE_DYNAMIC 동적 버퍼)
-													m_dwFVF,				// 정점의 옵션			
-													D3DPOOL_MANAGED,
-													&m_pVB,					// 생성된 버텍스 버퍼를 저장할 메모리 주소
-													nullptr)))
+	if (flag == VB_STATIC)
 	{
-		MSG_BOX("CreateVertexBuffer Failed");
-		return E_FAIL;
+		if (FAILED(m_pGraphicDev->CreateVertexBuffer(m_dwVtxCnt * m_dwVtxSize,  // 정점 버퍼의 크기
+			0,						// 버퍼를 만드는 방식(0인 경우 정적 버퍼,  D3DUSAGE_DYNAMIC 동적 버퍼)
+			m_dwFVF,				// 정점의 옵션			
+			D3DPOOL_MANAGED,
+			&m_pVB,					// 생성된 버텍스 버퍼를 저장할 메모리 주소
+			nullptr)))
+		{
+			MSG_BOX("CreateVertexBuffer Failed");
+			return E_FAIL;
+		}
 	}
+	else
+	{
+		FAILED_CHECK_RETURN_MSG
+		(
+			m_pGraphicDev->CreateVertexBuffer(
+			m_dwVtxCnt * m_dwVtxSize,
+			D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY,
+			m_dwFVF,
+			D3DPOOL_DEFAULT,
+			&m_pVB,
+			0),
+			E_FAIL,
+			L"동적 버텍스 버퍼 생성 실패"
+		);
+	}
+	
 
 	if (FAILED(m_pGraphicDev->CreateIndexBuffer(m_dwIdxSize * m_dwTriCnt,
 												0,

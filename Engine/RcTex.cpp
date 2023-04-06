@@ -16,7 +16,7 @@ CRcTex::~CRcTex()
 {
 }
 
-HRESULT CRcTex::Ready_Buffer(void)
+HRESULT CRcTex::Ready_Buffer(VIBUFFER_FLAG bufferFlag)
 {
 
 	m_dwFVF = FVF_TEX;
@@ -27,7 +27,7 @@ HRESULT CRcTex::Ready_Buffer(void)
 	m_dwIdxSize = sizeof(INDEX32);
 	m_IdxFmt = D3DFMT_INDEX32;
 
-	FAILED_CHECK_RETURN(__super::Ready_Buffer(), E_FAIL);
+	FAILED_CHECK_RETURN(__super::Ready_Buffer(bufferFlag), E_FAIL);
 
 	VTXTEX*		pVertex = nullptr;
 
@@ -65,11 +65,11 @@ HRESULT CRcTex::Ready_Buffer(void)
 	return S_OK;
 }
 
-CRcTex * CRcTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CRcTex * CRcTex::Create(LPDIRECT3DDEVICE9 pGraphicDev, VIBUFFER_FLAG bufferFlag)
 {
 	CRcTex *	pInstance = new CRcTex(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Buffer()))
+	if (FAILED(pInstance->Ready_Buffer(bufferFlag)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

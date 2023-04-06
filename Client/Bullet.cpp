@@ -8,6 +8,8 @@ CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 {
 	CComponent* pComponent = Engine::Clone_Proto(L"Collider", this, COL_PLAYERBULLET);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", pComponent });
+
+	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 }
 
 CBullet::~CBullet()

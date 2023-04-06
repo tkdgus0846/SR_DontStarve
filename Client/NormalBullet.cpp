@@ -7,7 +7,7 @@
 CNormalBullet::CNormalBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
 {
-	m_fSpeed = 30.f;
+	m_fSpeed = 3.f;
 	m_fLifeSpan = 2.f;
 	m_fAge = 0.f;
 }
@@ -25,6 +25,7 @@ HRESULT CNormalBullet::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
 
+	m_pTransform->m_vScale = { 0.1f, 0.1f, 1.f };
 
 	return result;
 }

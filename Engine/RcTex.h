@@ -11,10 +11,10 @@ private:
 	virtual ~CRcTex();
 
 public:
-	HRESULT		Ready_Buffer(void);
+	HRESULT		Ready_Buffer(VIBUFFER_FLAG bufferFlag = VB_STATIC);
 
 public:
-	static CRcTex*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CRcTex*		Create(LPDIRECT3DDEVICE9 pGraphicDev, VIBUFFER_FLAG bufferFlag = VB_STATIC);
 	virtual CComponent*	Clone(void);
 private:
 	virtual void Free(void);

@@ -169,7 +169,7 @@ _vec3 CImManager::PickingFloor()
 	POINT ptMouse = GetMousePos();
 
 	Ray ray = CalcRaycast(ptMouse);
-	cout << ray.vDirection.x << "\t" << ray.vDirection.y << endl;
+	//cout << ray.vDirection.x << "\t" << ray.vDirection.y << endl;
 
 	_vec3 result;
 	bool hit = Compute_RayCastHitFloor(&result, &ray);

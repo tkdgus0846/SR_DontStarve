@@ -203,6 +203,9 @@
     <ClInclude Include="Guppi.h">
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="GunUI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -330,6 +333,9 @@
     </ClCompile>
     <ClCompile Include="Baller.cpp">
       <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="GunUI.cpp">
+      <Filter>GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

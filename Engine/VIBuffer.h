@@ -3,6 +3,12 @@
 
 BEGIN(Engine)
 
+enum VIBUFFER_FLAG
+{
+	VB_DYNAMIC,
+	VB_STATIC,
+};
+
 class  CVIBuffer : public CComponent
 {
 protected:
@@ -11,7 +17,7 @@ protected:
 	virtual ~CVIBuffer();
 
 public:
-	HRESULT		Ready_Buffer(void);
+	HRESULT		Ready_Buffer(VIBUFFER_FLAG flag = VB_STATIC);
 	virtual void Render_Component() override;
 
 	LPDIRECT3DVERTEXBUFFER9 GetVertexBuffer() { return m_pVB; }
