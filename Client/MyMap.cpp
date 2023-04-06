@@ -86,12 +86,12 @@ void CMyMap::Create_Default_Room()
 	//	}
 	//}
 
-	CRoom* pRoom = CRoom::Create(m_pGraphicDev);
-	pRoom->Ready_GameObject();
+	
+	
 
-	m_arrRoom[0] = pRoom;
+	m_arrRoom[0] = CRoom::Create(m_pGraphicDev);
 
-	Add_GameObject(LAYER_ENVIRONMENT, L"Room", pRoom);
+	//Add_GameObject(LAYER_ENVIRONMENT, L"Room", pRoom);
 }
 
 CMyMap * CMyMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -109,7 +109,7 @@ CMyMap * CMyMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CMyMap::Free()
 {
-	//Safe_Release(m_arrRoom[0]);
+	Safe_Release(m_arrRoom[0]);
 
 	__super::Free();
 }

@@ -50,7 +50,7 @@ void CNormalWeapon::Shot()
 		/*bulletDir = cameraAt - cameraViewparams->vEye;
 		bulletDir.Normalize();*/
 
-		cout << bulletDir.x << " " << bulletDir.y << " " << bulletDir.z << " \n" << endl;
+		//cout << bulletDir.x << " " << bulletDir.y << " " << bulletDir.z << " \n" << endl;
 
 		CBullet* bullet = CBulletMgr::GetInstance()->Pop<CNormalBullet>(L"NormalBullet", m_pGraphicDev, bulletPos, bulletDir, false);
 		Add_GameObject(LAYER_BULLET, L"NormalBullet", bullet);
