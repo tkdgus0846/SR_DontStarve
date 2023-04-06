@@ -35,18 +35,8 @@ _int CEditCamera::Update_GameObject(const _float & fTimeDelta)
 		Fix_Mouse();
 		Mouse_Move(fTimeDelta);
 	}
-	CMyMap* pMap = (CMyMap*)Get_GameObject(LAYER_ENVIRONMENT, L"Map");
-	CWall* pWall = pMap->GetRoom()->GetArray(1);
-	Triangle tri;
-	IntersectRayGameObject(pWall, tri);
-	cout << fixed;
-	cout.precision(0);
-	cout << tri.v[0].x << " " << tri.v[0].y << " " << tri.v[0].z << "\t"
-		<< tri.v[1].x << " " << tri.v[1].y << " " << tri.v[1].z << "\t"
-		<< tri.v[2].x << " " << tri.v[2].y << " " << tri.v[2].z << endl;
-    
 	__super::Update_GameObject(fTimeDelta);
-	
+
 	return OBJ_NOEVENT;
 }
 
@@ -84,8 +74,14 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Get_DIMouseState(DIM_LB))
 	{
-		CMyMap* pMap = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"));
-		CRoom* pRoom = pMap->Get_CurRoom(m_pTransform->m_vInfo[INFO_POS]);
+		CMyMap* pMap = (CMyMap*)Get_GameObject(LAYER_ENVIRONMENT, L"Map");
+		Triangle tri;
+		IntersectRayRoom(pMap->Get_CurRoom(m_pTransform->m_vInfo[INFO_POS]), tri);
+		//cout << fixed;
+		//cout.precision(0);
+		//cout << tri.v[0].x << " " << tri.v[0].y << " " << tri.v[0].z << "\t"
+		//	<< tri.v[1].x << " " << tri.v[1].y << " " << tri.v[1].z << "\t"
+		//	<< tri.v[2].x << " " << tri.v[2].y << " " << tri.v[2].z << endl;
 	}
 }
 
@@ -201,6 +197,20 @@ _bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pG
 	pVIBuffer->GetIndexBuffer()->Unlock();
 
 	return success;
+}
+
+_bool CEditCamera::IntersectRayRoom(IN CRoom* pRoom, OUT Triangle& tri)
+{
+	for (_int i = 0; i < 4; ++i)
+	{
+		if (IntersectRayGameObject(pRoom->GetWallArray(i), tri))
+			return true;
+	}
+	
+	if (IntersectRayGameObject(pRoom->GetFloor(), tri))
+		return true;
+
+	return false;
 }
 
 _bool CEditCamera::IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri)

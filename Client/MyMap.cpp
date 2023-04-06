@@ -89,9 +89,7 @@ CRoom * CMyMap::Get_CurRoom(const _vec3& vPos)
 	_int iX = _int(vPos.x / 50.f);
 	_int iZ = _int(vPos.z / 50.f);
 
-	_int iIndex = iX * 5 + iZ;
-
-	cout << iX << ", " << iZ << endl;
+	_int iIndex = iZ * 5 + iX;
 
 	return m_arrRoom[iIndex];
 }

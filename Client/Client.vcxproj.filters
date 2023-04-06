@@ -62,6 +62,9 @@
     <Filter Include="GameObject\Map\Room">
       <UniqueIdentifier>{d53ab2d1-8167-4ef5-b101-2ce8c0ce1569}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Map\Tile">
+      <UniqueIdentifier>{910476eb-a1aa-4a0d-8173-4d5b22f9f1d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -218,6 +221,9 @@
     <ClInclude Include="GunUI.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>GameObject\Map\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -357,6 +363,9 @@
     </ClCompile>
     <ClCompile Include="GunUI.cpp">
       <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>GameObject\Map\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
