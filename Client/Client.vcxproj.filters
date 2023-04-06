@@ -378,7 +378,7 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>GameObject\Map\Tile</Filter>
-    </ClInclude>
+    </ClCompile>
     <ClCompile Include="BulletBar.cpp">
       <Filter>GameObject\UI</Filter>
     </ClCompile>
