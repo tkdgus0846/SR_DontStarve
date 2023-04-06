@@ -5,6 +5,7 @@ BEGIN(Engine)
 class CCamera;
 END
 
+class CRoom;
 class CEditCamera : public CGameObject
 {
 private:
@@ -23,8 +24,10 @@ private:
 	void	Mouse_Move(const _float& fTimeDelta);
 	void	Fix_Mouse();
 
-	_bool IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri);
+	_bool IntersectRayRoom(IN CRoom* pRoom, OUT Triangle& tri);
+
 private:
+	_bool IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri);
 	_bool Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri);
 	Ray CalcRaycast(POINT ptMouse);
 	POINT GetMousePos();
@@ -33,7 +36,7 @@ private:
 	_float				m_fSpeed;
 	_bool				m_bFix;
 	Engine::CCamera*	m_pCamera;
-	class CRoom*				tmp;
+	CRoom*				tmp;
 public:
 	static CEditCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

@@ -17,7 +17,7 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 	CFloor* GetFloor() { return m_pFloor; }
-	CWall* GetArray(_uint index) { return m_apWall[index]; }
+	CWall* GetWallArray(_uint index) { return m_apWall[index]; }
 
 private:
 	virtual HRESULT Add_Component() override;
