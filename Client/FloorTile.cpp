@@ -24,8 +24,6 @@ HRESULT CFloorTile::Ready_GameObject(void)
 
 _int CFloorTile::Update_GameObject(const _float & fTimeDelta)
 {
-	
-
 	CTile::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
