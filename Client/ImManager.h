@@ -24,13 +24,14 @@ public:
 	void Render(LPDIRECT3DDEVICE9 pGraphicDev);
 	void Release();
 
+	
 private:
 	_bool Compute_RayCastHitFloor(_vec3* result, const Ray* pRay);
-
-	Ray CalcRaycast(POINT ptMouse);
+	_bool IntersectRayTri(IN Ray ray, IN CGameObject*, OUT _vec3& _InterPos);
+	Ray PickingRay(POINT ptMouse);
 	POINT GetMousePos();
 
-	_vec3 PickingFloor();
+	_vec3 PickingObject(IN CGameObject*);
 	_bool PickingWall(class CWall* pWall);
 
 public:

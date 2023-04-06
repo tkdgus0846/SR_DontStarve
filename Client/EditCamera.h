@@ -24,6 +24,13 @@ private:
 	void		Fix_Mouse();
 
 private:
+	_bool Compute_RayCastHitBuffer(IN Ray* pRay, IN CVIBuffer* pVIBuffer, OUT Triangle& tri);
+	_bool Compute_RayCastHitFloor(_vec3* result, const Ray* pRay);
+	_bool IntersectRayTri(IN CVIBuffer* pVIBuffer, OUT Triangle& tri);
+	Ray CalcRaycast(POINT ptMouse);
+	POINT GetMousePos();
+
+private:
 	_float				m_fSpeed;
 	_bool				m_bFix;
 	Engine::CCamera*	m_pCamera;

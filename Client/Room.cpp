@@ -15,7 +15,7 @@ CRoom::~CRoom()
 HRESULT CRoom::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
-	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);
+	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);    
 	PlaceSubSet();
 
 	return result;

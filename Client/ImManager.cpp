@@ -32,7 +32,7 @@ void CImManager::Update(_float fTimeDelta)
 	{
 		_int iResult = iter->Update(fTimeDelta);
 	}
-	if (PickingFloor()) {}
+
 	//	cout << "gd" << endl;
 	//cout << (_int)tmp.x << "\t" << (_int)tmp.z << endl;
 }
@@ -123,7 +123,8 @@ _bool CImManager::Compute_RayCastHitFloor(_vec3 * result, const Ray* pRay)
 
 
 
-Ray CImManager::CalcRaycast(POINT ptMouse)
+
+Ray CImManager::PickingRay(POINT ptMouse)
 {
 	Ray ray;
 	_vec3 vMouse;
@@ -164,15 +165,14 @@ POINT CImManager::GetMousePos()
 	return ptMouse;
 }
 
-_vec3 CImManager::PickingFloor()
+_vec3 CImManager::PickingObject(IN CGameObject* pGameObject)
 {
 	POINT ptMouse = GetMousePos();
 
-	Ray ray = CalcRaycast(ptMouse);
-	cout << ray.vDirection.x << "\t" << ray.vDirection.y << endl;
+	//cout << ray.vDirection.x << "\t" << ray.vDirection.y << endl;
 
 	_vec3 result;
-	bool hit = Compute_RayCastHitFloor(&result, &ray);
+	//bool hit = Compute_RayCastHitFloor(&result, &ray);
 
 
 	return result;
