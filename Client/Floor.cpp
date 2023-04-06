@@ -25,12 +25,11 @@ _int CFloor::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	//m_pBufferCom->m_PlaneVec;
-
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }
+
 void CFloor::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
@@ -45,7 +44,6 @@ void CFloor::Render_GameObject(void)
 	m_pTextureCom->Set_Texture_Num();
 
 	__super::Render_GameObject();
-
 }
 
 HRESULT CFloor::Add_Component(void)
