@@ -53,8 +53,15 @@ HRESULT CScene::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGa
 	return S_OK;
 }
 
+CGameObject * CScene::Get_GameObject(LAYERID LayerID, const _tchar * pObjTag)
+{
+	NULL_CHECK_RETURN(pObjTag);
+
+	return m_arrLayer[LayerID]->Get_GameObject(pObjTag);
+}
+
 void Engine::CScene::Free(void)
 {
-	for_each(m_arrLayer.begin(), m_arrLayer.end(), CDeleteObj());	
+	for_each(m_arrLayer.begin(), m_arrLayer.end(), CDeleteObj());
 	Safe_Release(m_pGraphicDev);
 }

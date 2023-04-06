@@ -15,9 +15,7 @@ CRoom::~CRoom()
 HRESULT CRoom::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
-	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);    
-	PlaceSubSet();
-	FloorSubSet();
+	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);
 
 	return result;
 }
@@ -27,7 +25,7 @@ _int CRoom::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 	Update_Subset(fTimeDelta);
 	
-	Engine::Add_RenderGroup(RENDER_PRIORITY, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
 }
@@ -48,6 +46,8 @@ void CRoom::Render_GameObject(void)
 
 void CRoom::Update_Subset(const _float& fTimeDelta)
 {
+	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
+
 	m_pFloor->Update_GameObject(fTimeDelta);
 	for (auto& iter : m_apWall)
 		iter->Update_GameObject(fTimeDelta);
