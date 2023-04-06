@@ -4,7 +4,7 @@
 #include "Export_Function.h"
 
 CMyMap::CMyMap(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev)
+	:CGameObject(pGraphicDev), m_pTennel(nullptr)
 {
 	for (auto iter : m_arrRoom)
 		iter = nullptr;
@@ -23,9 +23,10 @@ HRESULT CMyMap::Ready_GameObject(void)
 
 _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 {
-	/*for (auto Room : m_arrRoom)
-		Room->Update_GameObject(fTimeDelta);*/
-	m_arrRoom[0]->Update_GameObject(fTimeDelta);
+	for (auto Room : m_arrRoom)
+		Room->Update_GameObject(fTimeDelta);
+
+	m_pTennel->Update_GameObject(fTimeDelta);
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -36,9 +37,10 @@ _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 
 void CMyMap::LateUpdate_GameObject(void)
 {
-	/*for (auto Room : m_arrRoom)
-		Room->LateUpdate_GameObject();*/
-	m_arrRoom[0]->LateUpdate_GameObject();
+	for (auto Room : m_arrRoom)
+		Room->LateUpdate_GameObject();
+
+	m_pTennel->LateUpdate_GameObject();
 
 	__super::LateUpdate_GameObject();
 }
@@ -69,29 +71,35 @@ HRESULT CMyMap::Add_Component()
 
 void CMyMap::Create_Default_Room()
 {
-	//for (_uint i = 0; i < 5; ++i)
-	//{
-	//	for (_uint j = 0; j < 5; ++j)
-	//	{
-	//		_uint iIndex = i * 5 + j;
+	for (_uint i = 0; i < 5; ++i)
+	{
+		for (_uint j = 0; j < 5; ++j)
+		{
+			_uint iIndex = i * 5 + j;
 
-	//		CRoom* pRoom = CRoom::Create(m_pGraphicDev);
+			CRoom* pRoom = CRoom::Create(m_pGraphicDev);
 
-	//		pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 50.f, 0.f, i * 50.f };
-	//		pRoom->Ready_GameObject();
+			pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 50.01f, 0.f, i * 50.01f };
+			pRoom->FloorSubSet();
+			pRoom->PlaceSubSet();
 
-	//		//Add_GameObject(LAYER_ENVIRONMENT, L"Room", pRoom);
+			m_arrRoom[iIndex] = pRoom;
+		}
+	}
+	m_pTennel = CRoom::Create(m_pGraphicDev, 3, 2, 10);
+	m_pTennel->m_pTransform->m_vInfo[INFO_POS] = { -60.f, 0.f, -60.f };
+	m_pTennel->FloorSubSet();
+	m_pTennel->PlaceSubSet();
+}
 
-	//		m_arrRoom[iIndex] = pRoom;
-	//	}
-	//}
+CRoom * CMyMap::Get_CurRoom(const _vec3& vPos)
+{
+	_int iX = _int(vPos.x / 50.f);
+	_int iZ = _int(vPos.z / 50.f);
 
-	CRoom* pRoom = CRoom::Create(m_pGraphicDev);
-	pRoom->Ready_GameObject();
+	_int iIndex = iZ * 5 + iX;
 
-	m_arrRoom[0] = pRoom;
-
-	Add_GameObject(LAYER_ENVIRONMENT, L"Room", pRoom);
+	return m_arrRoom[iIndex];
 }
 
 CMyMap * CMyMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -109,7 +117,8 @@ CMyMap * CMyMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CMyMap::Free()
 {
-	//Safe_Release(m_arrRoom[0]);
+	for (auto iter : m_arrRoom)
+		Safe_Release(iter);
 
 	__super::Free();
 }

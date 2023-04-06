@@ -1,7 +1,9 @@
 #include "EditCamera.h"
-
+#include "Room.h"
+#include "Wall.h"
+#include "MyMap.h"
 #include "Export_Function.h"
-
+#include "MyMap.h"
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_fSpeed(0.f), m_bFix(true)
 {
@@ -27,13 +29,12 @@ HRESULT CEditCamera::Ready_GameObject(void)
 _int CEditCamera::Update_GameObject(const _float & fTimeDelta)
 {
 	Key_Input(fTimeDelta);
-
+	
 	if (m_bFix)
 	{
 		Fix_Mouse();
 		Mouse_Move(fTimeDelta);
 	}
-	
 	__super::Update_GameObject(fTimeDelta);
 
 	return OBJ_NOEVENT;
@@ -73,7 +74,14 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Get_DIMouseState(DIM_LB))
 	{
-
+		CMyMap* pMap = (CMyMap*)Get_GameObject(LAYER_ENVIRONMENT, L"Map");
+		Triangle tri;
+		IntersectRayRoom(pMap->Get_CurRoom(m_pTransform->m_vInfo[INFO_POS]), tri);
+		//cout << fixed;
+		//cout.precision(0);
+		//cout << tri.v[0].x << " " << tri.v[0].y << " " << tri.v[0].z << "\t"
+		//	<< tri.v[1].x << " " << tri.v[1].y << " " << tri.v[1].z << "\t"
+		//	<< tri.v[2].x << " " << tri.v[2].y << " " << tri.v[2].z << endl;
 	}
 }
 
@@ -102,17 +110,17 @@ void CEditCamera::Fix_Mouse()
 
 /*
 Ray PickingRay(POINT pt);
-1. Ä«¸Þ¶ó À§Ä¡¿¡¼­ ¸¶¿ì½º·Î ±¤¼±À» ½ô.
--> ºäÆ÷Æ® to Åõ¿µ
--> Åõ¿µ to ºä ½ºÆäÀÌ½º
--> ºä ½ºÆäÀÌ½º to ¿ùµå
--> ray°´Ã¼ ¹ÝÈ¯.
+1. ì¹´ë©”ë¼ ìœ„ì¹˜ì—ì„œ ë§ˆìš°ìŠ¤ë¡œ ê´‘ì„ ì„ ì¨.
+-> ë·°í¬íŠ¸ to íˆ¬ì˜
+-> íˆ¬ì˜ to ë·° ìŠ¤íŽ˜ì´ìŠ¤
+-> ë·° ìŠ¤íŽ˜ì´ìŠ¤ to ì›”ë“œ
+-> rayê°ì²´ ë°˜í™˜.
 
 
 _bool IntersectRayTri(Ray ray, CVIBuffer _pVB, OUT float& distance, OUT _vec3& _InterPos)
-2. ÇöÀç room¾È¿¡ ÀÖ´Â ¸ðµç °´Ã¼µéÀÇ ¹öÅØ½º ¹öÆÛ¿Í ±¤¼±ÀÌ ±³Â÷ÇÏ´ÂÁö °Ë»çÇÑ´Ù.
--> VIBufferÄÄÆ÷³ÍÆ®¸¦ ¸Å°³ º¯¼öÀÇ ÀÎÀÚ·Î ¹Þ´Â´Ù.
--> ±¤¼±°ú VIBufferÀÇ »ï°¢ÇüµéÀÌ ±³Â÷ÇÏ´ÂÁö °Ë»çÇÑ´Ù.*/
+2. í˜„ìž¬ roomì•ˆì— ìžˆëŠ” ëª¨ë“  ê°ì²´ë“¤ì˜ ë²„í…ìŠ¤ ë²„í¼ì™€ ê´‘ì„ ì´ êµì°¨í•˜ëŠ”ì§€ ê²€ì‚¬í•œë‹¤.
+-> VIBufferì»´í¬ë„ŒíŠ¸ë¥¼ ë§¤ê°œ ë³€ìˆ˜ì˜ ì¸ìžë¡œ ë°›ëŠ”ë‹¤.
+-> ê´‘ì„ ê³¼ VIBufferì˜ ì‚¼ê°í˜•ë“¤ì´ êµì°¨í•˜ëŠ”ì§€ ê²€ì‚¬í•œë‹¤.*/
 
 CEditCamera * CEditCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
@@ -132,8 +140,16 @@ void CEditCamera::Free()
 	__super::Free();
 }
 
-_bool CEditCamera::Compute_RayCastHitBuffer(IN Ray * pRay, IN CVIBuffer * pVIBuffer, OUT Triangle & tri)
+_bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri)
 {
+	CVIBuffer* pVIBuffer = pGameObject->Get_VIBuffer();
+	CTransform* pTransform = pGameObject->m_pTransform;
+	
+	_matrix matWorld = *pTransform->Get_WorldMatrixPointer();
+
+	if (!pVIBuffer) 
+		return false;
+
 	_bool success = false;
 	_float u, v;
 	_float dist = FLT_MAX;
@@ -141,124 +157,74 @@ _bool CEditCamera::Compute_RayCastHitBuffer(IN Ray * pRay, IN CVIBuffer * pVIBuf
 	VTXTEX* vertices = nullptr;
 	INDEX32* indices = nullptr;
 	_bool tempSuccess;
-
+	Triangle	tmpTri;
 	D3DVERTEXBUFFER_DESC vbDescription;
 	D3DINDEXBUFFER_DESC inDescription;
 
 	pVIBuffer->GetVertexBuffer()->GetDesc(&vbDescription);
 	pVIBuffer->GetIndexBuffer()->GetDesc(&inDescription);
 
+	pVIBuffer->GetVertexBuffer()->Lock(0, 0, (void**)&vertices, 0);
+	pVIBuffer->GetIndexBuffer()->Lock(0, 0, (void**)&indices, 0);
 
-	pVIBuffer->GetVertexBuffer()->Lock(0, 0, (void**)vertices, 0);
-	pVIBuffer->GetIndexBuffer()->Lock(0, 0, (void**)indices, 0);
-	
-	_vec3 v0;
-
-	_ulong dwSize = inDescription.Size;
+	_ulong dwSize = inDescription.Size / sizeof(INDEX32);
 	for (_ulong i = 0; i < dwSize; ++i)
 	{
-		
+		tmpTri.v[0] = vertices[indices[i]._0].vPos;
+		tmpTri.v[1] = vertices[indices[i]._1].vPos;
+		tmpTri.v[2] = vertices[indices[i]._2].vPos;
 
+		tmpTri.v[0].TransformCoord(&matWorld);
+		tmpTri.v[1].TransformCoord(&matWorld);
+		tmpTri.v[2].TransformCoord(&matWorld);
+			
+		tempSuccess = D3DXIntersectTri(&tmpTri.v[0]
+			, &tmpTri.v[1]
+			, &tmpTri.v[2]
+			, (const D3DXVECTOR3*)(&pRay->vOrigin)
+			, (const D3DXVECTOR3*)(&pRay->vDirection)
+			, &u, &v, &distTemp);
 
-		//v0 = vertices[indices[i]._0];
-		//tri.v[1] = 
-		//tri.v[2] = 
-
-
-		//tri.v[0] = vFloorArr[dwIndex + VTXCNTX];
-		//tri.v[1] = vFloorArr[dwIndex + VTXCNTX + 1];
-		//tri.v[2] = vFloorArr[dwIndex + 1];
+		if (tempSuccess && (dist > distTemp))
+		{
+			dist = distTemp;
+			success = tempSuccess;
+			tri = tmpTri;
+		}
 	}
 
 	pVIBuffer->GetVertexBuffer()->Unlock();
 	pVIBuffer->GetIndexBuffer()->Unlock();
 
-	return _bool();
-}
-
-_bool CEditCamera::Compute_RayCastHitFloor(_vec3 * result, const Ray* pRay)
-{
-	_bool success = false;
-	_float u, v;
-	_float dist = FLT_MAX;
-	_float distTemp = 0.f;
-
-	_vec3 vFloorArr[VTXCNTX * VTXCNTZ];
-	_ulong	dwIndex = 0;
-
-	for (_ulong i = 0; i < VTXCNTZ; ++i)
-	{
-		for (_ulong j = 0; j < VTXCNTX; ++j)
-		{
-			dwIndex = i * VTXCNTX + j;
-
-			vFloorArr[dwIndex] = {
-				_float(j * VTXITV),
-				0.f,
-				_float(i * VTXITV) };
-		}
-	}
-
-	_vec3 v0, v1, v2;
-
-	for (int i = 0; i < VTXCNTZ - 1; i++)
-	{
-		for (int j = 0; j < VTXCNTX - 1; j++)
-		{
-			DWORD dwIndex = i * VTXCNTX + j;
-			_bool tempSuccess;
-
-			v0 = vFloorArr[dwIndex + VTXCNTX];
-			v1 = vFloorArr[dwIndex + VTXCNTX + 1];
-			v2 = vFloorArr[dwIndex + 1];
-
-			tempSuccess = D3DXIntersectTri(&v0, &v1, &v2
-				, (const D3DXVECTOR3*)(&pRay->vOrigin)
-				, (const D3DXVECTOR3*)(&pRay->vDirection)
-				, &u, &v, &distTemp);
-
-			if (tempSuccess && (dist > distTemp))
-			{
-				*result = v0 + u*(v1 - v0) + v * (v2 - v0);
-				dist = distTemp;
-				success = tempSuccess;
-			}
-
-			v0 = vFloorArr[dwIndex + VTXCNTX];
-			v1 = vFloorArr[dwIndex + 1];
-			v2 = vFloorArr[dwIndex];
-
-			tempSuccess = D3DXIntersectTri(&v0, &v1, &v2
-				, (const D3DXVECTOR3*)(&pRay->vOrigin)
-				, (const D3DXVECTOR3*)(&pRay->vDirection)
-				, &u, &v, &distTemp);
-
-			if (tempSuccess && (dist > distTemp))
-			{
-				*result = v0 + u*(v1 - v0) + v * (v2 - v0);
-				dist = distTemp;
-				success = tempSuccess;
-			}
-		}
-	}
-
 	return success;
 }
 
-_bool CEditCamera::IntersectRayTri(IN CVIBuffer* pVIBuffer, OUT Triangle& tri)
+_bool CEditCamera::IntersectRayRoom(IN CRoom* pRoom, OUT Triangle& tri)
 {
-	if (Get_DIMouseState(DIM_RB) & 0x80)
+	for (_int i = 0; i < 4; ++i)
 	{
-		Triangle tTri;
-		Ray ray = CalcRaycast(GetMousePos());
-		_bool success = Compute_RayCastHitBuffer(&ray, pVIBuffer, tTri);
-
-		if (success)
-		{
-			memcpy(&tri, &tTri, sizeof(Triangle));
+		if (IntersectRayGameObject(pRoom->GetWallArray(i), tri))
 			return true;
-		}
 	}
+	
+	if (IntersectRayGameObject(pRoom->GetFloor(), tri))
+		return true;
+
+	return false;
+}
+
+_bool CEditCamera::IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri)
+{
+	Triangle tTri;
+	Ray ray = CalcRaycast(GetMousePos());
+	_bool success = Compute_RayCastHitGameObject(&ray, pGameObject, tTri);
+
+	if (success)
+	{
+		memcpy(&tri, &tTri, sizeof(Triangle));
+		return true;
+	}
+
 	return false;
 }
 
@@ -269,7 +235,7 @@ Ray CEditCamera::CalcRaycast(POINT ptMouse)
 	Ray ray;
 	_vec3 vMouse;
 
-	// ºäÆ÷Æ® -> Åõ¿µ
+	// ë·°í¬íŠ¸ -> íˆ¬ì˜
 	D3DVIEWPORT9		ViewPort;
 	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
 	m_pGraphicDev->GetViewport(&ViewPort);
@@ -277,13 +243,13 @@ Ray CEditCamera::CalcRaycast(POINT ptMouse)
 	vMouse.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
 	vMouse.z = 0.f;
 
-	//  Åõ¿µ -> ºä ½ºÆäÀÌ½º
+	//  íˆ¬ì˜ -> ë·° ìŠ¤íŽ˜ì´ìŠ¤
 	_matrix		matProj;
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 	D3DXMatrixInverse(&matProj, 0, &matProj);
 	D3DXVec3TransformCoord(&vMouse, &vMouse, &matProj);
 
-	// ºä ½ºÆäÀÌ½º -> ¿ùµå
+	// ë·° ìŠ¤íŽ˜ì´ìŠ¤ -> ì›”ë“œ
 	_matrix		matView;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, 0, &matView);
