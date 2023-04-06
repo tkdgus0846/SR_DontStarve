@@ -32,7 +32,7 @@ void CImManager::Update(_float fTimeDelta)
 	{
 		_int iResult = iter->Update(fTimeDelta);
 	}
-	if (PickingFloor()) {}
+
 	//	cout << "gd" << endl;
 	//cout << (_int)tmp.x << "\t" << (_int)tmp.z << endl;
 }
@@ -123,12 +123,13 @@ _bool CImManager::Compute_RayCastHitFloor(_vec3 * result, const Ray* pRay)
 
 
 
-Ray CImManager::CalcRaycast(POINT ptMouse)
+
+Ray CImManager::PickingRay(POINT ptMouse)
 {
 	Ray ray;
 	_vec3 vMouse;
 	
-	// ºäÆ÷Æ® -> Åõ¿µ
+	// ë·°í¬íŠ¸ -> íˆ¬ì˜
 	D3DVIEWPORT9		ViewPort;
 	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
 	m_pGraphicDev->GetViewport(&ViewPort);
@@ -136,13 +137,13 @@ Ray CImManager::CalcRaycast(POINT ptMouse)
 	vMouse.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
 	vMouse.z = 0.f;
 
-	//  Åõ¿µ -> ºä ½ºÆäÀÌ½º
+	//  íˆ¬ì˜ -> ë·° ìŠ¤íŽ˜ì´ìŠ¤
 	_matrix		matProj;
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 	D3DXMatrixInverse(&matProj, 0, &matProj);
 	D3DXVec3TransformCoord(&vMouse, &vMouse, &matProj);
 
-	// ºä ½ºÆäÀÌ½º -> ¿ùµå
+	// ë·° ìŠ¤íŽ˜ì´ìŠ¤ -> ì›”ë“œ
 	_matrix		matView;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, 0, &matView);
@@ -164,15 +165,14 @@ POINT CImManager::GetMousePos()
 	return ptMouse;
 }
 
-_vec3 CImManager::PickingFloor()
+_vec3 CImManager::PickingObject(IN CGameObject* pGameObject)
 {
 	POINT ptMouse = GetMousePos();
 
-	Ray ray = CalcRaycast(ptMouse);
 	//cout << ray.vDirection.x << "\t" << ray.vDirection.y << endl;
 
 	_vec3 result;
-	bool hit = Compute_RayCastHitFloor(&result, &ray);
+	//bool hit = Compute_RayCastHitFloor(&result, &ray);
 
 
 	return result;

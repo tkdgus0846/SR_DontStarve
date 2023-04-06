@@ -11,17 +11,17 @@ public:
 	~CBlackBoard();
 
 public:
-	HRESULT Add_Type(const _tchar* pTypename, const _int& iType);
-	HRESULT Add_Type(const _tchar* pTypename, const _float& fType);
-	HRESULT Add_Type(const _tchar* pTypename, const _bool& bType);
-	HRESULT Add_Type(const _tchar* pTypename, const _vec3& vType);
-	HRESULT Add_Type(const _tchar* pTypename, CGameObject* pType);
+	HRESULT Add_Type(IN const _tchar* pTypename, IN const _int& iType);
+	HRESULT Add_Type(IN const _tchar* pTypename, IN const _float& fType);
+	HRESULT Add_Type(IN const _tchar* pTypename, IN const _bool& bType);
+	HRESULT Add_Type(IN const _tchar* pTypename, IN const _vec3& vType);
+	HRESULT Add_Type(IN const _tchar* pTypename, IN CGameObject* pType);
 
-	HRESULT Get_Type(const _tchar* pTypename, _int* pOut);
-	HRESULT Get_Type(const _tchar* pTypename, _float* pOut);
-	HRESULT Get_Type(const _tchar* pTypename, _bool* pOut);
-	HRESULT Get_Type(const _tchar* pTypename, _vec3* pOut);
-	HRESULT Get_Type(const _tchar* pTypename, CGameObject* pOut);
+	HRESULT Get_Type(IN const _tchar* pTypename, OUT _int* pOut);
+	HRESULT Get_Type(IN const _tchar* pTypename, OUT _float* pOut);
+	HRESULT Get_Type(IN const _tchar* pTypename, OUT _bool* pOut);
+	HRESULT Get_Type(IN const _tchar* pTypename, OUT _vec3* pOut);
+	HRESULT Get_Type(IN const _tchar* pTypename, OUT CGameObject* pOut);
 
 private:
 	map<const _tchar*, _int>			m_mapInt;

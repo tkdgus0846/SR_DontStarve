@@ -15,8 +15,9 @@ CRoom::~CRoom()
 HRESULT CRoom::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
-	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);
+	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);    
 	PlaceSubSet();
+	FloorSubSet();
 
 	return result;
 }
@@ -80,6 +81,16 @@ HRESULT CRoom::CreateSubset()
 	return S_OK;
 }
 
+void CRoom::FloorSubSet()
+{
+	// 바닥 위치 조정
+	_vec3 vPos;
+	float fLength = (VTXCNTZ - 1) * VTXITV;
+	m_pTransform->Get_Info(INFO_POS, &vPos);
+
+	m_pFloor->m_pTransform->Set_Pos(vPos);
+}
+
 void CRoom::PlaceSubSet()
 {
 	// 벽 위치 조정
@@ -106,6 +117,7 @@ HRESULT CRoom::Add_Component(void)
 
 
 
+
 CRoom* CRoom::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CRoom*		pInstance = new CRoom(pGraphicDev);
@@ -122,6 +134,7 @@ CRoom* CRoom::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CRoom::Free(void)
 {
 	Safe_Release(m_pFloor);
+
 	for (auto& iter : m_apWall)
 		Safe_Release(iter);
 

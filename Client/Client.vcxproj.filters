@@ -38,9 +38,6 @@
     <Filter Include="IMGUI\ImManager">
       <UniqueIdentifier>{3ce43516-b38f-46c0-886d-b8476ec0afb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Room">
-      <UniqueIdentifier>{d53ab2d1-8167-4ef5-b101-2ce8c0ce1569}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MonoBehaviors">
       <UniqueIdentifier>{0585166a-ee3f-4639-9ec9-27c7dd623b88}</UniqueIdentifier>
     </Filter>
@@ -58,6 +55,12 @@
     </Filter>
     <Filter Include="GameObject\UI">
       <UniqueIdentifier>{32636d53-2dee-4bbd-89c2-e6eb1ddd7c8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Map">
+      <UniqueIdentifier>{faf346d6-e9d0-4c34-b171-1cc5742d40b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Map\Room">
+      <UniqueIdentifier>{d53ab2d1-8167-4ef5-b101-2ce8c0ce1569}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -132,13 +135,13 @@
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Floor.h">
-      <Filter>GameObject\Room</Filter>
+      <Filter>GameObject\Map\Room</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
-      <Filter>GameObject\Room</Filter>
+      <Filter>GameObject\Map\Room</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
-      <Filter>GameObject\Room</Filter>
+      <Filter>GameObject\Map\Room</Filter>
     </ClInclude>
     <ClInclude Include="Attack.h">
       <Filter>MonoBehaviors</Filter>
@@ -203,6 +206,15 @@
     <ClInclude Include="Guppi.h">
       <Filter>GameObject\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="MyEdit.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="EditCamera.h">
+      <Filter>GameObject\ObjCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMap.h">
+      <Filter>GameObject\Map</Filter>
+    </ClInclude>
     <ClInclude Include="GunUI.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
@@ -266,13 +278,13 @@
       <Filter>GameObject\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Floor.cpp">
-      <Filter>GameObject\Room</Filter>
+      <Filter>GameObject\Map\Room</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
-      <Filter>GameObject\Room</Filter>
+      <Filter>GameObject\Map\Room</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
-      <Filter>GameObject\Room</Filter>
+      <Filter>GameObject\Map\Room</Filter>
     </ClCompile>
     <ClCompile Include="Attack.cpp">
       <Filter>MonoBehaviors</Filter>
@@ -333,6 +345,15 @@
     </ClCompile>
     <ClCompile Include="Baller.cpp">
       <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MyEdit.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="EditCamera.cpp">
+      <Filter>GameObject\ObjCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMap.cpp">
+      <Filter>GameObject\Map</Filter>
     </ClCompile>
     <ClCompile Include="GunUI.cpp">
       <Filter>GameObject\UI</Filter>

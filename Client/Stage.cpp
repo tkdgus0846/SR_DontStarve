@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Stage.h"
 
-#include "Export_Function.h"
 #include "Monster.h"
 #include "Bub.h"
 #include "Guppi.h"

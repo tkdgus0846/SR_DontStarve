@@ -159,6 +159,7 @@
     <ClInclude Include="Bub.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="EditCamera.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Evasion.h" />
     <ClInclude Include="GunUI.h" />
@@ -178,6 +179,12 @@
     <ClInclude Include="MonoBehaviors.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MoveLook.h" />
+    <ClInclude Include="MyEdit.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="MyMap.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="NormalBullet.h" />
     <ClInclude Include="NormalWeapon.h" />
     <ClInclude Include="ObjCamera.h" />
@@ -205,6 +212,7 @@
     <ClCompile Include="Bub.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="EditCamera.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Evasion.cpp" />
     <ClCompile Include="GunUI.cpp" />
@@ -225,6 +233,12 @@
     <ClCompile Include="MainApp.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MoveLook.cpp" />
+    <ClCompile Include="MyEdit.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="MyMap.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="NormalBullet.cpp" />
     <ClCompile Include="NormalWeapon.cpp" />
     <ClCompile Include="ObjCamera.cpp" />

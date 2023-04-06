@@ -4,6 +4,7 @@
 #include "Export_Function.h"
 #include "BackGround.h"
 #include "Stage.h"
+#include "MyEdit.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_pLoading(nullptr)
@@ -35,7 +36,17 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 
 	if (true == m_pLoading->Get_Finish())
 	{
-		if (GetAsyncKeyState(VK_RETURN))
+		if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_RETURN))
+		{
+			CScene*	pScene = CMyEdit::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pScene, -1);
+
+			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+
+			return 0;
+		}
+
+		if (Engine::Key_Down(DIK_RETURN))
 		{
 			CScene*	pScene = CStage::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
