@@ -219,4 +219,9 @@ struct BoundingSphere
 	}
 };
 
+typedef struct tagTriangle
+{
+	_vec3 v[3];
+}Triangle;
+
 END

@@ -13,7 +13,7 @@ protected:
 public:
 	HRESULT		Ready_Buffer(void);
 	virtual void Render_Component() override;
-
+	
 	LPDIRECT3DVERTEXBUFFER9 GetVertexBuffer() { return m_pVB; }
 	LPDIRECT3DINDEXBUFFER9	GetIndexBuffer() { return m_pIB; }
 
