@@ -224,6 +224,18 @@
     <ClInclude Include="Tile.h">
       <Filter>GameObject\Map\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="BulletBar.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletGauge.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CrossHair.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Hp.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -366,6 +378,18 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>GameObject\Map\Tile</Filter>
+    </ClInclude>
+    <ClCompile Include="BulletBar.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletGauge.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CrossHair.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Hp.cpp">
+      <Filter>GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ protected:
 public:
 
 	// 발사할 위치. 
-	virtual void Shot() override;
+	virtual CBullet* Shot_Setting() override;
 
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual HRESULT Add_Component() override;

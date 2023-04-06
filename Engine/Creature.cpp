@@ -28,10 +28,12 @@ _int CCreature::Update_GameObject(const _float & fTimeDelta)
 
 void CCreature::LateUpdate_GameObject(void)
 {
+	__super::LateUpdate_GameObject();
 }
 
 void CCreature::Render_GameObject(void)
 {
+	__super::Render_GameObject();
 }
 
 HRESULT CCreature::Add_Component()

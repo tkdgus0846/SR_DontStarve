@@ -14,5 +14,5 @@ CUI::~CUI()
 _int CUI::Update_GameObject(const _float& fTimeDelta)
 {
 	Add_RenderGroup(RENDER_ALPHA_UI, this);
-	return 0;
+	return __super::Update_GameObject(fTimeDelta);
 }

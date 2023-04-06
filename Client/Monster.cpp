@@ -5,7 +5,7 @@
 #include "MonoBehaviors.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev), m_fSpeed(0.f)
+	: CCreature(pGraphicDev), m_fSpeed(0.f)
 {
 }
 

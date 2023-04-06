@@ -29,10 +29,6 @@ _int CSkyBox::Update_GameObject(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matCamWorld, 0, &matCamWorld);
 
 	m_pTransform->Set_Pos(matCamWorld._41, matCamWorld._42 + 3.f, matCamWorld._43);
-
-	m_pTransform->Rot_Pitch(1.f, fTimeDelta);
-	m_pTransform->Rot_Roll(2.f, fTimeDelta);
-	m_pTransform->Rot_Yaw(1.f, fTimeDelta);
 	
 	__super::Update_GameObject(fTimeDelta);
 
