@@ -31,7 +31,7 @@ void Engine::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameO
 
 CGameObject*		Get_GameObject(LAYERID LayerID, const _tchar* pObjTag)
 {
-	CManagement::GetInstance()->Get_GameObject(LayerID, pObjTag);
+	return CManagement::GetInstance()->Get_GameObject(LayerID, pObjTag);
 }
 
 HRESULT			Set_Scene(CScene* pScene)

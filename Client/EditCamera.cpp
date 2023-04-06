@@ -1,5 +1,6 @@
 #include "EditCamera.h"
 #include "Room.h"
+#include "MyMap.h"
 #include "Export_Function.h"
 
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -21,8 +22,6 @@ HRESULT CEditCamera::Ready_GameObject(void)
 
 	m_fSpeed = 40.f;
 
-	tmp = CRoom::Create(m_pGraphicDev);
-
 	return result;
 }
 
@@ -34,15 +33,8 @@ _int CEditCamera::Update_GameObject(const _float & fTimeDelta)
 	{
 		Fix_Mouse();
 		Mouse_Move(fTimeDelta);
-		
-		
 	}
-	Triangle tri;
-	IntersectRayGameObject(tmp->GetFloor(), tri);
 
-	cout << tri.v[0].x << "\t" << tri.v[0].y << "\t" << tri.v[0].z << endl;
-
-	tmp->Update_GameObject(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
 	
 	return OBJ_NOEVENT;
@@ -50,13 +42,11 @@ _int CEditCamera::Update_GameObject(const _float & fTimeDelta)
 
 void CEditCamera::LateUpdate_GameObject(void)
 {
-	tmp->LateUpdate_GameObject();
 	__super::LateUpdate_GameObject();
 }
 
 void CEditCamera::Render_GameObject(void)
 {
-	tmp->Ready_GameObject();
 }
 
 HRESULT CEditCamera::Add_Component()
@@ -84,7 +74,8 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Get_DIMouseState(DIM_LB))
 	{
-
+		CMyMap* pMap = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"));
+		CRoom* pRoom = pMap->Get_CurRoom(m_pTransform->m_vInfo[INFO_POS]);
 	}
 }
 
@@ -163,8 +154,8 @@ _bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pG
 	pVIBuffer->GetVertexBuffer()->GetDesc(&vbDescription);
 	pVIBuffer->GetIndexBuffer()->GetDesc(&inDescription);
 
-	pVIBuffer->GetVertexBuffer()->Lock(0, 0, (void**)vertices, 0);
-	pVIBuffer->GetIndexBuffer()->Lock(0, 0, (void**)indices, 0);
+	pVIBuffer->GetVertexBuffer()->Lock(0, 0, (void**)&vertices, 0);
+	pVIBuffer->GetIndexBuffer()->Lock(0, 0, (void**)&indices, 0);
 
 	_ulong dwSize = inDescription.Size / sizeof(INDEX32);
 	for (_ulong i = 0; i < dwSize; ++i)

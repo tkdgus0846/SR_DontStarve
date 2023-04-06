@@ -75,13 +75,25 @@ void CMyMap::Create_Default_Room()
 
 			CRoom* pRoom = CRoom::Create(m_pGraphicDev);
 
-			pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 50.f, 0.f, i * 50.f };
+			pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 50.01f, 0.f, i * 50.01f };
 			pRoom->FloorSubSet();
 			pRoom->PlaceSubSet();
 
 			m_arrRoom[iIndex] = pRoom;
 		}
 	}
+}
+
+CRoom * CMyMap::Get_CurRoom(const _vec3& vPos)
+{
+	_int iX = _int(vPos.x / 50.f);
+	_int iZ = _int(vPos.z / 50.f);
+
+	_int iIndex = iX * 5 + iZ;
+
+	cout << iX << ", " << iZ << endl;
+
+	return m_arrRoom[iIndex];
 }
 
 CMyMap * CMyMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)
