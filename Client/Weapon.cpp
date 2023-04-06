@@ -9,7 +9,7 @@ CWeapon::CWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	m_fCycle(1.0f),
 	m_bShooted(false)
 {
-	m_vOffsetTrans = { 1.f,0.f,2.f };
+	m_vOffsetTrans = { 1.f,1.f,0.f };
 }
 
 CWeapon::~CWeapon()
@@ -28,7 +28,7 @@ _int CWeapon::Update_GameObject(const _float& fTimeDelta)
 	}
 	else
 	{
-		m_bEnableShot = false;
+		//m_bEnableShot = false;
 		if (m_bShooted == false) m_fAccTime = 0.f;
 	}
 
@@ -38,7 +38,7 @@ _int CWeapon::Update_GameObject(const _float& fTimeDelta)
 	
 	/*m_pTransform->m_matWorld = m_pTransform->m_matWorld * (*m_pOwnerTransform->Get_WorldMatrixPointer());*/
 	
-	cout << m_pTransform->m_matWorld._41 << " " << m_pTransform->m_matWorld._42 << " " << m_pTransform->m_matWorld._43 << endl;
+	
 	
 	/*Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);*/
 	

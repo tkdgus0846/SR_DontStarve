@@ -20,6 +20,7 @@ public:
 	virtual	void	LateUpdate_Component() {}
 
 	_matrix*		Get_Camera_ViewMatrix() { return &m_matView; }
+	VIEWPARAMS*		Get_Camera_ViewParams() { return &m_tViewParams; }
 
 	void			Set_CameraName(const _tchar* pName) { m_pName = pName; }
 

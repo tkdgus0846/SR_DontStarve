@@ -29,6 +29,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
 	Render_UI(pGraphicDev);
+	Render_AlphaUI(pGraphicDev);
 
 	Clear_RenderGroup();
 }
@@ -72,31 +73,23 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9 & pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
-void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
+void Engine::CRenderer::Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
-	float left = 0.0f;
-	float right = (float)WINCX;
-	float bottom = (float)WINCY;
-	float top = 0.0f;
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	float nearPlane = 0.0f;
-	float farPlane = 1.0f;
-
-	D3DXMATRIX orthoProjectionMatrix;
-	D3DXMatrixOrthoOffCenterLH(&orthoProjectionMatrix, left, right, bottom, top, nearPlane, farPlane);
-
-	pGraphicDev->SetTransform(D3DTS_PROJECTION, &orthoProjectionMatrix);
-
-	// 직교투영 적용
-
-	for (auto& iter : m_RenderGroup[RENDER_UI])
+	for (auto& iter : m_RenderGroup[RENDER_ALPHA_UI])
 		iter->Render_GameObject();
 
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
+	// 아래는 다시 원래대로 되돌리는 코드
 	_matrix projMatrix;
-
 	projMatrix.PerspectiveFovLH(D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
-	
+	// 원근투영으로 바꿔줌
 	_matrix* viewMatrix = nullptr;
 	if (Get_Player() != nullptr)
 		viewMatrix = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE))->Get_Camera_ViewMatrix();
@@ -106,6 +99,18 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
 	// 원근투영 적용
 	// 플레이어 카메라의 뷰행렬을 디바이스에 등록
 
+	pGraphicDev->SetRenderState(D3DRS_ZENABLE, true);
+}
+
+void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	D3DXMATRIX orthoProjectionMatrix;
+	D3DXMatrixOrthoLH(&orthoProjectionMatrix, (float)WINCX, (float)WINCY, 1.f, 0.f);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &orthoProjectionMatrix);
+	pGraphicDev->SetRenderState(D3DRS_ZENABLE, false);
+
+	for (auto& iter : m_RenderGroup[RENDER_UI])
+		iter->Render_GameObject(); 
 }
 
 void CRenderer::Free(void)

@@ -215,6 +215,9 @@
     <ClInclude Include="MyMap.h">
       <Filter>GameObject\Map</Filter>
     </ClInclude>
+    <ClInclude Include="GunUI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -351,6 +354,9 @@
     </ClCompile>
     <ClCompile Include="MyMap.cpp">
       <Filter>GameObject\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GunUI.cpp">
+      <Filter>GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

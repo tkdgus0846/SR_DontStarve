@@ -129,7 +129,7 @@ Ray CImManager::PickingRay(POINT ptMouse)
 	Ray ray;
 	_vec3 vMouse;
 	
-	// ºäÆ÷Æ® -> Åõ¿µ
+	// ë·°í¬íŠ¸ -> íˆ¬ì˜
 	D3DVIEWPORT9		ViewPort;
 	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
 	m_pGraphicDev->GetViewport(&ViewPort);
@@ -137,13 +137,13 @@ Ray CImManager::PickingRay(POINT ptMouse)
 	vMouse.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
 	vMouse.z = 0.f;
 
-	//  Åõ¿µ -> ºä ½ºÆäÀÌ½º
+	//  íˆ¬ì˜ -> ë·° ìŠ¤íŽ˜ì´ìŠ¤
 	_matrix		matProj;
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 	D3DXMatrixInverse(&matProj, 0, &matProj);
 	D3DXVec3TransformCoord(&vMouse, &vMouse, &matProj);
 
-	// ºä ½ºÆäÀÌ½º -> ¿ùµå
+	// ë·° ìŠ¤íŽ˜ì´ìŠ¤ -> ì›”ë“œ
 	_matrix		matView;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, 0, &matView);
