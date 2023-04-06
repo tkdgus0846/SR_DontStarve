@@ -36,9 +36,9 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 
 	if (true == m_pLoading->Get_Finish())
 	{
-		if (Engine::Key_Down(VK_RETURN))
+		if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_RETURN))
 		{
-			CScene*	pScene = CStage::Create(m_pGraphicDev);
+			CScene*	pScene = CMyEdit::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
@@ -46,9 +46,9 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			return 0;
 		}
 
-		if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_RETURN))
+		if (Engine::Key_Down(DIK_RETURN))
 		{
-			CScene*	pScene = CMyEdit::Create(m_pGraphicDev);
+			CScene*	pScene = CStage::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);

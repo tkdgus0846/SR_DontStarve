@@ -14,7 +14,7 @@ CBlackBoard::~CBlackBoard()
 {
 }
 
-HRESULT CBlackBoard::Add_Type(const _tchar * pTypename, const _int & iType)
+HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN const _int & iType)
 {
 	auto iter = find_if(m_mapInt.begin(), m_mapInt.end(), CTag_Finder(pTypename));
 
@@ -26,7 +26,7 @@ HRESULT CBlackBoard::Add_Type(const _tchar * pTypename, const _int & iType)
 	return E_FAIL;
 }
 
-HRESULT CBlackBoard::Add_Type(const _tchar * pTypename, const _float & fType)
+HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN const _float & fType)
 {
 	auto iter = find_if(m_mapFloat.begin(), m_mapFloat.end(), CTag_Finder(pTypename));
 
@@ -38,7 +38,7 @@ HRESULT CBlackBoard::Add_Type(const _tchar * pTypename, const _float & fType)
 	return E_FAIL;
 }
 
-HRESULT CBlackBoard::Add_Type(const _tchar * pTypename, const _bool & bType)
+HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN const _bool & bType)
 {
 	auto iter = find_if(m_mapBool.begin(), m_mapBool.end(), CTag_Finder(pTypename));
 
@@ -50,7 +50,7 @@ HRESULT CBlackBoard::Add_Type(const _tchar * pTypename, const _bool & bType)
 	return E_FAIL;
 }
 
-HRESULT CBlackBoard::Add_Type(const _tchar* pTypename, const _vec3& vType)
+HRESULT CBlackBoard::Add_Type(IN const _tchar* pTypename, IN const _vec3& vType)
 {
 	auto iter = find_if(m_mapBool.begin(), m_mapBool.end(), CTag_Finder(pTypename));
 
@@ -62,7 +62,7 @@ HRESULT CBlackBoard::Add_Type(const _tchar* pTypename, const _vec3& vType)
 	return E_FAIL;
 }
 
-HRESULT CBlackBoard::Add_Type(const _tchar* pTypename, CGameObject* pType)
+HRESULT CBlackBoard::Add_Type(IN const _tchar* pTypename, IN CGameObject* pType)
 {
 	auto iter = find_if(m_mapGameObject.begin(), m_mapGameObject.end(), CTag_Finder(pTypename));
 
@@ -74,7 +74,7 @@ HRESULT CBlackBoard::Add_Type(const _tchar* pTypename, CGameObject* pType)
 	return E_FAIL;
 }
 
-HRESULT CBlackBoard::Get_Type(const _tchar * pTypename, _int * pOut)
+HRESULT CBlackBoard::Get_Type(IN const _tchar * pTypename, OUT _int * pOut)
 {
 	auto iter = find_if(m_mapInt.begin(), m_mapInt.end(), CTag_Finder(pTypename));
 
@@ -88,7 +88,7 @@ HRESULT CBlackBoard::Get_Type(const _tchar * pTypename, _int * pOut)
 	return S_OK;
 }
 
-HRESULT CBlackBoard::Get_Type(const _tchar * pTypename, _float * pOut)
+HRESULT CBlackBoard::Get_Type(IN const _tchar * pTypename, OUT _float * pOut)
 {
 	auto iter = find_if(m_mapFloat.begin(), m_mapFloat.end(), CTag_Finder(pTypename));
 
@@ -102,7 +102,7 @@ HRESULT CBlackBoard::Get_Type(const _tchar * pTypename, _float * pOut)
 	return S_OK;
 }
 
-HRESULT CBlackBoard::Get_Type(const _tchar * pTypename, _bool * pOut)
+HRESULT CBlackBoard::Get_Type(IN const _tchar * pTypename, OUT _bool * pOut)
 {
 	auto iter = find_if(m_mapBool.begin(), m_mapBool.end(), CTag_Finder(pTypename));
 
@@ -116,7 +116,7 @@ HRESULT CBlackBoard::Get_Type(const _tchar * pTypename, _bool * pOut)
 	return S_OK;
 }
 
-HRESULT CBlackBoard::Get_Type(const _tchar* pTypename, _vec3* pOut)
+HRESULT CBlackBoard::Get_Type(IN const _tchar* pTypename, OUT _vec3* pOut)
 {
 	auto iter = find_if(m_mapVec.begin(), m_mapVec.end(), CTag_Finder(pTypename));
 
@@ -130,7 +130,7 @@ HRESULT CBlackBoard::Get_Type(const _tchar* pTypename, _vec3* pOut)
 	return S_OK;
 }
 
-HRESULT CBlackBoard::Get_Type(const _tchar* pTypename, CGameObject* pOut)
+HRESULT CBlackBoard::Get_Type(IN const _tchar* pTypename, OUT CGameObject* pOut)
 {
 	auto iter = find_if(m_mapGameObject.begin(), m_mapGameObject.end(), CTag_Finder(pTypename));
 
