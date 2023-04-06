@@ -3,7 +3,8 @@
 
 #include "Export_Function.h"
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
+	m_fVtxCntZ(0.f), m_fVtxItv(0.f)
 {
 }
 
@@ -12,8 +13,12 @@ CRoom::~CRoom()
 {
 }
 
-HRESULT CRoom::Ready_GameObject(void)
+HRESULT CRoom::Ready_GameObject(const _float& fVtxCntX, const _float& fVtxCntZ, const _float& fVtxItv)
 {
+	m_fVtxItv = fVtxItv;
+	m_fVtxCntX = fVtxCntX;
+	m_fVtxCntZ = fVtxCntZ;
+
 	HRESULT result = __super::Ready_GameObject();
 	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);
 
@@ -85,26 +90,26 @@ void CRoom::FloorSubSet()
 {
 	// 바닥 위치 조정
 	_vec3 vPos;
-	float fLength = (VTXCNTZ - 1) * VTXITV;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 
 	m_pFloor->m_pTransform->Set_Pos(vPos);
 }
 
-void CRoom::PlaceSubSet()
+void CRoom::PlaceSubSet()	
 {
 	// 벽 위치 조정
 	_vec3 vPos;
-	float fLength = (VTXCNTZ - 1) * VTXITV;
+	float fLengthX = (m_fVtxCntX - 1) * m_fVtxItv;
+	float fLengthZ = (m_fVtxCntZ - 1) * m_fVtxItv;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 
 	m_apWall[0]->m_pTransform->Set_Pos(vPos);
-	m_apWall[1]->m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z + fLength);
-	m_apWall[2]->m_pTransform->Set_Pos(vPos.x + fLength, vPos.y, vPos.z + fLength);
-	m_apWall[3]->m_pTransform->Set_Pos(vPos.x + fLength, vPos.y, vPos.z);
+	m_apWall[1]->m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z + fLengthZ);
+	m_apWall[2]->m_pTransform->Set_Pos(vPos.x + fLengthX, vPos.y, vPos.z + fLengthZ);
+	m_apWall[3]->m_pTransform->Set_Pos(vPos.x + fLengthX, vPos.y, vPos.z);
 
-	m_apWall[1]->m_pTransform->Set_Target({ vPos.x + fLength, vPos.y, vPos.z + fLength });
-	m_apWall[2]->m_pTransform->Set_Target({ vPos.x + fLength, vPos.y, vPos.z });
+	m_apWall[1]->m_pTransform->Set_Target({ vPos.x + fLengthX, vPos.y, vPos.z + fLengthZ });
+	m_apWall[2]->m_pTransform->Set_Target({ vPos.x + fLengthX, vPos.y, vPos.z });
 	m_apWall[3]->m_pTransform->Set_Target(vPos);
 }
 
@@ -115,14 +120,12 @@ HRESULT CRoom::Add_Component(void)
 	return S_OK;
 }
 
-
-
-
-CRoom* CRoom::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CRoom* CRoom::Create(LPDIRECT3DDEVICE9 pGraphicDev,
+	const _float& fVtxCntX, const _float& fVtxCntZ, const _float& fVtxItv)
 {
 	CRoom*		pInstance = new CRoom(pGraphicDev);
 	
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(fVtxCntX, fVtxCntZ, fVtxItv)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

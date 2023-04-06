@@ -27,7 +27,7 @@ private:
 	void		Key_Input(const _float& fTimeDelta);
 
 private:
-	Engine::CFloorTex*	m_pBufferCom;
+	Engine::CFloorTex*		m_pBufferCom;
 	Engine::CTexture*		m_pTextureCom;
 
 	_float					m_fSpeed = 10.f;
