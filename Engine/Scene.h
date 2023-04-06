@@ -22,7 +22,8 @@ public:
 	virtual void		Render_Scene(void)PURE;
 
 protected:
-	HRESULT Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj);
+	HRESULT			Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj);
+	CGameObject*	Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
 
 protected:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
