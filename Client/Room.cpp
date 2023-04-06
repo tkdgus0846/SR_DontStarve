@@ -70,6 +70,7 @@ void CRoom::Render_SubSet()
 	m_pFloor->Render_GameObject();
 	for (auto& iter : m_apWall)
 		iter->Render_GameObject();
+
 }
 
 HRESULT CRoom::CreateSubset()
