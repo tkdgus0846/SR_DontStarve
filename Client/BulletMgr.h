@@ -74,6 +74,11 @@ private:
 
 public:
 
+	void Reserve(_uint cnt) 
+	{
+		
+	}
+
 	template<typename T>
 	T * CBulletMgr::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const D3DXVECTOR3& vPos,
 		const D3DXVECTOR3& vDir, bool bIsEnemyBullet)

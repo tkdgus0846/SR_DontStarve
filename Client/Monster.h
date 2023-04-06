@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Include.h"
-#include "GameObject.h"
+#include "Creature.h"
 
 BEGIN(Engine)
 
@@ -11,7 +11,7 @@ class CCollider;
 
 END
 
-class CMonster : public Engine::CGameObject
+class CMonster : public CCreature
 {
 protected:
 	explicit CMonster(LPDIRECT3DDEVICE9 pGraphicDev);

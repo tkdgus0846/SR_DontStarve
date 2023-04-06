@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+
 class CCreature : public CGameObject
 {
 protected:

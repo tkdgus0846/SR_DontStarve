@@ -129,9 +129,10 @@ void CCollisionMgr::Change_ColGroup(CCollider* collider, COLGROUP changeID)
 
 void Engine::CCollisionMgr::Toggle_ColliderRender()
 {
+	m_bIsRender = (m_bIsRender == false) ? true : false;
 	for (int i = 0; i < COL_END; i++)
 		for (auto col : m_ColliderList[i])
-			m_bIsRender = col->Toggle_IsRender();
+			col->Set_IsRender(m_bIsRender);
 }
 
 bool CCollisionMgr::Collision_Box(CCollider* pSrc, CCollider* pDest, COL_DIR& colDir, BoundingBox& bound, _vec3& amountVec)

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Include.h"
-#include "GameObject.h"
+#include "Creature.h"
 
 BEGIN(Engine)
 
@@ -12,7 +12,7 @@ class CRigidbody;
 class CCamera;
 END
 
-class CPlayer : public Engine::CGameObject
+class CPlayer : public CCreature
 {
 private:
 	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
