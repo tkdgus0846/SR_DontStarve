@@ -45,6 +45,8 @@ HRESULT CMyEdit::Ready_Scene(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 
+	ShowCursor(TRUE);
+
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	return S_OK;
