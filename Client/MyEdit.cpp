@@ -13,6 +13,7 @@
 #include "MyMap.h"
 #include "ImManager.h"
 #include "Export_Function.h"
+#include "FloorTile.h"
 
 CMyEdit::CMyEdit(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
