@@ -22,10 +22,12 @@ public:
 	virtual void Render_GameObject(void) override;
 	CRoom* GetRoom() { return m_arrRoom[0]; }
 
+	CRoom*			Get_CurRoom(const _vec3& vPos);
+
 private:
 	virtual HRESULT Add_Component() override;
-	void Create_Default_Room();
-
+	void			Create_Default_Room();
+			
 private:
 	Engine::CFloorTex*	m_pBufferCom;
 	Engine::CTexture*	m_pTextureCom;

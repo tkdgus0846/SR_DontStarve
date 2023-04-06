@@ -28,9 +28,9 @@ _int CGuppi::Update_GameObject(const _float & fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
+
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return S_OK;
 }
