@@ -59,7 +59,7 @@ HRESULT CVIBuffer::Ready_Buffer(VIBUFFER_FLAG flag)
 		(
 			m_pGraphicDev->CreateVertexBuffer(
 			m_dwVtxCnt * m_dwVtxSize,
-			D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY,
+			D3DUSAGE_DYNAMIC,
 			m_dwFVF,
 			D3DPOOL_DEFAULT,
 			&m_pVB,
