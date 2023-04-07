@@ -6,6 +6,7 @@
 #include "imgui_impl_win32.h"
 #include "imgui.h"
 
+
 class CImWindow : public CBase
 {
 protected:
@@ -15,6 +16,10 @@ protected:
 public:
 	virtual HRESULT Ready_ImWindow();
 	virtual _int Update(float fTimeDelta) PURE;
+
+protected:
+	void Toggle(bool& _bVariable);
+	// 이거 헤더파일 2개 알려주면 사용가능
 
 private:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;

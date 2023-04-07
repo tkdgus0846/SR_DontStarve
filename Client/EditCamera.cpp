@@ -86,11 +86,11 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 			Add_GameObject(LAYER_ENVIRONMENT, L"CFloorTile", CFloorTile::Create(m_pGraphicDev, vPos));
 		}
 
-		cout << fixed;
+		/*cout << fixed;
 		cout.precision(0);
 		cout << tri.v[0].x << " " << tri.v[0].y << " " << tri.v[0].z << "\t"
 			<< tri.v[1].x << " " << tri.v[1].y << " " << tri.v[1].z << "\t"
-			<< tri.v[2].x << " " << tri.v[2].y << " " << tri.v[2].z << endl;
+			<< tri.v[2].x << " " << tri.v[2].y << " " << tri.v[2].z << endl;*/
 	}
 }
 

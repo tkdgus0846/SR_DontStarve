@@ -225,6 +225,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="CrossHair.h" />
     <ClInclude Include="EditCamera.h" />
+    <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Evasion.h" />
     <ClInclude Include="FloorTile.h" />
@@ -238,6 +239,8 @@
     <ClInclude Include="imgui_impl_win32.h" />
     <ClInclude Include="imgui_internal.h" />
     <ClInclude Include="ImManager.h" />
+    <ClInclude Include="ImMenuBar.h" />
+    <ClInclude Include="ImTest.h" />
     <ClInclude Include="ImWindow.h" />
     <ClInclude Include="Jump.h" />
     <ClInclude Include="LeapJump.h" />
@@ -287,12 +290,14 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CrossHair.cpp" />
     <ClCompile Include="EditCamera.cpp" />
+    <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Evasion.cpp" />
     <ClCompile Include="FloorTile.cpp" />
     <ClCompile Include="GunUI.cpp" />
     <ClCompile Include="Guppi.cpp" />
     <ClCompile Include="Hp.cpp" />
+    <ClCompile Include="ImGuiFileDialog.cpp" />
     <ClCompile Include="ImInspector.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
@@ -302,6 +307,8 @@
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="ImManager.cpp" />
+    <ClCompile Include="ImMenuBar.cpp" />
+    <ClCompile Include="ImTest.cpp" />
     <ClCompile Include="ImWindow.cpp" />
     <ClCompile Include="Jump.cpp" />
     <ClCompile Include="LeapJump.cpp" />

@@ -242,6 +242,15 @@
     <ClInclude Include="ImInspector.h">
       <Filter>IMGUI\ImWindow</Filter>
     </ClInclude>
+    <ClInclude Include="ImTest.h">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ImMenuBar.h">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -401,6 +410,18 @@
       <Filter>GameObject\Map\Tile</Filter>
     </ClCompile>
     <ClCompile Include="ImInspector.cpp">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="ImTest.cpp">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiFileDialog.cpp">
+      <Filter>IMGUI\core</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ImMenuBar.cpp">
       <Filter>IMGUI\ImWindow</Filter>
     </ClCompile>
   </ItemGroup>

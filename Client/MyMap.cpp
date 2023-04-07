@@ -98,6 +98,26 @@ CRoom * CMyMap::Get_CurRoom(const _vec3& vPos)
 	return m_arrRoom[iIndex];
 }
 
+_bool CMyMap::WriteMapFile(HANDLE hFile, DWORD& dwByte)
+{
+	_int iSize = m_arrRoom.size();
+	WriteFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iSize; ++i)
+		m_arrRoom[i]->WriteRoomFile(hFile, dwByte);
+
+	return true;
+}
+
+_bool CMyMap::ReadMapFile(HANDLE hFile, DWORD& dwByte)
+{
+	_int iSize;
+	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iSize; ++i)
+		m_arrRoom[i]->ReadRoomFile(hFile, dwByte);
+
+	return true;
+}
+
 CMyMap * CMyMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CMyMap*		pInstance = new CMyMap(pGraphicDev);

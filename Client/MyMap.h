@@ -24,6 +24,9 @@ public:
 
 	CRoom*			Get_CurRoom(const _vec3& vPos);
 
+	_bool WriteMapFile(HANDLE hFile, DWORD& dwByte);
+	_bool ReadMapFile(HANDLE hFile, DWORD& dwByte);
+
 private:
 	virtual HRESULT Add_Component() override;
 	void			Create_Default_Room();

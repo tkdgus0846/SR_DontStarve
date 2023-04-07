@@ -114,6 +114,39 @@ void CRoom::PlaceSubSet()
 	m_apWall[3]->m_pTransform->Set_Target(vPos);
 }
 
+_bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
+{
+	_int iSize = m_vecTile.size();
+
+	WriteFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
+	WriteFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
+	WriteFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
+	m_pTransform->WriteTransformFile(hFile, dwByte);
+	
+	WriteFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iSize; ++i)
+		m_vecTile[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
+	
+	return true;
+}
+
+_bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
+{
+	_int iSize;
+	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
+	ReadFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
+	ReadFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
+	m_pTransform->ReadTransformFile(hFile, dwByte);
+
+	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iSize; ++i)
+		m_vecTile[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
+
+	return true;
+}
+
+
+
 HRESULT CRoom::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
