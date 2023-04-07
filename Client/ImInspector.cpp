@@ -16,6 +16,8 @@ HRESULT CImInspector::Ready_ImWindow()
 
 _int CImInspector::Update(float fTimeDelta)
 {
+	ImGui::Begin("Inspector");
+	ImGui::End();
 	return 0;
 }
 

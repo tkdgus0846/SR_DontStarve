@@ -2,19 +2,6 @@
 
 #include "Scene.h"
 
-#ifdef _IMGUI
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-#include "imgui_impl_dx9.h"
-#include "imgui_impl_win32.h"
-#include "imgui.h"
-#include "ImManager.h"
-#endif
-
-#endif
-
 class CMyEdit : public CScene
 {
 private:

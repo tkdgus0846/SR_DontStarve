@@ -15,6 +15,7 @@ class CImWindow;
 class CImManager
 {
 	DECLARE_SINGLETON(CImManager)
+
 public:
 	CImManager();
 	~CImManager();

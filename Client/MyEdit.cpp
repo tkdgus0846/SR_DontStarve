@@ -16,6 +16,11 @@
 #include "Export_Function.h"
 #include "FloorTile.h"
 
+#include "imgui_impl_dx9.h"
+#include "imgui_impl_win32.h"
+#include "imgui.h"
+#include "ImManager.h"
+
 CMyEdit::CMyEdit(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -29,7 +34,6 @@ HRESULT CMyEdit::Ready_Scene(void)
 {
 	CImManager::GetInstance()->Ready_IMGUI(m_pGraphicDev);
 
-#ifdef _IMGUI
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -40,7 +44,6 @@ HRESULT CMyEdit::Ready_Scene(void)
 	ImGui::StyleColorsDark();
 	ImGui_ImplWin32_Init(g_hWnd);
 	ImGui_ImplDX9_Init(m_pGraphicDev);
-#endif
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
 
