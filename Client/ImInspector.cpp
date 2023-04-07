@@ -271,8 +271,5 @@ CImInspector * CImInspector::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CImInspector::Free(void)
 {
-	for (auto iter : m_vecMonster)
-		Safe_Release(iter);
-
 	__super::Free();
 }
