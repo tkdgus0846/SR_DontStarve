@@ -1,7 +1,5 @@
 #include "ImInspector.h"
 
-
-
 CImInspector::CImInspector(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CImWindow(pGraphicDev)
 {
@@ -18,9 +16,6 @@ HRESULT CImInspector::Ready_ImWindow()
 
 _int CImInspector::Update(float fTimeDelta)
 {
-	ImGui::Begin("Inspector");
-
-	ImGui::End();
 	return 0;
 }
 

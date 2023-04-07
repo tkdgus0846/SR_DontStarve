@@ -34,19 +34,21 @@
 #define DIRECTINPUT_VERSION		0x0800
 #include <dinput.h>
 
-#ifdef	_DEBUG
-#ifndef _IMGUI
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
-#ifndef DBG_NEW 
-
-#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
-#define new DBG_NEW 
-
-#endif
-#endif
-#endif
+//#ifdef	_DEBUG
+//#ifndef _IMGUI
+//#define _CRTDBG_MAP_ALLOC
+//#include <stdlib.h>
+//#include <crtdbg.h>
+//
+//#ifndef DBG_NEW 
+//
+//#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
+//#define new DBG_NEW 
+//
+//#endif
+//#endif
+//#endif
 
 using namespace std;
+
+#include "Include.h"
