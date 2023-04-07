@@ -4,7 +4,7 @@
 #include "imgui_impl_win32.h"
 #include "imgui.h"
 #include "Export_Function.h"
-#include "ImBaseWindow.h"
+#include "ImInspector.h"
 
 IMPLEMENT_SINGLETON(CImManager)
 
@@ -19,7 +19,7 @@ CImManager::~CImManager()
 
 HRESULT CImManager::Ready_IMGUI(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CImBaseWindow* pInstance = CImBaseWindow::Create(pGraphicDev);
+	CImInspector* pInstance = CImInspector::Create(pGraphicDev);
 
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 
@@ -30,8 +30,14 @@ HRESULT CImManager::Ready_IMGUI(LPDIRECT3DDEVICE9 pGraphicDev)
 
 _int CImManager::Update(_float fTimeDelta)
 {
+	ImGui_ImplDX9_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
 	for (auto& iter : m_vecImWindow)
 		_int iResult = iter->Update(fTimeDelta);
+
+	ImGui::EndFrame();
 
 	return 0;
 }
@@ -46,4 +52,8 @@ void CImManager::Release()
 {
 	for (auto iter : m_vecImWindow)
 		Safe_Release(iter);
+
+	ImGui_ImplDX9_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
 }

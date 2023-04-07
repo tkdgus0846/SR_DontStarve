@@ -1,5 +1,11 @@
 #pragma once
+
 #include "Scene.h"
+
+#include "imgui_impl_dx9.h"
+#include "imgui_impl_win32.h"
+#include "imgui.h"
+#include "ImManager.h"
 
 class CMyEdit : public CScene
 {

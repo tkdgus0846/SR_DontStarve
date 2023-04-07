@@ -239,7 +239,7 @@
     <ClInclude Include="FloorTile.h">
       <Filter>GameObject\Map\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="ImBaseWindow.h">
+    <ClInclude Include="ImInspector.h">
       <Filter>IMGUI\ImWindow</Filter>
     </ClInclude>
   </ItemGroup>
@@ -400,7 +400,7 @@
     <ClCompile Include="FloorTile.cpp">
       <Filter>GameObject\Map\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="ImBaseWindow.cpp">
+    <ClCompile Include="ImInspector.cpp">
       <Filter>IMGUI\ImWindow</Filter>
     </ClCompile>
   </ItemGroup>

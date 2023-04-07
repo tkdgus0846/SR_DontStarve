@@ -34,8 +34,8 @@
 #define DIRECTINPUT_VERSION		0x0800
 #include <dinput.h>
 
-#ifdef _DEBUG
-
+#ifdef	_DEBUG
+#ifndef _IMGUI
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -47,7 +47,6 @@
 
 #endif
 #endif
+#endif
 
 using namespace std;
-
-#include "Include.h"
