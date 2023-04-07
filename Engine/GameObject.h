@@ -27,15 +27,19 @@ public:
 	// 순수 가상함수 왜냐하면 게임오브젝트에 컴포넌트가 추가되지 않을일은 없으니까
 	virtual HRESULT		Add_Component() PURE;
 
+	// 에디터에서만 사용해야됨.
+	unordered_map<const _tchar*, CComponent*>* Get_ComponentMap() { return m_uMapComponent; }
+
+
 public:
 	virtual HRESULT		Ready_GameObject(void);
 	virtual _int		Update_GameObject(const _float& fTimeDelta);
 	virtual void		LateUpdate_GameObject(void);
 	virtual void		Render_GameObject(void);
 
-	virtual void OnCollisionEnter(const class Collision* collsion) {}
-	virtual void OnCollisionStay(const class Collision* collision) {}
-	virtual void OnCollisionExit(const class Collision* collision) {}
+	virtual void OnCollisionEnter(const struct Collision* collsion) {}
+	virtual void OnCollisionStay(const struct Collision* collision) {}
+	virtual void OnCollisionExit(const struct Collision* collision) {}
 
 	void			Compute_ViewZ(const _vec3* pPos);
 

@@ -19,7 +19,7 @@ public:
 
 protected:
 	void Toggle(bool& _bVariable);
-	// ÀÌ°Å Çì´õÆÄÀÏ 2°³ ¾Ë·ÁÁÖ¸é »ç¿ë°¡´É
+	// ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ ï¿½Ë·ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½ë°¡ï¿½ï¿½
 
 private:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;

@@ -63,6 +63,8 @@ _int CSelector::Update_Component(const _float & fTimeDelta)
 		else
 			return RUNNING;
 	}
+
+	return BEHAVIOR_FALSE;
 }
 
 void CSelector::LateUpdate_Component(void)

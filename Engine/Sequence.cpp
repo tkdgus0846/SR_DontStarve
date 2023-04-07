@@ -63,6 +63,8 @@ _int CSequence::Update_Component(const _float & fTimeDelta)
 		m_iterPreComponent = m_VecComponents[ID_UPDATE].begin();
 		return BEHAVIOR_FALSE;
 	}
+
+	return BEHAVIOR_FALSE;
 }
 
 void CSequence::LateUpdate_Component(void)
