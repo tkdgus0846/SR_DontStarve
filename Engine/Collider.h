@@ -58,6 +58,8 @@ public:
 	void Set_IsRender(_bool bIsRender) { m_bIsRender = bIsRender; }
 
 	void Set_BoundingBox(const _vec3& vSize = {2.f, 2.f, 2.f});
+	// 에디터에서만 사용해야됨.
+	BoundingBox* Get_BoundingBox() { return m_pBoundingBox; }
 
 public:
 	static CCollider* Create(LPDIRECT3DDEVICE9 pGraphicDev);

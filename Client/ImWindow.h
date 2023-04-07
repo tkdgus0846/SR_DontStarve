@@ -16,7 +16,7 @@ public:
 	virtual HRESULT Ready_ImWindow();
 	virtual _int Update(float fTimeDelta) PURE;
 
-private:
+protected:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;
 
 protected:

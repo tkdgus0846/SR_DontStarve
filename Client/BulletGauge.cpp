@@ -24,7 +24,7 @@ _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 {
 	//m_pBufferCom->EditVB(m_VBGuage);
 
-	m_VBGuage -= 0.1;
+	m_VBGuage -= 0.1f;
 
 	Engine::Add_RenderGroup(RENDER_UI, this);
 
