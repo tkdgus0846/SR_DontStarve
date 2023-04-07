@@ -34,6 +34,7 @@
 #define DIRECTINPUT_VERSION		0x0800
 #include <dinput.h>
 
+
 #ifdef	_DEBUG
 #ifndef _IMGUI
 #define _CRTDBG_MAP_ALLOC

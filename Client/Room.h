@@ -4,6 +4,8 @@
 #include "GameObject.h"
 #include "Floor.h"
 #include "Wall.h"
+#include "Tile.h"
+
 
 class CRoom : public Engine::CGameObject
 {
@@ -29,11 +31,14 @@ private:
 public:
 	void FloorSubSet();
 	void PlaceSubSet();
+	_bool WriteRoomFile(HANDLE hFile, DWORD& dwByte);
+	_bool ReadRoomFile(HANDLE hFile, DWORD& dwByte);
 
 private:
 	_float				m_fVtxCntX;
 	_float				m_fVtxCntZ;
 	_float				m_fVtxItv;
+	vector<CTile*>		m_vecTile;
 
 private:
 	CFloor*				m_pFloor;

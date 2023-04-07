@@ -21,3 +21,11 @@ void CImWindow::Free(void)
 {
 	Safe_Release(m_pGraphicDev);
 }
+
+void CImWindow::Toggle(bool & _bVariable)
+{
+	if (true == _bVariable)
+		_bVariable = false;
+	else
+		_bVariable = true;
+}

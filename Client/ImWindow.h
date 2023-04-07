@@ -6,6 +6,7 @@
 #include "imgui_impl_win32.h"
 #include "imgui.h"
 
+
 class CImWindow : public CBase
 {
 protected:
@@ -17,6 +18,10 @@ public:
 	virtual _int Update(float fTimeDelta) PURE;
 
 protected:
+	void Toggle(bool& _bVariable);
+	// �̰� ������� 2�� �˷��ָ� ��밡��
+
+private:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;
 
 protected:

@@ -5,6 +5,7 @@
 #include "imgui.h"
 #include "Export_Function.h"
 #include "ImInspector.h"
+#include "ImMenuBar.h"
 
 IMPLEMENT_SINGLETON(CImManager)
 
@@ -24,7 +25,7 @@ HRESULT CImManager::Ready_IMGUI(LPDIRECT3DDEVICE9 pGraphicDev)
 	NULL_CHECK_RETURN(pInstance, E_FAIL);
 
 	m_vecImWindow.push_back(pInstance);
-
+	m_vecImWindow.push_back(CImMenuBar::Create(pGraphicDev));
 	return S_OK;
 }
 

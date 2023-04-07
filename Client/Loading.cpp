@@ -12,7 +12,6 @@ CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_pGraphicDev->AddRef();
 }
 
-
 CLoading::~CLoading()
 {
 }
