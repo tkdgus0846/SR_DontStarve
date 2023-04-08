@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Room.h"
-#include "FloorTile.h"
 #include "Export_Function.h"
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
@@ -148,7 +147,7 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iSize; ++i)
 	{
-		m_vecTile.push_back(CFloorTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }));
+		m_vecTile.push_back(CTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }, L"Floor_Level1_Texture"));
 		m_vecTile[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
 	}
 

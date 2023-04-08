@@ -60,9 +60,9 @@ HRESULT CFloor::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"FloorTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Texture",this));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Level1_Texture",this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"Floor_Texture", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"Floor_Level1_Texture", pComponent });
 
 	return S_OK;
 }

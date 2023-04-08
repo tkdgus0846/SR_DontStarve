@@ -239,9 +239,6 @@
     <ClInclude Include="Hp.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
-    <ClInclude Include="FloorTile.h">
-      <Filter>GameObject\Map\Tile</Filter>
-    </ClInclude>
     <ClInclude Include="ImInspector.h">
       <Filter>IMGUI\ImWindow</Filter>
     </ClInclude>
@@ -426,9 +423,6 @@
     </ClCompile>
     <ClCompile Include="Hp.cpp">
       <Filter>GameObject\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorTile.cpp">
-      <Filter>GameObject\Map\Tile</Filter>
     </ClCompile>
     <ClCompile Include="ImInspector.cpp">
       <Filter>IMGUI\ImWindow</Filter>

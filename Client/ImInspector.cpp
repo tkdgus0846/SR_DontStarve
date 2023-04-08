@@ -2,6 +2,8 @@
 
 #include "Export_Function.h"
 
+#include "EditCamera.h"
+
 #include "Baller.h"
 #include "Bub.h"
 #include "Guppi.h"
@@ -54,20 +56,29 @@ void CImInspector::Show_TilePicking()
 	Show_Image(iTileNum);
 	ImGui::End();
 
-	CCamera* pCamera = dynamic_cast<CCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
+	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
+
+	ImGui::Checkbox("CHECK_PICK!", &pCamera->Get_Pick());
 	ImGui::SeparatorText("Tile");
 
 	if (ImGui::RadioButton("Level1_Floor", &iTileNum, 20))
-	{
-		if (nullptr == pCamera->Get_Component(L"Floor_Texture", ID_STATIC))
-		{
-		}
-	}
+		pCamera->Change_Texture(L"Floor_Level1_Texture");
+
 	ImGui::SameLine();
-	ImGui::RadioButton("Level1_Wall", &iTileNum, 21);
-	ImGui::RadioButton("Level2_Floor", &iTileNum, 22); ImGui::SameLine();
-	ImGui::RadioButton("Level2_Wall", &iTileNum, 23);
-	ImGui::RadioButton("Level3_Floor", &iTileNum, 24); ImGui::SameLine();
+
+	if (ImGui::RadioButton("Level1_Wall", &iTileNum, 21))
+		pCamera->Change_Texture(L"Wall_Level1_Texture");
+
+	if(ImGui::RadioButton("Level2_Floor", &iTileNum, 22))
+		pCamera->Change_Texture(L"Floor_Level2_Texture");
+
+	ImGui::SameLine();
+
+	if(ImGui::RadioButton("Level2_Wall", &iTileNum, 23))
+		pCamera->Change_Texture(L"Wall_Level2_Texture");
+
+	ImGui::RadioButton("Level3_Floor", &iTileNum, 24); 
+	ImGui::SameLine();
 	ImGui::RadioButton("Level3_Wall", &iTileNum, 25);
 }
 
@@ -295,9 +306,13 @@ void CImInspector::Show_Image(_int iObjNum)
 
 
 	if (20 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Texture", nullptr));
+		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Level1_Texture", nullptr));
 	if (21 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"WallPanels #420377", nullptr));
+		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Wall_Level1_Texture", nullptr));
+	if (22 == iObjNum)
+		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Level2_Texture", nullptr));
+	if (23 == iObjNum)
+		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Wall_Level2_Texture", nullptr));
 
 	if(pTexture)
 		ImGui::Image((void*)pTexture->Get_TextureCom(), ImVec2(100.f, 100.f));

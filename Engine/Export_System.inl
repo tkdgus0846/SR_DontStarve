@@ -86,6 +86,18 @@ bool		Key_Up(_ubyte ubyKey)
 {
 	return CDInputMgr::GetInstance()->Key_Up(ubyKey);
 }
+bool		Mouse_Down(MOUSEKEYSTATE eMouseID)
+{
+	return CDInputMgr::GetInstance()->Mouse_Down(eMouseID);
+}
+bool		Mouse_Pressing(MOUSEKEYSTATE eMouseID)
+{
+	return CDInputMgr::GetInstance()->Mouse_Pressing(eMouseID);
+}
+bool		Mouse_Up(MOUSEKEYSTATE eMouseID)
+{
+	return CDInputMgr::GetInstance()->Mouse_Up(eMouseID);
+}
 HRESULT		Ready_DInput(HINSTANCE hInst, HWND hWnd)
 {
 	return CDInputMgr::GetInstance()->Ready_DInput(hInst, hWnd);

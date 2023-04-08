@@ -88,8 +88,10 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Red_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Green.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Red.png")), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallPanels #420377", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420377.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Level1_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421865.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Wall_Level1_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Level2_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Wall_Level2_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420377.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gun/Gun.png")), E_FAIL);
 
 	// UI
