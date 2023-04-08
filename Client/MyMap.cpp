@@ -111,7 +111,7 @@ _bool CMyMap::ReadMapFile(HANDLE hFile, DWORD& dwByte)
 	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iSize; ++i)
 	{
-		m_arrRoom[i] = CRoom::Create(m_pGraphicDev);
+		//m_arrRoom[i] = CRoom::Create(m_pGraphicDev);
 		m_arrRoom[i]->ReadRoomFile(hFile, dwByte);
 		m_arrRoom[i]->FloorSubSet();
 		m_arrRoom[i]->PlaceSubSet();

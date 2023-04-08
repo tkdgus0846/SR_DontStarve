@@ -87,6 +87,24 @@ typedef	struct MyVec3 : public D3DXVECTOR3
 	{
 		return reinterpret_cast<MyVec3*>(D3DXVec3TransformCoord(this, this, matRot));
 	}
+
+	// 임의의 방향벡터를 기준으로 새로운 Up벡터 Right벡터를 만듭니다
+	// ex)
+	//MyVec3 Look;  <-임의의 방향벡터
+	//MyVec3 Right, Up;
+	//TileLook.RightUpFromLook(TileRight, TileUp);
+	void	RightUpFromLook(OUT D3DXVECTOR3& vRight, OUT D3DXVECTOR3& vUp)
+	{
+		_vec3 up = _vec3::Up();
+		_vec3 look = *this;
+		look.Normalize();
+		D3DXVec3Cross(&vRight, &up, &look);
+		D3DXVec3Cross(&vUp, &look, &vRight);
+	}
+
+	static D3DXVECTOR3 Right() { return D3DXVECTOR3{ 1.f, 0.f, 0.f }; }
+	static D3DXVECTOR3 Up() { return    D3DXVECTOR3{ 0.f, 1.f, 0.f }; }
+	static D3DXVECTOR3 Look() { return  D3DXVECTOR3{ 0.f, 0.f, 1.f }; }
 }_vec3;
 
 typedef	struct MyMatrix : public D3DXMATRIX
