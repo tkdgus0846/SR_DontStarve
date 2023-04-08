@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Logo.h"
 #include "BulletMgr.h"
+#include "EffectManager.h"
 
 // 주석 테스트용
 CMainApp::CMainApp()
@@ -101,6 +102,10 @@ CMainApp * CMainApp::Create(void)
 
 void CMainApp::Free(void)
 {
+	CImManager::DestroyInstance();
+	CBulletMgr::DestroyInstance();
+	CEffectManager::DestroyInstance();
+
 	FreeConsole();
 	Safe_Release(m_pGraphicDev);
 
@@ -110,5 +115,5 @@ void CMainApp::Free(void)
 	Engine::Release_Utility();
 	Engine::Release_System();
 
-	CBulletMgr::DestroyInstance();
+	
 }

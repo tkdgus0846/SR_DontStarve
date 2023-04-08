@@ -55,14 +55,14 @@ typedef	struct tagIndex32
 
 struct Particle
 {
-	_vec3 vPos;
-	_vec3 vVelocity;
-	_vec3 vAccel;
-	float fLifeTime;
-	float fAge;
-	_ulong dwColor;
-	_ulong dwColorFade;
-	bool bIsAlive;
+	_vec3	vPos;
+	_vec3	vVelocity;
+	_vec3	vAccel;
+	_float	fLifeTime;
+	_float	fAge;
+	_ulong	dwColor;
+	_ulong	dwColorFade;
+	_bool	bIsAlive;
 };
 
 struct BoundingBox

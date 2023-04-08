@@ -15,9 +15,6 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
-	virtual void OnCollisionEnter(const struct Collision* collsion) override {}
-	virtual void OnCollisionStay(const struct Collision* collision) override {}
-	virtual void OnCollisionExit(const struct Collision* collision) override {}
 
 public:
 	static CBub*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

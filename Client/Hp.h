@@ -1,6 +1,6 @@
 #pragma once
 #include "UI.h"
-
+#include "Player.h"
 
 BEGIN(Engine)
 
@@ -25,26 +25,24 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	void		Set_OrthoProj();
+	void		Set_VeiwMatrix_UI(_float fX, _float fY);
+	_int		Compute_Hp(_int& pPlayerHp);
 
 private:
-	Engine::CRcTex*			m_pBufferCom;
 	Engine::CTexture*		m_pTextureCom;
-	D3DXMATRIX  matWorld, matView;
+	D3DXMATRIX				matWorld, matView;
 
 private:
 	_int m_iMaxHp = 5;
+	_int m_iTotalHp = 20;
 	_int m_iCurrentHp = 0;
+	_int pPlayerHp = 20;
 
-	//vector<CRcTex*> m_vecRc;
+	vector<CRcTex*> m_vecRc;
 
 public:
 	static CHp*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	//void	Create_HP(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;
 };
-
-
-

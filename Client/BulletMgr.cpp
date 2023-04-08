@@ -12,6 +12,7 @@ CBulletPool::CBulletPool()
 
 CBulletPool::~CBulletPool()
 {
+	//Free();
 }
 
 void CBulletPool::Push(CBullet * pObj)
@@ -27,6 +28,9 @@ void CBulletPool::Free(void)
 	for_each(m_BulletPool.begin(), m_BulletPool.end(), CDeleteObj());
 	m_BulletPool.clear();
 }
+
+//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 CBulletPool* CBulletPool::Create()
 {

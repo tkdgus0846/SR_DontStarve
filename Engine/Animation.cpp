@@ -19,6 +19,7 @@ CAnimation::CAnimation(const CAnimation & rhs) :
 	m_eCurState(rhs.m_eCurState)
 {
 	m_RenderOrder = 2;
+	m_bFinished = FALSE;
 }
 
 CAnimation::~CAnimation()
@@ -45,7 +46,11 @@ _int CAnimation::Update_Component(const _float& fTimeDelta)
 			if (m_CurFrame->bRepeat == true)
 				m_CurFrame->iFrame = 0;
 			else
+			{
 				m_CurFrame->iFrame = m_CurFrame->iMaxFrame - 1;
+				m_bFinished = TRUE;
+			}
+				
 		}
 	}
 	return OBJ_NOEVENT;

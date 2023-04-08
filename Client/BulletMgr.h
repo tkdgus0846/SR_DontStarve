@@ -36,8 +36,9 @@ private:
 		(pBullet)->Set_Dir(vDir);
 		(pBullet)->SetIsEnemy(bIsEnemyBullet);
 		(pBullet)->SetAge();
+		(pBullet)->SetDead(false);
 
-		CCollider* collider = dynamic_cast<CCollider*>(pBullet->Get_Component(L"Collider", ID_ALL));
+		CCollider* collider = dynamic_cast<CCollider*>(pBullet->Get_Component(L"BodyCollider", ID_ALL));
 		if (collider == nullptr) return pBullet;
 		_bool bIsRender = Engine::Collider_GetIsRender();
 		collider->Set_IsRender(bIsRender);

@@ -36,7 +36,7 @@ void CBulletBar::LateUpdate_GameObject(void)
 
 void CBulletBar::Render_GameObject(void)
 {
-	Set_OrthoProj();
+	Set_VeiwMatrix_UI();
 
 	m_pBufferCom->Ready_Buffer();
 
@@ -55,14 +55,10 @@ HRESULT CBulletBar::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"BulletBar_Texture", pComponent });
 
-	pComponent = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Transform", this));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_UPDATE].insert({ L"Transform", pComponent });
-
 	return S_OK;
 }
 
-void CBulletBar::Set_OrthoProj()
+void CBulletBar::Set_VeiwMatrix_UI()
 {
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
@@ -92,5 +88,7 @@ CBulletBar * CBulletBar::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CBulletBar::Free(void)
 {
+	Safe_Release(m_pBufferCom);
+	Safe_Release(m_pTextureCom);
 	__super::Free();
 }

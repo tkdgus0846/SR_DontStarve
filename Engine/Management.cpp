@@ -46,6 +46,9 @@ void CManagement::LateUpdate_Management()
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
 	Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
 	Engine::Check_Collision(COL_DETECTION, COL_PLAYER);
+	Engine::Check_Collision(COL_ENEMY, COL_PLAYER);
+
+	Engine::Check_Collision(COL_ENEMY, COL_ENEMY);
 }
 
 void CManagement::Render_Management(LPDIRECT3DDEVICE9 pGraphicDev)

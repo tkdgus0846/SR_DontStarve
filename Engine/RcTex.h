@@ -12,6 +12,7 @@ private:
 
 public:
 	HRESULT		Ready_Buffer(VIBUFFER_FLAG bufferFlag = VB_STATIC);
+	void		Edit_VB(_float fX);
 
 public:
 	static CRcTex*		Create(LPDIRECT3DDEVICE9 pGraphicDev, VIBUFFER_FLAG bufferFlag = VB_STATIC);

@@ -34,6 +34,8 @@ public:
 public:
 	void SelectState(ANIMSTATE state);
 	void BindAnimation(ANIMSTATE state, CTexture* texture, float frameSpeed = 0.5f, bool repeat = TRUE);
+	_bool GetFinished() const { return m_bFinished; }
+	void AnimationClear() { m_bFinished = false; m_CurFrame->iFrame = 0; }
 
 private:
 	unordered_map<ANIMSTATE, AnimFrame> m_MapAnimation;
@@ -41,6 +43,8 @@ private:
 
 	ANIMSTATE m_ePrevState;
 	ANIMSTATE m_eCurState;
+
+	_bool	  m_bFinished;
 };
 
 END

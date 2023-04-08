@@ -36,11 +36,6 @@ void CCreature::Render_GameObject(void)
 	__super::Render_GameObject();
 }
 
-HRESULT CCreature::Add_Component()
-{
-	return S_OK;
-}
-
 void CCreature::Free()
 {
 	__super::Free();
