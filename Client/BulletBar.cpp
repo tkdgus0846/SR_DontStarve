@@ -55,10 +55,6 @@ HRESULT CBulletBar::Add_Component(void)
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"BulletBar_Texture", pComponent });
 
-	pComponent = m_pTransform = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Transform", this));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_UPDATE].insert({ L"Transform", pComponent });
-
 	return S_OK;
 }
 

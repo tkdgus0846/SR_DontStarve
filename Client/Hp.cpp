@@ -37,26 +37,26 @@ void CHp::LateUpdate_GameObject(void)
 
 void CHp::Render_GameObject(void)
 {
-	Set_OrthoProj();
+	/*Set_OrthoProj();
 
 	m_pTextureCom->Set_Texture_Num(m_iCurrentHp);
 
-	m_pGraphicDev->SetTexture(0, nullptr);
+	m_pGraphicDev->SetTexture(0, nullptr);*/
 
 	__super::Render_GameObject();
 }
 
 HRESULT CHp::Add_Component(void)
 {
-	for (size_t i = 0; i < m_iMaxHp; i++)
+	/*for (size_t i = 0; i < m_iMaxHp; i++)
 	{
 		CRcTex* RcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 		NULL_CHECK_RETURN(RcTex, E_FAIL);
-		
+
 		m_pTextureCom = nullptr;
 		m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Hp_Texture", this));
 		NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	}
+	}*/
 
 	//CAnimation* Ani = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	//NULL_CHECK_RETURN(Ani, E_FAIL);

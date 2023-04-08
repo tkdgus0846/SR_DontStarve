@@ -69,7 +69,7 @@ HRESULT CBaller::Add_Component()
 
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
+	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
 	pCollider->Set_BoundingBox({ 0.6f, 0.6f, 0.6f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));

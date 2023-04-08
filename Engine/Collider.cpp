@@ -76,6 +76,7 @@ void CCollider::Render_Component()
 void CCollider::OnCollisionEnter(const Collision * collision)
 {
 	if (m_bEnabled == false) return;
+	if (m_pGameObject->GetDead()) return;
 
 	//cout << this << ": OnCollisionEnter!" << " dir: " << collision->CollisionDir << endl;
 	m_pGameObject->OnCollisionEnter(collision);
@@ -84,14 +85,16 @@ void CCollider::OnCollisionEnter(const Collision * collision)
 void CCollider::OnCollisionStay(const Collision * collision)
 {
 	if (m_bEnabled == false) return;
+	if (m_pGameObject->GetDead()) return;
 
-	//cout << this << ": OnCollisionStay!" << " dir: " << collision->CollisionDir << endl;
+	cout << this << ": OnCollisionStay!" << " dir: " << collision->CollisionDir << endl;
 	m_pGameObject->OnCollisionStay(collision);
 }
 
 void CCollider::OnCollisionExit(const Collision * collision)
 {
 	if (m_bEnabled == false) return;
+	if (m_pGameObject->GetDead()) return;
 
 	//cout << this << ": OnCollisionExit!" << endl;
 	m_pGameObject->OnCollisionExit(collision);

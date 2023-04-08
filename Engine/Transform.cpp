@@ -125,6 +125,11 @@ void CTransform::Move_Walk(const _float & fUnits, const _float& fTimeDelta)
 	}
 }
 
+void CTransform::Move_Velocity(const _vec3& velocity)
+{
+	m_vInfo[INFO_POS] += velocity;
+}
+
 void CTransform::Rot_Pitch(const _float & fAngle, const _float& fTimeDelta)
 {
 	if (0 == fAngle)

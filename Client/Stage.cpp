@@ -29,7 +29,7 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
-  FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
 	
 	Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
 	dynamic_cast<CRoom*>(Get_GameObject(LAYER_ENVIRONMENT, L"Room"))->FloorSubSet();
@@ -38,14 +38,14 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_PLAYER, L"Player", CPlayer::Create(m_pGraphicDev));
 
-	Add_GameObject(LAYER_MONSTER, L"Monster_Baller", CBaller::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_MONSTER, L"Monster_Walker", CWalker::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_MONSTER, L"Monster_Turret", CTurret::Create(m_pGraphicDev));
+	/*Add_GameObject(LAYER_MONSTER, L"Monster_Baller", CBaller::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_MONSTER, L"Monster_Walker", CWalker::Create(m_pGraphicDev));*/
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Turret", CTurret::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_MONSTER, L"Monster_Guppi_Blue_Texture", CGuppi::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Guppi_Blue_Texture", CGuppi::Create(m_pGraphicDev));
 
 	Add_GameObject(LAYER_CAMERA, L"ObjCamera", CObjCamera::Create(m_pGraphicDev));
 
@@ -57,16 +57,16 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(LAYER_UI, L"CrossHair", CCrossHair::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_UI, L"Hp", CHp::Create(m_pGraphicDev));
 	
-	D3DLIGHT9		tLightInfo;
+	/*D3DLIGHT9		tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 
 	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
+	tLightInfo.Direction = _vec3(1.f, 1.f, 1.f);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);*/
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 

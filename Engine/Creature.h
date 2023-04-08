@@ -18,9 +18,6 @@ protected:
 	_int	m_iHp;
 	_int	m_iAttack;
 
-public:
-	virtual HRESULT Add_Component() override;
-
 protected:
 	virtual void Free() override;
 };

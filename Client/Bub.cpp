@@ -68,8 +68,13 @@ HRESULT CBub::Add_Component()
 
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
-	pCollider->Set_BoundingBox({ 0.6f, 0.6f, 0.6f });
+	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
+	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
+
+	//pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
+	//NULL_CHECK_RETURN(pCollider, E_FAIL);
+	//m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
+	//pCollider->Set_BoundingBox({ 50.f, 10.f, 50.f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
@@ -80,6 +85,10 @@ HRESULT CBub::Add_Component()
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
 	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
+
+	CRigidbody* pRigidBody = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"RigidBody", this));
+	NULL_CHECK_RETURN(pRigidBody, E_FAIL);
+	m_uMapComponent[ID_UPDATE].insert({ L"RigidBody", pRigidBody });
 
 	Set_PatrolAndFollow_AI();
 

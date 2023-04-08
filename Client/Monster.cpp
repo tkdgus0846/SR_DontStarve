@@ -24,6 +24,10 @@ HRESULT CMonster::Ready_GameObject(void)
 
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
+	_matrix view;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
+
+	//m_pTransform->Set_Billboard(&view);
 	__super::Update_GameObject(fTimeDelta);
 	return 0;
 }

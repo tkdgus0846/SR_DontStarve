@@ -163,6 +163,8 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="CrossHair.h" />
     <ClInclude Include="EditCamera.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Evasion.h" />
     <ClInclude Include="GunUI.h" />
@@ -221,6 +223,8 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="CrossHair.cpp" />
     <ClCompile Include="EditCamera.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Evasion.cpp" />
     <ClCompile Include="GunUI.cpp" />
