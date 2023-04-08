@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Room.h"
-
+#include "FloorTile.h"
 #include "Export_Function.h"
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
@@ -29,6 +29,8 @@ _int CRoom::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 	Update_Subset(fTimeDelta);
+	for (auto& Tile : m_vecTile)
+		Tile->Update_GameObject(fTimeDelta);
 	
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -40,6 +42,9 @@ void CRoom::LateUpdate_GameObject(void)
 	// 룸 특성상 트랜스폼 외엔 안쓸거같아서 일단 주석처리
 	//__super::LateUpdate_GameObject();
 	LateUpdate_SubSet();
+	for (auto& Tile : m_vecTile)
+		Tile->LateUpdate_GameObject();
+
 }
 
 void CRoom::Render_GameObject(void)
@@ -47,6 +52,8 @@ void CRoom::Render_GameObject(void)
 	// 룸 특성상 트랜스폼 외엔 안쓸거같아서 일단 주석처리
 	//__super::Render_GameObject();
 	Render_SubSet();
+	for (auto& Tile : m_vecTile)
+		Tile->Render_GameObject();
 }
 
 void CRoom::Update_Subset(const _float& fTimeDelta)
@@ -140,7 +147,10 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 
 	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iSize; ++i)
+	{
+		m_vecTile.push_back(CFloorTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }));
 		m_vecTile[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
+	}
 
 	return true;
 }
@@ -171,10 +181,10 @@ CRoom* CRoom::Create(LPDIRECT3DDEVICE9 pGraphicDev,
 void CRoom::Free(void)
 {
 	Safe_Release(m_pFloor);
-
 	for (auto& iter : m_apWall)
 		Safe_Release(iter);
-	
+	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
+
 	__super::Free();
 }
 

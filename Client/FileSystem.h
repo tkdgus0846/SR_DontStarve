@@ -10,8 +10,9 @@ public:
 
 	static wstring strToWStr(const string& str); 
 	static string wstrToStr(const wstring& wstr);
-	static string FileNameFromPath(const string& strFilePathName);
+	static string FileNameFromPath(IN const string& strFilePathName);
 	static wstring PathRemoveFileSpec(IN const wstring& FilePath);
 	static wstring GetCurDirectory();
+	static void Save(const TCHAR* path);
+	static void Load(const TCHAR* path);
 };
-

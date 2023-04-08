@@ -15,14 +15,9 @@ public:
 
 	static CImMenuBar* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-
-
 private:
 	void SaveFileDialog();
 	void LoadFileDialog();
-
-	void Save();
-	void Load();
 
 private:
 	_bool			m_bSaveButton = false;
