@@ -36,8 +36,8 @@ private:
 private:
 	_float				m_fSpeed;
 	_bool				m_bFix;
-	Engine::CCamera*	m_pCamera;
-	CRoom*				tmp; 
+	CRoom*				tmp;
+
 public:
 	static CEditCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

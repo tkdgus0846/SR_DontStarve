@@ -1,6 +1,6 @@
 #pragma once
 #include "Tile.h"
-
+#include "ImInspector.h"
 
 BEGIN(Engine)
 
@@ -12,6 +12,7 @@ END
 class CFloorTile :
 	public CTile
 {
+	friend class CInspector;
 private:
 	explicit CFloorTile(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CFloorTile();
@@ -24,7 +25,6 @@ public:
 	virtual void Render_GameObject(void) override;
 
 public:
-	virtual HRESULT Add_Component() override;
 	static CFloorTile* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
 
 private:

@@ -63,16 +63,3 @@ void CFloorTile::Free(void)
 {
 	CTile::Free();
 }
-
-HRESULT CFloorTile::Add_Component()
-{
-	m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"RcTex", m_pBufferCom });
-
-	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"NormalBullet_Texture", this));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"NormalBullet_Texture", m_pTextureCom });
-
-	return S_OK;
-}

@@ -53,12 +53,10 @@ void CEditCamera::Render_GameObject(void)
 
 HRESULT CEditCamera::Add_Component()
 {
-	CComponent*		pComponent = nullptr;
-
-	pComponent = m_pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
-	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
-	m_uMapComponent[ID_UPDATE].insert({ L"Edit_Camera", pComponent });
-	m_pCamera->Set_CameraName(L"Edit_Camera");
+	CCamera* pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
+	NULL_CHECK_RETURN(pCamera, E_FAIL);
+	m_uMapComponent[ID_UPDATE].insert({ L"Edit_Camera", pCamera });
+	pCamera->Set_CameraName(L"Edit_Camera");
 
 	return S_OK;
 }
@@ -99,14 +97,10 @@ void CEditCamera::Mouse_Move(const _float & fTimeDelta)
 	_long dwMouseMove = 0;
 
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
-	{
 		m_pTransform->m_vInfo[INFO_LOOK] += _vec3(0.f, 1.f, 0.f) * _float(-dwMouseMove) * fTimeDelta / 10.f;
-	}
 
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
-	{
 		m_pTransform->Rot_Yaw(_float(dwMouseMove) * 5.f, fTimeDelta);
-	}
 }
 
 void CEditCamera::Fix_Mouse()
