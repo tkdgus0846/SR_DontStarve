@@ -31,9 +31,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-#ifdef _DEBUG
+#ifdef  _DEBUG
+#ifndef _IMGUI
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif // _DEBUG
+#endif
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -90,20 +92,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			// 60프레임 제한을 걸고싶다.
 			if (Engine::IsPermit_Call(L"Frame60", fTimer_Immediate))
 			{
-#ifdef _DEBUG // IMGUI 준비
-				// Start the Dear ImGui frame
-				ImGui_ImplDX9_NewFrame();
-				ImGui_ImplWin32_NewFrame();
-				ImGui::NewFrame();
-#endif
 				Engine::Set_Timer(L"Timer_FPS60");
 				_float fTimer_FPS60 = Engine::Get_Timer(L"Timer_FPS60");
 				pMainApp->Update_MainApp(fTimer_FPS60);
 				pMainApp->LateUpdate_MainApp();
 
-#ifdef _DEBUG // IMGUI 종료
-				ImGui::EndFrame();
-#endif
 				pMainApp->Render_MainApp();
 
 			}
@@ -119,11 +112,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return FALSE;
 	}
 
-#ifdef _DEBUG // IMGUI 릴리즈
-	ImGui_ImplDX9_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
-#endif
     return (int) msg.wParam;
 }
 
@@ -200,12 +188,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
-#ifdef _DEBUG
+#ifdef _IMGUI
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-#ifdef _DEBUG
+#ifdef _IMGUI
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
 		return true;
 #endif
@@ -226,14 +215,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
-        }
-        break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
-            EndPaint(hWnd, &ps);
         }
         break;
 

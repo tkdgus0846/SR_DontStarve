@@ -1,6 +1,5 @@
 //#include "stdafx.h"
 #include "MainApp.h"
-#include "ImManager.h"
 #include "Scene.h"
 #include "Logo.h"
 #include "BulletMgr.h"
@@ -19,47 +18,15 @@ CMainApp::~CMainApp()
 
 HRESULT CMainApp::Ready_MainApp(void)
 {
-
-#ifdef _DEBUG
-
-	/*if (::AllocConsole() == TRUE)
-	{
-		FILE* nfp[3];
-		freopen_s(nfp + 0, "CONOUT$", "rb", stdin);
-		freopen_s(nfp + 1, "CONOUT$", "wb", stdout);
-		freopen_s(nfp + 2, "CONOUT$", "wb", stderr);
-		std::ios::sync_with_stdio();
-	}*/
-
-#endif // _DEBUG
-
 	//srand((unsigned int)time(NULL));
 	FAILED_CHECK_RETURN(Ready_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
-
-
-#ifdef _DEBUG // IMGUI 초기화
-	CImManager::GetInstance()->Ready_IMGUI(m_pGraphicDev);
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-
-															  // Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	ImGui_ImplWin32_Init(g_hWnd);
-	ImGui_ImplDX9_Init(m_pGraphicDev);
-#endif
 
 	return S_OK;
 }
 
 int CMainApp::Update_MainApp(const _float & fTimeDelta)
 {
-#ifdef _DEBUG // IMGUI 업데이트(LateUpdate는 없음)
-	CImManager::GetInstance()->Update(fTimeDelta);
-#endif
 	Engine::Update_DInput();
 
 	_long	dwMouse = 0;
@@ -82,9 +49,7 @@ void CMainApp::LateUpdate_MainApp(void)
 void CMainApp::Render_MainApp(void)
 {
 	Engine::Render_Begin(D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f));
-#ifdef _DEBUG // IMGUI 랜더
-	CImManager::GetInstance()->Render(m_pGraphicDev);
-#endif
+
 	m_pManagementClass->Render_Management(m_pGraphicDev);
 
 	Engine::Render_End();
@@ -140,6 +105,7 @@ void CMainApp::Free(void)
 	CImManager::DestroyInstance();
 	CBulletMgr::DestroyInstance();
 	CEffectManager::DestroyInstance();
+
 	FreeConsole();
 	Safe_Release(m_pGraphicDev);
 

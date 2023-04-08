@@ -47,15 +47,11 @@ void CMyMap::LateUpdate_GameObject(void)
 
 void CMyMap::Render_GameObject(void)
 {
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
 	m_pTextureCom->Set_Texture_Num();
 
 	__super::Render_GameObject();
-
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 HRESULT CMyMap::Add_Component()
@@ -102,6 +98,26 @@ CRoom * CMyMap::Get_CurRoom(const _vec3& vPos)
 	return m_arrRoom[iIndex];
 }
 
+_bool CMyMap::WriteMapFile(HANDLE hFile, DWORD& dwByte)
+{
+	_int iSize = m_arrRoom.size();
+	WriteFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iSize; ++i)
+		m_arrRoom[i]->WriteRoomFile(hFile, dwByte);
+
+	return true;
+}
+
+_bool CMyMap::ReadMapFile(HANDLE hFile, DWORD& dwByte)
+{
+	_int iSize;
+	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iSize; ++i)
+		m_arrRoom[i]->ReadRoomFile(hFile, dwByte);
+
+	return true;
+}
+
 CMyMap * CMyMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CMyMap*		pInstance = new CMyMap(pGraphicDev);
@@ -119,6 +135,9 @@ void CMyMap::Free()
 {
 	for (auto iter : m_arrRoom)
 		Safe_Release(iter);
+	Safe_Release(m_pTennel);
+
+	Safe_Release(m_pTennel);
 
 	__super::Free();
 }

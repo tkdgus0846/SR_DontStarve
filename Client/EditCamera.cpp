@@ -4,6 +4,8 @@
 #include "MyMap.h"
 #include "Export_Function.h"
 #include "MyMap.h"
+#include "FloorTile.h"
+
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_fSpeed(0.f), m_bFix(true)
 {
@@ -76,12 +78,19 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 	{
 		CMyMap* pMap = (CMyMap*)Get_GameObject(LAYER_ENVIRONMENT, L"Map");
 		Triangle tri;
-		IntersectRayRoom(pMap->Get_CurRoom(m_pTransform->m_vInfo[INFO_POS]), tri);
-		//cout << fixed;
-		//cout.precision(0);
-		//cout << tri.v[0].x << " " << tri.v[0].y << " " << tri.v[0].z << "\t"
-		//	<< tri.v[1].x << " " << tri.v[1].y << " " << tri.v[1].z << "\t"
-		//	<< tri.v[2].x << " " << tri.v[2].y << " " << tri.v[2].z << endl;
+		if (IntersectRayRoom(pMap->Get_CurRoom(m_pTransform->m_vInfo[INFO_POS]), tri))
+		{
+			_vec3 vPos{0.f, 0.f, 0.f};
+			vPos = CalcMiddlePoint(tri);
+			vPos.y += 1.f;
+			Add_GameObject(LAYER_ENVIRONMENT, L"CFloorTile", CFloorTile::Create(m_pGraphicDev, vPos));
+		}
+
+		/*cout << fixed;
+		cout.precision(0);
+		cout << tri.v[0].x << " " << tri.v[0].y << " " << tri.v[0].z << "\t"
+			<< tri.v[1].x << " " << tri.v[1].y << " " << tri.v[1].z << "\t"
+			<< tri.v[2].x << " " << tri.v[2].y << " " << tri.v[2].z << endl;*/
 	}
 }
 
@@ -91,12 +100,12 @@ void CEditCamera::Mouse_Move(const _float & fTimeDelta)
 
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
 	{
-		m_pTransform->m_vInfo[INFO_LOOK] += _vec3(0.f, 1.f, 0.f) * -dwMouseMove * fTimeDelta / 10.f;
+		m_pTransform->m_vInfo[INFO_LOOK] += _vec3(0.f, 1.f, 0.f) * _float(-dwMouseMove) * fTimeDelta / 10.f;
 	}
 
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
 	{
-		m_pTransform->Rot_Yaw(dwMouseMove * 5.f, fTimeDelta);
+		m_pTransform->Rot_Yaw(_float(dwMouseMove) * 5.f, fTimeDelta);
 	}
 }
 
@@ -269,4 +278,52 @@ POINT CEditCamera::GetMousePos()
 	ScreenToClient(g_hWnd, &ptMouse);
 
 	return ptMouse;
+}
+
+_vec3 CEditCamera::CalcMiddlePoint(Triangle & tri)
+{
+	_vec3 standard;
+	_vec3 a;
+	_vec3 b;
+	_vec3 A;
+	_vec3 B;
+	_vec3 result;
+	standard = tri.v[0];
+	a = tri.v[1];
+	b = tri.v[2];
+	A = a - standard;
+	B = b - standard;
+
+	if (fabs(A.Dot(B)) < 0.1f)
+	{
+		result = (a + b) / 2.f;
+		return result;
+	}
+
+	standard = tri.v[1];
+	a = tri.v[0];
+	b = tri.v[2];
+	A = a - standard;
+	B = b - standard;
+
+	if (fabs(A.Dot(B)) < 0.1f)
+	{
+		result = (a + b) / 2.f;
+		return result;
+	}
+		 
+	
+	standard = tri.v[2];
+	a = tri.v[1];
+	b = tri.v[0];
+	A = a - standard;
+	B = b - standard;
+
+	if (fabs(A.Dot(B)) < 0.1f)
+	{
+		result = (a + b) / 2.f;
+		return result;
+	}
+
+	return _vec3();
 }

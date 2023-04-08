@@ -83,6 +83,8 @@ HRESULT CBaller::Add_Component()
 	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
 
 	Set_PatrolAndFollow_AI();
+
+	return S_OK;
 }
 
 CBaller * CBaller::Create(LPDIRECT3DDEVICE9 pGraphicDev)

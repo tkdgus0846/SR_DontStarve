@@ -47,6 +47,25 @@ HRESULT CMonster::Add_Component(void)
 	return S_OK;
 }
 
+CMonster* CMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CMonster*		pInstance = new CMonster(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject()))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
+void CMonster::Free(void)
+{
+	__super::Free();
+}
+
+// AI	备泅何
 HRESULT CMonster::Set_PatrolAndFollow_AI()
 {
 	// 何前 积己
@@ -141,23 +160,5 @@ HRESULT CMonster::Set_TurretAI()
 	m_uMapComponent[ID_UPDATE].emplace(L"Root", pRoot);
 
 	return S_OK;
-}
-
-CMonster* CMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	CMonster*		pInstance = new CMonster(pGraphicDev);
-
-	if (FAILED(pInstance->Ready_GameObject()))
-	{
-		Safe_Release(pInstance);
-		return nullptr;
-	}
-
-	return pInstance;
-}
-
-void CMonster::Free(void)
-{
-	__super::Free();
 }
 

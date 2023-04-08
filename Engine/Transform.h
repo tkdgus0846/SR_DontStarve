@@ -73,6 +73,8 @@ public:
 
 	void	Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
 
+	_bool	WriteTransformFile(HANDLE hFile, DWORD& dwByte);
+	_bool	ReadTransformFile(HANDLE hFile, DWORD& dwByte);
 
 public:
 	HRESULT		Ready_Transform(void);

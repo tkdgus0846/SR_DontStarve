@@ -22,8 +22,11 @@ HRESULT CBulletGauge::Ready_GameObject(void)
 
 _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 {
+
+
 	m_pBufferCom->Edit_VB(m_VBGuage);
 	m_VBGuage -= 0.001f;
+
 
 	Engine::Add_RenderGroup(RENDER_UI, this);
 

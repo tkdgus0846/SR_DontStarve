@@ -10,6 +10,7 @@
 #include "SkyBox.h"
 #include "ObjCamera.h"
 #include "Room.h"
+#include "MyMap.h"
 #include "ImManager.h"
 #include "Export_Function.h"
 #include "GunUI.h"
@@ -33,9 +34,10 @@ HRESULT CStage::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
 	
-	Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
+	/*Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
 	dynamic_cast<CRoom*>(Get_GameObject(LAYER_ENVIRONMENT, L"Room"))->FloorSubSet();
-	dynamic_cast<CRoom*>(Get_GameObject(LAYER_ENVIRONMENT, L"Room"))->PlaceSubSet();
+	dynamic_cast<CRoom*>(Get_GameObject(LAYER_ENVIRONMENT, L"Room"))->PlaceSubSet();*/
+	Add_GameObject(LAYER_ENVIRONMENT, L"Map", CMyMap::Create(m_pGraphicDev));
 
 	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_PLAYER, L"Player", CPlayer::Create(m_pGraphicDev));
@@ -52,8 +54,9 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(LAYER_CAMERA, L"ObjCamera", CObjCamera::Create(m_pGraphicDev));
 
 	Add_GameObject(LAYER_UI, L"GunUI", CGunUI::Create(m_pGraphicDev));
-
+	
 	// UI
+
 	Add_GameObject(LAYER_UI, L"BulletGauge", CBulletGauge::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_UI, L"BulletBar", CBulletBar::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_UI, L"CrossHair", CCrossHair::Create(m_pGraphicDev));

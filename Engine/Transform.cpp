@@ -211,6 +211,26 @@ void Engine::CTransform::Chase_Target(const _vec3* pTargetPos, const _float& fSp
 
 }
 
+_bool CTransform::WriteTransformFile(HANDLE hFile, DWORD& dwByte)
+{
+	WriteFile(hFile, &m_eMoveType, sizeof(MOVETYPE), &dwByte, nullptr);
+	for (_int i = 0; i < INFO_END; ++i)
+		WriteFile(hFile, &m_vInfo[i], sizeof(_vec3), &dwByte, nullptr);
+	WriteFile(hFile, &m_vScale, sizeof(_vec3), &dwByte, nullptr);
+
+	return true;
+}
+
+_bool	CTransform::ReadTransformFile(HANDLE hFile, DWORD& dwByte)
+{
+	ReadFile(hFile, &m_eMoveType, sizeof(MOVETYPE), &dwByte, nullptr);
+	for (_int i = 0; i < INFO_END; ++i)
+		ReadFile(hFile, &m_vInfo[i], sizeof(_vec3), &dwByte, nullptr);
+	ReadFile(hFile, &m_vScale, sizeof(_vec3), &dwByte, nullptr);
+
+	return true;
+}
+
 _matrix* Engine::CTransform::Compute_Lookattarget(const _vec3* pTargetPos)
 {
 	_vec3	vDir = *pTargetPos - m_vInfo[INFO_POS];

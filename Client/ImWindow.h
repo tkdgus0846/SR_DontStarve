@@ -1,34 +1,26 @@
 #pragma once
 
+#include "Base.h"
 #include "Include.h"
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
 #include "imgui.h"
 
-// 엔진 컴포넌트 사용예시
-BEGIN(Engine)
 
-class CGameObject;
-
-END
-
-class CImWindow
+class CImWindow : public CBase
 {
 protected:
-	explicit CImWindow();
-public:
+	explicit CImWindow(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CImWindow();
 
 public:
-	virtual HRESULT Ready_ImWindow(CGameObject* pGameObject);
+	virtual HRESULT Ready_ImWindow();
 	virtual _int Update(float fTimeDelta) PURE;
 
-	// 생성함수는 항상 정의하기.
-// public:
-	// static CImWindow Create(CGameObject* pGameObject);
-private:
-	virtual void Free(void) PURE;
+protected:
+	void Toggle(bool& _bVariable);
+	LPDIRECT3DDEVICE9 m_pGraphicDev;
 
 protected:
-	CGameObject* m_pTarget;
+	virtual void Free(void);
 };

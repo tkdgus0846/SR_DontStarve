@@ -1,5 +1,6 @@
 #include "MyEdit.h"
 
+#include "ImManager.h"
 #include "Monster.h"
 #include "Bub.h"
 #include "Guppi.h"
@@ -13,6 +14,12 @@
 #include "MyMap.h"
 #include "ImManager.h"
 #include "Export_Function.h"
+#include "FloorTile.h"
+
+#include "imgui_impl_dx9.h"
+#include "imgui_impl_win32.h"
+#include "imgui.h"
+#include "ImManager.h"
 
 CMyEdit::CMyEdit(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -26,8 +33,19 @@ CMyEdit::~CMyEdit()
 HRESULT CMyEdit::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
+	CImManager::GetInstance()->Ready_IMGUI(m_pGraphicDev);
 
-	//Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+															  // Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	ImGui_ImplWin32_Init(g_hWnd);
+	ImGui_ImplDX9_Init(m_pGraphicDev);
+
 	Add_GameObject(LAYER_ENVIRONMENT, L"Map", CMyMap::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
 
@@ -45,6 +63,8 @@ HRESULT CMyEdit::Ready_Scene(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 
+	ShowCursor(TRUE);
+
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	return S_OK;
@@ -52,6 +72,8 @@ HRESULT CMyEdit::Ready_Scene(void)
 
 _int CMyEdit::Update_Scene(const _float & fTimeDelta)
 {
+	CImManager::GetInstance()->Update(fTimeDelta);
+
 	return __super::Update_Scene(fTimeDelta);
 }
 
@@ -62,7 +84,7 @@ void CMyEdit::LateUpdate_Scene(void)
 
 void CMyEdit::Render_Scene(void)
 {
-
+	CImManager::GetInstance()->Render(m_pGraphicDev);
 }
 
 CMyEdit * CMyEdit::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -80,5 +102,6 @@ CMyEdit * CMyEdit::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CMyEdit::Free(void)
 {
+	CImManager::DestroyInstance();
 	__super::Free();
 }

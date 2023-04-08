@@ -191,12 +191,12 @@ void CPlayer::Mouse_Move(const _float& fTimeDelta)
 
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
 	{
-		m_pTransform->m_vInfo[INFO_LOOK] += _vec3(0.f, 1.f, 0.f) * -dwMouseMove * fTimeDelta / 10.f;
+		m_pTransform->m_vInfo[INFO_LOOK] += _vec3(0.f, 1.f, 0.f) * _float(-dwMouseMove) * fTimeDelta / 10.f;
 	}
 
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
 	{
-		m_pTransform->Rot_Yaw(dwMouseMove * 5.f, fTimeDelta);
+		m_pTransform->Rot_Yaw(_float(dwMouseMove) * 5.f, fTimeDelta);
 	}
 }
 

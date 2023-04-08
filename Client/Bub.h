@@ -15,7 +15,6 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
-	
 
 public:
 	static CBub*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

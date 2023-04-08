@@ -12,7 +12,6 @@ CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_pGraphicDev->AddRef();
 }
 
-
 CLoading::~CLoading()
 {
 }
@@ -155,6 +154,14 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Sequence", CSequence::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Selector", CSelector::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Root", CRoot::Create(m_pGraphicDev)), E_FAIL);
+
+	const auto& uMapProto = Engine::CProtoMgr::GetInstance()->Get_ProtoMap();
+
+	for (auto iter : uMapProto)
+	{
+		if (dynamic_cast<CTexture*>(iter.second))
+			m_listTags.push_back(iter.first);
+	}
 
 	m_bFinish = true;	
 

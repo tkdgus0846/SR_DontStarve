@@ -49,7 +49,7 @@ void CHp::Render_GameObject(void)
 
 HRESULT CHp::Add_Component(void)
 {
-	for (size_t i = 0; i < m_iMaxHp; i++)
+	for (_int i = 0; i < m_iMaxHp; i++)
 	{
 		CRcTex* RcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 		NULL_CHECK_RETURN(RcTex, E_FAIL);
