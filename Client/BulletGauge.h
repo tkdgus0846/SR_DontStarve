@@ -24,16 +24,18 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	void		Set_OrthoProj();
+	void		Set_VeiwMatrix_UI();
 
 private:
 	Engine::CRcTex*			m_pBufferCom;
 	Engine::CTexture*		m_pTextureCom;
+
 	D3DXMATRIX  matWorld, matView;
 
 	_float m_GaugeScale = 106.f;
 	_float m_GaugePos = -203.f;
 	_float m_VBGuage = 1.f;
+	_float m_GuageVBUv= 1.f;
 
 public:
 	static CBulletGauge*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

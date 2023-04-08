@@ -111,6 +111,7 @@ void CVIBuffer::Render_Component()
 	3. 그릴 삼각형의 개수*/
 }
 
+
 void Engine::CVIBuffer::Free(void)
 {
 	Safe_Release(m_pIB);

@@ -1,20 +1,11 @@
 #pragma once
 #include "UI.h"
-
-BEGIN(Engine)
-
-class CRcTex;
-class CTexture;
-class CAnimation;
-
-END
-
-class CCrossHair :
+class CWeaponType :
 	public CUI
 {
 private:
-	CCrossHair(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CCrossHair();
+	CWeaponType(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CWeaponType();
 
 public:
 	virtual HRESULT Add_Component() override;
@@ -30,9 +21,8 @@ private:
 	D3DXMATRIX  matWorld, matView;
 
 public:
-	static CCrossHair*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CWeaponType*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;
 };
-

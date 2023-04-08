@@ -1,21 +1,20 @@
 #pragma once
 #include "UI.h"
-#include "Player.h"
 
 BEGIN(Engine)
 
-class CRcTex;
 class CTexture;
+class CRcTex;
 class CAnimation;
 
 END
 
-class CHp :
+class CDisc :
 	public CUI
 {
-public:
-	CHp(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CHp();
+private:
+	CDisc(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CDisc();
 
 public:
 	virtual HRESULT Add_Component() override;
@@ -25,24 +24,26 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
+	void		Set_VeiwMatrix_UI();
 	void		Set_VeiwMatrix_UI(_float fX, _float fY);
-	_int		Compute_Hp(_int& pPlayerHp);
+	_int		Compute_Num(_int& pPlayerDisc);
+
 
 private:
-	Engine::CTexture*		m_pTextureCom;
+	Engine::CTexture*		m_pTextureCom = nullptr;
+
 	D3DXMATRIX				matWorld, matView;
+	vector<CRcTex*>			m_vecRc;
 
-private:
-	_int m_iMaxHp = 5;
-	_int m_iTotalHp = 20;
-	_int m_iCurrentHp = 0;
-	_int pPlayerHp = 20;
+	_int m_MaxNumber = 3;
+	_int m_iStartNum = 26;
 
-	vector<CRcTex*> m_vecRc;
+	string pPlayerCoin = "17";
 
 public:
-	static CHp*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CDisc*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;
 };
+

@@ -239,6 +239,18 @@
     <ClInclude Include="Hp.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
+    <ClInclude Include="WeaponType.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Disc.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>GameObject\Effect</Filter>
     </ClInclude>
@@ -398,6 +410,18 @@
       <Filter>GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="Hp.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponType.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Disc.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
       <Filter>GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
