@@ -54,6 +54,8 @@ HRESULT CWall::Add_Component()
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"WallPanels #420377", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"WallPanels #420377", pComponent });
+
+	return S_OK;
 }
 
 CWall * CWall::Create(LPDIRECT3DDEVICE9 pGraphicDev)

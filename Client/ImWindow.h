@@ -19,9 +19,6 @@ public:
 
 protected:
 	void Toggle(bool& _bVariable);
-	// 이거 헤더파일 2개 알려주면 사용가능
-
-private:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;
 
 protected:

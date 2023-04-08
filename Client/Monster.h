@@ -25,9 +25,9 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
-	virtual void OnCollisionEnter(const class Collision* collsion) override {}
-	virtual void OnCollisionStay(const class Collision* collision) override {}
-	virtual void OnCollisionExit(const class Collision* collision) override {}
+	virtual void OnCollisionEnter(const struct Collision* collsion) override {}
+	virtual void OnCollisionStay(const struct Collision* collision) override {}
+	virtual void OnCollisionExit(const struct Collision* collision) override {}
 
 protected:
 	HRESULT		Set_PatrolAndFollow_AI();

@@ -32,6 +32,7 @@ CMyEdit::~CMyEdit()
 
 HRESULT CMyEdit::Ready_Scene(void)
 {
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
 	CImManager::GetInstance()->Ready_IMGUI(m_pGraphicDev);
 
 	IMGUI_CHECKVERSION();
@@ -45,9 +46,6 @@ HRESULT CMyEdit::Ready_Scene(void)
 	ImGui_ImplWin32_Init(g_hWnd);
 	ImGui_ImplDX9_Init(m_pGraphicDev);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
-
-	//Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_ENVIRONMENT, L"Map", CMyMap::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
 
