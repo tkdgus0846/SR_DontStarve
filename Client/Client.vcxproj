@@ -161,7 +161,9 @@
     <ClInclude Include="BulletBar.h" />
     <ClInclude Include="BulletGauge.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="CrossHair.h" />
+    <ClInclude Include="Disc.h" />
     <ClInclude Include="EditCamera.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Evasion.h" />
@@ -180,6 +182,7 @@
     <ClInclude Include="Loading.h" />
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainApp.h" />
+    <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MonoBehaviors.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MoveLook.h" />
@@ -209,6 +212,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Wait.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attack.cpp" />
@@ -219,7 +223,9 @@
     <ClCompile Include="BulletBar.cpp" />
     <ClCompile Include="BulletGauge.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CrossHair.cpp" />
+    <ClCompile Include="Disc.cpp" />
     <ClCompile Include="EditCamera.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Evasion.cpp" />
@@ -240,6 +246,7 @@
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainApp.cpp" />
+    <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="MyEdit.cpp">
@@ -268,6 +275,7 @@
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Wait.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter" />

@@ -19,7 +19,6 @@ HRESULT CCrossHair::Ready_GameObject(void)
 
 _int CCrossHair::Update_GameObject(const _float & fTimeDelta)
 {
-
 	__super::Update_GameObject(fTimeDelta);
 
 	return 0;
@@ -32,7 +31,7 @@ void CCrossHair::LateUpdate_GameObject(void)
 
 void CCrossHair::Render_GameObject(void)
 {
-	Set_OrthoProj();
+	Set_VeiwMatrix_UI();
 
 	__super::Render_GameObject();
 }
@@ -57,7 +56,7 @@ HRESULT CCrossHair::Add_Component(void)
 	return S_OK;
 }
 
-void CCrossHair::Set_OrthoProj()
+void CCrossHair::Set_VeiwMatrix_UI()
 {
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);

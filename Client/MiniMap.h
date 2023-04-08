@@ -1,7 +1,6 @@
 #pragma once
 #include "UI.h"
 #include "Player.h"
-
 BEGIN(Engine)
 
 class CRcTex;
@@ -10,12 +9,12 @@ class CAnimation;
 
 END
 
-class CHp :
+class CMiniMap :
 	public CUI
 {
-public:
-	CHp(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CHp();
+private:
+	CMiniMap(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CMiniMap();
 
 public:
 	virtual HRESULT Add_Component() override;
@@ -25,24 +24,15 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	void		Set_VeiwMatrix_UI(_float fX, _float fY);
-	_int		Compute_Hp(_int& pPlayerHp);
+	void		Set_VeiwMatrix_UI();
 
 private:
-	Engine::CTexture*		m_pTextureCom;
-	D3DXMATRIX				matWorld, matView;
-
-private:
-	_int m_iMaxHp = 5;
-	_int m_iTotalHp = 20;
-	_int m_iCurrentHp = 0;
-	_int pPlayerHp = 20;
-
-	vector<CRcTex*> m_vecRc;
+	D3DXMATRIX  matWorld, matView;
 
 public:
-	static CHp*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CMiniMap*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;
 };
+

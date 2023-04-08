@@ -17,6 +17,8 @@
 #include "BulletGauge.h"
 #include "CrossHair.h"
 #include "Hp.h"
+#include "Coin.h"
+#include "Disc.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -56,7 +58,9 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(LAYER_UI, L"BulletBar", CBulletBar::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_UI, L"CrossHair", CCrossHair::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_UI, L"Hp", CHp::Create(m_pGraphicDev));
-	
+	Add_GameObject(LAYER_UI, L"Coin", CCoin::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_UI, L"Disc", CDisc::Create(m_pGraphicDev));
+
 	D3DLIGHT9		tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 

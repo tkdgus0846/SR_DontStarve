@@ -22,9 +22,8 @@ HRESULT CBulletGauge::Ready_GameObject(void)
 
 _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 {
-	//m_pBufferCom->EditVB(m_VBGuage);
-
-	m_VBGuage -= 0.1;
+	m_pBufferCom->Edit_VB(m_VBGuage);
+	m_VBGuage -= 0.001f;
 
 	Engine::Add_RenderGroup(RENDER_UI, this);
 
@@ -41,8 +40,7 @@ void CBulletGauge::LateUpdate_GameObject(void)
 
 void CBulletGauge::Render_GameObject(void)
 {
-
-	Set_OrthoProj();
+	Set_VeiwMatrix_UI();
 
 	__super::Render_GameObject();
 }
@@ -51,9 +49,9 @@ HRESULT CBulletGauge::Add_Component(void)
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex_Dynamic", this));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"RcTex_Dynamic", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"BulletGauge_Texture", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
@@ -62,23 +60,16 @@ HRESULT CBulletGauge::Add_Component(void)
 	return S_OK;
 }
 
-void CBulletGauge::Set_OrthoProj()
+void CBulletGauge::Set_VeiwMatrix_UI()
 {
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
 	D3DXMatrixScaling(&matView, m_GaugeScale, 12.f, 0.f);
 
-	//if (m_GaugeScale > 0)
-	//{
-	//	m_GaugeScale -= 0.3;
-	//	m_GaugePos -= 0.3;
-	//}
-
 	D3DXMATRIX translationMat;
 	D3DXMatrixTranslation(&translationMat, m_GaugePos, -230.f, 0.f);
 	D3DXMatrixMultiply(&matView, &matView, &translationMat);
-
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);

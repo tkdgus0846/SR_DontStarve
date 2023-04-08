@@ -23,7 +23,7 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	void		Set_OrthoProj();
+	void		Set_VeiwMatrix_UI();
 
 private:
 	Engine::CRcTex*			m_pBufferCom;
