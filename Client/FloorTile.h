@@ -28,9 +28,5 @@ public:
 	static CFloorTile* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
 
 private:
-	Engine::CRcTex*		m_pBufferCom;
-	Engine::CTexture*	m_pTextureCom;
-
-private:
 	virtual void Free(void) override;	
 };

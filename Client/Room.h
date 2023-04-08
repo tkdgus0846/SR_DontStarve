@@ -39,6 +39,13 @@ public:
 		if (iIndex < 0 || iIndex >= m_vecGameObj.size()) return nullptr;
 		return m_vecGameObj[iIndex];
 	}
+
+	_int TileNum() { return m_vecTile.size(); }
+	CGameObject* GetTileByIndex(_int iIndex)
+	{
+		if (iIndex < 0 || iIndex >= m_vecTile.size()) return nullptr;
+		return m_vecTile[iIndex];
+	}
 private:
 	_float				m_fVtxCntX;
 	_float				m_fVtxCntZ;

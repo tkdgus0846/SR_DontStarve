@@ -219,6 +219,15 @@ _bool CEditCamera::IntersectRayRoom(IN CRoom* pRoom, OUT CGameObject*& pGameObje
 		}
 	}
 
+	for (_int i = 0; i < pRoom->TileNum(); ++i)
+	{
+		if (IntersectRayGameObject(pTempObj = pRoom->GetTileByIndex(i), tri, index))
+		{
+			pGameObject = pTempObj;
+			return true;
+		}
+	}
+
 	for (_int i = 0; i < 4; ++i)
 	{
 		if (IntersectRayGameObject(pTempObj = pRoom->GetWallArray(i), tri, index))

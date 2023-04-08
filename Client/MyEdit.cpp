@@ -20,6 +20,7 @@
 #include "imgui_impl_win32.h"
 #include "imgui.h"
 #include "ImManager.h"
+#include "FileSystem.h"
 
 CMyEdit::CMyEdit(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -96,7 +97,6 @@ CMyEdit * CMyEdit::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		Safe_Release(pInstance);
 		return nullptr;
 	}
-
 	return pInstance;
 }
 

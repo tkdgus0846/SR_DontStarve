@@ -5,8 +5,6 @@
 
 CFloorTile::CFloorTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
-	, m_pBufferCom(nullptr)
-	, m_pTextureCom(nullptr)
 {
 }
 
