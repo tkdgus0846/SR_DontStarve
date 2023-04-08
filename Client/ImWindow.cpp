@@ -3,7 +3,7 @@
 #include "Export_Function.h"
 
 CImWindow::CImWindow(LPDIRECT3DDEVICE9 pGraphicDev)
-	:m_pGraphicDev(pGraphicDev)
+	: m_pGraphicDev(pGraphicDev)
 {
 	m_pGraphicDev->AddRef();
 }

@@ -1,26 +1,25 @@
 #pragma once
-
 #include "ImWindow.h"
 
 class CImTest :
 	public CImWindow
 {
-protected:
+private:
 	explicit CImTest(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CImTest();
 
 public:
-	virtual HRESULT Ready_ImWindow();
-	virtual _int Update(float fTimeDelta);
+	virtual HRESULT Ready_ImWindow() override;
+	virtual _int	Update(float fTimeDelta) override;
 	
 	static CImTest* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	// ÆÄÀÏ °æ·Î + ÆÄÀÏ¸í Ãâ·Â
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½
 	//string GetFilePathName() { return m_strFilePathName; }
-	// ÆÄÀÏ °æ·Î¸¸ Ãâ·Â
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½
 	//string GetFilePath() { return m_strFilePath; }
-	// ÆÄÀÏ ÀÌ¸§¸¸ Ãâ·Â
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	//string GetFileName() { return m_strFileName; }
 
 private:
@@ -36,6 +35,8 @@ private:
 	wstring			m_strFilePath;
 	wstring			m_strFileName;
 
-protected:
-	virtual void Free(void);
+private:
+	virtual void Free(void) override;
 };
+
+

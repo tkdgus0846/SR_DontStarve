@@ -11,7 +11,9 @@ CImTest::CImTest(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CImTest::~CImTest()
 {
+
 }
+
 
 HRESULT CImTest::Ready_ImWindow()
 {
@@ -20,20 +22,20 @@ HRESULT CImTest::Ready_ImWindow()
 
 _int CImTest::Update(float fTimeDelta)
 {
-	// ¸Þ´º¹Ù »ý¼º ÄÚµå
+	// ï¿½Þ´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("New", "Ctrl+N")) { /* »õ·Î¿î ÆÄÀÏÀ» »ý¼ºÇÏ´Â ÄÚµå */ }
+			if (ImGui::MenuItem("New", "Ctrl+N")) { /* ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµï¿½ */ }
 			if (ImGui::MenuItem("Load", "Ctrl+O")) { m_bOpenButton = true; }
-			if (ImGui::MenuItem("Save", "Ctrl+S")) { /* ÆÄÀÏÀ» ÀúÀåÇÏ´Â ÄÚµå */ }
+			if (ImGui::MenuItem("Save", "Ctrl+S")) { /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Úµï¿½ */ }
 			ImGui::Separator();
 			//if (ImGui::MenuItem("Quit", "Alt+F4")) { glfwSetWindowShouldClose(window, 1); }
 			ImGui::EndMenu();
 		}
 
-		// Ãß°¡ÀûÀÎ ¸Þ´º Ç×¸ñÀ» ¿©±â¿¡ ÀÛ¼ºÇÏ¼¼¿ä.
+		// ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½Û¼ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.
 
 		ImGui::EndMainMenuBar();
 	}
