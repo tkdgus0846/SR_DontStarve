@@ -19,9 +19,6 @@ public:
 
 protected:
 	void Toggle(bool& _bVariable);
-	// �̰� ������� 2�� �˷��ָ� ��밡��
-
-private:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;
 
 protected:
