@@ -23,7 +23,7 @@ _int CBackGround::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_PRIORITY, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
 
 	return 0;
 }
@@ -35,6 +35,29 @@ void CBackGround::LateUpdate_GameObject(void)
 
 void CBackGround::Render_GameObject(void)
 {
+	static _float posX = 0.f;
+	static _float posY = 0.f;
+	static _float incX = 1.9f;
+	static _float angle = 0.f;
+
+
+	/*if (posX >= 190.f)
+	incX *= -1.f;
+
+	if (posX < 150.f)
+	incX *= -1.f;
+
+	posX += incX;*/
+	_matrix viewMatrix, transMatrix, scaleMatrix, rotationMatrix;
+	transMatrix.Translation(posX, posY, 0.f);
+	scaleMatrix.Scaling(200.f, 112.f, 0.f);
+	rotationMatrix.RotationZ(D3DXToRadian(angle));
+	viewMatrix.Identity();
+
+	viewMatrix = viewMatrix * scaleMatrix * rotationMatrix * transMatrix;
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &viewMatrix);
 	__super::Render_GameObject();
 }
 

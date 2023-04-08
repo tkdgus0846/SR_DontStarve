@@ -54,6 +54,7 @@ public:
 
 	// 룩 벡터로 움직이는거
 	void	Move_Walk(const _float& fUnits, const _float& fTimeDelta);  // Move-Look
+	void	Move_Velocity(const _vec3& velocity);
 
 	void	Rot_Pitch(const _float& fAngle, const _float& fTimeDelta);// Rot-Right
 	void	Rot_Yaw(const _float& fAngle, const _float& fTimeDelta);  // Rot-Up

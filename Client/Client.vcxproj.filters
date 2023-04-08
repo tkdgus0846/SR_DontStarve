@@ -44,9 +44,6 @@
     <Filter Include="GameObject\Weapon">
       <UniqueIdentifier>{432920f3-d7e9-4a00-b543-57a52176b347}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\BackGround">
-      <UniqueIdentifier>{5ba41007-e1a4-4574-9a69-7494fceab6df}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\ObjCamera">
       <UniqueIdentifier>{f71e35ad-3d7d-45a7-bca7-036311e8ca80}</UniqueIdentifier>
     </Filter>
@@ -64,6 +61,12 @@
     </Filter>
     <Filter Include="GameObject\Map\Tile">
       <UniqueIdentifier>{910476eb-a1aa-4a0d-8173-4d5b22f9f1d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\UI\BackGround">
+      <UniqueIdentifier>{5ba41007-e1a4-4574-9a69-7494fceab6df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Effect">
+      <UniqueIdentifier>{0d62534e-9cd4-404f-8200-3ae76b71715e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +180,7 @@
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="BackGround.h">
-      <Filter>GameObject\BackGround</Filter>
+      <Filter>GameObject\UI\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="ObjCamera.h">
       <Filter>GameObject\ObjCamera</Filter>
@@ -247,6 +250,12 @@
     </ClInclude>
     <ClInclude Include="MiniMap.h">
       <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -344,7 +353,7 @@
       <Filter>GameObject\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="BackGround.cpp">
-      <Filter>GameObject\BackGround</Filter>
+      <Filter>GameObject\UI\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="ObjCamera.cpp">
       <Filter>GameObject\ObjCamera</Filter>
@@ -414,6 +423,12 @@
     </ClCompile>
     <ClCompile Include="MiniMap.cpp">
       <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

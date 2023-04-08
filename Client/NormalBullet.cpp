@@ -3,6 +3,9 @@
 
 #include "Export_Function.h"
 #include "BulletMgr.h"
+#include "Turret.h"
+
+#include "EffectManager.h"
 
 CNormalBullet::CNormalBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
@@ -16,15 +19,20 @@ CNormalBullet::~CNormalBullet()
 {
 }
 
-void CNormalBullet::SetDead()
+void CNormalBullet::SetDead(_bool bDead)
 {
-	CBulletMgr::GetInstance()->Push(L"NormalBullet", this);
+	__super::SetDead(bDead);
+	if (bDead == true)
+		CBulletMgr::GetInstance()->Push(L"NormalBullet", this);
 }
 
 HRESULT CNormalBullet::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
 
+	
+
+	
 	m_pTransform->m_vScale = { 0.5f, 0.5f, 1.f };
 
 	return result;
@@ -32,7 +40,8 @@ HRESULT CNormalBullet::Ready_GameObject(void)
 
 _int CNormalBullet::Update_GameObject(const _float& fTimeDelta)
 {
-	if (Aging(fTimeDelta) == OBJ_RETPOOL) return OBJ_RETPOOL;
+	Aging(fTimeDelta);
+	if (GetDead()) return OBJ_RETPOOL;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 	
@@ -57,7 +66,14 @@ void CNormalBullet::Render_GameObject(void)
 
 void CNormalBullet::OnCollisionEnter(const Collision* collsion)
 {
-	
+	CMonster* monster = dynamic_cast<CMonster*>(collsion->OtherGameObject);
+	if (monster)
+	{
+		_vec3 pos = collsion->intersectBox._max;
+		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, 0.1f);
+		Add_GameObject(LAYER_EFFECT, L"ExplosionBlue", effect);
+		SetDead();
+	}
 }
 
 void CNormalBullet::OnCollisionStay(const Collision* collision)
@@ -86,6 +102,10 @@ HRESULT CNormalBullet::Add_Component()
 	CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", rcTex });
+
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_PLAYERBULLET));
+	pCollider->Set_BoundingBox({ 0.5f, 0.5f, 0.5f });
+	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
 
 	return S_OK;
 }

@@ -37,7 +37,7 @@ void CHp::LateUpdate_GameObject(void)
 
 void CHp::Render_GameObject(void)
 {
-	_int PlayerHp = pPlayerHp; // ÇÃ·¹ÀÌ¾î Ã¼·Â
+	_int PlayerHp = pPlayerHp; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ã¼ï¿½ï¿½
 	for (size_t i = 0; i < m_iMaxHp; i++)
 	{
 		m_iCurrentHp = Compute_Hp(PlayerHp);
@@ -53,8 +53,10 @@ HRESULT CHp::Add_Component(void)
 	{
 		CRcTex* RcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 		NULL_CHECK_RETURN(RcTex, E_FAIL);
+
 		m_vecRc.push_back(RcTex);
 	}
+
 
 	m_pTextureCom = nullptr;
 	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Hp_Texture", this));

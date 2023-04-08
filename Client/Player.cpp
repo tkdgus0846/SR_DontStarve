@@ -93,6 +93,7 @@ void CPlayer::OnCollisionEnter(const Collision * collsion)
 
 void CPlayer::OnCollisionStay(const Collision * collision)
 {
+	__super::OnCollisionStay(collision);
 }
 
 void CPlayer::OnCollisionExit(const Collision * collision)
@@ -112,8 +113,8 @@ HRESULT CPlayer::Add_Component(void)
 
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_PLAYER));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"Player_Collider", pCollider });
-	pCollider->Set_BoundingBox({3.f,3.f,3.f});
+	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
+	pCollider->Set_BoundingBox({3.f,10.f,3.f});
 
 	/*pComponent = m_pRigid = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"Rigidbody", this));
 	NULL_CHECK_RETURN(m_pRigid, E_FAIL);
@@ -123,6 +124,10 @@ HRESULT CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 	m_uMapComponent[ID_UPDATE].insert({ L"Player_Camera", m_pCamera });
 	m_pCamera->Set_CameraName(L"Player_Camera");
+
+	CRigidbody* pRigidBody = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"RigidBody", this));
+	NULL_CHECK_RETURN(pRigidBody, E_FAIL);
+	m_uMapComponent[ID_UPDATE].insert({ L"RigidBody", pRigidBody });
 
 	return S_OK;
 }

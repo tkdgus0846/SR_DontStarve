@@ -9,7 +9,7 @@ private:
 	virtual ~CNormalBullet();
 
 public:
-	virtual void SetDead() override;
+	virtual void SetDead(_bool bDead = true) override;
 
 	virtual HRESULT Ready_GameObject(void) override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;

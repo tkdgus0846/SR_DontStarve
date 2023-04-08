@@ -33,16 +33,17 @@ public:
 	virtual void		LateUpdate_GameObject(void);
 	virtual void		Render_GameObject(void);
 
-	virtual void OnCollisionEnter(const class Collision* collsion) {}
-	virtual void OnCollisionStay(const class Collision* collision) {}
-	virtual void OnCollisionExit(const class Collision* collision) {}
+	virtual void OnCollisionEnter(const class Collision* collsion);
+	virtual void OnCollisionStay(const class Collision* collision);
+	virtual void OnCollisionExit(const class Collision* collision);
 
 	void			Compute_ViewZ(const _vec3* pPos);
 
-	// 위치 지정 함수
 	void			Set_Pos(const _vec3& pos);
-	// 쳐다보는 방향 바꾸는 함수
 	void			Set_Dir(const _vec3& dir);
+
+	virtual void	SetDead(_bool bDead = true) { m_bDead = bDead; }
+	_bool			GetDead() const { return m_bDead; }
 
 private:
 	CComponent*			Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
@@ -51,6 +52,8 @@ protected:
 	unordered_map<const _tchar*, CComponent*>			m_uMapComponent[ID_END];	
 	LPDIRECT3DDEVICE9		m_pGraphicDev;
 	_float					m_fViewZ = 0.f;
+
+	_bool					m_bDead;
 	
 private:
 	// 컴포넌트들의 렌더순서를 정해주는 벡터 컨테이너
