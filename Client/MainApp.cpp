@@ -4,6 +4,7 @@
 #include "Logo.h"
 #include "BulletMgr.h"
 #include "EffectManager.h"
+#include "ImManager.h"
 
 // 주석 테스트용
 CMainApp::CMainApp()
