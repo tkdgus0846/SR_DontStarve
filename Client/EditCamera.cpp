@@ -77,13 +77,17 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 	if (Engine::Get_DIMouseState(DIM_LB))
 	{
 		CMyMap* pMap = (CMyMap*)Get_GameObject(LAYER_ENVIRONMENT, L"Map");
+		// 출력받을 변수들 모음.
 		Triangle tri;
-		if (IntersectRayRoom(pMap->Get_CurRoom(m_pTransform->m_vInfo[INFO_POS]), tri))
+		INDEX32 index;
+		CGameObject* pGameObj = nullptr;
+		if (IntersectRayRoom(pMap->Get_CurRoom(m_pTransform->m_vInfo[INFO_POS]), pGameObj, tri, index))
 		{
 			_vec3 vPos{0.f, 0.f, 0.f};
 			vPos = CalcMiddlePoint(tri);
-			vPos.y += 1.f;
-			Add_GameObject(LAYER_ENVIRONMENT, L"CFloorTile", CFloorTile::Create(m_pGraphicDev, vPos));
+			vPos.y += 0.01f;
+			CRoom* pCurRoom = pMap->Get_CurRoom(m_pTransform->m_vInfo[INFO_POS]);
+			pCurRoom->AddTile(CFloorTile::Create(m_pGraphicDev, vPos));
 		}
 
 		/*cout << fixed;
@@ -149,7 +153,7 @@ void CEditCamera::Free()
 	__super::Free();
 }
 
-_bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri)
+_bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index)
 {
 	CVIBuffer* pVIBuffer = pGameObject->Get_VIBuffer();
 	CTransform* pTransform = pGameObject->m_pTransform;
@@ -199,6 +203,7 @@ _bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pG
 			dist = distTemp;
 			success = tempSuccess;
 			tri = tmpTri;
+			index = indices[i];
 		}
 	}
 
@@ -208,29 +213,50 @@ _bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pG
 	return success;
 }
 
-_bool CEditCamera::IntersectRayRoom(IN CRoom* pRoom, OUT Triangle& tri)
+_bool CEditCamera::IntersectRayRoom(IN CRoom* pRoom, OUT CGameObject*& pGameObject,OUT Triangle& tri, OUT INDEX32& index)
 {
+	CGameObject* pTempObj = nullptr;
+	for (_int i = 0; i < pRoom->ObjNum(); ++i)
+	{
+		if (IntersectRayGameObject(pTempObj = pRoom->GetObjByIndex(i), tri, index))
+		{
+			pGameObject = pTempObj;
+			return true;
+		}
+	}
+
 	for (_int i = 0; i < 4; ++i)
 	{
-		if (IntersectRayGameObject(pRoom->GetWallArray(i), tri))
+		if (IntersectRayGameObject(pTempObj = pRoom->GetWallArray(i), tri, index))
+		{
+			pGameObject = pTempObj;
 			return true;
+		}
+			
 	}
 	
-	if (IntersectRayGameObject(pRoom->GetFloor(), tri))
+	if (IntersectRayGameObject(pTempObj = pRoom->GetFloor(), tri, index))
+	{
+		pGameObject = pTempObj;
 		return true;
+	}
+
+
 
 	return false;
 }
 
-_bool CEditCamera::IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri)
+_bool CEditCamera::IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index)
 {
 	Triangle tTri;
+	INDEX32 index32;
 	Ray ray = CalcRaycast(GetMousePos());
-	_bool success = Compute_RayCastHitGameObject(&ray, pGameObject, tTri);
+	_bool success = Compute_RayCastHitGameObject(&ray, pGameObject, tTri, index32);
 
 	if (success)
 	{
 		memcpy(&tri, &tTri, sizeof(Triangle));
+		memcpy(&index, &index32, sizeof(INDEX32));
 		return true;
 	}
 

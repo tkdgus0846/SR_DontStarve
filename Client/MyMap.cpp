@@ -67,21 +67,27 @@ HRESULT CMyMap::Add_Component()
 
 void CMyMap::Create_Default_Room()
 {
-	for (_uint i = 0; i < 5; ++i)
+	for (_int i = 0; i < 25; ++i)
 	{
-		for (_uint j = 0; j < 5; ++j)
-		{
-			_uint iIndex = i * 5 + j;
-
-			CRoom* pRoom = CRoom::Create(m_pGraphicDev);
-
-			pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 50.01f, 0.f, i * 50.01f };
-			pRoom->FloorSubSet();
-			pRoom->PlaceSubSet();
-
-			m_arrRoom[iIndex] = pRoom;
-		}
+		m_arrRoom[i] = CRoom::Create(m_pGraphicDev);
 	}
+
+	//for (_uint i = 0; i < 5; ++i)
+	//{
+	//	for (_uint j = 0; j < 5; ++j)
+	//	{
+	//		_uint iIndex = i * 5 + j;
+
+	//		CRoom* pRoom = CRoom::Create(m_pGraphicDev);
+
+	//		pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 50.01f, 0.f, i * 50.01f };
+	//		pRoom->FloorSubSet();
+	//		pRoom->PlaceSubSet();
+
+	//		m_arrRoom[iIndex] = pRoom;
+	//	}
+	//}
+
 	m_pTennel = CRoom::Create(m_pGraphicDev, 3, 2, 10);
 	m_pTennel->m_pTransform->m_vInfo[INFO_POS] = { -60.f, 0.f, -60.f };
 	m_pTennel->FloorSubSet();
@@ -103,7 +109,10 @@ _bool CMyMap::WriteMapFile(HANDLE hFile, DWORD& dwByte)
 	_int iSize = m_arrRoom.size();
 	WriteFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iSize; ++i)
+	{
 		m_arrRoom[i]->WriteRoomFile(hFile, dwByte);
+	}
+		
 
 	return true;
 }
@@ -113,7 +122,12 @@ _bool CMyMap::ReadMapFile(HANDLE hFile, DWORD& dwByte)
 	_int iSize;
 	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iSize; ++i)
+	{
+		m_arrRoom[i] = CRoom::Create(m_pGraphicDev);
 		m_arrRoom[i]->ReadRoomFile(hFile, dwByte);
+		m_arrRoom[i]->FloorSubSet();
+		m_arrRoom[i]->PlaceSubSet();
+	}
 
 	return true;
 }
