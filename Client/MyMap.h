@@ -32,8 +32,6 @@ private:
 	void			Create_Default_Room();
 			
 private:
-	Engine::CFloorTex*	m_pBufferCom;
-	Engine::CTexture*	m_pTextureCom;
 	array<CRoom*, 25>	m_arrRoom;
 	CRoom*				m_pTennel;
 

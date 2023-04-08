@@ -30,8 +30,6 @@ _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-
 	return 0;
 }
 
@@ -49,19 +47,11 @@ void CMyMap::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
-	m_pTextureCom->Set_Texture_Num();
-
 	__super::Render_GameObject();
 }
 
 HRESULT CMyMap::Add_Component()
 {
-	CComponent*		pComponent = nullptr;
-
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Texture", this));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"Map_Texture", pComponent });
-
 	return S_OK;
 }
 
@@ -72,21 +62,21 @@ void CMyMap::Create_Default_Room()
 		m_arrRoom[i] = CRoom::Create(m_pGraphicDev);
 	}
 
-	//for (_uint i = 0; i < 5; ++i)
-	//{
-	//	for (_uint j = 0; j < 5; ++j)
-	//	{
-	//		_uint iIndex = i * 5 + j;
+	/*for (_uint i = 0; i < 5; ++i)
+	{
+		for (_uint j = 0; j < 5; ++j)
+		{
+			_uint iIndex = i * 5 + j;
 
-	//		CRoom* pRoom = CRoom::Create(m_pGraphicDev);
+			CRoom* pRoom = CRoom::Create(m_pGraphicDev);
 
-	//		pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 50.01f, 0.f, i * 50.01f };
-	//		pRoom->FloorSubSet();
-	//		pRoom->PlaceSubSet();
+			pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 50.01f, 0.f, i * 50.01f };
+			pRoom->FloorSubSet();
+			pRoom->PlaceSubSet();
 
-	//		m_arrRoom[iIndex] = pRoom;
-	//	}
-	//}
+			m_arrRoom[iIndex] = pRoom;
+		}
+	}*/
 
 	m_pTennel = CRoom::Create(m_pGraphicDev, 3, 2, 10);
 	m_pTennel->m_pTransform->m_vInfo[INFO_POS] = { -60.f, 0.f, -60.f };
@@ -112,8 +102,6 @@ _bool CMyMap::WriteMapFile(HANDLE hFile, DWORD& dwByte)
 	{
 		m_arrRoom[i]->WriteRoomFile(hFile, dwByte);
 	}
-		
-
 	return true;
 }
 

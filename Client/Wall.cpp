@@ -51,9 +51,9 @@ HRESULT CWall::Add_Component()
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"WallTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"WallPanels #420377", this));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Wall_Level1_Texture", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"WallPanels #420377", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"Wall_Level1_Texture", pComponent });
 
 	return S_OK;
 }

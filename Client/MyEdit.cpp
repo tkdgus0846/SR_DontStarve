@@ -14,7 +14,7 @@
 #include "MyMap.h"
 #include "ImManager.h"
 #include "Export_Function.h"
-#include "FloorTile.h"
+#include "Tile.h"
 
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
