@@ -274,6 +274,7 @@
     <ClInclude Include="RangeCheck.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Tennel.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="UI.h" />
@@ -351,6 +352,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Tennel.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="UI.cpp" />

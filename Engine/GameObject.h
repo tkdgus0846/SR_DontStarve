@@ -49,6 +49,12 @@ public:
 	virtual void	SetDead(_bool bDead = true) { m_bDead = bDead; }
 	_bool			GetDead() const { return m_bDead; }
 
+protected:
+	// 에디터에서만 사용하세요.
+	void			Remove_Render_Component(const _tchar* pComponentTag);
+	// 에디터에서만 사용하세요.
+	void			Add_Render_Component();
+
 private:
 	CComponent*			Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	

@@ -1,6 +1,7 @@
 #include "MyMap.h"
 
 #include "Room.h"
+#include "Tennel.h"
 #include "Export_Function.h"
 
 CMyMap::CMyMap(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -23,8 +24,14 @@ HRESULT CMyMap::Ready_GameObject(void)
 
 _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 {
-	for (auto Room : m_arrRoom)
-		Room->Update_GameObject(fTimeDelta);
+	CGameObject* pPlayer = Get_Player();
+	if (nullptr == pPlayer)	// 에디터 모드
+	{
+		for (auto iter : m_arrRoom)
+			iter->Update_GameObject(fTimeDelta);
+	}
+	else	// 인 게임
+		Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->Update_GameObject(fTimeDelta);
 
 	m_pTennel->Update_GameObject(fTimeDelta);
 
@@ -35,8 +42,14 @@ _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 
 void CMyMap::LateUpdate_GameObject(void)
 {
-	for (auto Room : m_arrRoom)
-		Room->LateUpdate_GameObject();
+	CGameObject* pPlayer = Get_Player();
+	if (nullptr == pPlayer)	// 에디터 모드
+	{
+		for (auto iter : m_arrRoom)
+			iter->LateUpdate_GameObject();
+	}
+	else	// 인 게임
+		Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->LateUpdate_GameObject();
 
 	m_pTennel->LateUpdate_GameObject();
 
@@ -46,7 +59,6 @@ void CMyMap::LateUpdate_GameObject(void)
 void CMyMap::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-
 	__super::Render_GameObject();
 }
 
@@ -78,10 +90,8 @@ void CMyMap::Create_Default_Room()
 		}
 	}*/
 
-	m_pTennel = CRoom::Create(m_pGraphicDev, 3, 2, 10);
+	m_pTennel = CTennel::Create(m_pGraphicDev);
 	m_pTennel->m_pTransform->m_vInfo[INFO_POS] = { -60.f, 0.f, -60.f };
-	m_pTennel->FloorSubSet();
-	m_pTennel->PlaceSubSet();
 }
 
 CRoom * CMyMap::Get_CurRoom(const _vec3& vPos)
@@ -111,7 +121,6 @@ _bool CMyMap::ReadMapFile(HANDLE hFile, DWORD& dwByte)
 	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iSize; ++i)
 	{
-		//m_arrRoom[i] = CRoom::Create(m_pGraphicDev);
 		m_arrRoom[i]->ReadRoomFile(hFile, dwByte);
 		m_arrRoom[i]->FloorSubSet();
 		m_arrRoom[i]->PlaceSubSet();

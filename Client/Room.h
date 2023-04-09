@@ -18,15 +18,14 @@ public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
+
 	CFloor* GetFloor() { return m_pFloor; }
 	CWall* GetWallArray(_uint index) { return m_apWall[index]; }
 	void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
+
 private:
 	virtual HRESULT Add_Component() override;
-	void Update_Subset(const _float& fTimeDelta);
-	void LateUpdate_SubSet();
-	void Render_SubSet();
-	HRESULT CreateSubset();	
+	HRESULT CreateSubset();
 
 public:
 	void FloorSubSet();
@@ -46,6 +45,7 @@ public:
 		if (iIndex < 0 || iIndex >= m_vecTile.size()) return nullptr;
 		return m_vecTile[iIndex];
 	}
+
 private:
 	_float				m_fVtxCntX;
 	_float				m_fVtxCntZ;

@@ -269,6 +269,9 @@
     <ClInclude Include="EffectManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Tennel.h">
+      <Filter>GameObject\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -456,6 +459,9 @@
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Tennel.cpp">
+      <Filter>GameObject\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -47,9 +47,9 @@ void CTile::Render_GameObject(void)
 
 HRESULT CTile::Add_Component()
 {
-	m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"RcTex", m_pBufferCom });
+	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
+	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"RcTex", pBufferCom });
 
 	Change_Texture(m_pTextureName);
 
@@ -64,6 +64,7 @@ HRESULT CTile::Remove_TextureCom()
 		{
 			if (0 == lstrcmp(iter->first, m_pTextureName))
 			{
+				Remove_Render_Component(iter->first);
 				m_uMapComponent[i].erase(iter);
 				Safe_Release(m_pTextureCom);
 				m_pTextureName = L"";
@@ -82,6 +83,8 @@ void CTile::Change_Texture(const _tchar * pTextureName)
 	m_pTextureName = pTextureName;
 	NULL_CHECK_RETURN(m_pTextureCom);
 	m_uMapComponent[ID_RENDER].emplace(m_pTextureName, m_pTextureCom);
+
+	Add_Render_Component();
 }
 
 CTile * CTile::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos,

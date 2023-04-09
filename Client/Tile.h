@@ -2,10 +2,7 @@
 #include "GameObject.h"
 
 BEGIN(Engine)
-
-class CRcTex;
 class CTexture;
-
 END
 
 class CTile : public CGameObject
@@ -28,8 +25,6 @@ public:
 	void Change_Texture(const _tchar* pTextureName);
 
 private:
-	Engine::CRcTex*		m_pBufferCom;
-
 	const _tchar*		m_pTextureName;
 	Engine::CTexture*	m_pTextureCom;
 

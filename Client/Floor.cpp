@@ -21,8 +21,6 @@ HRESULT CFloor::Ready_GameObject(void)
 
 _int CFloor::Update_GameObject(const _float& fTimeDelta)
 {
-	Key_Input(fTimeDelta);
-
 	__super::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -33,41 +31,29 @@ _int CFloor::Update_GameObject(const _float& fTimeDelta)
 void CFloor::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
-
-	
 }
 
 void CFloor::Render_GameObject(void)
 {
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
 	m_pTextureCom->Set_Texture_Num();
 
 	__super::Render_GameObject();
-
-	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 HRESULT CFloor::Add_Component(void)
 {
-	CComponent*		pComponent = nullptr;
+	CFloorTex* pBufferCom = dynamic_cast<CFloorTex*>(Engine::Clone_Proto(L"FloorTex",this));
+	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"FloorTex", pBufferCom });
 
-	pComponent = m_pBufferCom = dynamic_cast<CFloorTex*>(Engine::Clone_Proto(L"FloorTex",this));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"FloorTex", pComponent });
-
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Level1_Texture",this));
+	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Level1_Texture",this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"Floor_Level1_Texture", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"Floor_Level1_Texture", m_pTextureCom });
 
 	return S_OK;
 }
-
-
 
 CFloor* CFloor::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
@@ -85,14 +71,4 @@ CFloor* CFloor::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CFloor::Free(void)
 {
 	__super::Free();
-}
-
-void CFloor::Key_Input(const _float & fTimeDelta)
-{
-	//_vec3		vDir;
-	//m_pTransform->Get_Info(INFO_UP, &vDir);
-
-	/*if (GetAsyncKeyState(VK_UP))	m_pTransform->Rotation(ROT_Y, D3DXToRadian(180.f * fTimeDelta));
-	if (GetAsyncKeyState(VK_DOWN))	m_pTransform->Rotation(ROT_Y, D3DXToRadian(-180.f * fTimeDelta));*/
-
 }

@@ -27,7 +27,13 @@ HRESULT CRoom::Ready_GameObject(const _float& fVtxCntX, const _float& fVtxCntZ, 
 _int CRoom::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
-	Update_Subset(fTimeDelta);
+
+	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
+
+	m_pFloor->Update_GameObject(fTimeDelta);
+	for (auto& iter : m_apWall)
+		iter->Update_GameObject(fTimeDelta);
+
 	for (auto& Tile : m_vecTile)
 		Tile->Update_GameObject(fTimeDelta);
 	
@@ -40,7 +46,11 @@ void CRoom::LateUpdate_GameObject(void)
 {
 	// 룸 특성상 트랜스폼 외엔 안쓸거같아서 일단 주석처리
 	//__super::LateUpdate_GameObject();
-	LateUpdate_SubSet();
+
+	m_pFloor->LateUpdate_GameObject();
+	for (auto& iter : m_apWall)
+		iter->LateUpdate_GameObject();
+
 	for (auto& Tile : m_vecTile)
 		Tile->LateUpdate_GameObject();
 
@@ -50,33 +60,13 @@ void CRoom::Render_GameObject(void)
 {
 	// 룸 특성상 트랜스폼 외엔 안쓸거같아서 일단 주석처리
 	//__super::Render_GameObject();
-	Render_SubSet();
-	for (auto& Tile : m_vecTile)
-		Tile->Render_GameObject();
-}
 
-void CRoom::Update_Subset(const _float& fTimeDelta)
-{
-	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
-
-	m_pFloor->Update_GameObject(fTimeDelta);
-	for (auto& iter : m_apWall)
-		iter->Update_GameObject(fTimeDelta);
-}
-
-void CRoom::LateUpdate_SubSet()
-{
-	m_pFloor->LateUpdate_GameObject();
-	for (auto& iter : m_apWall)
-		iter->LateUpdate_GameObject();
-}
-
-void CRoom::Render_SubSet()
-{
 	m_pFloor->Render_GameObject();
 	for (auto& iter : m_apWall)
 		iter->Render_GameObject();
 
+	for (auto& Tile : m_vecTile)
+		Tile->Render_GameObject();
 }
 
 HRESULT CRoom::CreateSubset()
@@ -154,12 +144,8 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	return true;
 }
 
-
-
 HRESULT CRoom::Add_Component(void)
 {
-	CComponent*		pComponent = nullptr;
-	
 	return S_OK;
 }
 

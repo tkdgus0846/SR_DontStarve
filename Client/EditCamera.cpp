@@ -1,6 +1,7 @@
 #include "EditCamera.h"
 #include "Room.h"
 #include "Wall.h"
+#include "Tile.h"
 #include "MyMap.h"
 #include "Export_Function.h"
 #include "MyMap.h"
@@ -83,26 +84,33 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 		float fDist;
 		if (IntersectRayRoom(pMap->Get_CurRoom(vCameraPos), pGameObj, tri, index, fDist))
 		{
-			CFloorTile* pTile = nullptr;
+			CTile* pTile = nullptr;
 			// Decide Tile Position
 			_vec3 vPos{0.f, 0.f, 0.f};
 			vPos = CalcMiddlePoint(tri);
 			_vec3 vOffset = vPos - vCameraPos;
 			vPos.y += 0.01f;
 			CRoom* pCurRoom = pMap->Get_CurRoom(vCameraPos);
-			pTile = CFloorTile::Create(m_pGraphicDev, vPos, m_pCurTextureName);
-			pCurRoom->AddTile(pTile);
 
-			// Decide Tile Rotation;
-			_vec3 vTileNormal = tri.Normal();
-			vTileNormal.Normalize();
+			if (dynamic_cast<CTile*>(pGameObj))	// 기존에 이미 설치된 타일인 경우
+				dynamic_cast<CTile*>(pGameObj)->Change_Texture(m_pCurTextureName);
 
-			if (vTileNormal.Degree(_vec3::Up()) > 0.1f)
+			else	// 설치된 타일이 없는 경우
 			{
-				pTile->m_pTransform->Set_Dir(vTileNormal);
+				pTile = CTile::Create(m_pGraphicDev, vPos, m_pCurTextureName);
+				pCurRoom->AddTile(pTile);
+
+				// Decide Tile Rotation;
+				_vec3 vTileNormal = tri.Normal();
+				vTileNormal.Normalize();
+
+				if (vTileNormal.Degree(_vec3::Up()) > 0.1f)
+				{
+					pTile->m_pTransform->Set_Dir(vTileNormal);
+				}
+				pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
+				cout << fDist << endl;
 			}
-			pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
-			cout << fDist << endl;
 		}
 
 		/*cout << fixed;
