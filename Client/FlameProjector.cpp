@@ -10,9 +10,9 @@
 CFlameProjector::CFlameProjector(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
 {
-	m_fCycle = 0.3f;
-	m_MaxBulletNum = 20;
-	m_CurBulletNum = 20;
+	m_fCycle = 0.1f;
+	m_MaxBulletNum = 10000;
+	m_CurBulletNum = 10000;
 }
 
 CFlameProjector::~CFlameProjector()
@@ -40,7 +40,7 @@ CBullet* CFlameProjector::Shot_Setting()
 	_vec3 bulletDir = cameraAt - m_pTransform->m_vInfo[INFO_POS];
 	bulletDir.Normalize();
 
-	CBullet* bullet = CBulletMgr::GetInstance()->Pop<CFireBullet>(L"FireBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, { 0.5f,0.5f,1.f }, false);
+	CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"FireBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, { 1.2f,1.2f,1.f }, false);
 
 	return bullet;
 }

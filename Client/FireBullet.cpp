@@ -6,6 +6,10 @@
 CFireBullet::CFireBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
 {
+	m_fSpeed = 2.f;
+	m_fLifeSpan = 1.f;
+	m_fAge = 0.f;
+	m_Damage = 3;
 }
 
 CFireBullet::~CFireBullet()
@@ -35,6 +39,7 @@ _int CFireBullet::Update_GameObject(const _float & fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
+	m_pTransform->Move_Walk(m_fSpeed*2.f, fTimeDelta);
 	Add_RenderGroup(RENDER_ALPHA, this);
 
 	return OBJ_NOEVENT;
@@ -58,9 +63,8 @@ void CFireBullet::OnCollisionEnter(const Collision * collsion)
 	if (monster)
 	{
 		_vec3 pos = collsion->intersectBox._max;
-		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 0.7f,0.7f,0.7f }, 0.1f);
-		Add_GameObject(LAYER_EFFECT, L"ExplosionBlue", effect);
-		SetDead();
+		/*CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 0.7f,0.7f,0.7f }, 0.1f);
+		Add_GameObject(LAYER_EFFECT, L"ExplosionBlue", effect);*/
 	}
 }
 
