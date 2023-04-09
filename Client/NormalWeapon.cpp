@@ -9,6 +9,8 @@ CNormalWeapon::CNormalWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
 {
 	m_fCycle = 0.3f;
+	m_MaxBulletNum = 2;
+	m_CurBulletNum = 1;
 }
 
 CNormalWeapon::~CNormalWeapon()
@@ -37,6 +39,8 @@ CBullet* CNormalWeapon::Shot_Setting()
 	bulletDir.Normalize();
 
 	CBullet* bullet = CBulletMgr::GetInstance()->Pop<CNormalBullet>(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, {0.5f,0.5f,1.f}, false);
+
+	m_CurBulletNum++;
 
 	return bullet;	
 }
