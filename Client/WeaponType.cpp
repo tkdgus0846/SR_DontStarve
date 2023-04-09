@@ -1,6 +1,6 @@
 #include "WeaponType.h"
 #include "Export_Function.h"
-
+#include "Player.h"
 
 CWeaponType::CWeaponType(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
@@ -68,7 +68,7 @@ void CWeaponType::LateUpdate_GameObject(void)
 
 void CWeaponType::Render_GameObject(void)
 {
-	WEAPONTYPE type = FREEZESHOT;
+	WEAPONTYPE type = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeaponType();
 	Set_ViewMatrix_UI();
 	dynamic_cast<CTexture*>(m_arrTexture[type])->Render_Texture();
 	m_pRcTex->Render_Component();

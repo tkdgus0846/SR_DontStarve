@@ -38,8 +38,6 @@ void CBulletBar::Render_GameObject(void)
 {
 	Set_ViewMatrix_UI();
 
-	m_pBufferCom->Ready_Buffer();
-
 	__super::Render_GameObject();
 }
 
