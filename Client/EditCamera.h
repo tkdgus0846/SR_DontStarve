@@ -24,9 +24,8 @@ private:
 	void	Mouse_Move(const _float& fTimeDelta);
 	void	Fix_Mouse();
 
-	_bool IntersectRayRoom(IN CRoom* pRoom, OUT CGameObject*& pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
-
 private:
+	_bool IntersectRayRoom(IN CRoom* pRoom, OUT CGameObject*& pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
 	_bool IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
 	_bool Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
 	Ray CalcRaycast(POINT ptMouse);

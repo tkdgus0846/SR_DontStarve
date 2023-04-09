@@ -102,7 +102,6 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 				pTile->m_pTransform->Set_Dir(vTileNormal);
 			}
 			pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
-			cout << fDist << endl;
 		}
 
 		/*cout << fixed;
@@ -308,6 +307,7 @@ _bool CEditCamera::IntersectRayGameObject(IN CGameObject* pGameObject, OUT Trian
 	Triangle tTri;
 	INDEX32 index32;
 	Ray ray = CalcRaycast(GetMousePos());
+	
 	_bool success = Compute_RayCastHitGameObject(&ray, pGameObject, tTri, index32, fDist);
 
 	if (success)
@@ -324,32 +324,32 @@ _bool CEditCamera::IntersectRayGameObject(IN CGameObject* pGameObject, OUT Trian
 
 Ray CEditCamera::CalcRaycast(POINT ptMouse)
 {
+	float px = 0.f;
+	float py = 0.f;
+
+	D3DVIEWPORT9 vp;
+	m_pGraphicDev->GetViewport(&vp);
+
+	D3DXMATRIX proj;
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &proj);
+
+	px = (((2.f * ptMouse.x) / vp.Width) - 1.0f) / proj(0, 0);
+	py = (((-2.f * ptMouse.y) / vp.Height) + 1.0f) / proj(1, 1);
+
 	Ray ray;
-	_vec3 vMouse;
+	ray.vOrigin = D3DXVECTOR3(0.f, 0.f, 0.f);
+	ray.vDirection = D3DXVECTOR3(px, py, 1.f);
 
-	// 뷰포트 -> 투영
-	D3DVIEWPORT9		ViewPort;
-	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
-	m_pGraphicDev->GetViewport(&ViewPort);
-	vMouse.x = ptMouse.x / (ViewPort.Width * 0.5f) - 1.f;
-	vMouse.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
-	vMouse.z = 0.f;
-
-	//  투영 -> 뷰 스페이스
-	_matrix		matProj;
-	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
-	D3DXMatrixInverse(&matProj, 0, &matProj);
-	D3DXVec3TransformCoord(&vMouse, &vMouse, &matProj);
-
-	// 뷰 스페이스 -> 월드
-	_matrix		matView;
+	_matrix matView;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixInverse(&matView, 0, &matView);
-	ray.vOrigin = { 0.f,0.f,0.f };
-	ray.vDirection = vMouse - ray.vOrigin;
 
 	D3DXVec3TransformCoord(&ray.vOrigin, &ray.vOrigin, &matView);
 	D3DXVec3TransformNormal(&ray.vDirection, &ray.vDirection, &matView);
+	D3DXVec3Normalize(&ray.vDirection, &ray.vDirection);
+
+
+	//cout << ray.vDirection.x << "\t" << ray.vDirection.y << "\t" << ray.vDirection.z << endl;
 
 	return ray;
 }
