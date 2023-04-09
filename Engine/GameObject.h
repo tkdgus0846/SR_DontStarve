@@ -37,9 +37,9 @@ public:
 	virtual void		LateUpdate_GameObject(void);
 	virtual void		Render_GameObject(void);
 
-	virtual void OnCollisionEnter(const class Collision* collsion);
-	virtual void OnCollisionStay(const class Collision* collision);
-	virtual void OnCollisionExit(const class Collision* collision);
+	virtual void OnCollisionEnter(const class Collision* collsion) {}
+	virtual void OnCollisionStay(const class Collision* collision) {}
+	virtual void OnCollisionExit(const class Collision* collision) {}
 
 	void			Compute_ViewZ(const _vec3* pPos);
 

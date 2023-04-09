@@ -3,6 +3,7 @@
 
 #include "Export_Function.h"
 #include "MonoBehaviors.h"
+#include "Player.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev), m_fSpeed(0.f)
@@ -40,6 +41,31 @@ void CMonster::LateUpdate_GameObject(void)
 void CMonster::Render_GameObject(void)
 {
 	__super::Render_GameObject();
+}
+
+void CMonster::OnCollisionEnter(const Collision * collsion)
+{
+	__super::OnCollisionEnter(collsion);
+
+	CPlayer* player = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
+
+
+	if (player && collsion->MyCollider == Get_Component(L"BodyCollider", ID_ALL))
+	{
+		player->Get_Damaged(Get_Attack());
+	}
+}
+
+void CMonster::OnCollisionStay(const Collision * collision)
+{
+	__super::OnCollisionStay(collision);
+
+	
+}
+
+void CMonster::OnCollisionExit(const Collision * collision)
+{
+	__super::OnCollisionExit(collision);
 }
 
 HRESULT CMonster::Add_Component(void)
