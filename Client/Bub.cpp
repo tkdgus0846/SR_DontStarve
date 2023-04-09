@@ -14,6 +14,7 @@ CBub::~CBub()
 HRESULT CBub::Ready_GameObject(void)
 {
 	m_fSpeed = 10.f;
+	m_iAttack = 1;
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = { 4.f, 0.8f, 15.f };

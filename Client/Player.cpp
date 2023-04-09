@@ -32,6 +32,7 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_pTransform->m_vInfo[INFO_LOOK] = { 0.f, 0.f, 1.f };
 
 	m_fSpeed = 12.f;
+	m_iHp = 20;
 
 	Set_Player(this);
 

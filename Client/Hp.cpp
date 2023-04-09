@@ -1,5 +1,6 @@
 #include "Hp.h"
 #include "Export_Function.h"
+#include "Player.h"
 CHp::CHp(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
 {
@@ -19,10 +20,6 @@ HRESULT CHp::Ready_GameObject(void)
 
 _int CHp::Update_GameObject(const _float & fTimeDelta)
 {
-	if (Engine::Key_Down(DIK_2))
-	{
-		pPlayerHp -= 1;
-	}
 	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
 
 	__super::Update_GameObject(fTimeDelta);
@@ -37,7 +34,9 @@ void CHp::LateUpdate_GameObject(void)
 
 void CHp::Render_GameObject(void)
 {
-	_int PlayerHp = pPlayerHp; // �÷��̾� ü��
+	_int PlayerHp = dynamic_cast<CCreature*>(Engine::Get_Player())->Get_HP();
+	cout << PlayerHp << endl;
+
 	for (size_t i = 0; i < m_iMaxHp; i++)
 	{
 		m_iCurrentHp = Compute_Hp(PlayerHp);
