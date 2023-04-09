@@ -16,6 +16,7 @@ protected:
 	_float		m_fLifeSpan;
 	// 살고 있는 시간
 	_float		m_fAge;
+	_uint		m_Damage;
 
 public:
 	_bool			GetIsEnemy() const { return m_bIsEnemy; }

@@ -31,7 +31,7 @@ CGameObject::~CGameObject()
 CComponent * CGameObject::Get_Component(const _tchar * pComponentTag, COMPONENTID eID)
 {
 	CComponent*		pComponent = Find_Component(pComponentTag, eID);
-	NULL_CHECK_RETURN(pComponent, nullptr);
+	//NULL_CHECK_RETURN(pComponent, nullptr);
 
 	return pComponent;
 }
@@ -208,7 +208,10 @@ void CGameObject::Free(void)
 {
 	for (size_t i = 0; i < ID_END; ++i)
 	{
-		for_each(m_uMapComponent[i].begin(), m_uMapComponent[i].end(), CDeleteMap());
+		for (auto iter = m_uMapComponent[i].begin(); iter != m_uMapComponent[i].end(); iter++)
+		{
+			Safe_Release((iter->second));
+		}
 		m_uMapComponent[i].clear();
 	}
 	Safe_Release(m_pGraphicDev);

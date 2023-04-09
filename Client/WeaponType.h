@@ -1,5 +1,12 @@
 #pragma once
 #include "UI.h"
+
+BEGIN(Engine)
+
+class CRcTex;
+
+END
+
 class CWeaponType :
 	public CUI
 {
@@ -15,10 +22,14 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	void		Set_VeiwMatrix_UI();
+	void		Set_ViewMatrix_UI();
 
 private:
 	D3DXMATRIX  matWorld, matView;
+
+	Engine::CRcTex* m_pRcTex;
+	array<CComponent*, WEAPONEND> m_arrTexture;
+
 
 public:
 	static CWeaponType*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

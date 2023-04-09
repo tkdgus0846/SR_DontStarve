@@ -60,6 +60,7 @@ _int CCamera::Update_Component(const _float & fTimeDelta)
 	//cout << vLook.x << " " << vLook.y << " " << vLook.z << endl;
 
 	m_tViewParams.LookAtLH(&m_matView);
+	m_tProjParams.PerspectiveLH(&m_matProj);
 
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);

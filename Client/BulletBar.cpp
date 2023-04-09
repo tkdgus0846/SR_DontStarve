@@ -36,7 +36,7 @@ void CBulletBar::LateUpdate_GameObject(void)
 
 void CBulletBar::Render_GameObject(void)
 {
-	Set_VeiwMatrix_UI();
+	Set_ViewMatrix_UI();
 
 	m_pBufferCom->Ready_Buffer();
 
@@ -58,7 +58,7 @@ HRESULT CBulletBar::Add_Component(void)
 	return S_OK;
 }
 
-void CBulletBar::Set_VeiwMatrix_UI()
+void CBulletBar::Set_ViewMatrix_UI()
 {
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);

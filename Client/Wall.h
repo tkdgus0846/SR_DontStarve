@@ -5,13 +5,20 @@
 
 BEGIN(Engine)
 class CTexture;
+class CCollider;
 END
 
 class CWall : public Engine::CGameObject
 {
+	friend class CRoom;
 public:
 	explicit CWall(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CWall();
+
+
+	virtual void OnCollisionEnter(const class Collision* collision) override;
+	virtual void OnCollisionStay(const class Collision* collision) override;
+	virtual void OnCollisionExit(const class Collision* collision) override;
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -20,10 +27,12 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	virtual HRESULT Add_Component() override;
+	CCollider*	m_pCollider;
 
 private:
 	Engine::CTexture*	m_pTextureCom;
+
+	virtual HRESULT Add_Component() override;
 
 public:
 	static CWall*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

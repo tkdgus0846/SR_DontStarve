@@ -19,6 +19,21 @@ HRESULT			Create_Management(CManagement** ppManagement)
 	return S_OK;
 }
 
+void		Start_WorldTimer()
+{
+	CManagement::GetInstance()->Start_WorldTimer();
+}
+
+void		Stop_WorldTimer()
+{
+	CManagement::GetInstance()->Stop_WorldTimer();
+}
+
+_float		Get_WorldTime()
+{
+	return CManagement::GetInstance()->Get_WorldTime();
+}
+
 CComponent*			Get_Component(LAYERID LayerID, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID)
 {
 	return CManagement::GetInstance()->Get_Component(LayerID, pObjTag, pComponentTag, eID);

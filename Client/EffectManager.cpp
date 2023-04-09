@@ -18,7 +18,7 @@ void CEffectPool::Push(CEffect* pObj)
 	m_EffectPool.push_back(pObj);
 }
 
-CEffect * CEffectPool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar * name, const D3DXVECTOR3 & vPos, _float fAnimationTime, _bool bEndByTime, _float fLifeSpan)
+CEffect * CEffectPool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar * name, const _vec3 & vPos, const _vec3& vScale, _float fAnimationTime, _bool bEndByTime, _float fLifeSpan)
 {
 	CEffect*		pEffect = nullptr;
 
@@ -38,6 +38,7 @@ CEffect * CEffectPool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar * name, const
 
 	(pEffect)->Set_Pos(vPos);
 	(pEffect)->SetDead(false);
+	(pEffect)->m_pTransform->Set_Scale(vScale);
 	return pEffect;
 }
 
@@ -66,13 +67,13 @@ CEffectManager::~CEffectManager()
 	Free();
 }
 
-CEffect * CEffectManager::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar * name, const D3DXVECTOR3 & vPos, _float fAnimationTime, _bool bEndByTime, _float fLifeSpan)
+CEffect * CEffectManager::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar * name, const _vec3 & vPos, const _vec3& vScale, _float fAnimationTime, _bool bEndByTime, _float fLifeSpan)
 {
 	if (m_EffectPool[name] == nullptr)
 	{
 		m_EffectPool[name] = CEffectPool::Create();
 	}
-	CEffect*		pEffect = m_EffectPool[name]->Pop(pDevice, name, vPos, fAnimationTime, bEndByTime, fLifeSpan);
+	CEffect*		pEffect = m_EffectPool[name]->Pop(pDevice, name, vPos, vScale, fAnimationTime, bEndByTime, fLifeSpan);
 	if (pEffect == nullptr)
 		return nullptr;
 

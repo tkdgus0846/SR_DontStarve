@@ -40,6 +40,10 @@ inline void				Set_Player(CGameObject* player);
 
 inline HRESULT			Create_Management(CManagement** ppManagement);
 
+inline void				Start_WorldTimer();
+inline void				Stop_WorldTimer();
+inline _float			Get_WorldTime();
+
 inline CComponent*			Get_Component(LAYERID LayerID, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
 
 inline void				Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj);

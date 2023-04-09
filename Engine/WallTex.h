@@ -4,6 +4,11 @@
 
 BEGIN(Engine)
 
+enum EdgeIndex
+{
+	LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM, EDGEEND
+};
+
 class CWallTex : public CVIBuffer
 {
 private:

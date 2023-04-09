@@ -6,7 +6,6 @@ CWeapon::CWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CGameObject(pGraphicDev),
 	m_fAccTime(0.f),
 	m_bEnableShot(true),
-	m_iDamage(1),
 	m_fCycle(1.0f),
 	m_bShooted(false)
 {

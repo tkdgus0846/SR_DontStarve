@@ -33,7 +33,7 @@ _int CAttack::Update_Component(const _float & fTimeDelta)
 		CNormalBullet* bullet = CBulletMgr::GetInstance()->Pop<CNormalBullet>(
 			L"NormalBullet", m_pGraphicDev, 
 			m_pGameObject->m_pTransform->m_vInfo[INFO_POS], 
-			m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK], true);
+			m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK], { 1.f,1.f,1.f }, true);
 		Add_GameObject(LAYER_BULLET, L"Bullet", bullet);
 		m_fCoolTime = 0.f;
 	}

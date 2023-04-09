@@ -181,13 +181,14 @@ bool CCollisionMgr::Collision_Box(CCollider* pSrc, CCollider* pDest, COL_DIR& co
 				if (pSrc->Get_BoundCenter().z < pDest->Get_BoundCenter().z)
 				{
 					// 후충돌
-					colDir = DIR_BACK;
+					colDir = DIR_FRONT;
 					return true;
 				}
 				else
 				{
 					// 전충돌
-					colDir = DIR_FRONT;
+					colDir = DIR_BACK;
+					return true;
 				}
 			}
 		}
@@ -213,13 +214,13 @@ bool CCollisionMgr::Collision_Box(CCollider* pSrc, CCollider* pDest, COL_DIR& co
 				if (pSrc->Get_BoundCenter().z < pDest->Get_BoundCenter().z)
 				{
 					// 후충돌
-					colDir = DIR_BACK;
+					colDir = DIR_FRONT;
 					return true;
 				}
 				else
 				{
 					// 전충돌
-					colDir = DIR_FRONT;
+					colDir = DIR_BACK;
 					return true;
 				}
 			}
@@ -253,7 +254,6 @@ void CCollisionMgr::Free(void)
 {
 	for (size_t i = 0; i < COL_END; ++i)
 	{
-		for_each(m_ColliderList[i].begin(), m_ColliderList[i].end(), CDeleteObj());
 		m_ColliderList[i].clear();
 	}
 }

@@ -22,8 +22,6 @@ HRESULT CBulletGauge::Ready_GameObject(void)
 
 _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 {
-
-
 	m_pBufferCom->Edit_VB(m_VBGuage);
 	m_VBGuage -= 0.001f;
 
@@ -43,7 +41,7 @@ void CBulletGauge::LateUpdate_GameObject(void)
 
 void CBulletGauge::Render_GameObject(void)
 {
-	Set_VeiwMatrix_UI();
+	Set_ViewMatrix_UI();
 
 	__super::Render_GameObject();
 }
@@ -63,7 +61,7 @@ HRESULT CBulletGauge::Add_Component(void)
 	return S_OK;
 }
 
-void CBulletGauge::Set_VeiwMatrix_UI()
+void CBulletGauge::Set_ViewMatrix_UI()
 {
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);

@@ -36,9 +36,6 @@ void CFloor::LateUpdate_GameObject(void)
 void CFloor::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-
-	m_pTextureCom->Set_Texture_Num();
-
 	__super::Render_GameObject();
 }
 

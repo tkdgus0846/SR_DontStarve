@@ -31,7 +31,7 @@ void CCrossHair::LateUpdate_GameObject(void)
 
 void CCrossHair::Render_GameObject(void)
 {
-	Set_VeiwMatrix_UI();
+	Set_ViewMatrix_UI();
 
 	__super::Render_GameObject();
 }
@@ -44,7 +44,7 @@ HRESULT CCrossHair::Add_Component(void)
 
 	CTexture* Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"CrossHair_Texture", this));
 	NULL_CHECK_RETURN(Texture, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"CrossHair_Texture", Texture });
+	m_uMapComponent[ID_RENDER].insert({ L"CrossHair_Texture", Texture });
 
 	CAnimation* Ani = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	NULL_CHECK_RETURN(Ani, E_FAIL);
@@ -56,7 +56,7 @@ HRESULT CCrossHair::Add_Component(void)
 	return S_OK;
 }
 
-void CCrossHair::Set_VeiwMatrix_UI()
+void CCrossHair::Set_ViewMatrix_UI()
 {
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);

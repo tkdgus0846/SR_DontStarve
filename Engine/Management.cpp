@@ -5,7 +5,9 @@
 IMPLEMENT_SINGLETON(CManagement)
 
 CManagement::CManagement() :
-	m_pPlayer(nullptr)
+	m_pPlayer(nullptr),
+	m_fWorldTime(0.f),
+	m_bPlayingWorldTimer(false)
 {
 }
 
@@ -33,6 +35,11 @@ HRESULT CManagement::Set_Scene(CScene * pScene)
 _int CManagement::Update_Management(const _float & fTimeDelta)
 {
 	NULL_CHECK_RETURN(m_pScene, -1);
+
+	if (m_bPlayingWorldTimer)
+	{
+		m_fWorldTime += fTimeDelta;
+	}
 	
 	return m_pScene->Update_Scene(fTimeDelta);
 }
@@ -47,8 +54,10 @@ void CManagement::LateUpdate_Management()
 	Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
 	Engine::Check_Collision(COL_DETECTION, COL_PLAYER);
 	Engine::Check_Collision(COL_ENEMY, COL_PLAYER);
-
 	Engine::Check_Collision(COL_ENEMY, COL_ENEMY);
+
+	Engine::Check_Collision(COL_ENVIRONMENT, COL_ENEMY);
+	Engine::Check_Collision(COL_ENVIRONMENT, COL_PLAYER);
 }
 
 void CManagement::Render_Management(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -83,6 +92,16 @@ void CManagement::Set_Player(CGameObject* player)
 {
 	if (m_pPlayer) MessageBox(NULL, L"이미 플레이어가 지정되어 있음", L"System Message", MB_OK);
 	m_pPlayer = player;
+}
+
+void CManagement::Start_WorldTimer()
+{
+	m_bPlayingWorldTimer = true;
+}
+
+void CManagement::Stop_WorldTimer()
+{
+	m_bPlayingWorldTimer = false;
 }
 
 void CManagement::Free(void)

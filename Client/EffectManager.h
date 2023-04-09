@@ -11,7 +11,7 @@ private:
 	CEffectPool();
 	~CEffectPool();
 
-	CEffect* CEffectPool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* name, const D3DXVECTOR3 & vPos, _float fAnimationTime = 0.1f, _bool bEndByTime = FALSE, _float fLifeSpan = 1.f);
+	CEffect* CEffectPool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* name, const _vec3 & vPos, const _vec3& vScale = { 1.f,1.f,1.f }, _float fAnimationTime = 0.1f, _bool bEndByTime = FALSE, _float fLifeSpan = 1.f);
 
 	void		Push(CEffect* pObj);
 
@@ -31,7 +31,7 @@ private:
 	virtual ~CEffectManager();
 
 public:
-	CEffect* CEffectManager::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* name, const D3DXVECTOR3 & vPos, _float fAnimationTime = 0.1f, _bool bEndByTime = FALSE, _float fLifeSpan = 1.f);
+	CEffect* CEffectManager::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* name, const _vec3 & vPos, const _vec3& vScale = { 1.f,1.f,1.f }, _float fAnimationTime = 0.1f, _bool bEndByTime = FALSE, _float fLifeSpan = 1.f);
 
 	void		Push(const _tchar* name, CEffect* pEffect);
 

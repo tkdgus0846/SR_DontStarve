@@ -13,13 +13,10 @@ public:
 	void					Shot();
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 
-	_vec3	m_vShotPoint;
-
 private:
 	_float	m_fAccTime;
 	
 protected:
-	_int	m_iDamage;		// 데미지
 	_float	m_fCycle;		// 총을 쏠 수 있는 주기
 	_bool	m_bShooted;		// 쏘고나서 true로 만들어주면됨.
 	_bool	m_bEnableShot;	// true일때만 Shot()이 발동함.

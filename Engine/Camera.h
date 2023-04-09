@@ -23,6 +23,7 @@ public:
 	VIEWPARAMS*		Get_Camera_ViewParams() { return &m_tViewParams; }
 
 	void			Set_CameraName(const _tchar* pName) { m_pName = pName; }
+	void			Set_ProjParams(PROJPARAMS& tProjParam) { m_tProjParams = tProjParam; }
 
 private:
 	void			On_Camera() { m_bSwitch = true; }
@@ -51,7 +52,7 @@ public:
 		PROJPARAMS& tProjParam = PROJPARAMS(
 			D3DXToRadian(60.f),
 			(_float)WINCX / WINCY,
-			1.f, 1000.f));
+			1.0f, 200.f));
 
 	virtual CComponent * Clone(void) override;
 

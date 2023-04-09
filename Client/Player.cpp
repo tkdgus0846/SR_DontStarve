@@ -7,7 +7,7 @@
 #include "NormalWeapon.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CCreature(pGraphicDev), m_fSpeed(0.f)
+	: CCreature(pGraphicDev)
 	, m_bFix(true)
 {
 	
@@ -24,9 +24,9 @@ HRESULT CPlayer::Ready_GameObject(void)
 	Engine::On_Camera(L"Player_Camera");
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
-	m_pTransform->m_vInfo[INFO_POS] = _vec3(2.f, 4.f, 2.f);
+	m_pTransform->m_vInfo[INFO_POS] = {4.f,4.f,4.f};
 
-	m_fSpeed = 10.f;
+	m_fSpeed = 12.f;
 
 	Set_Player(this);
 	m_pCurWeapon = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
@@ -35,10 +35,11 @@ HRESULT CPlayer::Ready_GameObject(void)
 }
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
+
 	Key_Input(fTimeDelta);
 
 	// m_planeVec
-
 	if (m_bFix)
 	{
 		Fix_Mouse();
@@ -114,7 +115,7 @@ HRESULT CPlayer::Add_Component(void)
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_PLAYER));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox({3.f,10.f,3.f});
+	pCollider->Set_BoundingBox({2.f,7.f,2.f});
 
 	/*pComponent = m_pRigid = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"Rigidbody", this));
 	NULL_CHECK_RETURN(m_pRigid, E_FAIL);
@@ -124,6 +125,10 @@ HRESULT CPlayer::Add_Component(void)
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 	m_uMapComponent[ID_UPDATE].insert({ L"Player_Camera", m_pCamera });
 	m_pCamera->Set_CameraName(L"Player_Camera");
+	m_pCamera->Set_ProjParams(PROJPARAMS(
+		D3DXToRadian(60.f),
+		(_float)WINCX / WINCY,
+		0.1f, 70.f));
 
 	CRigidbody* pRigidBody = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"RigidBody", this));
 	NULL_CHECK_RETURN(pRigidBody, E_FAIL);
