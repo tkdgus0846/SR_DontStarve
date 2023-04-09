@@ -9,6 +9,8 @@ class CAnimation;
 
 END
 
+
+
 class CMiniMap :
 	public CUI
 {
@@ -24,11 +26,17 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	void		Set_VeiwMatrix_UI();
+	void		Set_ViewMatrix_UI();
+	void		Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scaleY);
+	void		Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scaleY, _float fAngle);
 
 private:
 	D3DXMATRIX  matWorld, matView;
 
+	CRcTex* m_pRcTex;
+	array<CComponent*, MINIMAPEND> m_arrMap;
+
+	_float		m_PlayerAngle = 0.f;
 public:
 	static CMiniMap*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
