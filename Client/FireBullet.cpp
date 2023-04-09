@@ -54,6 +54,10 @@ void CFireBullet::LateUpdate_GameObject(void)
 void CFireBullet::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	_vec3 scale = m_pTransform->Get_Scale();
+
+	
+	
 	__super::Render_GameObject();
 }
 
@@ -63,8 +67,8 @@ void CFireBullet::OnCollisionEnter(const Collision * collsion)
 	if (monster)
 	{
 		_vec3 pos = collsion->intersectBox._max;
-		/*CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 0.7f,0.7f,0.7f }, 0.1f);
-		Add_GameObject(LAYER_EFFECT, L"ExplosionBlue", effect);*/
+		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"FireBullet_Texture", pos, { 0.7f,0.7f,0.7f }, 0.2f);
+		Add_GameObject(LAYER_EFFECT, L"FireEffect", effect);
 	}
 }
 

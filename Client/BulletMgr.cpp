@@ -46,15 +46,15 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 
 	if (m_BulletPool.empty())
 	{
-		if (lstrcmp(name, L"FireBullet") == 0)
+		if (name == L"FireBullet")
 		{
 			pBullet = CFireBullet::Create(pDevice);
 		}
-		else if (lstrcmp(name, L"NormalBullet") == 0)
+		else if (name == L"NormalBullet")
 		{
 			pBullet = CNormalBullet::Create(pDevice);
 		}
-		else if (lstrcmp(name, L"IceBullet") == 0)
+		else if (name == L"IceBullet")
 		{
 			pBullet = CIceBullet::Create(pDevice);
 		}
