@@ -79,7 +79,7 @@ void CMiniMap::Render_GameObject(void)
 	RECT miniMapRect = { 600, 300, 800, 0 };
 
 	LPDIRECT3DTEXTURE9 pTexture;
-	D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/Sprite/Gui/Weapon_spreadshot.png", &pTexture); // 예시용 텍스처 로드
+	//D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/Sprite/Gui/Weapon_spreadshot.png", &pTexture); // 예시용 텍스처 로드
 
 	LPDIRECT3DSURFACE9 pMiniMapSurface; // 미니맵을 그리기 위한 서피스 객체
 
