@@ -71,7 +71,6 @@ HRESULT CSkyBox::Add_Component(void)
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"SkyBox_Texture",this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"SkyBox_Texture", pComponent });
-	//m_pTextureCom->Set_Texture_Num(3);
 
 	return S_OK;
 }

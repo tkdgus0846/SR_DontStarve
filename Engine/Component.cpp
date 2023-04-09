@@ -128,6 +128,24 @@ HRESULT CComposite::Add_Component(COMPONENTID eID,
 	return S_OK;
 }
 
+HRESULT CComposite::Remove_Component(const _tchar * pComponentTag)
+{
+	for (_uint i = 0; i < ID_END; ++i)
+	{
+		for (auto iter = m_VecComponents[i].begin(); iter != m_VecComponents[i].end(); ++iter)
+		{
+			if (0 == lstrcmp(pComponentTag, iter->pTag))
+			{
+				Safe_Release(iter->pComponent);
+				m_VecComponents[i].erase(iter);
+
+				return S_OK;
+			}
+		}
+	}
+	return E_FAIL;
+}
+
 void Engine::CComposite::Free(void)
 {
 	for (int i = 0; i < ID_END; i++)

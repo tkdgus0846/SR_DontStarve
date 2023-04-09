@@ -1,19 +1,37 @@
 #pragma once
 #include "GameObject.h"
 
+BEGIN(Engine)
+class CTexture;
+END
 
 class CTile : public CGameObject
 {
-protected:
+private:
 	explicit CTile(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CTile();
 
-protected:
-	virtual HRESULT Ready_GameObject(void) override;
+public:
+	HRESULT Ready_GameObject(const _tchar* pTextureName);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
-protected:
+private:
+	virtual HRESULT Add_Component() override;
+	HRESULT Remove_TextureCom();
+
+public:
+	void Change_Texture(const _tchar* pTextureName);
+
+private:
+	const _tchar*		m_pTextureName;
+	Engine::CTexture*	m_pTextureCom;
+
+public:
+	static CTile* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, 
+		const _tchar* pTextureName);
+
+private:
 	virtual void Free(void) override;
 };

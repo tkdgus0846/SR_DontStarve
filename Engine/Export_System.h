@@ -45,6 +45,9 @@ inline _long		Get_DIMouseMove(MOUSEMOVESTATE eMouseMoveID);
 inline bool			Key_Pressing(_ubyte ubyKey);
 inline bool			Key_Down(_ubyte ubyKey);
 inline bool			Key_Up(_ubyte ubyKey);
+inline bool			Mouse_Down(MOUSEKEYSTATE eMouseID);
+inline bool			Mouse_Pressing(MOUSEKEYSTATE eMouseID);
+inline bool			Mouse_Up(MOUSEKEYSTATE eMouseID);
 inline HRESULT		Ready_DInput(HINSTANCE hInst, HWND hWnd);
 inline void			Update_DInput(void);
 

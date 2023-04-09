@@ -1,6 +1,7 @@
 #include "MyMap.h"
 
 #include "Room.h"
+#include "Tennel.h"
 #include "Export_Function.h"
 
 CMyMap::CMyMap(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -23,22 +24,32 @@ HRESULT CMyMap::Ready_GameObject(void)
 
 _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 {
-	for (auto Room : m_arrRoom)
-		Room->Update_GameObject(fTimeDelta);
+	CGameObject* pPlayer = Get_Player();
+	if (nullptr == pPlayer)	// 에디터 모드
+	{
+		for (auto iter : m_arrRoom)
+			iter->Update_GameObject(fTimeDelta);
+	}
+	else	// 인 게임
+		Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->Update_GameObject(fTimeDelta);
 
 	m_pTennel->Update_GameObject(fTimeDelta);
 
 	__super::Update_GameObject(fTimeDelta);
-
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }
 
 void CMyMap::LateUpdate_GameObject(void)
 {
-	for (auto Room : m_arrRoom)
-		Room->LateUpdate_GameObject();
+	CGameObject* pPlayer = Get_Player();
+	if (nullptr == pPlayer)	// 에디터 모드
+	{
+		for (auto iter : m_arrRoom)
+			iter->LateUpdate_GameObject();
+	}
+	else	// 인 게임
+		Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->LateUpdate_GameObject();
 
 	m_pTennel->LateUpdate_GameObject();
 
@@ -48,26 +59,22 @@ void CMyMap::LateUpdate_GameObject(void)
 void CMyMap::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-
-	m_pTextureCom->Set_Texture_Num();
-
 	__super::Render_GameObject();
 }
 
 HRESULT CMyMap::Add_Component()
 {
-	CComponent*		pComponent = nullptr;
-
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Texture", this));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"Map_Texture", pComponent });
-
 	return S_OK;
 }
 
 void CMyMap::Create_Default_Room()
 {
-	for (_uint i = 0; i < 5; ++i)
+	for (_int i = 0; i < 25; ++i)
+	{
+		m_arrRoom[i] = CRoom::Create(m_pGraphicDev);
+	}
+
+	/*for (_uint i = 0; i < 5; ++i)
 	{
 		for (_uint j = 0; j < 5; ++j)
 		{
@@ -81,11 +88,10 @@ void CMyMap::Create_Default_Room()
 
 			m_arrRoom[iIndex] = pRoom;
 		}
-	}
-	m_pTennel = CRoom::Create(m_pGraphicDev, 3, 2, 10);
+	}*/
+
+	m_pTennel = CTennel::Create(m_pGraphicDev);
 	m_pTennel->m_pTransform->m_vInfo[INFO_POS] = { -60.f, 0.f, -60.f };
-	m_pTennel->FloorSubSet();
-	m_pTennel->PlaceSubSet();
 }
 
 CRoom * CMyMap::Get_CurRoom(const _vec3& vPos)
@@ -103,8 +109,9 @@ _bool CMyMap::WriteMapFile(HANDLE hFile, DWORD& dwByte)
 	_int iSize = m_arrRoom.size();
 	WriteFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iSize; ++i)
+	{
 		m_arrRoom[i]->WriteRoomFile(hFile, dwByte);
-
+	}
 	return true;
 }
 
@@ -113,7 +120,11 @@ _bool CMyMap::ReadMapFile(HANDLE hFile, DWORD& dwByte)
 	_int iSize;
 	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iSize; ++i)
+	{
 		m_arrRoom[i]->ReadRoomFile(hFile, dwByte);
+		m_arrRoom[i]->FloorSubSet();
+		m_arrRoom[i]->PlaceSubSet();
+	}
 
 	return true;
 }

@@ -3,6 +3,7 @@
 
 BEGIN(Engine)
 class CCamera;
+class CTexture;
 END
 
 class CRoom;
@@ -24,20 +25,28 @@ private:
 	void	Mouse_Move(const _float& fTimeDelta);
 	void	Fix_Mouse();
 
-	_bool IntersectRayRoom(IN CRoom* pRoom, OUT Triangle& tri);
+public:
+	_bool& Get_Pick() { return m_bPick; }
 
 private:
-	_bool IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri);
-	_bool Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri);
+	_bool IntersectRayRoom(IN CRoom* pRoom, OUT CGameObject*& pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
+	_bool IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
+	_bool Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
 	Ray CalcRaycast(POINT ptMouse);
 	POINT GetMousePos();
 	_vec3 CalcMiddlePoint(Triangle& tri);
 
+public:
+	void Change_Texture(const _tchar* pTextureName) { m_pCurTextureName = pTextureName; }
+
 private:
 	_float				m_fSpeed;
 	_bool				m_bFix;
-	Engine::CCamera*	m_pCamera;
-	CRoom*				tmp; 
+	_bool				m_bPick;
+	CRoom*				tmp;
+
+	const _tchar*		m_pCurTextureName;
+
 public:
 	static CEditCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

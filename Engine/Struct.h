@@ -219,9 +219,16 @@ struct BoundingSphere
 	}
 };
 
-typedef struct tagTriangle
+struct Triangle
 {
+	_vec3 Normal()
+	{
+		_vec3 v0 = v[1] - v[0];
+		_vec3 v1 = v[2] - v[0];
+		_vec3 cross = v0.Cross(v1);
+		return cross;
+	}
 	_vec3 v[3];
-}Triangle;
+};
 
 END

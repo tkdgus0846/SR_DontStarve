@@ -87,15 +87,14 @@ void CWall::Render_GameObject(void)
 
 HRESULT CWall::Add_Component()
 {
-	CComponent*		pComponent = nullptr;
+	CWallTex* pBufferCom = dynamic_cast<CWallTex*>(Engine::Clone_Proto(L"WallTex", this));
+	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"WallTex", pBufferCom });
 
-	pComponent  = dynamic_cast<CWallTex*>(Engine::Clone_Proto(L"WallTex", this));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"WallTex", pComponent });
+	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Wall_Level1_Texture", this));
+	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"Wall_Level1_Texture", m_pTextureCom });
 
-	pComponent  = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"WallPanels #420377", this));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"WallPanels #420377", pComponent });
 
 	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENVIRONMENT));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);

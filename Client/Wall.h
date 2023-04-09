@@ -4,12 +4,8 @@
 #include "GameObject.h"
 
 BEGIN(Engine)
-
-class CWallTex;
-class CTransform;
 class CTexture;
 class CCollider;
-
 END
 
 class CWall : public Engine::CGameObject
@@ -34,6 +30,8 @@ private:
 	CCollider*	m_pCollider;
 
 private:
+	Engine::CTexture*	m_pTextureCom;
+
 	virtual HRESULT Add_Component() override;
 
 public:

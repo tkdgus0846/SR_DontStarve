@@ -1,17 +1,15 @@
 #pragma once
-
-#include "Include.h"
 #include "GameObject.h"
 
 BEGIN(Engine)
 class CTexture;
 END
 
-class CFloor : public Engine::CGameObject
+class CTennel : public CGameObject
 {
 private:
-	explicit CFloor(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CFloor();
+	explicit CTennel(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CTennel();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -26,7 +24,7 @@ private:
 	Engine::CTexture*		m_pTextureCom;
 
 public:
-	static CFloor*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTennel*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;

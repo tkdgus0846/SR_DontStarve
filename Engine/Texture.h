@@ -25,6 +25,8 @@ public:
 	void Render_Texture(const _uint& iIndex = 0);
 	virtual void Render_Component() override;
 
+	// 에디터에서만 사용하세요.
+	const IDirect3DBaseTexture9* Get_TextureCom() const { return m_vecTexture[0]; }
 private:
 	vector<IDirect3DBaseTexture9*>		m_vecTexture;
 	_uint								m_TextureNum;

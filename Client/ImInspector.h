@@ -16,9 +16,11 @@ public:
 	virtual _int	Update(float fTimeDelta) override;
 
 private:
+	void Show_TilePicking();
 	void Show_Create_Object();
 	void Show_MonsterList();
 	void Show_Components();
+	void Show_Image(_int iObjNum);
 
 private:
 	CGameObject*			m_pCurTarget;
