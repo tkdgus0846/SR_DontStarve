@@ -26,12 +26,6 @@ private:
 	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);
 
-private:
-	Engine::CFloorTex*		m_pBufferCom;
-	Engine::CTexture*		m_pTextureCom;
-
-	_float					m_fSpeed = 10.f;
-
 public:
 	static CFloor*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

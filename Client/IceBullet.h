@@ -1,24 +1,16 @@
 #pragma once
+#include "Bullet.h"
 
-#include "Include.h"
-#include "Creature.h"
-
-BEGIN(Engine)
-
-class CRcTex;
-class CTexture;
-class CCollider;
-class CRigidbody;
-class CCamera;
-END
-
-class CPlayer : public CCreature
+class CIceBullet : public CBullet
 {
+	friend class CBulletPool;
 private:
-	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CPlayer();
+	explicit CIceBullet(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CIceBullet();
 
 public:
+	virtual void SetDead(_bool bDead = true) override;
+
 	virtual HRESULT Ready_GameObject(void) override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
@@ -29,21 +21,12 @@ public:
 	virtual void OnCollisionStay(const Collision* collision) override;
 	virtual void OnCollisionExit(const Collision* collision) override;
 
-private:
 	virtual HRESULT Add_Component() override;
-	void		Key_Input(const _float& fTimeDelta);
-	void		Mouse_Move(const _float& fTimeDelta);
-	void		Fix_Mouse();
-
-private:
-	_bool					m_bFix;
-	class CWeapon*			m_pCurWeapon;
-
-public:
-	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
-private:
+protected:
 	virtual void Free(void) override;
 
+private:
+	// 총알은 매니저를 통해서 생성할것.
+	static CIceBullet*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 };
 

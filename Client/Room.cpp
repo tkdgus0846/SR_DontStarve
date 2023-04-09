@@ -98,10 +98,14 @@ void CRoom::FloorSubSet()
 
 void CRoom::PlaceSubSet()	
 {
+	const _float colliderThick = 4.f;
+
 	// 벽 위치 조정
 	_vec3 vPos;
 	float fLengthX = (m_fVtxCntX - 1) * m_fVtxItv;
 	float fLengthZ = (m_fVtxCntZ - 1) * m_fVtxItv;
+	float fLengthY = VTXITV;
+
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 
 	m_apWall[0]->m_pTransform->Set_Pos(vPos);
@@ -112,6 +116,30 @@ void CRoom::PlaceSubSet()
 	m_apWall[1]->m_pTransform->Set_Target({ vPos.x + fLengthX, vPos.y, vPos.z + fLengthZ });
 	m_apWall[2]->m_pTransform->Set_Target({ vPos.x + fLengthX, vPos.y, vPos.z });
 	m_apWall[3]->m_pTransform->Set_Target(vPos);
+
+	_float width, height, depth;
+	_vec3 centerPos;
+	height = fLengthY;
+
+	width = fLengthX;
+	depth = colliderThick;
+	centerPos = { + width / 2.f, + height / 2.f, - depth / 2.f};
+	m_apWall[0]->m_pCollider->Set_BoundingBox({ width,height,depth }, centerPos);
+
+	width = colliderThick;
+	depth = fLengthZ;
+	centerPos = { - width / 2.f, + height / 2.f, - depth/2.f };
+	m_apWall[1]->m_pCollider->Set_BoundingBox({ width,height,depth }, centerPos);
+
+	width = fLengthX;
+	depth = colliderThick;
+	centerPos = { - width / 2.f, + height / 2.f,+ depth/2.f  };
+	m_apWall[2]->m_pCollider->Set_BoundingBox({ width,height,depth }, centerPos);
+
+	width = colliderThick;
+	depth = fLengthZ;
+	centerPos = { + width / 2.f, + height / 2.f, + depth/2.f };
+	m_apWall[3]->m_pCollider->Set_BoundingBox({ width,height,depth }, centerPos);
 }
 
 _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)

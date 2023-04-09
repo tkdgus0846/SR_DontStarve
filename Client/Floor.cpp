@@ -43,9 +43,6 @@ void CFloor::Render_GameObject(void)
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-
-	m_pTextureCom->Set_Texture_Num();
-
 	__super::Render_GameObject();
 
 	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -56,12 +53,12 @@ HRESULT CFloor::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CFloorTex*>(Engine::Clone_Proto(L"FloorTex",this));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	pComponent  = dynamic_cast<CFloorTex*>(Engine::Clone_Proto(L"FloorTex",this));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"FloorTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Texture",this));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	pComponent  = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Texture",this));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"Floor_Texture", pComponent });
 
 	return S_OK;

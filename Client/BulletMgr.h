@@ -12,7 +12,7 @@ private:
 	~CBulletPool();
 
 	template<typename T>
-	CBullet* CBulletPool::Pop(LPDIRECT3DDEVICE9 pDevice, const D3DXVECTOR3 & vPos, const D3DXVECTOR3 & vDir, bool bIsEnemyBullet)
+	CBullet* CBulletPool::Pop(LPDIRECT3DDEVICE9 pDevice, const _vec3 & vPos, const _vec3 & vDir, const _vec3& vScale = { 1.f,1.f,1.f }, bool bIsEnemyBullet = false)
 	{
 		CBullet*		pBullet = nullptr;
 
@@ -37,6 +37,7 @@ private:
 		(pBullet)->SetIsEnemy(bIsEnemyBullet);
 		(pBullet)->SetAge();
 		(pBullet)->SetDead(false);
+		(pBullet)->m_pTransform->Set_Scale(vScale);
 
 		CCollider* collider = dynamic_cast<CCollider*>(pBullet->Get_Component(L"BodyCollider", ID_ALL));
 		if (collider == nullptr) return pBullet;
@@ -81,14 +82,13 @@ public:
 	}
 
 	template<typename T>
-	T * CBulletMgr::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const D3DXVECTOR3& vPos,
-		const D3DXVECTOR3& vDir, bool bIsEnemyBullet)
+	T * CBulletMgr::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _vec3& vPos, const _vec3& vDir, const _vec3& vScale = { 1.f,1.f,1.f }, bool bIsEnemyBullet = false)
 	{
 		if (m_BulletPool[name] == nullptr)
 		{
 			m_BulletPool[name] = CBulletPool::Create();
 		}
-		CBullet*		pBullet = m_BulletPool[name]->Pop<T>(pDevice, vPos, vDir, bIsEnemyBullet);
+		CBullet*		pBullet = m_BulletPool[name]->Pop<T>(pDevice, vPos, vDir, vScale, bIsEnemyBullet);
 		if (pBullet == nullptr)
 			return nullptr;
 

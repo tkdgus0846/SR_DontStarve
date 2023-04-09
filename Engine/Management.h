@@ -30,9 +30,16 @@ public:
 	class CGameObject*	Get_Player();
 	void				Set_Player(CGameObject* player);
 
+	void				Start_WorldTimer();
+	void				Stop_WorldTimer();
+	_float				Get_WorldTime() const { return m_fWorldTime; }
+
 private:
 	CScene*			m_pScene = nullptr;
 	class CGameObject*	m_pPlayer;
+
+	_float			m_fWorldTime;
+	_bool			m_bPlayingWorldTimer;
 
 private:
 	virtual void	Free(void);

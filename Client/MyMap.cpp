@@ -75,7 +75,7 @@ void CMyMap::Create_Default_Room()
 
 			CRoom* pRoom = CRoom::Create(m_pGraphicDev);
 
-			pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 50.01f, 0.f, i * 50.01f };
+			pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 60.01f, 0.f, i * 60.01f };
 			pRoom->FloorSubSet();
 			pRoom->PlaceSubSet();
 
@@ -135,7 +135,6 @@ void CMyMap::Free()
 {
 	for (auto iter : m_arrRoom)
 		Safe_Release(iter);
-	Safe_Release(m_pTennel);
 
 	Safe_Release(m_pTennel);
 

@@ -49,6 +49,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 
 		if (Engine::Key_Down(DIK_RETURN))
 		{
+			Start_WorldTimer();
 			CScene*	pScene = CStage::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 

@@ -22,6 +22,10 @@ private:
 
 	_bool				m_bEnabled;
 	_bool				m_bIsRender;
+	_bool				m_bRenderByOwnerPos;
+
+	_vec3				m_vCenterPos;
+	_vec3				m_VOriginCenterPos;
 
 	// 아래 두개 텍스쳐는 디버깅 용도로 넣었음. 나중에 지울거임.
 	IDirect3DBaseTexture9*			m_GreenTexture;
@@ -58,6 +62,7 @@ public:
 	void Set_IsRender(_bool bIsRender) { m_bIsRender = bIsRender; }
 
 	void Set_BoundingBox(const _vec3& vSize = {2.f, 2.f, 2.f});
+	void Set_BoundingBox(const _vec3& vSize, const _vec3& vCenterPos);
 	// 에디터에서만 사용해야됨.
 	BoundingBox* Get_BoundingBox() { return m_pBoundingBox; }
 

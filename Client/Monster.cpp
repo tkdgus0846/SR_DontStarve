@@ -24,6 +24,8 @@ HRESULT CMonster::Ready_GameObject(void)
 
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
+
 	_matrix view;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
 

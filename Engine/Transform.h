@@ -37,6 +37,8 @@ public:
 		m_vInfo[INFO_POS] = pos;
 	}
 
+	void Set_Scale(const _vec3& scale) { m_vScale = scale; }
+
 	// 제대로 돌아가는지 확인 해봐야함.
 	void Set_Dir(const _vec3& dir);
 

@@ -13,6 +13,22 @@ public:
 	virtual void		LateUpdate_GameObject(void);
 	virtual void		Render_GameObject(void);
 
+public:
+	void	Get_Damaged(_int Damage)
+	{
+		if (GetDead()) return;
+
+		m_iHp -= Damage;
+		if (m_iHp <= 0)
+		{
+			m_iHp = 0;
+			SetDead();
+		}
+	}
+	_int	Get_Attack() const { return m_iAttack; }
+	_int	Get_HP() const { return m_iHp; }
+	_float	Get_Speed() const { return m_fSpeed; }
+
 protected:
 	_float	m_fSpeed;
 	_int	m_iHp;

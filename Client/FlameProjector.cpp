@@ -1,21 +1,23 @@
-#include "NormalWeapon.h"
+#include "FlameProjector.h"
+
+
+
 #include "Export_Function.h"
 
 #include "BulletMgr.h"
-#include "NormalBullet.h"
-#include "IceBullet.h"
+#include "FireBullet.h"
 
-CNormalWeapon::CNormalWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
+CFlameProjector::CFlameProjector(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
 {
 	m_fCycle = 0.3f;
 }
 
-CNormalWeapon::~CNormalWeapon()
+CFlameProjector::~CFlameProjector()
 {
 }
 
-CBullet* CNormalWeapon::Shot_Setting()
+CBullet* CFlameProjector::Shot_Setting()
 {
 	CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
 
@@ -36,17 +38,17 @@ CBullet* CNormalWeapon::Shot_Setting()
 	_vec3 bulletDir = cameraAt - m_pTransform->m_vInfo[INFO_POS];
 	bulletDir.Normalize();
 
-	CBullet* bullet = CBulletMgr::GetInstance()->Pop<CNormalBullet>(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, {0.5f,0.5f,1.f}, false);
+	CBullet* bullet = CBulletMgr::GetInstance()->Pop<CFireBullet>(L"FireBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, { 0.5f,0.5f,1.f }, false);
 
-	return bullet;	
+	return bullet;
 }
 
-_int CNormalWeapon::Update_GameObject(const _float& fTimeDelta)
+_int CFlameProjector::Update_GameObject(const _float& fTimeDelta)
 {
 	return __super::Update_GameObject(fTimeDelta);
 }
 
-HRESULT CNormalWeapon::Add_Component()
+HRESULT CFlameProjector::Add_Component()
 {
 
 	/*CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
@@ -55,25 +57,25 @@ HRESULT CNormalWeapon::Add_Component()
 	return S_OK;
 }
 
-HRESULT CNormalWeapon::Ready_GameObject(void)
+HRESULT CFlameProjector::Ready_GameObject(void)
 {
 	return __super::Ready_GameObject();
 }
 
-void CNormalWeapon::LateUpdate_GameObject(void)
+void CFlameProjector::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
 }
 
-void CNormalWeapon::Render_GameObject(void)
+void CFlameProjector::Render_GameObject(void)
 {
-	
+
 	__super::Render_GameObject();
 }
 
-CNormalWeapon* CNormalWeapon::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pOnwerTransform)
+CFlameProjector* CFlameProjector::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pOnwerTransform)
 {
-	CNormalWeapon*		pInstance = new CNormalWeapon(pGraphicDev);
+	CFlameProjector*		pInstance = new CFlameProjector(pGraphicDev);
 	pInstance->m_pOwnerTransform = pOnwerTransform;
 
 	if (FAILED(pInstance->Ready_GameObject()))
@@ -85,7 +87,7 @@ CNormalWeapon* CNormalWeapon::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* 
 	return pInstance;
 }
 
-void CNormalWeapon::Free(void)
+void CFlameProjector::Free(void)
 {
 	__super::Free();
 }
