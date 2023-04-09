@@ -21,7 +21,7 @@ HRESULT CCoin::Add_Component()
 
 	CTexture* Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Coin_Texture", this));
 	NULL_CHECK_RETURN(Texture, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Coin_Texture", Texture });
+	m_uMapComponent[ID_RENDER].insert({ L"Coin_Texture", Texture });
 
 	CAnimation* Ani = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	NULL_CHECK_RETURN(Ani, E_FAIL);
@@ -80,17 +80,17 @@ void CCoin::Render_GameObject(void)
 		{
 			iNum = m_iStartNum + pPlayerCoin[k] - 48;
 		}
-		Set_VeiwMatrix_UI(330 + (25.f * i), 250.f);
+		Set_ViewMatrix_UI(330 + (25.f * i), 250.f);
 		m_pTextureCom->Render_Texture(iNum);
 		m_vecRc[i]->Render_Component();
 	}
 
-	Set_VeiwMatrix_UI();
+	Set_ViewMatrix_UI();
 
 	__super::Render_GameObject();
 }
 
-void CCoin::Set_VeiwMatrix_UI()
+void CCoin::Set_ViewMatrix_UI()
 {
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
@@ -104,7 +104,7 @@ void CCoin::Set_VeiwMatrix_UI()
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 }
 
-void CCoin::Set_VeiwMatrix_UI(_float fX, _float fY)
+void CCoin::Set_ViewMatrix_UI(_float fX, _float fY)
 {
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);

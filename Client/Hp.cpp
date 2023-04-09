@@ -41,7 +41,7 @@ void CHp::Render_GameObject(void)
 	for (size_t i = 0; i < m_iMaxHp; i++)
 	{
 		m_iCurrentHp = Compute_Hp(PlayerHp);
-		Set_VeiwMatrix_UI(-350 + (50.f * i) , 250.f);
+		Set_ViewMatrix_UI(-350 + (50.f * i) , 250.f);
 		m_pTextureCom->Render_Texture(m_iCurrentHp);
 		m_vecRc[i]->Render_Component();
 	}
@@ -65,7 +65,7 @@ HRESULT CHp::Add_Component(void)
 	return S_OK;
 }
 
-void CHp::Set_VeiwMatrix_UI(_float fX, _float fY)
+void CHp::Set_ViewMatrix_UI(_float fX, _float fY)
 {
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
