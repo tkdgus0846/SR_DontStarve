@@ -34,8 +34,12 @@ private:
 
 	_float m_GaugeScale = 106.f;
 	_float m_GaugePos = -203.f;
-	_float m_VBGuage = 1.f;
-	_float m_GuageVBUv= 1.f;
+
+	_float m_NormalGuage = 1.f;
+	_float m_IceGuage = 1.f;
+	_float m_FlameGuage = 1.f;
+
+
 
 public:
 	static CBulletGauge*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

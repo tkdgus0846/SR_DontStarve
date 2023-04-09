@@ -49,7 +49,6 @@ _int CIceBeamWeapon::Update_GameObject(const _float& fTimeDelta)
 
 HRESULT CIceBeamWeapon::Add_Component()
 {
-
 	/*CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", rcTex });*/

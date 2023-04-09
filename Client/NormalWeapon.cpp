@@ -10,7 +10,7 @@ CNormalWeapon::CNormalWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 {
 	m_fCycle = 0.3f;
 	m_MaxBulletNum = 2;
-	m_CurBulletNum = 1;
+	m_CurBulletNum = 2;
 }
 
 CNormalWeapon::~CNormalWeapon()
