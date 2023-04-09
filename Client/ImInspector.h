@@ -5,6 +5,8 @@ BEGIN(Engine)
 class CGameObject;
 END
 
+class CMyMap;
+class CRoom;
 class CImInspector : public CImWindow
 {
 private:
@@ -23,7 +25,9 @@ private:
 	void Show_Image(_int iObjNum);
 
 private:
-	CGameObject*			m_pCurTarget;
+	CRoom*			m_pCurRoom;
+	_vec3			m_vObjectPos;
+	CGameObject*	m_pCurTarget;
 	vector<pair<const char*, CGameObject*>>	m_vecMonster;
 
 public:

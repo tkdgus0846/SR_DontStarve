@@ -22,6 +22,7 @@ public:
 	CFloor* GetFloor() { return m_pFloor; }
 	CWall* GetWallArray(_uint index) { return m_apWall[index]; }
 	void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
+	void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
 
 private:
 	virtual HRESULT Add_Component() override;

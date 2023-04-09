@@ -21,9 +21,10 @@ HRESULT CEditCamera::Ready_GameObject(void)
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = _vec3(15.f, 20.f, 30.f);
+	m_pTransform->m_vInfo[INFO_LOOK] = { 0.f, 0.f, 1.f };
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 
-	m_fSpeed = 40.f;
+	m_fSpeed = 20.f;
 
 	return result;
 }
@@ -75,6 +76,10 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Mouse_Down(DIM_LB) && m_bPick)
 	{
+		_matrix proj;
+		proj.PerspectiveFovLH();
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &proj);
+
 		_vec3 vCameraPos = m_pTransform->m_vInfo[INFO_POS];
 		CMyMap* pMap = (CMyMap*)Get_GameObject(LAYER_ENVIRONMENT, L"Map");
 		// Variables for Output about InstersectRayRoom Method
@@ -111,9 +116,7 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 				pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
 				cout << fDist << endl;
 			}
-			pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
 		}
-
 		/*cout << fixed;
 		cout.precision(0);
 		cout << tri.v[0].x << " " << tri.v[0].y << " " << tri.v[0].z << "\t"

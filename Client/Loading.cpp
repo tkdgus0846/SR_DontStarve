@@ -97,6 +97,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Wall_Level1_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Level2_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Wall_Level2_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420377.png")), E_FAIL);
+	/*이거 바꾸셈!!!*/FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Dock_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_14.png")), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gun/Gun.png")), E_FAIL);
 
@@ -143,7 +144,6 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SkyBox_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/SkyBox/SkyBox.dds")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Level1_Tennel_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Level/Level1_Tennel.dds")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Level2_Tennel_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Level/Level2_Tennel.dds")), E_FAIL);
-	
 
 	Set_String(L"AI Loading..........");
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Move", CMoveLook::Create(m_pGraphicDev)), E_FAIL);
@@ -171,7 +171,7 @@ _uint CLoading::Loading_ForStage(void)
 	}
 	//===============
 
-	m_bFinish = true;	
+	m_bFinish = true;
 
 	Set_String(L"Loading Complete!!!!!!!!");
 

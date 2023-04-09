@@ -43,7 +43,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			NULL_CHECK_RETURN(pScene, -1);
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-			CFileSystem::Load(L"Save.dat");
+			//CFileSystem::Load(L"Save.dat");
 			pScene->Update_Scene(fTimeDelta);
 			return 0;
 		}
@@ -55,7 +55,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			NULL_CHECK_RETURN(pScene, -1);
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-			//CFileSystem::Load(L"Save.dat");
+			CFileSystem::Load(L"Save.dat");
 			return 0;
 		}
 	}

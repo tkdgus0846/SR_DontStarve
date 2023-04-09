@@ -30,7 +30,7 @@ private:
 			
 private:
 	array<CRoom*, 25>	m_arrRoom;
-	CTennel*			m_pTennel;
+	CTennel*			m_pTennel[2];
 
 public:
 	static CMyMap* Create(LPDIRECT3DDEVICE9 pGraphicDev);

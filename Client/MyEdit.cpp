@@ -34,6 +34,12 @@ CMyEdit::~CMyEdit()
 HRESULT CMyEdit::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
+	Add_GameObject(LAYER_ENVIRONMENT, L"Map", CMyMap::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
+
+	Add_GameObject(LAYER_CAMERA, L"Edit_Camera", CEditCamera::Create(m_pGraphicDev));
+	Engine::On_Camera(L"Edit_Camera");
+
 	CImManager::GetInstance()->Ready_IMGUI(m_pGraphicDev);
 
 	IMGUI_CHECKVERSION();
@@ -46,12 +52,6 @@ HRESULT CMyEdit::Ready_Scene(void)
 	ImGui::StyleColorsDark();
 	ImGui_ImplWin32_Init(g_hWnd);
 	ImGui_ImplDX9_Init(m_pGraphicDev);
-
-	Add_GameObject(LAYER_ENVIRONMENT, L"Map", CMyMap::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
-
-	Add_GameObject(LAYER_CAMERA, L"Edit_Camera", CEditCamera::Create(m_pGraphicDev));
-	Engine::On_Camera(L"Edit_Camera");
 
 	D3DLIGHT9		tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));

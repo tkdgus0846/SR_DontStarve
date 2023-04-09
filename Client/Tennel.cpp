@@ -15,7 +15,7 @@ HRESULT CTennel::Ready_GameObject(void)
 {
 	HRESULT Result = __super::Ready_GameObject();
 
-
+	m_pTransform->m_vScale = { 5.f, 5.f, 5.f };
 
 	return Result;
 }
@@ -24,7 +24,9 @@ _int CTennel::Update_GameObject(const _float & fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_PRIORITY, this);
+	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
+
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
 }
@@ -38,16 +40,7 @@ void CTennel::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
 	__super::Render_GameObject();
-
-	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 HRESULT CTennel::Add_Component()
@@ -60,7 +53,23 @@ HRESULT CTennel::Add_Component()
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"Level1_Tennel_Texture", m_pTextureCom });
 
+	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this));
+	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"Collider", m_pCollider });
+
 	return S_OK;
+}
+
+void CTennel::Set_Position(_int iFrontorBack)
+{
+	if (0 == iFrontorBack)	// front ÀÎ °æ¿ì
+	{
+		//m_pCollider->Set_BoundingBox({ 5.f, 5.f, 1.f }, )
+	}
+	else
+	{
+
+	}
 }
 
 CTennel * CTennel::Create(LPDIRECT3DDEVICE9 pGraphicDev)

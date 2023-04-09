@@ -3,14 +3,13 @@
 
 BEGIN(Engine)
 class CTexture;
-class CCollider;
 END
 
-class CTennel : public CGameObject
+class CDoor : public CGameObject
 {
 private:
-	explicit CTennel(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CTennel();
+	explicit CDoor(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CDoor();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -21,15 +20,11 @@ public:
 private:
 	virtual HRESULT Add_Component() override;
 
-public:
-	void Set_Position(_int iFrontorBack);
-
 private:
-	Engine::CCollider*		m_pCollider;
 	Engine::CTexture*		m_pTextureCom;
 
 public:
-	static CTennel*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CDoor*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;

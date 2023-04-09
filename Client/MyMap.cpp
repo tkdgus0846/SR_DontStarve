@@ -5,7 +5,7 @@
 #include "Export_Function.h"
 
 CMyMap::CMyMap(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev), m_pTennel(nullptr)
+	:CGameObject(pGraphicDev)//, m_pTennel(nullptr)
 {
 	for (auto iter : m_arrRoom)
 		iter = nullptr;
@@ -36,7 +36,8 @@ _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 	//else	// 인 게임
 	//	Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->Update_GameObject(fTimeDelta);
 
-	m_pTennel->Update_GameObject(fTimeDelta);
+	m_pTennel[0]->Update_GameObject(fTimeDelta);
+	m_pTennel[1]->Update_GameObject(fTimeDelta);
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -54,7 +55,8 @@ void CMyMap::LateUpdate_GameObject(void)
 	else	// 인 게임
 		Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->LateUpdate_GameObject();
 
-	m_pTennel->LateUpdate_GameObject();
+	m_pTennel[0]->LateUpdate_GameObject();
+	m_pTennel[1]->LateUpdate_GameObject();
 
 	__super::LateUpdate_GameObject();
 }
@@ -89,8 +91,10 @@ void CMyMap::Create_Default_Room()
 		}
 	}
 
-	m_pTennel = CTennel::Create(m_pGraphicDev);
-	m_pTennel->m_pTransform->m_vInfo[INFO_POS] = { -60.f, 0.f, -60.f };
+	m_pTennel[0] = CTennel::Create(m_pGraphicDev);
+	m_pTennel[0]->m_pTransform->m_vInfo[INFO_POS] = { 0.f, 0.f, -10.f };
+	m_pTennel[1] = CTennel::Create(m_pGraphicDev);
+	m_pTennel[1]->m_pTransform->m_vInfo[INFO_POS] = { 0.f, 0.f, -20.f };
 }
 
 CRoom * CMyMap::Get_CurRoom(const _vec3& vPos)
@@ -146,7 +150,7 @@ void CMyMap::Free()
 	for (auto iter : m_arrRoom)
 		Safe_Release(iter);
 
-	Safe_Release(m_pTennel);
+	//Safe_Release(m_pTennel);
 
 	__super::Free();
 }

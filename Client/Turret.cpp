@@ -11,12 +11,12 @@ CTurret::~CTurret()
 {
 }
 
-HRESULT CTurret::Ready_GameObject(void)
+HRESULT CTurret::Ready_GameObject(const _vec3& vPos)
 {
 	m_fSpeed = 10.f;
 
 	m_pTransform->m_vScale = { 2.f, 2.f, 2.f };
-	m_pTransform->m_vInfo[INFO_POS] = { 5.f, 1.8f, 5.f };
+	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	HRESULT result = __super::Ready_GameObject();
@@ -87,11 +87,11 @@ HRESULT CTurret::Add_Component()
 	return S_OK;
 }
 
-CTurret * CTurret::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CTurret * CTurret::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 {
 	CTurret* pInstance = new CTurret(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
