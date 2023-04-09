@@ -55,7 +55,7 @@ HRESULT CStage::Ready_Scene(void)
 
 	Add_GameObject(LAYER_CAMERA, L"ObjCamera", CObjCamera::Create(m_pGraphicDev));
 
-	Add_GameObject(LAYER_UI, L"GunUI", CGunUI::Create(m_pGraphicDev));
+	
 	
 	// UI
 	Add_GameObject(LAYER_UI, L"BulletGauge", CBulletGauge::Create(m_pGraphicDev));
@@ -66,6 +66,8 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(LAYER_UI, L"Disc", CDisc::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_UI, L"WeaponType", CWeaponType::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_UI, L"MiniMap", CMiniMap::Create(m_pGraphicDev));
+
+	Add_GameObject(LAYER_UI, L"GunUI", CGunUI::Create(m_pGraphicDev));
 
 
 	/*D3DLIGHT9		tLightInfo;

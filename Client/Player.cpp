@@ -37,6 +37,8 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
 	if (GetDead()) return OBJ_DEAD;
 
+	/*cout << m_pTransform->m_vInfo[INFO_POS].x << " " << m_pTransform->m_vInfo[INFO_POS].y << " " << m_pTransform->m_vInfo[INFO_POS].z << endl;*/
+
 	Key_Input(fTimeDelta);
 
 	// m_planeVec

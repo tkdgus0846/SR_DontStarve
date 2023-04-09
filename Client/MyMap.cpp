@@ -24,14 +24,17 @@ HRESULT CMyMap::Ready_GameObject(void)
 
 _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 {
-	CGameObject* pPlayer = Get_Player();
-	if (nullptr == pPlayer)	// 에디터 모드
-	{
-		for (auto iter : m_arrRoom)
-			iter->Update_GameObject(fTimeDelta);
-	}
-	else	// 인 게임
-		Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->Update_GameObject(fTimeDelta);
+	for (auto iter : m_arrRoom)
+		iter->Update_GameObject(fTimeDelta);
+
+	//CGameObject* pPlayer = Get_Player();
+	//if (nullptr == pPlayer)	// 에디터 모드
+	//{
+	//	for (auto iter : m_arrRoom)
+	//		iter->Update_GameObject(fTimeDelta);
+	//}
+	//else	// 인 게임
+	//	Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->Update_GameObject(fTimeDelta);
 
 	m_pTennel->Update_GameObject(fTimeDelta);
 
@@ -69,12 +72,8 @@ HRESULT CMyMap::Add_Component()
 
 void CMyMap::Create_Default_Room()
 {
-	for (_int i = 0; i < 25; ++i)
-	{
-		m_arrRoom[i] = CRoom::Create(m_pGraphicDev);
-	}
 
-	/*for (_uint i = 0; i < 5; ++i)
+	for (_uint i = 0; i < 5; ++i)
 	{
 		for (_uint j = 0; j < 5; ++j)
 		{
@@ -88,7 +87,7 @@ void CMyMap::Create_Default_Room()
 
 			m_arrRoom[iIndex] = pRoom;
 		}
-	}*/
+	}
 
 	m_pTennel = CTennel::Create(m_pGraphicDev);
 	m_pTennel->m_pTransform->m_vInfo[INFO_POS] = { -60.f, 0.f, -60.f };
