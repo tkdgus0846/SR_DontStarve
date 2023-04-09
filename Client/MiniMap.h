@@ -9,8 +9,6 @@ class CAnimation;
 
 END
 
-
-
 class CMiniMap :
 	public CUI
 {
@@ -29,6 +27,7 @@ private:
 	void		Set_ViewMatrix_UI();
 	void		Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scaleY);
 	void		Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scaleY, _float fAngle);
+	void		EWSN();
 
 private:
 	D3DXMATRIX  matWorld, matView;

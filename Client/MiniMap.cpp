@@ -28,6 +28,18 @@ HRESULT CMiniMap::Add_Component()
 	NULL_CHECK_RETURN(Texture, E_FAIL);
 	m_arrMap[MINIMAPBACKGROUND] = Texture;
 
+
+	Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"MiniMapBackGround_Texture", this));
+	NULL_CHECK_RETURN(Texture, E_FAIL);
+	m_arrMap[MINIMAPBACKGROUND] = Texture;
+
+	Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"MiniMapBackGround_Texture", this));
+	NULL_CHECK_RETURN(Texture, E_FAIL);
+	m_arrMap[MINIMAPBACKGROUND] = Texture;
+
+	Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"MiniMapBackGround_Texture", this));
+	NULL_CHECK_RETURN(Texture, E_FAIL);
+	m_arrMap[MINIMAPBACKGROUND] = Texture;
 	return S_OK;
 }
 
@@ -57,20 +69,24 @@ void CMiniMap::LateUpdate_GameObject(void)
 
 void CMiniMap::Render_GameObject(void)
 {
-//	D3DVIEWPORT9 viewport;
-//	m_pGraphicDev->GetViewport(&viewport);
-//	D3DVIEWPORT9 savedViewport = viewport;
-//
-//	int miniMapWidth = 300; // 미니맵 가로 크기
-//	int miniMapHeight = 300; // 미니맵 세로 크기
-//
-//	RECT miniMapRect = { 600, 300, 800, 0 };
-//
-//	LPDIRECT3DSURFACE9 pMiniMapSurface; // 미니맵을 그리기 위한 서피스 객체
-//	m_pGraphicDev->CreateOffscreenPlainSurface(0.f, 0.f, D3DFMT_X8R8G8B8, D3DPOOL_SYSTEMMEM, &pMiniMapSurface, NULL);
-//	m_pGraphicDev->SetRenderTarget(0, pMiniMapSurface); // 미니맵 서피스를 렌더링 타겟으로 설정
-//	m_pGraphicDev->SetViewport(&D3DVIEWPORT9{ (DWORD)500, (DWORD)300, (DWORD)miniMapWidth, (DWORD)miniMapHeight, 0.0f, 1.0f });
-//
+	D3DVIEWPORT9 viewport;
+	m_pGraphicDev->GetViewport(&viewport);
+	D3DVIEWPORT9 savedViewport = viewport;
+
+	int miniMapWidth = 300; // 미니맵 가로 크기
+	int miniMapHeight = 300; // 미니맵 세로 크기
+
+	RECT miniMapRect = { 600, 300, 800, 0 };
+
+	LPDIRECT3DTEXTURE9 pTexture;
+	D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/Sprite/Gui/Weapon_spreadshot.png", &pTexture); // 예시용 텍스처 로드
+
+	LPDIRECT3DSURFACE9 pMiniMapSurface; // 미니맵을 그리기 위한 서피스 객체
+
+	m_pGraphicDev->CreateOffscreenPlainSurface(miniMapWidth, miniMapHeight, D3DFMT_X8R8G8B8, D3DPOOL_SYSTEMMEM, &pMiniMapSurface, NULL);
+	m_pGraphicDev->SetRenderTarget(0, pMiniMapSurface); // 미니맵 서피스를 렌더링 타겟으로 설정
+	m_pGraphicDev->SetViewport(&D3DVIEWPORT9{ (DWORD)0, (DWORD)0, (DWORD)miniMapWidth, (DWORD)miniMapHeight, 0.0f, 1.0f });
+
 	for (size_t i = 0; i < MINIMAPEND; i++)
 	{
 		if (m_arrMap[i] != nullptr)
@@ -95,28 +111,12 @@ void CMiniMap::Render_GameObject(void)
 		}
 	}
 
+
+	// 원래 뷰포트로 복원
+	m_pGraphicDev->SetViewport(&savedViewport);
+
 	Set_ViewMatrix_UI();
 	__super::Render_GameObject();
-
-	//m_pGraphicDev->SetViewport(&savedViewport);
-	
-
-	//D3DXMATRIXA16 matProj;
-	//D3DXMatrixOrthoLH(&matProj, 200.f, 200.f, -1.0f, 1.0f);
-	//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
-
-	//_vec3 PlayerPos;
-	//Engine::Get_Player()->m_pTransform->Get_Info(INFO_POS, &PlayerPos);
-
-	//D3DXVECTOR3 vEyePt(PlayerPos.x, PlayerPos.y, PlayerPos.z); // 미니맵에서 보이는 카메라 위치
-	//D3DXVECTOR3 vLookatPt(PlayerPos.x, 0.0f, PlayerPos.z); // 플레이어 위치를 중심으로 볼 수 있도록 함
-	//D3DXVECTOR3 vUpVec(0.0f, 0.0f, 1.0f); // 미니맵에서는 위쪽 방향을 고정함
-
-	//D3DXMATRIXA16 matView;
-	//D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
-	//m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-
-	//// 미니맵 그리기
 }
 
 void CMiniMap::Set_ViewMatrix_UI()
@@ -159,7 +159,7 @@ void CMiniMap::Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float
 	//_float fAngleZ = acosf(fDot);
 
 	D3DXVec3TransformNormal(&vecRot, &vecRot, &pPlayerWorld);
-	_float fAngleZ = atan2f(vecRot.x, vecRot.z);
+	_float fAngleZ = -atan2f(vecRot.x, vecRot.z);
 
 	_matrix matRot, matTrans;
 	matRot.RotationZ(fAngleZ);

@@ -98,9 +98,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				pMainApp->LateUpdate_MainApp();
 
 				pMainApp->Render_MainApp();
-
 			}
-			
 		}        
     }
 
