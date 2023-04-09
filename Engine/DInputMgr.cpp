@@ -9,7 +9,9 @@ CDInputMgr::CDInputMgr()
 	, m_pMouse(nullptr)
 {
 	ZeroMemory(m_byKeyState, sizeof(m_byKeyState));
-	ZeroMemory(&m_MouseState, sizeof(DIMOUSESTATE));
+	ZeroMemory(m_byPreKeyState, sizeof(m_byKeyState));
+	ZeroMemory(&m_tMouseState, sizeof(DIMOUSESTATE));
+	ZeroMemory(&m_tPreMouseState, sizeof(DIMOUSESTATE));
 }
 
 
@@ -53,8 +55,10 @@ HRESULT CDInputMgr::Ready_DInput(HINSTANCE hInst, HWND hWnd)
 void CDInputMgr::Update_DInput(void)
 {
 	memcpy(m_byPreKeyState, m_byKeyState, sizeof(_byte) * MAX_DIK);
+	memcpy(&m_tPreMouseState, &m_tMouseState, sizeof(DIMOUSESTATE));
+
 	m_pKeyBoard->GetDeviceState(256, m_byKeyState);
-	m_pMouse->GetDeviceState(sizeof(m_MouseState), &m_MouseState);
+	m_pMouse->GetDeviceState(sizeof(m_tMouseState), &m_tMouseState);
 }
 
 bool CDInputMgr::Key_Pressing(_ubyte ubyKey)
@@ -76,6 +80,30 @@ bool CDInputMgr::Key_Down(_ubyte ubyKey)
 bool CDInputMgr::Key_Up(_ubyte ubyKey)
 {
 	if ((m_byPreKeyState[ubyKey] & 0x80) && !(m_byKeyState[ubyKey] & 0x80))
+		return true;
+
+	return false;
+}
+
+bool CDInputMgr::Mouse_Down(MOUSEKEYSTATE eMouseID)
+{
+	if (!m_tPreMouseState.rgbButtons[eMouseID] && m_tMouseState.rgbButtons[eMouseID])
+		return true;
+
+	return false;
+}
+
+bool CDInputMgr::Mouse_Pressing(MOUSEKEYSTATE eMouseID)
+{
+	if (m_tPreMouseState.rgbButtons[eMouseID] && m_tMouseState.rgbButtons[eMouseID])
+		return true;
+
+	return false;
+}
+
+bool CDInputMgr::Mouse_Up(MOUSEKEYSTATE eMouseID)
+{
+	if (m_tPreMouseState.rgbButtons[eMouseID] && !m_tMouseState.rgbButtons[eMouseID])
 		return true;
 
 	return false;

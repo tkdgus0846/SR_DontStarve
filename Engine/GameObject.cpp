@@ -166,6 +166,33 @@ void CGameObject::Set_Dir(const _vec3 & dir)
 	m_pTransform->Set_Dir(dir);
 }
 
+void CGameObject::Remove_Render_Component(const _tchar * pComponentTag)
+{
+	for (auto iter = m_RenderComponent.begin(); iter != m_RenderComponent.end(); ++iter)
+	{
+		if (0 == lstrcmp(pComponentTag, iter->first))
+		{
+			m_RenderComponent.erase(iter);
+			return;
+		}
+	}
+}
+
+void CGameObject::Add_Render_Component()
+{
+	vector <pair<const _tchar*, CComponent*>> VecRender(m_uMapComponent[ID_RENDER].begin(), m_uMapComponent[ID_RENDER].end());
+	vector <pair<const _tchar*, CComponent*>> VecAll(m_uMapComponent[ID_ALL].begin(), m_uMapComponent[ID_ALL].end());
+
+	vector <pair<const _tchar*, CComponent*>> sortVec;
+
+	sortVec.insert(sortVec.begin(), VecRender.begin(), VecRender.end());
+	sortVec.insert(sortVec.end(), VecAll.begin(), VecAll.end());
+
+	sort(sortVec.begin(), sortVec.end(), Compare_Component_Priority);
+
+	m_RenderComponent = sortVec;
+}
+
 CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENTID eID)
 {
 	auto	iter = find_if(m_uMapComponent[eID].begin(), m_uMapComponent[eID].end(), CTag_Finder(pComponentTag));

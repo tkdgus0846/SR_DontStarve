@@ -7,12 +7,12 @@ DWORD Safe_Release(T& pointer)
 {
 	DWORD	dwRefCnt = 0;
 
-	if (NULL != pointer)
+	if (nullptr != pointer)
 	{
 		dwRefCnt = pointer->Release();
 
 		if (dwRefCnt == 0)
-			pointer = NULL;
+			pointer = nullptr;
 	}
 	return dwRefCnt;
 }

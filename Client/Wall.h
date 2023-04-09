@@ -4,11 +4,7 @@
 #include "GameObject.h"
 
 BEGIN(Engine)
-
-class CWallTex;
-class CTransform;
 class CTexture;
-
 END
 
 class CWall : public Engine::CGameObject
@@ -27,7 +23,6 @@ private:
 	virtual HRESULT Add_Component() override;
 
 private:
-	Engine::CWallTex*	m_pBufferCom;
 	Engine::CTexture*	m_pTextureCom;
 
 public:

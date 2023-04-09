@@ -15,8 +15,6 @@ CMonster::~CMonster()
 
 HRESULT CMonster::Ready_GameObject(void)
 {
-	m_fSpeed = 10.f;
-
 	HRESULT result = __super::Ready_GameObject();
 
 	return result;

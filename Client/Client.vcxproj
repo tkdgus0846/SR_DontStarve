@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
- <Target Name="BeforeBuild">
+  <Target Name="BeforeBuild">
     <MSBuild Projects="$(MSBuildProjectFile)" Targets="Clean" />
   </Target>
   <ItemGroup Label="ProjectConfigurations">
@@ -235,7 +235,6 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Evasion.h" />
-    <ClInclude Include="FloorTile.h" />
     <ClInclude Include="GunUI.h" />
     <ClInclude Include="Guppi.h" />
     <ClInclude Include="Hp.h" />
@@ -275,6 +274,7 @@
     <ClInclude Include="RangeCheck.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Tennel.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="UI.h" />
@@ -306,7 +306,6 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Evasion.cpp" />
-    <ClCompile Include="FloorTile.cpp" />
     <ClCompile Include="GunUI.cpp" />
     <ClCompile Include="Guppi.cpp" />
     <ClCompile Include="Hp.cpp" />
@@ -353,6 +352,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Tennel.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="UI.cpp" />
