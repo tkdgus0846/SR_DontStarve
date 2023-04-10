@@ -75,6 +75,8 @@ inline void		Check_Collision(COLGROUP eGroup1, COLGROUP eGroup2);
 inline void		Toggle_ColliderRender();
 inline void		Change_ColGroup(CCollider* collider, COLGROUP changeID);
 inline _bool	Collider_GetIsRender();
+inline void		Remove_Collider(CCollider* collider, COLGROUP colID);
+inline void		Remove_Collider(CGameObject* gameObject);
 //inline void		Set_Collider(COLGROUP eGroup, CCollider* pCollider);
 //
 inline void		On_Camera(const _tchar* pCamTag);

@@ -22,6 +22,9 @@ void CBulletPool::Push(CBullet * pObj)
 	if (nullptr == pObj)
 		return;
 
+	CCollider* collider = dynamic_cast<CCollider*>(pObj->Get_Component(L"BodyCollider", ID_ALL));
+	collider->Set_Enable(FALSE);
+
 	m_BulletPool.push_back(pObj);
 }
 
@@ -80,6 +83,8 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 
 	CCollider* collider = dynamic_cast<CCollider*>(pBullet->Get_Component(L"BodyCollider", ID_ALL));
 	if (collider == nullptr) return pBullet;
+
+	collider->Set_Enable(TRUE);
 	_bool bIsRender = Engine::Collider_GetIsRender();
 	collider->Set_IsRender(bIsRender);
 

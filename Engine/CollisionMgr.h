@@ -20,8 +20,11 @@ public:
 	void		Toggle_ColliderRender();
 	void		Change_ColGroup(CCollider* collider, COLGROUP changeID);
 	_bool		GetIsRender() const { return m_bIsRender; }
+	void		Remove_Collider(CCollider* collider, COLGROUP colID);
+	void		Remove_Collider(CGameObject* gameObject);
 
 private:
+	void		Find_Remove_Collider(CGameObject* gameObject, COLGROUP colID);
 	bool		Collision_Box(CCollider* pSrc, CCollider* pDest, COL_DIR& colDir, BoundingBox& bound, _vec3& amountVec);
 	_bool		Check_BoundingBox(CCollider * pSrc, CCollider * pDest, _float * pX, _float * pY, _float * pZ);
 	

@@ -61,6 +61,8 @@ void CMonster::OnCollisionStay(const Collision * collision)
 	__super::OnCollisionStay(collision);
 
 	
+
+	
 }
 
 void CMonster::OnCollisionExit(const Collision * collision)
