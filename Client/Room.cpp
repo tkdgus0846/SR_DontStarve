@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "Room.h"
-
+#include "Baller.h"
+#include "Bub.h"
+#include "Guppi.h"
+#include "Turret.h"
+#include "Walker.h
 #include "Export_Function.h"
 
 #include "Floor.h"
@@ -53,13 +57,19 @@ _int CRoom::Update_GameObject(const _float& fTimeDelta)
 
 	for (auto& Tile : m_vecTile)
 		Tile->Update_GameObject(fTimeDelta);
+	
+  // ÌÖåÏä§Ìä∏Ïö© ÏΩîÎìú
+	for (auto& Obj : m_vecGameObj)
+		Obj->Update_GameObject(fTimeDelta);
+
+	Engine::Add_RenderGroup(RENDER_ALPHA, this
 
 	return 0;
 }
 
 void CRoom::LateUpdate_GameObject(void)
 {
-	// ∑Î ∆Øº∫ªÛ ∆Æ∑£Ω∫∆˚ ø‹ø£ æ»æµ∞≈∞∞æ∆º≠ ¿œ¥‹ ¡÷ºÆ√≥∏Æ
+	// Î£∏ ÌäπÏÑ±ÏÉÅ Ìä∏ÎûúÏä§Ìèº Ïô∏Ïóî ÏïàÏì∏Í±∞Í∞ôÏïÑÏÑú ÏùºÎã® Ï£ºÏÑùÏ≤òÎ¶¨
 	//__super::LateUpdate_GameObject();
 
 	m_pFloor->LateUpdate_GameObject();
@@ -69,11 +79,14 @@ void CRoom::LateUpdate_GameObject(void)
 	for (auto& Tile : m_vecTile)
 		Tile->LateUpdate_GameObject();
 
+	for (auto& Obj : m_vecGameObj)
+		Obj->LateUpdate_GameObject();
+
 }
 
 void CRoom::Render_GameObject(void)
 {
-	// ∑Î ∆Øº∫ªÛ ∆Æ∑£Ω∫∆˚ ø‹ø£ æ»æµ∞≈∞∞æ∆º≠ ¿œ¥‹ ¡÷ºÆ√≥∏Æ
+	// Î£∏ ÌäπÏÑ±ÏÉÅ Ìä∏ÎûúÏä§Ìèº Ïô∏Ïóî ÏïàÏì∏Í±∞Í∞ôÏïÑÏÑú ÏùºÎã® Ï£ºÏÑùÏ≤òÎ¶¨
 	//__super::Render_GameObject();
 
 	m_pFloor->Render_GameObject();
@@ -82,15 +95,18 @@ void CRoom::Render_GameObject(void)
 
 	for (auto& Tile : m_vecTile)
 		Tile->Render_GameObject();
+
+	for (auto& Obj : m_vecGameObj)
+		Obj->Render_GameObject();
 }
 
 HRESULT CRoom::CreateSubset()
 {
-	// πŸ¥⁄ ª˝º∫
+	// Î∞îÎã• ÏÉùÏÑ±
 	m_pFloor = CFloor::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pFloor, E_FAIL);
 
-	// ∫Æ 4∏È ª˝º∫
+	// Î≤Ω 4Î©¥ ÏÉùÏÑ±
 	for (auto& iter : m_apWall)
 		iter = CWall::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
@@ -234,7 +250,7 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 
 void CRoom::FloorSubSet()
 {
-	// πŸ¥⁄ ¿ßƒ° ¡∂¡§
+	// Î∞îÎã• ÏúÑÏπò Ï°∞Ï†ï
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 
@@ -245,7 +261,7 @@ void CRoom::PlaceSubSet()
 {
 	const _float colliderThick = 4.f;
 
-	// ∫Æ ¿ßƒ° ¡∂¡§
+	// Î≤Ω ÏúÑÏπò Ï°∞Ï†ï
 	_vec3 vPos;
 	float fLengthX = (m_fVtxCntX - 1) * m_fVtxItv;
 	float fLengthZ = (m_fVtxCntZ - 1) * m_fVtxItv;
@@ -289,35 +305,115 @@ void CRoom::PlaceSubSet()
 
 _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 {
-	_int iSize = m_vecTile.size();
+	_int iTileSize = m_vecTile.size();
+	_int iObjSize = m_vecGameObj.size();
 
+	// Î£∏Ïùò Î≥ÄÏàò Ï†ÄÏû•
 	WriteFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	WriteFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
 	WriteFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
 	m_pTransform->WriteTransformFile(hFile, dwByte);
 	
-	WriteFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
-	for (_int i = 0; i < iSize; ++i)
+	// ÌÉÄÏùº Ïª®ÌÖåÏù¥ÎÑà Ï†ÄÏû•
+	WriteFile(hFile, &iTileSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iTileSize; ++i)
+	{
 		m_vecTile[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
+		m_vecTile[i]->WriteTextureName(hFile, dwByte);
+	}
+		
 	
+	// Í∞ùÏ≤¥ Ïª®ÌÖåÏù¥ÎÑà Ï†ÄÏû•
+	WriteFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iObjSize; ++i)
+	{
+		// Ïñ¥Îñ§ Í∞ùÏ≤¥Ïù∏ÏßÄ Î≤àÌò∏Î°ú Ï†ÄÏû•.
+		_int iObjNumber = 0;
+		if (dynamic_cast<CBaller*>(m_vecGameObj[i]))
+		{
+			iObjNumber = 1;
+		}
+		else if (dynamic_cast<CBub*>(m_vecGameObj[i]))
+		{
+			iObjNumber = 2;
+		}
+		else if (dynamic_cast<CGuppi*>(m_vecGameObj[i]))
+		{
+			iObjNumber = 3;
+		}
+		else if (dynamic_cast<CTurret*>(m_vecGameObj[i]))
+		{
+			iObjNumber = 4;
+		}
+		else if (dynamic_cast<CWalker*>(m_vecGameObj[i]))
+		{
+			iObjNumber = 5;
+		}
+
+		// ÏÑ∏Ïù¥Î∏å Ïãú Ïñ¥Îñ§ Í∞ùÏ≤¥Ïù∏ÏßÄ Ï†ïÎ≥¥Î•º Ïïå Ïàò ÏóÜÏùÑ Îïå ÏóêÎü¨Î©îÏãúÏßÄ Î∞úÏÉù.
+		if (0 == iObjNumber)
+		{
+			FAILED_CHECK_RETURN(fail(), false);
+		}
+		else
+		{
+			WriteFile(hFile, &iObjNumber, sizeof(_int), &dwByte, nullptr);
+			m_vecGameObj[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
+		}
+	}
+
+
 	return true;
 }
 
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
-	_int iSize;
+	_int iTileSize;
+	_int iObjSize;
+	// Î£∏ Î≥ÄÏàò Î°úÎìú
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
-	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
-	for (_int i = 0; i < iSize; ++i)
+	// ÌÉÄÏùº Î°úÎìú
+	ReadFile(hFile, &iTileSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iTileSize; ++i)
 	{
 		m_vecTile.push_back(CTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }, L"Floor_Level1_Texture"));
 		m_vecTile[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
+		m_vecTile[i]->ReadTextureName(hFile, dwByte);
 	}
 
+	// Í∞ùÏ≤¥ Î°úÎìú
+	ReadFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iObjSize; ++i)
+	{
+		_int iObjNumber = 0;
+		ReadFile(hFile, &iObjNumber, sizeof(_int), &dwByte, nullptr);
+
+		if (1 == iObjNumber)
+		{
+			m_vecGameObj.push_back(CBaller::Create(m_pGraphicDev, _vec3{}));
+		}
+		else if (2 == iObjNumber)
+		{
+			m_vecGameObj.push_back(CBub::Create(m_pGraphicDev, _vec3{}));
+		}
+		else if (3 == iObjNumber)
+		{
+			m_vecGameObj.push_back(CGuppi::Create(m_pGraphicDev, _vec3{}));
+		}
+		else if (4 == iObjNumber)
+		{
+			m_vecGameObj.push_back(CTurret::Create(m_pGraphicDev, _vec3{}));
+		}
+		else if (5 == iObjNumber)
+		{
+			m_vecGameObj.push_back(CWalker::Create(m_pGraphicDev, _vec3{}));
+		}
+		m_vecGameObj[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
+	}
 	return true;
 }
 
@@ -346,10 +442,10 @@ void CRoom::Free(void)
 	for (auto& iter : m_apWall)
 		Safe_Release(iter);
 	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
+	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
 
 	for (auto& iter : m_apDoor)
 		Safe_Release(iter.second);
 
 	__super::Free();
 }
-
