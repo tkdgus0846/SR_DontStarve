@@ -38,7 +38,7 @@ _int CAttack::Update_Component(const _float & fTimeDelta)
 		m_fCoolTime = 0.f;
 	}
 
-	return BEHAVIOR_SUCCES;
+	return BEHAVIOR_TRUE;
 }
 
 void CAttack::Render_Component(void)

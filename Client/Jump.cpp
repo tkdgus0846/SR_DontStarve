@@ -33,7 +33,7 @@ _int CJump::Update_Component(const _float & fTimeDelta)
 	{
 		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y = m_fInit;
 		m_fTime = 0.f;
-		return BEHAVIOR_SUCCES;
+		return BEHAVIOR_TRUE;
 	}
 
 	_float fSpeed = 0.f;
@@ -45,7 +45,7 @@ _int CJump::Update_Component(const _float & fTimeDelta)
 
 	m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
 
-	return BEHAVIOR_RUNNING;
+	return RUNNING;
 }
 
 void CJump::Render_Component(void)

@@ -41,11 +41,11 @@ _int CEvasion::Update_Component(const _float & fTimeDelta)
 			else
 				m_pGameObject->m_pTransform->Move_Strafe(fSpeed * 10.f, fTimeDelta);
 
-			return BEHAVIOR_RUNNING;
+			return RUNNING;
 		}
 	}
 
-	return BEHAVIOR_SUCCES;
+	return BEHAVIOR_TRUE;
 }
 
 void CEvasion::LateUpdate_Component(void)

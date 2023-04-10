@@ -36,35 +36,35 @@ HRESULT CSequence::Ready_Behavior()
 _int CSequence::Update_Component(const _float & fTimeDelta)
 {
 	if (0 == m_VecComponents[ID_UPDATE].size())
-		return BEHAVIOR_FAIL;
+		return BEHAVIOR_FALSE;
 
-	if (BEHAVIOR_FAIL == update_Decorator(fTimeDelta))
-		return BEHAVIOR_FAIL;
+	if (BEHAVIOR_FALSE == update_Decorator(fTimeDelta))
+		return BEHAVIOR_FALSE;
 
 	_int iResult = m_iterCurComponent->pComponent->Update_Component(fTimeDelta);
 
 	switch (iResult)
 	{
-	case BEHAVIOR_RUNNING:
-		return BEHAVIOR_RUNNING;
+	case RUNNING:
+		return RUNNING;
 
-	case BEHAVIOR_SUCCES:
+	case BEHAVIOR_TRUE:
 		++m_iterPreComponent;
 
 		if (m_iterPreComponent == m_VecComponents[ID_UPDATE].end())
 		{
 			m_iterPreComponent = m_VecComponents[ID_UPDATE].begin();
-			return BEHAVIOR_SUCCES;
+			return BEHAVIOR_TRUE;
 		}
 		else
-			return BEHAVIOR_RUNNING;
+			return RUNNING;
 
-	case BEHAVIOR_FAIL:
+	case BEHAVIOR_FALSE:
 		m_iterPreComponent = m_VecComponents[ID_UPDATE].begin();
-		return BEHAVIOR_FAIL;
+		return BEHAVIOR_FALSE;
 	}
 
-	return BEHAVIOR_FAIL;
+	return BEHAVIOR_FALSE;
 }
 
 void CSequence::LateUpdate_Component(void)

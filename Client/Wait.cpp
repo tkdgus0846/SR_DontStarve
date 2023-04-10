@@ -33,10 +33,10 @@ _int CWait::Update_Component(const _float & fTimeDelta)
 	if (m_fTimer >= m_fLimit)
 	{
 		m_fTimer = 0.f;
-		return BEHAVIOR_FAIL;
+		return BEHAVIOR_FALSE;
 	}
 
-	return BEHAVIOR_RUNNING;
+	return RUNNING;
 }
 
 CWait * CWait::Create(LPDIRECT3DDEVICE9 pGraphicDev)

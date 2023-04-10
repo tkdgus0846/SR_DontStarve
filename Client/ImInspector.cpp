@@ -74,7 +74,6 @@ void CImInspector::Show_RoomInfo()
 	pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 20.f, 20.f, m_vObjectPos.z + 20.f };
 	CMyMap* pMyMap = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"));
 	m_pCurRoom = pMyMap->Get_CurRoom(pCamera->m_pTransform->m_vInfo[INFO_POS]);
-	pMyMap->Set_CurRoom(item_current);
 
 	static _int iObjNum = 0, iPre = 0;
 
@@ -97,7 +96,7 @@ void CImInspector::Show_RoomInfo()
 	if (iPre != iObjNum)
 	{
 		m_pCurRoom->Set_DoorType((DOOR_TYPE)iObjNum);
-		iPre = iObjNum;
+		iObjNum = iPre;
 	}
 }
 
