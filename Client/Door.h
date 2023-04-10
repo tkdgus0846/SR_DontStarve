@@ -1,4 +1,5 @@
 #pragma once
+
 #include "GameObject.h"
 
 BEGIN(Engine)
@@ -6,16 +7,14 @@ class CTexture;
 class CCollider;
 END
 
-class CTile;
-class CRoom;
-class CTennel : public CGameObject
+class CDoor : public CGameObject
 {
 private:
-	explicit CTennel(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CTennel();
+	explicit CDoor(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CDoor();
 
 public:
-	virtual HRESULT Ready_GameObject(void) override;
+	virtual HRESULT Ready_GameObject(const _vec3& vPos, _bool IsRot);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
@@ -23,19 +22,12 @@ public:
 private:
 	virtual HRESULT Add_Component() override;
 
-public:
-	void Set_Position(_int iFrontorBack);
-	void Set_Room(CRoom* pRoom) { m_pRoom = pRoom; }
-
 private:
-	Engine::CCollider*		m_pCollider;
 	Engine::CTexture*		m_pTextureCom;
-
-	CTile*		m_pTile;
-	CRoom*		m_pRoom;
+	Engine::CCollider*		m_pCollider;
 
 public:
-	static CTennel*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CDoor*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _bool IsRot = false);
 
 private:
 	virtual void Free(void) override;

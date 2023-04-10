@@ -284,6 +284,9 @@
     <ClInclude Include="IceBeamWeapon.h">
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>GameObject\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -486,6 +489,9 @@
     </ClCompile>
     <ClCompile Include="IceBeamWeapon.cpp">
       <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>GameObject\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

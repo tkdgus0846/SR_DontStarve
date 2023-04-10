@@ -53,6 +53,8 @@ namespace Engine
 
 	enum MOUSEKEYSTATE { DIM_LB, DIM_RB, DIM_MB, DIM_END };
 	enum MOUSEMOVESTATE { DIMS_X, DIMS_Y, DIMS_Z, DIMS_END };
+
+	enum DOOR_DIR { DOOR_UP, DOOR_DOWN, DOOR_LEFT, DOOR_RIGHT };
 }
 
 //	UI
@@ -79,3 +81,23 @@ enum MAPELEMENT
 	MINIMAPEND
 };
 
+// Room의 문 정보를 나타내는 ID
+enum DOOR_TYPE
+{
+	DOOR_ES,
+	DOOR_ESW,
+	DOOR_EW,
+	DOOR_N,
+	DOOR_NE,
+	DOOR_NES,
+	DOOR_NESW,
+	DOOR_NS,
+	DOOR_NW,
+	DOOR_S,
+	DOOR_SW,
+	DOOR_SWN,
+	DOOR_W,
+	DOOR_WNE,
+	DOOR_E,
+	DOOR_END
+};
