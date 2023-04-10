@@ -48,6 +48,11 @@ void CScene::LateUpdate_Scene(void)
 	}	
 }
 
+void Engine::CScene::Set_StaticLayerArr(vector<CLayer*>* layerArr)
+{
+	m_StaticLayerArr = layerArr;
+}
+
 HRESULT CScene::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj)
 {
 	FAILED_CHECK_RETURN(Get_Layer(LayerID)->Add_GameObject(pObjTag, pObj), E_FAIL);

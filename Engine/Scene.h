@@ -21,6 +21,8 @@ public:
 	virtual void		LateUpdate_Scene(void);
 	virtual void		Render_Scene(void)PURE;
 
+	void				Set_StaticLayerArr(vector<CLayer*>* layerArr);
+
 protected:
 	HRESULT			Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj);
 	CGameObject*	Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
