@@ -40,6 +40,10 @@ _int CEditCamera::Update_GameObject(const _float & fTimeDelta)
 		Mouse_Move(fTimeDelta);
 	}
 
+	cout << m_pTransform->m_vInfo[INFO_POS].x << ", "
+		<< m_pTransform->m_vInfo[INFO_POS].y << ", "
+		<< m_pTransform->m_vInfo[INFO_POS].z << endl;
+
 	__super::Update_GameObject(fTimeDelta);
 
 	return OBJ_NOEVENT;
@@ -60,6 +64,11 @@ HRESULT CEditCamera::Add_Component()
 	NULL_CHECK_RETURN(pCamera, E_FAIL);
 	m_uMapComponent[ID_UPDATE].insert({ L"Edit_Camera", pCamera });
 	pCamera->Set_CameraName(L"Edit_Camera");
+
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_PLAYER));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
+	pCollider->Set_BoundingBox({ 2.f,2.f,2.f });
 
 	return S_OK;
 }

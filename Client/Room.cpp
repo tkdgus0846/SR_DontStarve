@@ -58,9 +58,9 @@ _int CRoom::Update_GameObject(const _float& fTimeDelta)
 	for (auto& Tile : m_vecTile)
 		Tile->Update_GameObject(fTimeDelta);
 	
-  // 테스트용 코드
 	for (auto& Obj : m_vecGameObj)
 		Obj->Update_GameObject(fTimeDelta);
+
 	return 0;
 }
 
@@ -78,7 +78,6 @@ void CRoom::LateUpdate_GameObject(void)
 
 	for (auto& Obj : m_vecGameObj)
 		Obj->LateUpdate_GameObject();
-
 }
 
 void CRoom::Render_GameObject(void)
@@ -109,6 +108,26 @@ HRESULT CRoom::CreateSubset()
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
 
 	return S_OK;
+}
+
+void CRoom::FreeSubset()
+{
+	// 바닥, 벽 해제
+	Safe_Release(m_pFloor);
+	for (auto& iter : m_apWall)
+		Safe_Release(iter);
+
+	// 타일 해제
+	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
+	m_vecTile.clear();
+
+	// 오브젝트 해제
+	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
+	m_vecGameObj.clear();
+
+	// 문 해제
+	for (auto& iter : m_apDoor)
+		Safe_Release(iter.second);
 }
 
 void CRoom::Set_DoorType(DOOR_TYPE eType)
@@ -237,7 +256,7 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 					IsRot = true;
 					break;
 				}
-				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, vPos, IsRot);
+				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, vPos, IsRot, this);
 			}
 		}
 		else if (nullptr != m_apDoor[i].second)
@@ -309,6 +328,8 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 	WriteFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	WriteFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
 	WriteFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
+	_int iDoorType = (_int)m_eDoorType;
+	WriteFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
 	m_pTransform->WriteTransformFile(hFile, dwByte);
 	
 	// 타일 컨테이너 저장
@@ -365,12 +386,23 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
+	// 타일 해제
+	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
+	m_vecTile.clear();
+
+	// 오브젝트 해제
+	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
+	m_vecGameObj.clear();
+
 	_int iTileSize;
 	_int iObjSize;
 	// 룸 변수 로드
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
+	_int iDoorType;
+	ReadFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
+	m_eDoorType = (DOOR_TYPE)iDoorType;
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
 	// 타일 로드
@@ -435,14 +467,6 @@ CRoom* CRoom::Create(LPDIRECT3DDEVICE9 pGraphicDev,
 
 void CRoom::Free(void)
 {
-	Safe_Release(m_pFloor);
-	for (auto& iter : m_apWall)
-		Safe_Release(iter);
-	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
-	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
-
-	for (auto& iter : m_apDoor)
-		Safe_Release(iter.second);
-
+	FreeSubset();
 	__super::Free();
 }

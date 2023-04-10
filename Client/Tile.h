@@ -29,6 +29,8 @@ public:
 private:
 	_tchar		m_pTextureName[64];
 	Engine::CTexture*	m_pTextureCom;
+	Engine::CCollider*	m_pCollider;
+	_int				m_iTileOption;
 
 public:
 	static CTile* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, 

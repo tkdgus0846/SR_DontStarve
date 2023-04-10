@@ -15,6 +15,7 @@ enum COLGROUP
 	/* 충돌 레이어임. 그룹별로 충돌 검사를 하기위해서 구분하였음. 콜라이더를 넣어줄때 (클론할때) 세번째 매개변수로 넣어도 되고 콜리전 매니져의 Change_ColGroup 함수를 써도 됨.*/
 	COL_ENVIRONMENT,
 	COL_DETECTION,
+	COL_TRIGGER,
 	COL_PLAYER,
 	COL_ENEMY,
 	COL_PLAYERBULLET,
