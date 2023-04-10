@@ -24,12 +24,15 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
+	CDoor* Get_Door(DOOR_DIR eDir) { return m_apDoor[eDir].second; }
 	CFloor* GetFloor() const { return m_pFloor; }
 	CWall* GetWallArray(_uint index) const { return m_apWall[index]; }
 
-	// ±¸Á¶ °³Æí(·ë->·¹ÀÌ¾î) ÀÌÀü¿¡ ¾²ÀÌ´ø ÇÔ¼ö
-	//void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
-	//void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
+	_int Get_Room_Index();
+
+	void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
+	void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
+
 	_bool& Cur_Door_State(DOOR_DIR eDir) { return m_apDoor[eDir].first; }
 	void Set_DoorType(DOOR_TYPE eType);
 
@@ -39,6 +42,9 @@ private:
 	void	FreeSubset();
 	HRESULT Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, CGameObject* pObj);
 	
+
+
+
 public:
 	void FloorSubSet();
 	void PlaceSubSet();
@@ -75,17 +81,17 @@ private:
 	_float				m_fVtxCntZ;
 	_float				m_fVtxItv;
 
-	// ±âÁ¸ÀÇ ±¸Á¶,
-	// push_backÁ÷Á¢ÀûÀ¸·Î ¾²Áö¸»°í PushBack_½Ã¸®Áî ÇÔ¼öµé·Î ¾²¼À.
-	vector<CGameObject*>	m_vecTile;		// IMGUI¿¡¼­ »ç¿ëÁß
-	vector<CGameObject*> m_vecGameObj;	// IMGUI¿¡¼­ »ç¿ëÁß
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½,
+	// push_backï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PushBack_ï¿½Ã¸ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+	vector<CGameObject*>	m_vecTile;		// IMGUIï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+	vector<CGameObject*> m_vecGameObj;	// IMGUIï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	CFloor*				m_pFloor;
 	array<CWall*, 4>	m_apWall;
 	array<pair<_bool, CDoor*>, 4>	m_apDoor;
 	DOOR_TYPE			m_eDoorType;
 	
 private:
-	// ·¹ÀÌ¾î¿ë ÄÁÅ×ÀÌ³Ê
+	// ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½
 	vector<CLayer*> m_vecLayer;
 	list<CCollider*> m_ColliderList[COL_STATIC_END];
 

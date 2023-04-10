@@ -73,7 +73,8 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-			//CFileSystem::Load(L"tmp.dat");
+
+			CFileSystem::Load(L"Save.dat");
 			return 0;
 		}
 	}
@@ -88,7 +89,7 @@ void CLogo::LateUpdate_Scene(void)
 
 void CLogo::Render_Scene(void)
 {
-	// _DEBUG ¿ë Ãâ·Â
+	// _DEBUG ï¿½ï¿½ ï¿½ï¿½ï¿½
 
 	Engine::Render_Font(L"Font_Default", m_pLoading->Get_String(), &_vec2(20.f, 20.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 

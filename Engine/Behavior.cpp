@@ -53,11 +53,11 @@ _int CBehavior::update_Decorator(const _float & fTimeDelta)
 	{
 		_int iResult = Deco.pComponent->Update_Component(fTimeDelta);
 
-		if (BEHAVIOR_FALSE == iResult)
-			return BEHAVIOR_FALSE;
+		if (BEHAVIOR_FAIL == iResult)
+			return BEHAVIOR_FAIL;
 	}
 
-	return BEHAVIOR_TRUE;
+	return BEHAVIOR_SUCCES;
 }
 
 void CBehavior::Free()

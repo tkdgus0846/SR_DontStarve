@@ -31,17 +31,17 @@ _int CMoveLook::Update_Component(const _float & fTimeDelta)
 	m_fTimer += fTimeDelta;
 
 	_float fSpeed = 0.f;
-	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FALSE);
+	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FAIL);
 
 	m_pGameObject->m_pTransform->Move_Walk(fSpeed, fTimeDelta);
 
 	if (m_fTimer >= m_fLimit)
 	{
 		m_fTimer = 0.f;
-		return BEHAVIOR_TRUE;
+		return BEHAVIOR_SUCCES;
 	}
 	else
-		return RUNNING;
+		return BEHAVIOR_RUNNING;
 }
 
 void CMoveLook::Render_Component(void)

@@ -38,7 +38,7 @@ _int CRandomLook::Update_Component(const _float & fTimeDelta)
 
 	m_pGameObject->m_pTransform->Set_Target(vLookPos);
 	
-	return BEHAVIOR_TRUE;
+	return BEHAVIOR_SUCCES;
 }
 
 void CRandomLook::LateUpdate_Component(void)

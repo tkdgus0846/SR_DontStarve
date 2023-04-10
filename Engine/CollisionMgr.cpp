@@ -194,6 +194,7 @@ void Engine::CCollisionMgr::Remove_Collider(CGameObject* gameObject)
 	Find_Remove_Collider(gameObject, COL_ENEMY);
 	Find_Remove_Collider(gameObject, COL_OBJ);
 	Find_Remove_Collider(gameObject, COL_DETECTION);
+	Find_Remove_Collider(gameObject, COL_TRIGGER);
 }
 
 void Engine::CCollisionMgr::Toggle_ColliderRender()
