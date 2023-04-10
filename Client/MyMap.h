@@ -20,8 +20,9 @@ public:
 	virtual void Render_GameObject(void) override;
 
 	CRoom*			Get_CurRoom(const _vec3& vPos);
+	CRoom*			Get_Room(const _int iIndex);
 	void			Set_CurRoom(const _uint iIndex) { m_pCurRoom = m_arrRoom[iIndex]; }
-	CTennel*		Get_Tennel() { return m_pTennel[0]; }
+	CTennel*		Get_Tennel(const _int iIndex) { return m_pTennel[iIndex]; }
 
 	_bool WriteMapFile(HANDLE hFile, DWORD& dwByte);
 	_bool ReadMapFile(HANDLE hFile, DWORD& dwByte);

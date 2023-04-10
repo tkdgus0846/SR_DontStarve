@@ -27,17 +27,17 @@ _int CRangeCheck::Update_Component(const _float & fTimeDelta)
 	CComponent* pComponent = m_pGameObject->Get_Component(L"Range", ID_ALL);
 
 	if (dynamic_cast<CCollider*>(pComponent)->Get_ColliderList().empty())
-		return BEHAVIOR_FALSE;
+		return BEHAVIOR_FAIL;
 	else
 	{
 		for (auto iter : dynamic_cast<CCollider*>(pComponent)->Get_ColliderList())
 		{
 			if (nullptr != dynamic_cast<CPlayer*>(iter.second.OtherGameObject))
-				return BEHAVIOR_TRUE;
+				return BEHAVIOR_SUCCES;
 		}
 	}
 
-	return BEHAVIOR_FALSE;
+	return BEHAVIOR_FAIL;
 }
 
 void CRangeCheck::LateUpdate_Component(void)

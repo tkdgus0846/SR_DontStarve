@@ -107,6 +107,28 @@ void CTile::Change_Texture(const _tchar * pTextureName)
 	Add_Render_Component();
 }
 
+_vec3 CTile::NormalVectorFromTile()
+{
+	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
+	NULL_CHECK(pBufferCom);
+	Triangle tri;
+
+	VTXTEX*        pVertex = nullptr;
+	pBufferCom->GetVertexBuffer()->Lock(0, 0, (void**)&pVertex, 0);
+
+	tri.v[0] = pVertex[0].vPos;
+	tri.v[1] = pVertex[1].vPos;
+	tri.v[2] = pVertex[2].vPos;
+
+	pBufferCom->GetVertexBuffer()->Unlock();
+
+	tri.v[0].TransformCoord(&m_pTransform->m_matWorld);
+	tri.v[1].TransformCoord(&m_pTransform->m_matWorld);
+	tri.v[2].TransformCoord(&m_pTransform->m_matWorld);
+
+	return tri.Normal();
+}
+
 CTile * CTile::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos,
 	const _tchar* pTextureName)
 {

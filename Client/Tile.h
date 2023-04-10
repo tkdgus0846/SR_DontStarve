@@ -25,6 +25,7 @@ private:
 
 public:
 	void Change_Texture(const _tchar* pTextureName);
+	_vec3 NormalVectorFromTile();
 
 private:
 	_tchar		m_pTextureName[64];
