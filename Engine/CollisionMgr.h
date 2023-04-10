@@ -29,7 +29,7 @@ private:
 	_bool		Check_BoundingBox(CCollider * pSrc, CCollider * pDest, _float * pX, _float * pY, _float * pZ);
 	
 private:
-	list<CCollider*>	m_ColliderList[COL_END];
+	list<CCollider*>	m_ColliderList[COL_DYNAMIC_END];
 	_bool				m_bIsRender;
 
 private:

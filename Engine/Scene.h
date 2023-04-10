@@ -27,7 +27,7 @@ protected:
 
 protected:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
-	array<CLayer*, LAYER_END>	m_arrLayer;
+	array<CLayer*, LAYER_STATIC_END>	m_arrLayer;
 
 protected:
 	virtual void	Free(void);

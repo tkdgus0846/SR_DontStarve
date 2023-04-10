@@ -18,6 +18,9 @@ public:
 	virtual void Render_GameObject(void) override;
 	void WriteTextureName(HANDLE hFile, DWORD& dwByte);
 	void ReadTextureName(HANDLE hFile, DWORD& dwByte);
+	CCollider*	GetCollider() { return m_pCollider; }
+
+	_vec3	NormalVectorFromTile();
 
 private:
 	virtual HRESULT Add_Component() override;

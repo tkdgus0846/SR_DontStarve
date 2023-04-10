@@ -12,6 +12,7 @@
 #include "Tile.h"
 #include "Door.h"
 
+
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
 	m_fVtxCntZ(0.f), m_fVtxItv(0.f)
@@ -32,34 +33,39 @@ HRESULT CRoom::Ready_GameObject(const _float& fVtxCntX, const _float& fVtxCntZ, 
 	m_fVtxItv = fVtxItv;
 	m_fVtxCntX = fVtxCntX;
 	m_fVtxCntZ = fVtxCntZ;
+	
+	for (int i = 0; i < LAYER_STATIC_END; i++)
+	{
+		m_vecLayer.push_back(CLayer::Create());
+	}
 
 	HRESULT result = __super::Ready_GameObject();
 	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);
-
+	
 	return result;
 }
 
 _int CRoom::Update_GameObject(const _float& fTimeDelta)
 {
-	__super::Update_GameObject(fTimeDelta);
+	//__super::Update_GameObject(fTimeDelta);
 
-	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
+	//__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
-	m_pFloor->Update_GameObject(fTimeDelta);
-	for (auto& iter : m_apWall)
-		iter->Update_GameObject(fTimeDelta);
+	//m_pFloor->Update_GameObject(fTimeDelta);
+	//for (auto& Wall : m_apWall)
+	//	Wall->Update_GameObject(fTimeDelta);
 
-	for (auto& iter : m_apDoor)
-	{
-		if (nullptr != iter.second)
-			iter.second->Update_GameObject(fTimeDelta);
-	}
+	//for (auto& Door : m_apDoor)
+	//{
+	//	if (nullptr != Door.second)
+	//		Door.second->Update_GameObject(fTimeDelta);
+	//}
 
-	for (auto& Tile : m_vecTile)
-		Tile->Update_GameObject(fTimeDelta);
-	
-	for (auto& Obj : m_vecGameObj)
-		Obj->Update_GameObject(fTimeDelta);
+	//for (auto& Tile : m_vecTile)
+	//	Tile->Update_GameObject(fTimeDelta);
+	//
+	//for (auto& Obj : m_vecGameObj)
+	//	Obj->Update_GameObject(fTimeDelta);
 
 	return 0;
 }
@@ -69,15 +75,15 @@ void CRoom::LateUpdate_GameObject(void)
 	// 룸 특성상 트랜스폼 외엔 안쓸거같아서 일단 주석처리
 	//__super::LateUpdate_GameObject();
 
-	m_pFloor->LateUpdate_GameObject();
-	for (auto& iter : m_apWall)
-		iter->LateUpdate_GameObject();
+	//m_pFloor->LateUpdate_GameObject();
+	//for (auto& Wall : m_apWall)
+	//	Wall->LateUpdate_GameObject();
 
-	for (auto& Tile : m_vecTile)
-		Tile->LateUpdate_GameObject();
+	//for (auto& Tile : m_vecTile)
+	//	Tile->LateUpdate_GameObject();
 
-	for (auto& Obj : m_vecGameObj)
-		Obj->LateUpdate_GameObject();
+	//for (auto& Obj : m_vecGameObj)
+	//	Obj->LateUpdate_GameObject();
 }
 
 void CRoom::Render_GameObject(void)
@@ -85,15 +91,15 @@ void CRoom::Render_GameObject(void)
 	// 룸 특성상 트랜스폼 외엔 안쓸거같아서 일단 주석처리
 	//__super::Render_GameObject();
 
-	m_pFloor->Render_GameObject();
-	for (auto& iter : m_apWall)
-		iter->Render_GameObject();
+	//m_pFloor->Render_GameObject();
+	//for (auto& Wall : m_apWall)
+	//	Wall->Render_GameObject();
 
-	for (auto& Tile : m_vecTile)
-		Tile->Render_GameObject();
+	//for (auto& Tile : m_vecTile)
+	//	Tile->Render_GameObject();
 
-	for (auto& Obj : m_vecGameObj)
-		Obj->Render_GameObject();
+	//for (auto& Obj : m_vecGameObj)
+	//	Obj->Render_GameObject();
 }
 
 HRESULT CRoom::CreateSubset()
@@ -118,7 +124,7 @@ void CRoom::FreeSubset()
 		Safe_Release(iter);
 
 	// 타일 해제
-	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
+	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CGameObject*>);
 	m_vecTile.clear();
 
 	// 오브젝트 해제
@@ -128,6 +134,12 @@ void CRoom::FreeSubset()
 	// 문 해제
 	for (auto& iter : m_apDoor)
 		Safe_Release(iter.second);
+}
+
+HRESULT CRoom::Add_GameObject(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj)
+{
+	FAILED_CHECK_RETURN(m_vecLayer[LayerID]->Add_GameObject(pObjTag, pObj), E_FAIL);
+	return S_OK;
 }
 
 void CRoom::Set_DoorType(DOOR_TYPE eType)
@@ -337,7 +349,7 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 	for (_int i = 0; i < iTileSize; ++i)
 	{
 		m_vecTile[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
-		m_vecTile[i]->WriteTextureName(hFile, dwByte);
+		dynamic_cast<CTile*>(m_vecTile[i])->WriteTextureName(hFile, dwByte);
 	}
 		
 	
@@ -371,7 +383,7 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 		// 세이브 시 어떤 객체인지 정보를 알 수 없을 때 에러메시지 발생.
 		if (0 == iObjNumber)
 		{
-			FAILED_CHECK_RETURN(fail(), false);
+			FAILED_CHECK_RETURN(E_FAIL, false);
 		}
 		else
 		{
@@ -387,7 +399,7 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
 	// 타일 해제
-	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
+	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CGameObject*>);
 	m_vecTile.clear();
 
 	// 오브젝트 해제
@@ -409,9 +421,23 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	ReadFile(hFile, &iTileSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iTileSize; ++i)
 	{
-		m_vecTile.push_back(CTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }, L"Floor_Level1_Texture"));
+		// 타일 트랜스폼 컴포넌트 정보 로드
+		CGameObject* objTmp = CTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }, L"Floor_Level1_Texture");
+		PushBack_Tile(objTmp);
+
+		CTile* tmp = dynamic_cast<CTile*>(objTmp);
 		m_vecTile[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
-		m_vecTile[i]->ReadTextureName(hFile, dwByte);
+		dynamic_cast<CTile*>(m_vecTile[i])->ReadTextureName(hFile, dwByte);
+
+		// 타일 콜라이더 크기 조절 분기문(더러움주의)
+		if (fabs(tmp->NormalVectorFromTile().Degree(_vec3::Up())) < 0.1f
+			|| fabs(tmp->NormalVectorFromTile().Degree(-_vec3::Up())) < 0.1f)
+			tmp->GetCollider()->Set_BoundingBox({ 10.f, 1.f, 10.f });
+		else if(fabs(tmp->NormalVectorFromTile().Degree(_vec3::Right())) < 0.1f
+			|| fabs(tmp->NormalVectorFromTile().Degree(-_vec3::Right())) < 0.1f)
+			tmp->GetCollider()->Set_BoundingBox({ 1.f, 10.f, 10.f });
+		else
+			tmp->GetCollider()->Set_BoundingBox({ 10.f, 10.f, 1.f });
 	}
 
 	// 객체 로드
@@ -423,27 +449,47 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 
 		if (1 == iObjNumber)
 		{
-			m_vecGameObj.push_back(CBaller::Create(m_pGraphicDev, _vec3{}));
+			PushBack_GameObj(LAYER_MONSTER, L"Baller" ,CBaller::Create(m_pGraphicDev, _vec3{}), COL_ENEMY);
 		}
 		else if (2 == iObjNumber)
 		{
-			m_vecGameObj.push_back(CBub::Create(m_pGraphicDev, _vec3{}));
+			PushBack_GameObj(LAYER_MONSTER, L"Bub", CBub::Create(m_pGraphicDev, _vec3{}), COL_ENEMY);
 		}
 		else if (3 == iObjNumber)
 		{
-			m_vecGameObj.push_back(CGuppi::Create(m_pGraphicDev, _vec3{}));
+			PushBack_GameObj(LAYER_MONSTER, L"Guppi", CGuppi::Create(m_pGraphicDev, _vec3{}), COL_ENEMY);
 		}
 		else if (4 == iObjNumber)
 		{
-			m_vecGameObj.push_back(CTurret::Create(m_pGraphicDev, _vec3{}));
+			PushBack_GameObj(LAYER_MONSTER, L"Turret", CTurret::Create(m_pGraphicDev, _vec3{}), COL_ENEMY);
 		}
 		else if (5 == iObjNumber)
 		{
-			m_vecGameObj.push_back(CWalker::Create(m_pGraphicDev, _vec3{}));
+			PushBack_GameObj(LAYER_MONSTER, L"Walker", CWalker::Create(m_pGraphicDev, _vec3{}), COL_ENEMY);
 		}
 		m_vecGameObj[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
 	}
 	return true;
+}
+
+void CRoom::PushBack_Tile(CGameObject * pTile)
+{
+	NULL_CHECK(pTile);
+	m_vecTile.push_back(pTile);
+	Add_GameObject(LAYER_ENVIRONMENT, L"Tile", pTile);
+	CCollider* pCol = dynamic_cast<CCollider*>(pTile->Get_Component(L"Collider", ID_ALL));
+	NULL_CHECK(pCol);
+	m_ColliderList[COL_ENVIRONMENT].push_back(pCol);
+}
+
+void CRoom::PushBack_GameObj(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj, COLGROUP eColgroup)
+{
+	NULL_CHECK(pObj);
+	m_vecGameObj.push_back(pObj);
+	Add_GameObject(LayerID, pObjTag, pObj);
+	CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(L"Collider", ID_ALL));
+	NULL_CHECK(pCol);
+	m_ColliderList[eColgroup].push_back(pCol);
 }
 
 HRESULT CRoom::Add_Component(void)

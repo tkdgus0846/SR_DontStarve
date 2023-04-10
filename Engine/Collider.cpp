@@ -13,7 +13,7 @@ CCollider::CCollider(LPDIRECT3DDEVICE9 pGraphicDev) :
 	m_bRenderByOwnerPos(true),
 	m_vCenterPos({0.f,0.f,0.f}),
 	m_VOriginCenterPos({ 0.f,0.f,0.f }),
-	m_eColGroup(COL_END)
+	m_eColGroup(COL_DYNAMIC_END)
 {
 }
 

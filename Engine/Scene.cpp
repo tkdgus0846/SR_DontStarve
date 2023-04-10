@@ -6,7 +6,7 @@ CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	m_pGraphicDev->AddRef();
 
-	for (int i = 0; i < LAYER_END; i++)
+	for (int i = 0; i < LAYER_STATIC_END; i++)
 	{
 		m_arrLayer[i] = CLayer::Create();
 	}

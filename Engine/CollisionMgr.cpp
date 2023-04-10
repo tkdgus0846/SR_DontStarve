@@ -98,7 +98,7 @@ void CCollisionMgr::Check_Collision(COLGROUP ID1, COLGROUP ID2)
 
 void CCollisionMgr::Add_Collider(COLGROUP eID, CCollider * pCollider)
 {
-	if (COL_END <= eID || nullptr == pCollider)
+	if (COL_DYNAMIC_END <= eID || nullptr == pCollider)
 		return;
 	m_ColliderList[eID].push_back(pCollider);
 
@@ -110,7 +110,7 @@ void CCollisionMgr::Change_ColGroup(CCollider* collider, COLGROUP changeID)
 {
 	list<CCollider*>::iterator iter;
 	_bool found = false;
-	for (int i = 0; i < COL_END; i++)
+	for (int i = 0; i < COL_DYNAMIC_END; i++)
 	{
 		for (iter = m_ColliderList[i].begin(); iter != m_ColliderList[i].end(); ++iter)
 		{
@@ -172,7 +172,7 @@ void Engine::CCollisionMgr::Remove_Collider(CGameObject* gameObject)
 void Engine::CCollisionMgr::Toggle_ColliderRender()
 {
 	m_bIsRender = (m_bIsRender == false) ? true : false;
-	for (int i = 0; i < COL_END; i++)
+	for (int i = 0; i < COL_DYNAMIC_END; i++)
 		for (auto col : m_ColliderList[i])
 			col->Set_IsRender(m_bIsRender);
 }
