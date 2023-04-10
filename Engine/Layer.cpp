@@ -2,6 +2,9 @@
 #include "Layer.h"
 
 #include "Export_Function.h"
+#include "GameObject.h"
+#include "Component.h"
+
 CLayer::CLayer()
 {
 }
@@ -24,6 +27,7 @@ HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pGameObject
 {
 	if (nullptr == pGameObject)
 		return E_FAIL;
+	if (pGameObject == nullptr) return S_OK;
 
 	m_uMapObject.insert({ pObjTag, pGameObject });
 

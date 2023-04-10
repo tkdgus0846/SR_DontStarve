@@ -1,11 +1,15 @@
 ﻿#include "stdafx.h"
 #include "CollisionMgr.h"
+#include "Collider.h"
 
 IMPLEMENT_SINGLETON(CCollisionMgr)
 
 CCollisionMgr::CCollisionMgr()
 {
 	m_bIsRender = false;
+
+	for (int i = 0; i < COL_STATIC_END; i++)
+		m_StaticColliderList[i] = nullptr;
 }
 
 
@@ -16,6 +20,9 @@ CCollisionMgr::~CCollisionMgr()
 
 void CCollisionMgr::Check_Collision(COLGROUP ID1, COLGROUP ID2)
 {
+
+	if (Get_ColliderList(ID1) == nullptr) return;
+	if (Get_ColliderList(ID2) == nullptr) return;
 	
 	if (Get_ColliderList(ID1)->empty())
 		return;
@@ -111,7 +118,7 @@ void CCollisionMgr::Change_ColGroup(CCollider* collider, COLGROUP changeID)
 {
 	list<CCollider*>::iterator iter;
 	_bool found = false;
-	for (int i = 0; i < COL_DYNAMIC_END; i++)
+	for (int i = COL_STATIC_END+1; i < COL_DYNAMIC_END; i++)
 	{
 		for (iter = Get_ColliderList((COLGROUP)i)->begin(); iter != Get_ColliderList((COLGROUP)i)->end(); ++iter)
 		{
@@ -150,8 +157,10 @@ void Engine::CCollisionMgr::Set_StaticColliderList(list<CCollider*>* pStaticColl
 
 list<CCollider*>* CCollisionMgr::Get_ColliderList(COLGROUP colID)
 {
-	if (colID < COL_STATIC_END)
+	if (colID <= COL_STATIC_END)
 	{
+		if (m_StaticColliderList[colID] == nullptr) return nullptr;
+
 		return m_StaticColliderList[colID];
 	}
 	else if (colID < COL_DYNAMIC_END)
@@ -191,8 +200,11 @@ void Engine::CCollisionMgr::Toggle_ColliderRender()
 {
 	m_bIsRender = (m_bIsRender == false) ? true : false;
 	for (int i = 0; i < COL_DYNAMIC_END; i++)
+	{
+		if (i == COL_STATIC_END) continue;
 		for (auto col : *Get_ColliderList((COLGROUP)i))
 			col->Set_IsRender(m_bIsRender);
+	}	
 }
 
 bool CCollisionMgr::Collision_Box(CCollider* pSrc, CCollider* pDest, COL_DIR& colDir, BoundingBox& bound, _vec3& amountVec)

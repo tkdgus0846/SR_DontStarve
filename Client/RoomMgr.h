@@ -1,47 +1,46 @@
 #pragma once
-#include "GameObject.h"
-#include "Room.h"
+
+#include "Base.h"
+#include "Include.h"
 
 BEGIN(Engine)
-class CTexture;
+class CCollider;
+class CLayer;
 END
 
 class CRoom;
-class CTennel;
 
-class CRoomMgr
+class CRoomMgr : public CBase
 {
 	DECLARE_SINGLETON(CRoomMgr);
 public:
-	CRoomMgr();
-	virtual ~CRoomMgr();
+	explicit CRoomMgr();
+	~CRoomMgr();
 
 public:
 	HRESULT Ready_RoomMgr(LPDIRECT3DDEVICE9	pGraphicDev);
 
-	CRoom*			Get_CurRoom(const _vec3& vPos);
-	void			Set_CurRoom(const _uint iIndex) { m_pCurRoom = m_arrRoom[iIndex]; }
-	CTennel*		Get_Tennel() { return m_pTennel[0]; }
+	class CRoom*			Get_CurRoom(const _vec3& vPos);
+	void			Set_CurRoom(const _uint iIndex); 
+	class CTennel*		Get_Tennel() { return m_pTennel[0]; }
 
 	_bool WriteMapFile(HANDLE hFile, DWORD& dwByte);
 	_bool ReadMapFile(HANDLE hFile, DWORD& dwByte);
 
-	vector<CLayer*>* Get_CurLayerVec() { return m_pCurRoom->GetLayerVec(); }
-	list<CCollider*>* Get_CurColliderList(_int iIndex)
-	{
-		return m_pCurRoom->GetColliderList(iIndex);
-	}
+	vector<CLayer*>* Get_CurLayerVec();
+	list<CCollider*>* Get_CurColliderList(_int iIndex);
+	
 
 private:
 	void			Create_Default_Room();
 			
 private:
-	CRoom*				m_pCurRoom;
+	class CRoom*				m_pCurRoom;
 	array<CRoom*, 25>	m_arrRoom;
-	CTennel*			m_pTennel[2];//0 == 진입, 1 == 진출
+	class CTennel*			m_pTennel[2];//0 == 진입, 1 == 진출
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 
-private:
+public:
 	void Free();
 };
 

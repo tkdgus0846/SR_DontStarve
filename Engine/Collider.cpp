@@ -41,6 +41,7 @@ HRESULT CCollider::Ready_Collider()
 
 _int CCollider::Update_Component(const _float& fTimeDelta)
 {
+	
 	_int iExit = __super::Update_Component(fTimeDelta);
 	if (iExit != 0) return iExit;
 

@@ -26,6 +26,7 @@ HRESULT CTile::Ready_GameObject(const _tchar* pTextureName)
 
 _int CTile::Update_GameObject(const _float & fTimeDelta)
 {
+	
 	__super::Update_GameObject(fTimeDelta);
 
 	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
@@ -60,7 +61,7 @@ void CTile::ReadTextureName(HANDLE hFile, DWORD & dwByte)
 
 _vec3 CTile::NormalVectorFromTile()
 {
-	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
+	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Get_Component(L"RcTex", ID_RENDER));
 	NULL_CHECK(pBufferCom);
 	Triangle tri;
 
@@ -84,7 +85,7 @@ HRESULT CTile::Add_Component()
 {
 	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"RcTex", pBufferCom });
+	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pBufferCom });
 
 	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENVIRONMENT));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);

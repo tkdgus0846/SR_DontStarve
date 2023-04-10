@@ -1,9 +1,12 @@
 #pragma once
 
 #include "Base.h"
-#include "Layer.h"
+#include "Include.h"
 
 BEGIN(Engine)
+
+class CLayer;
+class CComponent;
 
 class  CScene : public CBase
 {

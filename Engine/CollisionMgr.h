@@ -1,8 +1,9 @@
 ﻿#pragma once
 #include "Base.h"
-#include "Collider.h"
 
 BEGIN(Engine)
+
+class CCollider;
 
 class CCollisionMgr : public CBase
 {

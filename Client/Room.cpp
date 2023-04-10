@@ -6,6 +6,7 @@
 #include "Turret.h"
 #include "Walker.h"
 #include "Export_Function.h"
+#include "Layer.h"
 
 #include "Floor.h"
 #include "Wall.h"
@@ -16,11 +17,17 @@
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
 	m_fVtxCntZ(0.f), m_fVtxItv(0.f)
+	, m_pFloor(nullptr)
 {
 	for (auto& iter : m_apDoor)
 	{
 		iter.first = false;
 		iter.second = nullptr;
+	}
+
+	for (auto& iter : m_apWall)
+	{
+		iter = nullptr;
 	}
 }
 
@@ -107,10 +114,19 @@ HRESULT CRoom::CreateSubset()
 	// 바닥 생성
 	m_pFloor = CFloor::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pFloor, E_FAIL);
+	Add_GameObject(LAYER_ENVIRONMENT, L"Floor", m_pFloor);
+	CCollider* pCol = dynamic_cast<CCollider*>(m_pFloor->Get_Component(L"Collider", ID_ALL));
+	NULL_CHECK(pCol);
+	m_ColliderList[COL_ENVIRONMENT].push_back(pCol);
 
-	// 벽 4면 생성
-	for (auto& iter : m_apWall)
+	//// 벽 4면 생성
+	for (auto& iter : m_apWall) {
 		iter = CWall::Create(m_pGraphicDev);
+		Add_GameObject(LAYER_ENVIRONMENT, L"Wall", iter);
+		CCollider* pCol = dynamic_cast<CCollider*>(iter->Get_Component(L"Collider", ID_ALL));
+		NULL_CHECK(pCol);
+		m_ColliderList[COL_ENVIRONMENT].push_back(pCol);
+	}
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
 
 	return S_OK;
@@ -118,22 +134,25 @@ HRESULT CRoom::CreateSubset()
 
 void CRoom::FreeSubset()
 {
-	// 바닥, 벽 해제
-	Safe_Release(m_pFloor);
-	for (auto& iter : m_apWall)
-		Safe_Release(iter);
+	for_each(m_vecLayer.begin(), m_vecLayer.end(), CDeleteObj());
+	//// 바닥, 벽 해제
+	//Safe_Release(m_pFloor);
+	//for (auto& iter : m_apWall)
+	//	Safe_Release(iter);
 
-	// 타일 해제
-	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CGameObject*>);
-	m_vecTile.clear();
+	//// 타일 해제
+	/*for_each(m_vecTile.begin(), m_vecTile.end(), CDeleteObj());
+	m_vecTile.clear();*/
 
-	// 오브젝트 해제
-	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
-	m_vecGameObj.clear();
+	//// 오브젝트 해제
+	//for_each(m_vecGameObj.begin(), m_vecGameObj.end(), CDeleteObj());
+	//m_vecGameObj.clear();
 
-	// 문 해제
-	for (auto& iter : m_apDoor)
-		Safe_Release(iter.second);
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	Safe_Release(m_apDoor[i].second);
+	//}
+
 }
 
 HRESULT CRoom::Add_GameObject(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj)
@@ -269,6 +288,7 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 					break;
 				}
 				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, vPos, IsRot, this);
+				Add_GameObject(LAYER_TRIGGER, L"Door", m_apDoor[i].second);
 			}
 		}
 		else if (nullptr != m_apDoor[i].second)
@@ -281,7 +301,7 @@ void CRoom::FloorSubSet()
 	// 바닥 위치 조정
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
-
+	if (nullptr == m_pFloor) return;
 	m_pFloor->m_pTransform->Set_Pos(vPos);
 }
 
@@ -296,7 +316,7 @@ void CRoom::PlaceSubSet()
 	float fLengthY = VTXITV;
 
 	m_pTransform->Get_Info(INFO_POS, &vPos);
-
+	if (nullptr == m_apWall[0]) return;
 	m_apWall[0]->m_pTransform->Set_Pos(vPos);
 	m_apWall[1]->m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z + fLengthZ);
 	m_apWall[2]->m_pTransform->Set_Pos(vPos.x + fLengthX, vPos.y, vPos.z + fLengthZ);
@@ -412,9 +432,12 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
+
+	//문 로드
 	_int iDoorType;
 	ReadFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
 	m_eDoorType = (DOOR_TYPE)iDoorType;
+	//Set_DoorType(m_eDoorType = (DOOR_TYPE)iDoorType);
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
 	// 타일 로드
@@ -449,23 +472,25 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 
 		if (1 == iObjNumber)
 		{
-			PushBack_GameObj(LAYER_MONSTER, L"Baller" ,CBaller::Create(m_pGraphicDev, _vec3{}), COL_ENEMY);
+			PushBack_GameObj(LAYER_MONSTER, L"Baller" ,CBaller::Create(m_pGraphicDev, _vec3{}), COL_ENEMY, L"BodyCollider");
 		}
 		else if (2 == iObjNumber)
 		{
-			PushBack_GameObj(LAYER_MONSTER, L"Bub", CBub::Create(m_pGraphicDev, _vec3{}), COL_ENEMY);
+			PushBack_GameObj(LAYER_MONSTER, L"Bub", CBub::Create(m_pGraphicDev, _vec3{}), COL_ENEMY
+				, L"BodyCollider");
 		}
 		else if (3 == iObjNumber)
 		{
-			PushBack_GameObj(LAYER_MONSTER, L"Guppi", CGuppi::Create(m_pGraphicDev, _vec3{}), COL_ENEMY);
+			PushBack_GameObj(LAYER_MONSTER, L"Guppi", CGuppi::Create(m_pGraphicDev, _vec3{}), COL_ENEMY
+				, L"BodyCollider");
 		}
 		else if (4 == iObjNumber)
 		{
-			PushBack_GameObj(LAYER_MONSTER, L"Turret", CTurret::Create(m_pGraphicDev, _vec3{}), COL_ENEMY);
+			PushBack_GameObj(LAYER_MONSTER, L"Turret", CTurret::Create(m_pGraphicDev, _vec3{}), COL_ENEMY, L"BodyCollider");
 		}
 		else if (5 == iObjNumber)
 		{
-			PushBack_GameObj(LAYER_MONSTER, L"Walker", CWalker::Create(m_pGraphicDev, _vec3{}), COL_ENEMY);
+			PushBack_GameObj(LAYER_MONSTER, L"Walker", CWalker::Create(m_pGraphicDev, _vec3{}), COL_ENEMY, L"BodyCollider");
 		}
 		m_vecGameObj[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
 	}
@@ -482,12 +507,12 @@ void CRoom::PushBack_Tile(CGameObject * pTile)
 	m_ColliderList[COL_ENVIRONMENT].push_back(pCol);
 }
 
-void CRoom::PushBack_GameObj(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj, COLGROUP eColgroup)
+void CRoom::PushBack_GameObj(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj, COLGROUP eColgroup, const _tchar* colliderName)
 {
 	NULL_CHECK(pObj);
 	m_vecGameObj.push_back(pObj);
 	Add_GameObject(LayerID, pObjTag, pObj);
-	CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(L"Collider", ID_ALL));
+	CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(colliderName, ID_ALL));
 	NULL_CHECK(pCol);
 	m_ColliderList[eColgroup].push_back(pCol);
 }

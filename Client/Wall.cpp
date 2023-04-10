@@ -19,7 +19,7 @@ void CWall::OnCollisionEnter(const Collision* collision)
 
 void CWall::OnCollisionStay(const Collision* collision)
 {
-	if (collision->MyCollider == Get_Component(L"WallCollider", ID_ALL) && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
+	if (collision->MyCollider == Get_Component(L"Collider", ID_ALL) && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
 	{
 		_vec3 amountVec = collision->amountVec;
 		if (m_pTransform == nullptr) return;
@@ -67,6 +67,7 @@ HRESULT CWall::Ready_GameObject(void)
 
 _int CWall::Update_GameObject(const _float & fTimeDelta)
 {
+	
 	__super::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -99,7 +100,7 @@ HRESULT CWall::Add_Component()
 	// Wall이랑 Floor 룸의 콜라이더 리스트에 넣어줘야함.
 	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENVIRONMENT));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"WallCollider", m_pCollider });
+	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
 
 	return S_OK;
 }

@@ -82,7 +82,7 @@ CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject, CBlac
 	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject, pBlackBoard);
 }
 
-CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize, COLTYPE colType)
+CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize)
 {
 	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject, eColGroup, boundSize);
 }

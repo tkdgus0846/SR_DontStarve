@@ -2,6 +2,8 @@
 #include "RoomMgr.h"
 
 #include "Tennel.h"
+#include "Room.h"
+#include "Layer.h"
 #include "Export_Function.h"
 
 IMPLEMENT_SINGLETON(CRoomMgr)
@@ -116,6 +118,11 @@ CRoom * CRoomMgr::Get_CurRoom(const _vec3& vPos)
 	return m_arrRoom[iIndex];
 }
 
+void CRoomMgr::Set_CurRoom(const _uint iIndex)
+{
+	m_pCurRoom = m_arrRoom[iIndex];
+}
+
 _bool CRoomMgr::WriteMapFile(HANDLE hFile, DWORD& dwByte)
 {
 	_int iSize = m_arrRoom.size();
@@ -139,6 +146,16 @@ _bool CRoomMgr::ReadMapFile(HANDLE hFile, DWORD& dwByte)
 	}
 
 	return true;
+}
+
+vector<CLayer*>* CRoomMgr::Get_CurLayerVec()
+{
+	return m_pCurRoom->GetLayerVec();
+}
+
+list<CCollider*>* CRoomMgr::Get_CurColliderList(_int iIndex)
+{
+	return m_pCurRoom->GetColliderList(iIndex);
 }
 
 void CRoomMgr::Free()

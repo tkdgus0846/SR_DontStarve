@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "Scene.h"
+#include "Layer.h"
 
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 {
 	m_pGraphicDev->AddRef();
 
+	m_DynamicLayerArr.resize(LAYER_DYNAMIC_END - LAYER_STATIC_END - 1);
 	for (int i = 0; i < LAYER_DYNAMIC_END - LAYER_STATIC_END - 1; i++)
 	{
 		m_DynamicLayerArr[i] = CLayer::Create();
@@ -32,7 +34,10 @@ _int CScene::Update_Scene(const _float & fTimeDelta)
 
 	for (int i = 0; i < LAYER_DYNAMIC_END; i++)
 	{
-		iResult = Get_Layer((LAYERID)i)->Update_Layer(fTimeDelta);
+		CLayer* curLayer = Get_Layer((LAYERID)i);
+		if (curLayer == nullptr) continue;
+
+		iResult = curLayer->Update_Layer(fTimeDelta);
 		if (iResult & 0x80000000)
 			return iResult;
 	}
@@ -44,7 +49,10 @@ void CScene::LateUpdate_Scene(void)
 {
 	for (int i = 0; i < LAYER_DYNAMIC_END; i++)
 	{
-		Get_Layer((LAYERID)i)->LateUpdate_Layer();
+		CLayer* curLayer = Get_Layer((LAYERID)i);
+		if (curLayer == nullptr) continue;
+
+		curLayer->LateUpdate_Layer();
 	}	
 }
 
@@ -55,26 +63,36 @@ void Engine::CScene::Set_StaticLayerArr(vector<CLayer*>* layerArr)
 
 HRESULT CScene::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj)
 {
-	FAILED_CHECK_RETURN(Get_Layer(LayerID)->Add_GameObject(pObjTag, pObj), E_FAIL);
+	CLayer* curLayer = Get_Layer(LayerID);
+	if (curLayer == nullptr) S_OK;
+
+	FAILED_CHECK_RETURN(curLayer->Add_GameObject(pObjTag, pObj), E_FAIL);
 	return S_OK;
 }
 
 CGameObject * CScene::Get_GameObject(LAYERID LayerID, const _tchar * pObjTag)
 {
+	CLayer* curLayer = Get_Layer(LayerID);
+	if (curLayer == nullptr) nullptr;
+
 	NULL_CHECK_RETURN(pObjTag);
 
-	return Get_Layer(LayerID)->Get_GameObject(pObjTag);
+	return curLayer->Get_GameObject(pObjTag);
 }
 
 CLayer* CScene::Get_Layer(LAYERID LayerID)
 {
 	if (LayerID < LAYER_STATIC_END)
 	{
+		if (m_StaticLayerArr == nullptr) return nullptr;
+
 		return (*m_StaticLayerArr)[LayerID];
 	}
 	else if (LayerID < LAYER_DYNAMIC_END)
 	{
-		return m_DynamicLayerArr[LayerID];
+		if (LayerID == LAYER_STATIC_END) return nullptr;
+
+		return m_DynamicLayerArr[LayerID - LAYER_STATIC_END - 1];
 	}
 }
 

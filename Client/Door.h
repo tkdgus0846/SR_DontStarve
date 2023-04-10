@@ -1,12 +1,12 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Include.h"
 
 BEGIN(Engine)
 class CTexture;
 class CCollider;
 END
-
 class CRoom;
 class CTennel;
 class CDoor : public CGameObject
@@ -29,8 +29,8 @@ private:
 private:
 	const CRoom*			m_pRoom;	// 현재 문이 속해있는 룸의 포인터
 	CTennel*				m_pTennel;	// 진입점의 터널포인터
-	Engine::CTexture*		m_pTextureCom;
-	Engine::CCollider*		m_pCollider;
+	CTexture*		m_pTextureCom;
+	CCollider*		m_pCollider;
 
 public:
 	static CDoor*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _bool IsRot, const CRoom* pRoom);

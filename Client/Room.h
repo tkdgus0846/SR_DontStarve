@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Include.h"
 #include "GameObject.h"
 
 class CWall;
@@ -60,12 +59,14 @@ public:
 	}
 
 	void PushBack_Tile(CGameObject* pTile);
-	void PushBack_GameObj(LAYERID LayerID, const _tchar* pObjTag, CGameObject* pObj, COLGROUP eColgroup);
+	void PushBack_GameObj(LAYERID LayerID, const _tchar* pObjTag, CGameObject* pObj, COLGROUP eColgroup
+		, const _tchar* colliderName);
 
 public:
 	vector<CLayer*>* GetLayerVec() { return &m_vecLayer; }
 	list<CCollider*>* GetColliderList(_int iIndex) 
 	{
+		if (iIndex >= LAYER_STATIC_END) return nullptr;
 		return &m_ColliderList[iIndex];
 	}
 

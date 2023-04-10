@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Logo.h"
 
 #include "Export_Function.h"
@@ -7,6 +6,7 @@
 #include "MyEdit.h"
 #include "FileSystem.h"
 #include "RoomMgr.h"
+#include "Loading.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_pLoading(nullptr)
@@ -22,7 +22,7 @@ HRESULT CLogo::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 
-	//Add_GameObject(LAYER_ENVIRONMENT, L"BackGround", CBackGround::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_DEBUG_BACKGROUND, L"BackGround", CBackGround::Create(m_pGraphicDev));
 
 	m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
@@ -52,7 +52,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			}
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-			CFileSystem::Load(L"tmp.dat");
+			//CFileSystem::Load(L"tmp.dat");
 			pScene->Update_Scene(fTimeDelta);
 			return 0;
 		}
@@ -73,7 +73,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-			CFileSystem::Load(L"tmp.dat");
+			//CFileSystem::Load(L"tmp.dat");
 			return 0;
 		}
 	}

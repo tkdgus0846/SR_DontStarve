@@ -65,13 +65,13 @@ HRESULT CBackGround::Add_Component(void)
 {
 	CComponent*		pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex",this));
-	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+	pComponent  = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex",this));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pComponent });
 
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Logo_Texture",this));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
+	pComponent  = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Logo_Texture",this));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"Logo_Texture", pComponent });
 
 	return S_OK;
