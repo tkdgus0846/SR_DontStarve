@@ -30,7 +30,7 @@ _int CAttack::Update_Component(const _float & fTimeDelta)
 
 	if (m_fCoolTime > 0.5f)
 	{
-		CNormalBullet* bullet = CBulletMgr::GetInstance()->Pop<CNormalBullet>(
+		CBullet* bullet = CBulletMgr::GetInstance()->Pop(
 			L"NormalBullet", m_pGraphicDev, 
 			m_pGameObject->m_pTransform->m_vInfo[INFO_POS], 
 			m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK], { 1.f,1.f,1.f }, true);

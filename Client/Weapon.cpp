@@ -23,7 +23,11 @@ void CWeapon::Shot()
 		CBullet* bullet = Shot_Setting();
 
 		if (bullet)
+		{
 			Add_GameObject(LAYER_BULLET, L"Bullet", bullet);
+			SpendBullet();
+		}
+			
 		m_bShooted = true;
 		m_bEnableShot = false;
 	}

@@ -61,9 +61,6 @@ _int CRoom::Update_GameObject(const _float& fTimeDelta)
   // 테스트용 코드
 	for (auto& Obj : m_vecGameObj)
 		Obj->Update_GameObject(fTimeDelta);
-
-	Engine::Add_RenderGroup(RENDER_ALPHA, this
-
 	return 0;
 }
 

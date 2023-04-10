@@ -6,10 +6,9 @@ BEGIN(Engine)
 class CRcTex;
 class CTexture;
 class CAnimation;
+class CVIBuffer;
 
 END
-
-
 
 class CMiniMap :
 	public CUI
@@ -29,11 +28,14 @@ private:
 	void		Set_ViewMatrix_UI();
 	void		Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scaleY);
 	void		Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scaleY, _float fAngle);
+	void		ESWN();
 
 private:
 	D3DXMATRIX  matWorld, matView;
 
 	CRcTex* m_pRcTex;
+	CRcTex* m_pBufferCom;
+
 	array<CComponent*, MINIMAPEND> m_arrMap;
 
 	_float		m_PlayerAngle = 0.f;

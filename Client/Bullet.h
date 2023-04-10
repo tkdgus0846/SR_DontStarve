@@ -31,7 +31,9 @@ public:
 		}
 	}
 	
+	//virtual void OnCollisionEnter(const class Collision* collsion) override;
+	//virtual void OnCollisionStay(const class Collision* collision) override;
+	//virtual void OnCollisionExit(const class Collision* collision) override;
 
-	
 };
 

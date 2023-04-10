@@ -1,7 +1,7 @@
 #include "BulletGauge.h"
 #include "Export_Function.h"
-
-
+#include "Player.h"
+#include "Weapon.h"
 
 CBulletGauge::CBulletGauge(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
@@ -22,8 +22,44 @@ HRESULT CBulletGauge::Ready_GameObject(void)
 
 _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 {
-	m_pBufferCom->Edit_VB(m_VBGuage);
-	m_VBGuage -= 0.001f;
+
+	CWeapon* pWeapon = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeapon();
+
+	switch (dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeaponType())
+	{
+	case BIGSHOT: 
+	{
+		m_pBufferCom->Edit_VB(m_NormalGuage);
+		_float Max = pWeapon->Get_MaxBulletNum();
+		_float Cur = pWeapon->Get_CurBulletNum();
+		m_NormalGuage = Cur / Max;
+	}
+		break;
+	case EXPLOSIVESHOT:
+		break;
+	case FLAMESHOT: 
+	{
+		m_pBufferCom->Edit_VB(m_FlameGuage);
+		_float Max = pWeapon->Get_MaxBulletNum();
+		_float Cur = pWeapon->Get_CurBulletNum();
+		m_FlameGuage = Cur / Max;
+	}
+		break;
+	case RAPIDSHOT:
+		break;
+	case SPREADSHOT:
+		break;
+	case FREEZESHOT: 
+	{
+		m_pBufferCom->Edit_VB(m_IceGuage);
+		_float Max = pWeapon->Get_MaxBulletNum();
+		_float Cur = pWeapon->Get_CurBulletNum();
+		m_IceGuage = Cur / Max; 
+	}
+		break;
+	case LASERSHOT:
+		break;
+	}
 
 
 	Engine::Add_RenderGroup(RENDER_UI, this);

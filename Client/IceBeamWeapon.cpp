@@ -8,6 +8,8 @@ CIceBeamWeapon::CIceBeamWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
 {
 	m_fCycle = 1.0f;
+	m_MaxBulletNum = 10;
+	m_CurBulletNum = 10;
 }
 
 CIceBeamWeapon::~CIceBeamWeapon()
@@ -35,7 +37,7 @@ CBullet* CIceBeamWeapon::Shot_Setting()
 	_vec3 bulletDir = cameraAt - m_pTransform->m_vInfo[INFO_POS];
 	bulletDir.Normalize();
 
-	CBullet* bullet = CBulletMgr::GetInstance()->Pop<CIceBullet>(L"IceBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, { 1.2f,1.2f,1.f }, false);
+	CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"IceBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, { 1.7f,1.7f,1.f }, false);
 
 	return bullet;
 }
@@ -47,7 +49,6 @@ _int CIceBeamWeapon::Update_GameObject(const _float& fTimeDelta)
 
 HRESULT CIceBeamWeapon::Add_Component()
 {
-
 	/*CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", rcTex });*/

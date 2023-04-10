@@ -29,6 +29,13 @@ public:
 	virtual void OnCollisionStay(const Collision* collision) override;
 	virtual void OnCollisionExit(const Collision* collision) override;
 
+	void			Change_Weapon(WEAPONTYPE eWeaponType);
+	void			Next_Weapon();
+	void			Prev_Weapon();
+	void			Gain_Weapon(WEAPONTYPE eWeaponType);
+	class CWeapon*	Get_CurWeapon() const { return m_pCurWeapon; }
+	WEAPONTYPE		Get_CurWeaponType() const { return m_eCurWeaponType; }
+
 private:
 	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);
@@ -37,7 +44,10 @@ private:
 
 private:
 	_bool					m_bFix;
-	class CWeapon*			m_pCurWeapon;
+
+	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;
+	class CWeapon*						m_pCurWeapon;
+	WEAPONTYPE							m_eCurWeaponType;
 
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

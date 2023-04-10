@@ -14,6 +14,8 @@ CBub::~CBub()
 HRESULT CBub::Ready_GameObject(const _vec3& vPos)
 {
 	m_fSpeed = 10.f;
+	m_iAttack = 1;
+	m_iHp = 5;
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -27,6 +29,7 @@ HRESULT CBub::Ready_GameObject(const _vec3& vPos)
 _int CBub::Update_GameObject(const _float & fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
+	if (GetDead()) return OBJ_DEAD;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -34,7 +37,7 @@ _int CBub::Update_GameObject(const _float & fTimeDelta)
 
 	
 
-	return S_OK;
+	return OBJ_NOEVENT;
 }
 
 void CBub::LateUpdate_GameObject(void)

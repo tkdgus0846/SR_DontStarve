@@ -6,10 +6,10 @@
 CIceBullet::CIceBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
 {
-	m_fSpeed = 50.f;
-	m_fLifeSpan = 2.f;
+	m_fSpeed = 10.f;
+	m_fLifeSpan = 5.f;
 	m_fAge = 0.f;
-	m_Damage = 3;
+	m_Damage = 5;
 }
 
 CIceBullet::~CIceBullet()
@@ -63,8 +63,9 @@ void CIceBullet::OnCollisionEnter(const Collision * collsion)
 	if (monster)
 	{
 		_vec3 pos = collsion->intersectBox._max;
-		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 0.7f,0.7f,0.7f }, 0.1f);
+		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 1.3f,1.3f,1.0f }, 0.1f);
 		Add_GameObject(LAYER_EFFECT, L"ExplosionBlue", effect);
+		monster->Get_Damaged(m_Damage);
 		SetDead();
 	}
 }

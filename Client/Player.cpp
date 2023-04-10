@@ -5,10 +5,14 @@
 #include "BulletMgr.h"
 #include "NormalBullet.h"
 #include "NormalWeapon.h"
+#include "IceBeamWeapon.h"
+#include "FlameProjector.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)
 	, m_bFix(true)
+	, m_eCurWeaponType(WEAPONEND)
+	, m_pCurWeapon(nullptr)
 {
 	
 }
@@ -28,9 +32,18 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_pTransform->m_vInfo[INFO_LOOK] = { 0.f, 0.f, 1.f };
 
 	m_fSpeed = 12.f;
+	m_iHp = 20;
 
 	Set_Player(this);
-	m_pCurWeapon = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
+
+	for (int i = 0; i < WEAPONEND; i++)
+		m_MyWeaponList[i] = nullptr;
+
+	m_MyWeaponList[BIGSHOT] = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
+
+	Change_Weapon(BIGSHOT);
 
 	return result;
 }
@@ -104,6 +117,98 @@ void CPlayer::OnCollisionExit(const Collision * collision)
 {
 }
 
+void CPlayer::Change_Weapon(WEAPONTYPE eWeaponType)
+{
+	if (eWeaponType == m_eCurWeaponType) return;
+
+	m_pCurWeapon = m_MyWeaponList[eWeaponType];
+
+	if (m_pCurWeapon == nullptr)
+	{
+		m_pCurWeapon = m_MyWeaponList[m_eCurWeaponType];
+		return;
+	}
+		
+	m_eCurWeaponType = eWeaponType;
+}
+
+void CPlayer::Next_Weapon()
+{
+	_int eWeaponType = m_eCurWeaponType + 1;
+	if (eWeaponType >= WEAPONEND)
+		eWeaponType = 0;
+
+	if (m_MyWeaponList[eWeaponType] == nullptr)
+	{
+		for (;; eWeaponType++)
+		{
+			if (eWeaponType >= WEAPONEND)
+				eWeaponType = 0;
+
+			if (m_MyWeaponList[eWeaponType] != nullptr) break;
+		}
+	}
+
+	Change_Weapon((WEAPONTYPE)eWeaponType);
+}
+
+void CPlayer::Prev_Weapon()
+{
+	_int eWeaponType = m_eCurWeaponType - 1;
+	if (eWeaponType < 0)
+		eWeaponType = WEAPONEND - 1;
+
+	if (m_MyWeaponList[eWeaponType] == nullptr)
+	{
+		for (; ; eWeaponType--)
+		{
+			if (eWeaponType < 0)
+				eWeaponType = WEAPONEND - 1;
+
+			if (m_MyWeaponList[eWeaponType] != nullptr) break;
+		}
+	}
+
+	Change_Weapon((WEAPONTYPE)eWeaponType);
+}
+
+void CPlayer::Gain_Weapon(WEAPONTYPE eWeaponType)
+{
+	
+	if (m_MyWeaponList[eWeaponType] == nullptr)
+	{
+		CWeapon* gainWeapon = nullptr;
+		switch (eWeaponType)
+		{
+		case BIGSHOT:
+			gainWeapon = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
+			break;
+		case EXPLOSIVESHOT:
+			break;
+		case FLAMESHOT:
+			gainWeapon = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
+			break;
+		case RAPIDSHOT:
+			break;
+		case SPREADSHOT:
+			break;
+		case FREEZESHOT:
+			gainWeapon = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
+			break;
+		case LASERSHOT:
+			break;
+		default:
+			break;
+		}
+
+		m_MyWeaponList[eWeaponType] = gainWeapon;
+	}
+	else
+	{
+		m_MyWeaponList[eWeaponType]->GainBullet(10);
+	}
+}
+
 HRESULT CPlayer::Add_Component(void)
 {
 	/*CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex",this));
@@ -155,7 +260,8 @@ CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CPlayer::Free(void)
 {
-	Safe_Release(m_pCurWeapon);
+	for (auto it : m_MyWeaponList)
+		Safe_Release(it);
 	__super::Free();
 }
 
@@ -170,8 +276,8 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (Engine::Key_Pressing(DIK_S))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
 	if (Engine::Key_Pressing(DIK_A))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
 	if (Engine::Key_Pressing(DIK_D))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
-	if (Engine::Key_Pressing(DIK_Q))	m_pTransform->Move_Fly(m_fSpeed, fTimeDelta);
-	if (Engine::Key_Pressing(DIK_E))	m_pTransform->Move_Fly(-m_fSpeed, fTimeDelta);
+	if (Engine::Key_Down(DIK_Q))	Prev_Weapon();
+	if (Engine::Key_Down(DIK_E))	Next_Weapon();
 
 	if (Engine::Key_Down((DIK_F1))) 	Engine::On_Camera(L"Player_Camera");
 	if (Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;

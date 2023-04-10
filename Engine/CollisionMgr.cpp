@@ -23,12 +23,15 @@ void CCollisionMgr::Check_Collision(COLGROUP ID1, COLGROUP ID2)
 
 	for (auto iterID1 = m_ColliderList[ID1].begin(); iterID1 != m_ColliderList[ID1].end(); iterID1++)
 	{
+		if ((*iterID1)->m_bEnabled == false) continue;
+
 		for (auto iterID2 = m_ColliderList[ID2].begin(); iterID2 != m_ColliderList[ID2].end(); iterID2++)
 		{
+			if ((*iterID2)->m_bEnabled == false) continue;
 			if (ID1 == ID2 && iterID1 == iterID2) continue;
 
 			CCollider* collider1 = *iterID1;
-			CCollider* collider2 = *iterID2;
+			CCollider* collider2 = *iterID2;		
 			
 			auto* colliderList1 = &collider1->m_CollisionList;
 			auto* colliderList2 = &collider2->m_CollisionList;
@@ -125,6 +128,41 @@ void CCollisionMgr::Change_ColGroup(CCollider* collider, COLGROUP changeID)
 
 	
 	m_ColliderList[changeID].push_front(collider);
+}
+
+void CCollisionMgr::Remove_Collider(CCollider* collider, COLGROUP colID)
+{
+	for (auto it = m_ColliderList[colID].begin(); it != m_ColliderList[colID].end(); it++)
+	{
+		if (*it == collider)
+		{
+			m_ColliderList[colID].erase(it);
+			break;
+		}
+	}
+}
+
+void Engine::CCollisionMgr::Find_Remove_Collider(CGameObject* gameObject, COLGROUP colID)
+{
+	for (auto it = m_ColliderList[colID].begin(); it != m_ColliderList[colID].end(); )
+	{
+		if ((*it)->Get_GameObject() == gameObject)
+		{
+			it = m_ColliderList[colID].erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
+void Engine::CCollisionMgr::Remove_Collider(CGameObject* gameObject)
+{
+	Find_Remove_Collider(gameObject, COL_PLAYER);
+	Find_Remove_Collider(gameObject, COL_ENEMY);
+	Find_Remove_Collider(gameObject, COL_OBJ);
+	Find_Remove_Collider(gameObject, COL_DETECTION);
 }
 
 void Engine::CCollisionMgr::Toggle_ColliderRender()
@@ -252,8 +290,5 @@ _bool CCollisionMgr::Check_BoundingBox(CCollider * pSrc, CCollider * pDest, _flo
 
 void CCollisionMgr::Free(void)
 {
-	for (size_t i = 0; i < COL_END; ++i)
-	{
-		m_ColliderList[i].clear();
-	}
+		
 }

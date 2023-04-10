@@ -98,51 +98,6 @@ void CGameObject::Render_GameObject(void)
 	m_pGraphicDev->SetTexture(0, nullptr);
 }
 
-void CGameObject::OnCollisionEnter(const Collision * collsion)
-{
-}
-
-void CGameObject::OnCollisionStay(const Collision * collision)
-{
-	// 몬스터끼리 서로 밀어내게 하면됨.
-	if (collision->MyCollider == Get_Component(L"BodyCollider", ID_ALL) && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
-	{
-		_vec3 amountVec = collision->amountVec;
-		if (m_pTransform == nullptr) return;
-
-		_float fps60 = Engine::Get_Timer(L"Timer_FPS60");
-
-		switch (collision->CollisionDir)
-		{
-		/*case DIR_UP:
-			m_pTransform->m_vInfo[INFO_POS].y -= amountVec.y;
-			break;
-		case DIR_DOWN:
-			m_pTransform->m_vInfo[INFO_POS].y += amountVec.y;
-			break;*/
-		case DIR_LEFT:
-			m_pTransform->m_vInfo[INFO_POS].x += fps60*amountVec.x * 6;
-			break;
-		case DIR_RIGHT:
-			m_pTransform->m_vInfo[INFO_POS].x -= fps60*amountVec.x * 6;
-			break;
-		case DIR_FRONT:
-			m_pTransform->m_vInfo[INFO_POS].z -= fps60*amountVec.z * 6;
-			break;
-		case DIR_BACK:
-			m_pTransform->m_vInfo[INFO_POS].z += fps60*amountVec.z * 6;
-			break;
-		default:
-			break;
-		}
-			
-	}
-}
-
-void CGameObject::OnCollisionExit(const Collision * collision)
-{
-}
-
 void CGameObject::Compute_ViewZ(const _vec3 * pPos)
 {
 	_matrix		matCamWorld;
@@ -211,8 +166,8 @@ void CGameObject::Free(void)
 		for (auto iter = m_uMapComponent[i].begin(); iter != m_uMapComponent[i].end(); iter++)
 		{
 			Safe_Release((iter->second));
-		}
-		m_uMapComponent[i].clear();
+		}	
 	}
+
 	Safe_Release(m_pGraphicDev);
 }
