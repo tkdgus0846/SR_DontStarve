@@ -2,8 +2,11 @@
 
 #include "Export_Function.h"
 
+#include "MyMap.h"
+
 CDoor::CDoor(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev)
+	: CGameObject(pGraphicDev), m_pRoom(nullptr)
+	, m_pTennel(nullptr)
 {
 }
 
@@ -11,9 +14,12 @@ CDoor::~CDoor()
 {
 }
 
-HRESULT CDoor::Ready_GameObject(const _vec3& vPos, _bool IsRot)
+HRESULT CDoor::Ready_GameObject(const _vec3& vPos, _bool IsRot, const CRoom* pRoom)
 {
 	HRESULT Result = __super::Ready_GameObject();
+
+	m_pRoom = pRoom;
+	m_pTennel = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"))->Get_Tennel();
 
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->m_vScale = { 3.f, 5.f, 1.f };
@@ -45,6 +51,11 @@ void CDoor::Render_GameObject(void)
 	__super::Render_GameObject();
 }
 
+void CDoor::OnCollisionEnter(const Collision * collsion)
+{
+	collsion->OtherGameObject;
+}
+
 HRESULT CDoor::Add_Component()
 {
 	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
@@ -55,7 +66,7 @@ HRESULT CDoor::Add_Component()
 	NULL_CHECK_RETURN(m_pTextureCom);
 	m_uMapComponent[ID_RENDER].emplace(L"Dock_Texture", m_pTextureCom);
 
-	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENVIRONMENT));
+	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_TRIGGER));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
 	m_pCollider->Set_BoundingBox({ 1.f, 4.f, 1.f });
@@ -63,11 +74,11 @@ HRESULT CDoor::Add_Component()
 	return S_OK;
 }
 
-CDoor * CDoor::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _bool IsRot)
+CDoor * CDoor::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _bool IsRot, const CRoom* pRoom)
 {
 	CDoor* pInstance = new CDoor(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(vPos, IsRot)))
+	if (FAILED(pInstance->Ready_GameObject(vPos, IsRot, pRoom)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

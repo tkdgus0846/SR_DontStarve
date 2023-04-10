@@ -5,7 +5,7 @@
 #include "Export_Function.h"
 
 CMyMap::CMyMap(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev)//, m_pTennel(nullptr)
+	:CGameObject(pGraphicDev), m_pCurRoom(nullptr)
 {
 	for (auto iter : m_arrRoom)
 		iter = nullptr;
@@ -18,6 +18,7 @@ CMyMap::~CMyMap()
 HRESULT CMyMap::Ready_GameObject(void)
 {
 	Create_Default_Room();
+	m_pCurRoom = m_arrRoom[0];
 
 	return __super::Ready_GameObject();
 }
@@ -34,7 +35,7 @@ _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 			iter->Update_GameObject(fTimeDelta);
 	}
 	else	// 인 게임
-		Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->Update_GameObject(fTimeDelta);
+		m_pCurRoom->Update_GameObject(fTimeDelta);
 
 	m_pTennel[0]->Update_GameObject(fTimeDelta);
 	m_pTennel[1]->Update_GameObject(fTimeDelta);
@@ -53,7 +54,7 @@ void CMyMap::LateUpdate_GameObject(void)
 			iter->LateUpdate_GameObject();
 	}
 	else	// 인 게임
-		Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->LateUpdate_GameObject();
+		m_pCurRoom->LateUpdate_GameObject();
 
 	m_pTennel[0]->LateUpdate_GameObject();
 	m_pTennel[1]->LateUpdate_GameObject();

@@ -75,10 +75,29 @@ void CImInspector::Show_RoomInfo()
 	CMyMap* pMyMap = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"));
 	m_pCurRoom = pMyMap->Get_CurRoom(pCamera->m_pTransform->m_vInfo[INFO_POS]);
 
-	ImGui::Checkbox("Door_Up", &m_pCurRoom->Cur_Door_State(DOOR_UP));
-	ImGui::Checkbox("Door_Down", &m_pCurRoom->Cur_Door_State(DOOR_DOWN));
-	ImGui::Checkbox("Door_Left", &m_pCurRoom->Cur_Door_State(DOOR_LEFT));
-	ImGui::Checkbox("Door_Right", &m_pCurRoom->Cur_Door_State(DOOR_RIGHT));
+	static _int iObjNum = 0, iPre = 0;
+
+	ImGui::RadioButton("DOOR_ES", &iObjNum, 0); ImGui::SameLine();
+	ImGui::RadioButton("DOOR_ESW", &iObjNum, 1); ImGui::SameLine();
+	ImGui::RadioButton("DOOR_EW", &iObjNum, 2);
+	ImGui::RadioButton("DOOR_N", &iObjNum, 3); ImGui::SameLine();
+	ImGui::RadioButton("DOOR_NE", &iObjNum, 4);
+	ImGui::RadioButton("DOOR_NES", &iObjNum, 5); ImGui::SameLine();
+	ImGui::RadioButton("DOOR_NESW", &iObjNum, 6); ImGui::SameLine();
+	ImGui::RadioButton("DOOR_NS", &iObjNum, 7);
+	ImGui::RadioButton("DOOR_NW", &iObjNum, 8); ImGui::SameLine();
+	ImGui::RadioButton("DOOR_S", &iObjNum, 9);
+	ImGui::RadioButton("DOOR_SW", &iObjNum, 10); ImGui::SameLine();
+	ImGui::RadioButton("DOOR_SWN", &iObjNum, 11); ImGui::SameLine();
+	ImGui::RadioButton("DOOR_W", &iObjNum, 12);
+	ImGui::RadioButton("DOOR_WNE", &iObjNum, 13); ImGui::SameLine();
+	ImGui::RadioButton("DOOR_E", &iObjNum, 14);
+
+	if (iPre != iObjNum)
+	{
+		m_pCurRoom->Set_DoorType((DOOR_TYPE)iObjNum);
+		iObjNum = iPre;
+	}
 }
 
 void CImInspector::Show_TilePicking()
