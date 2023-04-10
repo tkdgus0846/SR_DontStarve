@@ -1,7 +1,7 @@
 #include "FileSystem.h"
 #include <locale>
 #include <codecvt>
-#include "MyMap.h"
+#include "RoomMgr.h"
 #include "Export_Function.h"
 
 CFileSystem::CFileSystem()
@@ -74,7 +74,7 @@ void CFileSystem::Save(const TCHAR* path)
 	}
 	DWORD		dwByte = 0;
 
-	dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"))->WriteMapFile(hFile, dwByte);
+	ROOM_MGR->WriteMapFile(hFile, dwByte);
 
 	// 颇老 家戈
 	CloseHandle(hFile);
@@ -97,7 +97,7 @@ void CFileSystem::Load(const TCHAR* path)
 	}
 	DWORD		dwByte = 0;
 
-	dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"))->ReadMapFile(hFile, dwByte);
+	ROOM_MGR->ReadMapFile(hFile, dwByte);
 
 	// 颇老 家戈
 	CloseHandle(hFile);

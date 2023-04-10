@@ -2,7 +2,7 @@
 
 #include "Export_Function.h"
 
-#include "MyMap.h"
+#include "RoomMgr.h"
 
 CDoor::CDoor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_pRoom(nullptr)
@@ -19,7 +19,7 @@ HRESULT CDoor::Ready_GameObject(const _vec3& vPos, _bool IsRot, const CRoom* pRo
 	HRESULT Result = __super::Ready_GameObject();
 
 	m_pRoom = pRoom;
-	m_pTennel = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"))->Get_Tennel();
+	m_pTennel = ROOM_MGR->Get_Tennel();
 
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->m_vScale = { 3.f, 5.f, 1.f };

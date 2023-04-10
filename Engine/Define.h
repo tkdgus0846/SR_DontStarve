@@ -88,3 +88,5 @@
 				m_pInstance = NULL;						\
 			}											\
 		}
+
+#define ROOM_MGR CRoomMgr::GetInstance()

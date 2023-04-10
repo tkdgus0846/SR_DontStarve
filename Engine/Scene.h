@@ -32,9 +32,10 @@ private:
 
 protected:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
+
 	vector<CLayer*>*	m_StaticLayerArr;
 	vector<CLayer*>		m_DynamicLayerArr;
-
+  
 protected:
 	virtual void	Free(void);
 };

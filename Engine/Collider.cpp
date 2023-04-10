@@ -116,7 +116,7 @@ void CCollider::OnCollisionExit(const Collision * collision)
 	m_pGameObject->OnCollisionExit(collision);
 }
 
-// °¡·Î, ¼¼·Î, ±íÀÌ »çÀÌÁî ³Ö¾îÁÖ¸é µÊ.
+// ê°€ë¡œ, ì„¸ë¡œ, ê¹Šì´ ì‚¬ì´ì¦ˆ ë„£ì–´ì£¼ë©´ ë¨.
 void CCollider::Set_BoundingBox(const _vec3 & vSize)
 {
 	if (m_pMesh) Safe_Release(m_pMesh);

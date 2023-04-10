@@ -53,15 +53,6 @@
     <Filter Include="GameObject\UI">
       <UniqueIdentifier>{32636d53-2dee-4bbd-89c2-e6eb1ddd7c8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\Map">
-      <UniqueIdentifier>{faf346d6-e9d0-4c34-b171-1cc5742d40b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Map\Room">
-      <UniqueIdentifier>{d53ab2d1-8167-4ef5-b101-2ce8c0ce1569}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Map\Tile">
-      <UniqueIdentifier>{910476eb-a1aa-4a0d-8173-4d5b22f9f1d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\UI\BackGround">
       <UniqueIdentifier>{5ba41007-e1a4-4574-9a69-7494fceab6df}</UniqueIdentifier>
     </Filter>
@@ -70,6 +61,15 @@
     </Filter>
     <Filter Include="GameObject\Item">
       <UniqueIdentifier>{8d157d55-8910-480f-8838-5e1596283947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\RoomMgr">
+      <UniqueIdentifier>{faf346d6-e9d0-4c34-b171-1cc5742d40b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\RoomMgr\Tile">
+      <UniqueIdentifier>{910476eb-a1aa-4a0d-8173-4d5b22f9f1d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\RoomMgr\Room">
+      <UniqueIdentifier>{d53ab2d1-8167-4ef5-b101-2ce8c0ce1569}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -144,13 +144,13 @@
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Floor.h">
-      <Filter>GameObject\Map\Room</Filter>
+      <Filter>GameObject\RoomMgr\Room</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
-      <Filter>GameObject\Map\Room</Filter>
+      <Filter>GameObject\RoomMgr\Room</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
-      <Filter>GameObject\Map\Room</Filter>
+      <Filter>GameObject\RoomMgr\Room</Filter>
     </ClInclude>
     <ClInclude Include="Attack.h">
       <Filter>MonoBehaviors</Filter>
@@ -221,14 +221,11 @@
     <ClInclude Include="EditCamera.h">
       <Filter>GameObject\ObjCamera</Filter>
     </ClInclude>
-    <ClInclude Include="MyMap.h">
-      <Filter>GameObject\Map</Filter>
-    </ClInclude>
     <ClInclude Include="GunUI.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>GameObject\Map\Tile</Filter>
+      <Filter>GameObject\RoomMgr\Tile</Filter>
     </ClInclude>
     <ClInclude Include="BulletBar.h">
       <Filter>GameObject\UI</Filter>
@@ -273,7 +270,7 @@
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="Tennel.h">
-      <Filter>GameObject\Map</Filter>
+      <Filter>GameObject\RoomMgr</Filter>
     </ClInclude>
     <ClInclude Include="FireBullet.h">
       <Filter>GameObject\Bullet</Filter>
@@ -288,10 +285,13 @@
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
-      <Filter>GameObject\Map</Filter>
+      <Filter>GameObject\RoomMgr</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomMgr.h">
+      <Filter>GameObject\RoomMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -353,13 +353,13 @@
       <Filter>GameObject\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Floor.cpp">
-      <Filter>GameObject\Map\Room</Filter>
+      <Filter>GameObject\RoomMgr\Room</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
-      <Filter>GameObject\Map\Room</Filter>
+      <Filter>GameObject\RoomMgr\Room</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
-      <Filter>GameObject\Map\Room</Filter>
+      <Filter>GameObject\RoomMgr\Room</Filter>
     </ClCompile>
     <ClCompile Include="Attack.cpp">
       <Filter>MonoBehaviors</Filter>
@@ -427,14 +427,11 @@
     <ClCompile Include="EditCamera.cpp">
       <Filter>GameObject\ObjCamera</Filter>
     </ClCompile>
-    <ClCompile Include="MyMap.cpp">
-      <Filter>GameObject\Map</Filter>
-    </ClCompile>
     <ClCompile Include="GunUI.cpp">
       <Filter>GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
-      <Filter>GameObject\Map\Tile</Filter>
+      <Filter>GameObject\RoomMgr\Tile</Filter>
     </ClCompile>
     <ClCompile Include="BulletBar.cpp">
       <Filter>GameObject\UI</Filter>
@@ -482,7 +479,7 @@
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="Tennel.cpp">
-      <Filter>GameObject\Map</Filter>
+      <Filter>GameObject\RoomMgr</Filter>
     </ClCompile>
     <ClCompile Include="FireBullet.cpp">
       <Filter>GameObject\Bullet</Filter>
@@ -497,10 +494,13 @@
       <Filter>GameObject\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
-      <Filter>GameObject\Map</Filter>
+      <Filter>GameObject\RoomMgr</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomMgr.cpp">
+      <Filter>GameObject\RoomMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
