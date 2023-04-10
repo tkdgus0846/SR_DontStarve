@@ -11,12 +11,12 @@ CBub::~CBub()
 {
 }
 
-HRESULT CBub::Ready_GameObject(void)
+HRESULT CBub::Ready_GameObject(const _vec3& vPos)
 {
 	m_fSpeed = 10.f;
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
-	m_pTransform->m_vInfo[INFO_POS] = { 4.f, 0.8f, 15.f };
+	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	HRESULT result = __super::Ready_GameObject();
@@ -95,11 +95,11 @@ HRESULT CBub::Add_Component()
 	return S_OK;
 }
 
-CBub * CBub::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CBub * CBub::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 {
 	CBub* pInstance = new CBub(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

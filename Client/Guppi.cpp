@@ -11,12 +11,12 @@ CGuppi::~CGuppi()
 {
 }
 
-HRESULT CGuppi::Ready_GameObject(void)
+HRESULT CGuppi::Ready_GameObject(const _vec3& vPos)
 {
 	m_fSpeed = 10.f;
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
-	m_pTransform->m_vInfo[INFO_POS] = { 5.f, 0.8f, 5.f };
+	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 
 	HRESULT result = __super::Ready_GameObject();
@@ -85,11 +85,11 @@ HRESULT CGuppi::Add_Component()
 	return S_OK;
 }
 
-CGuppi * CGuppi::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGuppi * CGuppi::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 {
 	CGuppi* pInstance = new CGuppi(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

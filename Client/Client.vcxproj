@@ -229,6 +229,7 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CrossHair.h" />
     <ClInclude Include="Disc.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="EditCamera.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Effect.h" />
@@ -304,6 +305,7 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CrossHair.cpp" />
     <ClCompile Include="Disc.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="EditCamera.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Effect.cpp" />

@@ -4,6 +4,9 @@
 
 #include "EditCamera.h"
 
+#include "Room.h"
+#include "MyMap.h"
+
 #include "Baller.h"
 #include "Bub.h"
 #include "Guppi.h"
@@ -11,8 +14,10 @@
 #include "Walker.h"
 
 CImInspector::CImInspector(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CImWindow(pGraphicDev), m_pCurTarget(nullptr)
+	: CImWindow(pGraphicDev), m_pCurTarget(nullptr)
+	, m_pCurRoom(nullptr)
 {
+	ZeroMemory(m_vObjectPos, sizeof(_vec3));
 }
 
 CImInspector::~CImInspector()
@@ -31,6 +36,9 @@ _int CImInspector::Update(float fTimeDelta)
 
 	ImGui::Begin("Inspector");
 
+	if (ImGui::CollapsingHeader("RommInfo"))
+		Show_RoomInfo();
+
 	if (ImGui::CollapsingHeader("TilePicking"))
 		Show_TilePicking();
 
@@ -46,6 +54,31 @@ _int CImInspector::Update(float fTimeDelta)
 	ImGui::End();
 
 	return 0;
+}
+
+void CImInspector::Show_RoomInfo()
+{
+	const char* items[25] = { "0", "1", "2", "3", "4",
+		"5", "6", "7", "8", "9",
+		"10", "11", "12", "13", "14",
+		"15", "16", "17", "18", "19",
+		"20", "21", "22", "23", "24" };
+	static int item_current = 0;
+	ImGui::Combo("Room_Index", &item_current, items, IM_ARRAYSIZE(items));
+
+	m_vObjectPos.x = _float(item_current % 5 * 60 + 5);
+	m_vObjectPos.y = 5.f;
+	m_vObjectPos.z = _float(item_current / 5 * 60 + 5);
+
+	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
+	pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 20.f, 20.f, m_vObjectPos.z + 20.f };
+	CMyMap* pMyMap = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"));
+	m_pCurRoom = pMyMap->Get_CurRoom(pCamera->m_pTransform->m_vInfo[INFO_POS]);
+
+	ImGui::Checkbox("Door_Up", &m_pCurRoom->Cur_Door_State(DOOR_UP));
+	ImGui::Checkbox("Door_Down", &m_pCurRoom->Cur_Door_State(DOOR_DOWN));
+	ImGui::Checkbox("Door_Left", &m_pCurRoom->Cur_Door_State(DOOR_LEFT));
+	ImGui::Checkbox("Door_Right", &m_pCurRoom->Cur_Door_State(DOOR_RIGHT));
 }
 
 void CImInspector::Show_TilePicking()
@@ -77,7 +110,9 @@ void CImInspector::Show_TilePicking()
 	if(ImGui::RadioButton("Level2_Wall", &iTileNum, 23))
 		pCamera->Change_Texture(L"Wall_Level2_Texture");
 
-	ImGui::RadioButton("Level3_Floor", &iTileNum, 24); 
+	if(ImGui::RadioButton("Level3_Floor", &iTileNum, 24))
+		pCamera->Change_Texture(L"Dock_Texture");
+
 	ImGui::SameLine();
 	ImGui::RadioButton("Level3_Wall", &iTileNum, 25);
 }
@@ -102,7 +137,6 @@ void CImInspector::Show_Create_Object()
 
 		ImGui::SeparatorText("Environment");
 
-		ImGui::RadioButton("Door", &iObjNum, 10); ImGui::SameLine();
 		ImGui::RadioButton("Dirt_Barrier", &iObjNum, 11); ImGui::SameLine();
 		ImGui::RadioButton("Mine", &iObjNum, 12);
 
@@ -128,30 +162,31 @@ void CImInspector::Show_Create_Object()
 		if (0 == iObjNum)
 		{
 			pName = "Baller";
-			pGameObject = CBaller::Create(m_pGraphicDev);
+			pGameObject = CBaller::Create(m_pGraphicDev, m_vObjectPos);
 		}
 		if (1 == iObjNum)
 		{
 			pName = "Bub";
-			pGameObject = CBub::Create(m_pGraphicDev);
+			pGameObject = CBub::Create(m_pGraphicDev, m_vObjectPos);
 		}
 		if (2 == iObjNum)
 		{
 			pName = "Guppi";
-			pGameObject = CGuppi::Create(m_pGraphicDev);
+			pGameObject = CGuppi::Create(m_pGraphicDev, m_vObjectPos);
 		}
 		if (3 == iObjNum)
 		{
 			pName = "Turret";
-			pGameObject = CTurret::Create(m_pGraphicDev);
+			pGameObject = CTurret::Create(m_pGraphicDev, m_vObjectPos);
 		}
 		if (4 == iObjNum)
 		{
 			pName = "Walker";
-			pGameObject = CWalker::Create(m_pGraphicDev);
+			pGameObject = CWalker::Create(m_pGraphicDev, m_vObjectPos);
 		}
 
 		m_vecMonster.push_back({ pName, pGameObject });
+		m_pCurRoom->AddGameObject(pGameObject);
 	}
 }
 
@@ -313,6 +348,8 @@ void CImInspector::Show_Image(_int iObjNum)
 		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Level2_Texture", nullptr));
 	if (23 == iObjNum)
 		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Wall_Level2_Texture", nullptr));
+	if (24 == iObjNum)
+		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Dock_Texture", nullptr));
 
 	if(pTexture)
 		ImGui::Image((void*)pTexture->Get_TextureCom(), ImVec2(100.f, 100.f));

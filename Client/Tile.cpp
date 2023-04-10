@@ -15,7 +15,7 @@ CTile::~CTile()
 
 HRESULT CTile::Ready_GameObject(const _tchar* pTextureName)
 {
-	m_pTextureName = pTextureName;
+	lstrcpy(m_pTextureName, pTextureName);
 	HRESULT result = __super::Ready_GameObject();
 
 	m_pTransform->m_vScale *= VTXITV * 0.5f;
@@ -45,6 +45,19 @@ void CTile::Render_GameObject(void)
 	__super::Render_GameObject();
 }
 
+void CTile::WriteTextureName(HANDLE hFile, DWORD & dwByte)
+{
+	WriteFile(hFile, m_pTextureName, sizeof(_tchar) * 64, &dwByte, nullptr);
+}
+
+void CTile::ReadTextureName(HANDLE hFile, DWORD & dwByte)
+{
+	_tchar pTextureName[64];
+	ReadFile(hFile, pTextureName, sizeof(_tchar) * 64, &dwByte, nullptr);
+	const _tchar* tmp = const_cast<const _tchar*>(pTextureName);
+	Change_Texture(tmp);
+}
+// 엄~~~~청 옛날에배운 const캐스트 써야하나
 HRESULT CTile::Add_Component()
 {
 	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
@@ -67,20 +80,23 @@ HRESULT CTile::Remove_TextureCom()
 				Remove_Render_Component(iter->first);
 				m_uMapComponent[i].erase(iter);
 				Safe_Release(m_pTextureCom);
-				m_pTextureName = L"";
+				lstrcpy(m_pTextureName, L"");
 				return S_OK;
 			}
 		}
 	}
+	
 	return E_FAIL;
 }
 
 void CTile::Change_Texture(const _tchar * pTextureName)
 {
 	Remove_TextureCom();
-
+	
 	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(pTextureName, this));
-	m_pTextureName = pTextureName;
+	_tchar tmp[32];
+	lstrcpy(tmp, pTextureName);
+	lstrcpy(m_pTextureName, tmp);
 	NULL_CHECK_RETURN(m_pTextureCom);
 	m_uMapComponent[ID_RENDER].emplace(m_pTextureName, m_pTextureCom);
 

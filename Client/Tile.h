@@ -16,6 +16,8 @@ public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
+	void WriteTextureName(HANDLE hFile, DWORD& dwByte);
+	void ReadTextureName(HANDLE hFile, DWORD& dwByte);
 
 private:
 	virtual HRESULT Add_Component() override;
@@ -25,7 +27,7 @@ public:
 	void Change_Texture(const _tchar* pTextureName);
 
 private:
-	const _tchar*		m_pTextureName;
+	_tchar		m_pTextureName[64];
 	Engine::CTexture*	m_pTextureCom;
 
 public:

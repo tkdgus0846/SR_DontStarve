@@ -11,12 +11,12 @@ CBaller::~CBaller()
 {
 }
 
-HRESULT CBaller::Ready_GameObject(void)
+HRESULT CBaller::Ready_GameObject(const _vec3& vPos)
 {
 	m_fSpeed = 10.f;
 
 	m_pTransform->m_vScale = { 1.f, 3.f, 1.f };
-	m_pTransform->m_vInfo[INFO_POS] = { 5.f, 3.f, 5.f };
+	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	HRESULT result = __super::Ready_GameObject();
@@ -87,11 +87,11 @@ HRESULT CBaller::Add_Component()
 	return S_OK;
 }
 
-CBaller * CBaller::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CBaller * CBaller::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 {
 	CBaller* pInstance = new CBaller(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
