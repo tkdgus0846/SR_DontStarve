@@ -5,6 +5,7 @@
 #include "MyMap.h"
 #include "Export_Function.h"
 #include "MyMap.h"
+#include "Floor.h"
 
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_fSpeed(0.f), m_bFix(true), m_bPick(false)
@@ -72,6 +73,7 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 	if (Engine::Key_Pressing(DIK_Q))	m_pTransform->Move_Fly(m_fSpeed, fTimeDelta);
 	if (Engine::Key_Pressing(DIK_E))	m_pTransform->Move_Fly(-m_fSpeed, fTimeDelta);
 
+	if (Engine::Key_Down((DIK_C))) Engine::Toggle_ColliderRender();
 	if (Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
 
 	if (Engine::Mouse_Down(DIM_LB) && m_bPick)

@@ -4,14 +4,24 @@
 #include "Bub.h"
 #include "Guppi.h"
 #include "Turret.h"
-#include "Walker.h"
+#include "Walker.h
 #include "Export_Function.h"
+
+#include "Floor.h"
+#include "Wall.h"
+#include "Tile.h"
+#include "Door.h"
+
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
 	m_fVtxCntZ(0.f), m_fVtxItv(0.f)
 {
+	for (auto& iter : m_apDoor)
+	{
+		iter.first = false;
+		iter.second = nullptr;
+	}
 }
-
 
 CRoom::~CRoom()
 {
@@ -39,20 +49,27 @@ _int CRoom::Update_GameObject(const _float& fTimeDelta)
 	for (auto& iter : m_apWall)
 		iter->Update_GameObject(fTimeDelta);
 
+	for (auto& iter : m_apDoor)
+	{
+		if (nullptr != iter.second)
+			iter.second->Update_GameObject(fTimeDelta);
+	}
+
 	for (auto& Tile : m_vecTile)
 		Tile->Update_GameObject(fTimeDelta);
 	
+  // ÌÖåÏä§Ìä∏Ïö© ÏΩîÎìú
 	for (auto& Obj : m_vecGameObj)
 		Obj->Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA, this
 
 	return 0;
 }
 
 void CRoom::LateUpdate_GameObject(void)
 {
-	// ∑Î ∆Øº∫ªÛ ∆Æ∑£Ω∫∆˚ ø‹ø£ æ»æµ∞≈∞∞æ∆º≠ ¿œ¥‹ ¡÷ºÆ√≥∏Æ
+	// Î£∏ ÌäπÏÑ±ÏÉÅ Ìä∏ÎûúÏä§Ìèº Ïô∏Ïóî ÏïàÏì∏Í±∞Í∞ôÏïÑÏÑú ÏùºÎã® Ï£ºÏÑùÏ≤òÎ¶¨
 	//__super::LateUpdate_GameObject();
 
 	m_pFloor->LateUpdate_GameObject();
@@ -69,7 +86,7 @@ void CRoom::LateUpdate_GameObject(void)
 
 void CRoom::Render_GameObject(void)
 {
-	// ∑Î ∆Øº∫ªÛ ∆Æ∑£Ω∫∆˚ ø‹ø£ æ»æµ∞≈∞∞æ∆º≠ ¿œ¥‹ ¡÷ºÆ√≥∏Æ
+	// Î£∏ ÌäπÏÑ±ÏÉÅ Ìä∏ÎûúÏä§Ìèº Ïô∏Ïóî ÏïàÏì∏Í±∞Í∞ôÏïÑÏÑú ÏùºÎã® Ï£ºÏÑùÏ≤òÎ¶¨
 	//__super::Render_GameObject();
 
 	m_pFloor->Render_GameObject();
@@ -85,11 +102,11 @@ void CRoom::Render_GameObject(void)
 
 HRESULT CRoom::CreateSubset()
 {
-	// πŸ¥⁄ ª˝º∫
+	// Î∞îÎã• ÏÉùÏÑ±
 	m_pFloor = CFloor::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pFloor, E_FAIL);
 
-	// ∫Æ 4∏È ª˝º∫
+	// Î≤Ω 4Î©¥ ÏÉùÏÑ±
 	for (auto& iter : m_apWall)
 		iter = CWall::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
@@ -97,9 +114,143 @@ HRESULT CRoom::CreateSubset()
 	return S_OK;
 }
 
+void CRoom::Set_DoorType(DOOR_TYPE eType)
+{
+	m_eDoorType = eType;
+
+	switch (m_eDoorType)
+	{
+	case DOOR_ES:
+		m_apDoor[DOOR_RIGHT].first = true;
+		m_apDoor[DOOR_DOWN].first = true;
+		m_apDoor[DOOR_UP].first = false;
+		m_apDoor[DOOR_LEFT].first = false;
+		break;
+	case DOOR_ESW:
+		m_apDoor[DOOR_RIGHT].first = true;
+		m_apDoor[DOOR_DOWN].first = true;
+		m_apDoor[DOOR_LEFT].first = true;
+		m_apDoor[DOOR_UP].first = false;
+		break;
+	case DOOR_EW:
+		m_apDoor[DOOR_RIGHT].first = true;
+		m_apDoor[DOOR_LEFT].first = true;
+		m_apDoor[DOOR_UP].first = false;
+		m_apDoor[DOOR_DOWN].first = false;
+		break;
+	case DOOR_N:
+		m_apDoor[DOOR_UP].first = true;
+		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_LEFT].first = false;
+		m_apDoor[DOOR_RIGHT].first = false;
+		break;
+	case DOOR_NE:
+		m_apDoor[DOOR_UP].first = true;
+		m_apDoor[DOOR_RIGHT].first = true;
+		m_apDoor[DOOR_LEFT].first = false;
+		m_apDoor[DOOR_DOWN].first = false;
+		break;
+	case DOOR_NES:
+		m_apDoor[DOOR_UP].first = true;
+		m_apDoor[DOOR_RIGHT].first = true;
+		m_apDoor[DOOR_DOWN].first = true;
+		m_apDoor[DOOR_LEFT].first = false;
+		break;
+	case DOOR_NESW:
+		m_apDoor[DOOR_UP].first = true;
+		m_apDoor[DOOR_RIGHT].first = true;
+		m_apDoor[DOOR_DOWN].first = true;
+		m_apDoor[DOOR_LEFT].first = true;
+		break;
+	case DOOR_NS:
+		m_apDoor[DOOR_UP].first = true;
+		m_apDoor[DOOR_DOWN].first = true;
+		m_apDoor[DOOR_LEFT].first = false;
+		m_apDoor[DOOR_RIGHT].first = false;
+		break;
+	case DOOR_NW:
+		m_apDoor[DOOR_UP].first = true;
+		m_apDoor[DOOR_LEFT].first = true;
+		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_DOWN].first = false;
+		break;
+	case DOOR_S:
+		m_apDoor[DOOR_DOWN].first = true;
+		m_apDoor[DOOR_UP].first = false;
+		m_apDoor[DOOR_LEFT].first = false;
+		m_apDoor[DOOR_RIGHT].first = false;
+		break;
+	case DOOR_SW:
+		m_apDoor[DOOR_DOWN].first = true;
+		m_apDoor[DOOR_LEFT].first = true;
+		m_apDoor[DOOR_UP].first = false;
+		m_apDoor[DOOR_RIGHT].first = false;
+		break;
+	case DOOR_SWN:
+		m_apDoor[DOOR_DOWN].first = true;
+		m_apDoor[DOOR_LEFT].first = true;
+		m_apDoor[DOOR_UP].first = true;
+		m_apDoor[DOOR_RIGHT].first = false;
+		break;
+	case DOOR_W:
+		m_apDoor[DOOR_LEFT].first = true;
+		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_UP].first = false;
+		m_apDoor[DOOR_DOWN].first = false;
+		break;
+	case DOOR_WNE:
+		m_apDoor[DOOR_LEFT].first = true;
+		m_apDoor[DOOR_UP].first = true;
+		m_apDoor[DOOR_RIGHT].first = true;
+		m_apDoor[DOOR_DOWN].first = false;
+		break;
+	case DOOR_E:
+		m_apDoor[DOOR_RIGHT].first = true;
+		m_apDoor[DOOR_UP].first = false;
+		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_LEFT].first = false;
+		break;
+	}
+	for (_uint i = 0; i < 4; ++i)
+	{
+		if (true == m_apDoor[i].first)
+		{
+			if (nullptr == m_apDoor[i].second)
+			{
+				_vec3 vPos(0.f, 0.f, 0.f);
+				_vec3 vCurRoomPos = m_pTransform->m_vInfo[INFO_POS];
+				_bool IsRot = false;
+				switch (i)
+				{
+				case Engine::DOOR_UP:
+					vPos = { vCurRoomPos.x + 25.f, 3.f, vCurRoomPos.z + 49.9f };
+					break;
+
+				case Engine::DOOR_DOWN:
+					vPos = { vCurRoomPos.x + 25.f, 3.f, vCurRoomPos.z + 0.1f };
+					break;
+
+				case Engine::DOOR_LEFT:
+					vPos = { vCurRoomPos.x + 0.1f, 3.f, vCurRoomPos.z + 25.f };
+					IsRot = true;
+					break;
+
+				case Engine::DOOR_RIGHT:
+					vPos = { vCurRoomPos.x + 49.9f, 3.f, vCurRoomPos.z + 25.f };
+					IsRot = true;
+					break;
+				}
+				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, vPos, IsRot);
+			}
+		}
+		else if (nullptr != m_apDoor[i].second)
+			Safe_Release(m_apDoor[i].second);
+	}
+}
+
 void CRoom::FloorSubSet()
 {
-	// πŸ¥⁄ ¿ßƒ° ¡∂¡§
+	// Î∞îÎã• ÏúÑÏπò Ï°∞Ï†ï
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
 
@@ -110,7 +261,7 @@ void CRoom::PlaceSubSet()
 {
 	const _float colliderThick = 4.f;
 
-	// ∫Æ ¿ßƒ° ¡∂¡§
+	// Î≤Ω ÏúÑÏπò Ï°∞Ï†ï
 	_vec3 vPos;
 	float fLengthX = (m_fVtxCntX - 1) * m_fVtxItv;
 	float fLengthZ = (m_fVtxCntZ - 1) * m_fVtxItv;
@@ -157,13 +308,13 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 	_int iTileSize = m_vecTile.size();
 	_int iObjSize = m_vecGameObj.size();
 
-	// ∑Î¿« ∫Øºˆ ¿˙¿Â
+	// Î£∏Ïùò Î≥ÄÏàò Ï†ÄÏû•
 	WriteFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	WriteFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
 	WriteFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
 	m_pTransform->WriteTransformFile(hFile, dwByte);
 	
-	// ≈∏¿œ ƒ¡≈◊¿Ã≥  ¿˙¿Â
+	// ÌÉÄÏùº Ïª®ÌÖåÏù¥ÎÑà Ï†ÄÏû•
 	WriteFile(hFile, &iTileSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iTileSize; ++i)
 	{
@@ -172,11 +323,11 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 	}
 		
 	
-	// ∞¥√º ƒ¡≈◊¿Ã≥  ¿˙¿Â
+	// Í∞ùÏ≤¥ Ïª®ÌÖåÏù¥ÎÑà Ï†ÄÏû•
 	WriteFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iObjSize; ++i)
 	{
-		// æÓ∂≤ ∞¥√º¿Œ¡ˆ π¯»£∑Œ ¿˙¿Â.
+		// Ïñ¥Îñ§ Í∞ùÏ≤¥Ïù∏ÏßÄ Î≤àÌò∏Î°ú Ï†ÄÏû•.
 		_int iObjNumber = 0;
 		if (dynamic_cast<CBaller*>(m_vecGameObj[i]))
 		{
@@ -199,7 +350,7 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 			iObjNumber = 5;
 		}
 
-		// ºº¿Ã∫Í Ω√ æÓ∂≤ ∞¥√º¿Œ¡ˆ ¡§∫∏∏¶ æÀ ºˆ æ¯¿ª ∂ß ø°∑Ø∏ﬁΩ√¡ˆ πﬂª˝.
+		// ÏÑ∏Ïù¥Î∏å Ïãú Ïñ¥Îñ§ Í∞ùÏ≤¥Ïù∏ÏßÄ Ï†ïÎ≥¥Î•º Ïïå Ïàò ÏóÜÏùÑ Îïå ÏóêÎü¨Î©îÏãúÏßÄ Î∞úÏÉù.
 		if (0 == iObjNumber)
 		{
 			FAILED_CHECK_RETURN(fail(), false);
@@ -219,13 +370,13 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
 	_int iTileSize;
 	_int iObjSize;
-	// ∑Î ∫Øºˆ ∑ŒµÂ
+	// Î£∏ Î≥ÄÏàò Î°úÎìú
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
-	// ≈∏¿œ ∑ŒµÂ
+	// ÌÉÄÏùº Î°úÎìú
 	ReadFile(hFile, &iTileSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iTileSize; ++i)
 	{
@@ -234,7 +385,7 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 		m_vecTile[i]->ReadTextureName(hFile, dwByte);
 	}
 
-	// ∞¥√º ∑ŒµÂ
+	// Í∞ùÏ≤¥ Î°úÎìú
 	ReadFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iObjSize; ++i)
 	{
@@ -292,6 +443,9 @@ void CRoom::Free(void)
 		Safe_Release(iter);
 	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
 	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
+
+	for (auto& iter : m_apDoor)
+		Safe_Release(iter.second);
 
 	__super::Free();
 }

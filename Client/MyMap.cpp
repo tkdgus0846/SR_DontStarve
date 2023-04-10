@@ -27,14 +27,14 @@ _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 	for (auto iter : m_arrRoom)
 		iter->Update_GameObject(fTimeDelta);
 
-	//CGameObject* pPlayer = Get_Player();
-	//if (nullptr == pPlayer)	// 에디터 모드
-	//{
-	//	for (auto iter : m_arrRoom)
-	//		iter->Update_GameObject(fTimeDelta);
-	//}
-	//else	// 인 게임
-	//	Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->Update_GameObject(fTimeDelta);
+	CGameObject* pPlayer = Get_Player();
+	if (nullptr == pPlayer)	// 에디터 모드
+	{
+		for (auto iter : m_arrRoom)
+			iter->Update_GameObject(fTimeDelta);
+	}
+	else	// 인 게임
+		Get_CurRoom(Get_Player()->m_pTransform->m_vInfo[INFO_POS])->Update_GameObject(fTimeDelta);
 
 	m_pTennel[0]->Update_GameObject(fTimeDelta);
 	m_pTennel[1]->Update_GameObject(fTimeDelta);
@@ -91,15 +91,17 @@ void CMyMap::Create_Default_Room()
 	}
 
 	m_pTennel[0] = CTennel::Create(m_pGraphicDev);
-	m_pTennel[0]->m_pTransform->m_vInfo[INFO_POS] = { 0.f, 0.f, -10.f };
+	m_pTennel[0]->m_pTransform->m_vInfo[INFO_POS] = { -30.f, 0.f, -20.f };
+	m_pTennel[0]->Set_Position(0);
 	m_pTennel[1] = CTennel::Create(m_pGraphicDev);
-	m_pTennel[1]->m_pTransform->m_vInfo[INFO_POS] = { 0.f, 0.f, -20.f };
+	m_pTennel[1]->m_pTransform->m_vInfo[INFO_POS] = { -30.f, 0.f, -30.f };
+	m_pTennel[1]->Set_Position(1);
 }
 
 CRoom * CMyMap::Get_CurRoom(const _vec3& vPos)
 {
-	_int iX = _int(vPos.x / 50.f);
-	_int iZ = _int(vPos.z / 50.f);
+	_int iX = _int(vPos.x / 60.f);
+	_int iZ = _int(vPos.z / 60.f);
 
 	_int iIndex = iZ * 5 + iX;
 
@@ -149,7 +151,8 @@ void CMyMap::Free()
 	for (auto iter : m_arrRoom)
 		Safe_Release(iter);
 
-	//Safe_Release(m_pTennel);
+	Safe_Release(m_pTennel[0]);
+	Safe_Release(m_pTennel[1]);
 
 	__super::Free();
 }

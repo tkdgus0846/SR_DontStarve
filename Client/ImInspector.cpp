@@ -36,23 +36,8 @@ _int CImInspector::Update(float fTimeDelta)
 
 	ImGui::Begin("Inspector");
 
-	const char* items[25] = { "0", "1", "2", "3", "4", 
-								"5", "6", "7", "8", "9", 
-								"10", "11", "12", "13", "14", 
-								"15", "16", "17", "18", "19", 
-								"20", "21", "22", "23", "24" };
-	static int item_current = 0;
-	if (ImGui::Combo("Room_Index", &item_current, items, IM_ARRAYSIZE(items)))
-	{
-		m_vObjectPos.x = _float(item_current % 5 * 60 + 5);
-		m_vObjectPos.y = 5.f;
-		m_vObjectPos.z = _float(item_current / 5 * 60 + 5);
-
-		CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
-		pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 20.f, 20.f, m_vObjectPos.z + 20.f };
-		CMyMap* pMyMap = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"));
-		m_pCurRoom = pMyMap->Get_CurRoom(pCamera->m_pTransform->m_vInfo[INFO_POS]);
-	}
+	if (ImGui::CollapsingHeader("RommInfo"))
+		Show_RoomInfo();
 
 	if (ImGui::CollapsingHeader("TilePicking"))
 		Show_TilePicking();
@@ -69,6 +54,31 @@ _int CImInspector::Update(float fTimeDelta)
 	ImGui::End();
 
 	return 0;
+}
+
+void CImInspector::Show_RoomInfo()
+{
+	const char* items[25] = { "0", "1", "2", "3", "4",
+		"5", "6", "7", "8", "9",
+		"10", "11", "12", "13", "14",
+		"15", "16", "17", "18", "19",
+		"20", "21", "22", "23", "24" };
+	static int item_current = 0;
+	ImGui::Combo("Room_Index", &item_current, items, IM_ARRAYSIZE(items));
+
+	m_vObjectPos.x = _float(item_current % 5 * 60 + 5);
+	m_vObjectPos.y = 5.f;
+	m_vObjectPos.z = _float(item_current / 5 * 60 + 5);
+
+	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
+	pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 20.f, 20.f, m_vObjectPos.z + 20.f };
+	CMyMap* pMyMap = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"));
+	m_pCurRoom = pMyMap->Get_CurRoom(pCamera->m_pTransform->m_vInfo[INFO_POS]);
+
+	ImGui::Checkbox("Door_Up", &m_pCurRoom->Cur_Door_State(DOOR_UP));
+	ImGui::Checkbox("Door_Down", &m_pCurRoom->Cur_Door_State(DOOR_DOWN));
+	ImGui::Checkbox("Door_Left", &m_pCurRoom->Cur_Door_State(DOOR_LEFT));
+	ImGui::Checkbox("Door_Right", &m_pCurRoom->Cur_Door_State(DOOR_RIGHT));
 }
 
 void CImInspector::Show_TilePicking()
@@ -127,7 +137,6 @@ void CImInspector::Show_Create_Object()
 
 		ImGui::SeparatorText("Environment");
 
-		ImGui::RadioButton("Door", &iObjNum, 10); ImGui::SameLine();
 		ImGui::RadioButton("Dirt_Barrier", &iObjNum, 11); ImGui::SameLine();
 		ImGui::RadioButton("Mine", &iObjNum, 12);
 
