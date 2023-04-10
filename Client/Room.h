@@ -30,8 +30,8 @@ public:
 
 	_int Get_Room_Index();
 
-	void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
-	void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
+	//void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
+	//void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
 
 	_bool& Cur_Door_State(DOOR_DIR eDir) { return m_apDoor[eDir].first; }
 	void Set_DoorType(DOOR_TYPE eType);
@@ -91,7 +91,7 @@ private:
 	DOOR_TYPE			m_eDoorType;
 	
 private:
-	// ���̾�� �����̳�
+	// sibal
 	vector<CLayer*> m_vecLayer;
 	list<CCollider*> m_ColliderList[COL_STATIC_END];
 

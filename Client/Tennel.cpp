@@ -2,7 +2,7 @@
 
 #include "Export_Function.h"
 
-#include "MyMap.h"
+#include "RoomMgr.h"
 #include "Door.h"
 #include "Tile.h"
 #include "Player.h"
@@ -62,7 +62,7 @@ void CTennel::OnCollisionEnter(const Collision * collsion)
 	if (nullptr != pPlayer)
 	{
 		_int iRoomIdx = m_pDoor->Get_Room()->Get_Room_Index();
-		dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"))->Set_CurRoom(iRoomIdx);
+		CRoomMgr::GetInstance()->Set_CurRoom(iRoomIdx);
 
 		_vec3 vLook = pPlayer->m_pTransform->m_vInfo[INFO_LOOK];
 		_vec3 vDoorLook = m_pDoor->m_pTransform->m_vInfo[INFO_LOOK];

@@ -23,6 +23,7 @@ enum LAYERID
 	LAYER_SKILL, 
 	LAYER_EFFECT,
 	LAYER_UI,
+	LAYER_TENNEL,
 
 	LAYER_DEBUG_BACKGROUND,
 	LAYER_DEBUG_MONSTER,
@@ -39,18 +40,19 @@ enum ANIMSTATE {
 enum COLGROUP
 {
 	/* 충돌 레이어임. 그룹별로 충돌 검사를 하기위해서 구분하였음. 콜라이더를 넣어줄때 (클론할때) 세번째 매개변수로 넣어도 되고 콜리전 매니져의 Change_ColGroup 함수를 써도 됨.*/
-	COL_ENVIRONMENT = 0,
-	COL_DETECTION = 1,
-	COL_TRIGGER = 2,
-	COL_ENEMY = 3,
-	COL_OBJ = 4,
-	COL_STATIC_END = 5,
+	COL_ENVIRONMENT,
+	COL_DETECTION,
+	COL_TRIGGER,
+	COL_ENEMY,
+	COL_OBJ,
+	COL_STATIC_END,
 	// 위 까지가 룸에 있을 정보들
 
-	COL_PLAYER = 6,
-	COL_PLAYERBULLET = 7,
-	COL_ENEMYBULLET = 8,
-	COL_DYNAMIC_END = 9
+	COL_PLAYER,
+	COL_TENNEL,
+	COL_PLAYERBULLET,
+	COL_ENEMYBULLET,
+	COL_DYNAMIC_END
 	// 위 까지가 동적인 콜라이더들
 };
 

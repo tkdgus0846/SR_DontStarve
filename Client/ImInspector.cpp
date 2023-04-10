@@ -73,7 +73,6 @@ void CImInspector::Show_RoomInfo()
 	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
 	pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 20.f, 20.f, m_vObjectPos.z + 20.f };
 	CRoomMgr* pMyMap = ROOM_MGR;
-	m_pCurRoom = pMyMap->Get_CurRoom(pCamera->m_pTransform->m_vInfo[INFO_POS]);
 	pMyMap->Set_CurRoom(item_current);
 
 	static _int iObjNum = 0, iPre = 0;

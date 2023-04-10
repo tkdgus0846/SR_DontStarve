@@ -89,13 +89,13 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 
 		_vec3 vCameraPos = m_pTransform->m_vInfo[INFO_POS];
 
-		CRoomMgr* pMap = ROOM_MGR;
+		CRoomMgr* pRoomMgr = ROOM_MGR;
 		// Variables for Output about InstersectRayRoom Method
 		Triangle tri;
 		INDEX32 index;
 		CGameObject* pGameObj = nullptr;
 		float fDist;
-		if (IntersectRayRoom(pMap->Get_CurRoom(vCameraPos), pGameObj, tri, index, fDist))
+		if (IntersectRayRoom(pRoomMgr->Get_CurRoom(vCameraPos), pGameObj, tri, index, fDist))
 		{
 			CTile* pTile = nullptr;
 			// Decide Tile Position
@@ -103,7 +103,7 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 			vPos = CalcMiddlePoint(tri);
 			_vec3 vOffset = vPos - vCameraPos;
 			vPos.y += 0.01f;
-			CRoom* pCurRoom = pMap->Get_CurRoom(vCameraPos);
+			CRoom* pCurRoom = pRoomMgr->Get_CurRoom(vCameraPos);
 
 			if (dynamic_cast<CTile*>(pGameObj))	// 기존에 이미 설치된 타일인 경우
 				dynamic_cast<CTile*>(pGameObj)->Change_Texture(m_pCurTextureName);

@@ -25,7 +25,7 @@ HRESULT CRoomMgr::Ready_RoomMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_pGraphicDev = pGraphicDev;
 	m_pGraphicDev->AddRef();
 	Create_Default_Room();
-	m_pCurRoom = m_arrRoom[0];
+	
 
 	return S_OK;
 }
@@ -100,12 +100,17 @@ void CRoomMgr::Create_Default_Room()
 		}
 	}
 
-	m_pTennel[0] = CTennel::Create(m_pGraphicDev);
+	m_pCurRoom = m_arrRoom[0];
+
+	/*m_pTennel[0] = CTennel::Create(m_pGraphicDev);
 	m_pTennel[0]->m_pTransform->m_vInfo[INFO_POS] = { -30.f, 0.f, -20.f };
 	m_pTennel[0]->Set_Position(0);
 	m_pTennel[1] = CTennel::Create(m_pGraphicDev);
 	m_pTennel[1]->m_pTransform->m_vInfo[INFO_POS] = { -30.f, 0.f, -30.f };
-	m_pTennel[1]->Set_Position(1);
+	m_pTennel[1]->Set_Position(1);*/
+
+	/*m_pCurRoom->PushBack_GameObj(LAYER_TRIGGER, L"Tennel1", m_pTennel[0], COL_TRIGGER, L"Collider");
+	m_pCurRoom->PushBack_GameObj(LAYER_TRIGGER, L"Tennel2", m_pTennel[1], COL_TRIGGER, L"Collider");*/
 }
 
 CRoom * CRoomMgr::Get_CurRoom(const _vec3& vPos)
@@ -163,8 +168,8 @@ void CRoomMgr::Free()
 	for (auto Room : m_arrRoom)
 		Safe_Release(Room);
 
-	Safe_Release(m_pTennel[0]);
-	Safe_Release(m_pTennel[1]);
+	/*Safe_Release(m_pTennel[0]);
+	Safe_Release(m_pTennel[1]);*/
 
 	Safe_Release(m_pGraphicDev);
 }

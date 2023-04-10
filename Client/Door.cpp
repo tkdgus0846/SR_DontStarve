@@ -26,8 +26,8 @@ HRESULT CDoor::Ready_GameObject(DOOR_DIR eDir, CRoom* pRoom)
 	m_eDir = eDir;
 	m_pRoom = pRoom;
 
-	m_pInTennel = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"))->Get_Tennel(0);
-	m_pOutTennel = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"))->Get_Tennel(1);
+	m_pInTennel = CRoomMgr::GetInstance()->Get_Tennel(0);
+	m_pOutTennel = CRoomMgr::GetInstance()->Get_Tennel(1);
 
 	Set_Door_State();
 
@@ -66,7 +66,7 @@ void CDoor::OnCollisionEnter(const Collision * collsion)
 	{	
 		_int iNextRoomIdx = 0;
 		DOOR_DIR eNextDoor = DOOR_DIR_END;
-		CMyMap* pMap = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"));
+		CRoomMgr* pRoomMgr = CRoomMgr::GetInstance();
 
 		CRoom* pNextRoom = nullptr;
 		CDoor* pNextDoor = nullptr;
@@ -93,7 +93,7 @@ void CDoor::OnCollisionEnter(const Collision * collsion)
 			eNextDoor = DOOR_WEST;
 			break;
 		}
-		pNextRoom = pMap->Get_Room(iNextRoomIdx);
+		pNextRoom = pRoomMgr->Get_Room(iNextRoomIdx);
 		pNextDoor = pNextRoom->Get_Door(eNextDoor);
 
 		m_pInTennel->Set_Door(this);
