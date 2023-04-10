@@ -27,7 +27,7 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	CCollider*	m_pCollider;
+	Engine::CCollider*	m_pCollider;
 
 private:
 	Engine::CTexture*	m_pTextureCom;

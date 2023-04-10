@@ -6,6 +6,8 @@ class CTexture;
 class CCollider;
 END
 
+class CTile;
+class CRoom;
 class CTennel : public CGameObject
 {
 private:
@@ -23,10 +25,14 @@ private:
 
 public:
 	void Set_Position(_int iFrontorBack);
+	void Set_Room(CRoom* pRoom) { m_pRoom = pRoom; }
 
 private:
 	Engine::CCollider*		m_pCollider;
 	Engine::CTexture*		m_pTextureCom;
+
+	CTile*		m_pTile;
+	CRoom*		m_pRoom;
 
 public:
 	static CTennel*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -2,11 +2,12 @@
 
 #include "Include.h"
 #include "GameObject.h"
-#include "Floor.h"
-#include "Wall.h"
 #include "Tile.h"
 
-
+class CWall;
+class CTile;
+class CFloor;
+class CDoor;
 class CRoom : public Engine::CGameObject
 {
 private:
@@ -23,6 +24,8 @@ public:
 	CWall* GetWallArray(_uint index) { return m_apWall[index]; }
 	void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
 	void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
+	_bool& Cur_Door_State(DOOR_DIR eDir) { return m_apDoor[eDir].first; }
+	void Set_DoorType(DOOR_TYPE eType);
 
 private:
 	virtual HRESULT Add_Component() override;
@@ -52,11 +55,15 @@ private:
 	_float				m_fVtxCntZ;
 	_float				m_fVtxItv;
 	vector<CTile*>		m_vecTile;
-	vector<CGameObject*> m_vecGameObj;
+
+	vector<CGameObject*> m_vecGameObj; // 몬스터랑, 장애물 나눠서 저장
 
 private:
 	CFloor*				m_pFloor;
 	array<CWall*, 4>	m_apWall;
+
+	array<pair<_bool, CDoor*>, 4>	m_apDoor;
+	DOOR_TYPE			m_eDoorType;
 
 public:
 	static CRoom*		Create(LPDIRECT3DDEVICE9 pGraphicDev, 

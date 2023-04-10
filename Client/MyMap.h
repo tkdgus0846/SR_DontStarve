@@ -30,7 +30,7 @@ private:
 			
 private:
 	array<CRoom*, 25>	m_arrRoom;
-	CTennel*			m_pTennel[2];
+	CTennel*			m_pTennel[2];//0 == 진입, 1 == 진출
 
 public:
 	static CMyMap* Create(LPDIRECT3DDEVICE9 pGraphicDev);
