@@ -12,6 +12,9 @@ CMiniMap::~CMiniMap()
 
 HRESULT CMiniMap::Add_Component()
 {
+	m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex_Dynamic", this));
+	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
+
 	m_pRcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", m_pRcTex });
@@ -24,22 +27,10 @@ HRESULT CMiniMap::Add_Component()
 	NULL_CHECK_RETURN(Texture, E_FAIL);
 	m_arrMap[MINIMAPPOS] = Texture;
 
-	Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"MiniMapBackGround_Texture", this));
+	Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"ESWN_Texture", this));
 	NULL_CHECK_RETURN(Texture, E_FAIL);
-	m_arrMap[MINIMAPBACKGROUND] = Texture;
+	m_arrMap[MINIMAPESWN] = Texture;
 
-
-	Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"MiniMapBackGround_Texture", this));
-	NULL_CHECK_RETURN(Texture, E_FAIL);
-	m_arrMap[MINIMAPBACKGROUND] = Texture;
-
-	Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"MiniMapBackGround_Texture", this));
-	NULL_CHECK_RETURN(Texture, E_FAIL);
-	m_arrMap[MINIMAPBACKGROUND] = Texture;
-
-	Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"MiniMapBackGround_Texture", this));
-	NULL_CHECK_RETURN(Texture, E_FAIL);
-	m_arrMap[MINIMAPBACKGROUND] = Texture;
 	return S_OK;
 }
 
@@ -54,8 +45,6 @@ _int CMiniMap::Update_GameObject(const _float & fTimeDelta)
 {
 	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
 	
-	m_PlayerAngle += 1;
-
 	__super::Update_GameObject(fTimeDelta);
 
 	return 0;
@@ -69,33 +58,19 @@ void CMiniMap::LateUpdate_GameObject(void)
 
 void CMiniMap::Render_GameObject(void)
 {
-	D3DVIEWPORT9 viewport;
-	m_pGraphicDev->GetViewport(&viewport);
-	D3DVIEWPORT9 savedViewport = viewport;
-
-	int miniMapWidth = 300; // 미니맵 가로 크기
-	int miniMapHeight = 300; // 미니맵 세로 크기
-
-	RECT miniMapRect = { 600, 300, 800, 0 };
-
-	LPDIRECT3DTEXTURE9 pTexture;
-	//D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/Sprite/Gui/Weapon_spreadshot.png", &pTexture); // 예시용 텍스처 로드
-
-	LPDIRECT3DSURFACE9 pMiniMapSurface; // 미니맵을 그리기 위한 서피스 객체
-
-	m_pGraphicDev->CreateOffscreenPlainSurface(miniMapWidth, miniMapHeight, D3DFMT_X8R8G8B8, D3DPOOL_SYSTEMMEM, &pMiniMapSurface, NULL);
-	m_pGraphicDev->SetRenderTarget(0, pMiniMapSurface); // 미니맵 서피스를 렌더링 타겟으로 설정
-	m_pGraphicDev->SetViewport(&D3DVIEWPORT9{ (DWORD)0, (DWORD)0, (DWORD)miniMapWidth, (DWORD)miniMapHeight, 0.0f, 1.0f });
-
 	for (size_t i = 0; i < MINIMAPEND; i++)
 	{
 		if (m_arrMap[i] != nullptr)
 		{
 			switch (i)
 			{
-			case MINIMAPBACKGROUND:
-				Set_ViewMatrix_UI(300.f, -130.f, 76.f, 10.f);
-				break;
+			case MINIMAPESWN: {
+				ESWN();
+				dynamic_cast<CTexture*>(m_arrMap[i])->Render_Texture();
+				m_pBufferCom->Render_Component();
+				m_pBufferCom->Edit_UV(1.f);
+				continue;
+			}
 			case MINIMAPPOS:
 				Set_ViewMatrix_UI(300.f, -210.f, 16.f, 16.f, m_PlayerAngle);
 				break;
@@ -110,10 +85,6 @@ void CMiniMap::Render_GameObject(void)
 			m_pRcTex->Render_Component();
 		}
 	}
-
-
-	// 원래 뷰포트로 복원
-	m_pGraphicDev->SetViewport(&savedViewport);
 
 	Set_ViewMatrix_UI();
 	__super::Render_GameObject();
@@ -153,11 +124,9 @@ void CMiniMap::Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float
 	D3DXMatrixIdentity(&matView);
 
 	_matrix pPlayerWorld = *Engine::Get_Player()->m_pTransform->Get_WorldMatrixPointer();
-	_vec3 vecRot;
 	D3DXMatrixScaling(&matView, scaleX, scaleY, 0.f);
-	//_float fDot = D3DXVec3Dot(&PlayerLook, &AxisRight);
-	//_float fAngleZ = acosf(fDot);
 
+	_vec3 vecRot;
 	D3DXVec3TransformNormal(&vecRot, &vecRot, &pPlayerWorld);
 	_float fAngleZ = -atan2f(vecRot.x, vecRot.z);
 
@@ -169,6 +138,16 @@ void CMiniMap::Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+}
+
+void CMiniMap::ESWN()
+{
+	_matrix pPlayerWorld = *Engine::Get_Player()->m_pTransform->Get_WorldMatrixPointer();
+	_vec3 vecRot;
+	D3DXVec3TransformNormal(&vecRot, &vecRot, &pPlayerWorld);
+	_float fAngleZ = -atan2f(vecRot.x, vecRot.z) / 6.f;
+	m_pBufferCom->Edit_UV(fAngleZ);
+	Set_ViewMatrix_UI(300.f, -130.f, 76.f, 10.f);
 }
 
 CMiniMap * CMiniMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -187,7 +166,8 @@ CMiniMap * CMiniMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CMiniMap::Free(void)
 {
 	Safe_Release(m_pRcTex);
-	
+	Safe_Release(m_pBufferCom);
+
 	auto iter = m_arrMap.begin();
 	for (; iter < m_arrMap.end(); iter++)
 	{

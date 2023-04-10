@@ -65,7 +65,7 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(LAYER_UI, L"Coin", CCoin::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_UI, L"Disc", CDisc::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_UI, L"WeaponType", CWeaponType::Create(m_pGraphicDev));
-	//Add_GameObject(LAYER_UI, L"MiniMap", CMiniMap::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_UI, L"MiniMap", CMiniMap::Create(m_pGraphicDev));
 
 	Add_GameObject(LAYER_UI, L"GunUI", CGunUI::Create(m_pGraphicDev));
 

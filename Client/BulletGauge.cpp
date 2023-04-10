@@ -32,7 +32,6 @@ _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 		m_pBufferCom->Edit_VB(m_NormalGuage);
 		_float Max = pWeapon->Get_MaxBulletNum();
 		_float Cur = pWeapon->Get_CurBulletNum();
-
 		m_NormalGuage = Cur / Max;
 	}
 		break;
