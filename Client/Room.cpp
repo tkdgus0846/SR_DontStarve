@@ -60,6 +60,7 @@ _int CRoom::Update_GameObject(const _float& fTimeDelta)
 	
 	for (auto& Obj : m_vecGameObj)
 		Obj->Update_GameObject(fTimeDelta);
+
 	return 0;
 }
 
@@ -255,7 +256,7 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 					IsRot = true;
 					break;
 				}
-				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, vPos, IsRot);
+				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, vPos, IsRot, this);
 			}
 		}
 		else if (nullptr != m_apDoor[i].second)
