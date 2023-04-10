@@ -45,12 +45,14 @@ CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject* pGame
 	return pClone;
 }
 
-CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize)
+CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize, COLTYPE colType)
 {
 	CComponent* pClone = Clone_Proto(pProtoTag, pGameObject);
 	CCollider* pCollider = dynamic_cast<CCollider*>(pClone);
-	Engine::Add_Collider(eColGroup, pCollider);
-	pCollider->Set_ColGroup(eColGroup);
+
+	if (colType == COL_DYNAMIC)
+		Engine::Add_Collider(eColGroup, pCollider); // 콜리젼 매니저에 넣어주는 함수
+
 	pCollider->Set_BoundingBox(boundSize);
 	return pCollider;
 }

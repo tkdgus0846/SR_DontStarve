@@ -12,8 +12,7 @@ CCollider::CCollider(LPDIRECT3DDEVICE9 pGraphicDev) :
 	m_bIsRender(false),
 	m_bRenderByOwnerPos(true),
 	m_vCenterPos({0.f,0.f,0.f}),
-	m_VOriginCenterPos({ 0.f,0.f,0.f }),
-	m_eColGroup(COL_DYNAMIC_END)
+	m_VOriginCenterPos({ 0.f,0.f,0.f })
 {
 }
 
@@ -25,8 +24,7 @@ CCollider::CCollider(const CCollider & rhs) :
 	m_bIsRender(rhs.m_bIsRender),
 	m_bRenderByOwnerPos(rhs.m_bRenderByOwnerPos),
 	m_vCenterPos(rhs.m_vCenterPos),
-	m_VOriginCenterPos(rhs.m_VOriginCenterPos),
-	m_eColGroup(rhs.m_eColGroup)
+	m_VOriginCenterPos(rhs.m_VOriginCenterPos)
 {
 	D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/CollisionDebug/Green.png", (LPDIRECT3DTEXTURE9*)&m_GreenTexture);
 	D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/CollisionDebug/Red.png", (LPDIRECT3DTEXTURE9*)&m_RedTexture);
@@ -118,7 +116,7 @@ void CCollider::OnCollisionExit(const Collision * collision)
 	m_pGameObject->OnCollisionExit(collision);
 }
 
-// °¡·Î, ¼¼·Î, ±íÀÌ »çÀÌÁî ³Ö¾îÁÖ¸é µÊ.
+// ê°€ë¡œ, ì„¸ë¡œ, ê¹Šì´ ì‚¬ì´ì¦ˆ ë„£ì–´ì£¼ë©´ ë¨.
 void CCollider::Set_BoundingBox(const _vec3 & vSize)
 {
 	if (m_pMesh) Safe_Release(m_pMesh);
