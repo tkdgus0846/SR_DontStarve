@@ -253,6 +253,7 @@
     <ClInclude Include="ImMenuBar.h" />
     <ClInclude Include="ImTest.h" />
     <ClInclude Include="ImWindow.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Jump.h" />
     <ClInclude Include="LeapJump.h" />
     <ClInclude Include="Loading.h" />
@@ -332,6 +333,7 @@
     <ClCompile Include="ImMenuBar.cpp" />
     <ClCompile Include="ImTest.cpp" />
     <ClCompile Include="ImWindow.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jump.cpp" />
     <ClCompile Include="LeapJump.cpp" />
     <ClCompile Include="Loading.cpp" />

@@ -16,4 +16,3 @@ public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 
 };
-

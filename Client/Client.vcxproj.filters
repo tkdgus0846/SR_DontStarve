@@ -68,6 +68,9 @@
     <Filter Include="GameObject\Effect">
       <UniqueIdentifier>{0d62534e-9cd4-404f-8200-3ae76b71715e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Item">
+      <UniqueIdentifier>{8d157d55-8910-480f-8838-5e1596283947}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -287,6 +290,9 @@
     <ClInclude Include="Door.h">
       <Filter>GameObject\Map</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -492,6 +498,9 @@
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>GameObject\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>GameObject\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
