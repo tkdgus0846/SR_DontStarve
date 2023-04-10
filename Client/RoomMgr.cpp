@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "RoomMgr.h"
 
 #include "Tennel.h"
@@ -17,8 +18,10 @@ CRoomMgr::~CRoomMgr()
 	Free();
 }
 
-HRESULT CRoomMgr::Ready_GameObject(void)
+HRESULT CRoomMgr::Ready_RoomMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 {
+	m_pGraphicDev = pGraphicDev;
+	m_pGraphicDev->AddRef();
 	Create_Default_Room();
 	m_pCurRoom = m_arrRoom[0];
 
@@ -145,4 +148,6 @@ void CRoomMgr::Free()
 
 	Safe_Release(m_pTennel[0]);
 	Safe_Release(m_pTennel[1]);
+
+	Safe_Release(m_pGraphicDev);
 }

@@ -17,7 +17,7 @@ public:
 	virtual ~CRoomMgr();
 
 public:
-	HRESULT Ready_GameObject(void);
+	HRESULT Ready_RoomMgr(LPDIRECT3DDEVICE9	pGraphicDev);
 
 	CRoom*			Get_CurRoom(const _vec3& vPos);
 	void			Set_CurRoom(const _uint iIndex) { m_pCurRoom = m_arrRoom[iIndex]; }
@@ -25,6 +25,12 @@ public:
 
 	_bool WriteMapFile(HANDLE hFile, DWORD& dwByte);
 	_bool ReadMapFile(HANDLE hFile, DWORD& dwByte);
+
+	vector<CLayer*>* Get_CurLayerVec() { return m_pCurRoom->GetLayerVec(); }
+	list<CCollider*>* Get_CurColliderList(_int iIndex)
+	{
+		return m_pCurRoom->GetColliderList(iIndex);
+	}
 
 private:
 	void			Create_Default_Room();
@@ -38,4 +44,6 @@ private:
 private:
 	void Free();
 };
+
+#define ROOM_MGR CRoomMgr::GetInstance()
 

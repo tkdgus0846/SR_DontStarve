@@ -89,4 +89,3 @@
 			}											\
 		}
 
-#define ROOM_MGR CRoomMgr::GetInstance()

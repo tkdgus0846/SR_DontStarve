@@ -96,6 +96,7 @@ HRESULT CWall::Add_Component()
 	m_uMapComponent[ID_RENDER].insert({ L"Wall_Level1_Texture", m_pTextureCom });
 
 
+	// Wall이랑 Floor 룸의 콜라이더 리스트에 넣어줘야함.
 	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENVIRONMENT));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"WallCollider", m_pCollider });

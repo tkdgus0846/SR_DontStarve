@@ -41,7 +41,7 @@ HRESULT CStage::Ready_Scene(void)
 	dynamic_cast<CRoom*>(Get_GameObject(LAYER_ENVIRONMENT, L"Room"))->PlaceSubSet();*/
 	//Add_GameObject(LAYER_ENVIRONMENT, L"Map", CRoomMgr::Create(m_pGraphicDev));
 
-	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_SKYBOX, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_PLAYER, L"Player", CPlayer::Create(m_pGraphicDev));
 
 	/*Add_GameObject(LAYER_MONSTER, L"Monster_Baller", CBaller::Create(m_pGraphicDev));

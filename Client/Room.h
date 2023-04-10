@@ -62,6 +62,13 @@ public:
 	void PushBack_Tile(CGameObject* pTile);
 	void PushBack_GameObj(LAYERID LayerID, const _tchar* pObjTag, CGameObject* pObj, COLGROUP eColgroup);
 
+public:
+	vector<CLayer*>* GetLayerVec() { return &m_vecLayer; }
+	list<CCollider*>* GetColliderList(_int iIndex) 
+	{
+		return &m_ColliderList[iIndex];
+	}
+
 private:
 	_float				m_fVtxCntX;
 	_float				m_fVtxCntZ;

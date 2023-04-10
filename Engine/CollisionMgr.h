@@ -23,7 +23,7 @@ public:
 	void		Remove_Collider(CCollider* collider, COLGROUP colID);
 	void		Remove_Collider(CGameObject* gameObject);
 	
-	void		Set_StaticColliderList(list<CCollider*>* pStaticColliderList);
+	void		Set_StaticColliderList(list<CCollider*>* pStaticColliderList, _int iIndex);
 
 private:
 	list<CCollider*>* Get_ColliderList(COLGROUP colID);
@@ -32,7 +32,7 @@ private:
 	_bool		Check_BoundingBox(CCollider * pSrc, CCollider * pDest, _float * pX, _float * pY, _float * pZ);
 	
 private:
-	list<CCollider*>*	m_StaticColliderList; // 룸에 있을 콜라이더들의 리스트
+	list<CCollider*>*	m_StaticColliderList[COL_STATIC_END]; // 룸에 있을 콜라이더들의 리스트
 	list<CCollider*>	m_DynamicColliderList[COL_DYNAMIC_END - COL_STATIC_END - 1];
 	_bool				m_bIsRender;
 

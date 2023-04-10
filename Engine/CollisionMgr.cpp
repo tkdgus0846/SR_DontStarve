@@ -143,16 +143,16 @@ void CCollisionMgr::Remove_Collider(CCollider* collider, COLGROUP colID)
 	}
 }
 
-void Engine::CCollisionMgr::Set_StaticColliderList(list<CCollider*>* pStaticColliderList)
+void Engine::CCollisionMgr::Set_StaticColliderList(list<CCollider*>* pStaticColliderList, _int iIndex)
 {
-	m_StaticColliderList = pStaticColliderList;
+	m_StaticColliderList[iIndex] = pStaticColliderList;
 }
 
 list<CCollider*>* CCollisionMgr::Get_ColliderList(COLGROUP colID)
 {
 	if (colID < COL_STATIC_END)
 	{
-		return &m_StaticColliderList[colID];
+		return m_StaticColliderList[colID];
 	}
 	else if (colID < COL_DYNAMIC_END)
 	{
