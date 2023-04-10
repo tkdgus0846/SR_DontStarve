@@ -88,3 +88,4 @@
 				m_pInstance = NULL;						\
 			}											\
 		}
+

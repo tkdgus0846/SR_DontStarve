@@ -1,13 +1,17 @@
 #pragma once
 
-#include "Include.h"
 #include "GameObject.h"
-#include "Tile.h"
 
 class CWall;
 class CTile;
 class CFloor;
 class CDoor;
+
+BEGIN(Engine)
+	class CLayer;
+	class CCollider;
+END
+
 class CRoom : public Engine::CGameObject
 {
 private:
@@ -22,8 +26,10 @@ public:
 
 	CFloor* GetFloor() const { return m_pFloor; }
 	CWall* GetWallArray(_uint index) const { return m_apWall[index]; }
-	void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
-	void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
+
+	// 구조 개편(룸->레이어) 이전에 쓰이던 함수
+	//void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
+	//void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
 	_bool& Cur_Door_State(DOOR_DIR eDir) { return m_apDoor[eDir].first; }
 	void Set_DoorType(DOOR_TYPE eType);
 
@@ -31,6 +37,8 @@ private:
 	virtual HRESULT Add_Component() override;
 	HRESULT CreateSubset();
 	void	FreeSubset();
+	HRESULT Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, CGameObject* pObj);
+	
 public:
 	void FloorSubSet();
 	void PlaceSubSet();
@@ -43,7 +51,6 @@ public:
 		return m_vecGameObj[iIndex];
 	}
 
-	HRESULT fail() { return E_FAIL; }
 	_int TileNum() const { return m_vecTile.size(); }
 	CGameObject* GetTileByIndex(_int iIndex) const
 	{
@@ -51,25 +58,40 @@ public:
 		return m_vecTile[iIndex];
 	}
 
+	void PushBack_Tile(CGameObject* pTile);
+	void PushBack_GameObj(LAYERID LayerID, const _tchar* pObjTag, CGameObject* pObj, COLGROUP eColgroup
+		, const _tchar* colliderName);
+
+public:
+	vector<CLayer*>* GetLayerVec() { return &m_vecLayer; }
+	list<CCollider*>* GetColliderList(_int iIndex) 
+	{
+		if (iIndex >= LAYER_STATIC_END) return nullptr;
+		return &m_ColliderList[iIndex];
+	}
+
 private:
 	_float				m_fVtxCntX;
 	_float				m_fVtxCntZ;
 	_float				m_fVtxItv;
 
-	vector<CTile*>		m_vecTile;
-
-	vector<CGameObject*> m_vecGameObj; // 몬스터랑, 장애물 나눠서 저장
-
-private:
+	// 기존의 구조,
+	// push_back직접적으로 쓰지말고 PushBack_시리즈 함수들로 쓰셈.
+	vector<CGameObject*>	m_vecTile;		// IMGUI에서 사용중
+	vector<CGameObject*> m_vecGameObj;	// IMGUI에서 사용중
 	CFloor*				m_pFloor;
 	array<CWall*, 4>	m_apWall;
-
 	array<pair<_bool, CDoor*>, 4>	m_apDoor;
 	DOOR_TYPE			m_eDoorType;
+	
+private:
+	// 레이어용 컨테이너
+	vector<CLayer*> m_vecLayer;
+	list<CCollider*> m_ColliderList[COL_STATIC_END];
 
 public:
 	static CRoom*		Create(LPDIRECT3DDEVICE9 pGraphicDev, 
-		const _float& fVtxCntX = VTXCNTX, const _float& fVtxCntZ = VTXCNTZ, const _float& fVtxItv = VTXITV);
+	const	_float& fVtxCntX = VTXCNTX, const _float& fVtxCntZ = VTXCNTZ, const _float& fVtxItv = VTXITV);
 
 private:
 	virtual void Free(void) override;

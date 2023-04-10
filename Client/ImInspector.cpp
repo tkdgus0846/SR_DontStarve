@@ -5,7 +5,7 @@
 #include "EditCamera.h"
 
 #include "Room.h"
-#include "MyMap.h"
+#include "RoomMgr.h"
 
 #include "Baller.h"
 #include "Bub.h"
@@ -72,7 +72,7 @@ void CImInspector::Show_RoomInfo()
 
 	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
 	pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 20.f, 20.f, m_vObjectPos.z + 20.f };
-	CMyMap* pMyMap = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"));
+	CRoomMgr* pMyMap = ROOM_MGR;
 	m_pCurRoom = pMyMap->Get_CurRoom(pCamera->m_pTransform->m_vInfo[INFO_POS]);
 
 	static _int iObjNum = 0, iPre = 0;
@@ -182,30 +182,35 @@ void CImInspector::Show_Create_Object()
 		{
 			pName = "Baller";
 			pGameObject = CBaller::Create(m_pGraphicDev, m_vObjectPos);
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Baller" ,pGameObject, COL_ENEMY, L"BodyCollider");
 		}
 		if (1 == iObjNum)
 		{
 			pName = "Bub";
 			pGameObject = CBub::Create(m_pGraphicDev, m_vObjectPos);
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Bub", pGameObject, COL_ENEMY, L"BodyCollider");
 		}
+
 		if (2 == iObjNum)
 		{
 			pName = "Guppi";
 			pGameObject = CGuppi::Create(m_pGraphicDev, m_vObjectPos);
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Guppi", pGameObject, COL_ENEMY, L"BodyCollider");
 		}
 		if (3 == iObjNum)
 		{
 			pName = "Turret";
 			pGameObject = CTurret::Create(m_pGraphicDev, m_vObjectPos);
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Turret", pGameObject, COL_ENEMY, L"BodyCollider");
 		}
 		if (4 == iObjNum)
 		{
 			pName = "Walker";
 			pGameObject = CWalker::Create(m_pGraphicDev, m_vObjectPos);
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Walker", pGameObject, COL_ENEMY, L"BodyCollider");
 		}
 
 		m_vecMonster.push_back({ pName, pGameObject });
-		m_pCurRoom->AddGameObject(pGameObject);
 	}
 }
 

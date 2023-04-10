@@ -1,11 +1,15 @@
 ﻿#include "stdafx.h"
 #include "CollisionMgr.h"
+#include "Collider.h"
 
 IMPLEMENT_SINGLETON(CCollisionMgr)
 
 CCollisionMgr::CCollisionMgr()
 {
 	m_bIsRender = false;
+
+	for (int i = 0; i < COL_STATIC_END; i++)
+		m_StaticColliderList[i] = nullptr;
 }
 
 
@@ -16,16 +20,20 @@ CCollisionMgr::~CCollisionMgr()
 
 void CCollisionMgr::Check_Collision(COLGROUP ID1, COLGROUP ID2)
 {
-	if (m_ColliderList[ID1].empty())
+
+	if (Get_ColliderList(ID1) == nullptr) return;
+	if (Get_ColliderList(ID2) == nullptr) return;
+	
+	if (Get_ColliderList(ID1)->empty())
 		return;
-	if (m_ColliderList[ID2].empty())
+	if (Get_ColliderList(ID2)->empty())
 		return;
 
-	for (auto iterID1 = m_ColliderList[ID1].begin(); iterID1 != m_ColliderList[ID1].end(); iterID1++)
+	for (auto iterID1 = Get_ColliderList(ID1)->begin(); iterID1 != Get_ColliderList(ID1)->end(); iterID1++)
 	{
 		if ((*iterID1)->m_bEnabled == false) continue;
 
-		for (auto iterID2 = m_ColliderList[ID2].begin(); iterID2 != m_ColliderList[ID2].end(); iterID2++)
+		for (auto iterID2 = Get_ColliderList(ID2)->begin(); iterID2 != Get_ColliderList(ID2)->end(); iterID2++)
 		{
 			if ((*iterID2)->m_bEnabled == false) continue;
 			if (ID1 == ID2 && iterID1 == iterID2) continue;
@@ -98,9 +106,9 @@ void CCollisionMgr::Check_Collision(COLGROUP ID1, COLGROUP ID2)
 
 void CCollisionMgr::Add_Collider(COLGROUP eID, CCollider * pCollider)
 {
-	if (COL_END <= eID || nullptr == pCollider)
+	if (COL_DYNAMIC_END <= eID || nullptr == pCollider)
 		return;
-	m_ColliderList[eID].push_back(pCollider);
+	Get_ColliderList(eID)->push_back(pCollider);
 
 	if (m_bIsRender != pCollider->m_bIsRender)
 		m_bIsRender = pCollider->m_bIsRender;
@@ -110,13 +118,13 @@ void CCollisionMgr::Change_ColGroup(CCollider* collider, COLGROUP changeID)
 {
 	list<CCollider*>::iterator iter;
 	_bool found = false;
-	for (int i = 0; i < COL_END; i++)
+	for (int i = COL_STATIC_END+1; i < COL_DYNAMIC_END; i++)
 	{
-		for (iter = m_ColliderList[i].begin(); iter != m_ColliderList[i].end(); ++iter)
+		for (iter = Get_ColliderList((COLGROUP)i)->begin(); iter != Get_ColliderList((COLGROUP)i)->end(); ++iter)
 		{
 			if (*iter == collider)
 			{
-				m_ColliderList[i].erase(iter);
+				Get_ColliderList((COLGROUP)i)->erase(iter);
 				found = true;
 				break;
 			}
@@ -127,24 +135,43 @@ void CCollisionMgr::Change_ColGroup(CCollider* collider, COLGROUP changeID)
 	if (found == false) return;
 
 	
-	m_ColliderList[changeID].push_front(collider);
+	Get_ColliderList(changeID)->push_front(collider);
 }
 
 void CCollisionMgr::Remove_Collider(CCollider* collider, COLGROUP colID)
 {
-	for (auto it = m_ColliderList[colID].begin(); it != m_ColliderList[colID].end(); it++)
+	for (auto it = Get_ColliderList(colID)->begin(); it != Get_ColliderList(colID)->end(); it++)
 	{
 		if (*it == collider)
 		{
-			m_ColliderList[colID].erase(it);
+			Get_ColliderList(colID)->erase(it);
 			break;
 		}
 	}
 }
 
+void Engine::CCollisionMgr::Set_StaticColliderList(list<CCollider*>* pStaticColliderList, _int iIndex)
+{
+	m_StaticColliderList[iIndex] = pStaticColliderList;
+}
+
+list<CCollider*>* CCollisionMgr::Get_ColliderList(COLGROUP colID)
+{
+	if (colID <= COL_STATIC_END)
+	{
+		if (m_StaticColliderList[colID] == nullptr) return nullptr;
+
+		return m_StaticColliderList[colID];
+	}
+	else if (colID < COL_DYNAMIC_END)
+	{
+		return &m_DynamicColliderList[colID - COL_STATIC_END - 1];
+	}
+}
+
 void Engine::CCollisionMgr::Find_Remove_Collider(CGameObject* gameObject, COLGROUP colID)
 {
-	for (auto it = m_ColliderList[colID].begin(); it != m_ColliderList[colID].end(); )
+	for (auto it = Get_ColliderList(colID)->begin(); it != Get_ColliderList(colID)->end(); )
 	{
 		if ((*it)->Get_GameObject() == gameObject)
 		{
@@ -152,7 +179,7 @@ void Engine::CCollisionMgr::Find_Remove_Collider(CGameObject* gameObject, COLGRO
 			{
 				iter.first->Get_ColliderList().erase(*it);
 			}
-			it = m_ColliderList[colID].erase(it);
+			it = Get_ColliderList(colID)->erase(it);
 		}
 		else
 		{
@@ -172,9 +199,12 @@ void Engine::CCollisionMgr::Remove_Collider(CGameObject* gameObject)
 void Engine::CCollisionMgr::Toggle_ColliderRender()
 {
 	m_bIsRender = (m_bIsRender == false) ? true : false;
-	for (int i = 0; i < COL_END; i++)
-		for (auto col : m_ColliderList[i])
+	for (int i = 0; i < COL_DYNAMIC_END; i++)
+	{
+		if (i == COL_STATIC_END) continue;
+		for (auto col : *Get_ColliderList((COLGROUP)i))
 			col->Set_IsRender(m_bIsRender);
+	}	
 }
 
 bool CCollisionMgr::Collision_Box(CCollider* pSrc, CCollider* pDest, COL_DIR& colDir, BoundingBox& bound, _vec3& amountVec)

@@ -1,10 +1,11 @@
 ﻿#pragma once
 
 #include "Base.h"
-#include "GameObject.h"
 
 BEGIN(Engine)
 
+class CGameObject;
+class CComponent;
 
 class  CLayer : public CBase
 {

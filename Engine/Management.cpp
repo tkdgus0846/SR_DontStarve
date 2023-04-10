@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Export_Utility.h"
+#include "Layer.h"
+#include "Scene.h"
 
 
 IMPLEMENT_SINGLETON(CManagement)

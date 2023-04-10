@@ -5,6 +5,7 @@
 #include "Client.h"
 
 #include "MainApp.h"
+#include "Export_Function.h"
 
 #define MAX_LOADSTRING 100
 

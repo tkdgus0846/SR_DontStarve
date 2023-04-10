@@ -2,9 +2,9 @@
 #include "Room.h"
 #include "Wall.h"
 #include "Tile.h"
-#include "MyMap.h"
+#include "RoomMgr.h"
 #include "Export_Function.h"
-#include "MyMap.h"
+#include "RoomMgr.h"
 #include "Floor.h"
 
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -39,10 +39,6 @@ _int CEditCamera::Update_GameObject(const _float & fTimeDelta)
 		Fix_Mouse();
 		Mouse_Move(fTimeDelta);
 	}
-
-	cout << m_pTransform->m_vInfo[INFO_POS].x << ", "
-		<< m_pTransform->m_vInfo[INFO_POS].y << ", "
-		<< m_pTransform->m_vInfo[INFO_POS].z << endl;
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -92,7 +88,8 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &proj);
 
 		_vec3 vCameraPos = m_pTransform->m_vInfo[INFO_POS];
-		CMyMap* pMap = (CMyMap*)Get_GameObject(LAYER_ENVIRONMENT, L"Map");
+
+		CRoomMgr* pMap = ROOM_MGR;
 		// Variables for Output about InstersectRayRoom Method
 		Triangle tri;
 		INDEX32 index;
@@ -114,7 +111,7 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 			else	// 설치된 타일이 없는 경우
 			{
 				pTile = CTile::Create(m_pGraphicDev, vPos, m_pCurTextureName);
-				pCurRoom->AddTile(pTile);
+				pCurRoom->PushBack_Tile(pTile);
 
 				// Decide Tile Rotation;
 				_vec3 vTileNormal = tri.Normal();
@@ -125,7 +122,6 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 					pTile->m_pTransform->Set_Dir(vTileNormal);
 				}
 				pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
-				cout << fDist << endl;
 			}
 		}
 		/*cout << fixed;

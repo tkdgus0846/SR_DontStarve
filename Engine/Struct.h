@@ -227,6 +227,7 @@ struct Triangle
 		_vec3 v0 = v[1] - v[0];
 		_vec3 v1 = v[2] - v[0];
 		_vec3 cross = v0.Cross(v1);
+		cross.Normalize();
 		return cross;
 	}
 	_vec3 v[3];

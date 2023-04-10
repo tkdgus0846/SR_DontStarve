@@ -27,6 +27,7 @@ HRESULT CTennel::Ready_GameObject(void)
 
 _int CTennel::Update_GameObject(const _float & fTimeDelta)
 {
+	
 	__super::Update_GameObject(fTimeDelta);
 
 	m_pTile->Update_GameObject(fTimeDelta);

@@ -22,9 +22,6 @@ public:
 private:
 	virtual HRESULT Add_Component() override;
 
-private:
-	Engine::CTexture*		m_pTextureCom;
-
 public:
 	static CFloor*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

@@ -6,6 +6,9 @@
 #include "EffectManager.h"
 #include "ImManager.h"
 
+#include "Export_Function.h"
+#include "RoomMgr.h"
+
 // 주석 테스트용
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pManagementClass(nullptr), m_pGraphicDev(nullptr)
@@ -103,9 +106,11 @@ CMainApp * CMainApp::Create(void)
 
 void CMainApp::Free(void)
 {
+	CRoomMgr::DestroyInstance();
 	CImManager::DestroyInstance();
 	CBulletMgr::DestroyInstance();
 	CEffectManager::DestroyInstance();
+	
 
 	FreeConsole();
 	Safe_Release(m_pGraphicDev);

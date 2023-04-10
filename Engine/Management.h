@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Base.h"
-#include "Scene.h"
 
 BEGIN(Engine)
+
+class CScene;
+class CComponent;
 
 class  CManagement : public CBase
 {

@@ -61,7 +61,6 @@ HRESULT CRcTex::Ready_Buffer(VIBUFFER_FLAG bufferFlag)
 	pIndex[1]._2 = 3;
 
 	m_pIB->Unlock();
-
 	return S_OK;
 }
 

@@ -26,6 +26,7 @@ HRESULT CTile::Ready_GameObject(const _tchar* pTextureName)
 
 _int CTile::Update_GameObject(const _float & fTimeDelta)
 {
+	
 	__super::Update_GameObject(fTimeDelta);
 
 	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
@@ -58,18 +59,40 @@ void CTile::ReadTextureName(HANDLE hFile, DWORD & dwByte)
 	Change_Texture(tmp);
 }
 
+_vec3 CTile::NormalVectorFromTile()
+{
+	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Get_Component(L"RcTex", ID_RENDER));
+	NULL_CHECK(pBufferCom);
+	Triangle tri;
+
+	VTXTEX*		pVertex = nullptr;
+	pBufferCom->GetVertexBuffer()->Lock(0, 0, (void**)&pVertex, 0);
+
+	tri.v[0] = pVertex[0].vPos;
+	tri.v[1] = pVertex[1].vPos;
+	tri.v[2] = pVertex[2].vPos;
+
+	pBufferCom->GetVertexBuffer()->Unlock();
+
+	tri.v[0].TransformCoord(&m_pTransform->m_matWorld);
+	tri.v[1].TransformCoord(&m_pTransform->m_matWorld);
+	tri.v[2].TransformCoord(&m_pTransform->m_matWorld);
+
+	return tri.Normal();
+}
+
 HRESULT CTile::Add_Component()
 {
 	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"RcTex", pBufferCom });
+	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pBufferCom });
 
 	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENVIRONMENT));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"TileCollider", m_pCollider });
+	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
 
 	Change_Texture(m_pTextureName);
-
+	
 	return S_OK;
 }
 
