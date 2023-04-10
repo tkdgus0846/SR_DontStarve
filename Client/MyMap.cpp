@@ -28,17 +28,9 @@ _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 	if (!m_arrRoom[0])
 		return 0;
 
-	for (auto iter : m_arrRoom)
-		iter->Update_GameObject(fTimeDelta);
-
-	CGameObject* pPlayer = Get_Player();
-	if (nullptr == pPlayer)	// 에디터 모드
-	{
-		for (auto iter : m_arrRoom)
-			iter->Update_GameObject(fTimeDelta);
-	}
-	else	// 인 게임
-		m_pCurRoom->Update_GameObject(fTimeDelta);
+	//for (auto iter : m_arrRoom)
+	//	iter->Update_GameObject(fTimeDelta);
+	m_pCurRoom->Update_GameObject(fTimeDelta);
 
 	m_pTennel[0]->Update_GameObject(fTimeDelta);
 	m_pTennel[1]->Update_GameObject(fTimeDelta);
@@ -53,14 +45,7 @@ void CMyMap::LateUpdate_GameObject(void)
 	if (!m_arrRoom[0])
 		return;
 
-	CGameObject* pPlayer = Get_Player();
-	if (nullptr == pPlayer)	// 에디터 모드
-	{
-		for (auto iter : m_arrRoom)
-			iter->LateUpdate_GameObject();
-	}
-	else	// 인 게임
-		m_pCurRoom->LateUpdate_GameObject();
+	m_pCurRoom->LateUpdate_GameObject();
 
 	m_pTennel[0]->LateUpdate_GameObject();
 	m_pTennel[1]->LateUpdate_GameObject();
@@ -114,6 +99,14 @@ CRoom * CMyMap::Get_CurRoom(const _vec3& vPos)
 	_int iZ = _int(vPos.z / 60.f);
 
 	_int iIndex = iZ * 5 + iX;
+
+	return m_arrRoom[iIndex];
+}
+
+CRoom * CMyMap::Get_Room(const _int iIndex)
+{
+	if(0 > iIndex || 25 <= iIndex)
+		return nullptr;
 
 	return m_arrRoom[iIndex];
 }

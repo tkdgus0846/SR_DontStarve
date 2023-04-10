@@ -31,11 +31,11 @@ _int CLeapJump::Update_Component(const _float & fTimeDelta)
 	{
 		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y = m_fInit;
 		m_fTime = 0.f;
-		return BEHAVIOR_TRUE;
+		return BEHAVIOR_SUCCES;
 	}
 
 	_float fSpeed = 0.f;
-	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FALSE);
+	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FAIL);
 
 	m_pGameObject->m_pTransform->Move_Walk(fSpeed, fTimeDelta);
 
@@ -45,7 +45,7 @@ _int CLeapJump::Update_Component(const _float & fTimeDelta)
 
 	m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
 
-	return RUNNING;
+	return BEHAVIOR_RUNNING;
 }
 
 void CLeapJump::Render_Component(void)

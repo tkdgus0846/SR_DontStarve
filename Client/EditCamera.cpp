@@ -40,10 +40,10 @@ _int CEditCamera::Update_GameObject(const _float & fTimeDelta)
 		Mouse_Move(fTimeDelta);
 	}
 
-	cout << m_pTransform->m_vInfo[INFO_POS].x << ", "
+	/*cout << m_pTransform->m_vInfo[INFO_POS].x << ", "
 		<< m_pTransform->m_vInfo[INFO_POS].y << ", "
 		<< m_pTransform->m_vInfo[INFO_POS].z << endl;
-
+*/
 	__super::Update_GameObject(fTimeDelta);
 
 	return OBJ_NOEVENT;
@@ -125,7 +125,7 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 					pTile->m_pTransform->Set_Dir(vTileNormal);
 				}
 				pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
-				cout << fDist << endl;
+				//cout << fDist << endl;
 			}
 		}
 		/*cout << fixed;

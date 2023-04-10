@@ -61,6 +61,9 @@ _int CRoom::Update_GameObject(const _float& fTimeDelta)
 	for (auto& Obj : m_vecGameObj)
 		Obj->Update_GameObject(fTimeDelta);
 
+	//cout << _int(m_pTransform->m_vInfo[INFO_POS].x / 60.f) << ", " << 
+	//	_int(m_pTransform->m_vInfo[INFO_POS].z / 60.f) << endl;
+
 	return 0;
 }
 
@@ -137,94 +140,94 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 	switch (m_eDoorType)
 	{
 	case DOOR_ES:
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_LEFT].first = false;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_WEST].first = false;
 		break;
 	case DOOR_ESW:
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_UP].first = false;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
 		break;
 	case DOOR_EW:
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_SOUTH].first = false;
 		break;
 	case DOOR_N:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_DOWN].first = false;
-		m_apDoor[DOOR_LEFT].first = false;
-		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_SOUTH].first = false;
+		m_apDoor[DOOR_WEST].first = false;
+		m_apDoor[DOOR_EAST].first = false;
 		break;
 	case DOOR_NE:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_LEFT].first = false;
-		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_WEST].first = false;
+		m_apDoor[DOOR_SOUTH].first = false;
 		break;
 	case DOOR_NES:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = false;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = false;
 		break;
 	case DOOR_NESW:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = true;
 		break;
 	case DOOR_NS:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = false;
-		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = false;
+		m_apDoor[DOOR_EAST].first = false;
 		break;
 	case DOOR_NW:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_RIGHT].first = false;
-		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_EAST].first = false;
+		m_apDoor[DOOR_SOUTH].first = false;
 		break;
 	case DOOR_S:
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_LEFT].first = false;
-		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_WEST].first = false;
+		m_apDoor[DOOR_EAST].first = false;
 		break;
 	case DOOR_SW:
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_EAST].first = false;
 		break;
 	case DOOR_SWN:
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_EAST].first = false;
 		break;
 	case DOOR_W:
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_RIGHT].first = false;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_EAST].first = false;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_SOUTH].first = false;
 		break;
 	case DOOR_WNE:
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_SOUTH].first = false;
 		break;
 	case DOOR_E:
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_DOWN].first = false;
-		m_apDoor[DOOR_LEFT].first = false;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_SOUTH].first = false;
+		m_apDoor[DOOR_WEST].first = false;
 		break;
 	}
 	for (_uint i = 0; i < 4; ++i)
@@ -232,36 +235,19 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 		if (true == m_apDoor[i].first)
 		{
 			if (nullptr == m_apDoor[i].second)
-			{
-				_vec3 vPos(0.f, 0.f, 0.f);
-				_vec3 vCurRoomPos = m_pTransform->m_vInfo[INFO_POS];
-				_bool IsRot = false;
-				switch (i)
-				{
-				case Engine::DOOR_UP:
-					vPos = { vCurRoomPos.x + 25.f, 3.f, vCurRoomPos.z + 49.9f };
-					break;
-
-				case Engine::DOOR_DOWN:
-					vPos = { vCurRoomPos.x + 25.f, 3.f, vCurRoomPos.z + 0.1f };
-					break;
-
-				case Engine::DOOR_LEFT:
-					vPos = { vCurRoomPos.x + 0.1f, 3.f, vCurRoomPos.z + 25.f };
-					IsRot = true;
-					break;
-
-				case Engine::DOOR_RIGHT:
-					vPos = { vCurRoomPos.x + 49.9f, 3.f, vCurRoomPos.z + 25.f };
-					IsRot = true;
-					break;
-				}
-				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, vPos, IsRot, this);
-			}
+				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, (DOOR_DIR)i, this);
 		}
 		else if (nullptr != m_apDoor[i].second)
-			Safe_Release(m_apDoor[i].second);
+			m_apDoor[i].second->SetDead();
 	}
+}
+
+_int CRoom::Get_Room_Index()
+{
+	_int iX = _int(m_pTransform->m_vInfo[INFO_POS].x / 60.f);
+	_int iZ = _int(m_pTransform->m_vInfo[INFO_POS].z / 60.f);
+
+	return iZ * 5 + iX;
 }
 
 void CRoom::FloorSubSet()
@@ -394,6 +380,9 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
 	m_vecGameObj.clear();
 
+	for (auto iter : m_apDoor)
+		Safe_Release(iter.second);
+
 	_int iTileSize;
 	_int iObjSize;
 	// 룸 변수 로드
@@ -402,7 +391,7 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	ReadFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
 	_int iDoorType;
 	ReadFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
-	m_eDoorType = (DOOR_TYPE)iDoorType;
+	Set_DoorType((DOOR_TYPE)iDoorType);
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
 	// 타일 로드

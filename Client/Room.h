@@ -20,8 +20,11 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
+	CDoor* Get_Door(DOOR_DIR eDir) { return m_apDoor[eDir].second; }
 	CFloor* GetFloor() const { return m_pFloor; }
 	CWall* GetWallArray(_uint index) const { return m_apWall[index]; }
+	_int Get_Room_Index();
+
 	void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
 	void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
 	_bool& Cur_Door_State(DOOR_DIR eDir) { return m_apDoor[eDir].first; }
@@ -31,6 +34,7 @@ private:
 	virtual HRESULT Add_Component() override;
 	HRESULT CreateSubset();
 	void	FreeSubset();
+
 public:
 	void FloorSubSet();
 	void PlaceSubSet();

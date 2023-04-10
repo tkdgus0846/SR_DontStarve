@@ -2,11 +2,14 @@
 
 #include "Export_Function.h"
 
-#include "Room.h"
+#include "MyMap.h"
+#include "Door.h"
 #include "Tile.h"
+#include "Player.h"
+#include "Room.h"
 
 CTennel::CTennel(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev), m_pRoom(nullptr)
+	: CGameObject(pGraphicDev), m_pDoor(nullptr)
 	, m_pTile(nullptr)
 {
 }
@@ -49,6 +52,31 @@ void CTennel::Render_GameObject(void)
 	m_pTile->Render_GameObject();
 	__super::Render_GameObject();
 
+}
+
+void CTennel::OnCollisionEnter(const Collision * collsion)
+{
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
+
+	if (nullptr != pPlayer)
+	{
+		_int iRoomIdx = m_pDoor->Get_Room()->Get_Room_Index();
+		dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"))->Set_CurRoom(iRoomIdx);
+
+		_vec3 vLook = pPlayer->m_pTransform->m_vInfo[INFO_LOOK];
+		_vec3 vDoorLook = m_pDoor->m_pTransform->m_vInfo[INFO_LOOK];
+		vLook.Normalize();
+		vDoorLook.Normalize();
+		_float fAngle = vLook.Degree(vDoorLook);
+		pPlayer->m_pTransform->Rot_Yaw(fAngle, 1.f);
+		pPlayer->m_pTransform->m_vInfo[INFO_POS] = m_pDoor->m_pTransform->m_vInfo[INFO_POS] + m_pDoor->m_pTransform->m_vInfo[INFO_LOOK] * 3.f;
+		/*cout << pPlayer->m_pTransform->m_vInfo[INFO_LOOK].x << ", "
+			<< pPlayer->m_pTransform->m_vInfo[INFO_LOOK].y << ", "
+			<< pPlayer->m_pTransform->m_vInfo[INFO_LOOK].z << ", " << endl;*/
+
+		if (m_pDoor->Get_Door_Dir() == DOOR_WEST)
+			pPlayer->m_pTransform->Rot_Yaw(180.f, 1.f);
+	}
 }
 
 HRESULT CTennel::Add_Component()

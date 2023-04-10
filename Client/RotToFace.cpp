@@ -30,7 +30,7 @@ _int CRotToFace::Update_Component(const _float & fTimeDelta)
 
 	m_pGameObject->m_pTransform->Set_Target(pTargetTransform->m_vInfo[INFO_POS]);
 
-	return BEHAVIOR_TRUE;
+	return BEHAVIOR_SUCCES;
 }
 
 void CRotToFace::LateUpdate_Component(void)

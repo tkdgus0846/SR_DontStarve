@@ -62,7 +62,7 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 			pBullet = CIceBullet::Create(pDevice);
 		}
 		++m_iCreateCnt;
-		cout << m_iCreateCnt << endl;
+		//cout << m_iCreateCnt << endl;
 	}
 
 	else
