@@ -115,8 +115,9 @@ struct BoundingBox
 	_vec3 _offsetMax;
 };
 
-struct Collision
+class Collision
 {
+public:
 	Collision() : 
 		CollisionDir(DIR_END),
 		MyCollider(nullptr),
