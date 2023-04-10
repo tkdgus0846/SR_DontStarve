@@ -30,7 +30,7 @@ public:
 private:
 	virtual HRESULT Add_Component() override;
 	HRESULT CreateSubset();
-
+	void	FreeSubset();
 public:
 	void FloorSubSet();
 	void PlaceSubSet();
@@ -55,6 +55,7 @@ private:
 	_float				m_fVtxCntX;
 	_float				m_fVtxCntZ;
 	_float				m_fVtxItv;
+
 	vector<CTile*>		m_vecTile;
 
 	vector<CGameObject*> m_vecGameObj; // 몬스터랑, 장애물 나눠서 저장
