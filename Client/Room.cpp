@@ -1,5 +1,10 @@
 #include "stdafx.h"
 #include "Room.h"
+#include "Baller.h"
+#include "Bub.h"
+#include "Guppi.h"
+#include "Turret.h"
+#include "Walker.h"
 #include "Export_Function.h"
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
@@ -37,6 +42,9 @@ _int CRoom::Update_GameObject(const _float& fTimeDelta)
 	for (auto& Tile : m_vecTile)
 		Tile->Update_GameObject(fTimeDelta);
 	
+	for (auto& Obj : m_vecGameObj)
+		Obj->Update_GameObject(fTimeDelta);
+
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
@@ -54,6 +62,9 @@ void CRoom::LateUpdate_GameObject(void)
 	for (auto& Tile : m_vecTile)
 		Tile->LateUpdate_GameObject();
 
+	for (auto& Obj : m_vecGameObj)
+		Obj->LateUpdate_GameObject();
+
 }
 
 void CRoom::Render_GameObject(void)
@@ -67,6 +78,9 @@ void CRoom::Render_GameObject(void)
 
 	for (auto& Tile : m_vecTile)
 		Tile->Render_GameObject();
+
+	for (auto& Obj : m_vecGameObj)
+		Obj->Render_GameObject();
 }
 
 HRESULT CRoom::CreateSubset()
@@ -140,35 +154,115 @@ void CRoom::PlaceSubSet()
 
 _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 {
-	_int iSize = m_vecTile.size();
+	_int iTileSize = m_vecTile.size();
+	_int iObjSize = m_vecGameObj.size();
 
+	// 룸의 변수 저장
 	WriteFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	WriteFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
 	WriteFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
 	m_pTransform->WriteTransformFile(hFile, dwByte);
 	
-	WriteFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
-	for (_int i = 0; i < iSize; ++i)
+	// 타일 컨테이너 저장
+	WriteFile(hFile, &iTileSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iTileSize; ++i)
+	{
 		m_vecTile[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
+		m_vecTile[i]->WriteTextureName(hFile, dwByte);
+	}
+		
 	
+	// 객체 컨테이너 저장
+	WriteFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iObjSize; ++i)
+	{
+		// 어떤 객체인지 번호로 저장.
+		_int iObjNumber = 0;
+		if (dynamic_cast<CBaller*>(m_vecGameObj[i]))
+		{
+			iObjNumber = 1;
+		}
+		else if (dynamic_cast<CBub*>(m_vecGameObj[i]))
+		{
+			iObjNumber = 2;
+		}
+		else if (dynamic_cast<CGuppi*>(m_vecGameObj[i]))
+		{
+			iObjNumber = 3;
+		}
+		else if (dynamic_cast<CTurret*>(m_vecGameObj[i]))
+		{
+			iObjNumber = 4;
+		}
+		else if (dynamic_cast<CWalker*>(m_vecGameObj[i]))
+		{
+			iObjNumber = 5;
+		}
+
+		// 세이브 시 어떤 객체인지 정보를 알 수 없을 때 에러메시지 발생.
+		if (0 == iObjNumber)
+		{
+			FAILED_CHECK_RETURN(fail(), false);
+		}
+		else
+		{
+			WriteFile(hFile, &iObjNumber, sizeof(_int), &dwByte, nullptr);
+			m_vecGameObj[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
+		}
+	}
+
+
 	return true;
 }
 
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
-	_int iSize;
+	_int iTileSize;
+	_int iObjSize;
+	// 룸 변수 로드
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
-	ReadFile(hFile, &iSize, sizeof(_int), &dwByte, nullptr);
-	for (_int i = 0; i < iSize; ++i)
+	// 타일 로드
+	ReadFile(hFile, &iTileSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iTileSize; ++i)
 	{
 		m_vecTile.push_back(CTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }, L"Floor_Level1_Texture"));
 		m_vecTile[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
+		m_vecTile[i]->ReadTextureName(hFile, dwByte);
 	}
 
+	// 객체 로드
+	ReadFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
+	for (_int i = 0; i < iObjSize; ++i)
+	{
+		_int iObjNumber = 0;
+		ReadFile(hFile, &iObjNumber, sizeof(_int), &dwByte, nullptr);
+
+		if (1 == iObjNumber)
+		{
+			m_vecGameObj.push_back(CBaller::Create(m_pGraphicDev, _vec3{}));
+		}
+		else if (2 == iObjNumber)
+		{
+			m_vecGameObj.push_back(CBub::Create(m_pGraphicDev, _vec3{}));
+		}
+		else if (3 == iObjNumber)
+		{
+			m_vecGameObj.push_back(CGuppi::Create(m_pGraphicDev, _vec3{}));
+		}
+		else if (4 == iObjNumber)
+		{
+			m_vecGameObj.push_back(CTurret::Create(m_pGraphicDev, _vec3{}));
+		}
+		else if (5 == iObjNumber)
+		{
+			m_vecGameObj.push_back(CWalker::Create(m_pGraphicDev, _vec3{}));
+		}
+		m_vecGameObj[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
+	}
 	return true;
 }
 
@@ -197,7 +291,7 @@ void CRoom::Free(void)
 	for (auto& iter : m_apWall)
 		Safe_Release(iter);
 	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
+	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
 
 	__super::Free();
 }
-

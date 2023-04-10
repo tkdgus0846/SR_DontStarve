@@ -19,8 +19,8 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
-	CFloor* GetFloor() { return m_pFloor; }
-	CWall* GetWallArray(_uint index) { return m_apWall[index]; }
+	CFloor* GetFloor() const { return m_pFloor; }
+	CWall* GetWallArray(_uint index) const { return m_apWall[index]; }
 	void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
 	void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
 
@@ -33,15 +33,16 @@ public:
 	void PlaceSubSet();
 	_bool WriteRoomFile(HANDLE hFile, DWORD& dwByte);
 	_bool ReadRoomFile(HANDLE hFile, DWORD& dwByte);
-	_int ObjNum() { return m_vecGameObj.size(); }
-	CGameObject* GetObjByIndex(_int iIndex) 
+	_int ObjNum() const  { return m_vecGameObj.size(); }
+	CGameObject* GetObjByIndex(_int iIndex) const
 	{
 		if (iIndex < 0 || iIndex >= m_vecGameObj.size()) return nullptr;
 		return m_vecGameObj[iIndex];
 	}
 
-	_int TileNum() { return m_vecTile.size(); }
-	CGameObject* GetTileByIndex(_int iIndex)
+	HRESULT fail() { return E_FAIL; }
+	_int TileNum() const { return m_vecTile.size(); }
+	CGameObject* GetTileByIndex(_int iIndex) const
 	{
 		if (iIndex < 0 || iIndex >= m_vecTile.size()) return nullptr;
 		return m_vecTile[iIndex];

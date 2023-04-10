@@ -236,7 +236,7 @@ _bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pG
 	return success;
 }
 
-_bool CEditCamera::IntersectRayRoom(IN CRoom* pRoom, OUT CGameObject*& pGameObject,OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist)
+_bool CEditCamera::IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGameObject,OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist)
 {
 	CGameObject* pTempObj = nullptr;
 	_bool success = false;

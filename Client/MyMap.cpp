@@ -74,7 +74,6 @@ HRESULT CMyMap::Add_Component()
 
 void CMyMap::Create_Default_Room()
 {
-
 	for (_uint i = 0; i < 5; ++i)
 	{
 		for (_uint j = 0; j < 5; ++j)
