@@ -50,6 +50,7 @@ CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject* pGame
 	CComponent* pClone = Clone_Proto(pProtoTag, pGameObject);
 	CCollider* pCollider = dynamic_cast<CCollider*>(pClone);
 	Engine::Add_Collider(eColGroup, pCollider);
+	pCollider->Set_ColGroup(eColGroup);
 	pCollider->Set_BoundingBox(boundSize);
 	return pCollider;
 }

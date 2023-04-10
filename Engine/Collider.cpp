@@ -12,7 +12,8 @@ CCollider::CCollider(LPDIRECT3DDEVICE9 pGraphicDev) :
 	m_bIsRender(false),
 	m_bRenderByOwnerPos(true),
 	m_vCenterPos({0.f,0.f,0.f}),
-	m_VOriginCenterPos({ 0.f,0.f,0.f })
+	m_VOriginCenterPos({ 0.f,0.f,0.f }),
+	m_eColGroup(COL_END)
 {
 }
 
@@ -24,7 +25,8 @@ CCollider::CCollider(const CCollider & rhs) :
 	m_bIsRender(rhs.m_bIsRender),
 	m_bRenderByOwnerPos(rhs.m_bRenderByOwnerPos),
 	m_vCenterPos(rhs.m_vCenterPos),
-	m_VOriginCenterPos(rhs.m_VOriginCenterPos)
+	m_VOriginCenterPos(rhs.m_VOriginCenterPos),
+	m_eColGroup(rhs.m_eColGroup)
 {
 	D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/CollisionDebug/Green.png", (LPDIRECT3DTEXTURE9*)&m_GreenTexture);
 	D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/CollisionDebug/Red.png", (LPDIRECT3DTEXTURE9*)&m_RedTexture);
@@ -61,22 +63,6 @@ void CCollider::LateUpdate_Component()
 void CCollider::Render_Component()
 {
 	if (m_bIsRender == false) return;
-
-	/*if (m_bRenderByOwnerPos)
-	{
-		_vec3 offsetPoint;
-		m_pGameObject->m_pTransform->Get_Info(INFO_POS, &offsetPoint);
-
-		_matrix worldMatrix;
-		worldMatrix.Translation(offsetPoint.x, offsetPoint.y, offsetPoint.z);
-		m_pGraphicDev->SetTransform(D3DTS_WORLD, &worldMatrix);
-	}
-	else
-	{
-		_matrix worldMatrix;
-		worldMatrix.Translation(m_vCenterPos.x, m_vCenterPos.y, m_vCenterPos.z);
-		m_pGraphicDev->SetTransform(D3DTS_WORLD, &worldMatrix);
-	}*/
 
 	_matrix worldMatrix;
 	worldMatrix.Translation(m_vCenterPos.x, m_vCenterPos.y, m_vCenterPos.z);
@@ -192,9 +178,15 @@ CComponent * CCollider::Clone(void)
 
 void CCollider::Free(void)
 {
+	/*if (m_bClone == true)
+	{
+		Engine::Remove_Collider(this, m_eColGroup);
+	}*/
+	m_CollisionList.clear();
 	Safe_Delete(m_pBoundingBox);
 	Safe_Release(m_pMesh);
 	Safe_Release(m_GreenTexture);
 	Safe_Release(m_RedTexture);
+
 	__super::Free();
 }

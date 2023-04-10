@@ -37,7 +37,7 @@ _int CRoom::Update_GameObject(const _float& fTimeDelta)
 	for (auto& Tile : m_vecTile)
 		Tile->Update_GameObject(fTimeDelta);
 	
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	//Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
 }

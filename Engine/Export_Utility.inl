@@ -124,6 +124,16 @@ _bool		Collider_GetIsRender()
 	return CCollisionMgr::GetInstance()->GetIsRender();
 }
 
+void		Remove_Collider(CCollider* collider, COLGROUP colID)
+{
+	CCollisionMgr::GetInstance()->Remove_Collider(collider, colID);
+}
+
+void		Remove_Collider(CGameObject* gameObject)
+{
+	CCollisionMgr::GetInstance()->Remove_Collider(gameObject);
+}
+
 //void		Set_Collider(COLGROUP eGroup, CCollider* pCollider)
 //{
 //	CCollisionMgr::GetInstance()->Set_Collider(eGroup, pCollider);

@@ -166,8 +166,8 @@ void CGameObject::Free(void)
 		for (auto iter = m_uMapComponent[i].begin(); iter != m_uMapComponent[i].end(); iter++)
 		{
 			Safe_Release((iter->second));
-		}
-		m_uMapComponent[i].clear();
+		}	
 	}
+
 	Safe_Release(m_pGraphicDev);
 }
