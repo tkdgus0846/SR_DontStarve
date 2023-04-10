@@ -148,6 +148,10 @@ void Engine::CCollisionMgr::Find_Remove_Collider(CGameObject* gameObject, COLGRO
 	{
 		if ((*it)->Get_GameObject() == gameObject)
 		{
+			for (auto& iter : (*it)->m_CollisionList)
+			{
+				iter.first->Get_ColliderList().erase(*it);
+			}
 			it = m_ColliderList[colID].erase(it);
 		}
 		else

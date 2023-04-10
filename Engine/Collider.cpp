@@ -52,6 +52,13 @@ _int CCollider::Update_Component(const _float& fTimeDelta)
 	m_vCenterPos = m_VOriginCenterPos + offsetPoint;
 	m_pBoundingBox->Offset(m_vCenterPos);
 
+	for (auto iter = m_CollisionList.begin(); iter != m_CollisionList.end();)
+	{
+		if (iter->first == nullptr)
+			iter = m_CollisionList.erase(iter);
+		else iter++;
+	}
+
 	return 0;
 }
 
