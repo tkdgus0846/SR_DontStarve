@@ -24,6 +24,9 @@ HRESULT CMyMap::Ready_GameObject(void)
 
 _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 {
+	if (!m_arrRoom[0])
+		return 0;
+
 	for (auto iter : m_arrRoom)
 		iter->Update_GameObject(fTimeDelta);
 
@@ -46,6 +49,9 @@ _int CMyMap::Update_GameObject(const _float & fTimeDelta)
 
 void CMyMap::LateUpdate_GameObject(void)
 {
+	if (!m_arrRoom[0])
+		return;
+
 	CGameObject* pPlayer = Get_Player();
 	if (nullptr == pPlayer)	// 에디터 모드
 	{
@@ -63,6 +69,9 @@ void CMyMap::LateUpdate_GameObject(void)
 
 void CMyMap::Render_GameObject(void)
 {
+	if (!m_arrRoom[0])
+		return;
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }

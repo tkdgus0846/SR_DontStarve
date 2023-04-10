@@ -5,9 +5,9 @@
 
 CTile::CTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
+	, m_iTileOption(0)
 {
 }
-
 
 CTile::~CTile()
 {
@@ -57,12 +57,16 @@ void CTile::ReadTextureName(HANDLE hFile, DWORD & dwByte)
 	const _tchar* tmp = const_cast<const _tchar*>(pTextureName);
 	Change_Texture(tmp);
 }
-// 엄~~~~청 옛날에배운 const캐스트 써야하나
+
 HRESULT CTile::Add_Component()
 {
 	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"RcTex", pBufferCom });
+
+	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENVIRONMENT));
+	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"TileCollider", m_pCollider });
 
 	Change_Texture(m_pTextureName);
 
