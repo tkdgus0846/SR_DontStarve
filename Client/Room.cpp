@@ -363,7 +363,7 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	_int iDoorType;
 	ReadFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
 
-	Set_DoorType((DOOR_TYPE)iDoorType);
+	//Set_DoorType((DOOR_TYPE)iDoorType);
 
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
