@@ -33,6 +33,7 @@ _int CTennel::Update_GameObject(const _float & fTimeDelta)
 	
 	__super::Update_GameObject(fTimeDelta);
 
+	// ³Î·Î µé¾î¿È
 	m_pTile->Update_GameObject(fTimeDelta);
 	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -90,7 +91,7 @@ HRESULT CTennel::Add_Component()
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"Level1_Tennel_Texture", m_pTextureCom });
 
-	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENVIRONMENT));
+	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_TENNEL));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
 
