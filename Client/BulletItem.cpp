@@ -1,0 +1,101 @@
+#include "BulletItem.h"
+#include "Export_Function.h"
+#include "Player.h"
+#include "Weapon.h"
+CBulletItem::CBulletItem(LPDIRECT3DDEVICE9 pGraphicDev)
+	: CItem(pGraphicDev)
+{
+	m_fY = 1.f;
+	m_fMaxY = m_fY + 0.5f;
+	m_fMinY = m_fY - 0.5f;
+}
+
+CBulletItem::~CBulletItem()
+{
+}
+
+HRESULT CBulletItem::Add_Component()
+{
+	CRcTex* RcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
+	NULL_CHECK_RETURN(RcTex, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"RcTex", RcTex });
+
+	CTexture* Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"BulletItem_Texture", this));
+	NULL_CHECK_RETURN(Texture, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"BulletItem_Texture", Texture });
+
+	CAnimation* Ani = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
+	NULL_CHECK_RETURN(Ani, E_FAIL);
+
+	Ani->BindAnimation(ANIM_IDLE, Texture, 0.3f);
+	Ani->SelectState(ANIM_IDLE);
+	m_uMapComponent[ID_ALL].insert({ L"Animation", Ani });
+
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_OBJ));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
+	pCollider->Set_BoundingBox({ 1.5f, 1.5f, 1.5f });
+
+	return S_OK;
+}
+
+HRESULT CBulletItem::Ready_GameObject(void)
+{
+	_vec3 vScale = { 1.f, 1.f, 0.f };
+	m_pTransform->Set_Pos(20.f, 1.f, 20.f);
+	m_pTransform->Set_Scale(vScale);
+	__super::Ready_GameObject();
+	return S_OK;
+}
+
+_int CBulletItem::Update_GameObject(const _float & fTimeDelta)
+{
+	ItemPatrol();
+	__super::Update_GameObject(fTimeDelta);
+
+	if (GetDead()) return OBJ_DEAD;
+
+	return OBJ_NOEVENT;
+}
+
+void CBulletItem::LateUpdate_GameObject(void)
+{
+	__super::LateUpdate_GameObject();
+}
+
+void CBulletItem::Render_GameObject(void)
+{
+	__super::Render_GameObject();
+}
+
+CBulletItem * CBulletItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CBulletItem* pInstance = new CBulletItem(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject()))
+	{
+		delete pInstance;
+		pInstance = nullptr;
+	}
+
+	return pInstance;
+}
+
+void CBulletItem::OnCollisionEnter(const Collision * collsion)
+{
+	__super::OnCollisionEnter(collsion);
+
+	CPlayer* player = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
+	CWeapon* pWeapon = player->Get_CurWeapon();
+	_int maxBullet = pWeapon->Get_MaxBulletNum();
+	_int curBullet = pWeapon->Get_CurBulletNum();
+	if ( curBullet / maxBullet  <  1.f)
+	{
+		pWeapon->GainBullet(2);
+	}
+}
+
+void CBulletItem::Free(void)
+{
+	__super::Free();
+}
