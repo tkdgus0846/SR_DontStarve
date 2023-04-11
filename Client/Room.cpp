@@ -202,10 +202,12 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 			{
 				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, (DOOR_DIR)i, this);
 				Add_GameObject(LAYER_ENVIRONMENT, L"Door", m_apDoor[i].second);
+				m_ColliderList[COL_TRIGGER].push_back(dynamic_cast<CCollider*>(m_apDoor[i].second->Get_Component(L"Collider", ID_ALL)));
 			}
 		}
 		else if (nullptr != m_apDoor[i].second)
 			m_apDoor[i].second->SetDead();
+
 	}
 }
 

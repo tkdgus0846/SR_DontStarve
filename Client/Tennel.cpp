@@ -100,6 +100,8 @@ HRESULT CTennel::Add_Component()
 
 void CTennel::Set_Position(_int iFrontorBack)
 {
+	m_pTransform->m_vInfo[INFO_POS] = { -30.f, 0.f, -30.f };
+	m_pTransform->m_vInfo[INFO_POS] += _vec3(0.f, 0.f, -10.f) * iFrontorBack;
 	_vec3 vPos = m_pTransform->m_vInfo[INFO_POS];
 	
 	if (0 == iFrontorBack)	// front ÀÎ °æ¿ì

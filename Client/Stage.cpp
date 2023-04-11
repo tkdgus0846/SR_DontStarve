@@ -77,14 +77,11 @@ HRESULT CStage::Ready_Scene(void)
 	tennel1->Set_Position(0);
 	tennel2->Set_Position(1);
 
-
-	
-
 	Add_GameObject(LAYER_TENNEL, L"Tennel1", tennel1);
 	Add_GameObject(LAYER_TENNEL, L"Tennel2", tennel2);
 
 	ROOM_MGR->Set_Tennel(tennel1, 0);
-	ROOM_MGR->Set_Tennel(tennel1, 1);
+	ROOM_MGR->Set_Tennel(tennel2, 1);
 
 	/*D3DLIGHT9		tLightInfo;
 
