@@ -121,6 +121,22 @@ void CGameObject::Set_Dir(const _vec3 & dir)
 	m_pTransform->Set_Dir(dir);
 }
 
+void CGameObject::Add_Colldier_Info(const _tchar * colName, COLGROUP colGroup)
+{
+	m_ObjInfo.colNameVec.push_back(colName);
+	m_ObjInfo.colGroupVec.push_back(colGroup);
+}
+
+void CGameObject::Set_LayerID(LAYERID layerID)
+{
+	m_ObjInfo.layerID = layerID;
+}
+
+void Engine::CGameObject::Set_ObjTag(const _tchar* pObjTag)
+{
+	m_ObjInfo.pObjTag = pObjTag;
+}
+
 void CGameObject::Remove_Render_Component(const _tchar * pComponentTag)
 {
 	for (auto iter = m_RenderComponent.begin(); iter != m_RenderComponent.end(); ++iter)

@@ -8,6 +8,8 @@
 CNormalWeapon::CNormalWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
 {
+	Set_ObjTag(L"NormalWeapon");
+
 	m_fCycle = 0.3f;
 	m_MaxBulletNum = 2;
 	m_CurBulletNum = 2;

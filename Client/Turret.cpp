@@ -5,6 +5,8 @@
 CTurret::CTurret(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
+	Set_ObjTag(L"Turret");
+
 }
 
 CTurret::~CTurret()
@@ -67,17 +69,17 @@ HRESULT CTurret::Add_Component()
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", rcTex });
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENEMY));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({L"BodyCollider", pCollider });
 	pCollider->Set_BoundingBox({ 1.6f, 1.6f, 1.6f });
 
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
+	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 50.f, 10.f, 50.f });
 
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
+	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"EvasBullet", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
 	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });

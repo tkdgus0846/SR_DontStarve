@@ -9,6 +9,7 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev), m_fSpeed(0.f)
 	, m_pRoot(nullptr)
 {
+	Set_LayerID(LAYER_MONSTER);
 }
 
 CMonster::~CMonster()

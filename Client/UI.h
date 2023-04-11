@@ -12,7 +12,4 @@ protected:
 public:
 	_bool	CanShow() const { return m_bShow; }
 	_bool   SetShow(_bool state) { m_bShow; }
-
-	virtual _int Update_GameObject(const _float& fTimeDelta) override;
-
 };

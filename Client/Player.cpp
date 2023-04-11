@@ -14,6 +14,9 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_eCurWeaponType(WEAPONEND)
 	, m_pCurWeapon(nullptr)
 {
+	Set_LayerID(LAYER_PLAYER);
+	Set_ObjTag(L"Player");
+
 	
 }
 
@@ -220,7 +223,7 @@ HRESULT CPlayer::Add_Component(void)
 	m_uMapComponent[ID_RENDER].insert({ L"Player_Texture", pTextureCom });
 	pTextureCom->Set_Texture_Num(0);*/
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_PLAYER));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_PLAYER));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
 	pCollider->Set_BoundingBox({2.f,7.f,2.f});

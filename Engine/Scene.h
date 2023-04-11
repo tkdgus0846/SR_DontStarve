@@ -27,7 +27,7 @@ public:
 	void				Set_StaticLayerArr(vector<CLayer*>* layerArr);
 
 protected:
-	HRESULT			Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj);
+	HRESULT			Add_GameObject(class CGameObject* pObj);
 	CGameObject*	Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
 
 private:

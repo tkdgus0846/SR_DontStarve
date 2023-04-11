@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Scene.h"
 #include "Layer.h"
+#include "GameObject.h"
 
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -63,12 +64,12 @@ void Engine::CScene::Set_StaticLayerArr(vector<CLayer*>* layerArr)
 	m_StaticLayerArr = layerArr;
 }
 
-HRESULT CScene::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj)
+HRESULT CScene::Add_GameObject(CGameObject* pObj)
 {
-	CLayer* curLayer = Get_Layer(LayerID);
+	CLayer* curLayer = Get_Layer(pObj->Get_LayerID());
 	if (curLayer == nullptr) S_OK;
 
-	FAILED_CHECK_RETURN(curLayer->Add_GameObject(pObjTag, pObj), E_FAIL);
+	FAILED_CHECK_RETURN(curLayer->Add_GameObject(pObj->Get_ObjTag(), pObj), E_FAIL);
 		
 	return S_OK;
 }

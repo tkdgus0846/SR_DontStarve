@@ -5,6 +5,7 @@
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
+	Set_LayerID(LAYER_ITEM);
 	m_bDrop = false;
 	m_bBill = true;
 	m_fSpeed = 0.01f;

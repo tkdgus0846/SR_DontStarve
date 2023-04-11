@@ -102,10 +102,10 @@ void CRoomMgr::Create_Default_Room()
 
 	m_pCurRoom = m_arrRoom[0];
 
-	//m_arrRoom[0]->Set_DoorType(DOOR_NE);
-	//m_arrRoom[1]->Set_DoorType(DOOR_NW);
-	//m_arrRoom[5]->Set_DoorType(DOOR_ES);
-	//m_arrRoom[6]->Set_DoorType(DOOR_SW);
+	m_arrRoom[0]->Set_DoorType(DOOR_NE);
+	m_arrRoom[1]->Set_DoorType(DOOR_NW);
+	m_arrRoom[5]->Set_DoorType(DOOR_ES);
+	m_arrRoom[6]->Set_DoorType(DOOR_SW);
 }
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)

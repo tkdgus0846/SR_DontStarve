@@ -75,11 +75,11 @@ void CManagement::Render_Management(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_pScene->Render_Scene();
 }
 
-void CManagement::Add_GameObject(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj)
+void CManagement::Add_GameObject(CGameObject * pObj)
 {
 	NULL_CHECK(pObj);
 
-	m_pScene->Add_GameObject(LayerID, pObjTag, pObj);	
+	m_pScene->Add_GameObject(pObj);	
 }
 
 CGameObject* CManagement::Get_GameObject(LAYERID LayerID, const _tchar * pObjTag)

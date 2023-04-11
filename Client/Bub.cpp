@@ -5,6 +5,8 @@
 CBub::CBub(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
+	Set_ObjTag(L"Bub");
+
 }
 
 CBub::~CBub()
@@ -67,25 +69,30 @@ HRESULT CBub::Add_Component()
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", rcTex });
 
-	//CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENEMY));
-	//NULL_CHECK_RETURN(pCollider, E_FAIL);
-	//m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	//pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
+	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
 
 	//pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
 	//NULL_CHECK_RETURN(pCollider, E_FAIL);
 	//m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	//pCollider->Set_BoundingBox({ 50.f, 10.f, 50.f });
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
+	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 30.f, 10.f, 30.f });
 
-	//pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
-	//NULL_CHECK_RETURN(pCollider, E_FAIL);
-	//m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
-	//pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
+	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"EvasBullet", this, COL_DETECTION));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
+	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
+
+	CRigidbody* pRigidBody = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"RigidBody", this));
+	NULL_CHECK_RETURN(pRigidBody, E_FAIL);
+	m_uMapComponent[ID_UPDATE].insert({ L"RigidBody", pRigidBody });
+
 
 	Create_Root_AI();
 	//Set_PatrolAndFollow_AI();

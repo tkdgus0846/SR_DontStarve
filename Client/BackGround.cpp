@@ -6,6 +6,9 @@
 CBackGround::CBackGround(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
+	Set_LayerID(LAYER_BACKGROUND);
+	Set_ObjTag(L"Background");
+
 }
 
 CBackGround::~CBackGround()

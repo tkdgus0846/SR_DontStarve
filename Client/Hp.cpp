@@ -4,6 +4,8 @@
 CHp::CHp(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
 {
+	Set_ObjTag(L"HP");
+
 }
 
 CHp::~CHp()

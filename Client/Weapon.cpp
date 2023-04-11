@@ -24,7 +24,7 @@ void CWeapon::Shot()
 
 		if (bullet)
 		{
-			Add_GameObject(LAYER_BULLET, L"Bullet", bullet);
+			Add_GameObject(bullet);
 			SpendBullet();
 		}
 			

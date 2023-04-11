@@ -10,6 +10,9 @@
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_fSpeed(0.f), m_bFix(true), m_bPick(false)
 {
+	Set_LayerID(LAYER_CAMERA);
+	Set_ObjTag(L"EditCamera");
+
 }
 
 CEditCamera::~CEditCamera()
@@ -61,7 +64,7 @@ HRESULT CEditCamera::Add_Component()
 	m_uMapComponent[ID_UPDATE].insert({ L"Edit_Camera", pCamera });
 	pCamera->Set_CameraName(L"Edit_Camera");
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_PLAYER));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_PLAYER));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
 	pCollider->Set_BoundingBox({ 2.f,2.f,2.f });

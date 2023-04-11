@@ -13,6 +13,9 @@ CDoor::CDoor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_pRoom(nullptr)
 	, m_pInTennel(nullptr), m_pOutTennel(nullptr)
 {
+	Set_LayerID(LAYER_TRIGGER);
+	Set_ObjTag(L"Door");
+
 }
 
 CDoor::~CDoor()
@@ -123,7 +126,7 @@ HRESULT CDoor::Add_Component()
 
 	m_uMapComponent[ID_RENDER].emplace(L"Dock_Texture", m_pTextureCom);
 
-	m_pCollider = dynamic_cast<CCollider*>(Clone_Proto(L"Collider", this, COL_TRIGGER));
+	m_pCollider = dynamic_cast<CCollider*>(Clone_Proto(L"Collider", L"Collider", this, COL_TRIGGER));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
 	m_pCollider->Set_BoundingBox({ 1.f, 4.f, 1.f });

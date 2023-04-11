@@ -23,7 +23,7 @@ public:
 	class CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, class CBlackBoard* pBlackBoard);
 
 	// Collider 클론용
-	class CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize = {2.f,2.f,2.f});
+	class CComponent*	Clone_Proto(const _tchar * pProtoTag, const _tchar* colliderName, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize = {2.f,2.f,2.f});
 
 public:
 	const unordered_map<const _tchar*, class CComponent*>& Get_ProtoMap() const { return m_uMapProto; }

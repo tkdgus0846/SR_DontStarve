@@ -6,6 +6,9 @@
 CWall::CWall(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
+	Set_LayerID(LAYER_ENVIRONMENT);
+	Set_ObjTag(L"Wall");
+
 }
 
 CWall::~CWall()
@@ -98,7 +101,7 @@ HRESULT CWall::Add_Component()
 
 
 	// Wall이랑 Floor 룸의 콜라이더 리스트에 넣어줘야함.
-	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENVIRONMENT));
+	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ENVIRONMENT));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
 

@@ -4,6 +4,8 @@
 CWeaponItem::CWeaponItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
+	Set_ObjTag(L"WeaponItem");
+
 	m_bBill = false;
 }
 
@@ -19,7 +21,7 @@ HRESULT CWeaponItem::Add_Component()
 
 	Select_Type();
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ITEM));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ITEM));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 	pCollider->Set_BoundingBox({ 1.5f, 3.0f, 1.5f });
