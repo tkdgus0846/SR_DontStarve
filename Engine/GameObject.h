@@ -63,11 +63,12 @@ protected:
 	LPDIRECT3DDEVICE9		m_pGraphicDev;
 	_float					m_fViewZ = 0.f;
 
-	_bool					m_bDead;
+	
 	
 private:
 	// 컴포넌트들의 렌더순서를 정해주는 벡터 컨테이너
 	vector<pair<const _tchar*, CComponent*>> m_RenderComponent;
+	_bool					m_bDead;
 
 public:
 	class CTransform*		m_pTransform;

@@ -33,7 +33,7 @@ void CItem::OnCollisionEnter(const Collision * collsion)
 
 	if (player && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
 	{
-		m_bDead = true;
+		SetDead();
 	}
 }
 

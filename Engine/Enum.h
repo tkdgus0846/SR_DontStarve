@@ -11,12 +11,12 @@ enum LAYERID
 	LAYER_NPC,
 	LAYER_MONSTER,
 	LAYER_BOSS,
-	LAYER_ITEM,
 	LAYER_STATIC_END,
 
 	//////////////////////////////// 위는 방에서 가져올 게임오브젝트들 리스트이다.
 
 	LAYER_SKYBOX,
+	LAYER_ITEM,
 	LAYER_CAMERA,  
 	LAYER_PLAYER,  
 	LAYER_BULLET, 
@@ -48,6 +48,7 @@ enum COLGROUP
 	COL_STATIC_END,
 	// 위 까지가 룸에 있을 정보들
 
+	COL_ITEM,
 	COL_PLAYER,
 	COL_TENNEL,
 	COL_PLAYERBULLET,

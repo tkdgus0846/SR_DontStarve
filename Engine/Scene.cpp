@@ -69,6 +69,7 @@ HRESULT CScene::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGa
 	if (curLayer == nullptr) S_OK;
 
 	FAILED_CHECK_RETURN(curLayer->Add_GameObject(pObjTag, pObj), E_FAIL);
+		
 	return S_OK;
 }
 

@@ -24,7 +24,7 @@ HRESULT CHeartItem::Add_Component()
 	NULL_CHECK_RETURN(Texture, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"HeartItem_Texture", Texture });
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_OBJ));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ITEM));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 	pCollider->Set_BoundingBox({ 1.0f, 1.0f, 1.0f });

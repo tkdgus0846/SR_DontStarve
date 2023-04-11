@@ -28,7 +28,7 @@ HRESULT CCoinItem::Add_Component()
 	m_pAniCom->SelectState(ANIM_IDLE);
 	m_uMapComponent[ID_ALL].insert({ L"Animation", m_pAniCom });
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_OBJ));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ITEM));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 	pCollider->Set_BoundingBox({ 1.0f, 1.0f, 1.0f });

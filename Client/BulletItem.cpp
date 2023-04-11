@@ -31,7 +31,7 @@ HRESULT CBulletItem::Add_Component()
 	Ani->SelectState(ANIM_IDLE);
 	m_uMapComponent[ID_ALL].insert({ L"Animation", Ani });
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_OBJ));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ITEM));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 	pCollider->Set_BoundingBox({ 1.5f, 1.5f, 1.5f });
