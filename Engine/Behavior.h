@@ -37,12 +37,17 @@ public:
 	virtual void	Render_Component(void);
 
 	HRESULT			Add_Decorator(CComponent* pComponent);
+	void			Set_Timer(const _float& fTime) { m_fTime = fTime; }
 
 protected:
 	_int			update_Decorator(const _float& fTimeDelta);
 
 protected:
 	list<PRICOMP> m_DecoratorList;
+
+	_float m_fCurTime;
+	_float m_fPreTime;
+	_float m_fTime;
 
 public:
 	CBlackBoard* m_pBlackBoard;

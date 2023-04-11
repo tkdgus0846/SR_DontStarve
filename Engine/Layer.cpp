@@ -70,12 +70,8 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 
 void CLayer::LateUpdate_Layer(void)
 {
-	
 	for (auto& iter : m_uMapObject)
-	{
 		iter.second->LateUpdate_GameObject();
-	}
-		
 }
 
 

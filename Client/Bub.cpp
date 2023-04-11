@@ -93,7 +93,11 @@ HRESULT CBub::Add_Component()
 	NULL_CHECK_RETURN(pRigidBody, E_FAIL);
 	m_uMapComponent[ID_UPDATE].insert({ L"RigidBody", pRigidBody });
 
-	Set_PatrolAndFollow_AI();
+
+	Create_Root_AI();
+	//Set_PatrolAndFollow_AI();
+	Set_PAF_JumpAI();
+	Init_AI_Behaviours();
 
 	return S_OK;
 }

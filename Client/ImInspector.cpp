@@ -188,6 +188,7 @@ void CImInspector::Show_Create_Object()
 		{
 			pName = "Bub";
 			pGameObject = CBub::Create(m_pGraphicDev, m_vObjectPos);
+
 			m_pCurRoom->PushBack_GameObj(pGameObject);
 		}
 

@@ -182,6 +182,7 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 		m_apDoor[DOOR_WEST].first = false;
 		break;
 	}
+
 	for (_uint i = 0; i < 4; ++i)
 	{
 		if (true == m_apDoor[i].first)
@@ -194,7 +195,6 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 		}
 		else if (nullptr != m_apDoor[i].second)
 			m_apDoor[i].second->SetDead();
-
 	}
 }
 

@@ -13,7 +13,6 @@ CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-
 CLogo::~CLogo()
 {
 }

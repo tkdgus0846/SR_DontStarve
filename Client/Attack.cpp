@@ -6,12 +6,12 @@
 #include "NormalBullet.h"
 
 CAttack::CAttack(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CBehavior(pGraphicDev), m_fCoolTime(0.f)
+	: CBehavior(pGraphicDev)
 {
 }
 
 CAttack::CAttack(const CAttack & rhs)
-	: CBehavior(rhs), m_fCoolTime(rhs.m_fCoolTime)
+	: CBehavior(rhs)
 {
 }
 
@@ -26,16 +26,17 @@ HRESULT CAttack::Ready_Behavior()
 
 _int CAttack::Update_Component(const _float & fTimeDelta)
 {
-	m_fCoolTime += fTimeDelta;
+	m_fCurTime = Get_WorldTime();
 
-	if (m_fCoolTime > 0.5f)
+	if (m_fCurTime - m_fPreTime > 1.f)
 	{
 		CBullet* bullet = CBulletMgr::GetInstance()->Pop(
 			L"NormalBullet", m_pGraphicDev, 
 			m_pGameObject->m_pTransform->m_vInfo[INFO_POS], 
 			m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK], { 1.f,1.f,1.f }, true);
+
+		m_fPreTime = m_fCurTime;
 		Add_GameObject(bullet);
-		m_fCoolTime = 0.f;
 	}
 
 	return BEHAVIOR_SUCCES;

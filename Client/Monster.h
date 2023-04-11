@@ -5,6 +5,7 @@
 
 BEGIN(Engine)
 
+class CRoot;
 class CTriCol;
 class CTransform;
 class CCollider;
@@ -31,8 +32,14 @@ private:
 	virtual HRESULT Add_Component() override;
 
 protected:
-	HRESULT		Set_PatrolAndFollow_AI();
+	HRESULT		Create_Root_AI();			// AI 생성 시 제일 먼저 실행 시켜야 함.
+	HRESULT		Set_PatrolAndFollow_AI();	// 줄여서 PAF
 	HRESULT		Set_TurretAI();
+	HRESULT		Set_PAF_JumpAI();
+	HRESULT		Init_AI_Behaviours();		// AI작업 마지막에 무조건 실행 시켜야 함.
+
+private:
+	CRoot*		m_pRoot;	// 모든 몬스터는 하나의 ai를 가지는걸로 가정.
 
 protected:
 	_float		m_fSpeed;
