@@ -49,7 +49,6 @@ void CMonster::OnCollisionEnter(const Collision * collsion)
 
 	CPlayer* player = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
 
-
 	if (player && collsion->MyCollider == Get_Component(L"BodyCollider", ID_ALL))
 	{
 		player->Get_Damaged(Get_Attack());

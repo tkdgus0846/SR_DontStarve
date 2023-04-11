@@ -35,8 +35,6 @@ _int CBub::Update_GameObject(const _float & fTimeDelta)
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
-	
-
 	return OBJ_NOEVENT;
 }
 

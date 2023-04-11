@@ -5,6 +5,7 @@
 #include "BulletMgr.h"
 #include "EffectManager.h"
 #include "ImManager.h"
+#include <time.h>
 
 #include "Export_Function.h"
 #include "RoomMgr.h"
@@ -22,7 +23,7 @@ CMainApp::~CMainApp()
 
 HRESULT CMainApp::Ready_MainApp(void)
 {
-	//srand((unsigned int)time(NULL));
+	srand((unsigned int)time(NULL));
 	FAILED_CHECK_RETURN(Ready_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 

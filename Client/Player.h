@@ -36,6 +36,9 @@ public:
 	class CWeapon*	Get_CurWeapon() const { return m_pCurWeapon; }
 	WEAPONTYPE		Get_CurWeaponType() const { return m_eCurWeaponType; }
 
+	void			Gain_Coin() {}
+	void			Gain_Hp(_int Hp = 1) { m_iHp += Hp; }
+
 private:
 	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);

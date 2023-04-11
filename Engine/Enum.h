@@ -141,3 +141,13 @@ enum DOOR_TYPE
 	DOOR_E,
 	DOOR_END
 };
+//
+//enum ITEMID
+//{
+//	BULLETITEM,
+//	COINITEM,
+//	DISCITEM,
+//	HEARTITEM,
+//	WEAPONITEM,
+//	ITEMIDEND
+//};

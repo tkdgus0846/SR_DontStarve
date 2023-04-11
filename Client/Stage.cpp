@@ -22,7 +22,15 @@
 #include "Disc.h"
 #include "WeaponType.h"
 #include "MiniMap.h"
+
+#include "CoinItem.h"
+#include "BulletItem.h"
+#include "HeartItem.h"
+#include "WeaponItem.h"
+#include "DiscItem.h"
+
 #include "Tennel.h"
+
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_iCurRoomIdx(0)
@@ -70,6 +78,13 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(LAYER_UI, L"MiniMap", CMiniMap::Create(m_pGraphicDev));
 
 	Add_GameObject(LAYER_UI, L"GunUI", CGunUI::Create(m_pGraphicDev));
+
+	// Item
+	Add_GameObject(LAYER_UI, L"CoinItem", CCoinItem::Create(m_pGraphicDev));	
+	Add_GameObject(LAYER_UI, L"BulletItem", CBulletItem::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_UI, L"HeartItem", CHeartItem::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_UI, L"WeaponItem", CWeaponItem::Create(m_pGraphicDev, _vec3{ 15.f, 2.f, 15.f }, FLAMESHOT));
+	Add_GameObject(LAYER_UI, L"DisItem", CDiscItem::Create(m_pGraphicDev));
 
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);
 	CTennel* tennel2 = CTennel::Create(m_pGraphicDev);

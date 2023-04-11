@@ -35,7 +35,6 @@ void CHp::LateUpdate_GameObject(void)
 void CHp::Render_GameObject(void)
 {
 	_int PlayerHp = dynamic_cast<CCreature*>(Engine::Get_Player())->Get_HP();
-	//cout << PlayerHp << endl;
 
 	for (size_t i = 0; i < m_iMaxHp; i++)
 	{
@@ -55,7 +54,6 @@ HRESULT CHp::Add_Component(void)
 
 		m_vecRc.push_back(RcTex);
 	}
-
 
 	m_pTextureCom = nullptr;
 	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Hp_Texture", this));
