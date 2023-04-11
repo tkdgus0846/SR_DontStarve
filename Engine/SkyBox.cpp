@@ -6,6 +6,9 @@
 CSkyBox::CSkyBox(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
+	Set_LayerID(LAYER_SKYBOX);
+	Set_ObjTag(L"SkyBox");
+
 }
 
 CSkyBox::~CSkyBox()

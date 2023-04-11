@@ -4,6 +4,8 @@
 CDisc::CDisc(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CUI(pGraphicDev)
 {
+	Set_ObjTag(L"Disc");
+
 }
 
 CDisc::~CDisc()
@@ -51,6 +53,7 @@ HRESULT CDisc::Ready_GameObject(void)
 
 _int CDisc::Update_GameObject(const _float & fTimeDelta)
 {
+	Add_RenderGroup(RENDER_ALPHA_UI, this);
 	__super::Update_GameObject(fTimeDelta);
 
 	return 0;

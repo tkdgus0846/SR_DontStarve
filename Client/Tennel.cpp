@@ -12,6 +12,9 @@ CTennel::CTennel(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_pDoor(nullptr)
 	, m_pTile(nullptr)
 {
+	Set_LayerID(LAYER_TENNEL);
+	Set_ObjTag(L"Tennel");
+
 }
 
 CTennel::~CTennel()
@@ -91,7 +94,7 @@ HRESULT CTennel::Add_Component()
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"Level1_Tennel_Texture", m_pTextureCom });
 
-	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_TENNEL));
+	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_TENNEL));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
 

@@ -39,9 +39,9 @@ CComponent*			Get_Component(LAYERID LayerID, const _tchar* pObjTag, const _tchar
 	return CManagement::GetInstance()->Get_Component(LayerID, pObjTag, pComponentTag, eID);
 }
 
-void Engine::Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj)
+void Engine::Add_GameObject(class CGameObject* pObj)
 {
-	CManagement::GetInstance()->Add_GameObject(LayerID, pObjTag, pObj);
+	CManagement::GetInstance()->Add_GameObject(pObj);
 }
 
 CGameObject*		Get_GameObject(LAYERID LayerID, const _tchar* pObjTag)
@@ -82,9 +82,9 @@ CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject, CBlac
 	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject, pBlackBoard);
 }
 
-CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize)
+CComponent*	Clone_Proto(const _tchar * pProtoTag, const _tchar* colliderName, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize)
 {
-	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject, eColGroup, boundSize);
+	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, colliderName, pGameObject, eColGroup, boundSize);
 }
 
 void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)

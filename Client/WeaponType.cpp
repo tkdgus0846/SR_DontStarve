@@ -5,6 +5,8 @@
 CWeaponType::CWeaponType(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
 {
+	Set_ObjTag(L"WeaponType");
+
 }
 
 CWeaponType::~CWeaponType()
@@ -56,6 +58,7 @@ HRESULT CWeaponType::Ready_GameObject(void)
 
 _int CWeaponType::Update_GameObject(const _float & fTimeDelta)
 {
+	Add_RenderGroup(RENDER_ALPHA_UI, this);
 	__super::Update_GameObject(fTimeDelta);
 
 	return 0;

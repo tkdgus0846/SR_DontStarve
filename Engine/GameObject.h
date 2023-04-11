@@ -13,6 +13,14 @@ struct ComponentCmp
 	}
 };
 
+struct OBJ_INFO
+{
+	LAYERID					layerID;
+	const _tchar*			pObjTag;
+	vector<COLGROUP>		colGroupVec;
+	vector<const _tchar*>	colNameVec;
+};
+
 class  CGameObject : public CBase
 {
 protected:
@@ -49,6 +57,16 @@ public:
 	virtual void	SetDead(_bool bDead = true) { m_bDead = bDead; }
 	_bool			GetDead() const { return m_bDead; }
 
+	void			Add_Colldier_Info(const _tchar* colName, COLGROUP colGroup);
+	void			Set_LayerID(LAYERID layerID);
+	void			Set_ObjTag(const _tchar* pObjTag);
+
+	LAYERID							Get_LayerID() { return m_ObjInfo.layerID; }
+	const _tchar*					Get_ObjTag() { return m_ObjInfo.pObjTag; }
+	vector<const _tchar*>			Get_ColNameVec() { return m_ObjInfo.colNameVec; }
+	vector<COLGROUP>				Get_ColGroupVec() { return m_ObjInfo.colGroupVec; }
+	OBJ_INFO						Get_ObjInfo() { return m_ObjInfo; }
+
 protected:
 	// 에디터에서만 사용하세요.
 	void			Remove_Render_Component(const _tchar* pComponentTag);
@@ -63,7 +81,7 @@ protected:
 	LPDIRECT3DDEVICE9		m_pGraphicDev;
 	_float					m_fViewZ = 0.f;
 
-	
+	OBJ_INFO				m_ObjInfo;
 	
 private:
 	// 컴포넌트들의 렌더순서를 정해주는 벡터 컨테이너

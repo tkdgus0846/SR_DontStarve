@@ -4,15 +4,9 @@
 CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CGameObject(pGraphicDev)
 {
-
+	Set_LayerID(LAYER_UI);
 }
 
 CUI::~CUI()
 {
-}
-
-_int CUI::Update_GameObject(const _float& fTimeDelta)
-{
-	Add_RenderGroup(RENDER_ALPHA_UI, this);
-	return __super::Update_GameObject(fTimeDelta);
 }

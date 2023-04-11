@@ -10,6 +10,8 @@
 CFlameProjector::CFlameProjector(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
 {
+	Set_ObjTag(L"FlameProjector");
+
 	m_fCycle = 0.07f;
 	m_MaxBulletNum = 100;
 	m_CurBulletNum = 100;

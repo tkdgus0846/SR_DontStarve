@@ -46,7 +46,7 @@ inline _float			Get_WorldTime();
 
 inline CComponent*			Get_Component(LAYERID LayerID, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
 
-inline void				Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj);
+inline void				Add_GameObject(class CGameObject* pObj);
 inline CGameObject*		Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
 
 inline HRESULT			Set_Scene(CScene* pScene);
@@ -63,7 +63,7 @@ inline CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject
 inline CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, class CBlackBoard* pBlackBoard);
 
 // Collider Å¬·Ð¿ë
-inline CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize = { 2.f,2.f,2.f });
+inline CComponent*	Clone_Proto(const _tchar * pProtoTag, const _tchar* colliderName, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize = { 2.f,2.f,2.f });
 
 
 inline void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);

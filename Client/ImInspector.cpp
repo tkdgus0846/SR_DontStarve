@@ -182,32 +182,32 @@ void CImInspector::Show_Create_Object()
 		{
 			pName = "Baller";
 			pGameObject = CBaller::Create(m_pGraphicDev, m_vObjectPos);
-			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Baller" ,pGameObject, COL_ENEMY, L"BodyCollider");
+			m_pCurRoom->PushBack_GameObj(pGameObject);
 		}
 		if (1 == iObjNum)
 		{
 			pName = "Bub";
 			pGameObject = CBub::Create(m_pGraphicDev, m_vObjectPos);
-			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Bub", pGameObject, COL_ENEMY, L"BodyCollider");
+			m_pCurRoom->PushBack_GameObj(pGameObject);
 		}
 
 		if (2 == iObjNum)
 		{
 			pName = "Guppi";
 			pGameObject = CGuppi::Create(m_pGraphicDev, m_vObjectPos);
-			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Guppi", pGameObject, COL_ENEMY, L"BodyCollider");
+			m_pCurRoom->PushBack_GameObj(pGameObject);
 		}
 		if (3 == iObjNum)
 		{
 			pName = "Turret";
 			pGameObject = CTurret::Create(m_pGraphicDev, m_vObjectPos);
-			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Turret", pGameObject, COL_ENEMY, L"BodyCollider");
+			m_pCurRoom->PushBack_GameObj(pGameObject);
 		}
 		if (4 == iObjNum)
 		{
 			pName = "Walker";
 			pGameObject = CWalker::Create(m_pGraphicDev, m_vObjectPos);
-			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Walker", pGameObject, COL_ENEMY, L"BodyCollider");
+			m_pCurRoom->PushBack_GameObj(pGameObject);
 		}
 
 		m_vecMonster.push_back({ pName, pGameObject });

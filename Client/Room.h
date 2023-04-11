@@ -40,11 +40,7 @@ private:
 	virtual HRESULT Add_Component() override;
 	HRESULT CreateSubset();
 	void	FreeSubset();
-	HRESULT Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, CGameObject* pObj);
 	
-
-
-
 public:
 	void FloorSubSet();
 	void PlaceSubSet();
@@ -65,8 +61,7 @@ public:
 	}
 
 	void PushBack_Tile(CGameObject* pTile);
-	void PushBack_GameObj(LAYERID LayerID, const _tchar* pObjTag, CGameObject* pObj, COLGROUP eColgroup
-		, const _tchar* colliderName);
+	void PushBack_GameObj(CGameObject* pObj);
 
 public:
 	vector<CLayer*>* GetLayerVec() { return &m_vecLayer; }

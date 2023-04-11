@@ -51,8 +51,8 @@ HRESULT CStage::Ready_Scene(void)
 	dynamic_cast<CRoom*>(Get_GameObject(LAYER_ENVIRONMENT, L"Room"))->PlaceSubSet();*/
 	//Add_GameObject(LAYER_ENVIRONMENT, L"Map", CRoomMgr::Create(m_pGraphicDev));
 
-	Add_GameObject(LAYER_SKYBOX, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_PLAYER, L"Player", CPlayer::Create(m_pGraphicDev));
+	Add_GameObject(CSkyBox::Create(m_pGraphicDev));
+	Add_GameObject(CPlayer::Create(m_pGraphicDev));
 
 	/*Add_GameObject(LAYER_MONSTER, L"Monster_Baller", CBaller::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_MONSTER, L"Monster_Walker", CWalker::Create(m_pGraphicDev));*/
@@ -63,27 +63,29 @@ HRESULT CStage::Ready_Scene(void)
 	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
 	/*Add_GameObject(LAYER_MONSTER, L"Monster_Guppi_Blue_Texture", CGuppi::Create(m_pGraphicDev));*/
 
-	Add_GameObject(LAYER_CAMERA, L"ObjCamera", CObjCamera::Create(m_pGraphicDev));
+	Add_GameObject(CObjCamera::Create(m_pGraphicDev));
 
 	
 	
 	// UI
-	Add_GameObject(LAYER_UI, L"BulletGauge", CBulletGauge::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_UI, L"BulletBar", CBulletBar::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_UI, L"CrossHair", CCrossHair::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_UI, L"Hp", CHp::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_UI, L"Coin", CCoin::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_UI, L"Disc", CDisc::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_UI, L"WeaponType", CWeaponType::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_UI, L"MiniMap", CMiniMap::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_UI, L"GunUI", CGunUI::Create(m_pGraphicDev));
+	Add_GameObject(CBulletGauge::Create(m_pGraphicDev));
+	Add_GameObject(CBulletBar::Create(m_pGraphicDev));
+	
+
+	Add_GameObject(CCrossHair::Create(m_pGraphicDev));
+	Add_GameObject(CHp::Create(m_pGraphicDev));
+	Add_GameObject(CCoin::Create(m_pGraphicDev));
+	Add_GameObject(CDisc::Create(m_pGraphicDev));
+	Add_GameObject(CWeaponType::Create(m_pGraphicDev));
+	Add_GameObject(CMiniMap::Create(m_pGraphicDev));
+	Add_GameObject(CGunUI::Create(m_pGraphicDev));
 
 	// Item
-	Add_GameObject(LAYER_ITEM, L"CoinItem", CCoinItem::Create(m_pGraphicDev));	
-	Add_GameObject(LAYER_ITEM, L"BulletItem", CBulletItem::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_ITEM, L"HeartItem", CHeartItem::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_ITEM, L"WeaponItem", CWeaponItem::Create(m_pGraphicDev, _vec3{ 15.f, 2.f, 15.f }, FLAMESHOT));
-	Add_GameObject(LAYER_ITEM, L"DisItem", CDiscItem::Create(m_pGraphicDev));
+	Add_GameObject(CCoinItem::Create(m_pGraphicDev));	
+	Add_GameObject(CBulletItem::Create(m_pGraphicDev));
+	Add_GameObject(CHeartItem::Create(m_pGraphicDev));
+	Add_GameObject(CWeaponItem::Create(m_pGraphicDev, _vec3{ 15.f, 2.f, 15.f }, FLAMESHOT));
+	Add_GameObject(CDiscItem::Create(m_pGraphicDev));
 
 	// 터널 룸매니져에 바인딩
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);
@@ -92,8 +94,8 @@ HRESULT CStage::Ready_Scene(void)
 	tennel1->Set_Position(0);
 	tennel2->Set_Position(1);
 
-	Add_GameObject(LAYER_TENNEL, L"Tennel1", tennel1);
-	Add_GameObject(LAYER_TENNEL, L"Tennel2", tennel2);
+	Add_GameObject(tennel1);
+	Add_GameObject(tennel2);
 
 	ROOM_MGR->Set_Tennel(tennel1, 0);
 	ROOM_MGR->Set_Tennel(tennel2, 1);

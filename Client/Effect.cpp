@@ -8,6 +8,8 @@ CEffect::CEffect(LPDIRECT3DDEVICE9 pGraphicDev) :
 	m_fAge(0.f),
 	m_pAnimation(nullptr)
 {
+	Set_LayerID(LAYER_EFFECT);
+	Set_ObjTag(L"Effect");
 }
 
 CEffect::~CEffect()

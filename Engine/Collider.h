@@ -27,6 +27,9 @@ private:
 	_vec3				m_vCenterPos;
 	_vec3				m_VOriginCenterPos;
 
+	// 콜라이더 이름
+	const _tchar*		m_Name;
+
 	// 아래 두개 텍스쳐는 디버깅 용도로 넣었음. 나중에 지울거임.
 	IDirect3DBaseTexture9*			m_GreenTexture;
 	IDirect3DBaseTexture9*			m_RedTexture;
@@ -64,7 +67,8 @@ public:
 	void Set_BoundingBox(const _vec3& vSize = {2.f, 2.f, 2.f});
 	void Set_BoundingBox(const _vec3& vSize, const _vec3& vCenterPos);
 	// 에디터에서만 사용해야됨.
-	BoundingBox* Get_BoundingBox() { return m_pBoundingBox; }
+	BoundingBox*	Get_BoundingBox() { return m_pBoundingBox; }
+	const _tchar*	Get_Name() { return m_Name; }
 
 public:
 	static CCollider* Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -4,6 +4,8 @@
 CGunUI::CGunUI(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CUI(pGraphicDev)
 {
+	Set_ObjTag(L"GunUI");
+
 }
 
 CGunUI::~CGunUI()
@@ -12,6 +14,13 @@ CGunUI::~CGunUI()
 
 _int CGunUI::Update_GameObject(const _float& fTimeDelta)
 {
+	_matrix matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	matView.Inverse();
+
+	_vec3 pos = { matView._41, matView._42, matView._43 };
+	Compute_ViewZ(&pos);
+	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
 	return __super::Update_GameObject(fTimeDelta);
 }
 

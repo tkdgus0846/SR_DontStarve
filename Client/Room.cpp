@@ -18,7 +18,7 @@ CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
 	m_fVtxCntZ(0.f), m_fVtxItv(0.f)
 	, m_pFloor(nullptr)
-{
+{	
 	for (auto& iter : m_apDoor)
 	{
 		iter.first = false;
@@ -68,18 +68,12 @@ HRESULT CRoom::CreateSubset()
 	// 바닥 생성
 	m_pFloor = CFloor::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pFloor, E_FAIL);
-	Add_GameObject(LAYER_ENVIRONMENT, L"Floor", m_pFloor);
-	CCollider* pCol = dynamic_cast<CCollider*>(m_pFloor->Get_Component(L"Collider", ID_ALL));
-	NULL_CHECK(pCol);
-	m_ColliderList[COL_ENVIRONMENT].push_back(pCol);
+	PushBack_GameObj(m_pFloor);
 
 	//// 벽 4면 생성
 	for (auto& iter : m_apWall) {
 		iter = CWall::Create(m_pGraphicDev);
-		Add_GameObject(LAYER_ENVIRONMENT, L"Wall", iter);
-		CCollider* pCol = dynamic_cast<CCollider*>(iter->Get_Component(L"Collider", ID_ALL));
-		NULL_CHECK(pCol);
-		m_ColliderList[COL_ENVIRONMENT].push_back(pCol);
+		PushBack_GameObj(iter);
 	}
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
 
@@ -89,12 +83,6 @@ HRESULT CRoom::CreateSubset()
 void CRoom::FreeSubset()
 {
 	for_each(m_vecLayer.begin(), m_vecLayer.end(), CDeleteObj());
-}
-
-HRESULT CRoom::Add_GameObject(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj)
-{
-	FAILED_CHECK_RETURN(m_vecLayer[LayerID]->Add_GameObject(pObjTag, pObj), E_FAIL);
-	return S_OK;
 }
 
 void CRoom::Set_DoorType(DOOR_TYPE eType)
@@ -201,8 +189,7 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 			if (nullptr == m_apDoor[i].second)
 			{
 				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, (DOOR_DIR)i, this);
-				Add_GameObject(LAYER_ENVIRONMENT, L"Door", m_apDoor[i].second);
-				m_ColliderList[COL_TRIGGER].push_back(dynamic_cast<CCollider*>(m_apDoor[i].second->Get_Component(L"Collider", ID_ALL)));
+				PushBack_GameObj(m_apDoor[i].second);
 			}
 		}
 		else if (nullptr != m_apDoor[i].second)
@@ -399,25 +386,23 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 
 		if (1 == iObjNumber)
 		{
-			PushBack_GameObj(LAYER_MONSTER, L"Baller" ,CBaller::Create(m_pGraphicDev, _vec3{}), COL_ENEMY, L"BodyCollider");
+			PushBack_GameObj(CBaller::Create(m_pGraphicDev, _vec3{}));
 		}
 		else if (2 == iObjNumber)
 		{
-			PushBack_GameObj(LAYER_MONSTER, L"Bub", CBub::Create(m_pGraphicDev, _vec3{}), COL_ENEMY
-				, L"BodyCollider");
+			PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3{}));
 		}
 		else if (3 == iObjNumber)
 		{
-			PushBack_GameObj(LAYER_MONSTER, L"Guppi", CGuppi::Create(m_pGraphicDev, _vec3{}), COL_ENEMY
-				, L"BodyCollider");
+			PushBack_GameObj(CGuppi::Create(m_pGraphicDev, _vec3{}));
 		}
 		else if (4 == iObjNumber)
 		{
-			PushBack_GameObj(LAYER_MONSTER, L"Turret", CTurret::Create(m_pGraphicDev, _vec3{}), COL_ENEMY, L"BodyCollider");
+			PushBack_GameObj(CTurret::Create(m_pGraphicDev, _vec3{}));
 		}
 		else if (5 == iObjNumber)
 		{
-			PushBack_GameObj(LAYER_MONSTER, L"Walker", CWalker::Create(m_pGraphicDev, _vec3{}), COL_ENEMY, L"BodyCollider");
+			PushBack_GameObj(CWalker::Create(m_pGraphicDev, _vec3{}));
 		}
 		m_vecGameObj[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
 	}
@@ -428,20 +413,32 @@ void CRoom::PushBack_Tile(CGameObject * pTile)
 {
 	NULL_CHECK(pTile);
 	m_vecTile.push_back(pTile);
-	Add_GameObject(LAYER_ENVIRONMENT, L"Tile", pTile);
-	CCollider* pCol = dynamic_cast<CCollider*>(pTile->Get_Component(L"Collider", ID_ALL));
-	NULL_CHECK(pCol);
-	m_ColliderList[COL_ENVIRONMENT].push_back(pCol);
+	
+	OBJ_INFO objInfo = pTile->Get_ObjInfo();
+	m_vecLayer[objInfo.layerID]->Add_GameObject(objInfo.pObjTag, pTile);
+
+	for (int i = 0; i < objInfo.colNameVec.size(); i++)
+	{
+		CCollider* pCol = dynamic_cast<CCollider*>(pTile->Get_Component(objInfo.colNameVec[i], ID_ALL));
+		NULL_CHECK(pCol);
+		m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
+	}
 }
 
-void CRoom::PushBack_GameObj(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj, COLGROUP eColgroup, const _tchar* colliderName)
+void CRoom::PushBack_GameObj(CGameObject * pObj)
 {
 	NULL_CHECK(pObj);
 	m_vecGameObj.push_back(pObj);
-	Add_GameObject(LayerID, pObjTag, pObj);
-	CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(colliderName, ID_ALL));
-	NULL_CHECK(pCol);
-	m_ColliderList[eColgroup].push_back(pCol);
+	OBJ_INFO objInfo = pObj->Get_ObjInfo();
+
+	m_vecLayer[objInfo.layerID]->Add_GameObject(objInfo.pObjTag, pObj);
+
+	for (int i = 0; i < objInfo.colNameVec.size(); i++)
+	{
+		CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(objInfo.colNameVec[i], ID_ALL));
+		NULL_CHECK(pCol);
+		m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
+	}	
 }
 
 HRESULT CRoom::Add_Component(void)

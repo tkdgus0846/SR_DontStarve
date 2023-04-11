@@ -7,6 +7,8 @@
 CIceBeamWeapon::CIceBeamWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
 {
+	Set_ObjTag(L"IceBeamWeapon");
+
 	m_fCycle = 1.0f;
 	m_MaxBulletNum = 10;
 	m_CurBulletNum = 10;

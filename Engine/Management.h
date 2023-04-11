@@ -25,7 +25,7 @@ public:
 	void			LateUpdate_Management();
 	void			Render_Management(LPDIRECT3DDEVICE9 pGraphicDev);
 
-	void			Add_GameObject(LAYERID LayerID, const _tchar* pObjTag, class CGameObject* pObj);
+	void			Add_GameObject(class CGameObject* pObj);
 	CGameObject*	Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
 
 	// 플레이어를 전역적으로 불러옴.

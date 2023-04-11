@@ -34,7 +34,7 @@ _int CAttack::Update_Component(const _float & fTimeDelta)
 			L"NormalBullet", m_pGraphicDev, 
 			m_pGameObject->m_pTransform->m_vInfo[INFO_POS], 
 			m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK], { 1.f,1.f,1.f }, true);
-		Add_GameObject(LAYER_BULLET, L"Bullet", bullet);
+		Add_GameObject(bullet);
 		m_fCoolTime = 0.f;
 	}
 
