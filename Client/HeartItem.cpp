@@ -45,7 +45,10 @@ _int CHeartItem::Update_GameObject(const _float & fTimeDelta)
 {
 	ItemPatrol();
 	__super::Update_GameObject(fTimeDelta);
-	return 0;
+
+	if (GetDead()) return OBJ_DEAD;
+
+	return OBJ_NOEVENT;
 }
 
 void CHeartItem::LateUpdate_GameObject(void)
@@ -73,11 +76,12 @@ CHeartItem * CHeartItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CHeartItem::OnCollisionEnter(const Collision * collsion)
 {
-	__super::OnCollisionEnter(collsion);
 
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
 
 	_int curHp = pPlayer->Get_HP();
+	if (curHp == 20) { return; }
+	__super::OnCollisionEnter(collsion);
 
 	if (curHp < 20)
 	{

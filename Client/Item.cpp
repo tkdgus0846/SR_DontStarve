@@ -51,6 +51,20 @@ void CItem::ItemPatrol()
 	}
 }
 
+void CItem::ItemMagnetic(CPlayer* pPlayer)
+{
+	_vec3 pPlayerInfo;
+	pPlayer->m_pTransform->Get_Info(INFO_POS, &pPlayerInfo);
+
+	_vec3 vDir;
+	vDir = pPlayerInfo - m_pTransform->m_vInfo[INFO_POS];
+	_float fDistance = D3DXVec3Length(&vDir);
+
+	//fDistance += vDir
+
+
+}
+
 void CItem::Free()
 {
 	Safe_Release(m_pAniCom);

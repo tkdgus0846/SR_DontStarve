@@ -8,6 +8,7 @@ class CTexture;
 
 END
 
+class CPlayer;
 class CItem :
 	public CGameObject
 {
@@ -32,7 +33,8 @@ protected:
 	_float					m_fMinY;
 
 protected:
-	virtual void	ItemPatrol();
+	virtual void		ItemPatrol();
+	virtual void		ItemMagnetic(CPlayer* pPlayer);
 
 protected:
 	virtual void Free() override;

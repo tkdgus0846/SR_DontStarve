@@ -1,6 +1,6 @@
 #include "Coin.h"
 #include "Export_Function.h"
-
+#include "Player.h"
 
 
 CCoin::CCoin(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -67,7 +67,13 @@ void CCoin::LateUpdate_GameObject(void)
 
 void CCoin::Render_GameObject(void)
 {
-	int strLen = pPlayerCoin.length();
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
+
+	_int coin = pPlayer->Get_Coin();
+
+	string strCoin = to_string(coin);
+
+	int strLen = strCoin.length();
 	for (size_t i = 0, j = 2, k = 0; i < m_MaxNumber; i++, j--, k++)
 	{
 		_int iNum = 26;
@@ -78,7 +84,7 @@ void CCoin::Render_GameObject(void)
 		}
 		else
 		{
-			iNum = m_iStartNum + pPlayerCoin[k] - 48;
+			iNum = m_iStartNum + strCoin[k] - 48;
 		}
 		Set_ViewMatrix_UI(330 + (25.f * i), 250.f);
 		m_pTextureCom->Render_Texture(iNum);
