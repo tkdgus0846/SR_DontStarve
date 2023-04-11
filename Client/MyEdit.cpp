@@ -11,7 +11,7 @@
 #include "ObjCamera.h"
 #include "EditCamera.h"
 #include "Room.h"
-#include "MyMap.h"
+#include "RoomMgr.h"
 #include "ImManager.h"
 #include "Export_Function.h"
 #include "Tile.h"
@@ -23,7 +23,8 @@
 #include "FileSystem.h"
 
 CMyEdit::CMyEdit(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CScene(pGraphicDev)
+	: CScene(pGraphicDev), m_iCurRoomIdx(0)
+	, m_iPreRoomIdx(0)
 {
 }
 
@@ -34,8 +35,8 @@ CMyEdit::~CMyEdit()
 HRESULT CMyEdit::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
-	Add_GameObject(LAYER_ENVIRONMENT, L"Map", CMyMap::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_ENVIRONMENT, L"Map", CRoomMgr::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_SKYBOX, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
 
 	Add_GameObject(LAYER_CAMERA, L"Edit_Camera", CEditCamera::Create(m_pGraphicDev));
 	Engine::On_Camera(L"Edit_Camera");
@@ -81,6 +82,18 @@ _int CMyEdit::Update_Scene(const _float & fTimeDelta)
 void CMyEdit::LateUpdate_Scene(void)
 {
 	__super::LateUpdate_Scene();
+
+	m_iCurRoomIdx = ROOM_MGR->Get_CurRoom()->Get_Room_Index();
+
+	if (m_iCurRoomIdx != m_iPreRoomIdx)
+	{
+		Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());
+
+		for (int i = 0; i < COL_STATIC_END; i++)
+			CCollisionMgr::GetInstance()->Set_StaticColliderList(ROOM_MGR->Get_CurColliderList(i), i);
+
+		m_iPreRoomIdx = m_iCurRoomIdx;
+	}
 }
 
 void CMyEdit::Render_Scene(void)

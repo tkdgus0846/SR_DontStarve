@@ -12,9 +12,9 @@
 #define		VTXITV		10
 #define		MAX_DIK		256
 
-#define		RUNNING			1
-#define		BEHAVIOR_TRUE	2
-#define		BEHAVIOR_FALSE	3
+#define		BEHAVIOR_RUNNING	1
+#define		BEHAVIOR_SUCCES		2
+#define		BEHAVIOR_FAIL		3
 
 #define		PURE			= 0
 
@@ -88,3 +88,4 @@
 				m_pInstance = NULL;						\
 			}											\
 		}
+

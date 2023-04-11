@@ -1,10 +1,11 @@
 ﻿#pragma once
 
 #include "Base.h"
-#include "GameObject.h"
 
 BEGIN(Engine)
 
+class CGameObject;
+class CComponent;
 
 class  CLayer : public CBase
 {
@@ -17,6 +18,7 @@ public:
 
 public:
 	HRESULT				Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject);
+	HRESULT				Remove_Static_Layers();
 	CGameObject*		Get_GameObject(const _tchar* pObjTag);
 
 	HRESULT				Ready_Layer(void);

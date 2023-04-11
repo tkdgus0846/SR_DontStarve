@@ -5,7 +5,7 @@
 #include "EditCamera.h"
 
 #include "Room.h"
-#include "MyMap.h"
+#include "RoomMgr.h"
 
 #include "Baller.h"
 #include "Bub.h"
@@ -71,9 +71,9 @@ void CImInspector::Show_RoomInfo()
 	m_vObjectPos.z = _float(item_current / 5 * 60 + 5);
 
 	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
-	pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 20.f, 20.f, m_vObjectPos.z + 20.f };
-	CMyMap* pMyMap = dynamic_cast<CMyMap*>(Get_GameObject(LAYER_ENVIRONMENT, L"Map"));
-	m_pCurRoom = pMyMap->Get_CurRoom(pCamera->m_pTransform->m_vInfo[INFO_POS]);
+	pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 25.f, 25.f, m_vObjectPos.z + 25.f };
+	ROOM_MGR->Set_CurRoom(item_current);
+	m_pCurRoom = ROOM_MGR->Get_CurRoom();
 
 	static _int iObjNum = 0, iPre = 0;
 
@@ -96,7 +96,7 @@ void CImInspector::Show_RoomInfo()
 	if (iPre != iObjNum)
 	{
 		m_pCurRoom->Set_DoorType((DOOR_TYPE)iObjNum);
-		iObjNum = iPre;
+		iPre = iObjNum;
 	}
 }
 
@@ -182,30 +182,35 @@ void CImInspector::Show_Create_Object()
 		{
 			pName = "Baller";
 			pGameObject = CBaller::Create(m_pGraphicDev, m_vObjectPos);
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Baller" ,pGameObject, COL_ENEMY, L"BodyCollider");
 		}
 		if (1 == iObjNum)
 		{
 			pName = "Bub";
 			pGameObject = CBub::Create(m_pGraphicDev, m_vObjectPos);
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Bub", pGameObject, COL_ENEMY, L"BodyCollider");
 		}
+
 		if (2 == iObjNum)
 		{
 			pName = "Guppi";
 			pGameObject = CGuppi::Create(m_pGraphicDev, m_vObjectPos);
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Guppi", pGameObject, COL_ENEMY, L"BodyCollider");
 		}
 		if (3 == iObjNum)
 		{
 			pName = "Turret";
 			pGameObject = CTurret::Create(m_pGraphicDev, m_vObjectPos);
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Turret", pGameObject, COL_ENEMY, L"BodyCollider");
 		}
 		if (4 == iObjNum)
 		{
 			pName = "Walker";
 			pGameObject = CWalker::Create(m_pGraphicDev, m_vObjectPos);
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Walker", pGameObject, COL_ENEMY, L"BodyCollider");
 		}
 
 		m_vecMonster.push_back({ pName, pGameObject });
-		m_pCurRoom->AddGameObject(pGameObject);
 	}
 }
 

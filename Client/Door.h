@@ -1,12 +1,12 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Include.h"
 
 BEGIN(Engine)
 class CTexture;
 class CCollider;
 END
-
 class CRoom;
 class CTennel;
 class CDoor : public CGameObject
@@ -16,24 +16,31 @@ private:
 	virtual ~CDoor();
 
 public:
-	virtual HRESULT Ready_GameObject(const _vec3& vPos, _bool IsRot, const CRoom* pRoom);
+	virtual HRESULT Ready_GameObject(DOOR_DIR eDir, CRoom* pRoom);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
 	virtual void OnCollisionEnter(const class Collision* collsion);
+	CRoom* Get_Room() { return m_pRoom; }
+	DOOR_DIR Get_Door_Dir() { return m_eDir; }
 
 private:
 	virtual HRESULT Add_Component() override;
+	void Set_Door_State();
 
 private:
-	const CRoom*			m_pRoom;	// ÇöÀç ¹®ÀÌ ¼ÓÇØÀÖ´Â ·ëÀÇ Æ÷ÀÎÅÍ
-	CTennel*				m_pTennel;	// ÁøÀÔÁ¡ÀÇ ÅÍ³ÎÆ÷ÀÎÅÍ
+
+	CRoom*					m_pRoom;	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	CTennel*				m_pInTennel;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	CTennel*				m_pOutTennel;	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	Engine::CTexture*		m_pTextureCom;
 	Engine::CCollider*		m_pCollider;
 
+	DOOR_DIR				m_eDir;		// ï¿½ï¿½ ï¿½È¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+
 public:
-	static CDoor*		Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos, _bool IsRot, const CRoom* pRoom);
+	static CDoor*		Create(LPDIRECT3DDEVICE9 pGraphicDev, DOOR_DIR eDir, CRoom* pRoom);
 
 private:
 	virtual void Free(void) override;

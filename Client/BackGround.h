@@ -1,14 +1,7 @@
 #pragma once
 
-#include "Include.h"
 #include "GameObject.h"
 
-BEGIN(Engine)
-
-class CRcTex;
-class CTexture;
-
-END
 class CBackGround : public Engine::CGameObject
 {
 private:
@@ -23,11 +16,6 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
-
-private:
-	Engine::CRcTex*			m_pBufferCom;
-	Engine::CTexture*		m_pTextureCom;
-
 
 public:
 	static CBackGround*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

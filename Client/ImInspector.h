@@ -5,7 +5,7 @@ BEGIN(Engine)
 class CGameObject;
 END
 
-class CMyMap;
+class CRoomMgr;
 class CRoom;
 class CImInspector : public CImWindow
 {

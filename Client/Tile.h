@@ -18,6 +18,7 @@ public:
 	virtual void Render_GameObject(void) override;
 	void WriteTextureName(HANDLE hFile, DWORD& dwByte);
 	void ReadTextureName(HANDLE hFile, DWORD& dwByte);
+	CCollider*	GetCollider() { return m_pCollider; }
 
 private:
 	virtual HRESULT Add_Component() override;
@@ -25,6 +26,7 @@ private:
 
 public:
 	void Change_Texture(const _tchar* pTextureName);
+	_vec3 NormalVectorFromTile();
 
 private:
 	_tchar		m_pTextureName[64];

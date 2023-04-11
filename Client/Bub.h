@@ -18,7 +18,7 @@ private:
 
 public:
 	static CBub*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
-
+	static const _tchar* GetTag() { return L"bub"; }
 private:
 	virtual void Free(void) override;
 };

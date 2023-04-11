@@ -6,20 +6,28 @@
 #include "Turret.h"
 #include "Walker.h"
 #include "Export_Function.h"
+#include "Layer.h"
 
 #include "Floor.h"
 #include "Wall.h"
 #include "Tile.h"
 #include "Door.h"
 
+
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
 	m_fVtxCntZ(0.f), m_fVtxItv(0.f)
+	, m_pFloor(nullptr)
 {
 	for (auto& iter : m_apDoor)
 	{
 		iter.first = false;
 		iter.second = nullptr;
+	}
+
+	for (auto& iter : m_apWall)
+	{
+		iter = nullptr;
 	}
 }
 
@@ -32,68 +40,27 @@ HRESULT CRoom::Ready_GameObject(const _float& fVtxCntX, const _float& fVtxCntZ, 
 	m_fVtxItv = fVtxItv;
 	m_fVtxCntX = fVtxCntX;
 	m_fVtxCntZ = fVtxCntZ;
+	
+	for (int i = 0; i < LAYER_STATIC_END; i++)
+		m_vecLayer.push_back(CLayer::Create());
 
 	HRESULT result = __super::Ready_GameObject();
 	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);
-
+	
 	return result;
 }
 
 _int CRoom::Update_GameObject(const _float& fTimeDelta)
 {
-	__super::Update_GameObject(fTimeDelta);
-
-	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
-
-	m_pFloor->Update_GameObject(fTimeDelta);
-	for (auto& iter : m_apWall)
-		iter->Update_GameObject(fTimeDelta);
-
-	for (auto& iter : m_apDoor)
-	{
-		if (nullptr != iter.second)
-			iter.second->Update_GameObject(fTimeDelta);
-	}
-
-	for (auto& Tile : m_vecTile)
-		Tile->Update_GameObject(fTimeDelta);
-	
-	for (auto& Obj : m_vecGameObj)
-		Obj->Update_GameObject(fTimeDelta);
-
 	return 0;
 }
 
 void CRoom::LateUpdate_GameObject(void)
 {
-	// 룸 특성상 트랜스폼 외엔 안쓸거같아서 일단 주석처리
-	//__super::LateUpdate_GameObject();
-
-	m_pFloor->LateUpdate_GameObject();
-	for (auto& iter : m_apWall)
-		iter->LateUpdate_GameObject();
-
-	for (auto& Tile : m_vecTile)
-		Tile->LateUpdate_GameObject();
-
-	for (auto& Obj : m_vecGameObj)
-		Obj->LateUpdate_GameObject();
 }
 
 void CRoom::Render_GameObject(void)
 {
-	// 룸 특성상 트랜스폼 외엔 안쓸거같아서 일단 주석처리
-	//__super::Render_GameObject();
-
-	m_pFloor->Render_GameObject();
-	for (auto& iter : m_apWall)
-		iter->Render_GameObject();
-
-	for (auto& Tile : m_vecTile)
-		Tile->Render_GameObject();
-
-	for (auto& Obj : m_vecGameObj)
-		Obj->Render_GameObject();
 }
 
 HRESULT CRoom::CreateSubset()
@@ -101,10 +68,19 @@ HRESULT CRoom::CreateSubset()
 	// 바닥 생성
 	m_pFloor = CFloor::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pFloor, E_FAIL);
+	Add_GameObject(LAYER_ENVIRONMENT, L"Floor", m_pFloor);
+	CCollider* pCol = dynamic_cast<CCollider*>(m_pFloor->Get_Component(L"Collider", ID_ALL));
+	NULL_CHECK(pCol);
+	m_ColliderList[COL_ENVIRONMENT].push_back(pCol);
 
-	// 벽 4면 생성
-	for (auto& iter : m_apWall)
+	//// 벽 4면 생성
+	for (auto& iter : m_apWall) {
 		iter = CWall::Create(m_pGraphicDev);
+		Add_GameObject(LAYER_ENVIRONMENT, L"Wall", iter);
+		CCollider* pCol = dynamic_cast<CCollider*>(iter->Get_Component(L"Collider", ID_ALL));
+		NULL_CHECK(pCol);
+		m_ColliderList[COL_ENVIRONMENT].push_back(pCol);
+	}
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
 
 	return S_OK;
@@ -112,22 +88,13 @@ HRESULT CRoom::CreateSubset()
 
 void CRoom::FreeSubset()
 {
-	// 바닥, 벽 해제
-	Safe_Release(m_pFloor);
-	for (auto& iter : m_apWall)
-		Safe_Release(iter);
+	for_each(m_vecLayer.begin(), m_vecLayer.end(), CDeleteObj());
+}
 
-	// 타일 해제
-	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
-	m_vecTile.clear();
-
-	// 오브젝트 해제
-	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
-	m_vecGameObj.clear();
-
-	// 문 해제
-	for (auto& iter : m_apDoor)
-		Safe_Release(iter.second);
+HRESULT CRoom::Add_GameObject(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj)
+{
+	FAILED_CHECK_RETURN(m_vecLayer[LayerID]->Add_GameObject(pObjTag, pObj), E_FAIL);
+	return S_OK;
 }
 
 void CRoom::Set_DoorType(DOOR_TYPE eType)
@@ -137,94 +104,94 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 	switch (m_eDoorType)
 	{
 	case DOOR_ES:
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_LEFT].first = false;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_WEST].first = false;
 		break;
 	case DOOR_ESW:
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_UP].first = false;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
 		break;
 	case DOOR_EW:
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_SOUTH].first = false;
 		break;
 	case DOOR_N:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_DOWN].first = false;
-		m_apDoor[DOOR_LEFT].first = false;
-		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_SOUTH].first = false;
+		m_apDoor[DOOR_WEST].first = false;
+		m_apDoor[DOOR_EAST].first = false;
 		break;
 	case DOOR_NE:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_LEFT].first = false;
-		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_WEST].first = false;
+		m_apDoor[DOOR_SOUTH].first = false;
 		break;
 	case DOOR_NES:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = false;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = false;
 		break;
 	case DOOR_NESW:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = true;
 		break;
 	case DOOR_NS:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = false;
-		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = false;
+		m_apDoor[DOOR_EAST].first = false;
 		break;
 	case DOOR_NW:
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_RIGHT].first = false;
-		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_EAST].first = false;
+		m_apDoor[DOOR_SOUTH].first = false;
 		break;
 	case DOOR_S:
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_LEFT].first = false;
-		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_WEST].first = false;
+		m_apDoor[DOOR_EAST].first = false;
 		break;
 	case DOOR_SW:
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_EAST].first = false;
 		break;
 	case DOOR_SWN:
-		m_apDoor[DOOR_DOWN].first = true;
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_RIGHT].first = false;
+		m_apDoor[DOOR_SOUTH].first = true;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_EAST].first = false;
 		break;
 	case DOOR_W:
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_RIGHT].first = false;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_EAST].first = false;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_SOUTH].first = false;
 		break;
 	case DOOR_WNE:
-		m_apDoor[DOOR_LEFT].first = true;
-		m_apDoor[DOOR_UP].first = true;
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_DOWN].first = false;
+		m_apDoor[DOOR_WEST].first = true;
+		m_apDoor[DOOR_NORTH].first = true;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_SOUTH].first = false;
 		break;
 	case DOOR_E:
-		m_apDoor[DOOR_RIGHT].first = true;
-		m_apDoor[DOOR_UP].first = false;
-		m_apDoor[DOOR_DOWN].first = false;
-		m_apDoor[DOOR_LEFT].first = false;
+		m_apDoor[DOOR_EAST].first = true;
+		m_apDoor[DOOR_NORTH].first = false;
+		m_apDoor[DOOR_SOUTH].first = false;
+		m_apDoor[DOOR_WEST].first = false;
 		break;
 	}
 	for (_uint i = 0; i < 4; ++i)
@@ -233,35 +200,23 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 		{
 			if (nullptr == m_apDoor[i].second)
 			{
-				_vec3 vPos(0.f, 0.f, 0.f);
-				_vec3 vCurRoomPos = m_pTransform->m_vInfo[INFO_POS];
-				_bool IsRot = false;
-				switch (i)
-				{
-				case Engine::DOOR_UP:
-					vPos = { vCurRoomPos.x + 25.f, 3.f, vCurRoomPos.z + 49.9f };
-					break;
-
-				case Engine::DOOR_DOWN:
-					vPos = { vCurRoomPos.x + 25.f, 3.f, vCurRoomPos.z + 0.1f };
-					break;
-
-				case Engine::DOOR_LEFT:
-					vPos = { vCurRoomPos.x + 0.1f, 3.f, vCurRoomPos.z + 25.f };
-					IsRot = true;
-					break;
-
-				case Engine::DOOR_RIGHT:
-					vPos = { vCurRoomPos.x + 49.9f, 3.f, vCurRoomPos.z + 25.f };
-					IsRot = true;
-					break;
-				}
-				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, vPos, IsRot, this);
+				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, (DOOR_DIR)i, this);
+				Add_GameObject(LAYER_ENVIRONMENT, L"Door", m_apDoor[i].second);
+				m_ColliderList[COL_TRIGGER].push_back(dynamic_cast<CCollider*>(m_apDoor[i].second->Get_Component(L"Collider", ID_ALL)));
 			}
 		}
 		else if (nullptr != m_apDoor[i].second)
-			Safe_Release(m_apDoor[i].second);
+			m_apDoor[i].second->SetDead();
+
 	}
+}
+
+_int CRoom::Get_Room_Index()
+{
+	_int iX = _int(m_pTransform->m_vInfo[INFO_POS].x / 60.f);
+	_int iZ = _int(m_pTransform->m_vInfo[INFO_POS].z / 60.f);
+
+	return iZ * 5 + iX;
 }
 
 void CRoom::FloorSubSet()
@@ -269,7 +224,7 @@ void CRoom::FloorSubSet()
 	// 바닥 위치 조정
 	_vec3 vPos;
 	m_pTransform->Get_Info(INFO_POS, &vPos);
-
+	if (nullptr == m_pFloor) return;
 	m_pFloor->m_pTransform->Set_Pos(vPos);
 }
 
@@ -284,7 +239,7 @@ void CRoom::PlaceSubSet()
 	float fLengthY = VTXITV;
 
 	m_pTransform->Get_Info(INFO_POS, &vPos);
-
+	if (nullptr == m_apWall[0]) return;
 	m_apWall[0]->m_pTransform->Set_Pos(vPos);
 	m_apWall[1]->m_pTransform->Set_Pos(vPos.x, vPos.y, vPos.z + fLengthZ);
 	m_apWall[2]->m_pTransform->Set_Pos(vPos.x + fLengthX, vPos.y, vPos.z + fLengthZ);
@@ -337,7 +292,7 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 	for (_int i = 0; i < iTileSize; ++i)
 	{
 		m_vecTile[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
-		m_vecTile[i]->WriteTextureName(hFile, dwByte);
+		dynamic_cast<CTile*>(m_vecTile[i])->WriteTextureName(hFile, dwByte);
 	}
 		
 	
@@ -371,7 +326,7 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 		// 세이브 시 어떤 객체인지 정보를 알 수 없을 때 에러메시지 발생.
 		if (0 == iObjNumber)
 		{
-			FAILED_CHECK_RETURN(fail(), false);
+			FAILED_CHECK_RETURN(E_FAIL, false);
 		}
 		else
 		{
@@ -387,12 +342,15 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
 	// 타일 해제
-	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CTile*>);
+	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CGameObject*>);
 	m_vecTile.clear();
 
 	// 오브젝트 해제
 	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
 	m_vecGameObj.clear();
+
+	for (auto iter : m_apDoor)
+		Safe_Release(iter.second);
 
 	_int iTileSize;
 	_int iObjSize;
@@ -400,18 +358,36 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
+
+	//문 로드
 	_int iDoorType;
 	ReadFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
-	m_eDoorType = (DOOR_TYPE)iDoorType;
+
+	Set_DoorType((DOOR_TYPE)iDoorType);
+
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
 	// 타일 로드
 	ReadFile(hFile, &iTileSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iTileSize; ++i)
 	{
-		m_vecTile.push_back(CTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }, L"Floor_Level1_Texture"));
+		// 타일 트랜스폼 컴포넌트 정보 로드
+		CGameObject* objTmp = CTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }, L"Floor_Level1_Texture");
+		PushBack_Tile(objTmp);
+
+		CTile* tmp = dynamic_cast<CTile*>(objTmp);
 		m_vecTile[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
-		m_vecTile[i]->ReadTextureName(hFile, dwByte);
+		dynamic_cast<CTile*>(m_vecTile[i])->ReadTextureName(hFile, dwByte);
+
+		// 타일 콜라이더 크기 조절 분기문(더러움주의)
+		if (fabs(tmp->NormalVectorFromTile().Degree(_vec3::Up())) < 0.1f
+			|| fabs(tmp->NormalVectorFromTile().Degree(-_vec3::Up())) < 0.1f)
+			tmp->GetCollider()->Set_BoundingBox({ 10.f, 1.f, 10.f });
+		else if(fabs(tmp->NormalVectorFromTile().Degree(_vec3::Right())) < 0.1f
+			|| fabs(tmp->NormalVectorFromTile().Degree(-_vec3::Right())) < 0.1f)
+			tmp->GetCollider()->Set_BoundingBox({ 1.f, 10.f, 10.f });
+		else
+			tmp->GetCollider()->Set_BoundingBox({ 10.f, 10.f, 1.f });
 	}
 
 	// 객체 로드
@@ -423,27 +399,49 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 
 		if (1 == iObjNumber)
 		{
-			m_vecGameObj.push_back(CBaller::Create(m_pGraphicDev, _vec3{}));
+			PushBack_GameObj(LAYER_MONSTER, L"Baller" ,CBaller::Create(m_pGraphicDev, _vec3{}), COL_ENEMY, L"BodyCollider");
 		}
 		else if (2 == iObjNumber)
 		{
-			m_vecGameObj.push_back(CBub::Create(m_pGraphicDev, _vec3{}));
+			PushBack_GameObj(LAYER_MONSTER, L"Bub", CBub::Create(m_pGraphicDev, _vec3{}), COL_ENEMY
+				, L"BodyCollider");
 		}
 		else if (3 == iObjNumber)
 		{
-			m_vecGameObj.push_back(CGuppi::Create(m_pGraphicDev, _vec3{}));
+			PushBack_GameObj(LAYER_MONSTER, L"Guppi", CGuppi::Create(m_pGraphicDev, _vec3{}), COL_ENEMY
+				, L"BodyCollider");
 		}
 		else if (4 == iObjNumber)
 		{
-			m_vecGameObj.push_back(CTurret::Create(m_pGraphicDev, _vec3{}));
+			PushBack_GameObj(LAYER_MONSTER, L"Turret", CTurret::Create(m_pGraphicDev, _vec3{}), COL_ENEMY, L"BodyCollider");
 		}
 		else if (5 == iObjNumber)
 		{
-			m_vecGameObj.push_back(CWalker::Create(m_pGraphicDev, _vec3{}));
+			PushBack_GameObj(LAYER_MONSTER, L"Walker", CWalker::Create(m_pGraphicDev, _vec3{}), COL_ENEMY, L"BodyCollider");
 		}
 		m_vecGameObj[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
 	}
 	return true;
+}
+
+void CRoom::PushBack_Tile(CGameObject * pTile)
+{
+	NULL_CHECK(pTile);
+	m_vecTile.push_back(pTile);
+	Add_GameObject(LAYER_ENVIRONMENT, L"Tile", pTile);
+	CCollider* pCol = dynamic_cast<CCollider*>(pTile->Get_Component(L"Collider", ID_ALL));
+	NULL_CHECK(pCol);
+	m_ColliderList[COL_ENVIRONMENT].push_back(pCol);
+}
+
+void CRoom::PushBack_GameObj(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj, COLGROUP eColgroup, const _tchar* colliderName)
+{
+	NULL_CHECK(pObj);
+	m_vecGameObj.push_back(pObj);
+	Add_GameObject(LayerID, pObjTag, pObj);
+	CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(colliderName, ID_ALL));
+	NULL_CHECK(pCol);
+	m_ColliderList[eColgroup].push_back(pCol);
 }
 
 HRESULT CRoom::Add_Component(void)

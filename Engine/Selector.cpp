@@ -36,35 +36,35 @@ HRESULT CSelector::Ready_Behavior()
 _int CSelector::Update_Component(const _float & fTimeDelta)
 {
 	if (0 == m_VecComponents[ID_UPDATE].size())
-		return BEHAVIOR_FALSE;
+		return BEHAVIOR_FAIL;
 
-	if (BEHAVIOR_FALSE == update_Decorator(fTimeDelta))
-		return BEHAVIOR_FALSE;
+	if (BEHAVIOR_FAIL == update_Decorator(fTimeDelta))
+		return BEHAVIOR_FAIL;
 
 	_int iResult = m_iterCurComponent->pComponent->Update_Component(fTimeDelta);
 
 	switch (iResult)
 	{
-	case RUNNING:
-		return RUNNING;
+	case BEHAVIOR_RUNNING:
+		return BEHAVIOR_RUNNING;
 
-	case BEHAVIOR_TRUE:
+	case BEHAVIOR_SUCCES:
 		m_iterPreComponent = m_VecComponents[ID_UPDATE].begin();
-		return BEHAVIOR_FALSE;
+		return BEHAVIOR_SUCCES;
 
-	case BEHAVIOR_FALSE:
+	case BEHAVIOR_FAIL:
 		++m_iterPreComponent;
 
 		if (m_iterPreComponent == m_VecComponents[ID_UPDATE].end())
 		{
 			m_iterPreComponent = m_VecComponents[ID_UPDATE].begin();
-			return BEHAVIOR_TRUE;
+			return BEHAVIOR_FAIL;
 		}
 		else
-			return RUNNING;
+			return BEHAVIOR_RUNNING;
 	}
 
-	return BEHAVIOR_FALSE;
+	return BEHAVIOR_FAIL;
 }
 
 void CSelector::LateUpdate_Component(void)

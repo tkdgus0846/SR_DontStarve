@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Logo.h"
 
 #include "Export_Function.h"
@@ -6,6 +5,8 @@
 #include "Stage.h"
 #include "MyEdit.h"
 #include "FileSystem.h"
+#include "RoomMgr.h"
+#include "Loading.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_pLoading(nullptr)
@@ -21,7 +22,7 @@ HRESULT CLogo::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 
-	Add_GameObject(LAYER_ENVIRONMENT, L"BackGround", CBackGround::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_DEBUG_BACKGROUND, L"BackGround", CBackGround::Create(m_pGraphicDev));
 
 	m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
@@ -42,8 +43,16 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			CScene*	pScene = CMyEdit::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 
+			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev);
+			pScene->Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());
+
+			for (int i = 0; i < COL_STATIC_END; i++)
+			{
+				CCollisionMgr::GetInstance()->Set_StaticColliderList(ROOM_MGR->Get_CurColliderList(i), i);
+			}
+
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-			//CFileSystem::Load(L"Save.dat");
+			//CFileSystem::Load(L"tmp.dat");
 			pScene->Update_Scene(fTimeDelta);
 			return 0;
 		}
@@ -53,9 +62,19 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			Start_WorldTimer();
 			CScene*	pScene = CStage::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
+			
+			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev);
+			pScene->Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());
+			
+			for (int i = 0; i < COL_STATIC_END; i++)
+			{
+				CCollisionMgr::GetInstance()->Set_StaticColliderList(ROOM_MGR->Get_CurColliderList(i), i);
+			}
+			
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-			//CFileSystem::Load(L"Save.dat");
+
+			CFileSystem::Load(L"tmp.dat");
 			return 0;
 		}
 	}
@@ -70,7 +89,7 @@ void CLogo::LateUpdate_Scene(void)
 
 void CLogo::Render_Scene(void)
 {
-	// _DEBUG ¿ë Ãâ·Â
+	// _DEBUG ï¿½ï¿½ ï¿½ï¿½ï¿½
 
 	Engine::Render_Font(L"Font_Default", m_pLoading->Get_String(), &_vec2(20.f, 20.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 

@@ -10,7 +10,7 @@
 #include "SkyBox.h"
 #include "ObjCamera.h"
 #include "Room.h"
-#include "MyMap.h"
+#include "RoomMgr.h"
 #include "ImManager.h"
 #include "Export_Function.h"
 #include "GunUI.h"
@@ -22,14 +22,19 @@
 #include "Disc.h"
 #include "WeaponType.h"
 #include "MiniMap.h"
+
 #include "CoinItem.h"
 #include "BulletItem.h"
 #include "HeartItem.h"
 #include "WeaponItem.h"
 #include "DiscItem.h"
 
+#include "Tennel.h"
+
+
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CScene(pGraphicDev)
+	: CScene(pGraphicDev), m_iCurRoomIdx(0)
+	, m_iPreRoomIdx(0)
 {
 }
 
@@ -44,18 +49,18 @@ HRESULT CStage::Ready_Scene(void)
 	/*Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
 	dynamic_cast<CRoom*>(Get_GameObject(LAYER_ENVIRONMENT, L"Room"))->FloorSubSet();
 	dynamic_cast<CRoom*>(Get_GameObject(LAYER_ENVIRONMENT, L"Room"))->PlaceSubSet();*/
-	Add_GameObject(LAYER_ENVIRONMENT, L"Map", CMyMap::Create(m_pGraphicDev));
+	//Add_GameObject(LAYER_ENVIRONMENT, L"Map", CRoomMgr::Create(m_pGraphicDev));
 
-	Add_GameObject(LAYER_ENVIRONMENT, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
+	Add_GameObject(LAYER_SKYBOX, L"SkyBox", CSkyBox::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_PLAYER, L"Player", CPlayer::Create(m_pGraphicDev));
 
 	/*Add_GameObject(LAYER_MONSTER, L"Monster_Baller", CBaller::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_MONSTER, L"Monster_Walker", CWalker::Create(m_pGraphicDev));*/
 	//Add_GameObject(LAYER_MONSTER, L"Monster_Turret", CTurret::Create(m_pGraphicDev));
-	Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
-	Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
-	Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
-	Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
+	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
 	/*Add_GameObject(LAYER_MONSTER, L"Monster_Guppi_Blue_Texture", CGuppi::Create(m_pGraphicDev));*/
 
 	Add_GameObject(LAYER_CAMERA, L"ObjCamera", CObjCamera::Create(m_pGraphicDev));
@@ -80,6 +85,18 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(LAYER_UI, L"HeartItem", CHeartItem::Create(m_pGraphicDev));
 	Add_GameObject(LAYER_UI, L"WeaponItem", CWeaponItem::Create(m_pGraphicDev, _vec3{ 15.f, 2.f, 15.f }, FLAMESHOT));
 	Add_GameObject(LAYER_UI, L"DisItem", CDiscItem::Create(m_pGraphicDev));
+
+	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);
+	CTennel* tennel2 = CTennel::Create(m_pGraphicDev);
+
+	tennel1->Set_Position(0);
+	tennel2->Set_Position(1);
+
+	Add_GameObject(LAYER_TENNEL, L"Tennel1", tennel1);
+	Add_GameObject(LAYER_TENNEL, L"Tennel2", tennel2);
+
+	ROOM_MGR->Set_Tennel(tennel1, 0);
+	ROOM_MGR->Set_Tennel(tennel2, 1);
 
 	/*D3DLIGHT9		tLightInfo;
 
@@ -106,6 +123,18 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 void CStage::LateUpdate_Scene(void)
 {
 	__super::LateUpdate_Scene();
+
+	m_iCurRoomIdx = ROOM_MGR->Get_CurRoom()->Get_Room_Index();
+
+	if (m_iCurRoomIdx != m_iPreRoomIdx)
+	{
+		Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());
+
+		for (int i = 0; i < COL_STATIC_END; i++)
+			CCollisionMgr::GetInstance()->Set_StaticColliderList(ROOM_MGR->Get_CurColliderList(i), i);
+
+		m_iPreRoomIdx = m_iCurRoomIdx;
+	}
 }
 
 void CStage::Render_Scene(void)
