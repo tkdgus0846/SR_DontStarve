@@ -85,7 +85,9 @@ HRESULT CWalker::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
 	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
 
+	Create_Root_AI();
 	Set_PatrolAndFollow_AI();
+	Init_AI_Behaviours();
 
 	return S_OK;
 }

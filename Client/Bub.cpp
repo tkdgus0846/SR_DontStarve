@@ -67,31 +67,30 @@ HRESULT CBub::Add_Component()
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", rcTex });
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENEMY));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
+	//CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ENEMY));
+	//NULL_CHECK_RETURN(pCollider, E_FAIL);
+	//m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
+	//pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
 
 	//pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
 	//NULL_CHECK_RETURN(pCollider, E_FAIL);
 	//m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	//pCollider->Set_BoundingBox({ 50.f, 10.f, 50.f });
 
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 30.f, 10.f, 30.f });
 
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
-	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
+	//pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_DETECTION));
+	//NULL_CHECK_RETURN(pCollider, E_FAIL);
+	//m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
+	//pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
 
-	CRigidbody* pRigidBody = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"RigidBody", this));
-	NULL_CHECK_RETURN(pRigidBody, E_FAIL);
-	m_uMapComponent[ID_UPDATE].insert({ L"RigidBody", pRigidBody });
-
-	Set_PatrolAndFollow_AI();
+	Create_Root_AI();
+	//Set_PatrolAndFollow_AI();
+	Set_PAF_JumpAI();
+	Init_AI_Behaviours();
 
 	return S_OK;
 }

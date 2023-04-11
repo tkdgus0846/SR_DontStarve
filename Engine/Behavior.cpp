@@ -4,12 +4,14 @@
 #include "Export_Utility.h"
 
 CBehavior::CBehavior(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CComposite(pGraphicDev), m_pBlackBoard(nullptr)
+	: CComposite(pGraphicDev), m_fCurTime(0.f)
+	, m_fPreTime(0.f), m_fTime(0.f)
 {
 }
 
 CBehavior::CBehavior(const CBehavior & rhs)
-	:CComposite(rhs)
+	: CComposite(rhs), m_fCurTime(rhs.m_fCurTime)
+	, m_fPreTime(rhs.m_fPreTime), m_fTime(rhs.m_fTime)
 {
 }
 

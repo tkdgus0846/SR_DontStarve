@@ -194,6 +194,7 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 		m_apDoor[DOOR_WEST].first = false;
 		break;
 	}
+
 	for (_uint i = 0; i < 4; ++i)
 	{
 		if (true == m_apDoor[i].first)
@@ -207,7 +208,6 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 		}
 		else if (nullptr != m_apDoor[i].second)
 			m_apDoor[i].second->SetDead();
-
 	}
 }
 
@@ -404,7 +404,7 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 		else if (2 == iObjNumber)
 		{
 			PushBack_GameObj(LAYER_MONSTER, L"Bub", CBub::Create(m_pGraphicDev, _vec3{}), COL_ENEMY
-				, L"BodyCollider");
+				, L"Range");
 		}
 		else if (3 == iObjNumber)
 		{

@@ -27,23 +27,30 @@ HRESULT CLeapJump::Ready_Behavior()
 
 _int CLeapJump::Update_Component(const _float & fTimeDelta)
 {
+	m_fCurTime = Get_WorldTime();
+
 	if (m_fInit > m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y)
 	{
 		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y = m_fInit;
+		m_fPreTime = m_fCurTime;
 		m_fTime = 0.f;
+
 		return BEHAVIOR_SUCCES;
 	}
 
 	_float fSpeed = 0.f;
 	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FAIL);
+	
+	if (m_fCurTime - m_fPreTime >= m_fTime)
+	{
+		m_pGameObject->m_pTransform->Move_Walk(fSpeed, fTimeDelta);
 
-	m_pGameObject->m_pTransform->Move_Walk(fSpeed, fTimeDelta);
+		m_fTime += fTimeDelta * 7.f;
 
-	m_fTime += fTimeDelta * 7.f;
+		_float fY = fSpeed * m_fTime - 4.9f * m_fTime * m_fTime;
 
-	_float fY = fSpeed * m_fTime - 4.9f * m_fTime * m_fTime;
-
-	m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
+		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
+	}
 
 	return BEHAVIOR_RUNNING;
 }

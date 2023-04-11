@@ -16,13 +16,6 @@ public:
 	virtual void Render_Component(void) override {};
 
 public:
-	void	Set_Limit(const _float& fTime) { m_fLimit = fTime; }
-
-private:
-	_float m_fLimit;
-	_float m_fTimer;
-
-public:
 	static CWait* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
 

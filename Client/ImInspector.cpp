@@ -188,7 +188,7 @@ void CImInspector::Show_Create_Object()
 		{
 			pName = "Bub";
 			pGameObject = CBub::Create(m_pGraphicDev, m_vObjectPos);
-			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Bub", pGameObject, COL_ENEMY, L"BodyCollider");
+			m_pCurRoom->PushBack_GameObj(LAYER_MONSTER, L"Bub", pGameObject, COL_ENEMY, L"Range");
 		}
 
 		if (2 == iObjNum)

@@ -7,6 +7,7 @@
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev), m_fSpeed(0.f)
+	, m_pRoot(nullptr)
 {
 }
 
@@ -58,10 +59,6 @@ void CMonster::OnCollisionEnter(const Collision * collsion)
 void CMonster::OnCollisionStay(const Collision * collision)
 {
 	__super::OnCollisionStay(collision);
-
-	
-
-	
 }
 
 void CMonster::OnCollisionExit(const Collision * collision)
@@ -92,13 +89,19 @@ void CMonster::Free(void)
 	__super::Free();
 }
 
+HRESULT CMonster::Create_Root_AI()
+{
+	m_pRoot = dynamic_cast<CRoot*>(Engine::Clone_Proto(L"Root", this));
+	NULL_CHECK_RETURN(m_pRoot, E_FAIL);
+	m_uMapComponent[ID_UPDATE].emplace(L"Root", m_pRoot);
+
+	return S_OK;
+}
+
 // AI	구현부
-HRESULT CMonster::Set_PatrolAndFollow_AI()
+HRESULT CMonster::Set_PatrolAndFollow_AI() 
 {
 	// 부품 생성
-	CComponent* pRoot = dynamic_cast<CRoot*>(Engine::Clone_Proto(L"Root", this));
-	NULL_CHECK_RETURN(pRoot, E_FAIL);
-
 	CComponent* pSelector = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
 	NULL_CHECK_RETURN(pSelector, E_FAIL);
 
@@ -122,11 +125,11 @@ HRESULT CMonster::Set_PatrolAndFollow_AI()
 	NULL_CHECK_RETURN(pDecRangeCheck, E_FAIL);
 
 	// 부품 초기설정
-	dynamic_cast<CWait*>(pTaskWait)->Set_Limit(1.f);
-	dynamic_cast<CMoveLook*>(pTaskMovePatrol)->Set_MoveTimer(0.5f);
+	dynamic_cast<CWait*>(pTaskWait)->Set_Timer(1.f);
+	dynamic_cast<CMoveLook*>(pTaskMovePatrol)->Set_Timer(0.5f);
 
 	// 부품 조립
-	FAILED_CHECK_RETURN(dynamic_cast<CRoot*>(pRoot)->Add_Component(ID_UPDATE, 1, L"SL_AIRoot", pSelector), E_FAIL);
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, 1, L"SL_AIRoot", pSelector), E_FAIL);
 
 	FAILED_CHECK_RETURN(dynamic_cast<CSelector*>(pSelector)->Add_Component(ID_UPDATE, 1, L"SQ_Chase", pSQChase), E_FAIL);
 	FAILED_CHECK_RETURN(dynamic_cast<CSelector*>(pSelector)->Add_Component(ID_UPDATE, 2, L"SQ_Patrol", pSQPatrol), E_FAIL);
@@ -140,23 +143,12 @@ HRESULT CMonster::Set_PatrolAndFollow_AI()
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_UPDATE, 2, L"TSK_MovePatrol", pTaskMovePatrol), E_FAIL);
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_UPDATE, 3, L"TSK_Wait", pTaskWait), E_FAIL);
 
-	// 조립된 트리 전체 초기화
-	FAILED_CHECK_RETURN(dynamic_cast<CRoot*>(pRoot)->Ready_Behavior(), E_FAIL);
-
-	// 루트의 블랙보드에 자료형 채우기
-	FAILED_CHECK_RETURN(dynamic_cast<CRoot*>(pRoot)->m_pBlackBoard->Add_Type(L"fSpeed", m_fSpeed), E_FAIL);
-
-	m_uMapComponent[ID_UPDATE].emplace(L"Root", pRoot);
-
 	return S_OK;
 }
 
 HRESULT CMonster::Set_TurretAI()
 {
 	// 부품 생성
-	CComponent* pRoot = dynamic_cast<CRoot*>(Engine::Clone_Proto(L"Root", this));
-	NULL_CHECK_RETURN(pRoot, E_FAIL);
-
 	CComponent* pSQChaseAtk = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQChaseAtk, E_FAIL);
 
@@ -171,23 +163,48 @@ HRESULT CMonster::Set_TurretAI()
 	// 부품 초기설정
 
 	// 부품 조립
-	FAILED_CHECK_RETURN(dynamic_cast<CRoot*>(pRoot)->Add_Component(ID_UPDATE, 1, L"SQ_ChaseAtk", pSQChaseAtk), E_FAIL);
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, 1, L"SQ_ChaseAtk", pSQChaseAtk), E_FAIL);
 
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChaseAtk)->Add_Decorator(pDecRangeCheck), E_FAIL);
 
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChaseAtk)->Add_Component(ID_UPDATE, 1, L"TSK_Rot", pTaskRot), E_FAIL);
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChaseAtk)->Add_Component(ID_UPDATE, 2, L"TSK_Attack", pTaskAttack), E_FAIL);
 
-	// 조립된 트리 전체 초기화
-	FAILED_CHECK_RETURN(dynamic_cast<CRoot*>(pRoot)->Ready_Behavior(), E_FAIL);
-
-	// 루트의 블랙보드에 자료형 채우기
-	FAILED_CHECK_RETURN(dynamic_cast<CRoot*>(pRoot)->m_pBlackBoard->Add_Type(L"fSpeed", m_fSpeed), E_FAIL);
-
-	m_uMapComponent[ID_UPDATE].emplace(L"Root", pRoot);
-
 	return S_OK;
 }
+
+HRESULT CMonster::Set_PAF_JumpAI()
+{
+	Set_PatrolAndFollow_AI();
+
+	// 부품 생성
+	CComponent* pTskJump = dynamic_cast<CJump*>(Engine::Clone_Proto(L"TSK_Jump", this));
+	NULL_CHECK_RETURN(pTskJump, E_FAIL);
+
+	// 기존에 생성했던 비헤비어 가져옴
+	CSelector* pSelector = dynamic_cast<CSelector*>(m_pRoot->Get_Component(L"SL_AIRoot", ID_UPDATE));
+	CSequence* pSQChase = dynamic_cast<CSequence*>(pSelector->Get_Component(L"SQ_Chase", ID_UPDATE));
+
+	// 부품 초기설정
+	dynamic_cast<CJump*>(pTskJump)->Set_Timer(4.f);
+
+	// 부품 조립
+	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 3, L"TSK_Jump", pTskJump));
+	
+	return S_OK;
+}
+
+HRESULT CMonster::Init_AI_Behaviours()
+{
+	// 조립된 트리 전체 초기화
+	FAILED_CHECK_RETURN(dynamic_cast<CRoot*>(m_pRoot)->Ready_Behavior(), E_FAIL);
+
+	// 루트의 블랙보드에 자료형 채우기
+	FAILED_CHECK_RETURN(m_pRoot->m_pBlackBoard->Add_Type(L"fSpeed", m_fSpeed), E_FAIL);
+
+	return E_NOTIMPL;
+}
+
 
 CGameObject * MonsterFactory::CreateMonster(const _tchar * tag)
 {
