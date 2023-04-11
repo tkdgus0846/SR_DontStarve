@@ -42,9 +42,7 @@ HRESULT CRoom::Ready_GameObject(const _float& fVtxCntX, const _float& fVtxCntZ, 
 	m_fVtxCntZ = fVtxCntZ;
 	
 	for (int i = 0; i < LAYER_STATIC_END; i++)
-	{
 		m_vecLayer.push_back(CLayer::Create());
-	}
 
 	HRESULT result = __super::Ready_GameObject();
 	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);
@@ -54,62 +52,15 @@ HRESULT CRoom::Ready_GameObject(const _float& fVtxCntX, const _float& fVtxCntZ, 
 
 _int CRoom::Update_GameObject(const _float& fTimeDelta)
 {
-	//__super::Update_GameObject(fTimeDelta);
-
-	//__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
-
-	//m_pFloor->Update_GameObject(fTimeDelta);
-	//for (auto& Wall : m_apWall)
-	//	Wall->Update_GameObject(fTimeDelta);
-
-	//for (auto& Door : m_apDoor)
-	//{
-	//	if (nullptr != Door.second)
-	//		Door.second->Update_GameObject(fTimeDelta);
-	//}
-
-	//for (auto& Tile : m_vecTile)
-	//	Tile->Update_GameObject(fTimeDelta);
-	//
-	//for (auto& Obj : m_vecGameObj)
-	//	Obj->Update_GameObject(fTimeDelta);
-
-	//cout << _int(m_pTransform->m_vInfo[INFO_POS].x / 60.f) << ", " << 
-	//	_int(m_pTransform->m_vInfo[INFO_POS].z / 60.f) << endl;
-
 	return 0;
 }
 
 void CRoom::LateUpdate_GameObject(void)
 {
-	// 룸 특성상 트랜스폼 외엔 안쓸거같아서 일단 주석처리
-	//__super::LateUpdate_GameObject();
-
-	//m_pFloor->LateUpdate_GameObject();
-	//for (auto& Wall : m_apWall)
-	//	Wall->LateUpdate_GameObject();
-
-	//for (auto& Tile : m_vecTile)
-	//	Tile->LateUpdate_GameObject();
-
-	//for (auto& Obj : m_vecGameObj)
-	//	Obj->LateUpdate_GameObject();
 }
 
 void CRoom::Render_GameObject(void)
 {
-	// 룸 특성상 트랜스폼 외엔 안쓸거같아서 일단 주석처리
-	//__super::Render_GameObject();
-
-	//m_pFloor->Render_GameObject();
-	//for (auto& Wall : m_apWall)
-	//	Wall->Render_GameObject();
-
-	//for (auto& Tile : m_vecTile)
-	//	Tile->Render_GameObject();
-
-	//for (auto& Obj : m_vecGameObj)
-	//	Obj->Render_GameObject();
 }
 
 HRESULT CRoom::CreateSubset()
@@ -138,24 +89,6 @@ HRESULT CRoom::CreateSubset()
 void CRoom::FreeSubset()
 {
 	for_each(m_vecLayer.begin(), m_vecLayer.end(), CDeleteObj());
-	//// 바닥, 벽 해제
-	//Safe_Release(m_pFloor);
-	//for (auto& iter : m_apWall)
-	//	Safe_Release(iter);
-
-	//// 타일 해제
-	/*for_each(m_vecTile.begin(), m_vecTile.end(), CDeleteObj());
-	m_vecTile.clear();*/
-
-	//// 오브젝트 해제
-	//for_each(m_vecGameObj.begin(), m_vecGameObj.end(), CDeleteObj());
-	//m_vecGameObj.clear();
-
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	Safe_Release(m_apDoor[i].second);
-	//}
-
 }
 
 HRESULT CRoom::Add_GameObject(LAYERID LayerID, const _tchar * pObjTag, CGameObject * pObj)
@@ -266,8 +199,10 @@ void CRoom::Set_DoorType(DOOR_TYPE eType)
 		if (true == m_apDoor[i].first)
 		{
 			if (nullptr == m_apDoor[i].second)
+			{
 				m_apDoor[i].second = CDoor::Create(m_pGraphicDev, (DOOR_DIR)i, this);
-
+				Add_GameObject(LAYER_ENVIRONMENT, L"Door", m_apDoor[i].second);
+			}
 		}
 		else if (nullptr != m_apDoor[i].second)
 			m_apDoor[i].second->SetDead();

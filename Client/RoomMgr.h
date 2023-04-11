@@ -13,6 +13,7 @@ class CRoom;
 class CRoomMgr : public CBase
 {
 	DECLARE_SINGLETON(CRoomMgr);
+
 public:
 	explicit CRoomMgr();
 	~CRoomMgr();
@@ -20,8 +21,9 @@ public:
 public:
 	HRESULT Ready_RoomMgr(LPDIRECT3DDEVICE9	pGraphicDev);
 
-	class CRoom*			Get_CurRoom();
-	void			Set_CurRoom(const _uint iIndex); 
+	class CRoom*		Get_CurRoom() { return m_pCurRoom; }
+	void				Set_CurRoom(const _uint iIndex);
+
 	class CTennel*		Get_Tennel(const _int i) { return m_pTennel[i]; }
 	void Set_Tennel(class CTennel* tennel, _int iIndex);
 
@@ -38,7 +40,9 @@ private:
 private:
 	class CRoom*		m_pCurRoom;
 	array<CRoom*, 25>	m_arrRoom;
-	class CTennel*		m_pTennel[2];
+
+	class CTennel*		m_pTennel[2];	
+
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 
 public:

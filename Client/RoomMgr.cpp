@@ -39,12 +39,12 @@ HRESULT CRoomMgr::Ready_RoomMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 //		iter->Update_GameObject(fTimeDelta);
 //
 //	CGameObject* pPlayer = Get_Player();
-//	if (nullptr == pPlayer)	// ¿¡µðÅÍ ¸ðµå
+//	if (nullptr == pPlayer)	// ì—ë””í„° ëª¨ë“œ
 //	{
 //		for (auto iter : m_arrRoom)
 //			iter->Update_GameObject(fTimeDelta);
 //	}
-//	else	// ÀÎ °ÔÀÓ
+//	else	// ì¸ ê²Œìž„
 //		m_pCurRoom->Update_GameObject(fTimeDelta);
 //
 //	m_pTennel[0]->Update_GameObject(fTimeDelta);
@@ -60,12 +60,12 @@ HRESULT CRoomMgr::Ready_RoomMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 //		return;
 //
 //	CGameObject* pPlayer = Get_Player();
-//	if (nullptr == pPlayer)	// ¿¡µðÅÍ ¸ðµå
+//	if (nullptr == pPlayer)	// ì—ë””í„° ëª¨ë“œ
 //	{
 //		for (auto iter : m_arrRoom)
 //			iter->LateUpdate_GameObject();
 //	}
-//	else	// ÀÎ °ÔÀÓ
+//	else	// ì¸ ê²Œìž„
 //		m_pCurRoom->LateUpdate_GameObject();
 //
 //	m_pTennel[0]->LateUpdate_GameObject();
@@ -101,11 +101,6 @@ void CRoomMgr::Create_Default_Room()
 	}
 
 	m_pCurRoom = m_arrRoom[0];
-}
-
-CRoom * CRoomMgr::Get_CurRoom()
-{
-	return m_pCurRoom;
 }
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)

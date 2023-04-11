@@ -25,7 +25,8 @@
 #include "Tennel.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CScene(pGraphicDev)
+	: CScene(pGraphicDev), m_iCurRoomIdx(0)
+	, m_iPreRoomIdx(0)
 {
 }
 
@@ -110,6 +111,18 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 void CStage::LateUpdate_Scene(void)
 {
 	__super::LateUpdate_Scene();
+
+	m_iCurRoomIdx = ROOM_MGR->Get_CurRoom()->Get_Room_Index();
+
+	if (m_iCurRoomIdx != m_iPreRoomIdx)
+	{
+		Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());
+
+		for (int i = 0; i < COL_STATIC_END; i++)
+			CCollisionMgr::GetInstance()->Set_StaticColliderList(ROOM_MGR->Get_CurColliderList(i), i);
+
+		m_iPreRoomIdx = m_iCurRoomIdx;
+	}
 }
 
 void CStage::Render_Scene(void)
