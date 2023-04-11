@@ -22,6 +22,7 @@
 #include "Disc.h"
 #include "WeaponType.h"
 #include "MiniMap.h"
+#include "Tennel.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev)
@@ -69,6 +70,20 @@ HRESULT CStage::Ready_Scene(void)
 
 	Add_GameObject(LAYER_UI, L"GunUI", CGunUI::Create(m_pGraphicDev));
 
+	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);
+	CTennel* tennel2 = CTennel::Create(m_pGraphicDev);
+
+	tennel1->Set_Position(0);
+	tennel2->Set_Position(1);
+
+
+	
+
+	Add_GameObject(LAYER_TENNEL, L"Tennel1", tennel1);
+	Add_GameObject(LAYER_TENNEL, L"Tennel2", tennel2);
+
+	ROOM_MGR->Set_Tennel(tennel1, 0);
+	ROOM_MGR->Set_Tennel(tennel1, 1);
 
 	/*D3DLIGHT9		tLightInfo;
 

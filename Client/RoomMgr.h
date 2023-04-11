@@ -20,9 +20,10 @@ public:
 public:
 	HRESULT Ready_RoomMgr(LPDIRECT3DDEVICE9	pGraphicDev);
 
-	class CRoom*			Get_CurRoom(const _vec3& vPos);
+	class CRoom*			Get_CurRoom();
 	void			Set_CurRoom(const _uint iIndex); 
 	class CTennel*		Get_Tennel(const _int i) { return m_pTennel[i]; }
+	void Set_Tennel(class CTennel* tennel, _int iIndex);
 
 	_bool WriteMapFile(HANDLE hFile, DWORD& dwByte);
 	_bool ReadMapFile(HANDLE hFile, DWORD& dwByte);
@@ -37,7 +38,7 @@ private:
 private:
 	class CRoom*		m_pCurRoom;
 	array<CRoom*, 25>	m_arrRoom;
-	class CTennel*		m_pTennel[2];//0 == 진입, 1 == 진출
+	class CTennel*		m_pTennel[2];
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 
 public:
