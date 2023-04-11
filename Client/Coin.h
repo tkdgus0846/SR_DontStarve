@@ -37,8 +37,6 @@ private:
 	_int m_MaxNumber = 3;
 	_int m_iStartNum = 26;
 
-	string pPlayerCoin = "85";
-
 public:
 	static CCoin*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

@@ -1,5 +1,6 @@
 #include "WeaponItem.h"
 #include "Export_Function.h"
+#include "Player.h"
 
 CWeaponItem::CWeaponItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
@@ -25,6 +26,12 @@ HRESULT CWeaponItem::Add_Component()
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 	pCollider->Set_BoundingBox({ 1.5f, 3.0f, 1.5f });
+
+	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", this, COL_ITEM));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
+	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
+
 
 	return S_OK;
 }
@@ -62,7 +69,23 @@ void CWeaponItem::Render_GameObject(void)
 
 void CWeaponItem::OnCollisionEnter(const Collision * collsion)
 {
+	//if (collsion->MyCollider == Get_Component(L"Collider", ID_ALL) && collsion->Other)
+	//{
+
+	//}
 	__super::OnCollisionEnter(collsion);
+
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);	
+	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
+	{
+		pPlayer->Gain_Weapon(m_eID);
+	}
+	else
+	{
+		this->ItemMagnetic(pPlayer);
+	}
+
+
 }
 
 CWeaponItem * CWeaponItem::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, WEAPONTYPE eID)
@@ -93,6 +116,7 @@ void CWeaponItem::Select_Type()
 		{
 			CTexture* Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Weapon_bigshot_Texture", this));
 			m_uMapComponent[ID_RENDER].insert({ L"Weapon_bigshot_Item_Texture", Texture });
+			
 		}
 		break;
 		case EXPLOSIVESHOT:

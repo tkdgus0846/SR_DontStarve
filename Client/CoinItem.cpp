@@ -89,6 +89,7 @@ void CCoinItem::RandCoin()
 		m_pTransform->Set_Pos(2.f, 0.5f, 10.f);
 		m_uMapComponent[ID_RENDER].insert({ L"Coin_Texture", BigCoin });
 		m_pAniCom->BindAnimation(ANIM_IDLE, BigCoin, 0.15f);
+		m_eID = BIG;
 	}
 	else
 	{
@@ -97,6 +98,7 @@ void CCoinItem::RandCoin()
 		m_pTransform->Set_Pos(2.f, 0.25f, 10.f);
 		m_uMapComponent[ID_RENDER].insert({ L"SmallCoin_Texture", SmallCoin });
 		m_pAniCom->BindAnimation(ANIM_IDLE, SmallCoin, 0.15f);
+		m_eID = SMALL;
 	}
 }
 
@@ -104,6 +106,16 @@ void CCoinItem::OnCollisionEnter(const Collision * collsion)
 {
 	__super::OnCollisionEnter(collsion);
 
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
+	
+	if (m_eID == BIG)
+	{
+		pPlayer->Gain_Coin(2);
+	}
+	else
+	{
+		pPlayer->Gain_Coin(1);
+	}
 }
 
 void CCoinItem::Free()

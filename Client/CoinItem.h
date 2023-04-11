@@ -10,6 +10,12 @@ END
 class CCoinItem :
 	public CItem
 {
+	enum COINTYPE
+	{
+		BIG,
+		SMALL,
+		COINTYPEEND
+	};
 private:
 	CCoinItem(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CCoinItem();
@@ -23,12 +29,12 @@ public:
 
 private:
 	D3DXMATRIX				matWorld, matView;
+	COINTYPE				m_eID;
 
 public:
 	static CCoinItem*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void OnCollisionEnter(const class Collision* collsion) final;
 	void	RandCoin();
-
 
 private:
 	virtual void Free(void) override;

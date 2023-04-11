@@ -138,7 +138,6 @@ public:
 	BoundingBox			intersectBox;
 	// 얼마나 충돌했는지에 대한 벡터 (x만큼 겹침, y만큼 겹침, z만큼 겹침)
 	_vec3				amountVec;
-	
 };
 
 typedef struct tagViewParams

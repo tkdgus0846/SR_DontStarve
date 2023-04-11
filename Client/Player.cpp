@@ -43,8 +43,8 @@ HRESULT CPlayer::Ready_GameObject(void)
 		m_MyWeaponList[i] = nullptr;
 
 	m_MyWeaponList[BIGSHOT] = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
-	m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
-	m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
+	//m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
+	//m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
 
 	Change_Weapon(BIGSHOT);
 
@@ -203,7 +203,6 @@ void CPlayer::Gain_Weapon(WEAPONTYPE eWeaponType)
 		default:
 			break;
 		}
-
 		m_MyWeaponList[eWeaponType] = gainWeapon;
 	}
 	else
@@ -281,6 +280,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (Engine::Key_Pressing(DIK_D))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
 	if (Engine::Key_Down(DIK_Q))	Prev_Weapon();
 	if (Engine::Key_Down(DIK_E))	Next_Weapon();
+	if (Engine::Key_Down(DIK_P))	Get_Damaged(1);
 
 	if (Engine::Key_Down((DIK_F1))) 	Engine::On_Camera(L"Player_Camera");
 	if (Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;

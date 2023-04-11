@@ -36,7 +36,9 @@ public:
 	class CWeapon*	Get_CurWeapon() const { return m_pCurWeapon; }
 	WEAPONTYPE		Get_CurWeaponType() const { return m_eCurWeaponType; }
 
-	void			Gain_Coin() {}
+	void			Gain_Coin(_int coin = 1) { m_iCoin += coin; }
+	_int			Get_Coin() { return m_iCoin; }
+
 	void			Gain_Hp(_int Hp = 1) { m_iHp += Hp; }
 
 private:
@@ -47,6 +49,8 @@ private:
 
 private:
 	_bool					m_bFix;
+
+	_int					m_iCoin = 777;
 
 	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;
 	class CWeapon*						m_pCurWeapon;
