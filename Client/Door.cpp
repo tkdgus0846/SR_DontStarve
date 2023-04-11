@@ -66,7 +66,6 @@ void CDoor::OnCollisionEnter(const Collision * collsion)
 	{	
 		_int iNextRoomIdx = 0;
 		DOOR_DIR eNextDoor = DOOR_DIR_END;
-		CRoomMgr* pRoomMgr = CRoomMgr::GetInstance();
 
 		CRoom* pNextRoom = nullptr;
 		CDoor* pNextDoor = nullptr;
@@ -93,7 +92,7 @@ void CDoor::OnCollisionEnter(const Collision * collsion)
 			eNextDoor = DOOR_WEST;
 			break;
 		}
-		pNextRoom = pRoomMgr->Get_Room(iNextRoomIdx);
+		pNextRoom = ROOM_MGR->Get_Room(iNextRoomIdx);
 		pNextDoor = pNextRoom->Get_Door(eNextDoor);
 
 		m_pInTennel->Set_Door(this);

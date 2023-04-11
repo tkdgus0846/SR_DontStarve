@@ -113,16 +113,6 @@ void CRoomMgr::Create_Default_Room()
 	m_pCurRoom->PushBack_GameObj(LAYER_TRIGGER, L"Tennel2", m_pTennel[1], COL_TRIGGER, L"Collider");*/
 }
 
-CRoom * CRoomMgr::Get_CurRoom(const _vec3& vPos)
-{
-	_int iX = _int(vPos.x / 60.f);
-	_int iZ = _int(vPos.z / 60.f);
-
-	_int iIndex = iZ * 5 + iX;
-
-	return m_arrRoom[iIndex];
-}
-
 void CRoomMgr::Set_CurRoom(const _uint iIndex)
 {
 	m_pCurRoom = m_arrRoom[iIndex];

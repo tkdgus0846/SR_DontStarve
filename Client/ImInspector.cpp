@@ -71,9 +71,9 @@ void CImInspector::Show_RoomInfo()
 	m_vObjectPos.z = _float(item_current / 5 * 60 + 5);
 
 	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
-	pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 20.f, 20.f, m_vObjectPos.z + 20.f };
-	CRoomMgr* pMyMap = ROOM_MGR;
-	pMyMap->Set_CurRoom(item_current);
+	pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 25.f, 25.f, m_vObjectPos.z + 25.f };
+	ROOM_MGR->Set_CurRoom(item_current);
+	m_pCurRoom = ROOM_MGR->Get_CurRoom();
 
 	static _int iObjNum = 0, iPre = 0;
 

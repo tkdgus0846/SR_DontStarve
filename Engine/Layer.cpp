@@ -34,6 +34,12 @@ HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pGameObject
 	return S_OK;
 }
 
+HRESULT CLayer::Remove_Static_Layers()
+{
+
+	return S_OK;
+}
+
 CGameObject* CLayer::Get_GameObject(const _tchar* pObjTag)
 {
 	return m_uMapObject.find(pObjTag)->second;
