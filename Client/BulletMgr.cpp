@@ -23,8 +23,16 @@ void CBulletPool::Push(CBullet * pObj)
 	if (nullptr == pObj)
 		return;
 
-	CCollider* collider = dynamic_cast<CCollider*>(pObj->Get_Component(L"BodyCollider", ID_ALL));
-	collider->Set_Enable(FALSE);
+	auto colNameVec = pObj->Get_ColNameVec();
+
+	for (int i = 0; i < colNameVec.size(); i++)
+	{
+		CCollider* collider = dynamic_cast<CCollider*>(pObj->Get_Component(colNameVec[i], ID_ALL));
+
+		if (collider == nullptr) continue;
+
+		collider->Set_Enable(FALSE);
+	}
 
 	m_BulletPool.push_back(pObj);
 }
@@ -87,21 +95,32 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 	(pBullet)->m_pTransform->Set_Scale(vScale);
 	(pBullet)->Pop_Initialize();
 
-	CCollider* collider = dynamic_cast<CCollider*>(pBullet->Get_Component(L"BodyCollider", ID_ALL));
-	if (collider == nullptr) return pBullet;
+	Engine::Add_Collider(pBullet);
 
-	collider->Set_Enable(TRUE);
+
+	auto colNameVec = pBullet->Get_ColNameVec();
 	_bool bIsRender = Engine::Collider_GetIsRender();
-	collider->Set_IsRender(bIsRender);
 
-	if (bIsEnemyBullet == true)
+	for (int i = 0; i < colNameVec.size(); i++)
 	{
-		Engine::Change_ColGroup(collider, COL_ENEMYBULLET);
-	}
-	else
-	{
-		Engine::Change_ColGroup(collider, COL_PLAYERBULLET);
-	}
+		CCollider* collider = dynamic_cast<CCollider*>(pBullet->Get_Component(colNameVec[i], ID_ALL));
+
+		if (collider == nullptr) continue;
+
+		collider->Set_Enable(TRUE);
+		collider->Set_IsRender(bIsRender);
+
+		if (bIsEnemyBullet == true)
+		{
+			Engine::Change_ColGroup(collider, COL_ENEMYBULLET);
+		}
+		else
+		{
+			Engine::Change_ColGroup(collider, COL_PLAYERBULLET);
+		}
+	}	
+
+	
 
 	return pBullet;
 }

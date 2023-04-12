@@ -71,6 +71,8 @@ inline void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
 inline void		Clear_RenderGroup(void);
 
 inline void		Add_Collider(COLGROUP eID, CCollider * pCollider);
+inline void		Add_Collider(CGameObject* gameObject);
+
 inline void		Check_Collision(COLGROUP eGroup1, COLGROUP eGroup2);
 inline void		Toggle_ColliderRender();
 inline void		Change_ColGroup(CCollider* collider, COLGROUP changeID);

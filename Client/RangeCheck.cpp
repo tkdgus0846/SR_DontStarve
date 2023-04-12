@@ -26,11 +26,11 @@ _int CRangeCheck::Update_Component(const _float & fTimeDelta)
 {
 	CComponent* pComponent = m_pGameObject->Get_Component(L"Range", ID_ALL);
 
-	if (dynamic_cast<CCollider*>(pComponent)->Get_ColliderList().empty())
+	if (dynamic_cast<CCollider*>(pComponent)->Get_CollisionList().empty())
 		return BEHAVIOR_FAIL;
 	else
 	{
-		for (auto iter : dynamic_cast<CCollider*>(pComponent)->Get_ColliderList())
+		for (auto iter : dynamic_cast<CCollider*>(pComponent)->Get_CollisionList())
 		{
 			if (nullptr != dynamic_cast<CPlayer*>(iter.second.OtherGameObject))
 				return BEHAVIOR_SUCCES;

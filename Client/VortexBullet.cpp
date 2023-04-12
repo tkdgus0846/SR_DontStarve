@@ -11,7 +11,7 @@ CVortexBullet::CVortexBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 {
 	Set_ObjTag(L"VortexBullet");
 	m_fSpeed = 20.f;
-	m_fLifeSpan = 4.f;
+	m_fLifeSpan = 15.f;
 	m_fAge = 0.f;
 	m_Damage = 0;
 }
@@ -55,17 +55,20 @@ _int CVortexBullet::Update_GameObject(const _float & fTimeDelta)
 	}
 	else
 	{
-		if (m_pTransform->m_vInfo[INFO_POS].y > 4.f)
+		if (m_pTransform->m_vInfo[INFO_POS].y > 0.5f)
 		{
-			m_pTransform->m_vInfo[INFO_POS].y -= 1.f*fTimeDelta;
+			m_pTransform->m_vInfo[INFO_POS].y -= 1.1f*fTimeDelta;
 		}
 
-		if (m_pTransform->m_vScale.x < 2.f)
+		if (m_pTransform->m_vScale.x < 6.f)
 		{
-			m_pTransform->m_vScale.x += 1.f*fTimeDelta;
-			m_pTransform->m_vScale.y += 1.f*fTimeDelta;
+			m_pTransform->m_vScale.x += 2.f*fTimeDelta;
+			m_pTransform->m_vScale.y += 2.f*fTimeDelta;
 		}
 
+		
+		m_pTransform->Rot_Roll(-360.f, fTimeDelta*1.5f);
+		//m_pTransform->Rot_Axis({})
 		// y ÃàÀ¸·Î »±»±µµ´ÂÄÚµå ³Ö¾î¾ßµÊ.
 		
 	}
@@ -108,6 +111,8 @@ void CVortexBullet::OnCollisionEnter(const Collision * collsion)
 		{
 			m_bHit = true;
 			m_pTransform->Set_Scale({ 0.5f,0.5f,1.f });
+			
+			m_pTransform->Rot_Pitch(90.f, 1.f);
 		}
 	}
 	
