@@ -1,0 +1,552 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{e52a0183-f91f-42a5-89c3-87ef976111e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{493da810-209f-4978-ad05-d997e6ebcb9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{e3cfa13b-ee92-4c4f-8a26-3baf0aefc692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{7b58fff8-80c7-46ee-b1e8-d86f9d615377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Bullet">
+      <UniqueIdentifier>{a0e5ad6c-cb46-4588-95ca-bbf2fee75a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Monster">
+      <UniqueIdentifier>{a8e8f643-7eb0-4382-b79b-3af3b0fd3cbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI">
+      <UniqueIdentifier>{e7df5923-5bbb-4ddf-b8a3-0dd60d955223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\backends">
+      <UniqueIdentifier>{43a9f1a4-d4f5-44d4-8e80-a16b7004af8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\core">
+      <UniqueIdentifier>{d20b1ca2-961d-4805-9bbf-48dcada5d533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\ImWindow">
+      <UniqueIdentifier>{03928814-698e-468d-9a8b-211edf7b6c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\ImManager">
+      <UniqueIdentifier>{3ce43516-b38f-46c0-886d-b8476ec0afb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MonoBehaviors">
+      <UniqueIdentifier>{0585166a-ee3f-4639-9ec9-27c7dd623b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Weapon">
+      <UniqueIdentifier>{432920f3-d7e9-4a00-b543-57a52176b347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\ObjCamera">
+      <UniqueIdentifier>{f71e35ad-3d7d-45a7-bca7-036311e8ca80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Player">
+      <UniqueIdentifier>{1f54bba7-419e-4f5a-9d48-f0679b58ab17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\UI">
+      <UniqueIdentifier>{32636d53-2dee-4bbd-89c2-e6eb1ddd7c8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\UI\BackGround">
+      <UniqueIdentifier>{5ba41007-e1a4-4574-9a69-7494fceab6df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Effect">
+      <UniqueIdentifier>{0d62534e-9cd4-404f-8200-3ae76b71715e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Item">
+      <UniqueIdentifier>{8d157d55-8910-480f-8838-5e1596283947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\RoomMgr">
+      <UniqueIdentifier>{faf346d6-e9d0-4c34-b171-1cc5742d40b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\RoomMgr\Tile">
+      <UniqueIdentifier>{910476eb-a1aa-4a0d-8173-4d5b22f9f1d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\RoomMgr\Room">
+      <UniqueIdentifier>{d53ab2d1-8167-4ef5-b101-2ce8c0ce1569}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Client.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Loading.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Logo.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="MainApp.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="imconfig.h">
+      <Filter>IMGUI\core</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.h">
+      <Filter>IMGUI\core</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_internal.h">
+      <Filter>IMGUI\core</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_dx9.h">
+      <Filter>IMGUI\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_win32.h">
+      <Filter>IMGUI\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="ImWindow.h">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="ImManager.h">
+      <Filter>IMGUI\ImManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletMgr.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>GameObject\RoomMgr\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>GameObject\RoomMgr\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>GameObject\RoomMgr\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>MonoBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="Jump.h">
+      <Filter>MonoBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoBehaviors.h">
+      <Filter>MonoBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveLook.h">
+      <Filter>MonoBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomLook.h">
+      <Filter>MonoBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="RotToFace.h">
+      <Filter>MonoBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="Wait.h">
+      <Filter>MonoBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="Evasion.h">
+      <Filter>MonoBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalWeapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>GameObject\UI\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjCamera.h">
+      <Filter>GameObject\ObjCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LeapJump.h">
+      <Filter>MonoBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="RangeCheck.h">
+      <Filter>MonoBehaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="Turret.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Walker.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Baller.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Bub.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Guppi.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MyEdit.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="EditCamera.h">
+      <Filter>GameObject\ObjCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="GunUI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>GameObject\RoomMgr\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletBar.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletGauge.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CrossHair.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Hp.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImInspector.h">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="ImTest.h">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ImMenuBar.h">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponType.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Disc.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Tennel.h">
+      <Filter>GameObject\RoomMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="IceBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="FlameProjector.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="IceBeamWeapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>GameObject\RoomMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="HeartItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomMgr.h">
+      <Filter>GameObject\RoomMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="VortexBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Loading.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Logo.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainApp.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_widgets.cpp">
+      <Filter>IMGUI\core</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <Filter>IMGUI\core</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_demo.cpp">
+      <Filter>IMGUI\core</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_draw.cpp">
+      <Filter>IMGUI\core</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_tables.cpp">
+      <Filter>IMGUI\core</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_dx9.cpp">
+      <Filter>IMGUI\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_win32.cpp">
+      <Filter>IMGUI\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="ImWindow.cpp">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="ImManager.cpp">
+      <Filter>IMGUI\ImManager</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletMgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>GameObject\RoomMgr\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>GameObject\RoomMgr\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>GameObject\RoomMgr\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>MonoBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="Jump.cpp">
+      <Filter>MonoBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveLook.cpp">
+      <Filter>MonoBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomLook.cpp">
+      <Filter>MonoBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="RotToFace.cpp">
+      <Filter>MonoBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="Wait.cpp">
+      <Filter>MonoBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="Evasion.cpp">
+      <Filter>MonoBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalWeapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>GameObject\UI\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjCamera.cpp">
+      <Filter>GameObject\ObjCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LeapJump.cpp">
+      <Filter>MonoBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="RangeCheck.cpp">
+      <Filter>MonoBehaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="Turret.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Walker.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Bub.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Guppi.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Baller.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MyEdit.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="EditCamera.cpp">
+      <Filter>GameObject\ObjCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="GunUI.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>GameObject\RoomMgr\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletBar.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletGauge.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CrossHair.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Hp.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImInspector.cpp">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="ImTest.cpp">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiFileDialog.cpp">
+      <Filter>IMGUI\core</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ImMenuBar.cpp">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponType.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Disc.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Tennel.cpp">
+      <Filter>GameObject\RoomMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="IceBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="FlameProjector.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="IceBeamWeapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>GameObject\RoomMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="HeartItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomMgr.cpp">
+      <Filter>GameObject\RoomMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="VortexBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.natstepfilter">
+      <Filter>IMGUI\core</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="imgui.natvis">
+      <Filter>IMGUI\core</Filter>
+    </Natvis>
+  </ItemGroup>
+</Project>
