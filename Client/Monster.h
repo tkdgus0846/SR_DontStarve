@@ -50,8 +50,3 @@ public:
 protected:
 	virtual void Free(void) override;
 };
-
-class MonsterFactory {
-public:
-	CGameObject* CreateMonster(const _tchar* tag);
-};
