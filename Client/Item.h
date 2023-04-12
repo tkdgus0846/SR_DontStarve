@@ -19,6 +19,7 @@ protected:
 public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void OnCollisionEnter(const class Collision* collsion) override;
+	virtual void OnCollisionStay(const class Collision* collision) override;
 
 public:
 	class CAnimation* m_pAniCom;
@@ -35,6 +36,10 @@ protected:
 protected:
 	virtual void		ItemPatrol();
 	virtual void		ItemMagnetic(CPlayer* pPlayer);
+	virtual void		ItemDrop(const _float & fTimeDelta);
+
+private:
+	_float fTime;
 
 protected:
 	virtual void Free() override;

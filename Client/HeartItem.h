@@ -27,6 +27,7 @@ private:
 public:
 	static CHeartItem*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual void OnCollisionEnter(const class Collision* collsion) final;
+	virtual void OnCollisionStay(const class Collision* collision) final;
 
 private:
 	virtual void Free(void) override;
