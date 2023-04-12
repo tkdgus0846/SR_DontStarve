@@ -14,6 +14,7 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 	virtual void OnCollisionEnter(const class Collision* collsion) final;
+	virtual void OnCollisionStay(const class Collision* collision) final;
 
 private:
 	D3DXMATRIX				matWorld, matView;

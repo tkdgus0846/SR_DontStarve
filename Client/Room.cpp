@@ -283,7 +283,6 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 		m_vecTile[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
 		dynamic_cast<CTile*>(m_vecTile[i])->WriteTextureName(hFile, dwByte);
 	}
-		
 	
 	// 객체 컨테이너 저장
 	WriteFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
@@ -430,8 +429,8 @@ void CRoom::PushBack_Tile(CGameObject * pTile)
 	for (int i = 0; i < objInfo.colNameVec.size(); i++)
 	{
 		CCollider* pCol = dynamic_cast<CCollider*>(pTile->Get_Component(objInfo.colNameVec[i], ID_ALL));
-		NULL_CHECK(pCol);
-		m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
+		if (!pCol)
+			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
 	}
 }
 
@@ -446,9 +445,11 @@ void CRoom::PushBack_GameObj(CGameObject * pObj)
 	for (int i = 0; i < objInfo.colNameVec.size(); i++)
 	{
 		CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(objInfo.colNameVec[i], ID_ALL));
-		NULL_CHECK(pCol);
-		m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
-	}
+
+		if(!pCol)
+			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
+	}	
+
 }
 
 HRESULT CRoom::Add_Component(void)

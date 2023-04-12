@@ -243,6 +243,7 @@
     <ClInclude Include="Evasion.h" />
     <ClInclude Include="GunUI.h" />
     <ClInclude Include="Guppi.h" />
+    <ClInclude Include="HardPyramid.h" />
     <ClInclude Include="HeartItem.h" />
     <ClInclude Include="Hp.h" />
     <ClInclude Include="IceBeamWeapon.h" />
@@ -263,14 +264,18 @@
     <ClInclude Include="Loading.h" />
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainApp.h" />
+    <ClInclude Include="MapObj.h" />
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MonoBehaviors.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="MoveLook.h" />
     <ClInclude Include="MyEdit.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Pyramid.h" />
+    <ClInclude Include="ReflectBall.h" />
     <ClInclude Include="RoomMgr.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">false</ExcludedFromBuild>
@@ -326,6 +331,7 @@
     <ClCompile Include="Evasion.cpp" />
     <ClCompile Include="GunUI.cpp" />
     <ClCompile Include="Guppi.cpp" />
+    <ClCompile Include="HardPyramid.cpp" />
     <ClCompile Include="HeartItem.cpp" />
     <ClCompile Include="Hp.cpp" />
     <ClCompile Include="IceBeamWeapon.cpp" />
@@ -349,13 +355,17 @@
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="MainApp.cpp" />
+    <ClCompile Include="MapObj.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterFactory.cpp" />
     <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="MyEdit.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Pyramid.cpp" />
+    <ClCompile Include="ReflectBall.cpp" />
     <ClCompile Include="RoomMgr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">false</ExcludedFromBuild>

@@ -7,7 +7,6 @@ CBulletBar::CBulletBar(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
 {
 	Set_ObjTag(L"BulletBar");
-
 }
 
 CBulletBar::~CBulletBar()

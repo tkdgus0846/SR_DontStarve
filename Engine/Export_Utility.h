@@ -8,21 +8,21 @@
 #include "TriCol.h"
 #include "RcCol.h"
 #include "RcTex.h"
+#include "FrustrumNormalTex.h"
+#include "RoomTex.h"
+#include "FloorTex.h"
+#include "WallTex.h"
 
 #include "Collider.h"
-
 #include "GameObject.h"
-
 #include "Transform.h"
 #include "Texture.h"
 #include "Camera.h"
 #include "CubeTex.h"
 #include "Rigidbody.h"
 #include "CameraMgr.h"
-#include "RoomTex.h"
+
 #include "Mesh.h"
-#include "FloorTex.h"
-#include "WallTex.h"
 
 #include "LightMgr.h"
 

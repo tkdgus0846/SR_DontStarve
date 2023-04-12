@@ -211,15 +211,3 @@ HRESULT CMonster::Init_AI_Behaviours()
 }
 
 
-CGameObject * MonsterFactory::CreateMonster(const _tchar * tag)
-{
-		//if (_tcscmp(tag, _T("Zombie")) == 0) {
-		//	return nullptr;// new Zombie();
-		//}
-		//else if (_tcscmp(tag, _T("Skeleton")) == 0) {
-		//	return nullptr;// new Skeleton();
-		//}
-		//// 여기에 더 많은 몬스터 클래스를 추가할 수 있습니다.
-		//return nullptr;
-	return nullptr;
-}
