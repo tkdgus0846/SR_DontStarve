@@ -1,6 +1,6 @@
 #include "DiscItem.h"
 #include "Export_Function.h"
-
+#include "Player.h"
 CDiscItem::CDiscItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -77,6 +77,18 @@ CDiscItem * CDiscItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 
 	return pInstance;
+}
+
+void CDiscItem::OnCollisionEnter(const Collision * collsion)
+{
+}
+
+void CDiscItem::OnCollisionStay(const Collision * collision)
+{
+	__super::OnCollisionEnter(collision);
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+
+	ItemMagnetic(pPlayer);
 }
 
 void CDiscItem::Free(void)
