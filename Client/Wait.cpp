@@ -28,7 +28,7 @@ _int CWait::Update_Component(const _float & fTimeDelta)
 {
 	m_fCurTime += fTimeDelta;
 
-	if (m_fCurTime - m_fPreTime >= m_fTime)
+	if (m_fCurTime - m_fPreTime >= m_fTimer)
 	{
 		m_fPreTime = m_fCurTime;
 		return BEHAVIOR_SUCCES;
