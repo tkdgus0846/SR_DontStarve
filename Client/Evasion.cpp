@@ -27,7 +27,7 @@ _int CEvasion::Update_Component(const _float & fTimeDelta)
 	CCollider* pBodyCollider = dynamic_cast<CCollider*>(m_pGameObject->Get_Component(L"BodyCollider", ID_ALL));
 	CComponent* pComponent = m_pGameObject->Get_Component(L"EvasBullet", ID_ALL);
 
-	for (auto iter : dynamic_cast<CCollider*>(pComponent)->Get_ColliderList())
+	for (auto iter : dynamic_cast<CCollider*>(pComponent)->Get_CollisionList())
 	{
 		if (nullptr != dynamic_cast<CBullet*>(iter.second.OtherGameObject))
 		{

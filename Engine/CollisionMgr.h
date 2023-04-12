@@ -16,11 +16,15 @@ private:
 public:
 	// 실질적으로 콜리젼을 체크해주는 함수.
 	void		Check_Collision(COLGROUP ID1, COLGROUP ID2);
-	void		Add_Collider(COLGROUP eID, CCollider* pCollider);
+	
 	// 콜라이더들의 렌더를 꺼주는 함수.
 	void		Toggle_ColliderRender();
 	void		Change_ColGroup(CCollider* collider, COLGROUP changeID);
 	_bool		GetIsRender() const { return m_bIsRender; }
+
+	void		Add_Collider(COLGROUP eID, CCollider* pCollider);
+	void		Add_Collider(CGameObject* gameObject);
+
 	void		Remove_Collider(CCollider* collider, COLGROUP colID);
 	void		Remove_Collider(CGameObject* gameObject);
 	

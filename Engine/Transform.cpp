@@ -187,7 +187,7 @@ void CTransform::Rot_Roll(const _float & fAngle, const _float& fTimeDelta)
 	case Engine::CTransform::AIRCRAFT:
 		D3DXMatrixRotationAxis(&matRot, &m_vInfo[INFO_LOOK], D3DXToRadian(fAngle) * fTimeDelta);
 		D3DXVec3TransformCoord(&m_vInfo[INFO_UP], &m_vInfo[INFO_UP], &matRot);
-		D3DXVec3TransformCoord(&m_vInfo[INFO_LOOK], &m_vInfo[INFO_LOOK], &matRot);
+		D3DXVec3TransformCoord(&m_vInfo[INFO_RIGHT], &m_vInfo[INFO_RIGHT], &matRot);
 		break;
 	}
 }
