@@ -184,6 +184,9 @@
     <ClInclude Include="Creature.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="FrustrumNormalTex.h">
+      <Filter>Component\VIBuffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -335,6 +338,9 @@
     </ClCompile>
     <ClCompile Include="Creature.cpp">
       <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FrustrumNormalTex.cpp">
+      <Filter>Component\VIBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
