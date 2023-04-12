@@ -148,6 +148,23 @@ void CImInspector::Show_Create_Object()
 
 		ImGui::SeparatorText("Monster");
 
+		const char* items[] = { "Baller", "Bub", "Guppi", "Turret", "Walker"};
+		static const char* current_monster_item = NULL;
+
+		if (ImGui::BeginCombo("##combo", current_monster_item)) // The second parameter is the label previewed before opening the combo.
+		{
+			for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+			{
+				bool is_selected = (current_monster_item == items[n]);  // You can store your selection however you want, outside or inside your objects
+				if (ImGui::Selectable(items[n], is_selected))
+					current_monster_item = items[n];
+
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+			}
+			ImGui::EndCombo();
+		}
+
 		ImGui::RadioButton("Baller", &iObjNum, 0); ImGui::SameLine();
 		ImGui::RadioButton("Bub", &iObjNum, 1); ImGui::SameLine();
 		ImGui::RadioButton("Guppi", &iObjNum, 2);

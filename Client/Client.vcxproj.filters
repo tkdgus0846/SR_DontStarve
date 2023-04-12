@@ -71,6 +71,12 @@
     <Filter Include="GameObject\RoomMgr\Room">
       <UniqueIdentifier>{d53ab2d1-8167-4ef5-b101-2ce8c0ce1569}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\MapObject">
+      <UniqueIdentifier>{5461e7fa-0c0d-4faf-aae6-523b56a94af2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{d13b3543-a1f2-479d-9363-26c9d470ab3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -308,6 +314,21 @@
     <ClInclude Include="RoomMgr.h">
       <Filter>GameObject\RoomMgr</Filter>
     </ClInclude>
+    <ClInclude Include="MapObj.h">
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Pyramid.h">
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="HardPyramid.h">
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ReflectBall.h">
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -531,6 +552,21 @@
     </ClCompile>
     <ClCompile Include="RoomMgr.cpp">
       <Filter>GameObject\RoomMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObj.cpp">
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Pyramid.cpp">
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="HardPyramid.cpp">
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ReflectBall.cpp">
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFactory.cpp">
+      <Filter>Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

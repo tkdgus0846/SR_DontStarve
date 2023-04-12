@@ -30,7 +30,7 @@
 #include "DiscItem.h"
 
 #include "Tennel.h"
-
+#include "Pyramid.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_iCurRoomIdx(0)
@@ -63,9 +63,7 @@ HRESULT CStage::Ready_Scene(void)
 	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
 	/*Add_GameObject(LAYER_MONSTER, L"Monster_Guppi_Blue_Texture", CGuppi::Create(m_pGraphicDev));*/
 
-	Add_GameObject(CObjCamera::Create(m_pGraphicDev));
-
-	
+	Add_GameObject(CObjCamera::Create(m_pGraphicDev));	
 	
 	// UI
 	Add_GameObject(CBulletGauge::Create(m_pGraphicDev));
