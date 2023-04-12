@@ -4,6 +4,8 @@
 #include "Effect.h"
 #include "EffectManager.h"
 
+#include "Export_Function.h"
+
 CVortexBullet::CVortexBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
 {

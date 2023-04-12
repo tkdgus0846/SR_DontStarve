@@ -62,7 +62,7 @@ void CIceBullet::OnCollisionEnter(const Collision * collsion)
 {
 	CMonster* monster = dynamic_cast<CMonster*>(collsion->OtherGameObject);
 
-	if (monster && collsion->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL) != nullptr)
+	if (monster && collsion->OtherCollider == collsion->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
 	{
 		_vec3 pos = collsion->intersectBox._max;
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 1.3f,1.3f,1.0f }, 0.1f);

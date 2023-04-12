@@ -1,6 +1,12 @@
 #pragma once
 #include "Bullet.h"
 
+BEGIN(Engine)
+class CTexture;
+class CRcTex;
+class CAnimation;
+END
+
 class CVortexBullet : public CBullet
 {
 	friend class CBulletPool;

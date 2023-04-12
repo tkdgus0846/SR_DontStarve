@@ -4,7 +4,6 @@
 #include "Export_Function.h"
 #include "BulletMgr.h"
 #include "Turret.h"
-
 #include "EffectManager.h"
 
 CNormalBullet::CNormalBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
@@ -65,7 +64,7 @@ void CNormalBullet::OnCollisionEnter(const Collision* collsion)
 {
 	CMonster* monster = dynamic_cast<CMonster*>(collsion->OtherGameObject);
 
-	if (monster && collsion->OtherCollider == OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
+	if (monster && collsion->OtherCollider == collsion->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
 	{
 		_vec3 pos = collsion->intersectBox._max;
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"RedBlood", pos, {0.7f,0.7f,0.7f}, 0.1f);
