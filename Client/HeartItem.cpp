@@ -31,6 +31,11 @@ HRESULT CHeartItem::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 	pCollider->Set_BoundingBox({ 1.0f, 1.0f, 1.0f });
 
+	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_ITEM));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
+	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
+
 	return S_OK;
 }
 
@@ -89,6 +94,14 @@ void CHeartItem::OnCollisionEnter(const Collision * collsion)
 	{
 		pPlayer->Gain_Hp();
 	}
+}
+
+void CHeartItem::OnCollisionStay(const Collision * collision)
+{
+	__super::OnCollisionEnter(collision);
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+
+	ItemMagnetic(pPlayer);
 }
 
 void CHeartItem::Free(void)

@@ -31,7 +31,6 @@ void CWall::OnCollisionStay(const Collision* collision)
 		const float amount = 20.f;
 		switch (collision->CollisionDir)
 		{
-
 			/*case DIR_UP:
 			m_pTransform->m_vInfo[INFO_POS].y -= amountVec.y;
 			break;

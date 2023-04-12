@@ -329,6 +329,9 @@
     <ClInclude Include="MonsterFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
+    <ClInclude Include="VortexBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -567,6 +570,9 @@
     </ClCompile>
     <ClCompile Include="MonsterFactory.cpp">
       <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="VortexBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

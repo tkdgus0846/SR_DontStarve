@@ -43,7 +43,7 @@ HRESULT CPlayer::Ready_GameObject(void)
 		m_MyWeaponList[i] = nullptr;
 
 	m_MyWeaponList[BIGSHOT] = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
-	//m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
 	//m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
 
 	Change_Weapon(BIGSHOT);
@@ -299,6 +299,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &projMatrix);
 		m_pGraphicDev->GetViewport()
 		D3DXVec3Unproject(&centerWorld, &screenCenter, &pViewport, &projMatrix, &viewMatrix, m_pTransform->Get_WorldMatrixPointer());*/
+	}
+
+	if (Engine::Key_Down(DIK_F))
+	{
+		CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"VortexBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS] + m_pTransform->m_vInfo[INFO_LOOK] * 1.3f, m_pTransform->m_vInfo[INFO_LOOK], { 1.f,1.f,1.f });
+		Add_GameObject(bullet);
 	}
 }
 

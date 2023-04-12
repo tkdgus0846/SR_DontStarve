@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "CollisionMgr.h"
 #include "Collider.h"
+#include "GameObject.h"
 
 IMPLEMENT_SINGLETON(CCollisionMgr)
 
@@ -93,6 +94,8 @@ void CCollisionMgr::Check_Collision(COLGROUP ID1, COLGROUP ID2)
 				{
 					auto findCollider2 = colliderList2->find(collider1);
 
+					if (findCollider2 == colliderList2->end()) continue;
+
 					collider1->OnCollisionExit(&findCollider->second);
 					collider2->OnCollisionExit(&findCollider2->second);
 
@@ -112,6 +115,17 @@ void CCollisionMgr::Add_Collider(COLGROUP eID, CCollider * pCollider)
 
 	if (m_bIsRender != pCollider->m_bIsRender)
 		m_bIsRender = pCollider->m_bIsRender;
+}
+
+void CCollisionMgr::Add_Collider(CGameObject* gameObject)
+{
+	vector<COLGROUP> colGroupVec = gameObject->Get_ColGroupVec();
+	vector<const _tchar*> colNameVec = gameObject->Get_ColNameVec();
+
+	for (int i = 0; i < colGroupVec.size(); i++)
+	{
+		Add_Collider(colGroupVec[i], dynamic_cast<CCollider*>(gameObject->Get_Component(colNameVec[i], ID_ALL)));
+	}
 }
 
 void CCollisionMgr::Change_ColGroup(CCollider* collider, COLGROUP changeID)
@@ -175,9 +189,11 @@ void Engine::CCollisionMgr::Find_Remove_Collider(CGameObject* gameObject, COLGRO
 	{
 		if ((*it)->Get_GameObject() == gameObject)
 		{
+			// 나의 콜리젼리스트를 돌면서 충돌한놈의 목록을 체크한다.
 			for (auto& iter : (*it)->m_CollisionList)
 			{
-				iter.first->Get_ColliderList().erase(*it);
+				// 상대방의 콜리젼 리스트에서 제거해주는 거임 나의 콜라이더를
+				iter.first->m_CollisionList.erase(*it);
 			}
 			it = Get_ColliderList(colID)->erase(it);
 		}
@@ -196,7 +212,6 @@ void Engine::CCollisionMgr::Remove_Collider(CGameObject* gameObject)
 	Find_Remove_Collider(gameObject, COL_DETECTION);
 	Find_Remove_Collider(gameObject, COL_TRIGGER);
 	Find_Remove_Collider(gameObject, COL_ITEM);
-
 }
 
 void Engine::CCollisionMgr::Toggle_ColliderRender()

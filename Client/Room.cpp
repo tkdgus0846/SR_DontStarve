@@ -288,6 +288,10 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 	WriteFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iObjSize; ++i)
 	{
+
+		if (!dynamic_cast<CMonster*>(m_vecGameObj[i]))
+			continue;
+
 		// 어떤 객체인지 번호로 저장.
 		_int iObjNumber = 0;
 		if (dynamic_cast<CBaller*>(m_vecGameObj[i]))
@@ -311,8 +315,9 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 			iObjNumber = 5;
 		}
 
+
 		// 세이브 시 어떤 객체인지 정보를 알 수 없을 때 에러메시지 발생.
-		if (0 == iObjNumber)
+		if (0 == iObjNumber && !m_vecGameObj.empty())
 		{
 			FAILED_CHECK_RETURN(E_FAIL, false);
 		}
@@ -382,6 +387,7 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	ReadFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iObjSize; ++i)
 	{
+
 		_int iObjNumber = 0;
 		ReadFile(hFile, &iObjNumber, sizeof(_int), &dwByte, nullptr);
 
@@ -405,6 +411,8 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 		{
 			PushBack_GameObj(CWalker::Create(m_pGraphicDev, _vec3{}));
 		}
+		else
+			continue;
 		m_vecGameObj[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
 	}
 	return true;
@@ -421,7 +429,7 @@ void CRoom::PushBack_Tile(CGameObject * pTile)
 	for (int i = 0; i < objInfo.colNameVec.size(); i++)
 	{
 		CCollider* pCol = dynamic_cast<CCollider*>(pTile->Get_Component(objInfo.colNameVec[i], ID_ALL));
-		if (!pCol)
+		if (pCol)
 			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
 	}
 }
@@ -437,7 +445,7 @@ void CRoom::PushBack_GameObj(CGameObject * pObj)
 	for (int i = 0; i < objInfo.colNameVec.size(); i++)
 	{
 		CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(objInfo.colNameVec[i], ID_ALL));
-		if(!pCol)
+		if(pCol)
 			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
 	}	
 }

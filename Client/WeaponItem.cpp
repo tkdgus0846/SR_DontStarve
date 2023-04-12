@@ -80,12 +80,16 @@ void CWeaponItem::OnCollisionEnter(const Collision * collsion)
 	{
 		pPlayer->Gain_Weapon(m_eID);
 	}
-	else
-	{
-		this->ItemMagnetic(pPlayer);
-	}
 
 
+}
+
+void CWeaponItem::OnCollisionStay(const Collision * collision)
+{
+	__super::OnCollisionEnter(collision);
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+
+	ItemMagnetic(pPlayer);
 }
 
 CWeaponItem * CWeaponItem::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, WEAPONTYPE eID)

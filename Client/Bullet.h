@@ -22,6 +22,7 @@ public:
 	_bool			GetIsEnemy() const { return m_bIsEnemy; }
 	void			SetIsEnemy(_bool state) { m_bIsEnemy = state; }
 	void			SetAge(_float age = 0.f) { m_fAge = age; }
+	virtual void	Pop_Initialize() {}
 	void			Aging(_float fTimeDelta) 
 	{ 
 		m_fAge += fTimeDelta;

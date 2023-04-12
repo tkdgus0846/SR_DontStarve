@@ -53,8 +53,10 @@ _int CCollider::Update_Component(const _float& fTimeDelta)
 
 	for (auto iter = m_CollisionList.begin(); iter != m_CollisionList.end();)
 	{
-		if (iter->first == nullptr)
+		if (iter->first == nullptr || iter->second.OtherCollider->Get_Enable() == false)
+		{
 			iter = m_CollisionList.erase(iter);
+		}	
 		else iter++;
 	}
 

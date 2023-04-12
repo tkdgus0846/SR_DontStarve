@@ -31,6 +31,19 @@ _int CJump::Update_Component(const _float & fTimeDelta)
 {
 	m_fCurTime = Get_WorldTime();
 
+	if (m_fCurTime - m_fPreTime < m_fTimer)
+		return BEHAVIOR_SUCCES; // 지금 살짝 애매한거 같기도 함,, 시퀀스나 셀렉터에 넣는게 나은가...
+
+	_float fSpeed = 0.f;
+	m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed);
+	fSpeed *= 0.8f;
+
+	m_fTime += fTimeDelta * 7.f;
+
+	_float fY = fSpeed * m_fTime - 4.9f * m_fTime * m_fTime;
+
+	m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
+
 	if (m_fInit > m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y)
 	{
 		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y = m_fInit;
@@ -38,18 +51,6 @@ _int CJump::Update_Component(const _float & fTimeDelta)
 		m_fTime = 0.f;
 
 		return BEHAVIOR_SUCCES;
-	}
-
-	if (m_fCurTime - m_fPreTime >= m_fTime)
-	{
-		_float fSpeed = 0.f;
-		m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed);
-
-		m_fTime += fTimeDelta * 7.f;
-
-		_float fY = fSpeed * m_fTime - 4.9f * m_fTime * m_fTime;
-
-		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
 	}
 
 	return BEHAVIOR_RUNNING;

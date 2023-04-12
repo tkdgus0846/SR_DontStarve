@@ -293,6 +293,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="VortexBullet.h" />
     <ClInclude Include="Walker.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="RotToFace.h" />
@@ -387,6 +388,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="VortexBullet.cpp" />
     <ClCompile Include="Walker.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Wait.cpp" />
