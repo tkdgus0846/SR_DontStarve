@@ -53,6 +53,7 @@ void CManagement::LateUpdate_Management()
 
 	// 그룹핑 하여 충돌검사하게끔 만들었음. 
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
+	Engine::Check_Collision(COL_PLAYERBULLET, COL_DETECTION);
 	Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
 	Engine::Check_Collision(COL_DETECTION, COL_PLAYER);
 	Engine::Check_Collision(COL_TRIGGER, COL_PLAYER);

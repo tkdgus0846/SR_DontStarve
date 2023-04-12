@@ -40,17 +40,18 @@ _int CJump::Update_Component(const _float & fTimeDelta)
 		return BEHAVIOR_SUCCES;
 	}
 
-	if (m_fCurTime - m_fPreTime >= m_fTime)
-	{
-		_float fSpeed = 0.f;
-		m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed);
+	if (m_fCurTime - m_fPreTime < m_fTimer)
+		return BEHAVIOR_SUCCES;
 
-		m_fTime += fTimeDelta * 7.f;
+	_float fSpeed = 0.f;
+	m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed);
+	fSpeed *= 0.8f;
 
-		_float fY = fSpeed * m_fTime - 4.9f * m_fTime * m_fTime;
+	m_fTime += fTimeDelta * 7.f;
 
-		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
-	}
+	_float fY = fSpeed * m_fTime - 4.9f * m_fTime * m_fTime;
+
+	m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
 
 	return BEHAVIOR_RUNNING;
 }

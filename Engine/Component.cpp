@@ -128,6 +128,23 @@ HRESULT CComposite::Add_Component(COMPONENTID eID,
 	return S_OK;
 }
 
+CComponent * CComposite::Get_Component(const _tchar * pComponentTag, COMPONENTID eID)
+{
+	auto iter = find_if(m_VecComponents[eID].begin(), m_VecComponents[eID].end(), [&](auto& Comp)->bool 
+	{
+		if (0 == lstrcmp(pComponentTag, Comp.pTag))
+			return true;
+		
+		return false;
+	});
+
+	if(iter == m_VecComponents[eID].end())
+		return nullptr;
+
+	return iter->pComponent;
+}
+
+
 HRESULT CComposite::Remove_Component(const _tchar * pComponentTag)
 {
 	for (_uint i = 0; i < ID_END; ++i)

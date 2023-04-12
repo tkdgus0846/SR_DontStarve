@@ -67,6 +67,7 @@ public:
 										const _int& iPriority, 
 										const _tchar* pComponentTag, 
 										CComponent* pComponent);
+	CComponent*			Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	HRESULT				Remove_Component(const _tchar* pComponentTag);
 	virtual void		Free(void) override;
 

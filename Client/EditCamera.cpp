@@ -11,7 +11,7 @@ CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev), m_fSpeed(0.f), m_bFix(true), m_bPick(false)
 {
 	Set_LayerID(LAYER_CAMERA);
-	Set_ObjTag(L"EditCamera");
+	Set_ObjTag(L"Edit_Camera");
 
 }
 

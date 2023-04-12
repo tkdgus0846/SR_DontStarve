@@ -6,6 +6,7 @@
 #include "Layer.h"
 #include "Export_Function.h"
 
+#include "Bub.h"
 IMPLEMENT_SINGLETON(CRoomMgr)
 
 CRoomMgr::CRoomMgr()
@@ -102,10 +103,16 @@ void CRoomMgr::Create_Default_Room()
 
 	m_pCurRoom = m_arrRoom[0];
 
+	//====== 임시 코드임 =======
 	m_arrRoom[0]->Set_DoorType(DOOR_NE);
 	m_arrRoom[1]->Set_DoorType(DOOR_NW);
 	m_arrRoom[5]->Set_DoorType(DOOR_ES);
 	m_arrRoom[6]->Set_DoorType(DOOR_SW);
+
+	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 1.f, 40.f)));
+	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(35.f, 1.f, 40.f)));
+
+	//====== 임시 코드임 =======
 }
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)

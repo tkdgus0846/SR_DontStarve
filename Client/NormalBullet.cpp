@@ -64,6 +64,7 @@ void CNormalBullet::Render_GameObject(void)
 void CNormalBullet::OnCollisionEnter(const Collision* collsion)
 {
 	CMonster* monster = dynamic_cast<CMonster*>(collsion->OtherGameObject);
+
 	if (monster)
 	{
 		_vec3 pos = collsion->intersectBox._max;
