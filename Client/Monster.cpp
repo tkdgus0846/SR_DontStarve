@@ -122,8 +122,8 @@ HRESULT CMonster::Set_PatrolAndFollow_AI()
 	CComponent* pTaskWait = dynamic_cast<CWait*>(Engine::Clone_Proto(L"TSK_Wait", this));
 	NULL_CHECK_RETURN(pTaskWait, E_FAIL);
 
-	CComponent* pTaskEvasion = dynamic_cast<CEvasion*>(Engine::Clone_Proto(L"TSK_Evasion", this));
-	NULL_CHECK_RETURN(pTaskEvasion, E_FAIL);
+	//CComponent* pTaskEvasion = dynamic_cast<CEvasion*>(Engine::Clone_Proto(L"TSK_Evasion", this));
+	//NULL_CHECK_RETURN(pTaskEvasion, E_FAIL);
 
 	CComponent* pDecRangeCheck = dynamic_cast<CRangeCheck*>(Engine::Clone_Proto(L"DEC_RangeCheck", this));
 	NULL_CHECK_RETURN(pDecRangeCheck, E_FAIL);
@@ -142,7 +142,7 @@ HRESULT CMonster::Set_PatrolAndFollow_AI()
 
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 1, L"TSK_Rot", pTaskRot), E_FAIL);
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 2, L"TSK_MovePlayer", pTaskMovePlayer), E_FAIL);
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 3, L"TSK_Evasion", pTaskEvasion), E_FAIL);
+	//FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 3, L"TSK_Evasion", pTaskEvasion), E_FAIL);
 
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_UPDATE, 1, L"TSK_RandomLook", pTaskRandomLook), E_FAIL);
 	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_UPDATE, 2, L"TSK_MovePatrol", pTaskMovePatrol), E_FAIL);

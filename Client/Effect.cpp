@@ -16,8 +16,6 @@ CEffect::~CEffect()
 {
 }
 
-
-
 HRESULT CEffect::Add_Component()
 {
 	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(m_TextureName, this));
