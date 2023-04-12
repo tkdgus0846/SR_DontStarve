@@ -26,7 +26,7 @@ const	_ulong		FVF_TEX = D3DFVF_XYZ | D3DFVF_TEX1;
 typedef	 struct tagVertexCube
 {
 	_vec3			vPos;		// 위치
-	_vec3			vNormal;
+	//_vec3			vNormal;
 	_vec3			vTexUV;		// 색상
 
 }VTXCUBE;
