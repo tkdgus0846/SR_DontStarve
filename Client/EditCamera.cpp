@@ -127,7 +127,8 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 				pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
 			}
 		}
-		/*cout << fixed;
+		/*
+		<< fixed;
 		cout.precision(0);
 		cout << tri.v[0].x << " " << tri.v[0].y << " " << tri.v[0].z << "\t"
 			<< tri.v[1].x << " " << tri.v[1].y << " " << tri.v[1].z << "\t"
