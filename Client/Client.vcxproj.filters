@@ -308,6 +308,9 @@
     <ClInclude Include="RoomMgr.h">
       <Filter>GameObject\RoomMgr</Filter>
     </ClInclude>
+    <ClInclude Include="VortexBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -531,6 +534,9 @@
     </ClCompile>
     <ClCompile Include="RoomMgr.cpp">
       <Filter>GameObject\RoomMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="VortexBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

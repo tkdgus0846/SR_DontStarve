@@ -3,6 +3,7 @@
 #include "NormalBullet.h"
 #include "FireBullet.h"
 #include "IceBullet.h"
+#include "VortexBullet.h"
 
 IMPLEMENT_SINGLETON(CBulletMgr)
 
@@ -61,6 +62,10 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 		{
 			pBullet = CIceBullet::Create(pDevice);
 		}
+		else if (name == L"VortexBullet")
+		{
+			pBullet = CVortexBullet::Create(pDevice);
+		}
 		++m_iCreateCnt;
 		//cout << m_iCreateCnt << endl;
 	}
@@ -80,6 +85,7 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 	(pBullet)->SetAge();
 	(pBullet)->SetDead(false);
 	(pBullet)->m_pTransform->Set_Scale(vScale);
+	(pBullet)->Pop_Initialize();
 
 	CCollider* collider = dynamic_cast<CCollider*>(pBullet->Get_Component(L"BodyCollider", ID_ALL));
 	if (collider == nullptr) return pBullet;

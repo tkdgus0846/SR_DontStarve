@@ -65,7 +65,8 @@ void CFireBullet::Render_GameObject(void)
 void CFireBullet::OnCollisionEnter(const Collision * collsion)
 {
 	CMonster* monster = dynamic_cast<CMonster*>(collsion->OtherGameObject);
-	if (monster)
+
+	if (monster && collsion->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL) != nullptr)
 	{
 		_vec3 pos = collsion->intersectBox._max;
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"FireBullet_Texture", pos, { 0.7f,0.7f,0.7f }, 0.2f);
