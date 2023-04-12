@@ -33,7 +33,7 @@ _int CScene::Update_Scene(const _float & fTimeDelta)
 {
 	_int iResult = 0;
 
-	cout << m_StaticLayerArr << endl;
+	//cout << m_StaticLayerArr << endl;
 
 	for (int i = 0; i < LAYER_DYNAMIC_END; i++)
 	{

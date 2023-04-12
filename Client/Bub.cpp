@@ -82,7 +82,7 @@ HRESULT CBub::Add_Component()
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"EvasBullet", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
-	pCollider->Set_BoundingBox({ 3.5f, 3.5f, 3.5f });
+	pCollider->Set_BoundingBox({ 15.f, 6.f, 15.f });
 
 	CRigidbody* pRigidBody = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"RigidBody", this));
 	NULL_CHECK_RETURN(pRigidBody, E_FAIL);
@@ -90,8 +90,8 @@ HRESULT CBub::Add_Component()
 
 
 	Create_Root_AI();
-	Set_PatrolAndFollow_AI();
-	//Set_PAF_JumpAI();
+	//Set_PatrolAndFollow_AI();
+	Set_PAF_JumpAI();
 	Init_AI_Behaviours();
 
 	return S_OK;
