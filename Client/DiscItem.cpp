@@ -6,6 +6,9 @@ CDiscItem::CDiscItem(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	Set_ObjTag(L"DiscItem");
 
+	m_fY = 1.f;
+	m_fMaxY = m_fY + 0.5f;
+	m_fMinY = m_fY - 0.5f;
 }
 
 CDiscItem::~CDiscItem()
@@ -29,11 +32,15 @@ HRESULT CDiscItem::Add_Component()
 	Ani->SelectState(ANIM_IDLE);
 	m_uMapComponent[ID_ALL].insert({ L"Animation", Ani });
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ITEM));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ITEM));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
+	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 	pCollider->Set_BoundingBox({ 1.0f, 1.0f, 1.0f });
 
+	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"RangeCollider", this, COL_ITEM));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"RangeCollider", pCollider });
+	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
 
 	return S_OK;
 }
@@ -49,6 +56,8 @@ HRESULT CDiscItem::Ready_GameObject(void)
 
 _int CDiscItem::Update_GameObject(const _float & fTimeDelta)
 {
+	if (m_bDrop == true) ItemPatrol();
+
 	__super::Update_GameObject(fTimeDelta);
 
 	if (GetDead()) return OBJ_DEAD;
@@ -63,6 +72,8 @@ void CDiscItem::LateUpdate_GameObject(void)
 
 void CDiscItem::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+
 	__super::Render_GameObject();
 }
 
@@ -81,11 +92,20 @@ CDiscItem * CDiscItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CDiscItem::OnCollisionEnter(const Collision * collsion)
 {
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
+
+
+	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
+	{
+		pPlayer->Gain_Disc(1);
+	}
+
+	__super::OnCollisionEnter(collsion);
 }
 
 void CDiscItem::OnCollisionStay(const Collision * collision)
 {
-	__super::OnCollisionEnter(collision);
+	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
 
 	ItemMagnetic(pPlayer);

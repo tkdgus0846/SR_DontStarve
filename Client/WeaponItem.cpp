@@ -6,7 +6,7 @@ CWeaponItem::CWeaponItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
 	Set_ObjTag(L"WeaponItem");
-
+	m_bDrop = true;
 	m_bBill = false;
 }
 
@@ -31,7 +31,6 @@ HRESULT CWeaponItem::Add_Component()
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
-
 
 	return S_OK;
 }
@@ -86,7 +85,7 @@ void CWeaponItem::OnCollisionEnter(const Collision * collsion)
 
 void CWeaponItem::OnCollisionStay(const Collision * collision)
 {
-	__super::OnCollisionEnter(collision);
+	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
 
 	ItemMagnetic(pPlayer);

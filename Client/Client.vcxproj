@@ -221,6 +221,7 @@
     <ClInclude Include="Attack.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Baller.h" />
+    <ClInclude Include="BossHp.h" />
     <ClInclude Include="Bub.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletBar.h" />
@@ -289,6 +290,7 @@
     <ClInclude Include="RangeCheck.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="BootsItem.h" />
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Tennel.h" />
     <ClInclude Include="Tile.h" />
@@ -310,6 +312,7 @@
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Baller.cpp" />
+    <ClCompile Include="BossHp.cpp" />
     <ClCompile Include="Bub.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletBar.cpp" />
@@ -380,6 +383,7 @@
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RandomLook.cpp" />
     <ClCompile Include="RotToFace.cpp" />
+    <ClCompile Include="BootsItem.cpp" />
     <ClCompile Include="SoftPyramid.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -38,9 +38,10 @@ public:
 
 	void			Gain_Coin(_int coin = 1) { m_iCoin += coin; }
 	_int			Get_Coin() { return m_iCoin; }
-
+	void			Gain_Disc(_int disc = 1) { m_iDisc += disc; }
+	_int			Get_Disc() { return m_iDisc; }
 	void			Gain_Hp(_int Hp = 1) { m_iHp += Hp; }
-
+	
 private:
 	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);
@@ -51,6 +52,7 @@ private:
 	_bool					m_bFix;
 
 	_int					m_iCoin = 777;
+	_int					m_iDisc = 0;
 
 	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;
 	class CWeapon*						m_pCurWeapon;

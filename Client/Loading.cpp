@@ -129,6 +129,9 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Coin_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/sprBigCoin_strip6_%d.png", 6)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Disc_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/data_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Num_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Text/tigl_font2_DEPRECATE_%d.png", 42)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BossHpBar_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/BossHpBar.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BossHpGuage_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/BossHpGuage.png")), E_FAIL);
+
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Weapon_bigshot_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Weapon_bigshot.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Weapon_explosiveshot_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Weapon_explosiveshot.png")), E_FAIL);
@@ -137,6 +140,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Weapon_spreadshot_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Weapon_spreadshot.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Weapon_freezeshot_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Weapon_freezeshot.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Weapon_lasershot_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Weapon_lasershot.png")), E_FAIL);
+	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MiniMap_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/hud_map.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MapPos_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/mapPos.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ESWN_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/ESWN.png")), E_FAIL);
@@ -144,7 +148,8 @@ _uint CLoading::Loading_ForStage(void)
 	// Item
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SmallCoin_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/sprCoin_strip6_%d.png", 6)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BulletItem_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/sprBullet_%d.png", 2)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HeartItem_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/hearts_0.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HeartItem_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/hearts_0.png")), E_FAIL);	
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BootsItem_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/boots.png")), E_FAIL);
 	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SkyBox_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/SkyBox/SkyBox.dds")), E_FAIL);
 

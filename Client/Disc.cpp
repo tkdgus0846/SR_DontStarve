@@ -1,6 +1,6 @@
 #include "Disc.h"
 #include "Export_Function.h"
-
+#include "Player.h"
 CDisc::CDisc(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CUI(pGraphicDev)
 {
@@ -66,23 +66,8 @@ void CDisc::LateUpdate_GameObject(void)
 
 void CDisc::Render_GameObject(void)
 {
-	_int strLen = pPlayerCoin.length() ;
-	for (size_t i = 0, j = 2, k = 0; i < m_MaxNumber; i++, j--, k++)
-	{
-		_int iNum = 26;
-		if (j >= strLen)
-		{
-			iNum = 26;
-			k--;
-		}
-		else
-		{
-			iNum = m_iStartNum + pPlayerCoin[k] - 48;
-		}
-		Set_ViewMatrix_UI(330 + (25.f * i), 220.f);
-		m_pTextureCom->Render_Texture(iNum);
-		m_vecRc[i]->Render_Component();
-	}
+
+	Redner_Disc();
 
 	Set_ViewMatrix_UI();
 
@@ -120,6 +105,33 @@ void CDisc::Set_ViewMatrix_UI(_float fX, _float fY)
 _int CDisc::Compute_Num(_int & pPlayerDisc)
 {
 	return _int();
+}
+
+void CDisc::Redner_Disc()
+{
+	_int curDisc = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_Disc();
+
+	for (size_t i = 0; i < m_MaxNumber; i++)
+	{
+		switch (i)
+		{
+		case 0:
+			Set_ViewMatrix_UI(330 + (25.f * i), 220.f);
+			m_pTextureCom->Render_Texture(curDisc + m_iStartNum);
+			m_vecRc[i]->Render_Component();
+			break;
+		case 1:
+			Set_ViewMatrix_UI(330 + (25.f * i), 220.f);
+			m_pTextureCom->Render_Texture(41);
+			m_vecRc[i]->Render_Component();
+			break;
+		case 2:
+			Set_ViewMatrix_UI(330 + (25.f * i), 220.f);
+			m_pTextureCom->Render_Texture(31);
+			m_vecRc[i]->Render_Component();
+			break;
+		}
+	}
 }
 
 CDisc * CDisc::Create(LPDIRECT3DDEVICE9 pGraphicDev)

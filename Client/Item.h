@@ -39,7 +39,7 @@ protected:
 	virtual void		ItemDrop(const _float & fTimeDelta);
 
 private:
-	_float fTime;
+	_float m_fTime;
 
 protected:
 	virtual void Free() override;
