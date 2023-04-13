@@ -4,10 +4,11 @@
 #include "Export_Function.h"
 #include "MonoBehaviors.h"
 #include "Player.h"
+#include "Bullet.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev), m_fSpeed(0.f)
-	, m_pRoot(nullptr)
+	, m_pRoot(nullptr), m_redTexture(false)
 {
 	Set_LayerID(LAYER_MONSTER);
 }
@@ -30,6 +31,11 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	_matrix view;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
 
+	if (m_pTransform->m_vInfo[INFO_POS].y < 0.6f)
+	{
+		m_pTransform->m_vInfo[INFO_POS].y = 0.6f;
+	}
+
 	//m_pTransform->Set_Billboard(&view);
 	__super::Update_GameObject(fTimeDelta);
 	return 0;
@@ -42,7 +48,37 @@ void CMonster::LateUpdate_GameObject(void)
 
 void CMonster::Render_GameObject(void)
 {
+	if (m_redTexture)
+	{
+		m_fCurTime = Get_WorldTime();
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_CURRENT);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLORARG2, D3DTA_TEXTURE);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_ALPHAARG1, D3DTA_CURRENT);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
+		float sparkleIntensity = 1.0f; // 0.0 (약함) ~ 1.0 (강함)
+		m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(static_cast<int>(255 * sparkleIntensity), 255, 255, 255));
+	}
+
 	__super::Render_GameObject();
+
+	if (m_redTexture)
+	{
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
+
+		if (m_fCurTime - m_fPreTime > m_fDuration)
+			m_redTexture = false;
+	}
 }
 
 void CMonster::OnCollisionEnter(const Collision * collsion)
@@ -54,6 +90,13 @@ void CMonster::OnCollisionEnter(const Collision * collsion)
 	if (player && collsion->MyCollider == Get_Component(L"BodyCollider", ID_ALL))
 	{
 		player->Get_Damaged(Get_Attack());
+	}
+
+	if (dynamic_cast<CBullet*>(collsion->OtherGameObject))
+	{
+		m_redTexture = true;
+		m_fCurTime = Get_WorldTime();
+		m_fPreTime = Get_WorldTime();
 	}
 }
 

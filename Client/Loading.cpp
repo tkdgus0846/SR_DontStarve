@@ -4,6 +4,8 @@
 #include "Export_Function.h"
 #include "MonoBehaviors.h"
 
+#include "RoomMgr.h"
+
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_bFinish(false)
@@ -59,6 +61,11 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 	m_eID = eID;
 
+	// 빨간색으로 블랜딩할 멀티 텍스처 용도의 텍스처 파일
+	IDirect3DBaseTexture9*			redTexture;
+	FAILED_CHECK_RETURN(D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/CollisionDebug/Red.png", (LPDIRECT3DTEXTURE9*)&redTexture), E_FAIL);
+	m_pGraphicDev->SetTexture(1, redTexture);
+
 	return S_OK;
 }
 
@@ -68,14 +75,14 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Player_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture/Player/Sonic.png")), E_FAIL);
 
-	// 총알 텍스처
+	// Bullet Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"NormalBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/bigbullet_%d.png", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"IceBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/iceBeam_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FireBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/smallExplode_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"VortexBulletBefore_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/Energy_%d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"VortexBulletAfter_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/vortex.png")), E_FAIL);
 
-	// 몬스터 텍스처
+	// Monster Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Bub_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/bub_%d.png", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Blue_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_blue_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_green_%d.png", 4)), E_FAIL);
@@ -92,16 +99,27 @@ _uint CLoading::Loading_ForStage(void)
 	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_green_%d.png", 4)), E_FAIL);
 	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_green_%d.png", 4)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Red_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Green.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Red.png")), E_FAIL);
+	// Collision Texture for the Debug
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Green.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Red_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Red.png")), E_FAIL);
 
+	// Tile Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Level1_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421865.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Wall_Level1_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Level2_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Wall_Level2_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420377.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorCrate_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorCrate.png")), E_FAIL);
+
+
 	/*이거 바꾸셈!!!*/FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Dock_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_14.png")), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gun/Gun.png")), E_FAIL);
+
+	// Map Object
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SoftPyramid_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Entities/SoftPyramid.dds")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HardPyramid_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Entities/HardPyramid.dds")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Slider_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/slider.png")), E_FAIL);
 
 	// UI
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BulletBar_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/hud_secondary_ext_edit.png")), E_FAIL);
@@ -126,13 +144,17 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MiniMap_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/hud_map.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MapPos_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/mapPos.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ESWN_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/ESWN.png")), E_FAIL);
-
+	
 	// Item
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SmallCoin_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/sprCoin_strip6_%d.png", 6)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BulletItem_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/sprBullet_%d.png", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HeartItem_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/hearts_0.png")), E_FAIL);	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BootsItem_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/boots.png")), E_FAIL);
+	
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SkyBox_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/SkyBox/SkyBox.dds")), E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Level1_Tennel_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Level/Level1_Tennel.dds")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Level2_Tennel_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Level/Level2_Tennel.dds")), E_FAIL);
 
 	Set_String(L"Buffer Loading.......");
 
@@ -152,12 +174,16 @@ _uint CLoading::Loading_ForStage(void)
 	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Animation", CAnimation::Create(m_pGraphicDev)), E_FAIL);
 	
+	/////////////////////////// 파티클
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Particle", CSnow::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Firework_Particle", CFirework::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Vortex_Particle", CVortexParticle::Create(m_pGraphicDev)), E_FAIL);
+
+	/////////////////////////// 파티클 텍스쳐 
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Smoke_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Particle/smoke.png")), E_FAIL);
 
 	Set_String(L"Buffer Loading..........");
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SkyBox_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/SkyBox/SkyBox.dds")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Level1_Tennel_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Level/Level1_Tennel.dds")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Level2_Tennel_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Level/Level2_Tennel.dds")), E_FAIL);
 
 	Set_String(L"AI Loading..........");
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Move", CMoveLook::Create(m_pGraphicDev)), E_FAIL);
@@ -175,6 +201,9 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Selector", CSelector::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Root", CRoot::Create(m_pGraphicDev)), E_FAIL);
 
+	Set_String(L"Room Loading..........");
+
+	
 	// ==임시 코드==
 	const auto& uMapProto = Engine::CProtoMgr::GetInstance()->Get_ProtoMap();
 
@@ -183,10 +212,10 @@ _uint CLoading::Loading_ForStage(void)
 		if (dynamic_cast<CTexture*>(iter.second))
 			m_listTags.push_back(iter.first);
 	}
-	//===============
+
 
 	m_bFinish = true;
-
+	
 	Set_String(L"Loading Complete!!!!!!!!");
 
 	return 0;

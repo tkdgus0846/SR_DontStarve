@@ -9,8 +9,5 @@ class CMapObj :
 protected:
 	explicit CMapObj(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CMapObj();
-
-protected:
-	virtual void Free(void) override;
+	virtual void Render_GameObject(void) override;
 };
-

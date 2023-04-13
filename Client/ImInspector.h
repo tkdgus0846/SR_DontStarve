@@ -30,6 +30,7 @@ private:
 	_vec3			m_vObjectPos;
 	CGameObject*	m_pCurTarget;
 	vector<pair<const char*, CGameObject*>>	m_vecMonster;
+	vector<pair<const char*, CGameObject*>>	m_vecMap;
 
 public:
 	static CImInspector* Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -37,4 +38,3 @@ public:
 private:
 	virtual void Free(void) override;
 };
-

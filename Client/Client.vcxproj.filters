@@ -77,6 +77,9 @@
     <Filter Include="Factory">
       <UniqueIdentifier>{d13b3543-a1f2-479d-9363-26c9d470ab3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\MapObject\Pyramid">
+      <UniqueIdentifier>{3c856778-44ca-465a-90eb-65695009b097}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -317,15 +320,6 @@
     <ClInclude Include="MapObj.h">
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
-    <ClInclude Include="Pyramid.h">
-      <Filter>GameObject\MapObject</Filter>
-    </ClInclude>
-    <ClInclude Include="HardPyramid.h">
-      <Filter>GameObject\MapObject</Filter>
-    </ClInclude>
-    <ClInclude Include="ReflectBall.h">
-      <Filter>GameObject\MapObject</Filter>
-    </ClInclude>
     <ClInclude Include="MonsterFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
@@ -337,6 +331,18 @@
     </ClInclude>
     <ClInclude Include="BossHp.h">
       <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Pyramid.h">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClInclude>
+    <ClInclude Include="HardPyramid.h">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClInclude>
+    <ClInclude Include="SoftPyramid.h">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClInclude>
+    <ClInclude Include="Slider.h">
+      <Filter>GameObject\MapObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -565,15 +571,6 @@
     <ClCompile Include="MapObj.cpp">
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
-    <ClCompile Include="Pyramid.cpp">
-      <Filter>GameObject\MapObject</Filter>
-    </ClCompile>
-    <ClCompile Include="HardPyramid.cpp">
-      <Filter>GameObject\MapObject</Filter>
-    </ClCompile>
-    <ClCompile Include="ReflectBall.cpp">
-      <Filter>GameObject\MapObject</Filter>
-    </ClCompile>
     <ClCompile Include="MonsterFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
@@ -585,6 +582,18 @@
     </ClCompile>
     <ClCompile Include="BossHp.cpp">
       <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Pyramid.cpp">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClCompile>
+    <ClCompile Include="HardPyramid.cpp">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClCompile>
+    <ClCompile Include="SoftPyramid.cpp">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClCompile>
+    <ClCompile Include="Slider.cpp">
+      <Filter>GameObject\MapObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

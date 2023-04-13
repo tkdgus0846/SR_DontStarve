@@ -44,6 +44,13 @@ private:
 protected:
 	_float		m_fSpeed;
 
+	// 빨갛게 반짝이는 효과를 결정하는 변수들
+	// m_fDuration로 효과의 지속시간을 결정함.
+	bool m_redTexture;
+	float m_fDuration = 0.05f;
+	float m_fCurTime;
+	float m_fPreTime;
+
 public:
 	static CMonster*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

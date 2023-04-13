@@ -18,10 +18,17 @@ public:
 	
 	virtual _int Update_Component(const _float& fTimeDelta) override;
 	virtual void LateUpdate_Component() override;
+	virtual void Render_Component() override;
+
 	void		Render_Particle(void);
 
-	void SetOrigin(const _vec3& origin) { m_Origin = origin; }
+	void SetOffset(const _vec3& origin) { m_Offset = origin; }
 	void SetBoundingBox(const BoundingBox& boundingBox) { m_BoundingBox = boundingBox; }
+	void SetBoundingSize(const _vec3& vSize) 
+	{
+		m_BoundingBox._offsetMax = vSize / 2;
+		m_BoundingBox._offsetMin = -vSize / 2;
+	}
 	void SetEmitRate(const float& emitRate) { m_EmitRate = emitRate; }
 	void SetNumParticle(const int& numParticle) 
 	{
@@ -42,11 +49,13 @@ protected:
 	virtual void PostRender();
 
 protected:
-	_vec3					m_Origin;
+	_vec3					m_Offset;
+	_vec3					m_Pos;
+
 	BoundingBox				m_BoundingBox;
 	float					m_EmitRate;
 	float					m_Size;
-	IDirect3DTexture9*		m_Texture;
+	class CTexture*			m_Texture;
 	LPDIRECT3DVERTEXBUFFER9 m_VB;
 	list<Particle>			m_Particles;
 	int						m_MaxParticles;
@@ -54,8 +63,6 @@ protected:
 	DWORD					m_VBSize;
 	DWORD					m_VBOffset;
 	DWORD					m_VBBatchSize;
-
-
 };
 
 END

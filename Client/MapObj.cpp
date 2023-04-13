@@ -11,6 +11,9 @@ CMapObj::~CMapObj()
 {
 }
 
-void CMapObj::Free(void)
+void CMapObj::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+
+	__super::Render_GameObject();
 }
