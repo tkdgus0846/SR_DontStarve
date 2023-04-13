@@ -109,22 +109,14 @@ void CComposite::Render_Component(void)
 }
 
 HRESULT CComposite::Add_Component(COMPONENTID eID, 
-									const _int & iPriority, 
 									const _tchar * pComponentTag, 
 									CComponent * pComponent)
 {
-	for (auto iter : m_VecComponents[eID])
-	{
-		if (iter.iPriority == iPriority)
-			return E_FAIL;
-	}
+	if (nullptr == pComponent)
+		return E_FAIL;
 
-	m_VecComponents[eID].push_back({ iPriority, pComponentTag, pComponent });
+	m_VecComponents[eID].push_back({ pComponentTag, pComponent });
 
-	sort(m_VecComponents[eID].begin(), m_VecComponents[eID].end(), [](auto Src, auto Dest)->bool
-	{
-		return Src.iPriority < Dest.iPriority;
-	});
 	return S_OK;
 }
 

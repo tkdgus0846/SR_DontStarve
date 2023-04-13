@@ -54,9 +54,18 @@ void Engine::CTransform::Set_Target(const _vec3& targetPos)
 	vRight = vUp.Cross(vDir);
 	vUp = vDir.Cross(vRight);
 
-	m_vInfo[INFO_LOOK] = vDir;
-	m_vInfo[INFO_RIGHT] = vRight;
-	m_vInfo[INFO_UP] = vUp;
+	if (m_eMoveType == LANDOBJECT)
+	{
+		m_vInfo[INFO_LOOK] = _vec3(vDir.x, 0.f, vDir.z);
+		m_vInfo[INFO_RIGHT] = vRight;
+		m_vInfo[INFO_UP] = { 0.f,1.f, 0.f };
+	}
+	else
+	{
+		m_vInfo[INFO_LOOK] = vDir;
+		m_vInfo[INFO_RIGHT] = vRight;
+		m_vInfo[INFO_UP] = vUp;
+	}
 }
 
 void CTransform::Rot_To_TargetPos(const _vec3 & vTargetPos, const _float& fTimeDelta)

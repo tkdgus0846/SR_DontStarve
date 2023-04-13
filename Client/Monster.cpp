@@ -6,8 +6,7 @@
 #include "Player.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CCreature(pGraphicDev), m_fSpeed(0.f)
-	, m_pRoot(nullptr)
+	: CCreature(pGraphicDev), m_pRoot(nullptr)
 {
 	Set_LayerID(LAYER_MONSTER);
 }
@@ -100,53 +99,265 @@ HRESULT CMonster::Create_Root_AI()
 }
 
 // AI	备泅何
-HRESULT CMonster::Set_PatrolAndFollow_AI() 
+CSequence* CMonster::Make_Patrol_AI(const _float& fWaitTime, const _float& fMoveTime)
 {
 	// 何前 积己
-	CComponent* pSelector = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
-	NULL_CHECK_RETURN(pSelector, E_FAIL);
-
-	CComponent* pSQChase = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
-	NULL_CHECK_RETURN(pSQChase, E_FAIL);
-	CComponent* pSQPatrol = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
-	NULL_CHECK_RETURN(pSQPatrol, E_FAIL);
+	CSequence* pSQPatrol = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQPatrol, nullptr);
 	
-	CComponent* pTaskMovePlayer = dynamic_cast<CMoveLook*>(Engine::Clone_Proto(L"TSK_Move", this));
-	NULL_CHECK_RETURN(pTaskMovePlayer, E_FAIL);
-	CComponent* pTaskMovePatrol = dynamic_cast<CMoveLook*>(Engine::Clone_Proto(L"TSK_Move", this));
-	NULL_CHECK_RETURN(pTaskMovePatrol, E_FAIL);
-	CComponent* pTaskRot = dynamic_cast<CRotToFace*>(Engine::Clone_Proto(L"TSK_Rot", this));
-	NULL_CHECK_RETURN(pTaskRot, E_FAIL);
-	CComponent* pTaskRandomLook = dynamic_cast<CRandomLook*>(Engine::Clone_Proto(L"TSK_RandomLook", this));
-	NULL_CHECK_RETURN(pTaskRandomLook, E_FAIL);
-	CComponent* pTaskWait = dynamic_cast<CWait*>(Engine::Clone_Proto(L"TSK_Wait", this));
-	NULL_CHECK_RETURN(pTaskWait, E_FAIL);
+	CMoveLook* pTaskMovePatrol = dynamic_cast<CMoveLook*>(Engine::Clone_Proto(L"TSK_Move", this));
+	NULL_CHECK_RETURN(pTaskMovePatrol, nullptr);
+	CRandomLook* pTaskRandomLook = dynamic_cast<CRandomLook*>(Engine::Clone_Proto(L"TSK_RandomLook", this));
+	NULL_CHECK_RETURN(pTaskRandomLook, nullptr);
+	CWait* pTaskWait = dynamic_cast<CWait*>(Engine::Clone_Proto(L"TSK_Wait", this));
+	NULL_CHECK_RETURN(pTaskWait, nullptr);
 
-	//CComponent* pTaskEvasion = dynamic_cast<CEvasion*>(Engine::Clone_Proto(L"TSK_Evasion", this));
-	//NULL_CHECK_RETURN(pTaskEvasion, E_FAIL);
-
-	CComponent* pDecRangeCheck = dynamic_cast<CRangeCheck*>(Engine::Clone_Proto(L"DEC_RangeCheck", this));
-	NULL_CHECK_RETURN(pDecRangeCheck, E_FAIL);
+	CIsNotRangeInPlayer* pDecFunc = dynamic_cast<CIsNotRangeInPlayer*>(Engine::Clone_Proto(L"DEC_IsNotRangeInPlayer", this));
+	NULL_CHECK_RETURN(pDecFunc, nullptr);
 
 	// 何前 檬扁汲沥
-	dynamic_cast<CWait*>(pTaskWait)->Set_Timer(1.f);
-	dynamic_cast<CMoveLook*>(pTaskMovePatrol)->Set_Timer(0.5f);
+	pTaskWait->Set_Timer(fWaitTime);
+	pTaskMovePatrol->Set_Timer(fMoveTime);
+	pTaskMovePatrol->Set_Magnifi();
 
 	// 何前 炼赋
-	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, 1, L"SL_AIRoot", pSelector), E_FAIL);
+	FAILED_CHECK_RETURN(pSQPatrol->Add_Decorator(pDecFunc), nullptr);
 
-	FAILED_CHECK_RETURN(dynamic_cast<CSelector*>(pSelector)->Add_Component(ID_UPDATE, 1, L"SQ_Chase", pSQChase), E_FAIL);
-	FAILED_CHECK_RETURN(dynamic_cast<CSelector*>(pSelector)->Add_Component(ID_UPDATE, 2, L"SQ_Patrol", pSQPatrol), E_FAIL);
-	
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Decorator(pDecRangeCheck), E_FAIL);
+	FAILED_CHECK_RETURN(pSQPatrol->Add_Component(ID_UPDATE, L"TSK_RandomLook", pTaskRandomLook), nullptr);
+	FAILED_CHECK_RETURN(pSQPatrol->Add_Component(ID_UPDATE, L"TSK_MovePatrol", pTaskMovePatrol), nullptr);
+	FAILED_CHECK_RETURN(pSQPatrol->Add_Component(ID_UPDATE, L"TSK_Wait", pTaskWait), nullptr);
 
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 1, L"TSK_Rot", pTaskRot), E_FAIL);
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 2, L"TSK_MovePlayer", pTaskMovePlayer), E_FAIL);
-	//FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 3, L"TSK_Evasion", pTaskEvasion), E_FAIL);
+	return pSQPatrol;
+}
 
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_UPDATE, 1, L"TSK_RandomLook", pTaskRandomLook), E_FAIL);
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_UPDATE, 2, L"TSK_MovePatrol", pTaskMovePatrol), E_FAIL);
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQPatrol)->Add_Component(ID_UPDATE, 3, L"TSK_Wait", pTaskWait), E_FAIL);
+CSequence* CMonster::Make_Follow_AI(const _float& fTimer)
+{
+	// 何前 积己
+	CSequence* pSQChase = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQChase, nullptr);
+
+	CMoveLook* pTskMovePlayer = dynamic_cast<CMoveLook*>(Engine::Clone_Proto(L"TSK_Move", this));
+	NULL_CHECK_RETURN(pTskMovePlayer, nullptr);
+	CLookAtTarget* pTskLookAtTarget = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
+	NULL_CHECK_RETURN(pTskLookAtTarget, nullptr);
+
+	CIsRangeInPlayer* pDecIsRangeInPlayer = dynamic_cast<CIsRangeInPlayer*>(Engine::Clone_Proto(L"DEC_IsRangeInPlayer", this));
+	NULL_CHECK_RETURN(pDecIsRangeInPlayer, nullptr);
+
+	CTimeInLimit* pDecTimeInLimit = dynamic_cast<CTimeInLimit*>(Engine::Clone_Proto(L"DEC_TimeInLimit", this));
+	NULL_CHECK_RETURN(pDecTimeInLimit, nullptr);
+
+	// 何前 檬扁汲沥
+	pDecTimeInLimit->Set_Timer(fTimer);
+	pTskMovePlayer->Set_Magnifi();
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(pSQChase->Add_Decorator(pDecIsRangeInPlayer), nullptr);
+	FAILED_CHECK_RETURN(pSQChase->Add_Decorator(pDecTimeInLimit), nullptr);
+
+	FAILED_CHECK_RETURN(pSQChase->Add_Component(ID_UPDATE, L"TSK_LookAtTarget", pTskLookAtTarget), nullptr);
+	FAILED_CHECK_RETURN(pSQChase->Add_Component(ID_UPDATE, L"TSK_MovePlayer", pTskMovePlayer), nullptr);
+
+	return pSQChase;
+}
+
+CSequence* CMonster::Make_JumpAI(const _float& fTimer)
+{
+	// 何前 积己
+	CSequence* pSQJump = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQJump, nullptr);
+
+	CJump* pTskJump = dynamic_cast<CJump*>(Engine::Clone_Proto(L"TSK_Jump", this));
+	NULL_CHECK_RETURN(pTskJump, nullptr);
+
+	// 何前 檬扁汲沥
+	pTskJump->Set_Timer(fTimer);
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_Jump", pTskJump), nullptr);
+
+	return pSQJump;
+}
+
+CSequence * CMonster::Make_DBJumpAI(const _float & fTimer)
+{
+	// 何前 积己
+	CSequence* pSQJump = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQJump, nullptr);
+
+	CJump* pTskJump1 = dynamic_cast<CJump*>(Engine::Clone_Proto(L"TSK_Jump", this));
+	NULL_CHECK_RETURN(pTskJump1, nullptr);
+	CJump* pTskJump2 = dynamic_cast<CJump*>(Engine::Clone_Proto(L"TSK_Jump", this));
+	NULL_CHECK_RETURN(pTskJump2, nullptr);
+
+	// 何前 檬扁汲沥
+	pTskJump1->Set_Timer(fTimer);
+	pTskJump2->Set_Timer(0.f);
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_BackJump", pTskJump1), nullptr);
+	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_BackJump", pTskJump2), nullptr);
+
+	return pSQJump;
+}
+
+CSequence * CMonster::Make_DBBackJumpAI(const _float & fTimer)
+{
+	// 何前 积己
+	CSequence* pSQJump = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQJump, nullptr);
+
+	CBackJump* pTskJump1 = dynamic_cast<CBackJump*>(Engine::Clone_Proto(L"TSK_BackJump", this));
+	NULL_CHECK_RETURN(pTskJump1, nullptr);
+	CBackJump* pTskJump2 = dynamic_cast<CBackJump*>(Engine::Clone_Proto(L"TSK_BackJump", this));
+	NULL_CHECK_RETURN(pTskJump2, nullptr);
+
+	// 何前 檬扁汲沥
+	pTskJump1->Set_Timer(fTimer);
+	pTskJump2->Set_Timer(0.f);
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_Jump", pTskJump1), nullptr);
+	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_Jump", pTskJump2), nullptr);
+
+	return pSQJump;
+}
+
+CSequence * CMonster::Make_LeapJumpAI(const _float & fTimer)
+{
+	// 何前 积己
+	CSequence* pSQLeapJump = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQLeapJump, nullptr);
+
+	CLeapJump* pTskLeapJump = dynamic_cast<CLeapJump*>(Engine::Clone_Proto(L"TSK_LeapJump", this));
+	NULL_CHECK_RETURN(pTskLeapJump, nullptr);
+
+	// 何前 檬扁汲沥
+	pTskLeapJump->Set_Timer(fTimer);
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(pSQLeapJump->Add_Component(ID_UPDATE, L"TSK_LeapJump", pTskLeapJump), nullptr);
+
+	return pSQLeapJump;
+}
+
+CSequence * CMonster::Make_JumpToPlayer()
+{
+	// 何前 积己
+	CSequence* pSQJump = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQJump, nullptr);
+
+	CLookAtTarget* pTskLookAt = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
+	NULL_CHECK_RETURN(pTskLookAt, nullptr);
+	CLeapJump* pTskLeapJump = dynamic_cast<CLeapJump*>(Engine::Clone_Proto(L"TSK_LeapJump", this));
+	NULL_CHECK_RETURN(pTskLeapJump, nullptr);
+
+	// 何前 檬扁汲沥
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_LookAtPlayer", pTskLookAt), nullptr);
+	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_LeapJump", pTskLeapJump), nullptr);
+
+	return pSQJump;
+}
+
+CSequence * CMonster::Make_RushAI()
+{
+	// 何前 积己
+	CSequence* pSQRush = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQRush, nullptr);
+
+	CLookAtTarget* pTskLookatTarget = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
+	NULL_CHECK_RETURN(pTskLookatTarget, nullptr);
+	CRush* pTskRush = dynamic_cast<CRush*>(Engine::Clone_Proto(L"TSK_Rush", this));
+	NULL_CHECK_RETURN(pTskRush, nullptr);
+
+	// 何前 檬扁汲沥
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(pSQRush->Add_Component(ID_UPDATE, L"TSK_LookAtTarget", pTskLookatTarget), nullptr);
+	FAILED_CHECK_RETURN(pSQRush->Add_Component(ID_UPDATE, L"TSK_Rush", pTskRush), nullptr);
+
+	return pSQRush;
+}
+
+CSequence* CMonster::Make_BossPattern1(const _float& fCoolTime)
+{
+	// 何前 积己
+	CSequence* pSQPattern1 = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQPattern1, nullptr);
+
+	// 何前 檬扁汲沥
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_DBJump", Make_DBJumpAI(fCoolTime)), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_Rush", Make_RushAI()), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_Jump", Make_JumpAI()), nullptr);
+
+	return pSQPattern1;
+}
+
+CSequence * CMonster::Make_BossPattern2(const _float & fCoolTime)
+{
+	// 何前 积己
+	CSequence* pSQPattern1 = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQPattern1, nullptr);
+
+	// 何前 檬扁汲沥
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_DBBackJump", Make_DBBackJumpAI(fCoolTime)), nullptr);
+
+	for (_uint i = 0; i < 5; ++i)
+	{
+		FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_Rush", Make_RushAI()), nullptr);
+		FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_JumpToPlayer", Make_JumpToPlayer()), nullptr);
+	}
+	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_Jump", Make_JumpAI()), nullptr);
+
+	return pSQPattern1;
+}
+
+HRESULT CMonster::Set_PatrolAndFollow_AI()
+{
+	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
+	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SLRootAI", pSLRootAI));
+
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQFollow", Make_Follow_AI()));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQPatrol", Make_Patrol_AI()));
+
+	return S_OK;
+}
+
+HRESULT CMonster::Set_PAF_JumpAI()
+{
+	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
+	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SLRootAI", pSLRootAI));
+
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQFollow", Make_Follow_AI(4.f)));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQJump", Make_JumpAI(3.f)));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQPatrol", Make_Patrol_AI()));
+
+	return S_OK;
+}
+
+HRESULT CMonster::Set_PAF_LeapJumpAI()
+{
+	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
+	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
+
+	// 何前 炼赋
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SLRootAI", pSLRootAI));
+
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQFollow", Make_Follow_AI(4.f)));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQLeapJump", Make_LeapJumpAI(3.f)));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQPatrol", Make_Patrol_AI()));
 
 	return S_OK;
 }
@@ -154,48 +365,46 @@ HRESULT CMonster::Set_PatrolAndFollow_AI()
 HRESULT CMonster::Set_TurretAI()
 {
 	// 何前 积己
-	CComponent* pSQChaseAtk = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	CSequence* pSQChaseAtk = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQChaseAtk, E_FAIL);
 
-	CComponent* pTaskRot = dynamic_cast<CRotToFace*>(Engine::Clone_Proto(L"TSK_Rot", this));
+	CRotToFace* pTaskRot = dynamic_cast<CRotToFace*>(Engine::Clone_Proto(L"TSK_Rot", this));
 	NULL_CHECK_RETURN(pTaskRot, E_FAIL);
-	CComponent* pTaskAttack = dynamic_cast<CAttack*>(Engine::Clone_Proto(L"TSK_Attack", this));
+	CAttack* pTaskAttack = dynamic_cast<CAttack*>(Engine::Clone_Proto(L"TSK_Attack", this));
 	NULL_CHECK_RETURN(pTaskAttack, E_FAIL);
 
-	CComponent* pDecRangeCheck = dynamic_cast<CRangeCheck*>(Engine::Clone_Proto(L"DEC_RangeCheck", this));
-	NULL_CHECK_RETURN(pDecRangeCheck, E_FAIL);
+	CIsRangeInPlayer* pDecIsRangeInPlayer = dynamic_cast<CIsRangeInPlayer*>(Engine::Clone_Proto(L"DEC_IsRangeInPlayer", this));
+	NULL_CHECK_RETURN(pDecIsRangeInPlayer, E_FAIL);
 
 	// 何前 檬扁汲沥
 
 	// 何前 炼赋
-	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, 1, L"SQ_ChaseAtk", pSQChaseAtk), E_FAIL);
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SQ_ChaseAtk", pSQChaseAtk), E_FAIL);
 
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChaseAtk)->Add_Decorator(pDecRangeCheck), E_FAIL);
+	FAILED_CHECK_RETURN(pSQChaseAtk->Add_Decorator(pDecIsRangeInPlayer), E_FAIL);
 
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChaseAtk)->Add_Component(ID_UPDATE, 1, L"TSK_Rot", pTaskRot), E_FAIL);
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChaseAtk)->Add_Component(ID_UPDATE, 2, L"TSK_Attack", pTaskAttack), E_FAIL);
+	FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"TSK_Rot", pTaskRot), E_FAIL);
+	FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"TSK_Attack", pTaskAttack), E_FAIL);
 
 	return S_OK;
 }
 
-HRESULT CMonster::Set_PAF_JumpAI()
+HRESULT CMonster::Set_Boss1_AI()
 {
-	Set_PatrolAndFollow_AI();
-
 	// 何前 积己
-	CComponent* pTskJump = dynamic_cast<CJump*>(Engine::Clone_Proto(L"TSK_Jump", this));
-	NULL_CHECK_RETURN(pTskJump, E_FAIL);
-
-	// 扁粮俊 积己沁带 厚庆厚绢 啊廉咳
-	CSelector* pSelector = dynamic_cast<CSelector*>(m_pRoot->CComposite::Get_Component(L"SL_AIRoot", ID_UPDATE));
-	CSequence* pSQChase = dynamic_cast<CSequence*>(pSelector->CComposite::Get_Component(L"SQ_Chase", ID_UPDATE));
+	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
+	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
 	// 何前 檬扁汲沥
-	dynamic_cast<CJump*>(pTskJump)->Set_Timer(4.f);
 
 	// 何前 炼赋
-	FAILED_CHECK_RETURN(dynamic_cast<CSequence*>(pSQChase)->Add_Component(ID_UPDATE, 3, L"TSK_Jump", pTskJump));
-	
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
+
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(6.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern1", Make_BossPattern1()), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern2", Make_BossPattern2()), E_FAIL);
+
 	return S_OK;
 }
 

@@ -4,12 +4,12 @@
 #include "Export_Utility.h"
 
 CMoveLook::CMoveLook(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CBehavior(pGraphicDev)
+	: CBehavior(pGraphicDev), m_fMagnification(0.f)
 {
 }
 
 CMoveLook::CMoveLook(const CMoveLook & rhs)
-	: CBehavior(rhs)
+	: CBehavior(rhs), m_fMagnification(rhs.m_fMagnification)
 {
 }
 
@@ -31,7 +31,7 @@ _int CMoveLook::Update_Component(const _float & fTimeDelta)
 	_float fSpeed = 0.f;
 	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FAIL);
 
-	m_pGameObject->m_pTransform->Move_Walk(fSpeed, fTimeDelta);
+	m_pGameObject->m_pTransform->Move_Walk(fSpeed * m_fMagnification, fTimeDelta);
 
 	if (m_fCurTime - m_fPreTime >= m_fTimer)
 	{

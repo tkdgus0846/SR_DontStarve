@@ -8,10 +8,13 @@
 #include "Player.h"
 #include "Tennel.h"
 
+#include "Animation.h"
+
 
 CDoor::CDoor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_pRoom(nullptr)
 	, m_pInTennel(nullptr), m_pOutTennel(nullptr)
+	, m_bIsOpen(false)
 {
 	Set_LayerID(LAYER_TRIGGER);
 	Set_ObjTag(L"Door");
@@ -39,14 +42,22 @@ HRESULT CDoor::Ready_GameObject(DOOR_DIR eDir, CRoom* pRoom)
 
 _int CDoor::Update_GameObject(const _float & fTimeDelta)
 {
+	if (m_bIsOpen)
+	{
+		m_pAnimation->ToggleInverse();
+		m_pCollider->Set_Enable(m_bIsOpen);
+	}
+	else
+		m_pCollider->Set_Enable(m_bIsOpen);
+
+
 	if (GetDead()) return OBJ_DEAD;
-
-
-	__super::Update_GameObject(fTimeDelta);
 
 	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Add_RenderGroup(RENDER_ALPHA, this);
+
+	__super::Update_GameObject(fTimeDelta);
 
 	return 0;
 }
@@ -59,6 +70,9 @@ void CDoor::LateUpdate_GameObject(void)
 void CDoor::Render_GameObject(void)
 {
 	__super::Render_GameObject();
+
+	m_pAnimation->Render_Component();
+	m_pRcTex->Render_Component();
 }
 
 void CDoor::OnCollisionEnter(const Collision * collsion)
@@ -117,20 +131,27 @@ void CDoor::OnCollisionEnter(const Collision * collsion)
 
 HRESULT CDoor::Add_Component()
 {
-	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Clone_Proto(L"RcTex", this));
-	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"RcTex", pBufferCom });
+	m_pRcTex = dynamic_cast<CRcTex*>(Clone_Proto(L"RcTex", this));
+	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"RcTex", m_pRcTex });
 
 	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Dock_Texture", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-
 	m_uMapComponent[ID_RENDER].emplace(L"Dock_Texture", m_pTextureCom);
 
 	m_pCollider = dynamic_cast<CCollider*>(Clone_Proto(L"Collider", L"Collider", this, COL_TRIGGER));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
 	m_pCollider->Set_BoundingBox({ 1.f, 4.f, 1.f });
-	
+
+	m_pAnimation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
+	NULL_CHECK_RETURN(m_pAnimation, E_FAIL);
+
+	m_pAnimation->BindAnimation(ANIM_WALK, m_pTextureCom, 0.03f, false);
+	m_pAnimation->SelectState(ANIM_WALK);
+	m_pAnimation->ToggleInverse();
+	m_uMapComponent[ID_UPDATE].insert({ L"Animation", m_pAnimation });
+
 	return S_OK;
 }
 

@@ -19,7 +19,7 @@ HRESULT CBub::Ready_GameObject(const _vec3& vPos)
 	m_iAttack = 1;
 	m_iHp = 5;
 
-	m_pTransform->m_vScale = { 0.6f, 0.6f, 0.6f };
+	m_pTransform->m_vScale = { 2.4f, 2.4f, 2.4f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
@@ -72,26 +72,23 @@ HRESULT CBub::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox({ 1.2f, 1.2f, 1.2f });
+	pCollider->Set_BoundingBox({ 4.8f, 4.8f, 4.8f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
-	pCollider->Set_BoundingBox({ 30.f, 10.f, 30.f });
+	pCollider->Set_BoundingBox({ 70.f, 10.f, 70.f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"EvasBullet", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
 	pCollider->Set_BoundingBox({ 15.f, 6.f, 15.f });
 
-	CRigidbody* pRigidBody = dynamic_cast<CRigidbody*>(Engine::Clone_Proto(L"RigidBody", this));
-	NULL_CHECK_RETURN(pRigidBody, E_FAIL);
-	m_uMapComponent[ID_UPDATE].insert({ L"RigidBody", pRigidBody });
-
-
 	Create_Root_AI();
 	//Set_PatrolAndFollow_AI();
-	Set_PAF_JumpAI();
+	//Set_PAF_JumpAI();
+	//Set_PAF_LeapJumpAI();
+	Set_Boss1_AI();
 	Init_AI_Behaviours();
 
 	return S_OK;

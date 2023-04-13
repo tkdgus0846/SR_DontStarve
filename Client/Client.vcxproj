@@ -220,6 +220,7 @@
   <ItemGroup>
     <ClInclude Include="Attack.h" />
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="BackJump.h" />
     <ClInclude Include="Baller.h" />
     <ClInclude Include="Bub.h" />
     <ClInclude Include="Bullet.h" />
@@ -258,11 +259,14 @@
     <ClInclude Include="ImMenuBar.h" />
     <ClInclude Include="ImTest.h" />
     <ClInclude Include="ImWindow.h" />
+    <ClInclude Include="IsNotRangeInPlayer.h" />
+    <ClInclude Include="IsRangeInPlayer.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Jump.h" />
     <ClInclude Include="LeapJump.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="Logo.h" />
+    <ClInclude Include="LookAtTarget.h" />
     <ClInclude Include="MainApp.h" />
     <ClInclude Include="MapObj.h" />
     <ClInclude Include="MiniMap.h" />
@@ -274,6 +278,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="NotCollisionWall.h" />
     <ClInclude Include="Pyramid.h" />
     <ClInclude Include="ReflectBall.h" />
     <ClInclude Include="RoomMgr.h">
@@ -289,8 +294,10 @@
     <ClInclude Include="RangeCheck.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Rush.h" />
     <ClInclude Include="Tennel.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="TimeInLimit.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="VortexBullet.h" />
@@ -308,6 +315,7 @@
   <ItemGroup>
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="BackJump.cpp" />
     <ClCompile Include="Baller.cpp" />
     <ClCompile Include="Bub.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -349,11 +357,14 @@
     <ClCompile Include="ImMenuBar.cpp" />
     <ClCompile Include="ImTest.cpp" />
     <ClCompile Include="ImWindow.cpp" />
+    <ClCompile Include="IsNotRangeInPlayer.cpp" />
+    <ClCompile Include="IsRangeInPlayer.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jump.cpp" />
     <ClCompile Include="LeapJump.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Logo.cpp" />
+    <ClCompile Include="LookAtTarget.cpp" />
     <ClCompile Include="MainApp.cpp" />
     <ClCompile Include="MapObj.cpp" />
     <ClCompile Include="MiniMap.cpp" />
@@ -364,6 +375,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="NotCollisionWall.cpp" />
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="ReflectBall.cpp" />
     <ClCompile Include="RoomMgr.cpp">
@@ -379,6 +391,7 @@
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RandomLook.cpp" />
     <ClCompile Include="RotToFace.cpp" />
+    <ClCompile Include="Rush.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -386,6 +399,7 @@
     </ClCompile>
     <ClCompile Include="Tennel.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TimeInLimit.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="VortexBullet.cpp" />

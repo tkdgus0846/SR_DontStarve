@@ -43,8 +43,7 @@ private:
 // 비해비어 트리에 우선순위를 정하기 위한 구조체
 typedef struct PriComp
 {
-	_int			iPriority;
-	const _tchar*	pTag;		// 컴포넌트 태그인데 아직 사용처가 불분명함.
+	const _tchar*	pTag;
 	CComponent*		pComponent;
 }PRICOMP;
 
@@ -64,7 +63,6 @@ public:
 
 public:
 	HRESULT				Add_Component(COMPONENTID eID, 
-										const _int& iPriority, 
 										const _tchar* pComponentTag, 
 										CComponent* pComponent);
 	CComponent*			Get_Component(const _tchar* pComponentTag, COMPONENTID eID);

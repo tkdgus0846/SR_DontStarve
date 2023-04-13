@@ -44,7 +44,7 @@ HRESULT CBehavior::Add_Decorator(CComponent * pComponent)
 {
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 
-	m_DecoratorList.push_back({ 0, nullptr, pComponent });
+	m_DecoratorList.push_back({ nullptr, pComponent });
 
 	return S_OK;
 }
