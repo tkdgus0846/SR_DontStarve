@@ -152,7 +152,7 @@ CBossHp * CBossHp::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CBossHp::Free(void)
 {
 	Safe_Release(m_sRcTex);
-	Safe_Release(m_sRcTex);
+	Safe_Release(m_dRcTex);
 
 	auto iter = m_arrMap.begin();
 	for (; iter < m_arrMap.end(); iter++)

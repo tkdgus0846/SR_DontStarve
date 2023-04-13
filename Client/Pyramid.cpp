@@ -55,10 +55,10 @@ HRESULT CPyramid::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"FrustrumNormalTex", pComponent });
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_TRIGGER));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_OBJ));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox(m_pTransform->Get_Scale() * 4.f);
+	pCollider->Set_BoundingBox(m_pTransform->Get_Scale() * 4.f, {0.f,1.f,0.f});
 	return S_OK;
 }
 

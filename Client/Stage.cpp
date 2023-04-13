@@ -79,7 +79,7 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CDisc::Create(m_pGraphicDev));
 	Add_GameObject(CWeaponType::Create(m_pGraphicDev));
 	Add_GameObject(CMiniMap::Create(m_pGraphicDev));
-	//Add_GameObject(CGunUI::Create(m_pGraphicDev));
+	Add_GameObject(CGunUI::Create(m_pGraphicDev));
 
 	// Item
 	Add_GameObject(CCoinItem::Create(m_pGraphicDev));	

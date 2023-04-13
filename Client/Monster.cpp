@@ -6,9 +6,10 @@
 #include "Player.h"
 #include "Bullet.h"
 
-CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CCreature(pGraphicDev), m_fSpeed(0.f)
-	, m_pRoot(nullptr), m_redTexture(false)
+CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev) : 
+	CCreature(pGraphicDev),
+	m_pRoot(nullptr), 
+	m_redTexture(false)
 {
 	Set_LayerID(LAYER_MONSTER);
 }
@@ -31,10 +32,10 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	_matrix view;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
 
-	if (m_pTransform->m_vInfo[INFO_POS].y < 0.6f)
+	/*if (m_pTransform->m_vInfo[INFO_POS].y < 0.6f)
 	{
 		m_pTransform->m_vInfo[INFO_POS].y = 0.6f;
-	}
+	}*/
 
 	//m_pTransform->Set_Billboard(&view);
 	__super::Update_GameObject(fTimeDelta);

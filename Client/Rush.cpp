@@ -41,14 +41,7 @@ _int CRush::Update_Component(const _float & fTimeDelta)
 	}
 	else
 	{
-		for (auto iter : uMap)
-		{
-			if (dynamic_cast<CPlayer*>(iter.second.OtherGameObject))
-				return BEHAVIOR_SUCCES;
-
-			else if (dynamic_cast<CWall*>(iter.second.OtherGameObject))
-				return BEHAVIOR_SUCCES;
-		}
+		return BEHAVIOR_SUCCES;
 	}
 
 	return BEHAVIOR_FAIL;
