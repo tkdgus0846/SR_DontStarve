@@ -1,27 +1,26 @@
 #include "stdafx.h"
 #include "Firework.h"
+#include "GameObject.h"
+#include "Transform.h"
+#include "Export_Function.h"
 
 
-
-
-CFirework::CFirework(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 * origin, int numParticles) :
+CFirework::CFirework(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CParticleSystem(pGraphicDev)
 {
-	m_Origin = *origin;
-	m_Size = 0.8f;
+	m_Size = 0.7f;
 	m_VBSize = 2048;
 	m_VBOffset = 0;
 	m_VBBatchSize = 512;
-
-	for (int i = 0; i < numParticles; i++)
-		AddParticle();
 }
 
 CFirework::CFirework(const CFirework & rhs) :
 	CParticleSystem(rhs)
 {
-	for (auto it = rhs.m_Particles.begin(); it != rhs.m_Particles.end(); it++)
-		m_Particles.push_back(*it);
+	m_fRadius = 10.f;
+
+	m_Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"IceBullet_Texture", nullptr));
+	
 }
 
 CFirework::~CFirework()
@@ -30,31 +29,45 @@ CFirework::~CFirework()
 
 void CFirework::ResetParticle(Particle * particle)
 {
+	_vec3 offsetPoint;
+	m_pGameObject->m_pTransform->Get_Info(INFO_POS, &offsetPoint);
+
+	/*m_BoundingBox.Offset(offsetPoint);*/
+	m_Pos = offsetPoint;
+
 	particle->bIsAlive = true;
-	particle->vPos = m_Origin;
 
-	_vec3 minVec = _vec3(-1.f, -1.f, -1.f);
-	_vec3 maxVec = _vec3(1.f, 1.f, 1.f);
+	particle->fAngle = D3DXToRadian(GetRandomFloat(0.f, 360.f));
+	particle->fRadius = GetRandomFloat(15.f, 20.f);
+	particle->vPos.x = m_Pos.x + particle->fRadius * cosf(D3DXToRadian(particle->fAngle));
+	particle->vPos.z = m_Pos.z + particle->fRadius * sinf(D3DXToRadian(particle->fAngle));
+	particle->vPos.y = m_Pos.y - 2.1f;
 
-	GetRandomVector(
-		&particle->vVelocity,
-		&minVec,
-		&maxVec);
+	particle->fSpeed = 0.45f;
 
-	D3DXVec3Normalize(
-		&particle->vVelocity,
-		&particle->vVelocity);
+	int randNum = rand() % 2;
 
-	particle->vVelocity *= 100.f;
-
-	particle->dwColor = D3DXCOLOR(
-		GetRandomFloat(0.f, 1.f),
-		GetRandomFloat(0.f, 1.f),
-		GetRandomFloat(0.f, 1.f),
-		1.f);
+	if (randNum == 0)
+	{
+		particle->dwColor = D3DXCOLOR(
+			0.f,
+			0.f,
+			0.f,
+			GetRandomFloat(0.f, 1.0f));
+		particle->vTexUV = { 0.f, 0.f };
+	}
+	else
+	{
+		particle->dwColor = D3DXCOLOR(
+			1.f,
+			1.f,
+			1.f,
+			GetRandomFloat(0.f, 1.0f));
+	}
+	
 
 	particle->fAge = 0.f;
-	particle->fLifeTime = 2.0f;
+	particle->fLifeTime = 7.5f;
 }
 
 _int CFirework::Update_Component(const _float & fTimeDelta)
@@ -63,14 +76,22 @@ _int CFirework::Update_Component(const _float & fTimeDelta)
 	if (iExit != 0) return iExit;
 
 	list<Particle>::iterator it;
+	m_fRadius -= 1.0f * fTimeDelta;
 
 	for (it = m_Particles.begin(); it != m_Particles.end(); it++)
 	{
 		if (it->bIsAlive)
 		{
-			it->vPos += it->vVelocity * fTimeDelta;
-			it->fAge += fTimeDelta;
+			
+			it->vPos.x = m_Pos.x + it->fRadius * cosf(it->fAngle);
+			it->vPos.z = m_Pos.z + it->fRadius * sinf(it->fAngle);
 
+			it->fAge += fTimeDelta;
+			it->vPos.y -= it->fSpeed * fTimeDelta;
+			if (it->vPos.y < 0.1f) it->vPos.y = 0.1f;
+			it->fAngle -= D3DXToRadian(480.f) * fTimeDelta;
+			it->fRadius -= GetRandomFloat(3.f,9.f) * fTimeDelta;
+			/*if (it->fRadius < 8.f) it->fRadius = 8.f;*/
 			if (it->fAge > it->fLifeTime)
 				it->bIsAlive = false;
 		}
@@ -82,9 +103,9 @@ _int CFirework::Update_Component(const _float & fTimeDelta)
 	return 0;
 }
 
-CFirework * CFirework::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3* origin, int numParticles)
+CFirework * CFirework::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CFirework *	pInstance = new CFirework(pGraphicDev, origin, numParticles);
+	CFirework *	pInstance = new CFirework(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Particle()))
 	{
@@ -104,18 +125,19 @@ void CFirework::PreRender()
 {
 	CParticleSystem::PreRender();
 
-	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, false);
+	/*m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
+	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);*/
+	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, false);
 }
 
 void CFirework::PostRender()
 {
 	CParticleSystem::PostRender();
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, true);
+	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, true);
 }
 
 void CFirework::Free(void)
 {
+	Safe_Release(m_Texture);
 	__super::Free();
 }

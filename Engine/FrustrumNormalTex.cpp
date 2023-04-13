@@ -53,19 +53,21 @@ HRESULT CFrustrumNormalTex::Ready_Buffer(void)
 	pVertex[3].vTexUV = pVertex[3].vPos;
 
 
-	pVertex[4].vPos = { -0.5f, 1.0f,  0.5f };
+	_float fx = 0.2f;
+
+	pVertex[4].vPos = { -fx, 1.0f,  fx };
 	//pVertex[4].vNormal = { 0.f, 0.f, 0.f };
 	pVertex[4].vTexUV = pVertex[4].vPos;
 
-	pVertex[5].vPos = { 0.5f, 1.0f,  0.5f };
+	pVertex[5].vPos = { fx, 1.0f,  fx };
 	//pVertex[5].vNormal = { 0.f, 0.f, 0.f };
 	pVertex[5].vTexUV = pVertex[5].vPos;
 
-	pVertex[6].vPos = { 0.5f, 1.0f, -0.5f };
+	pVertex[6].vPos = { fx, 1.0f, -fx };
 	//pVertex[6].vNormal = { 0.f, 0.f, 0.f };
 	pVertex[6].vTexUV = pVertex[6].vPos;
 
-	pVertex[7].vPos = { -0.5f, 1.0f, -0.5f };
+	pVertex[7].vPos = { -fx, 1.0f, -fx };
 	//pVertex[7].vNormal = { 0.f, 0.f, 0.f };
 	pVertex[7].vTexUV = pVertex[7].vPos;
 

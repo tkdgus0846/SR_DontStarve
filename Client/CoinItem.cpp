@@ -39,6 +39,7 @@ HRESULT CCoinItem::Add_Component()
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
+
 	return S_OK;
 }
 
@@ -50,7 +51,7 @@ HRESULT CCoinItem::Ready_GameObject(void)
 
 _int CCoinItem::Update_GameObject(const _float & fTimeDelta)
 {
-	ItemPatrol();
+	if (m_bDrop == true) ItemPatrol();
 	__super::Update_GameObject(fTimeDelta);
 
 	if (GetDead()) return OBJ_DEAD;
@@ -112,19 +113,23 @@ void CCoinItem::OnCollisionEnter(const Collision * collsion)
 
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
 	
-	if (m_eID == BIG)
+	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
 	{
-		pPlayer->Gain_Coin(2);
+		if (m_eID == BIG)
+		{
+			pPlayer->Gain_Coin(2);
+		}
+		else
+		{
+			pPlayer->Gain_Coin(1);
+		}
 	}
-	else
-	{
-		pPlayer->Gain_Coin(1);
-	}
+
 }
 
 void CCoinItem::OnCollisionStay(const Collision * collision)
 {
-	__super::OnCollisionEnter(collision);
+	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
 
 	ItemMagnetic(pPlayer);

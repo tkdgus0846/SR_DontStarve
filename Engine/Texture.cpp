@@ -47,8 +47,7 @@ HRESULT CTexture::Ready_Texture(TEXTYPE eTextype, const _tchar * pPath, const _u
 			break;
 
 		case TEX_CUBE:
-			FAILED_CHECK_RETURN(D3DXCreateCubeTextureFromFile(m_pGraphicDev, szFileName, (LPDIRECT3DCUBETEXTURE9*)&pTexture), E_FAIL);
-			break;
+			FAILED_CHECK_RETURN(D3DXCreateCubeTextureFromFile(m_pGraphicDev, szFileName, (LPDIRECT3DCUBETEXTURE9*)&pTexture), E_FAIL);			break;
 		}
 	
 		m_vecTexture.push_back(pTexture);
@@ -64,6 +63,13 @@ void CTexture::Render_Texture(const _uint& iIndex)
 		return;
 
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
+}
+
+void Engine::CTexture::Render_Texture_Num()
+{
+	if (m_vecTexture.size() <= m_TextureNum)
+		return;
+	m_pGraphicDev->SetTexture(0, m_vecTexture[m_TextureNum]);
 }
 
 void CTexture::Render_Component()

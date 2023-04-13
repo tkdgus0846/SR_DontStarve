@@ -4,9 +4,11 @@
 #include "Export_Function.h"
 #include "MonoBehaviors.h"
 #include "Player.h"
+#include "Bullet.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CCreature(pGraphicDev), m_pRoot(nullptr)
+	: CCreature(pGraphicDev), m_fSpeed(0.f)
+	, m_pRoot(nullptr), m_redTexture(false)
 {
 	Set_LayerID(LAYER_MONSTER);
 }
@@ -29,6 +31,11 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	_matrix view;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
 
+	if (m_pTransform->m_vInfo[INFO_POS].y < 0.6f)
+	{
+		m_pTransform->m_vInfo[INFO_POS].y = 0.6f;
+	}
+
 	//m_pTransform->Set_Billboard(&view);
 	__super::Update_GameObject(fTimeDelta);
 	return 0;
@@ -41,7 +48,37 @@ void CMonster::LateUpdate_GameObject(void)
 
 void CMonster::Render_GameObject(void)
 {
+	if (m_redTexture)
+	{
+		m_fCurTime = Get_WorldTime();
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_MODULATE2X);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_CURRENT);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLORARG2, D3DTA_TEXTURE);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_ALPHAARG1, D3DTA_CURRENT);
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
+		float sparkleIntensity = 1.0f; // 0.0 (ÏïΩÌï®) ~ 1.0 (Í∞ïÌï®)
+		m_pGraphicDev->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(static_cast<int>(255 * sparkleIntensity), 255, 255, 255));
+	}
+
 	__super::Render_GameObject();
+
+	if (m_redTexture)
+	{
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		m_pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+
+		m_pGraphicDev->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
+
+		if (m_fCurTime - m_fPreTime > m_fDuration)
+			m_redTexture = false;
+	}
 }
 
 void CMonster::OnCollisionEnter(const Collision * collsion)
@@ -53,6 +90,13 @@ void CMonster::OnCollisionEnter(const Collision * collsion)
 	if (player && collsion->MyCollider == Get_Component(L"BodyCollider", ID_ALL))
 	{
 		player->Get_Damaged(Get_Attack());
+	}
+
+	if (dynamic_cast<CBullet*>(collsion->OtherGameObject))
+	{
+		m_redTexture = true;
+		m_fCurTime = Get_WorldTime();
+		m_fPreTime = Get_WorldTime();
 	}
 }
 
@@ -98,10 +142,10 @@ HRESULT CMonster::Create_Root_AI()
 	return S_OK;
 }
 
-// AI	±∏«ˆ∫Œ
+// AI	Íµ¨ÌòÑÎ∂Ä
 CSequence* CMonster::Make_Patrol_AI(const _float& fWaitTime, const _float& fMoveTime)
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQPatrol = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQPatrol, nullptr);
 	
@@ -115,12 +159,12 @@ CSequence* CMonster::Make_Patrol_AI(const _float& fWaitTime, const _float& fMove
 	CIsNotRangeInPlayer* pDecFunc = dynamic_cast<CIsNotRangeInPlayer*>(Engine::Clone_Proto(L"DEC_IsNotRangeInPlayer", this));
 	NULL_CHECK_RETURN(pDecFunc, nullptr);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 	pTaskWait->Set_Timer(fWaitTime);
 	pTaskMovePatrol->Set_Timer(fMoveTime);
 	pTaskMovePatrol->Set_Magnifi();
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(pSQPatrol->Add_Decorator(pDecFunc), nullptr);
 
 	FAILED_CHECK_RETURN(pSQPatrol->Add_Component(ID_UPDATE, L"TSK_RandomLook", pTaskRandomLook), nullptr);
@@ -132,7 +176,7 @@ CSequence* CMonster::Make_Patrol_AI(const _float& fWaitTime, const _float& fMove
 
 CSequence* CMonster::Make_Follow_AI(const _float& fTimer)
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQChase = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQChase, nullptr);
 
@@ -147,11 +191,11 @@ CSequence* CMonster::Make_Follow_AI(const _float& fTimer)
 	CTimeInLimit* pDecTimeInLimit = dynamic_cast<CTimeInLimit*>(Engine::Clone_Proto(L"DEC_TimeInLimit", this));
 	NULL_CHECK_RETURN(pDecTimeInLimit, nullptr);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 	pDecTimeInLimit->Set_Timer(fTimer);
 	pTskMovePlayer->Set_Magnifi();
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(pSQChase->Add_Decorator(pDecIsRangeInPlayer), nullptr);
 	FAILED_CHECK_RETURN(pSQChase->Add_Decorator(pDecTimeInLimit), nullptr);
 
@@ -163,17 +207,17 @@ CSequence* CMonster::Make_Follow_AI(const _float& fTimer)
 
 CSequence* CMonster::Make_JumpAI(const _float& fTimer)
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQJump = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQJump, nullptr);
 
 	CJump* pTskJump = dynamic_cast<CJump*>(Engine::Clone_Proto(L"TSK_Jump", this));
 	NULL_CHECK_RETURN(pTskJump, nullptr);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 	pTskJump->Set_Timer(fTimer);
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_Jump", pTskJump), nullptr);
 
 	return pSQJump;
@@ -181,7 +225,7 @@ CSequence* CMonster::Make_JumpAI(const _float& fTimer)
 
 CSequence * CMonster::Make_DBJumpAI(const _float & fTimer)
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQJump = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQJump, nullptr);
 
@@ -190,11 +234,11 @@ CSequence * CMonster::Make_DBJumpAI(const _float & fTimer)
 	CJump* pTskJump2 = dynamic_cast<CJump*>(Engine::Clone_Proto(L"TSK_Jump", this));
 	NULL_CHECK_RETURN(pTskJump2, nullptr);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 	pTskJump1->Set_Timer(fTimer);
 	pTskJump2->Set_Timer(0.f);
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_BackJump", pTskJump1), nullptr);
 	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_BackJump", pTskJump2), nullptr);
 
@@ -203,7 +247,7 @@ CSequence * CMonster::Make_DBJumpAI(const _float & fTimer)
 
 CSequence * CMonster::Make_DBBackJumpAI(const _float & fTimer)
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQJump = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQJump, nullptr);
 
@@ -212,11 +256,11 @@ CSequence * CMonster::Make_DBBackJumpAI(const _float & fTimer)
 	CBackJump* pTskJump2 = dynamic_cast<CBackJump*>(Engine::Clone_Proto(L"TSK_BackJump", this));
 	NULL_CHECK_RETURN(pTskJump2, nullptr);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 	pTskJump1->Set_Timer(fTimer);
 	pTskJump2->Set_Timer(0.f);
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_Jump", pTskJump1), nullptr);
 	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_Jump", pTskJump2), nullptr);
 
@@ -225,17 +269,17 @@ CSequence * CMonster::Make_DBBackJumpAI(const _float & fTimer)
 
 CSequence * CMonster::Make_LeapJumpAI(const _float & fTimer)
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQLeapJump = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQLeapJump, nullptr);
 
 	CLeapJump* pTskLeapJump = dynamic_cast<CLeapJump*>(Engine::Clone_Proto(L"TSK_LeapJump", this));
 	NULL_CHECK_RETURN(pTskLeapJump, nullptr);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 	pTskLeapJump->Set_Timer(fTimer);
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(pSQLeapJump->Add_Component(ID_UPDATE, L"TSK_LeapJump", pTskLeapJump), nullptr);
 
 	return pSQLeapJump;
@@ -243,7 +287,7 @@ CSequence * CMonster::Make_LeapJumpAI(const _float & fTimer)
 
 CSequence * CMonster::Make_JumpToPlayer()
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQJump = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQJump, nullptr);
 
@@ -252,9 +296,9 @@ CSequence * CMonster::Make_JumpToPlayer()
 	CLeapJump* pTskLeapJump = dynamic_cast<CLeapJump*>(Engine::Clone_Proto(L"TSK_LeapJump", this));
 	NULL_CHECK_RETURN(pTskLeapJump, nullptr);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_LookAtPlayer", pTskLookAt), nullptr);
 	FAILED_CHECK_RETURN(pSQJump->Add_Component(ID_UPDATE, L"TSK_LeapJump", pTskLeapJump), nullptr);
 
@@ -263,7 +307,7 @@ CSequence * CMonster::Make_JumpToPlayer()
 
 CSequence * CMonster::Make_RushAI()
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQRush = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQRush, nullptr);
 
@@ -272,9 +316,9 @@ CSequence * CMonster::Make_RushAI()
 	CRush* pTskRush = dynamic_cast<CRush*>(Engine::Clone_Proto(L"TSK_Rush", this));
 	NULL_CHECK_RETURN(pTskRush, nullptr);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(pSQRush->Add_Component(ID_UPDATE, L"TSK_LookAtTarget", pTskLookatTarget), nullptr);
 	FAILED_CHECK_RETURN(pSQRush->Add_Component(ID_UPDATE, L"TSK_Rush", pTskRush), nullptr);
 
@@ -283,13 +327,13 @@ CSequence * CMonster::Make_RushAI()
 
 CSequence* CMonster::Make_BossPattern1(const _float& fCoolTime)
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQPattern1 = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQPattern1, nullptr);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_DBJump", Make_DBJumpAI(fCoolTime)), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_Rush", Make_RushAI()), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_Jump", Make_JumpAI()), nullptr);
@@ -299,13 +343,13 @@ CSequence* CMonster::Make_BossPattern1(const _float& fCoolTime)
 
 CSequence * CMonster::Make_BossPattern2(const _float & fCoolTime)
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQPattern1 = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQPattern1, nullptr);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_DBBackJump", Make_DBBackJumpAI(fCoolTime)), nullptr);
 
 	for (_uint i = 0; i < 5; ++i)
@@ -323,7 +367,7 @@ HRESULT CMonster::Set_PatrolAndFollow_AI()
 	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
 	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SLRootAI", pSLRootAI));
 
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQFollow", Make_Follow_AI()));
@@ -337,7 +381,7 @@ HRESULT CMonster::Set_PAF_JumpAI()
 	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
 	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SLRootAI", pSLRootAI));
 
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQFollow", Make_Follow_AI(4.f)));
@@ -352,7 +396,7 @@ HRESULT CMonster::Set_PAF_LeapJumpAI()
 	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
 	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SLRootAI", pSLRootAI));
 
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQFollow", Make_Follow_AI(4.f)));
@@ -364,7 +408,7 @@ HRESULT CMonster::Set_PAF_LeapJumpAI()
 
 HRESULT CMonster::Set_TurretAI()
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSequence* pSQChaseAtk = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQChaseAtk, E_FAIL);
 
@@ -376,9 +420,9 @@ HRESULT CMonster::Set_TurretAI()
 	CIsRangeInPlayer* pDecIsRangeInPlayer = dynamic_cast<CIsRangeInPlayer*>(Engine::Clone_Proto(L"DEC_IsRangeInPlayer", this));
 	NULL_CHECK_RETURN(pDecIsRangeInPlayer, E_FAIL);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SQ_ChaseAtk", pSQChaseAtk), E_FAIL);
 
 	FAILED_CHECK_RETURN(pSQChaseAtk->Add_Decorator(pDecIsRangeInPlayer), E_FAIL);
@@ -391,13 +435,13 @@ HRESULT CMonster::Set_TurretAI()
 
 HRESULT CMonster::Set_Boss1_AI()
 {
-	// ∫Œ«∞ ª˝º∫
+	// Î∂ÄÌíà ÏÉùÏÑ±
 	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
 	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
-	// ∫Œ«∞ √ ±‚º≥¡§
+	// Î∂ÄÌíà Ï¥àÍ∏∞ÏÑ§Ï†ï
 
-	// ∫Œ«∞ ¡∂∏≥
+	// Î∂ÄÌíà Ï°∞Î¶Ω
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(6.f)), E_FAIL);
@@ -410,10 +454,10 @@ HRESULT CMonster::Set_Boss1_AI()
 
 HRESULT CMonster::Init_AI_Behaviours()
 {
-	// ¡∂∏≥µ» ∆Æ∏Æ ¿¸√º √ ±‚»≠
+	// Ï°∞Î¶ΩÎêú Ìä∏Î¶¨ Ï†ÑÏ≤¥ Ï¥àÍ∏∞Ìôî
 	FAILED_CHECK_RETURN(dynamic_cast<CRoot*>(m_pRoot)->Ready_Behavior(), E_FAIL);
 
-	// ∑Á∆Æ¿« ∫Ì∑¢∫∏µÂø° ¿⁄∑·«¸ √§øÏ±‚
+	// Î£®Ìä∏Ïùò Î∏îÎûôÎ≥¥ÎìúÏóê ÏûêÎ£åÌòï Ï±ÑÏö∞Í∏∞
 	FAILED_CHECK_RETURN(m_pRoot->m_pBlackBoard->Add_Type(L"fSpeed", m_fSpeed), E_FAIL);
 
 	return E_NOTIMPL;

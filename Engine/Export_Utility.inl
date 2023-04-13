@@ -77,14 +77,22 @@ CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject)
 	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject);
 }
 
+// AI 클론용
 CComponent*	Clone_Proto(const _tchar* pProtoTag, CGameObject* pGameObject, CBlackBoard* pBlackBoard)
 {
 	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject, pBlackBoard);
 }
 
+// Collider 클론용
 CComponent*	Clone_Proto(const _tchar * pProtoTag, const _tchar* colliderName, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize)
 {
 	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, colliderName, pGameObject, eColGroup, boundSize);
+}
+
+// Particle 클론용
+CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, const _int& particleNums, const _vec3& origin, const _vec3& boundSize)
+{
+	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag, pGameObject, particleNums, origin, boundSize);
 }
 
 void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)

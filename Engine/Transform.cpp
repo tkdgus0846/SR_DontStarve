@@ -181,6 +181,19 @@ void CTransform::Rot_Yaw(const _float & fAngle, const _float& fTimeDelta)
 	D3DXVec3TransformCoord(&m_vInfo[INFO_LOOK], &m_vInfo[INFO_LOOK], &matRot);
 }
 
+void CTransform::Reverse_Dir()
+{
+	_vec3 vDir = m_vInfo[INFO_LOOK];
+	_vec3 vUp, vRight;
+
+	vDir *= -1.f;
+	vDir.RightUpFromLook(vRight, vUp);
+
+	m_vInfo[INFO_LOOK] = vDir;
+	m_vInfo[INFO_RIGHT] = vRight;
+	m_vInfo[INFO_UP] = vUp;
+}
+
 void CTransform::Rot_Roll(const _float & fAngle, const _float& fTimeDelta)
 {
 	if (0 == fAngle)

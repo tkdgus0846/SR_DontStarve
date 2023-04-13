@@ -56,11 +56,9 @@ HRESULT CBulletItem::Ready_GameObject(void)
 
 _int CBulletItem::Update_GameObject(const _float & fTimeDelta)
 {
-	ItemPatrol();
+	if (m_bDrop == true) ItemPatrol();
 	__super::Update_GameObject(fTimeDelta);
-
 	if (GetDead()) return OBJ_DEAD;
-
 	return OBJ_NOEVENT;
 }
 
@@ -91,19 +89,23 @@ void CBulletItem::OnCollisionEnter(const Collision * collsion)
 {
 	__super::OnCollisionEnter(collsion);
 
-	CPlayer* player = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
-	CWeapon* pWeapon = player->Get_CurWeapon();
-	_int maxBullet = pWeapon->Get_MaxBulletNum();
-	_int curBullet = pWeapon->Get_CurBulletNum();
-	if ( curBullet / maxBullet  <  1.f)
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
+
+	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
 	{
-		pWeapon->GainBullet(2);
+		CWeapon* pWeapon = pPlayer->Get_CurWeapon();
+		_int maxBullet = pWeapon->Get_MaxBulletNum();
+		_int curBullet = pWeapon->Get_CurBulletNum();
+		if (curBullet / maxBullet  <  1.f)
+		{
+			pWeapon->GainBullet(2);
+		}
 	}
 }
 
 void CBulletItem::OnCollisionStay(const Collision * collision)
 {
-	__super::OnCollisionEnter(collision);
+	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
 
 	ItemMagnetic(pPlayer);

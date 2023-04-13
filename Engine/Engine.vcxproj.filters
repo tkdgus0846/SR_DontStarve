@@ -187,6 +187,12 @@
     <ClInclude Include="FrustrumNormalTex.h">
       <Filter>Component\VIBuffer</Filter>
     </ClInclude>
+    <ClInclude Include="VortexParticle.h">
+      <Filter>Component\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="SmokeParticle.h">
+      <Filter>Component\ParticleSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -341,6 +347,12 @@
     </ClCompile>
     <ClCompile Include="FrustrumNormalTex.cpp">
       <Filter>Component\VIBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="VortexParticle.cpp">
+      <Filter>Component\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="SmokeParticle.cpp">
+      <Filter>Component\ParticleSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

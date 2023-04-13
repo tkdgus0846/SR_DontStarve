@@ -83,6 +83,9 @@
     <Filter Include="Monobehaviours\Decorator">
       <UniqueIdentifier>{1314d0bf-6eda-469f-9b59-aa953435a1c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\MapObject\Pyramid">
+      <UniqueIdentifier>{3c856778-44ca-465a-90eb-65695009b097}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -296,15 +299,6 @@
     <ClInclude Include="MapObj.h">
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
-    <ClInclude Include="Pyramid.h">
-      <Filter>GameObject\MapObject</Filter>
-    </ClInclude>
-    <ClInclude Include="HardPyramid.h">
-      <Filter>GameObject\MapObject</Filter>
-    </ClInclude>
-    <ClInclude Include="ReflectBall.h">
-      <Filter>GameObject\MapObject</Filter>
-    </ClInclude>
     <ClInclude Include="MonsterFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
@@ -358,6 +352,24 @@
     </ClInclude>
     <ClInclude Include="BackJump.h">
       <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="BootsItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="BossHp.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Pyramid.h">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClInclude>
+    <ClInclude Include="HardPyramid.h">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClInclude>
+    <ClInclude Include="SoftPyramid.h">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClInclude>
+    <ClInclude Include="Slider.h">
+      <Filter>GameObject\MapObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -559,15 +571,6 @@
     <ClCompile Include="MapObj.cpp">
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
-    <ClCompile Include="Pyramid.cpp">
-      <Filter>GameObject\MapObject</Filter>
-    </ClCompile>
-    <ClCompile Include="HardPyramid.cpp">
-      <Filter>GameObject\MapObject</Filter>
-    </ClCompile>
-    <ClCompile Include="ReflectBall.cpp">
-      <Filter>GameObject\MapObject</Filter>
-    </ClCompile>
     <ClCompile Include="MonsterFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
@@ -621,6 +624,24 @@
     </ClCompile>
     <ClCompile Include="BackJump.cpp">
       <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="BootsItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="BossHp.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Pyramid.cpp">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClCompile>
+    <ClCompile Include="HardPyramid.cpp">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClCompile>
+    <ClCompile Include="SoftPyramid.cpp">
+      <Filter>GameObject\MapObject\Pyramid</Filter>
+    </ClCompile>
+    <ClCompile Include="Slider.cpp">
+      <Filter>GameObject\MapObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

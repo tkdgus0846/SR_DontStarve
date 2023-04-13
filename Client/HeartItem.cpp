@@ -50,7 +50,8 @@ HRESULT CHeartItem::Ready_GameObject(void)
 
 _int CHeartItem::Update_GameObject(const _float & fTimeDelta)
 {
-	ItemPatrol();
+
+	if (m_bDrop == true) ItemPatrol();
 	__super::Update_GameObject(fTimeDelta);
 
 	if (GetDead()) return OBJ_DEAD;
@@ -83,23 +84,30 @@ CHeartItem * CHeartItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CHeartItem::OnCollisionEnter(const Collision * collsion)
 {
-
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
 
 	_int curHp = pPlayer->Get_HP();
 	if (curHp == 20) { return; }
+
 	__super::OnCollisionEnter(collsion);
 
-	if (curHp < 20)
+	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
 	{
-		pPlayer->Gain_Hp();
+		if (curHp < 20)
+		{
+			pPlayer->Gain_Hp();
+		}
 	}
 }
 
 void CHeartItem::OnCollisionStay(const Collision * collision)
 {
-	__super::OnCollisionEnter(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+
+	_int curHp = pPlayer->Get_HP();
+	if (curHp == 20) { return; }
+
+	__super::OnCollisionEnter(collision);
 
 	ItemMagnetic(pPlayer);
 }

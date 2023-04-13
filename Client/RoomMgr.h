@@ -2,13 +2,11 @@
 
 #include "Base.h"
 #include "Include.h"
-
+#include "Room.h"
 BEGIN(Engine)
 class CCollider;
 class CLayer;
 END
-
-class CRoom;
 
 class CRoomMgr : public CBase
 {

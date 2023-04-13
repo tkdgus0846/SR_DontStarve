@@ -27,6 +27,7 @@ private:
 	void		Set_ViewMatrix_UI();
 	void		Set_ViewMatrix_UI(_float fX, _float fY);
 	_int		Compute_Num(_int& pPlayerDisc);
+	void		Redner_Disc();
 
 
 private:
@@ -37,8 +38,6 @@ private:
 
 	_int m_MaxNumber = 3;
 	_int m_iStartNum = 26;
-
-	string pPlayerCoin = "17";
 
 public:
 	static CDisc*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

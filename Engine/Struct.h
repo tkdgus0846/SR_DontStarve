@@ -57,8 +57,12 @@ typedef	struct tagIndex32
 struct Particle
 {
 	_vec3	vPos;
+	_vec2	vTexUV;
 	_vec3	vVelocity;
 	_vec3	vAccel;
+	_float	fSpeed;
+	_float	fRadius;
+	_float	fAngle;
 	_float	fLifeTime;
 	_float	fAge;
 	_ulong	dwColor;
