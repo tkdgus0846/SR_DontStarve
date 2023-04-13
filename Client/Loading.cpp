@@ -4,6 +4,7 @@
 #include "Export_Function.h"
 #include "MonoBehaviors.h"
 
+
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_bFinish(false)
@@ -146,6 +147,13 @@ _uint CLoading::Loading_ForStage(void)
 	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Animation", CAnimation::Create(m_pGraphicDev)), E_FAIL);
 	
+	/////////////////////////// 파티클
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Particle", CSnow::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Firework_Particle", CFirework::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Vortex_Particle", CVortexParticle::Create(m_pGraphicDev)), E_FAIL);
+
+	/////////////////////////// 파티클 텍스쳐 
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Smoke_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Particle/smoke.png")), E_FAIL);
 
 	Set_String(L"Buffer Loading..........");
 

@@ -11,7 +11,7 @@ CVortexBullet::CVortexBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 {
 	Set_ObjTag(L"VortexBullet");
 	m_fSpeed = 20.f;
-	m_fLifeSpan = 15.f;
+	m_fLifeSpan = 7.f;
 	m_fAge = 0.f;
 	m_Damage = 0;
 }
@@ -55,15 +55,16 @@ _int CVortexBullet::Update_GameObject(const _float & fTimeDelta)
 	}
 	else
 	{
-		if (m_pTransform->m_vInfo[INFO_POS].y > 0.5f)
+		m_Particle->Update_Component(fTimeDelta);
+		if (m_pTransform->m_vInfo[INFO_POS].y > 0.02f)
 		{
 			m_pTransform->m_vInfo[INFO_POS].y -= 1.1f*fTimeDelta;
 		}
 
-		if (m_pTransform->m_vScale.x < 6.f)
+		if (m_pTransform->m_vScale.x < 8.f)
 		{
-			m_pTransform->m_vScale.x += 2.f*fTimeDelta;
-			m_pTransform->m_vScale.y += 2.f*fTimeDelta;
+			m_pTransform->m_vScale.x += 4.f*fTimeDelta;
+			m_pTransform->m_vScale.y += 4.f*fTimeDelta;
 		}
 
 		
@@ -95,9 +96,21 @@ void CVortexBullet::Render_GameObject(void)
 	if (m_bHit == false)
 		m_Animation->Render_Component();
 	else
+	{	
 		m_AfterTexture->Render_Component();
+	}
+		
 
 	m_RcTex->Render_Component();
+
+	if (m_bHit == true)
+	{
+		_matrix mat;
+		mat.Identity();
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, &mat);
+		m_Particle->Render_Component();
+	}
+		
 }
 
 void CVortexBullet::OnCollisionEnter(const Collision * collsion)
@@ -112,6 +125,7 @@ void CVortexBullet::OnCollisionEnter(const Collision * collsion)
 			m_bHit = true;
 			m_pTransform->Set_Scale({ 0.5f,0.5f,1.f });
 			
+			m_pTransform->Set_Dir({ 0.f,0.f,1.f });
 			m_pTransform->Rot_Pitch(90.f, 1.f);
 		}
 	}
@@ -128,6 +142,14 @@ void CVortexBullet::OnCollisionStay(const Collision * collision)
 			collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL) == collision->OtherCollider)
 		{
 			// 끌여 당겨주는 코드.
+
+			_vec3 dir = m_pTransform->m_vInfo[INFO_POS] - collision->OtherGameObject->m_pTransform->m_vInfo[INFO_POS];
+			
+			//dir.y = 0.f;
+			dir.Normalize();
+
+			collision->OtherGameObject->m_pTransform->m_vInfo[INFO_POS] += dir * 0.1f;
+			
 		}
 	}
 }
@@ -162,8 +184,12 @@ HRESULT CVortexBullet::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"RangeCollider", this, COL_PLAYERBULLET));
-	pCollider->Set_BoundingBox({ 7.5f, 7.5f, 7.5f });
+	pCollider->Set_BoundingBox({ 100.5f, 20.5f, 100.5f });
 	m_uMapComponent[ID_ALL].insert({ L"RangeCollider", pCollider });
+
+	
+	m_Particle = dynamic_cast<CParticleSystem*>(Engine::Clone_Proto(L"Vortex_Particle", this, 70));
+	m_uMapComponent[ID_STATIC].insert({ L"Vortex_Particle", m_Particle });
 
 	return S_OK;
 }
@@ -171,6 +197,7 @@ HRESULT CVortexBullet::Add_Component()
 void CVortexBullet::Pop_Initialize()
 {
 	m_bHit = false;
+	m_Particle->Reset();
 }
 
 void CVortexBullet::Free(void)

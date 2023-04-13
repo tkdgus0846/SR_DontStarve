@@ -111,6 +111,12 @@ void CRoomMgr::Create_Default_Room()
 
 	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 40.f)));
 	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(35.f, 0.6f, 40.f)));
+	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(41.f, 0.6f, 41.f)));
+	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(32.f, 0.6f, 40.f)));
+	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(30.f, 0.6f, 40.f)));
+	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(32.f, 0.6f, 43.f)));
+	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 40.f)));
+	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(35.f, 0.6f, 40.f)));
 
 	//====== 임시 코드임 =======
 }

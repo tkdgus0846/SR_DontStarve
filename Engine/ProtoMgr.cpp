@@ -59,6 +59,18 @@ CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, const _tchar* coll
 	return pCollider;
 }
 
+CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag, CGameObject * pGameObject, const _int& particleNums, const _vec3 & origin, const _vec3 & boundSize)
+{
+	CComponent* pClone = Clone_Proto(pProtoTag, pGameObject);
+	CParticleSystem* pParticle = dynamic_cast<CParticleSystem*>(pClone);
+
+	pParticle->SetOffset(origin);
+	pParticle->SetBoundingSize(boundSize);
+	pParticle->SetNumParticle(particleNums);
+
+	return pParticle;
+}
+
 
 
 CComponent * CProtoMgr::Find_Proto(const _tchar * pProtoTag)
