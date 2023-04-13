@@ -112,8 +112,7 @@ void CRoomMgr::Create_Default_Room()
 	m_arrRoom[5]->Set_DoorType(DOOR_ES);
 	m_arrRoom[6]->Set_DoorType(DOOR_SW);
 
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(35.f, 0.6f, 40.f)));
+	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 2.4f, 40.f)));
 
 	m_arrRoom[0]->PushBack_GameObj(CSoftPyramid::Create(m_pGraphicDev));
 	m_arrRoom[0]->PushBack_GameObj(CSlider::Create(m_pGraphicDev));

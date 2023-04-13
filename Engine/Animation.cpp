@@ -20,6 +20,8 @@ CAnimation::CAnimation(const CAnimation & rhs) :
 {
 	m_RenderOrder = 2;
 	m_bFinished = FALSE;
+	m_bInversed = FALSE;
+	m_bPlaying = TRUE;
 }
 
 CAnimation::~CAnimation()
@@ -34,31 +36,58 @@ HRESULT CAnimation::Ready_Animation()
 _int CAnimation::Update_Component(const _float& fTimeDelta)
 {
 	if (m_CurFrame == nullptr) return OBJ_NOEVENT;
+	if (m_bPlaying == FALSE) return 0;
 
 	m_CurFrame->fAccTime += fTimeDelta;
-	if (m_CurFrame->fFrameSpeed <= m_CurFrame->fAccTime)
-	{
-		m_CurFrame->iFrame++;
-		m_CurFrame->fAccTime = 0.f;
 
-		if (m_CurFrame->iMaxFrame <= m_CurFrame->iFrame)
+	if (m_bInversed == FALSE)
+	{
+		if (m_CurFrame->fFrameSpeed <= m_CurFrame->fAccTime)
 		{
-			if (m_CurFrame->bRepeat == true)
-				m_CurFrame->iFrame = 0;
-			else
+			m_CurFrame->iFrame++;
+			m_CurFrame->fAccTime = 0.f;
+
+			if (m_CurFrame->iMaxFrame <= m_CurFrame->iFrame)
 			{
-				m_CurFrame->iFrame = m_CurFrame->iMaxFrame - 1;
-				m_bFinished = TRUE;
+				if (m_CurFrame->bRepeat == TRUE)
+					m_CurFrame->iFrame = 0;
+				else
+				{
+					m_CurFrame->iFrame = m_CurFrame->iMaxFrame - 1;
+					m_bFinished = TRUE;
+				}
+
 			}
-				
 		}
 	}
+	else
+	{
+		if (m_CurFrame->fFrameSpeed <= m_CurFrame->fAccTime)
+		{
+			if (m_CurFrame->iFrame >= 1)
+				m_CurFrame->iFrame--;
+			m_CurFrame->fAccTime = 0.f;
+
+			if (0 >= m_CurFrame->iFrame)
+			{
+				if (m_CurFrame->bRepeat == TRUE)
+					m_CurFrame->iFrame = m_CurFrame->iMaxFrame - 1;
+				else
+				{
+					m_CurFrame->iFrame = 0;
+					m_bFinished = TRUE;
+				}
+
+			}
+		}
+	}
+
 	return OBJ_NOEVENT;
 }
 
 void CAnimation::LateUpdate_Component()
 {
-	
+
 }
 
 void CAnimation::Render_Component()
@@ -103,7 +132,7 @@ void CAnimation::SelectState(ANIMSTATE state)
 	m_ePrevState = state;
 	m_eCurState = state;
 
-	
+
 	*m_CurFrame = (m_MapAnimation[m_eCurState]);
 }
 
@@ -116,4 +145,15 @@ void CAnimation::BindAnimation(ANIMSTATE state, CTexture* texture, float frameSp
 	animFrame.iFrame = 0;
 	animFrame.iMaxFrame = texture->Get_Size();
 	animFrame.pTexture = texture;
+}
+
+void CAnimation::Play_Animation()
+{
+	m_bPlaying = TRUE;
+}
+
+void CAnimation::Stop_Animation()
+{
+	m_bPlaying = FALSE;
+
 }

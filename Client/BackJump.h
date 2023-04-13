@@ -1,13 +1,12 @@
 #pragma once
 #include "Behavior.h"
-
-class CBlackBoard;
-class CMoveLook : public CBehavior
+class CBackJump : public CBehavior
 {
+public:
 private:
-	explicit CMoveLook(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CMoveLook(const CMoveLook& rhs);
-	virtual ~CMoveLook();
+	explicit CBackJump(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CBackJump(const CBackJump& rhs);
+	virtual ~CBackJump();
 
 public:
 	virtual HRESULT Ready_Behavior() override;
@@ -15,15 +14,15 @@ public:
 	virtual void LateUpdate_Component(void) override {}
 	virtual void Render_Component(void) override;
 
-	void Set_Magnifi(const _float& fMag = 1.f) { m_fMagnification = fMag; }
-
 private:
-	_float m_fMagnification;
+	_float m_fTime;
+	_float m_fInit;
 
 public:
-	static CComponent* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CBackJump* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
 
 private:
 	virtual void Free() override;
 };
+

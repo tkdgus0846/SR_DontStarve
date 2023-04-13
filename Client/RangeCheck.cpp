@@ -1,6 +1,5 @@
 #include "RangeCheck.h"
 
-#include "Player.h"
 #include "Export_Function.h"
 
 CRangeCheck::CRangeCheck(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -32,7 +31,7 @@ _int CRangeCheck::Update_Component(const _float & fTimeDelta)
 	{
 		for (auto iter : dynamic_cast<CCollider*>(pComponent)->Get_CollisionList())
 		{
-			if (nullptr != dynamic_cast<CPlayer*>(iter.second.OtherGameObject))
+			if (nullptr != dynamic_cast<CGameObject*>(iter.second.OtherGameObject))
 				return BEHAVIOR_SUCCES;
 		}
 	}

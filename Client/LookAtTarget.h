@@ -1,24 +1,17 @@
 #pragma once
 #include "Behavior.h"
-
-class CBlackBoard;
-class CMoveLook : public CBehavior
+class CLookAtTarget : public CBehavior
 {
 private:
-	explicit CMoveLook(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CMoveLook(const CMoveLook& rhs);
-	virtual ~CMoveLook();
+	explicit CLookAtTarget(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CLookAtTarget(const CLookAtTarget& rhs);
+	virtual ~CLookAtTarget();
 
 public:
 	virtual HRESULT Ready_Behavior() override;
 	virtual _int Update_Component(const _float & fTimeDelta) override;
 	virtual void LateUpdate_Component(void) override {}
 	virtual void Render_Component(void) override;
-
-	void Set_Magnifi(const _float& fMag = 1.f) { m_fMagnification = fMag; }
-
-private:
-	_float m_fMagnification;
 
 public:
 	static CComponent* Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -27,3 +20,4 @@ public:
 private:
 	virtual void Free() override;
 };
+

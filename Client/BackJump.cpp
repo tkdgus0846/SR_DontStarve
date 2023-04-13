@@ -1,33 +1,29 @@
-#include "stdafx.h"
-#include "Jump.h"
+#include "BackJump.h"
 
 #include "Export_Function.h"
 
-
-CJump::CJump(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CBehavior(pGraphicDev), m_fTime(0.f), 
-	m_fInit(0.f)
+CBackJump::CBackJump(LPDIRECT3DDEVICE9 pGraphicDev)
+	:CBehavior(pGraphicDev)
 {
 }
 
-CJump::CJump(const CJump & rhs)
-	:CBehavior(rhs), m_fTime(rhs.m_fTime),
-	m_fInit(rhs.m_fInit)
+CBackJump::CBackJump(const CBackJump & rhs)
+	: CBehavior(rhs)
 {
 }
 
-CJump::~CJump()
+CBackJump::~CBackJump()
 {
 }
 
-HRESULT CJump::Ready_Behavior()
+HRESULT CBackJump::Ready_Behavior()
 {
 	m_fInit = m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y;
 
 	return S_OK;
 }
 
-_int CJump::Update_Component(const _float & fTimeDelta)
+_int CBackJump::Update_Component(const _float & fTimeDelta)
 {
 	m_fCurTime = Get_WorldTime();
 
@@ -41,6 +37,8 @@ _int CJump::Update_Component(const _float & fTimeDelta)
 	m_fTime += fTimeDelta * 7.f;
 
 	_float fY = fSpeed * m_fTime - 4.9f * m_fTime * m_fTime;
+
+	m_pGameObject->m_pTransform->Move_Walk(-fSpeed * 2.f, fTimeDelta);
 
 	m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
 
@@ -56,14 +54,13 @@ _int CJump::Update_Component(const _float & fTimeDelta)
 	return BEHAVIOR_RUNNING;
 }
 
-void CJump::Render_Component(void)
+void CBackJump::Render_Component(void)
 {
-	__super::Render_Component();
 }
 
-CJump * CJump::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CBackJump * CBackJump::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CJump* pInstance = new CJump(pGraphicDev);
+	CBackJump* pInstance = new CBackJump(pGraphicDev);
 
 	if (!pInstance)
 		return nullptr;
@@ -71,12 +68,12 @@ CJump * CJump::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CComponent * CJump::Clone(void)
+CComponent * CBackJump::Clone(void)
 {
-	return new CJump(*this);
+	return new CBackJump(*this);
 }
 
-void CJump::Free()
+void CBackJump::Free()
 {
 	__super::Free();
 }

@@ -38,9 +38,6 @@
     <Filter Include="IMGUI\ImManager">
       <UniqueIdentifier>{3ce43516-b38f-46c0-886d-b8476ec0afb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MonoBehaviors">
-      <UniqueIdentifier>{0585166a-ee3f-4639-9ec9-27c7dd623b88}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\Weapon">
       <UniqueIdentifier>{432920f3-d7e9-4a00-b543-57a52176b347}</UniqueIdentifier>
     </Filter>
@@ -76,6 +73,15 @@
     </Filter>
     <Filter Include="Factory">
       <UniqueIdentifier>{d13b3543-a1f2-479d-9363-26c9d470ab3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monobehaviours">
+      <UniqueIdentifier>{0585166a-ee3f-4639-9ec9-27c7dd623b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monobehaviours\Task">
+      <UniqueIdentifier>{5f61b14a-59ee-47a6-93ad-fe20f6f42257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Monobehaviours\Decorator">
+      <UniqueIdentifier>{1314d0bf-6eda-469f-9b59-aa953435a1c3}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameObject\MapObject\Pyramid">
       <UniqueIdentifier>{3c856778-44ca-465a-90eb-65695009b097}</UniqueIdentifier>
@@ -161,29 +167,8 @@
     <ClInclude Include="Wall.h">
       <Filter>GameObject\RoomMgr\Room</Filter>
     </ClInclude>
-    <ClInclude Include="Attack.h">
-      <Filter>MonoBehaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="Jump.h">
-      <Filter>MonoBehaviors</Filter>
-    </ClInclude>
     <ClInclude Include="MonoBehaviors.h">
-      <Filter>MonoBehaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveLook.h">
-      <Filter>MonoBehaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="RandomLook.h">
-      <Filter>MonoBehaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="RotToFace.h">
-      <Filter>MonoBehaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="Wait.h">
-      <Filter>MonoBehaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="Evasion.h">
-      <Filter>MonoBehaviors</Filter>
+      <Filter>Monobehaviours</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>GameObject\Weapon</Filter>
@@ -202,12 +187,6 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>GameObject\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="LeapJump.h">
-      <Filter>MonoBehaviors</Filter>
-    </ClInclude>
-    <ClInclude Include="RangeCheck.h">
-      <Filter>MonoBehaviors</Filter>
     </ClInclude>
     <ClInclude Include="Turret.h">
       <Filter>GameObject\Monster</Filter>
@@ -326,6 +305,54 @@
     <ClInclude Include="VortexBullet.h">
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Evasion.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Jump.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="LeapJump.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveLook.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomLook.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="RotToFace.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Wait.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="RangeCheck.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="IsRangeInPlayer.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeInLimit.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="NotCollisionWall.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="LookAtTarget.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Rush.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="IsNotRangeInPlayer.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="BackJump.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
     <ClInclude Include="BootsItem.h">
       <Filter>GameObject\Item</Filter>
     </ClInclude>
@@ -412,27 +439,6 @@
     <ClCompile Include="Wall.cpp">
       <Filter>GameObject\RoomMgr\Room</Filter>
     </ClCompile>
-    <ClCompile Include="Attack.cpp">
-      <Filter>MonoBehaviors</Filter>
-    </ClCompile>
-    <ClCompile Include="Jump.cpp">
-      <Filter>MonoBehaviors</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveLook.cpp">
-      <Filter>MonoBehaviors</Filter>
-    </ClCompile>
-    <ClCompile Include="RandomLook.cpp">
-      <Filter>MonoBehaviors</Filter>
-    </ClCompile>
-    <ClCompile Include="RotToFace.cpp">
-      <Filter>MonoBehaviors</Filter>
-    </ClCompile>
-    <ClCompile Include="Wait.cpp">
-      <Filter>MonoBehaviors</Filter>
-    </ClCompile>
-    <ClCompile Include="Evasion.cpp">
-      <Filter>MonoBehaviors</Filter>
-    </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>GameObject\Weapon</Filter>
     </ClCompile>
@@ -450,12 +456,6 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>GameObject\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="LeapJump.cpp">
-      <Filter>MonoBehaviors</Filter>
-    </ClCompile>
-    <ClCompile Include="RangeCheck.cpp">
-      <Filter>MonoBehaviors</Filter>
     </ClCompile>
     <ClCompile Include="Turret.cpp">
       <Filter>GameObject\Monster</Filter>
@@ -576,6 +576,54 @@
     </ClCompile>
     <ClCompile Include="VortexBullet.cpp">
       <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Evasion.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Jump.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="LeapJump.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveLook.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomLook.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="RotToFace.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Wait.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="RangeCheck.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="IsRangeInPlayer.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeInLimit.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="NotCollisionWall.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="LookAtTarget.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Rush.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="IsNotRangeInPlayer.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="BackJump.cpp">
+      <Filter>Monobehaviours\Task</Filter>
     </ClCompile>
     <ClCompile Include="BootsItem.cpp">
       <Filter>GameObject\Item</Filter>

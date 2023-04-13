@@ -6,9 +6,13 @@
 BEGIN(Engine)
 class CTexture;
 class CCollider;
+class CAnimation;
+class CRcTex;
 END
+
 class CRoom;
 class CTennel;
+
 class CDoor : public CGameObject
 {
 private:
@@ -24,18 +28,22 @@ public:
 	virtual void OnCollisionEnter(const class Collision* collsion);
 	CRoom* Get_Room() { return m_pRoom; }
 	DOOR_DIR Get_Door_Dir() { return m_eDir; }
+	void Door_Open() { m_bIsOpen = true; }
+	void Door_Close() { m_bIsOpen = false; }
 
 private:
 	virtual HRESULT Add_Component() override;
 	void Set_Door_State();
 
 private:
-
+	_bool					m_bIsOpen;
 	CRoom*					m_pRoom;	// ���� ���� �����ִ� ���� ������
 	CTennel*				m_pInTennel;	// �������� �ͳ�������
 	CTennel*				m_pOutTennel;	// �������� �ͳ�������
 	Engine::CTexture*		m_pTextureCom;
 	Engine::CCollider*		m_pCollider;
+	Engine::CAnimation*		m_pAnimation;
+	Engine::CRcTex*			m_pRcTex;
 
 	DOOR_DIR				m_eDir;		// �� �ȿ��� ���� ��ġ(��������)
 
