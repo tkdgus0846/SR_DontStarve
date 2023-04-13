@@ -1,8 +1,16 @@
 #pragma once
-#include "MapObj.h"
-class CHardPyramid :
-	public CMapObj
-{
+#include "Pyramid.h"
 
+class CHardPyramid :
+	public CPyramid
+{
+private:
+	explicit CHardPyramid(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CHardPyramid();
+
+	virtual HRESULT Add_Component() override;
+
+public:
+	static CHardPyramid*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 };
 

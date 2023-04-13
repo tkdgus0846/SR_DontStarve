@@ -439,7 +439,7 @@ void CRoom::PushBack_GameObj(CGameObject * pObj)
 	NULL_CHECK(pObj);
 	m_vecGameObj.push_back(pObj);
 	OBJ_INFO objInfo = pObj->Get_ObjInfo();
-
+	
 	m_vecLayer[objInfo.layerID]->Add_GameObject(objInfo.pObjTag, pObj);
 
 	for (int i = 0; i < objInfo.colNameVec.size(); i++)

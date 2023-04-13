@@ -2,11 +2,14 @@
 #include "RoomMgr.h"
 
 #include "Tennel.h"
-#include "Room.h"
 #include "Layer.h"
 #include "Export_Function.h"
 
 #include "Bub.h"
+#include "SoftPyramid.h"
+#include "HardPyramid.h"
+#include "Slider.h"
+
 IMPLEMENT_SINGLETON(CRoomMgr)
 
 CRoomMgr::CRoomMgr()
@@ -111,7 +114,9 @@ void CRoomMgr::Create_Default_Room()
 
 	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 40.f)));
 	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(35.f, 0.6f, 40.f)));
-
+	m_arrRoom[0]->PushBack_GameObj(CSoftPyramid::Create(m_pGraphicDev));
+	m_arrRoom[0]->PushBack_GameObj(CSlider::Create(m_pGraphicDev));
+	//m_arrRoom[0]->PushBack_GameObj(CHardPyramid::Create(m_pGraphicDev));
 	//====== 임시 코드임 =======
 }
 

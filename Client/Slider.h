@@ -1,12 +1,11 @@
 #pragma once
 #include "MapObj.h"
-
-class CPyramid :
+class CSlider :
 	public CMapObj
 {
 protected:
-	explicit CPyramid(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CPyramid();
+	explicit CSlider(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CSlider();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -15,7 +14,9 @@ public:
 	virtual void Render_GameObject(void) override;
 
 	virtual HRESULT Add_Component() override;
+	virtual void OnCollisionEnter(const class Collision* collsion);
 
+	static CSlider* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 protected:
 	virtual void Free(void) override;
 };
