@@ -62,6 +62,8 @@ public:
 	void	Rot_Yaw(const _float& fAngle, const _float& fTimeDelta);  // Rot-Up
 	void	Rot_Roll(const _float& fAngle, const _float& fTimeDelta); // Rot-Look
 
+	// 룩 벡터 반전.
+	void	Reverse_Dir();
 
 	void	Set_Billboard(_matrix* _matView)
 	{

@@ -7,11 +7,17 @@
 #include "Room.h"
 #include "RoomMgr.h"
 
+// 몬스터 헤더파일
 #include "Baller.h"
 #include "Bub.h"
 #include "Guppi.h"
 #include "Turret.h"
 #include "Walker.h"
+
+// 맵 오브젝트 헤더파일
+#include "SoftPyramid.h"
+#include "HardPyramid.h"
+#include "Slider.h"
 
 CImInspector::CImInspector(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CImWindow(pGraphicDev), m_pCurTarget(nullptr)
@@ -148,23 +154,6 @@ void CImInspector::Show_Create_Object()
 
 		ImGui::SeparatorText("Monster");
 
-		const char* items[] = { "Baller", "Bub", "Guppi", "Turret", "Walker"};
-		static const char* current_monster_item = NULL;
-
-		if (ImGui::BeginCombo("##combo", current_monster_item)) // The second parameter is the label previewed before opening the combo.
-		{
-			for (int n = 0; n < IM_ARRAYSIZE(items); n++)
-			{
-				bool is_selected = (current_monster_item == items[n]);  // You can store your selection however you want, outside or inside your objects
-				if (ImGui::Selectable(items[n], is_selected))
-					current_monster_item = items[n];
-
-				if (is_selected)
-					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
-			}
-			ImGui::EndCombo();
-		}
-
 		ImGui::RadioButton("Baller", &iObjNum, 0); ImGui::SameLine();
 		ImGui::RadioButton("Bub", &iObjNum, 1); ImGui::SameLine();
 		ImGui::RadioButton("Guppi", &iObjNum, 2);
@@ -175,6 +164,12 @@ void CImInspector::Show_Create_Object()
 
 		ImGui::RadioButton("Dirt_Barrier", &iObjNum, 11); ImGui::SameLine();
 		ImGui::RadioButton("Mine", &iObjNum, 12);
+
+		ImGui::SeparatorText("MapObject");
+
+		ImGui::RadioButton("Pyramid", &iObjNum, 20); ImGui::SameLine();
+		ImGui::RadioButton("HardPyramid", &iObjNum, 21); 
+		ImGui::RadioButton("ReflectBall", &iObjNum, 22);
 
 		ImGui::TreePop();
 		ImGui::Spacing();
@@ -228,23 +223,34 @@ void CImInspector::Show_Create_Object()
 			m_pCurRoom->PushBack_GameObj(pGameObject);
 		}
 
-		m_vecMonster.push_back({ pName, pGameObject });
+		if (20 == iObjNum)
+		{
+			pName = "SoftPyramid";
+			pGameObject = CSoftPyramid::Create(m_pGraphicDev);
+			m_pCurRoom->PushBack_GameObj(pGameObject);
+		}
+
+		if(dynamic_cast<CMonster*>(pGameObject))
+			m_vecMonster.push_back({ pName, pGameObject });
+		else if(dynamic_cast<CMapObj*>(pGameObject))
+			m_vecMap.push_back({ pName, pGameObject });
 	}
 }
 
 void CImInspector::Show_MonsterList()
 {
-	static _int iCurItemIdx = 0;
+
 
 	if (ImGui::BeginListBox("Monster"))
 	{
+		static _int iCurMonserItemIdx = 0;
 		for (_uint i = 0; i < m_vecMonster.size(); ++i)
 		{
-			bool is_selected = (iCurItemIdx == i);
+			bool is_selected = (iCurMonserItemIdx == i);
 			if (ImGui::Selectable(m_vecMonster[i].first, is_selected, 4914304))
 			{
 				m_pCurTarget = m_vecMonster[i].second;
-				iCurItemIdx = i;
+				iCurMonserItemIdx = i;
 			}
 
 			if (is_selected)
@@ -254,12 +260,35 @@ void CImInspector::Show_MonsterList()
 	}
 	if (ImGui::BeginListBox("Environment"))
 	{
+		static _int iCurEnvItemIdx = 0;
+
 		ImGui::EndListBox();
 	}
+
+	if (ImGui::BeginListBox("MapObject"))
+	{
+		static _int iCurMapObjItemIdx = 0;
+		for (_uint i = 0; i < m_vecMap.size(); ++i)
+		{
+			bool is_selected = (iCurMapObjItemIdx == i);
+			if (ImGui::Selectable(m_vecMap[i].first, is_selected, 4914304))
+			{
+				m_pCurTarget = m_vecMap[i].second;
+				iCurMapObjItemIdx = i;
+			}
+
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndListBox();
+	}
+
 	if (ImGui::BeginListBox("Tile"))
 	{
+		static _int iCurTileItemIdx = 0;
 		ImGui::EndListBox();
 	}
+
 }
 
 void CImInspector::Show_Components()
