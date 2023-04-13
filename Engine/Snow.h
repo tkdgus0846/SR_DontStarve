@@ -6,17 +6,18 @@ BEGIN(Engine)
 class  CSnow : public CParticleSystem
 {
 public:
-	explicit CSnow(LPDIRECT3DDEVICE9 pGraphicDev, BoundingBox* boundingBox, int numParticles);
+	explicit CSnow(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CSnow(const CSnow& rhs);
 	virtual ~CSnow();
 
 	virtual void ResetParticle(Particle* particle) override;
 
 
+
 	virtual _int Update_Component(const _float& fTimeDelta) override;
 
 
-	static CSnow* Create(LPDIRECT3DDEVICE9 pGraphicDev, BoundingBox* boundingBox, int numParticles);
+	static CSnow* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent* Clone(void) override;
 
 protected:

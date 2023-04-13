@@ -1,11 +1,15 @@
 #include "stdafx.h"
+#include "SmokeParticle.h"
+
+
+#include "stdafx.h"
 #include "Firework.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "Export_Function.h"
 
 
-CFirework::CFirework(LPDIRECT3DDEVICE9 pGraphicDev) :
+CSmokeParticle::CSmokeParticle(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CParticleSystem(pGraphicDev)
 {
 	m_Size = 0.7f;
@@ -14,20 +18,19 @@ CFirework::CFirework(LPDIRECT3DDEVICE9 pGraphicDev) :
 	m_VBBatchSize = 512;
 }
 
-CFirework::CFirework(const CFirework & rhs) :
+CSmokeParticle::CSmokeParticle(const CSmokeParticle & rhs) :
 	CParticleSystem(rhs)
 {
-	m_fRadius = 10.f;
+	m_Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Smoke_Texture", nullptr));
+	m_Texture->Set_Texture_Num(0);
 
-	m_Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"IceBullet_Texture", nullptr));
-	
 }
 
-CFirework::~CFirework()
+CSmokeParticle::~CSmokeParticle()
 {
 }
 
-void CFirework::ResetParticle(Particle * particle)
+void CSmokeParticle::ResetParticle(Particle * particle)
 {
 	_vec3 offsetPoint;
 	m_pGameObject->m_pTransform->Get_Info(INFO_POS, &offsetPoint);
@@ -45,44 +48,23 @@ void CFirework::ResetParticle(Particle * particle)
 
 	particle->fSpeed = 0.45f;
 
-	int randNum = rand() % 2;
-
-	if (randNum == 0)
-	{
-		particle->dwColor = D3DXCOLOR(
-			0.f,
-			0.f,
-			0.f,
-			GetRandomFloat(0.f, 1.0f));
-		particle->vTexUV = { 0.f, 0.f };
-	}
-	else
-	{
-		particle->dwColor = D3DXCOLOR(
-			1.f,
-			1.f,
-			1.f,
-			GetRandomFloat(0.f, 1.0f));
-	}
-	
 
 	particle->fAge = 0.f;
 	particle->fLifeTime = 7.5f;
 }
 
-_int CFirework::Update_Component(const _float & fTimeDelta)
+_int CSmokeParticle::Update_Component(const _float & fTimeDelta)
 {
 	_int iExit = __super::Update_Component(fTimeDelta);
 	if (iExit != 0) return iExit;
 
 	list<Particle>::iterator it;
-	m_fRadius -= 1.0f * fTimeDelta;
 
 	for (it = m_Particles.begin(); it != m_Particles.end(); it++)
 	{
 		if (it->bIsAlive)
 		{
-			
+
 			it->vPos.x = m_Pos.x + it->fRadius * cosf(it->fAngle);
 			it->vPos.z = m_Pos.z + it->fRadius * sinf(it->fAngle);
 
@@ -90,7 +72,7 @@ _int CFirework::Update_Component(const _float & fTimeDelta)
 			it->vPos.y -= it->fSpeed * fTimeDelta;
 			if (it->vPos.y < 0.1f) it->vPos.y = 0.1f;
 			it->fAngle -= D3DXToRadian(480.f) * fTimeDelta;
-			it->fRadius -= GetRandomFloat(3.f,9.f) * fTimeDelta;
+			it->fRadius -= GetRandomFloat(3.f, 9.f) * fTimeDelta;
 			/*if (it->fRadius < 8.f) it->fRadius = 8.f;*/
 			if (it->fAge > it->fLifeTime)
 				it->bIsAlive = false;
@@ -103,9 +85,9 @@ _int CFirework::Update_Component(const _float & fTimeDelta)
 	return 0;
 }
 
-CFirework * CFirework::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CSmokeParticle * CSmokeParticle::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CFirework *	pInstance = new CFirework(pGraphicDev);
+	CSmokeParticle *	pInstance = new CSmokeParticle(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Particle()))
 	{
@@ -116,28 +98,7 @@ CFirework * CFirework::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CComponent * CFirework::Clone(void)
+CComponent * CSmokeParticle::Clone(void)
 {
-	return new CFirework(*this);
-}
-
-void CFirework::PreRender()
-{
-	CParticleSystem::PreRender();
-
-	/*m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);*/
-	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, false);
-}
-
-void CFirework::PostRender()
-{
-	CParticleSystem::PostRender();
-	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, true);
-}
-
-void CFirework::Free(void)
-{
-	Safe_Release(m_Texture);
-	__super::Free();
+	return new CSmokeParticle(*this);
 }

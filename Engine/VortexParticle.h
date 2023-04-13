@@ -2,19 +2,19 @@
 #include "ParticleSystem.h"
 
 BEGIN(Engine)
-class  CFirework : public CParticleSystem
+class  CVortexParticle : public CParticleSystem
 {
 public:
-	explicit CFirework(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CFirework(const CFirework& rhs);
-	virtual ~CFirework();
+	explicit CVortexParticle(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CVortexParticle(const CVortexParticle& rhs);
+	virtual ~CVortexParticle();
 
 	virtual void ResetParticle(Particle* particle) override;
 
 	virtual _int Update_Component(const _float& fTimeDelta) override;
 
 
-	static CFirework* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CVortexParticle* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent* Clone(void) override;
 
 private:

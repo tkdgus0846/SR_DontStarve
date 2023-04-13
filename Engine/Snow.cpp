@@ -3,17 +3,14 @@
 
 
 
-CSnow::CSnow(LPDIRECT3DDEVICE9 pGraphicDev, BoundingBox* boundingBox, int numParticles) :
+CSnow::CSnow(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CParticleSystem(pGraphicDev)
 {
-	m_BoundingBox = *boundingBox;
+	m_BoundingBox = BoundingBox();
 	m_Size = 0.8f;
 	m_VBSize = 2048;
 	m_VBOffset = 0;
 	m_VBBatchSize = 512;
-
-	for (int i = 0; i < numParticles; i++)
-		AddParticle();
 }
 
 CSnow::CSnow(const CSnow& rhs) :
@@ -58,6 +55,7 @@ _int CSnow::Update_Component(const _float& fTimeDelta)
 	{
 		it->vPos += it->vVelocity * fTimeDelta;
 
+		//cout << ":::::::" << it->vPos.x << " " << it->vPos.y << " " << it->vPos.z << endl;
 		if (m_BoundingBox.Intersect(it->vPos) == false)
 		{
 			ResetParticle(&(*it));
@@ -66,9 +64,9 @@ _int CSnow::Update_Component(const _float& fTimeDelta)
 	return 0;
 }
 
-CSnow* CSnow::Create(LPDIRECT3DDEVICE9 pGraphicDev, BoundingBox* boundingBox, int numParticles)
+CSnow* CSnow::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CSnow *	pInstance = new CSnow(pGraphicDev, boundingBox, numParticles);
+	CSnow *	pInstance = new CSnow(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Particle()))
 	{

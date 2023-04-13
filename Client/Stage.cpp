@@ -83,7 +83,7 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CBulletItem::Create(m_pGraphicDev));
 	Add_GameObject(CHeartItem::Create(m_pGraphicDev));
 	Add_GameObject(CWeaponItem::Create(m_pGraphicDev, _vec3{ 15.f, 2.f, 15.f }, FLAMESHOT));
-	Add_GameObject(CDiscItem::Create(m_pGraphicDev));
+	//Add_GameObject(CDiscItem::Create(m_pGraphicDev));
 
 	// 터널 룸매니져에 바인딩
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);

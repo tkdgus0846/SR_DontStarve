@@ -62,8 +62,10 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 			Safe_Release(iter->second);
 		}
 
-		if (result != OBJ_NOEVENT) iter = m_uMapObject.erase(iter);
-		else ++iter;
+		if (result != OBJ_NOEVENT) 
+			iter = m_uMapObject.erase(iter);
+		else 
+			++iter;
 	}
 	return 0;
 }

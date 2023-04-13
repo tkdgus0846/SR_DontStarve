@@ -13,6 +13,9 @@
 #include "FloorTex.h"
 #include "WallTex.h"
 
+#include "Snow.h"
+#include "Firework.h"
+
 #include "Collider.h"
 #include "GameObject.h"
 #include "Transform.h"
@@ -32,6 +35,8 @@
 #include "BlackBoard.h"
 #include "Animation.h"
 #include "PickingSphere.h"
+
+#include "VortexParticle.h"
 
 BEGIN(Engine)
 
@@ -64,6 +69,9 @@ inline CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGam
 
 // Collider 클론용
 inline CComponent*	Clone_Proto(const _tchar * pProtoTag, const _tchar* colliderName, class CGameObject* pGameObject, COLGROUP eColGroup, const _vec3& boundSize = { 2.f,2.f,2.f });
+
+// Particle 클론용
+inline CComponent*	Clone_Proto(const _tchar * pProtoTag, class CGameObject* pGameObject, const _int& particleNums, const _vec3& offset = { 0.f,0.f,0.f }, const _vec3& boundSize = { 2.f,2.f,2.f });
 
 
 inline void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);

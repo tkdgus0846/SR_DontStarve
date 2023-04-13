@@ -5,6 +5,7 @@ BEGIN(Engine)
 class CTexture;
 class CRcTex;
 class CAnimation;
+class CParticleSystem;
 END
 
 class CVortexBullet : public CBullet
@@ -46,5 +47,6 @@ private:
 	CTexture*	m_AfterTexture;
 	CRcTex*		m_RcTex;
 	CAnimation*	m_Animation;
+	CParticleSystem* m_Particle;
 };
 

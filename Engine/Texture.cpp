@@ -65,6 +65,13 @@ void CTexture::Render_Texture(const _uint& iIndex)
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
 }
 
+void Engine::CTexture::Render_Texture_Num()
+{
+	if (m_vecTexture.size() <= m_TextureNum)
+		return;
+	m_pGraphicDev->SetTexture(0, m_vecTexture[m_TextureNum]);
+}
+
 void CTexture::Render_Component()
 {
 	if (m_vecTexture.size() <= m_TextureNum)

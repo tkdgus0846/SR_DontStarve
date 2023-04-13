@@ -23,6 +23,7 @@ public:
 
 	// 바로 그려주는 함수도 있다.
 	void Render_Texture(const _uint& iIndex = 0);
+	void Render_Texture_Num();
 	virtual void Render_Component() override;
 
 	// 에디터에서만 사용하세요.

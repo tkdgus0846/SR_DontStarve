@@ -80,6 +80,7 @@
     <ClInclude Include="Selector.h" />
     <ClInclude Include="Sequence.h" />
     <ClInclude Include="SkyBox.h" />
+    <ClInclude Include="SmokeParticle.h" />
     <ClInclude Include="Snow.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="TriCol.h" />
     <ClInclude Include="Typedef.h" />
     <ClInclude Include="VIBuffer.h" />
+    <ClInclude Include="VortexParticle.h" />
     <ClInclude Include="WallTex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +141,7 @@
     <ClCompile Include="Selector.cpp" />
     <ClCompile Include="Sequence.cpp" />
     <ClCompile Include="SkyBox.cpp" />
+    <ClCompile Include="SmokeParticle.cpp" />
     <ClCompile Include="Snow.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -150,6 +153,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TriCol.cpp" />
     <ClCompile Include="VIBuffer.cpp" />
+    <ClCompile Include="VortexParticle.cpp" />
     <ClCompile Include="WallTex.cpp" />
   </ItemGroup>
   <ItemGroup>
