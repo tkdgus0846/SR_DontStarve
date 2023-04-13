@@ -93,7 +93,9 @@ void CMonster::OnCollisionEnter(const Collision * collsion)
 		player->Get_Damaged(Get_Attack());
 	}
 
-	if (dynamic_cast<CBullet*>(collsion->OtherGameObject))
+	if (dynamic_cast<CBullet*>(collsion->OtherGameObject) && 
+		collsion->OtherCollider == collsion->OtherGameObject->Get_Component(L"BodyCollider",ID_ALL) && 
+		collsion->MyCollider == Get_Component(L"BodyCollider",ID_ALL))
 	{
 		m_redTexture = true;
 		m_fCurTime = Get_WorldTime();
