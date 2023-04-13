@@ -332,6 +332,12 @@
     <ClInclude Include="VortexBullet.h">
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="BootsItem.h">
+      <Filter>GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="BossHp.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -573,6 +579,12 @@
     </ClCompile>
     <ClCompile Include="VortexBullet.cpp">
       <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BootsItem.cpp">
+      <Filter>GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="BossHp.cpp">
+      <Filter>GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

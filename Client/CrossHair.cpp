@@ -2,10 +2,9 @@
 #include "Export_Function.h"
 
 CCrossHair::CCrossHair(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CUI(pGraphicDev)
+	: CUI(pGraphicDev)
 {
 	Set_ObjTag(L"CrossHair");
-
 }
 
 CCrossHair::~CCrossHair()

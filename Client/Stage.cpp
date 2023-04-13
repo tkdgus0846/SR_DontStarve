@@ -22,6 +22,7 @@
 #include "Disc.h"
 #include "WeaponType.h"
 #include "MiniMap.h"
+#include "BossHp.h"
 
 #include "CoinItem.h"
 #include "BulletItem.h"
@@ -31,6 +32,7 @@
 
 #include "Tennel.h"
 #include "Pyramid.h"
+#include "BootsItem.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_iCurRoomIdx(0)
@@ -68,7 +70,8 @@ HRESULT CStage::Ready_Scene(void)
 	// UI
 	Add_GameObject(CBulletGauge::Create(m_pGraphicDev));
 	Add_GameObject(CBulletBar::Create(m_pGraphicDev));
-	
+	Add_GameObject(CBossHp::Create(m_pGraphicDev));
+
 
 	Add_GameObject(CCrossHair::Create(m_pGraphicDev));
 	Add_GameObject(CHp::Create(m_pGraphicDev));
@@ -76,7 +79,7 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CDisc::Create(m_pGraphicDev));
 	Add_GameObject(CWeaponType::Create(m_pGraphicDev));
 	Add_GameObject(CMiniMap::Create(m_pGraphicDev));
-	Add_GameObject(CGunUI::Create(m_pGraphicDev));
+	//Add_GameObject(CGunUI::Create(m_pGraphicDev));
 
 	// Item
 	Add_GameObject(CCoinItem::Create(m_pGraphicDev));	
@@ -84,6 +87,7 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CHeartItem::Create(m_pGraphicDev));
 	Add_GameObject(CWeaponItem::Create(m_pGraphicDev, _vec3{ 15.f, 2.f, 15.f }, FLAMESHOT));
 	Add_GameObject(CDiscItem::Create(m_pGraphicDev));
+	Add_GameObject(CBootsItem::Create(m_pGraphicDev, _vec3{ 20.f, 2.f, 20.f }));
 
 	// 터널 룸매니져에 바인딩
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);

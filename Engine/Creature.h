@@ -33,6 +33,8 @@ public:
 	_int	Get_HP() const { return m_iHp; }
 	_float	Get_Speed() const { return m_fSpeed; }
 
+	void	Plus_Speed (_float fSpeed = 1) { m_fSpeed += fSpeed; }
+
 protected:
 	_float	m_fSpeed;
 	_int	m_iHp;
