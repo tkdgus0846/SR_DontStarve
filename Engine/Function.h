@@ -101,6 +101,30 @@ private:
 	const _tchar*		m_pTargetTag = nullptr;
 };
 
+class CTag_MyFinder
+{
+public:
+	explicit CTag_MyFinder(const char* pTag)
+		: m_pTargetTag(pTag)
+	{
+	}
+	~CTag_MyFinder() {}
+public:
+	template<typename T>
+	bool operator()(const T& pair)
+	{
+		if (0 == strcmp(m_pTargetTag, pair.first))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+private:
+	const char*		m_pTargetTag = nullptr;
+};
+
 class CDeleteObj
 {
 public:

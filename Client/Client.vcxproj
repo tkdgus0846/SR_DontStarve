@@ -273,7 +273,7 @@
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MonoBehaviors.h" />
     <ClInclude Include="Monster.h" />
-    <ClInclude Include="MonsterFactory.h" />
+    <ClInclude Include="NogadaFactory.h" />
     <ClInclude Include="MoveLook.h" />
     <ClInclude Include="MyEdit.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -373,7 +373,7 @@
     <ClCompile Include="MapObj.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="MonsterFactory.cpp" />
+    <ClCompile Include="NogadaFactory.cpp" />
     <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="MyEdit.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

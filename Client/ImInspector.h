@@ -31,7 +31,6 @@ private:
 	CGameObject*	m_pCurTarget;
 	vector<pair<const char*, CGameObject*>>	m_vecMonster;
 	vector<pair<const char*, CGameObject*>>	m_vecMap;
-
 public:
 	static CImInspector* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

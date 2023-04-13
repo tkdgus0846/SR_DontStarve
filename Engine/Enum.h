@@ -157,3 +157,22 @@ enum FONT
 	A,	B,	C,	D,	E,	F,	G,	H,	I,	J,	K,
 	L,	M,	N,	O,	P,	Q,	R,	S,	T,	U,	V,	W,	X,	Y,	Z
 };
+
+enum PICK_TYPE
+{
+	PICK_TILE,
+	PICK_OBJ,
+	PICK_END
+};
+
+enum OBJ_TYPE
+{
+	OBJ_MONSTER,
+	OBJ_ENVIRONMENT,
+	OBJ_ITEM,
+	OBJ_MAPOBJ,
+	OBJ_BULLET,
+	OBJ_EFFECT,
+	OBJ_UI,
+	OBJ_END
+};

@@ -6,6 +6,8 @@
 
 #include "Room.h"
 #include "RoomMgr.h"
+#include "NogadaFactory.h"
+#include "FileSystem.h"
 
 // 몬스터 헤더파일
 #include "Baller.h"
@@ -18,6 +20,8 @@
 #include "SoftPyramid.h"
 #include "HardPyramid.h"
 #include "Slider.h"
+
+static const char* cur_monster_item = "Baller";
 
 CImInspector::CImInspector(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CImWindow(pGraphicDev), m_pCurTarget(nullptr)
@@ -116,7 +120,7 @@ void CImInspector::Show_TilePicking()
 
 	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
 
-	ImGui::Checkbox("CHECK_PICK!", &pCamera->Get_Pick());
+	ImGui::Checkbox("CHECK_PICK!", &pCamera->Get_Pick(PICK_TILE));
 	ImGui::SeparatorText("Tile");
 
 	if (ImGui::RadioButton("Level1_Floor", &iTileNum, 20))
@@ -153,12 +157,28 @@ void CImInspector::Show_Create_Object()
 		ImGui::End();
 
 		ImGui::SeparatorText("Monster");
+		vector<const char*> items = FACTORY->GetTagVec(OBJ_MONSTER);
 
-		ImGui::RadioButton("Baller", &iObjNum, 0); ImGui::SameLine();
-		ImGui::RadioButton("Bub", &iObjNum, 1); ImGui::SameLine();
-		ImGui::RadioButton("Guppi", &iObjNum, 2);
-		ImGui::RadioButton("Turret", &iObjNum, 3); ImGui::SameLine();
-		ImGui::RadioButton("Walker", &iObjNum, 4);
+		
+
+		if (ImGui::BeginCombo("##combo", cur_monster_item)) // The second parameter is the label previewed before opening the combo.
+		{
+			for (int n = 0; n < items.size(); n++)
+			{
+				bool is_selected = (cur_monster_item == items[n]); // You can store your selection however you want, outside or inside your objects
+				if (ImGui::Selectable(items[n], is_selected))
+					cur_monster_item = items[n];
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+			}
+			ImGui::EndCombo();
+		}
+
+		//ImGui::RadioButton("Baller", &iObjNum, 0); ImGui::SameLine();
+		//ImGui::RadioButton("Bub", &iObjNum, 1); ImGui::SameLine();
+		//ImGui::RadioButton("Guppi", &iObjNum, 2);
+		//ImGui::RadioButton("Turret", &iObjNum, 3); ImGui::SameLine();
+		//ImGui::RadioButton("Walker", &iObjNum, 4);
 
 		ImGui::SeparatorText("Environment");
 
@@ -190,57 +210,19 @@ void CImInspector::Show_Create_Object()
 		CGameObject* pGameObject = nullptr;
 		const char* pName = nullptr;
 
-		if (0 == iObjNum)
-		{
-			pName = "Baller";
-			pGameObject = CBaller::Create(m_pGraphicDev, m_vObjectPos);
-			m_pCurRoom->PushBack_GameObj(pGameObject);
-		}
-		if (1 == iObjNum)
-		{
-			pName = "Bub";
-			pGameObject = CBub::Create(m_pGraphicDev, m_vObjectPos);
-
-			m_pCurRoom->PushBack_GameObj(pGameObject);
-		}
-
-		if (2 == iObjNum)
-		{
-			pName = "Guppi";
-			pGameObject = CGuppi::Create(m_pGraphicDev, m_vObjectPos);
-			m_pCurRoom->PushBack_GameObj(pGameObject);
-		}
-		if (3 == iObjNum)
-		{
-			pName = "Turret";
-			pGameObject = CTurret::Create(m_pGraphicDev, m_vObjectPos);
-			m_pCurRoom->PushBack_GameObj(pGameObject);
-		}
-		if (4 == iObjNum)
-		{
-			pName = "Walker";
-			pGameObject = CWalker::Create(m_pGraphicDev, m_vObjectPos);
-			m_pCurRoom->PushBack_GameObj(pGameObject);
-		}
-
-		if (20 == iObjNum)
-		{
-			pName = "SoftPyramid";
-			pGameObject = CSoftPyramid::Create(m_pGraphicDev);
-			m_pCurRoom->PushBack_GameObj(pGameObject);
-		}
+		pGameObject = FACTORY->CreateObj(OBJ_MONSTER, cur_monster_item);
 
 		if(dynamic_cast<CMonster*>(pGameObject))
-			m_vecMonster.push_back({ pName, pGameObject });
+			m_vecMonster.push_back({ cur_monster_item, pGameObject });
 		else if(dynamic_cast<CMapObj*>(pGameObject))
 			m_vecMap.push_back({ pName, pGameObject });
+
+		m_pCurRoom->PushBack_GameObj(pGameObject);
 	}
 }
 
 void CImInspector::Show_MonsterList()
 {
-
-
 	if (ImGui::BeginListBox("Monster"))
 	{
 		static _int iCurMonserItemIdx = 0;
@@ -399,16 +381,30 @@ void CImInspector::Show_Components()
 void CImInspector::Show_Image(_int iObjNum)
 {
 	CTexture* pTexture = nullptr;
-	if (0 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Baller_Texture", nullptr));
-	if (1 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Bub_Texture", nullptr));
-	if (2 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Guppi_Blue_Texture", nullptr));
-	if (3 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Turret_Texture", nullptr));
-	if (4 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Walker_Texture", nullptr));
+	CGameObject* pGameObject = nullptr;
+
+	for (_int i = 0; i < FACTORY->Size(OBJ_MONSTER); ++i)
+	{
+		if (strcmp(cur_monster_item, FACTORY->GetTagVec(OBJ_MONSTER)[i]) == 0)
+		{
+			pGameObject = FACTORY->CreateObj(OBJ_MONSTER, cur_monster_item);
+			pTexture = pGameObject->Get_Texture();
+
+			Safe_Release(pGameObject);
+			break;
+		}
+	}
+
+	//if (strcmp(cur_monster_item, "Baller") == 0)
+	//	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Baller_Texture", nullptr));
+	//if (strcmp(cur_monster_item, "Bub") == 0)
+	//	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Bub_Texture", nullptr));
+	//if (strcmp(cur_monster_item, "Guppi") == 0)
+	//	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Guppi_Blue_Texture", nullptr));
+	//if (strcmp(cur_monster_item, "Turret") == 0)
+	//	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Turret_Texture", nullptr));
+	//if (strcmp(cur_monster_item, "Walker") == 0)
+	//	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Walker_Texture", nullptr));
 
 
 	if (20 == iObjNum)

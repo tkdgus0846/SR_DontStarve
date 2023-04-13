@@ -6,13 +6,19 @@
 #include "Export_Function.h"
 #include "RoomMgr.h"
 #include "Floor.h"
+#include "NogadaFactory.h"
 
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev), m_fSpeed(0.f), m_bFix(true), m_bPick(false)
+	:CGameObject(pGraphicDev)
+	, m_fSpeed(0.f)
+	, m_bFix(true)
+	, m_pCurTextureName(L"Floor_Level1_Texture")
 {
 	Set_LayerID(LAYER_CAMERA);
 	Set_ObjTag(L"Edit_Camera");
-
+	ZeroMemory(&m_tPickInfo, sizeof(ClickInfo));
+	for (_int i = 0; i < PICK_END; ++i)
+		m_bPick[i] = false;
 }
 
 CEditCamera::~CEditCamera()
@@ -36,7 +42,7 @@ HRESULT CEditCamera::Ready_GameObject(void)
 _int CEditCamera::Update_GameObject(const _float & fTimeDelta)
 {
 	Key_Input(fTimeDelta);
-	
+
 	if (m_bFix)
 	{
 		Fix_Mouse();
@@ -84,55 +90,11 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 	if (Engine::Key_Down((DIK_C))) Engine::Toggle_ColliderRender();
 	if (Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
 
-	if (Engine::Mouse_Down(DIM_LB) && m_bPick)
+	if (Engine::Mouse_Down(DIM_LB))
 	{
-		_matrix proj;
-		proj.PerspectiveFovLH();
-		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &proj);
-
-		_vec3 vCameraPos = m_pTransform->m_vInfo[INFO_POS];
-
-		CRoomMgr* pRoomMgr = ROOM_MGR;
-		// Variables for Output about InstersectRayRoom Method
-		Triangle tri;
-		INDEX32 index;
-		CGameObject* pGameObj = nullptr;
-		float fDist;
-		if (IntersectRayRoom(pRoomMgr->Get_CurRoom(), pGameObj, tri, index, fDist))
-		{
-			CTile* pTile = nullptr;
-			// Decide Tile Position
-			_vec3 vPos{0.f, 0.f, 0.f};
-			vPos = CalcMiddlePoint(tri);
-			_vec3 vOffset = vPos - vCameraPos;
-			vPos.y += 0.01f;
-			CRoom* pCurRoom = pRoomMgr->Get_CurRoom();
-
-			if (dynamic_cast<CTile*>(pGameObj))	// 기존에 이미 설치된 타일인 경우
-				dynamic_cast<CTile*>(pGameObj)->Change_Texture(m_pCurTextureName);
-
-			else	// 설치된 타일이 없는 경우
-			{
-				pTile = CTile::Create(m_pGraphicDev, vPos, m_pCurTextureName);
-				pCurRoom->PushBack_Tile(pTile);
-
-				// Decide Tile Rotation;
-				_vec3 vTileNormal = tri.Normal();
-				vTileNormal.Normalize();
-
-				if (vTileNormal.Degree(_vec3::Up()) > 0.1f)
-				{
-					pTile->m_pTransform->Set_Dir(vTileNormal);
-				}
-				pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
-			}
-		}
-		/*
-		<< fixed;
-		cout.precision(0);
-		cout << tri.v[0].x << " " << tri.v[0].y << " " << tri.v[0].z << "\t"
-			<< tri.v[1].x << " " << tri.v[1].y << " " << tri.v[1].z << "\t"
-			<< tri.v[2].x << " " << tri.v[2].y << " " << tri.v[2].z << endl;*/
+		SetClickInfo();
+		CreateTile();
+		//CreateObj();
 	}
 }
 
@@ -191,10 +153,10 @@ _bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pG
 {
 	CVIBuffer* pVIBuffer = pGameObject->Get_VIBuffer();
 	CTransform* pTransform = pGameObject->m_pTransform;
-	
+
 	_matrix matWorld = *pTransform->Get_WorldMatrixPointer();
 
-	if (!pVIBuffer) 
+	if (!pVIBuffer)
 		return false;
 
 	_bool success = false;
@@ -224,7 +186,7 @@ _bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pG
 		tmpTri.v[0].TransformCoord(&matWorld);
 		tmpTri.v[1].TransformCoord(&matWorld);
 		tmpTri.v[2].TransformCoord(&matWorld);
-			
+
 		tempSuccess = D3DXIntersectTri(&tmpTri.v[0]
 			, &tmpTri.v[1]
 			, &tmpTri.v[2]
@@ -247,7 +209,19 @@ _bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pG
 	return success;
 }
 
-_bool CEditCamera::IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGameObject,OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist)
+void CEditCamera::SetClickInfo()
+{
+	_matrix proj;
+	proj.PerspectiveFovLH();
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &proj);
+
+	CRoomMgr* pRoomMgr = ROOM_MGR;
+	// Variables for Output about InstersectRayRoom Method
+
+	IntersectRayRoom(pRoomMgr->Get_CurRoom(), m_tPickInfo.pGameObj, m_tPickInfo.tri, m_tPickInfo.index, m_tPickInfo.fDist);
+}
+
+_bool CEditCamera::IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist)
 {
 	CGameObject* pTempObj = nullptr;
 	_bool success = false;
@@ -298,9 +272,9 @@ _bool CEditCamera::IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGa
 			}
 			success = true;
 		}
-			
+
 	}
-	
+
 	if (IntersectRayGameObject(pGameObject = pRoom->GetFloor(), tri, index, fDist))
 	{
 		if (fMinDist > fDist)
@@ -310,7 +284,7 @@ _bool CEditCamera::IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGa
 			tmpTri = tri;
 			tmpIndex = index;
 		}
-		
+
 		success = true;
 	}
 
@@ -321,7 +295,7 @@ _bool CEditCamera::IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGa
 		tri = tmpTri;
 		index = tmpIndex;
 	}
-		
+
 
 	return success;
 }
@@ -331,7 +305,7 @@ _bool CEditCamera::IntersectRayGameObject(IN CGameObject* pGameObject, OUT Trian
 	Triangle tTri;
 	INDEX32 index32;
 	Ray ray = CalcRaycast(GetMousePos());
-	
+
 	_bool success = Compute_RayCastHitGameObject(&ray, pGameObject, tTri, index32, fDist);
 
 	if (success)
@@ -418,8 +392,8 @@ _vec3 CEditCamera::CalcMiddlePoint(Triangle & tri)
 		result = (a + b) / 2.f;
 		return result;
 	}
-		 
-	
+
+
 	standard = tri.v[2];
 	a = tri.v[1];
 	b = tri.v[0];
@@ -433,4 +407,45 @@ _vec3 CEditCamera::CalcMiddlePoint(Triangle & tri)
 	}
 
 	return _vec3();
+}
+
+void CEditCamera::CreateTile()
+{
+	if (!m_bPick[PICK_TILE])
+		return;
+
+	CTile* pTile = nullptr;
+	// Decide Tile Position
+	_vec3 vPos{ 0.f, 0.f, 0.f };
+	vPos = CalcMiddlePoint(m_tPickInfo.tri);
+	_vec3 vOffset = vPos - m_pTransform->m_vInfo[INFO_POS];
+	vPos.y += 0.01f;
+	CRoom* pCurRoom = ROOM_MGR->Get_CurRoom();
+
+	if (dynamic_cast<CTile*>(m_tPickInfo.pGameObj))	// 기존에 이미 설치된 타일인 경우
+		dynamic_cast<CTile*>(m_tPickInfo.pGameObj)->Change_Texture(m_pCurTextureName);
+
+	else	// 설치된 타일이 없는 경우
+	{
+		pTile = CTile::Create(m_pGraphicDev, vPos, m_pCurTextureName);
+		pCurRoom->PushBack_Tile(pTile);
+
+		// Decide Tile Rotation;
+		_vec3 vTileNormal = m_tPickInfo.tri.Normal();
+		vTileNormal.Normalize();
+
+		if (vTileNormal.Degree(_vec3::Up()) > 0.1f)
+		{
+			pTile->m_pTransform->Set_Dir(vTileNormal);
+		}
+		pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
+	}
+}
+
+void CEditCamera::CreateObj(const _tchar* tag, _vec3 vPos)
+{
+	if (!m_bPick[PICK_OBJ])
+		return;
+
+	//FACTORY->CreateObj(tag, vPos);
 }
