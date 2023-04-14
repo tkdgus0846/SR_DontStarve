@@ -45,11 +45,11 @@ HRESULT CBossHp::Ready_GameObject(void)
 
 _int CBossHp::Update_GameObject(const _float & fTimeDelta)
 {
-	if (Get_GameObject(LAYER_MONSTER, L"Bub") == nullptr) 
+	if (Get_GameObject(LAYER_MONSTER, L"WalkerBoss") == nullptr)
 		return OBJ_NOEVENT;
 	else
 	{
-		pGameObject = Get_GameObject(LAYER_MONSTER, L"Bub");
+		pGameObject = Get_GameObject(LAYER_MONSTER, L"WalkerBoss");
 	}
 	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
 
