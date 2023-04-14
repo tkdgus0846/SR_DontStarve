@@ -53,7 +53,6 @@ HRESULT CTexture::Ready_Texture(TEXTYPE eTextype, const _tchar * pPath, const _u
 		m_vecTexture.push_back(pTexture);
 	}
 
-
 	return S_OK;
 }
 

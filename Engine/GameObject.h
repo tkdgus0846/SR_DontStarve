@@ -31,7 +31,7 @@ public:
 	CComponent*			Get_Component(const _tchar* pComponentTag, COMPONENTID eID);
 	_float				Get_ViewZ(void) { return m_fViewZ; }
 	class CVIBuffer*	Get_VIBuffer();
-
+	class CTexture*		Get_Texture();
 	// 순수 가상함수 왜냐하면 게임오브젝트에 컴포넌트가 추가되지 않을일은 없으니까
 	virtual HRESULT		Add_Component() PURE;
 
@@ -90,7 +90,6 @@ private:
 
 public:
 	class CTransform*		m_pTransform;
-	class CPickingSphere*	m_pPickingSphere;
 
 protected:
 	virtual void		Free(void);

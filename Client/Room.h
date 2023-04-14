@@ -75,9 +75,11 @@ private:
 	_float				m_fVtxCntZ;
 	_float				m_fVtxItv;
 
-	// push_back
-	vector<CGameObject*>	m_vecTile;	// IMGUI
-	vector<CGameObject*> m_vecGameObj;	// IMGUI
+	// ������ ����,
+	// push_back���������� �������� PushBack_�ø��� �Լ���� ����.
+	vector<CGameObject*>	m_vecTile;		// IMGUI���� 
+	vector<CGameObject*>	 m_vecGameObj;	// IMGUI���� �����
+
 	CFloor*				m_pFloor;
 	array<CWall*, 4>	m_apWall;
 	array<pair<_bool, CDoor*>, 4>	m_apDoor;

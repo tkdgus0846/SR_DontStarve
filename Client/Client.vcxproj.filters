@@ -290,9 +290,6 @@
     <ClInclude Include="MapObj.h">
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterFactory.h">
-      <Filter>Factory</Filter>
-    </ClInclude>
     <ClInclude Include="VortexBullet.h">
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
@@ -361,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="Slider.h">
       <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NogadaFactory.h">
+      <Filter>Factory</Filter>
     </ClInclude>
     <ClInclude Include="Baller.h">
       <Filter>GameObject\Monster\Enemy</Filter>
@@ -583,9 +583,6 @@
     <ClCompile Include="MapObj.cpp">
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterFactory.cpp">
-      <Filter>Factory</Filter>
-    </ClCompile>
     <ClCompile Include="VortexBullet.cpp">
       <Filter>GameObject\Bullet</Filter>
     </ClCompile>
@@ -654,6 +651,9 @@
     </ClCompile>
     <ClCompile Include="Slider.cpp">
       <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NogadaFactory.cpp">
+      <Filter>Factory</Filter>
     </ClCompile>
     <ClCompile Include="Baller.cpp">
       <Filter>GameObject\Monster\Enemy</Filter>

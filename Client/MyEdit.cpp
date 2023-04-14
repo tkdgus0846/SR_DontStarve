@@ -21,7 +21,7 @@
 #include "imgui.h"
 #include "ImManager.h"
 #include "FileSystem.h"
-
+#include "NogadaFactory.h"
 CMyEdit::CMyEdit(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_iCurRoomIdx(0)
 	, m_iPreRoomIdx(0)
@@ -68,7 +68,7 @@ HRESULT CMyEdit::Ready_Scene(void)
 	ShowCursor(TRUE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-
+	FACTORY->Ready_CNogadaFactory(m_pGraphicDev);
 	return S_OK;
 }
 
@@ -115,6 +115,7 @@ CMyEdit * CMyEdit::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CMyEdit::Free(void)
 {
+	FACTORY->DestroyInstance();
 	CImManager::DestroyInstance();
 	__super::Free();
 }

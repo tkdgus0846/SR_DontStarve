@@ -5,6 +5,7 @@
 #include "BulletMgr.h"
 #include "EffectManager.h"
 #include "ImManager.h"
+#include "NogadaFactory.h"
 #include <time.h>
 
 #include "Export_Function.h"
