@@ -10,16 +10,16 @@
 
 
 CVortexParticle::CVortexParticle(LPDIRECT3DDEVICE9 pGraphicDev) :
-	CParticleSystem(pGraphicDev)
+	CTextureParticle(pGraphicDev)
 {
 	m_Size = 0.7f;
-	m_VBSize = 2048;
+	m_VBSize = 500;
 	m_VBOffset = 0;
-	m_VBBatchSize = 512;
+	m_VBBatchSize = 125;
 }
 
 CVortexParticle::CVortexParticle(const CVortexParticle & rhs) :
-	CParticleSystem(rhs)
+	CTextureParticle(rhs)
 {
 	m_fRadius = 10.f;
 
@@ -37,8 +37,7 @@ void CVortexParticle::ResetParticle(Particle * particle)
 	_vec3 offsetPoint;
 	m_pGameObject->m_pTransform->Get_Info(INFO_POS, &offsetPoint);
 
-	/*m_BoundingBox.Offset(offsetPoint);*/
-	m_Pos = offsetPoint;
+	m_Pos = offsetPoint + m_Offset;
 
 	particle->bIsAlive = true;
 
@@ -107,25 +106,4 @@ CVortexParticle * CVortexParticle::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 CComponent * CVortexParticle::Clone(void)
 {
 	return new CVortexParticle(*this);
-}
-
-void CVortexParticle::PreRender()
-{
-	CParticleSystem::PreRender();
-
-	/*m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);*/
-	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, false);
-}
-
-void CVortexParticle::PostRender()
-{
-	CParticleSystem::PostRender();
-	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, true);
-}
-
-void CVortexParticle::Free(void)
-{
-	
-	__super::Free();
 }

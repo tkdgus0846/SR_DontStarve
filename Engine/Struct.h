@@ -237,4 +237,12 @@ struct Triangle
 	_vec3 v[3];
 };
 
+struct ClickInfo
+{
+	Triangle tri;			// 클릭한 3정점
+	INDEX32 index;			// 정점의 인덱스
+	CGameObject* pGameObj;	// 클릭당한 오브젝트
+	float fDist;			// 카메라와 오브젝트 사이의 거리
+};
+
 END

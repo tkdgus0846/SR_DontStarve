@@ -1,13 +1,11 @@
 #include "stdafx.h"
 #include "ParticleSystem.h"
-#include "GameObject.h"
-#include "Transform.h"
-#include "Export_Function.h"
 
+#include "Export_Function.h"
 
 CParticleSystem::CParticleSystem(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CComponent(pGraphicDev),
-	m_BoundingBox({0.f,0.f,0.f},{0.f,0.f,0.f})
+	m_BoundingBox({ 0.f,0.f,0.f }, { 0.f,0.f,0.f })
 {
 }
 
@@ -18,7 +16,6 @@ CParticleSystem::CParticleSystem(const CParticleSystem & rhs) :
 	m_VBOffset(rhs.m_VBOffset),
 	m_VBBatchSize(rhs.m_VBBatchSize),
 	m_Offset(rhs.m_Offset),
-	m_Texture(rhs.m_Texture),
 	m_EmitRate(rhs.m_EmitRate),
 	m_Size(rhs.m_Size),
 	m_BoundingBox(rhs.m_BoundingBox)
@@ -32,26 +29,7 @@ CParticleSystem::~CParticleSystem()
 {
 }
 
-HRESULT CParticleSystem::Ready_Particle(void)
-{
-	FAILED_CHECK_RETURN
-	(
-		m_pGraphicDev->CreateVertexBuffer(
-			m_VBSize * sizeof(PTCTEX),
-			D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY,
-			FVF_COL,
-			D3DPOOL_DEFAULT,
-			&m_VB,
-			0),
-		E_FAIL
-	);
-
-	
-
-	return S_OK;
-}
-
-_int CParticleSystem::Update_Component(const _float& fTimeDelta)
+_int CParticleSystem::Update_Component(const _float & fTimeDelta)
 {
 	_int iExit = __super::Update_Component(fTimeDelta);
 	if (iExit != 0) return iExit;
@@ -59,7 +37,7 @@ _int CParticleSystem::Update_Component(const _float& fTimeDelta)
 	_vec3 offsetPoint;
 	m_pGameObject->m_pTransform->Get_Info(INFO_POS, &offsetPoint);
 
-	
+
 	m_BoundingBox.Offset(offsetPoint);
 	m_Pos = offsetPoint + m_Offset;
 	return 0;
@@ -67,93 +45,17 @@ _int CParticleSystem::Update_Component(const _float& fTimeDelta)
 
 void CParticleSystem::LateUpdate_Component()
 {
-
 }
 
-void Engine::CParticleSystem::Render_Component()
+void CParticleSystem::Render_Component()
 {
 	Render_Particle();
 }
 
-void CParticleSystem::Render_Particle(void)
+void CParticleSystem::SetNumParticle(const int & numParticle)
 {
-	if (!m_Particles.empty())
-	{
-		
-		PreRender();
-		m_Texture->Render_Texture_Num();
-		
-		
-		m_pGraphicDev->SetFVF(FVF_TEX);
-		m_pGraphicDev->SetStreamSource(0, m_VB, 0, sizeof(PTCTEX));
-
-		if (m_VBOffset >= m_VBSize)
-			m_VBOffset = 0;
-
-		PTCTEX* v = 0;
-
-		m_VB->Lock(
-			m_VBOffset * sizeof(PTCTEX),
-			m_VBBatchSize * sizeof(PTCTEX),
-			(void**)&v,
-			m_VBOffset ? D3DLOCK_NOOVERWRITE : D3DLOCK_DISCARD);
-
-		DWORD numParticlesInBatch = 0;
-
-		list<Particle>::iterator it;
-		for (it = m_Particles.begin(); it != m_Particles.end(); it++)
-		{
-			if (it->bIsAlive)
-			{
-				v->vPos = it->vPos;
-				v->vTexUV = it->vTexUV;
-				//v->dwColor = it->dwColor;
-				
-				
-				v++;
-				numParticlesInBatch++;
-
-				if (numParticlesInBatch == m_VBBatchSize)
-				{
-					m_VB->Unlock();
-
-					
-					m_pGraphicDev->DrawPrimitive(
-						D3DPT_POINTLIST,
-						m_VBOffset,
-						m_VBBatchSize);
-					m_VBOffset += m_VBBatchSize;
-
-					if (m_VBOffset >= m_VBSize)
-						m_VBOffset = 0;
-
-					m_VB->Lock(
-						m_VBOffset * sizeof(PTCTEX),
-						m_VBBatchSize * sizeof(PTCTEX),
-						(void**)&v,
-						m_VBOffset ? D3DLOCK_NOOVERWRITE : D3DLOCK_DISCARD);
-					numParticlesInBatch = 0;
-				}
-			}
-		}
-
-
-		m_VB->Unlock();
-
-		if (numParticlesInBatch)
-		{
-			
-			m_pGraphicDev->DrawPrimitive(
-				D3DPT_POINTLIST,
-				m_VBOffset,
-				numParticlesInBatch);
-		}
-
-		m_VBOffset += m_VBBatchSize;
-
-		PostRender();
-	}
-
+	for (int i = 0; i < numParticle; i++)
+		AddParticle();
 }
 
 bool CParticleSystem::IsEmpty()
@@ -173,6 +75,14 @@ bool CParticleSystem::IsDead()
 	return true;
 }
 
+void CParticleSystem::SetDead()
+{
+	for (Particle& it : m_Particles)
+	{
+		it.bIsAlive = false;
+	}
+}
+
 void CParticleSystem::RemoveDeadParticles()
 {
 	list<Particle>::iterator it;
@@ -188,11 +98,16 @@ void CParticleSystem::RemoveDeadParticles()
 		else it++;
 	}
 
-	
+
 }
 
 void CParticleSystem::Reset()
 {
+	_vec3 offsetPoint;
+	m_pGameObject->m_pTransform->Get_Info(INFO_POS, &offsetPoint);
+
+	m_Pos = offsetPoint + m_Offset;
+
 	list<Particle>::iterator it;
 	for (it = m_Particles.begin(); it != m_Particles.end(); it++)
 	{
@@ -209,7 +124,6 @@ void CParticleSystem::AddParticle()
 
 void CParticleSystem::Free(void)
 {
-	Safe_Release(m_Texture);
 	m_VB->Release();
 	CComponent::Free();
 }

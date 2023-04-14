@@ -51,25 +51,30 @@ void CManagement::LateUpdate_Management()
 	NULL_CHECK(m_pScene);
 	m_pScene->LateUpdate_Scene();
 
-	// 그룹핑 하여 충돌검사하게끔 만들었음. 
+	// 총알과 객체들의 관계
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_DETECTION);
+	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENVIRONMENT);
 	Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
-	Engine::Check_Collision(COL_DETECTION, COL_PLAYER);
-	Engine::Check_Collision(COL_TRIGGER, COL_PLAYER);
-	Engine::Check_Collision(COL_TRIGGER, COL_PLAYERBULLET);
-	Engine::Check_Collision(COL_TENNEL, COL_PLAYER);
-	Engine::Check_Collision(COL_ENEMY, COL_PLAYER);
+	
+	// 플레이어와 다른 객체들의 관계
+	Engine::Check_Collision(COL_PLAYER, COL_OBJ);
+	Engine::Check_Collision(COL_PLAYER, COL_ITEM);
+	Engine::Check_Collision(COL_PLAYER, COL_TENNEL);
+	Engine::Check_Collision(COL_PLAYER, COL_ENEMY);	
+	Engine::Check_Collision(COL_PLAYER, COL_DETECTION);
+	Engine::Check_Collision(COL_PLAYER, COL_TRIGGER);
+	Engine::Check_Collision(COL_PLAYER, COL_ENVIRONMENT);
+	/*Engine::Check_Collision(COL_TRIGGER, COL_PLAYERBULLET);*/
+	
+	// 몬스터와 다른 객체들의 관계
 	Engine::Check_Collision(COL_ENEMY, COL_ENEMY);
-
-	Engine::Check_Collision(COL_ENVIRONMENT, COL_ENEMY);
-	Engine::Check_Collision(COL_ENVIRONMENT, COL_PLAYER);
-
-	Engine::Check_Collision(COL_ITEM, COL_PLAYER);
-
-	Engine::Check_Collision(COL_OBJ, COL_PLAYER);
+	Engine::Check_Collision(COL_ENEMY, COL_ENVIRONMENT);
+	Engine::Check_Collision(COL_ENEMY, COL_OBJ);
+	
+	// 기타 등등
 	Engine::Check_Collision(COL_OBJ, COL_ENVIRONMENT);
-	Engine::Check_Collision(COL_OBJ, COL_ENEMY);
+	
 
 
 }

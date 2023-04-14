@@ -5,10 +5,12 @@
 #include "BulletMgr.h"
 #include "EffectManager.h"
 #include "ImManager.h"
+#include "NogadaFactory.h"
 #include <time.h>
 
 #include "Export_Function.h"
 #include "RoomMgr.h"
+#include "ParticleMgr.h"
 
 // 주석 테스트용
 CMainApp::CMainApp()
@@ -110,6 +112,7 @@ void CMainApp::Free(void)
 	CRoomMgr::DestroyInstance();
 	CImManager::DestroyInstance();
 	CBulletMgr::DestroyInstance();
+	CParticleMgr::DestroyInstance();
 	CEffectManager::DestroyInstance();
 	
 

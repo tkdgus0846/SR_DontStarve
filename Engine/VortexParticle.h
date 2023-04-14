@@ -1,8 +1,8 @@
 #pragma once
-#include "ParticleSystem.h"
+#include "TextureParticle.h"
 
 BEGIN(Engine)
-class  CVortexParticle : public CParticleSystem
+class  CVortexParticle : public CTextureParticle
 {
 public:
 	explicit CVortexParticle(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -19,13 +19,6 @@ public:
 
 private:
 	_float m_fRadius;
-
-private:
-	virtual void PreRender() override;
-	virtual void PostRender() override;
-
-protected:
-	virtual void Free(void) override;
 };
 END
 

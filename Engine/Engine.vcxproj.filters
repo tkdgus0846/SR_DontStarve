@@ -82,9 +82,6 @@
     <ClInclude Include="Firework.h">
       <Filter>Component\ParticleSystem</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleSystem.h">
-      <Filter>Component\ParticleSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Snow.h">
       <Filter>Component\ParticleSystem</Filter>
     </ClInclude>
@@ -187,11 +184,41 @@
     <ClInclude Include="FrustrumNormalTex.h">
       <Filter>Component\VIBuffer</Filter>
     </ClInclude>
+    <ClInclude Include="SmokeParticle.h">
+      <Filter>Component\ParticleSystem\SmokeParticles</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpSmokeParticle.h">
+      <Filter>Component\ParticleSystem\SmokeParticles</Filter>
+    </ClInclude>
+    <ClInclude Include="RunSmokeParticle.h">
+      <Filter>Component\ParticleSystem\SmokeParticles</Filter>
+    </ClInclude>
+    <ClInclude Include="UpSmokeParticle.h">
+      <Filter>Component\ParticleSystem\SmokeParticles</Filter>
+    </ClInclude>
     <ClInclude Include="VortexParticle.h">
+      <Filter>Component\ParticleSystem\BulletParticles</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureParticle.h">
+      <Filter>Component\ParticleSystem\ParticleSystem_Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorParticle.h">
+      <Filter>Component\ParticleSystem\ParticleSystem_Color</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalBulletParticle.h">
+      <Filter>Component\ParticleSystem\BulletParticles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
       <Filter>Component\ParticleSystem</Filter>
     </ClInclude>
-    <ClInclude Include="SmokeParticle.h">
-      <Filter>Component\ParticleSystem</Filter>
+    <ClInclude Include="Particle.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleMgr.h">
+      <Filter>Manager\ParticleMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="PyramidDestoryParticle.h">
+      <Filter>Component\ParticleSystem\ObjectParticles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -241,9 +268,6 @@
       <Filter>Component\VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="Firework.cpp">
-      <Filter>Component\ParticleSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp">
       <Filter>Component\ParticleSystem</Filter>
     </ClCompile>
     <ClCompile Include="Snow.cpp">
@@ -348,11 +372,41 @@
     <ClCompile Include="FrustrumNormalTex.cpp">
       <Filter>Component\VIBuffer</Filter>
     </ClCompile>
+    <ClCompile Include="SmokeParticle.cpp">
+      <Filter>Component\ParticleSystem\SmokeParticles</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpSmokeParticle.cpp">
+      <Filter>Component\ParticleSystem\SmokeParticles</Filter>
+    </ClCompile>
+    <ClCompile Include="RunSmokeParticle.cpp">
+      <Filter>Component\ParticleSystem\SmokeParticles</Filter>
+    </ClCompile>
+    <ClCompile Include="UpSmokeParticle.cpp">
+      <Filter>Component\ParticleSystem\SmokeParticles</Filter>
+    </ClCompile>
     <ClCompile Include="VortexParticle.cpp">
+      <Filter>Component\ParticleSystem\BulletParticles</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureParticle.cpp">
+      <Filter>Component\ParticleSystem\ParticleSystem_Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorParticle.cpp">
+      <Filter>Component\ParticleSystem\ParticleSystem_Color</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalBulletParticle.cpp">
+      <Filter>Component\ParticleSystem\BulletParticles</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
       <Filter>Component\ParticleSystem</Filter>
     </ClCompile>
-    <ClCompile Include="SmokeParticle.cpp">
-      <Filter>Component\ParticleSystem</Filter>
+    <ClCompile Include="Particle.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleMgr.cpp">
+      <Filter>Manager\ParticleMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="PyramidDestoryParticle.cpp">
+      <Filter>Component\ParticleSystem\ObjectParticles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -447,6 +501,24 @@
     </Filter>
     <Filter Include="Component\UIComponent">
       <UniqueIdentifier>{01ceebb4-0a9e-4d59-bd77-bcc5daffd18c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ParticleSystem\SmokeParticles">
+      <UniqueIdentifier>{9f76f5c6-ceb0-47b7-8b7c-e7cc4b9907c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ParticleSystem\BulletParticles">
+      <UniqueIdentifier>{31aaaa75-2907-47ea-a925-434355a0abad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ParticleSystem\ParticleSystem_Texture">
+      <UniqueIdentifier>{865b6618-f282-43f1-80c4-8bfcabd9b493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ParticleSystem\ParticleSystem_Color">
+      <UniqueIdentifier>{e20c17a0-2c5d-48b7-8c9f-3a60e952191d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\ParticleMgr">
+      <UniqueIdentifier>{327c178d-12d2-4f55-848c-4205c3f6cdc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ParticleSystem\ObjectParticles">
+      <UniqueIdentifier>{858baa2f-9d7a-4bd9-8138-bc98c52a2532}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

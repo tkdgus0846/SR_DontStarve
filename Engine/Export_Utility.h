@@ -37,6 +37,10 @@
 #include "PickingSphere.h"
 
 #include "VortexParticle.h"
+#include "NormalBulletParticle.h"
+#include "UpSmokeParticle.h"
+#include "JumpSmokeParticle.h"
+#include "PyramidDestoryParticle.h"
 
 BEGIN(Engine)
 

@@ -77,7 +77,6 @@ _int CAnimation::Update_Component(const _float& fTimeDelta)
 					m_CurFrame->iFrame = 0;
 					m_bFinished = TRUE;
 				}
-
 			}
 		}
 	}

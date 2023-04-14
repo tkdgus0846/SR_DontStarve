@@ -273,15 +273,18 @@
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MonoBehaviors.h" />
     <ClInclude Include="Monster.h" />
-    <ClInclude Include="MonsterFactory.h" />
+    <ClInclude Include="NogadaFactory.h" />
     <ClInclude Include="MoveLook.h" />
     <ClInclude Include="MyEdit.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="NotCollisionWall.h" />
+    <ClInclude Include="NubBoss.h" />
     <ClInclude Include="Pyramid.h" />
     <ClInclude Include="ShopNpc.h" />
+    <ClInclude Include="Rub.h" />
+    <ClInclude Include="RapidWeapon.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="RoomMgr.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -299,6 +302,9 @@
     <ClInclude Include="Rush.h" />
     <ClInclude Include="BootsItem.h" />
     <ClInclude Include="SoftPyramid.h" />
+    <ClInclude Include="Cryder.h" />
+    <ClInclude Include="SwordBullet.h" />
+    <ClInclude Include="SwordWeapon.h" />
     <ClInclude Include="Tennel.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TimeInLimit.h" />
@@ -307,6 +313,7 @@
     <ClInclude Include="UltimateUI.h" />
     <ClInclude Include="VortexBullet.h" />
     <ClInclude Include="Walker.h" />
+    <ClInclude Include="WalkerBoss.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="RotToFace.h" />
     <ClInclude Include="Stage.h" />
@@ -375,15 +382,18 @@
     <ClCompile Include="MapObj.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="MonsterFactory.cpp" />
+    <ClCompile Include="NogadaFactory.cpp" />
     <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="MyEdit.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="NotCollisionWall.cpp" />
+    <ClCompile Include="NubBoss.cpp" />
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="ShopNpc.cpp" />
+    <ClCompile Include="Rub.cpp" />
+    <ClCompile Include="RapidWeapon.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="RoomMgr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -401,11 +411,14 @@
     <ClCompile Include="Rush.cpp" />
     <ClCompile Include="BootsItem.cpp" />
     <ClCompile Include="SoftPyramid.cpp" />
+    <ClCompile Include="Cryder.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SwordBullet.cpp" />
+    <ClCompile Include="SwordWeapon.cpp" />
     <ClCompile Include="Tennel.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TimeInLimit.cpp" />
@@ -414,6 +427,7 @@
     <ClCompile Include="UltimateUI.cpp" />
     <ClCompile Include="VortexBullet.cpp" />
     <ClCompile Include="Walker.cpp" />
+    <ClCompile Include="WalkerBoss.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Wait.cpp" />
     <ClCompile Include="Weapon.cpp" />

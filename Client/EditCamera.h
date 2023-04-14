@@ -26,27 +26,42 @@ private:
 	void	Fix_Mouse();
 
 public:
-	_bool& Get_Pick() { return m_bPick; }
+	void Set_Tag(const char* tag) { m_tag = tag; }
+	_bool& Get_Pick(PICK_TYPE ePickType) { return m_bPick[ePickType]; }
+	ClickInfo&	Get_ClickInfo() { return m_tPickInfo; }
+	void CreateObj();
+	_int&	Get_Radio() { return m_radio; }
 
 private:
+	// imgui에서 사용하는 함수들로 bool변수로 활성화 여부를 결정.
+	// ex) m_bPick[PICK_TILE]를 true로 만들어주면 CreateTile이 활성화된다.
+	void CreateTile();
+
+private:
+	void SetClickInfo();
+
+	// Functions that fill in mouse click information
 	_bool IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
 	_bool IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
 	_bool Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
 	Ray CalcRaycast(POINT ptMouse);
 	POINT GetMousePos();
-	_vec3 CalcMiddlePoint(Triangle& tri);
 
+	// 
+	_vec3 CalcMiddlePoint(Triangle& tri);
 public:
 	void Change_Texture(const _tchar* pTextureName) { m_pCurTextureName = pTextureName; }
 
 private:
 	_float				m_fSpeed;
 	_bool				m_bFix;
-	_bool				m_bPick;
+	_bool				m_bPick[PICK_END];
 	CRoom*				tmp;
-
+	ClickInfo			m_tPickInfo;
 	const _tchar*		m_pCurTextureName;
+	const char*			m_tag;
 
+	_int				m_radio;
 public:
 	static CEditCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

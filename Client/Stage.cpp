@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Stage.h"
 
+#include "Layer.h"
 #include "Monster.h"
 #include "Bub.h"
 #include "Guppi.h"
@@ -123,6 +124,9 @@ HRESULT CStage::Ready_Scene(void)
 
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
+	if(0 == (*m_StaticLayerArr)[LAYER_MONSTER]->Get_ObjectSize())
+		ROOM_MGR->Get_CurRoom()->Open_Doors();
+
 	return __super::Update_Scene(fTimeDelta);
 }
 
@@ -140,6 +144,7 @@ void CStage::LateUpdate_Scene(void)
 			CCollisionMgr::GetInstance()->Set_StaticColliderList(ROOM_MGR->Get_CurColliderList(i), i);
 
 		m_iPreRoomIdx = m_iCurRoomIdx;
+		ROOM_MGR->Get_CurRoom()->Close_Doors();
 	}
 }
 

@@ -84,9 +84,9 @@ HRESULT CTurret::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
 	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
 
-	Create_Root_AI();
-	Set_TurretAI();
-	Init_AI_Behaviours();
+	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
+	FAILED_CHECK_RETURN(Set_TurretAI(), E_FAIL);
+	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;
 }

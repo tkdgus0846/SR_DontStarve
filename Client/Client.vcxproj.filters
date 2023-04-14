@@ -89,6 +89,12 @@
     <Filter Include="GameObject\ShopNpc">
       <UniqueIdentifier>{950bbc09-db17-4371-b439-132eb03aeaef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Monster\Enemy">
+      <UniqueIdentifier>{5b624f17-61ee-4804-bcc2-e9195a46d326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Monster\Boss">
+      <UniqueIdentifier>{eca07ded-532e-4ec6-9bd6-0e495dffff75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -191,21 +197,6 @@
     <ClInclude Include="UI.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Turret.h">
-      <Filter>GameObject\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Walker.h">
-      <Filter>GameObject\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Baller.h">
-      <Filter>GameObject\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Bub.h">
-      <Filter>GameObject\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Guppi.h">
-      <Filter>GameObject\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="MyEdit.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -302,9 +293,6 @@
     <ClInclude Include="MapObj.h">
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterFactory.h">
-      <Filter>Factory</Filter>
-    </ClInclude>
     <ClInclude Include="VortexBullet.h">
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
@@ -379,6 +367,45 @@
     </ClInclude>
     <ClInclude Include="ShopNpc.h">
       <Filter>GameObject\ShopNpc</Filter>
+    </ClInclude>
+    <ClInclude Include="NogadaFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Baller.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Bub.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Cryder.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Guppi.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Rub.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Turret.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Walker.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="NubBoss.h">
+      <Filter>GameObject\Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkerBoss.h">
+      <Filter>GameObject\Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="RapidWeapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="SwordBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="SwordWeapon.h">
+      <Filter>GameObject\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -465,21 +492,6 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>GameObject\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Turret.cpp">
-      <Filter>GameObject\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Walker.cpp">
-      <Filter>GameObject\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Bub.cpp">
-      <Filter>GameObject\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Guppi.cpp">
-      <Filter>GameObject\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Baller.cpp">
-      <Filter>GameObject\Monster</Filter>
     </ClCompile>
     <ClCompile Include="MyEdit.cpp">
       <Filter>Scene</Filter>
@@ -580,9 +592,6 @@
     <ClCompile Include="MapObj.cpp">
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterFactory.cpp">
-      <Filter>Factory</Filter>
-    </ClCompile>
     <ClCompile Include="VortexBullet.cpp">
       <Filter>GameObject\Bullet</Filter>
     </ClCompile>
@@ -657,6 +666,45 @@
     </ClCompile>
     <ClCompile Include="ShopNpc.cpp">
       <Filter>GameObject\ShopNpc</Filter>
+    </ClCompile>
+    <ClCompile Include="NogadaFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Baller.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Bub.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Cryder.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Guppi.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Rub.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Turret.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Walker.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="NubBoss.cpp">
+      <Filter>GameObject\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkerBoss.cpp">
+      <Filter>GameObject\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="RapidWeapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordWeapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

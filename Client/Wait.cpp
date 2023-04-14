@@ -27,11 +27,15 @@ HRESULT CWait::Ready_Behavior()
 _int CWait::Update_Component(const _float & fTimeDelta)
 {
 	m_fCurTime += fTimeDelta;
+	
+	CAnimation* pAnimation = dynamic_cast<CAnimation*>(m_pGameObject->Get_Component(L"Animation", ID_ALL));
+	if (pAnimation)
+		pAnimation->SelectState(ANIM_IDLE);
 
 	if (m_fCurTime - m_fPreTime >= m_fTimer)
 	{
 		m_fPreTime = m_fCurTime;
-		return BEHAVIOR_SUCCES;
+		return BEHAVIOR_FAIL;
 	}
 
 	return BEHAVIOR_RUNNING;

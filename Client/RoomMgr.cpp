@@ -5,7 +5,11 @@
 #include "Layer.h"
 #include "Export_Function.h"
 
+#include "NubBoss.h"
+#include "WalkerBoss.h"
 #include "Bub.h"
+#include "Rub.h"
+#include "Cryder.h"
 #include "SoftPyramid.h"
 #include "HardPyramid.h"
 #include "Slider.h"
@@ -34,58 +38,6 @@ HRESULT CRoomMgr::Ready_RoomMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 	return S_OK;
 }
 
-//_int CRoomMgr::Update_GameObject(const _float & fTimeDelta)
-//{
-//	if (!m_arrRoom[0])
-//		return 0;
-//
-//	for (auto iter : m_arrRoom)
-//		iter->Update_GameObject(fTimeDelta);
-//
-//	CGameObject* pPlayer = Get_Player();
-//	if (nullptr == pPlayer)	// 에디터 모드
-//	{
-//		for (auto iter : m_arrRoom)
-//			iter->Update_GameObject(fTimeDelta);
-//	}
-//	else	// 인 게임
-//		m_pCurRoom->Update_GameObject(fTimeDelta);
-//
-//	m_pTennel[0]->Update_GameObject(fTimeDelta);
-//	m_pTennel[1]->Update_GameObject(fTimeDelta);
-//
-//
-//	return 0;
-//}
-//
-//void CRoomMgr::LateUpdate_GameObject(void)
-//{
-//	if (!m_arrRoom[0])
-//		return;
-//
-//	CGameObject* pPlayer = Get_Player();
-//	if (nullptr == pPlayer)	// 에디터 모드
-//	{
-//		for (auto iter : m_arrRoom)
-//			iter->LateUpdate_GameObject();
-//	}
-//	else	// 인 게임
-//		m_pCurRoom->LateUpdate_GameObject();
-//
-//	m_pTennel[0]->LateUpdate_GameObject();
-//	m_pTennel[1]->LateUpdate_GameObject();
-//
-//}
-//
-//void CRoomMgr::Render_GameObject(void)
-//{
-//	if (!m_arrRoom[0])
-//		return;
-//
-//	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-//}
-
-
 void CRoomMgr::Create_Default_Room()
 {
 	for (_uint i = 0; i < 5; ++i)
@@ -112,19 +64,11 @@ void CRoomMgr::Create_Default_Room()
 	m_arrRoom[5]->Set_DoorType(DOOR_ES);
 	m_arrRoom[6]->Set_DoorType(DOOR_SW);
 
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 2.4f, 40.f)));
-
-	m_arrRoom[0]->PushBack_GameObj(CSoftPyramid::Create(m_pGraphicDev));
-	m_arrRoom[0]->PushBack_GameObj(CSlider::Create(m_pGraphicDev));
-	//m_arrRoom[0]->PushBack_GameObj(CHardPyramid::Create(m_pGraphicDev));
-
-	/*m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(41.f, 0.6f, 41.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(32.f, 0.6f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(30.f, 0.6f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(32.f, 0.6f, 43.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(35.f, 0.6f, 40.f)));*/
-
+	m_arrRoom[0]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(40.f, 3.f, 40.f)));
+	m_arrRoom[1]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(100.f, 1.f, 40.f)));
+	m_arrRoom[1]->PushBack_GameObj(CRub::Create(m_pGraphicDev, _vec3(90.f, 2.4f, 40.f)));
+	m_arrRoom[5]->PushBack_GameObj(CCryder::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 100.f)));
+	m_arrRoom[6]->PushBack_GameObj(CNubBoss::Create(m_pGraphicDev, _vec3(100.f, 0.6f, 100.f)));
 
 	//====== 임시 코드임 =======
 }

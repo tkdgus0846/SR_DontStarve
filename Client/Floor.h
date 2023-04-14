@@ -3,10 +3,6 @@
 #include "Include.h"
 #include "GameObject.h"
 
-BEGIN(Engine)
-class CTexture;
-END
-
 class CFloor : public Engine::CGameObject
 {
 private:
@@ -19,6 +15,9 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
+	virtual void OnCollisionEnter(const class Collision* collsion);
+	virtual void OnCollisionStay(const class Collision* collision);
+	virtual void OnCollisionExit(const class Collision* collision);
 private:
 	virtual HRESULT Add_Component() override;
 

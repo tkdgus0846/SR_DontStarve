@@ -4,7 +4,7 @@
 
 
 CSnow::CSnow(LPDIRECT3DDEVICE9 pGraphicDev) :
-	CParticleSystem(pGraphicDev)
+	CTextureParticle(pGraphicDev)
 {
 	m_BoundingBox = BoundingBox();
 	m_Size = 0.8f;
@@ -14,7 +14,7 @@ CSnow::CSnow(LPDIRECT3DDEVICE9 pGraphicDev) :
 }
 
 CSnow::CSnow(const CSnow& rhs) :
-	CParticleSystem(rhs)
+	CTextureParticle(rhs)
 {
 	for (auto it = rhs.m_Particles.begin(); it != rhs.m_Particles.end(); it++)
 		m_Particles.push_back(*it);

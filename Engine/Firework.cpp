@@ -6,7 +6,7 @@
 
 
 CFirework::CFirework(LPDIRECT3DDEVICE9 pGraphicDev) :
-	CParticleSystem(pGraphicDev)
+	CTextureParticle(pGraphicDev)
 {
 	m_Size = 0.7f;
 	m_VBSize = 2048;
@@ -15,7 +15,7 @@ CFirework::CFirework(LPDIRECT3DDEVICE9 pGraphicDev) :
 }
 
 CFirework::CFirework(const CFirework & rhs) :
-	CParticleSystem(rhs)
+	CTextureParticle(rhs)
 {
 	m_fRadius = 10.f;
 
@@ -45,27 +45,7 @@ void CFirework::ResetParticle(Particle * particle)
 
 	particle->fSpeed = 0.45f;
 
-	int randNum = rand() % 2;
-
-	if (randNum == 0)
-	{
-		particle->dwColor = D3DXCOLOR(
-			0.f,
-			0.f,
-			0.f,
-			GetRandomFloat(0.f, 1.0f));
-		particle->vTexUV = { 0.f, 0.f };
-	}
-	else
-	{
-		particle->dwColor = D3DXCOLOR(
-			1.f,
-			1.f,
-			1.f,
-			GetRandomFloat(0.f, 1.0f));
-	}
-	
-
+	particle->vTexUV = { 0.f, 0.f };
 	particle->fAge = 0.f;
 	particle->fLifeTime = 7.5f;
 }
@@ -123,7 +103,7 @@ CComponent * CFirework::Clone(void)
 
 void CFirework::PreRender()
 {
-	CParticleSystem::PreRender();
+	CTextureParticle::PreRender();
 
 	/*m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
 	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);*/
@@ -132,12 +112,11 @@ void CFirework::PreRender()
 
 void CFirework::PostRender()
 {
-	CParticleSystem::PostRender();
+	CTextureParticle::PostRender();
 	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, true);
 }
 
 void CFirework::Free(void)
 {
-	Safe_Release(m_Texture);
 	__super::Free();
 }

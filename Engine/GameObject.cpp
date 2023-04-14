@@ -1,4 +1,5 @@
-﻿#include "stdafx.h"
+﻿#include "GameObject.h"
+#include "stdafx.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "Export_Function.h"
@@ -48,6 +49,20 @@ CVIBuffer* CGameObject::Get_VIBuffer()
 		}
 	}
 	return nullptr;
+}
+
+CTexture * CGameObject::Get_Texture()
+{
+	CTexture* pTexture = nullptr;
+	for (_ulong i = 0; i < ID_END; ++i)
+	{
+		for (auto& Component : m_uMapComponent[i])
+		{
+			if (pTexture = dynamic_cast<CTexture*>(Component.second))
+				return pTexture;
+		}
+	}
+	return pTexture;
 }
 
 HRESULT CGameObject::Ready_GameObject(void)

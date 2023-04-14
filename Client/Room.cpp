@@ -206,6 +206,24 @@ _int CRoom::Get_Room_Index()
 	return iZ * 5 + iX;
 }
 
+void CRoom::Open_Doors()
+{
+	for (auto& iter : m_apDoor)
+	{
+		if (iter.first)
+			iter.second->Door_Open();
+	}
+}
+
+void CRoom::Close_Doors()
+{
+	for (auto& iter : m_apDoor)
+	{
+		if (iter.first)
+			iter.second->Door_Close();
+	}
+}
+
 void CRoom::FloorSubSet()
 {
 	// 바닥 위치 조정
@@ -288,9 +306,11 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 	WriteFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iObjSize; ++i)
 	{
-
 		if (!dynamic_cast<CMonster*>(m_vecGameObj[i]))
 			continue;
+		_tchar a[32];
+		lstrcpy(a, CBub::GetTag());
+		cout <<  m_vecGameObj[i]->Get_ObjTag() << endl;
 
 		// 어떤 객체인지 번호로 저장.
 		_int iObjNumber = 0;
@@ -315,7 +335,6 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 			iObjNumber = 5;
 		}
 
-
 		// 세이브 시 어떤 객체인지 정보를 알 수 없을 때 에러메시지 발생.
 		if (0 == iObjNumber && !m_vecGameObj.empty())
 		{
@@ -327,7 +346,6 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 			m_vecGameObj[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
 		}
 	}
-
 
 	return true;
 }
@@ -347,6 +365,7 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 
 	_int iTileSize;
 	_int iObjSize;
+
 	// 룸 변수 로드
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	ReadFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
@@ -387,7 +406,6 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	ReadFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iObjSize; ++i)
 	{
-
 		_int iObjNumber = 0;
 		ReadFile(hFile, &iObjNumber, sizeof(_int), &dwByte, nullptr);
 
@@ -447,7 +465,7 @@ void CRoom::PushBack_GameObj(CGameObject * pObj)
 		CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(objInfo.colNameVec[i], ID_ALL));
 		if(pCol)
 			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
-	}	
+	}
 }
 
 HRESULT CRoom::Add_Component(void)
