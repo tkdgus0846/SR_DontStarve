@@ -1,7 +1,6 @@
 #include "Rush.h"
 
-#include "Player.h"
-#include "Wall.h"
+#include "Bullet.h"
 #include "Export_Function.h"
 
 CRush::CRush(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -41,6 +40,11 @@ _int CRush::Update_Component(const _float & fTimeDelta)
 	}
 	else
 	{
+		for (auto& iter : uMap)
+		{
+			if (dynamic_cast<CBullet*>(iter.second.OtherGameObject))
+				return BEHAVIOR_RUNNING;
+		}
 		return BEHAVIOR_SUCCES;
 	}
 
