@@ -86,6 +86,9 @@
     <Filter Include="GameObject\MapObject\Pyramid">
       <UniqueIdentifier>{3c856778-44ca-465a-90eb-65695009b097}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\ShopNpc">
+      <UniqueIdentifier>{950bbc09-db17-4371-b439-132eb03aeaef}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GameObject\Monster\Enemy">
       <UniqueIdentifier>{5b624f17-61ee-4804-bcc2-e9195a46d326}</UniqueIdentifier>
     </Filter>
@@ -358,6 +361,12 @@
     </ClInclude>
     <ClInclude Include="Slider.h">
       <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="UltimateUI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopNpc.h">
+      <Filter>GameObject\ShopNpc</Filter>
     </ClInclude>
     <ClInclude Include="NogadaFactory.h">
       <Filter>Factory</Filter>
@@ -651,6 +660,12 @@
     </ClCompile>
     <ClCompile Include="Slider.cpp">
       <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="UltimateUI.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopNpc.cpp">
+      <Filter>GameObject\ShopNpc</Filter>
     </ClCompile>
     <ClCompile Include="NogadaFactory.cpp">
       <Filter>Factory</Filter>

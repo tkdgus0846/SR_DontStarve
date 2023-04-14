@@ -5,6 +5,7 @@
 #include "BulletMgr.h"
 #include "Turret.h"
 #include "EffectManager.h"
+#include "Player.h"
 #include "ParticleMgr.h"
 #include "..\Engine\ColorParticle.h"
 #include "Wall.h"
@@ -78,13 +79,18 @@ void CNormalBullet::OnCollisionEnter(const Collision* collsion)
 
 void CNormalBullet::OnCollisionStay(const Collision* collision)
 {
+
+	__super::OnCollisionStay(collision);
+
 	CMonster* monster = dynamic_cast<CMonster*>(collision->OtherGameObject);
 
 	if (monster && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
 	{
 		_vec3 pos = collision->intersectBox._max;
+
 		/*CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"RedBlood", pos, { 0.7f,0.7f,0.7f }, 0.1f);
 		Add_GameObject(effect);*/
+
 
 		monster->Get_Damaged(m_Damage);
 		SetDead();

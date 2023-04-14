@@ -282,6 +282,7 @@
     <ClInclude Include="NotCollisionWall.h" />
     <ClInclude Include="NubBoss.h" />
     <ClInclude Include="Pyramid.h" />
+    <ClInclude Include="ShopNpc.h" />
     <ClInclude Include="Rub.h" />
     <ClInclude Include="RapidWeapon.h" />
     <ClInclude Include="Slider.h" />
@@ -309,6 +310,7 @@
     <ClInclude Include="TimeInLimit.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="UltimateUI.h" />
     <ClInclude Include="VortexBullet.h" />
     <ClInclude Include="Walker.h" />
     <ClInclude Include="WalkerBoss.h" />
@@ -389,6 +391,7 @@
     <ClCompile Include="NotCollisionWall.cpp" />
     <ClCompile Include="NubBoss.cpp" />
     <ClCompile Include="Pyramid.cpp" />
+    <ClCompile Include="ShopNpc.cpp" />
     <ClCompile Include="Rub.cpp" />
     <ClCompile Include="RapidWeapon.cpp" />
     <ClCompile Include="Slider.cpp" />
@@ -421,6 +424,7 @@
     <ClCompile Include="TimeInLimit.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UltimateUI.cpp" />
     <ClCompile Include="VortexBullet.cpp" />
     <ClCompile Include="Walker.cpp" />
     <ClCompile Include="WalkerBoss.cpp" />

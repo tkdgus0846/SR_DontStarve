@@ -54,7 +54,9 @@ _int CBootsItem::Update_GameObject(const _float & fTimeDelta)
 	m_fAngle += 10.f;
 
 	__super::Update_GameObject(fTimeDelta);
-	
+
+	//cout << m_pTransform->m_vInfo[INFO_POS].x << endl;
+
 	if (GetDead()) return OBJ_DEAD;
 
 	return OBJ_NOEVENT;

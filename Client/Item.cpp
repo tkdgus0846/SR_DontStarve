@@ -77,8 +77,6 @@ void CItem::ItemDrop(const _float& fTimeDelta)
 	m_pTransform->m_vInfo[INFO_POS].y += 2.f * m_fTime - (4.9f * m_fTime * m_fTime) * 0.5f;
 	m_fTime += 0.1f;
 
-	//cout << m_pTransform->m_vInfo[INFO_POS].y << endl;
-
 	if (m_pTransform->m_vInfo[INFO_POS].y < 0.f)
 	{
 		m_pTransform->m_vInfo[INFO_POS].y = m_fY;

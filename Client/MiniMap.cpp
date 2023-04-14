@@ -76,7 +76,7 @@ void CMiniMap::Render_GameObject(void)
 				ESWN();
 				dynamic_cast<CTexture*>(m_arrMap[i])->Render_Texture();
 				m_pBufferCom->Render_Component();
-				m_pBufferCom->Edit_UV(1.f);
+				m_pBufferCom->Edit_U(1.f);
 				continue;
 			}
 			case MINIMAPPOS:
@@ -154,7 +154,7 @@ void CMiniMap::ESWN()
 	_vec3 vecRot;
 	D3DXVec3TransformNormal(&vecRot, &vecRot, &pPlayerWorld);
 	_float fAngleZ = -atan2f(vecRot.x, vecRot.z) / 6.f;
-	m_pBufferCom->Edit_UV(fAngleZ);
+	m_pBufferCom->Edit_U(fAngleZ);
 	Set_ViewMatrix_UI(300.f, -130.f, 76.f, 10.f);
 }
 

@@ -8,7 +8,6 @@ protected:
 	virtual ~CFlameProjector();
 
 public:
-
 	// 발사할 위치. 
 	virtual CBullet* Shot_Setting() override;
 

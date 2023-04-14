@@ -42,7 +42,10 @@ HRESULT CLayer::Remove_Static_Layers()
 
 CGameObject* CLayer::Get_GameObject(const _tchar* pObjTag)
 {
-	return m_uMapObject.find(pObjTag)->second;
+	auto iter = m_uMapObject.find(pObjTag);
+	if (iter == m_uMapObject.end()) return nullptr;
+
+	return iter->second;
 }
 
 HRESULT CLayer::Ready_Layer(void)

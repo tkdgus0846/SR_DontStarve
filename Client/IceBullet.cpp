@@ -66,6 +66,8 @@ void CIceBullet::OnCollisionEnter(const Collision * collsion)
 
 void CIceBullet::OnCollisionStay(const Collision * collision)
 {
+	__super::OnCollisionStay(collision);
+
 	CMonster* monster = dynamic_cast<CMonster*>(collision->OtherGameObject);
 
 	if (monster && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))

@@ -2,6 +2,7 @@
 #include "BulletMgr.h"
 #include "Monster.h"
 #include "EffectManager.h"
+#include "Player.h"
 #include "..\Engine\ParticleMgr.h"
 
 CFireBullet::CFireBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
@@ -79,6 +80,9 @@ void CFireBullet::OnCollisionEnter(const Collision * collsion)
 
 void CFireBullet::OnCollisionStay(const Collision * collision)
 {
+	//__super::OnCollisionStay(collision);
+
+	
 }
 
 void CFireBullet::OnCollisionExit(const Collision * collision)

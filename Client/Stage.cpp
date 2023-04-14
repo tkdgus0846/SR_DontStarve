@@ -24,6 +24,7 @@
 #include "WeaponType.h"
 #include "MiniMap.h"
 #include "BossHp.h"
+#include "UltimateUI.h"
 
 #include "CoinItem.h"
 #include "BulletItem.h"
@@ -72,6 +73,7 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CBulletGauge::Create(m_pGraphicDev));
 	Add_GameObject(CBulletBar::Create(m_pGraphicDev));
 	Add_GameObject(CBossHp::Create(m_pGraphicDev));
+	Add_GameObject(CUltimateUI::Create(m_pGraphicDev));
 
 
 	Add_GameObject(CCrossHair::Create(m_pGraphicDev));

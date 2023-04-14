@@ -77,8 +77,6 @@ CGameObject * CScene::Get_GameObject(LAYERID LayerID, const _tchar * pObjTag)
 	CLayer* curLayer = Get_Layer(LayerID);
 	if (curLayer == nullptr) nullptr;
 
-	NULL_CHECK_RETURN(pObjTag);
-
 	return curLayer->Get_GameObject(pObjTag);
 }
 

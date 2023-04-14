@@ -1,7 +1,11 @@
 ﻿#include "stdafx.h"
 #include "Bullet.h"
+#include "Player.h"
+#include "Monster.h"
+#include "Weapon.h"
 
 #include "Export_Function.h"
+
 
 CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CGameObject(pGraphicDev),
@@ -16,4 +20,10 @@ CBullet::~CBullet()
 {
 }
 
+void CBullet::OnCollisionStay(const Collision * collision)
+{
+	CMonster* monster = dynamic_cast<CMonster*>(collision->OtherGameObject);
 
+	if (monster && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
+		dynamic_cast<CPlayer*>(Engine::Get_Player())->Gain_UltiGuage(m_Damage);
+}
