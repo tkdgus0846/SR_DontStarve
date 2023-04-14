@@ -110,12 +110,12 @@ void CTennel::Set_Position(_int iFrontorBack)
 	if (0 == iFrontorBack)	// front ÀÎ °æ¿ì
 	{
 		m_pCollider->Set_BoundingBox({ 10.f, 10.f, 1.f }, _vec3(0.f, 0.f, 5.f));
-		m_pTile = CTile::Create(m_pGraphicDev, vPos + _vec3(0.f, 0.f, 5.f), L"Dock_Texture");
+		m_pTile = CTile::Create(m_pGraphicDev, vPos + _vec3(0.f, 0.f, 5.f), L"Open_Texture");
 	}
 	else
 	{
 		m_pCollider->Set_BoundingBox({ 10.f, 10.f, 1.f }, -_vec3(0.f, 0.f, 5.f));
-		m_pTile = CTile::Create(m_pGraphicDev, vPos - _vec3(0.f, 0.f, 5.f), L"Dock_Texture");
+		m_pTile = CTile::Create(m_pGraphicDev, vPos - _vec3(0.f, 0.f, 5.f), L"Open_Texture");
 	}
 	m_pTile->m_pTransform->Rot_Pitch(90.f, 1.f);
 	m_pTile->m_pTransform->m_vInfo[INFO_POS] -= _vec3(0.f, 1.f, 0.f);

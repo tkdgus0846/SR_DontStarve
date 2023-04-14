@@ -4,6 +4,7 @@
 #include "FireBullet.h"
 #include "IceBullet.h"
 #include "VortexBullet.h"
+#include "SwordBullet.h"
 
 IMPLEMENT_SINGLETON(CBulletMgr)
 
@@ -52,7 +53,7 @@ CBulletPool* CBulletPool::Create()
 	return pInstance;
 }
 
-CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _vec3 & vPos, const _vec3 & vDir, const _vec3& vScale, bool bIsEnemyBullet)
+CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _vec3 & vPos, const _vec3 & vDir, const _vec3& vScale, bool bIsEnemyBullet, const _float& fSpeed)
 {
 	CBullet*		pBullet = nullptr;
 
@@ -74,6 +75,10 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 		{
 			pBullet = CVortexBullet::Create(pDevice);
 		}
+		else if (name == L"SwordBullet")
+		{
+			pBullet = CSwordBullet::Create(pDevice);
+		}
 		++m_iCreateCnt;
 		//cout << m_iCreateCnt << endl;
 	}
@@ -94,6 +99,9 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 	(pBullet)->SetDead(false);
 	(pBullet)->m_pTransform->Set_Scale(vScale);
 	(pBullet)->Pop_Initialize();
+
+	if (fSpeed != -1.f)
+		(pBullet)->SetSpeed(fSpeed);
 
 	Engine::Add_Collider(pBullet);
 
@@ -151,13 +159,13 @@ void CBulletMgr::Free(void)
 	m_BulletPool.clear();
 }
 
-CBullet* CBulletMgr::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _vec3& vPos, const _vec3& vDir, const _vec3& vScale, bool bIsEnemyBullet)
+CBullet* CBulletMgr::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _vec3& vPos, const _vec3& vDir, const _vec3& vScale, bool bIsEnemyBullet, const _float& fSpeed)
 {
 	if (m_BulletPool[name] == nullptr)
 	{
 		m_BulletPool[name] = CBulletPool::Create();
 	}
-	CBullet*		pBullet = m_BulletPool[name]->Pop(name, pDevice, vPos, vDir, vScale, bIsEnemyBullet);
+	CBullet*		pBullet = m_BulletPool[name]->Pop(name, pDevice, vPos, vDir, vScale, bIsEnemyBullet, fSpeed);
 	if (pBullet == nullptr)
 		return nullptr;
 

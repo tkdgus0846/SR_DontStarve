@@ -30,6 +30,10 @@ _int CBackJump::Update_Component(const _float & fTimeDelta)
 	if (m_fCurTime - m_fPreTime < m_fTimer)
 		return BEHAVIOR_FAIL;
 
+	CAnimation* pAnimation = dynamic_cast<CAnimation*>(m_pGameObject->Get_Component(L"Animation", ID_ALL));
+	if (pAnimation)
+		pAnimation->SelectState(ANIM_JUMP);
+
 	_float fSpeed = 0.f;
 	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FAIL);
 	fSpeed *= 0.8f;

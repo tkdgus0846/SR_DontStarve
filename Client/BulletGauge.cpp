@@ -48,6 +48,12 @@ _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 	}
 		break;
 	case RAPIDSHOT:
+	{
+		m_pBufferCom->Edit_VB(m_RapidGuage);
+		_float Max = pWeapon->Get_MaxBulletNum();
+		_float Cur = pWeapon->Get_CurBulletNum();
+		m_RapidGuage = Cur / Max;
+	}
 		break;
 	case SPREADSHOT:
 		break;
@@ -60,6 +66,12 @@ _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 	}
 		break;
 	case LASERSHOT:
+	{
+		m_pBufferCom->Edit_VB(m_LaserGuage);
+		_float Max = pWeapon->Get_MaxBulletNum();
+		_float Cur = pWeapon->Get_CurBulletNum();
+		m_LaserGuage = Cur / Max;
+	}
 		break;
 	}
 

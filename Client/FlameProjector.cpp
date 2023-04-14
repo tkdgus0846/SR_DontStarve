@@ -40,6 +40,14 @@ CBullet* CFlameProjector::Shot_Setting()
 
 
 	_vec3 bulletDir = cameraAt - m_pTransform->m_vInfo[INFO_POS];
+	/*bulletDir.x += GetRandomFloat(-0.6f, 0.6f);
+	bulletDir.y += GetRandomFloat(-0.6f, 0.6f);
+	bulletDir.z += GetRandomFloat(-0.6f, 0.6f);*/
+
+	/*_vec3 minVec = { bulletDir.x - 2.f,-1.f,bulletDir.z - 2.f };
+	_vec3 maxVec = { bulletDir.x + 2.f,1.f,bulletDir.z +2.f };
+
+	GetRandomVector(&bulletDir, &bulletDir, &bulletDir);*/
 	bulletDir.Normalize();
 
 	CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"FireBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, { 1.4f,1.4f,1.f }, false);

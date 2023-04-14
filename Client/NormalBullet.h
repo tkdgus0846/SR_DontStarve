@@ -22,12 +22,15 @@ public:
 	virtual void OnCollisionExit(const Collision* collision) override;
 
 	virtual HRESULT Add_Component() override;
+
+public:
+	virtual void Pop_Initialize();
+
 protected:
 	virtual void Free(void) override;
 
 private:
 	// 총알은 매니저를 통해서 생성할것.
 	static CNormalBullet*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
 };
 

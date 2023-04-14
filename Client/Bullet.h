@@ -17,8 +17,13 @@ protected:
 	// 살고 있는 시간
 	_float		m_fAge;
 	_uint		m_Damage;
+	_bool		m_bHit;
 
 public:
+	void			SetDamage(_uint damage) { m_Damage = damage; }
+	_uint			GetDamage() const { return m_Damage; }
+	void			SetSpeed(_float speed) { m_fSpeed = speed; }
+	_float			GetSpeed() const { return m_fSpeed; }
 	_bool			GetIsEnemy() const { return m_bIsEnemy; }
 	void			SetIsEnemy(_bool state) { m_bIsEnemy = state; }
 	void			SetAge(_float age = 0.f) { m_fAge = age; }

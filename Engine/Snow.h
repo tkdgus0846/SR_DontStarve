@@ -1,9 +1,9 @@
 #pragma once
-#include "ParticleSystem.h"
+#include "TextureParticle.h"
 
 BEGIN(Engine)
 
-class  CSnow : public CParticleSystem
+class  CSnow : public CTextureParticle
 {
 public:
 	explicit CSnow(LPDIRECT3DDEVICE9 pGraphicDev);

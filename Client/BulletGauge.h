@@ -38,7 +38,11 @@ private:
 	_float m_NormalGuage = 1.f;
 	_float m_IceGuage = 1.f;
 	_float m_FlameGuage = 1.f;
+	_float m_RapidGuage = 1.f;
+	_float m_LaserGuage = 1.f;
 
+	// 이 게이지 들이 각각 필요한 이유가 뭐에요?
+	// 어차피 다 똑같잖아요
 
 
 public:

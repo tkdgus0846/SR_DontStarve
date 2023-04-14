@@ -206,6 +206,24 @@ _int CRoom::Get_Room_Index()
 	return iZ * 5 + iX;
 }
 
+void CRoom::Open_Doors()
+{
+	for (auto& iter : m_apDoor)
+	{
+		if (iter.first)
+			iter.second->Door_Open();
+	}
+}
+
+void CRoom::Close_Doors()
+{
+	for (auto& iter : m_apDoor)
+	{
+		if (iter.first)
+			iter.second->Door_Close();
+	}
+}
+
 void CRoom::FloorSubSet()
 {
 	// 바닥 위치 조정
@@ -447,7 +465,7 @@ void CRoom::PushBack_GameObj(CGameObject * pObj)
 		CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(objInfo.colNameVec[i], ID_ALL));
 		if(pCol)
 			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
-	}	
+	}
 }
 
 HRESULT CRoom::Add_Component(void)

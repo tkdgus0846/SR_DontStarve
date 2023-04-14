@@ -44,11 +44,14 @@ _int CDoor::Update_GameObject(const _float & fTimeDelta)
 {
 	if (m_bIsOpen)
 	{
-		m_pAnimation->ToggleInverse();
+		m_pAnimation->SetInverse(false);
 		m_pCollider->Set_Enable(m_bIsOpen);
 	}
 	else
+	{
+		m_pAnimation->SetInverse(true);
 		m_pCollider->Set_Enable(m_bIsOpen);
+	}
 
 
 	if (GetDead()) return OBJ_DEAD;

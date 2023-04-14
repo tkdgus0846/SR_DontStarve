@@ -7,6 +7,8 @@
 #include "NormalWeapon.h"
 #include "IceBeamWeapon.h"
 #include "FlameProjector.h"
+#include "RapidWeapon.h"
+#include "SwordWeapon.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)
@@ -44,7 +46,8 @@ HRESULT CPlayer::Ready_GameObject(void)
 
 	m_MyWeaponList[BIGSHOT] = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
-	//m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[RAPIDSHOT] = CRapidWeapon::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[LASERSHOT] = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
 
 	Change_Weapon(BIGSHOT);
 
@@ -192,6 +195,7 @@ void CPlayer::Gain_Weapon(WEAPONTYPE eWeaponType)
 			gainWeapon = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
 			break;
 		case RAPIDSHOT:
+			gainWeapon = CRapidWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		case SPREADSHOT:
 			break;
@@ -199,6 +203,7 @@ void CPlayer::Gain_Weapon(WEAPONTYPE eWeaponType)
 			gainWeapon = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		case LASERSHOT:
+			gainWeapon = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		default:
 			break;
@@ -286,20 +291,24 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
 	if (Engine::Key_Down((DIK_C))) Engine::Toggle_ColliderRender();
 
-	if (Engine::Get_DIMouseState(DIM_LB))
+	if (Engine::Mouse_Pressing(DIM_LB))
 	{
-		D3DXVECTOR3 screenCenter = { WINCX / 2.f, WINCY / 2.f, 0.f };
-		D3DXVECTOR3 bulletPosition(1.0f, 1.0f, 1.0f);
-
-		bulletPosition = m_pTransform->m_vInfo[INFO_POS] + bulletPosition;
-		m_pCurWeapon->Shot();
-		/*D3DXVECTOR3 centerWorld;
-		D3DXMATRIX viewMatrix, projMatrix;
-		m_pGraphicDev->GetTransform(D3DTS_VIEW, &viewMatrix);
-		m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &projMatrix);
-		m_pGraphicDev->GetViewport()
-		D3DXVec3Unproject(&centerWorld, &screenCenter, &pViewport, &projMatrix, &viewMatrix, m_pTransform->Get_WorldMatrixPointer());*/
+		if (m_eCurWeaponType == LASERSHOT)
+		{
+			CSwordWeapon* weapon = dynamic_cast<CSwordWeapon*>(m_pCurWeapon);
+			weapon->Gather_Sword(fTimeDelta);
+		}
+		else
+		{
+			m_pCurWeapon->Shot();
+		}	
 	}
+	else if (Engine::Mouse_Up(DIM_LB))
+	{
+		if (m_eCurWeaponType == LASERSHOT)
+			m_pCurWeapon->Shot();
+	}
+
 
 	if (Engine::Key_Down(DIK_F))
 	{

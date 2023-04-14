@@ -8,7 +8,7 @@
 
 CCamera::CCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CComponent(pGraphicDev), m_bSwitch(false),
-	m_pName(nullptr)
+	m_pName(nullptr), m_fShackForce(0.f), m_fShackTime(0.f)
 {
 	//ZeroMemory(m_szName, sizeof(_tchar) * 256);
 	ZeroMemory(&m_tViewParams, sizeof(VIEWPARAMS));
@@ -17,7 +17,8 @@ CCamera::CCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CCamera::CCamera(const CCamera & rhs)
 	:CComponent(rhs), m_bSwitch(false),
-	m_pName(rhs.m_pName)
+	m_pName(rhs.m_pName), m_fShackForce(rhs.m_fShackForce),
+	m_fShackTime(rhs.m_fShackTime)
 {
 	//ZeroMemory(m_szName, sizeof(_tchar) * 256);
 	m_tViewParams = rhs.m_tViewParams;
@@ -68,19 +69,19 @@ _int CCamera::Update_Component(const _float & fTimeDelta)
 	return 0;
 }
 
-void CCamera::Shake(const _float & fTimeDelta)
+void CCamera::Shake(const _float & fTimeDelta, const _float& fForce, const _float& fTime)
 {
-	static _float fTime = 0.f;
 	static _float fX = 0.f, fY = 0.f;
 
-	fTime += fTimeDelta;
-
-	fY = sinf(fX * 3.f) * powf(0.4f, fX);
-	//fY *= (rand() % 2);
-
-	m_tViewParams.vEye.y += fY;
-	m_tViewParams.vAt.y += fY;
 	fX += fTimeDelta * 5.f;
+
+	fY = sinf(fX * 10.f) * sinf(fX * 10.f) * powf(0.4f, fX);
+
+	m_tViewParams.vEye.y += fY * 1.5f;
+	m_tViewParams.vAt.y += fY * 1.5f;
+
+	//m_tViewParams.vEye.x += fY * 1.5f;
+	//m_tViewParams.vAt.x += fY * 1.5f;
 
 	if (fX > 5.f)
 	{
@@ -88,16 +89,6 @@ void CCamera::Shake(const _float & fTimeDelta)
 		fY = 0.f;
 		m_bShack = false;
 	}
-	/*if (fTime > fTimeDelta * 2)
-	{
-
-		_vec3 vAmount = { _float(rand() % 2), _float(rand() % 2) , _float(rand() % 2) };
-
-		D3DXVec3Normalize(&vAmount, &vAmount);
-		m_tViewParams.vEye += vPadong;
-		fTime = 0.f;
-		
-	}*/
 }
 
 CCamera * CCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev, VIEWPARAMS& tViewParam, PROJPARAMS& tProjParam)
