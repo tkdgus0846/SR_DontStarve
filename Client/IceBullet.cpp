@@ -2,6 +2,7 @@
 #include "BulletMgr.h"
 #include "Monster.h"
 #include "EffectManager.h"
+#include "Wall.h"
 
 CIceBullet::CIceBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
@@ -60,20 +61,31 @@ void CIceBullet::Render_GameObject(void)
 
 void CIceBullet::OnCollisionEnter(const Collision * collsion)
 {
-	CMonster* monster = dynamic_cast<CMonster*>(collsion->OtherGameObject);
+	
+}
 
-	if (monster && collsion->OtherCollider == collsion->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
+void CIceBullet::OnCollisionStay(const Collision * collision)
+{
+	CMonster* monster = dynamic_cast<CMonster*>(collision->OtherGameObject);
+
+	if (monster && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
 	{
-		_vec3 pos = collsion->intersectBox._max;
+		_vec3 pos = collision->intersectBox._max;
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 1.3f,1.3f,1.0f }, 0.1f);
 		Add_GameObject(effect);
 		monster->Get_Damaged(m_Damage);
 		SetDead();
 	}
-}
 
-void CIceBullet::OnCollisionStay(const Collision * collision)
-{
+	CWall* wall = dynamic_cast<CWall*>(collision->OtherGameObject);
+	if (wall)
+	{
+		_vec3 pos = collision->intersectBox._max;
+		SetDead();
+		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 1.3f,1.3f,1.0f }, 0.1f);
+		Add_GameObject(effect);
+		return;
+	}
 }
 
 void CIceBullet::OnCollisionExit(const Collision * collision)

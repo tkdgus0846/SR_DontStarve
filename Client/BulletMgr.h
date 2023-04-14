@@ -10,7 +10,7 @@ private:
 	CBulletPool();
 	~CBulletPool();
 
-	class CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _vec3 & vPos, const _vec3 & vDir, const _vec3& vScale = { 1.f,1.f,1.f }, bool bIsEnemyBullet = false);
+	class CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _vec3 & vPos, const _vec3 & vDir, const _vec3& vScale = { 1.f,1.f,1.f }, bool bIsEnemyBullet = false, const _float& fSpeed = -1.0f);
 
 	void		Push(CBullet* pObj);
 
@@ -37,7 +37,7 @@ public:
 		
 	}
 
-	class CBullet* CBulletMgr::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _vec3& vPos, const _vec3& vDir, const _vec3& vScale = { 1.f,1.f,1.f }, bool bIsEnemyBullet = false);
+	class CBullet* CBulletMgr::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _vec3& vPos, const _vec3& vDir, const _vec3& vScale = { 1.f,1.f,1.f }, bool bIsEnemyBullet = false, const _float& fSpeed = -1.0f);
 	
 	void		Push(const _tchar* name, CBullet* pBullet);
 

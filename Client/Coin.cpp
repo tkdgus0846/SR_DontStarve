@@ -44,7 +44,6 @@ HRESULT CCoin::Add_Component()
 	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Num_Texture", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
 
-
 	return S_OK;
 }
 
@@ -58,6 +57,7 @@ HRESULT CCoin::Ready_GameObject(void)
 _int CCoin::Update_GameObject(const _float & fTimeDelta)
 {
 	Add_RenderGroup(RENDER_ALPHA_UI, this);
+
 	__super::Update_GameObject(fTimeDelta);
 
 	return 0;

@@ -283,6 +283,7 @@
     <ClInclude Include="NubBoss.h" />
     <ClInclude Include="Pyramid.h" />
     <ClInclude Include="Rub.h" />
+    <ClInclude Include="RapidWeapon.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="RoomMgr.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -301,6 +302,8 @@
     <ClInclude Include="BootsItem.h" />
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
+    <ClInclude Include="SwordBullet.h" />
+    <ClInclude Include="SwordWeapon.h" />
     <ClInclude Include="Tennel.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TimeInLimit.h" />
@@ -387,6 +390,7 @@
     <ClCompile Include="NubBoss.cpp" />
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="Rub.cpp" />
+    <ClCompile Include="RapidWeapon.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="RoomMgr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -410,6 +414,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SwordBullet.cpp" />
+    <ClCompile Include="SwordWeapon.cpp" />
     <ClCompile Include="Tennel.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TimeInLimit.cpp" />

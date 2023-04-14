@@ -5,13 +5,16 @@
 #include "BulletMgr.h"
 #include "Turret.h"
 #include "EffectManager.h"
+#include "ParticleMgr.h"
+#include "..\Engine\ColorParticle.h"
+#include "Wall.h"
 
 CNormalBullet::CNormalBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
 {
 	Set_ObjTag(L"NormalBullet");
 	m_fSpeed = 50.f;
-	m_fLifeSpan = 2.f;
+	m_fLifeSpan = 3.f;
 	m_fAge = 0.f;
 	m_Damage = 1;
 }
@@ -24,7 +27,11 @@ void CNormalBullet::SetDead(_bool bDead)
 {
 	__super::SetDead(bDead);
 	if (bDead == true)
+	{
 		CBulletMgr::GetInstance()->Push(L"NormalBullet", this);
+		
+	}
+		
 }
 
 HRESULT CNormalBullet::Ready_GameObject(void)
@@ -41,9 +48,12 @@ _int CNormalBullet::Update_GameObject(const _float& fTimeDelta)
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 	
+
 	__super::Update_GameObject(fTimeDelta);
-	
+
 	m_pTransform->Move_Walk(m_fSpeed*2.f, fTimeDelta);
+
+	
 	Add_RenderGroup(RENDER_ALPHA, this);
 	
 	return OBJ_NOEVENT;
@@ -58,10 +68,12 @@ void CNormalBullet::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
+	
 }
 
 void CNormalBullet::OnCollisionEnter(const Collision* collsion)
 {
+
 }
 
 void CNormalBullet::OnCollisionStay(const Collision* collision)
@@ -71,10 +83,27 @@ void CNormalBullet::OnCollisionStay(const Collision* collision)
 	if (monster && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
 	{
 		_vec3 pos = collision->intersectBox._max;
-		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"RedBlood", pos, { 0.7f,0.7f,0.7f }, 0.1f);
-		Add_GameObject(effect);
+		/*CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"RedBlood", pos, { 0.7f,0.7f,0.7f }, 0.1f);
+		Add_GameObject(effect);*/
+
 		monster->Get_Damaged(m_Damage);
 		SetDead();
+
+		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
+		//CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"PyramidDestory_Particle", 20, pos);
+		//CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
+		Add_GameObject(particle);
+		return;
+	}
+
+	CWall* wall = dynamic_cast<CWall*>(collision->OtherGameObject);
+	if (wall)
+	{
+		_vec3 pos = collision->intersectBox._max;
+		SetDead();
+		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
+		Add_GameObject(particle);
+		return;
 	}
 }
 
@@ -105,6 +134,11 @@ HRESULT CNormalBullet::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
 
 	return S_OK;
+}
+
+void CNormalBullet::Pop_Initialize()
+{
+	m_bHit = false;
 }
 
 void CNormalBullet::Free(void)

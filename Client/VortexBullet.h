@@ -5,7 +5,7 @@ BEGIN(Engine)
 class CTexture;
 class CRcTex;
 class CAnimation;
-class CParticleSystem;
+class CTextureParticle;
 END
 
 class CVortexBullet : public CBullet
@@ -41,12 +41,10 @@ private:
 	static CVortexBullet*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	_bool		m_bHit;
-
 	CTexture*	m_BeforeTexture;
 	CTexture*	m_AfterTexture;
 	CRcTex*		m_RcTex;
 	CAnimation*	m_Animation;
-	CParticleSystem* m_Particle;
+	CTextureParticle* m_Particle;
 };
 

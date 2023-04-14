@@ -2,6 +2,7 @@
 #include "BulletMgr.h"
 #include "Monster.h"
 #include "EffectManager.h"
+#include "..\Engine\ParticleMgr.h"
 
 CFireBullet::CFireBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
@@ -69,8 +70,9 @@ void CFireBullet::OnCollisionEnter(const Collision * collsion)
 	if (monster && collsion->OtherCollider == collsion->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
 	{
 		_vec3 pos = collsion->intersectBox._max;
-		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"FireBullet_Texture", pos, { 0.7f,0.7f,0.7f }, 0.2f);
-		Add_GameObject(effect);
+		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"UpSmoke_Particle", 1, pos, {0.f,1.f,0.f});
+		/*CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"JumpSmoke_Particle", 100, pos, {0.f,0.f,0.f});*/
+		Add_GameObject(particle);
 		monster->Get_Damaged(m_Damage);
 	}
 }
