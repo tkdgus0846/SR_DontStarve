@@ -371,6 +371,15 @@
     <ClInclude Include="Slider.h">
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
+    <ClInclude Include="RapidWeapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="SwordBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="SwordWeapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -642,6 +651,15 @@
     </ClCompile>
     <ClCompile Include="Slider.cpp">
       <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="RapidWeapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SwordWeapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

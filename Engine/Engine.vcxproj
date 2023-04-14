@@ -37,8 +37,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="ColorParticle.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="FrustrumNormalTex.h" />
+    <ClInclude Include="JumpSmokeParticle.h" />
+    <ClInclude Include="NormalBulletParticle.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleMgr.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PickingSphere.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionMgr.h" />
@@ -68,7 +74,8 @@
     <ClInclude Include="MaterialMgr.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MyFont.h" />
-    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="PyramidDestoryParticle.h" />
+    <ClInclude Include="TextureParticle.h" />
     <ClInclude Include="ProtoMgr.h" />
     <ClInclude Include="RcCol.h" />
     <ClInclude Include="RcTex.h" />
@@ -76,6 +83,7 @@
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="RoomTex.h" />
     <ClInclude Include="Root.h" />
+    <ClInclude Include="RunSmokeParticle.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Selector.h" />
     <ClInclude Include="Sequence.h" />
@@ -91,6 +99,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TriCol.h" />
     <ClInclude Include="Typedef.h" />
+    <ClInclude Include="UpSmokeParticle.h" />
     <ClInclude Include="VIBuffer.h" />
     <ClInclude Include="VortexParticle.h" />
     <ClInclude Include="WallTex.h" />
@@ -105,8 +114,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="ColorParticle.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="FrustrumNormalTex.cpp" />
+    <ClCompile Include="JumpSmokeParticle.cpp" />
+    <ClCompile Include="NormalBulletParticle.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleMgr.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PickingSphere.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
@@ -129,7 +144,8 @@
     <ClCompile Include="MaterialMgr.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MyFont.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="PyramidDestoryParticle.cpp" />
+    <ClCompile Include="TextureParticle.cpp" />
     <ClCompile Include="ProtoMgr.cpp" />
     <ClCompile Include="RcCol.cpp" />
     <ClCompile Include="RcTex.cpp" />
@@ -137,6 +153,7 @@
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="RoomTex.cpp" />
     <ClCompile Include="Root.cpp" />
+    <ClCompile Include="RunSmokeParticle.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Selector.cpp" />
     <ClCompile Include="Sequence.cpp" />
@@ -152,6 +169,7 @@
     <ClCompile Include="TimerMgr.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TriCol.cpp" />
+    <ClCompile Include="UpSmokeParticle.cpp" />
     <ClCompile Include="VIBuffer.cpp" />
     <ClCompile Include="VortexParticle.cpp" />
     <ClCompile Include="WallTex.cpp" />

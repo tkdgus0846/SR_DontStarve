@@ -3,12 +3,14 @@
 
 class CWeapon : public CGameObject
 {
+	friend class CSwordWeapon;
+
 protected:
 	explicit CWeapon(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CWeapon();
 
 public:
-	void			Shot();
+	virtual void	Shot();
 	virtual _int	Update_GameObject(const _float& fTimeDelta) override;
 
 	_int	Get_CurBulletNum() const { return m_CurBulletNum; }

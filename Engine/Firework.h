@@ -1,8 +1,8 @@
 #pragma once
-#include "ParticleSystem.h"
+#include "TextureParticle.h"
 
 BEGIN(Engine)
-class  CFirework : public CParticleSystem
+class  CFirework : public CTextureParticle
 {
 public:
 	explicit CFirework(LPDIRECT3DDEVICE9 pGraphicDev);

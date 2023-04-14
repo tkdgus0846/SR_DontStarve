@@ -74,7 +74,7 @@ void CSlider::OnCollisionEnter(const Collision * collsion)
 {
 	if (dynamic_cast<CWall*>(collsion->OtherGameObject))
 	{
-		cout << "충돌함" << endl;
+		//cout << "충돌함" << endl;
 		m_pTransform->Reverse_Dir();
 	}
 

@@ -1,19 +1,11 @@
 #pragma once
-#include "ParticleSystem.h"
+#include "TextureParticle.h"
 
-class CSmokeParticle : public CParticleSystem
+class CSmokeParticle : public CTextureParticle
 {
 public:
 	explicit CSmokeParticle(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CSmokeParticle(const CSmokeParticle& rhs);
 	virtual ~CSmokeParticle();
-
-	virtual void ResetParticle(Particle* particle) override;
-
-	virtual _int Update_Component(const _float& fTimeDelta) override;
-
-
-	static CSmokeParticle* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual CComponent* Clone(void) override;
 };
 

@@ -91,21 +91,21 @@ void CMonster::OnCollisionEnter(const Collision * collsion)
 	if (player && collsion->MyCollider == Get_Component(L"BodyCollider", ID_ALL))
 	{
 		player->Get_Damaged(Get_Attack());
-	}
-
-	if (dynamic_cast<CBullet*>(collsion->OtherGameObject) && 
-		collsion->OtherCollider == collsion->OtherGameObject->Get_Component(L"BodyCollider",ID_ALL) && 
-		collsion->MyCollider == Get_Component(L"BodyCollider",ID_ALL))
-	{
-		m_redTexture = true;
-		m_fCurTime = Get_WorldTime();
-		m_fPreTime = Get_WorldTime();
-	}
+	}	
 }
 
 void CMonster::OnCollisionStay(const Collision * collision)
 {
 	__super::OnCollisionStay(collision);
+
+	if (dynamic_cast<CBullet*>(collision->OtherGameObject) &&
+		collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL) &&
+		collision->MyCollider == Get_Component(L"BodyCollider", ID_ALL))
+	{
+		m_redTexture = true;
+		m_fCurTime = Get_WorldTime();
+		m_fPreTime = Get_WorldTime();
+	}
 }
 
 void CMonster::OnCollisionExit(const Collision * collision)

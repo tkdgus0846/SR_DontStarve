@@ -56,10 +56,10 @@ _int CVortexBullet::Update_GameObject(const _float & fTimeDelta)
 	else
 	{
 		m_Particle->Update_Component(fTimeDelta);
-		if (m_pTransform->m_vInfo[INFO_POS].y > 0.02f)
+		/*if (m_pTransform->m_vInfo[INFO_POS].y > 0.02f)
 		{
 			m_pTransform->m_vInfo[INFO_POS].y -= 1.1f*fTimeDelta;
-		}
+		}*/
 
 		if (m_pTransform->m_vScale.x < 8.f)
 		{
@@ -127,6 +127,7 @@ void CVortexBullet::OnCollisionEnter(const Collision * collsion)
 			
 			m_pTransform->Set_Dir({ 0.f,0.f,1.f });
 			m_pTransform->Rot_Pitch(90.f, 1.f);
+			m_pTransform->m_vInfo[INFO_POS].y = 0.03f;
 		}
 	}
 	
@@ -188,7 +189,7 @@ HRESULT CVortexBullet::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"RangeCollider", pCollider });
 
 	
-	m_Particle = dynamic_cast<CParticleSystem*>(Engine::Clone_Proto(L"Vortex_Particle", this, 70));
+	m_Particle = dynamic_cast<CTextureParticle*>(Engine::Clone_Proto(L"Vortex_Particle", this, 70));
 	m_uMapComponent[ID_STATIC].insert({ L"Vortex_Particle", m_Particle });
 
 	return S_OK;
