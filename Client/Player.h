@@ -41,7 +41,10 @@ public:
 	void			Gain_Disc(_int disc = 1) { m_iDisc += disc; }
 	_int			Get_Disc() { return m_iDisc; }
 	void			Gain_Hp(_int Hp = 1) { m_iHp += Hp; }
-	
+	void			Gain_UltiGuage(_int guage = 1) { m_fUltimateGuage += guage; }
+	_int			Get_UltiGuage() { return m_fUltimateGuage; }
+	_int			Get_UltiMaxGuage() { return m_fUltimateMax; }
+
 private:
 	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);
@@ -53,6 +56,9 @@ private:
 
 	_int					m_iCoin = 777;
 	_int					m_iDisc = 0;
+
+	_float					m_fUltimateMax = 100.f;
+	_float					m_fUltimateGuage = 0.f;
 
 	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;
 	class CWeapon*						m_pCurWeapon;

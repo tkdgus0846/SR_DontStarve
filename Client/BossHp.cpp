@@ -1,6 +1,6 @@
 #include "BossHp.h"
 #include "Export_Function.h"
-
+#include "Creature.h"
 
 CBossHp::CBossHp(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CUI(pGraphicDev)
@@ -14,7 +14,6 @@ CBossHp::~CBossHp()
 
 HRESULT CBossHp::Add_Component()
 {
-
 	m_dRcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex_Dynamic", this));
 	NULL_CHECK_RETURN(m_dRcTex, E_FAIL);
 
@@ -38,6 +37,7 @@ HRESULT CBossHp::Add_Component()
 
 HRESULT CBossHp::Ready_GameObject(void)
 {
+
 	__super::Ready_GameObject();
 
 	return S_OK;
@@ -45,6 +45,12 @@ HRESULT CBossHp::Ready_GameObject(void)
 
 _int CBossHp::Update_GameObject(const _float & fTimeDelta)
 {
+	if (Get_GameObject(LAYER_MONSTER, L"Bub") == nullptr) 
+		return OBJ_NOEVENT;
+	else
+	{
+		pGameObject = Get_GameObject(LAYER_MONSTER, L"Bub");
+	}
 	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
 
 	__super::Update_GameObject(fTimeDelta);
@@ -64,19 +70,19 @@ void CBossHp::Render_GameObject(void)
 		switch (i)
 		{
 		case BOSS_UI_B:
-			Set_ViewMatrix_UI(-45.f + i * 30, 280.f);
+			Set_ViewMatrix_UI(-45.f + i * 30, 270.f);
 			dynamic_cast<CTexture*>(m_arrMap[BOSS_MAP_FONT])->Render_Texture(FONT::B);
 			break;
 		case BOSS_UI_O:
-			Set_ViewMatrix_UI(-45.f + i * 30, 280.f);
+			Set_ViewMatrix_UI(-45.f + i * 30, 270.f);
 			dynamic_cast<CTexture*>(m_arrMap[BOSS_MAP_FONT])->Render_Texture(FONT::O);
 			break;
 		case BOSS_UI_S:
-			Set_ViewMatrix_UI(-45.f + i * 30, 280.f);
+			Set_ViewMatrix_UI(-45.f + i * 30, 270.f);
 			dynamic_cast<CTexture*>(m_arrMap[BOSS_MAP_FONT])->Render_Texture(FONT::S);
 			break;
 		case BOSS_UI_S2:
-			Set_ViewMatrix_UI(-45.f + i * 30, 280.f);
+			Set_ViewMatrix_UI(-45.f + i * 30, 270.f);
 			dynamic_cast<CTexture*>(m_arrMap[BOSS_MAP_FONT])->Render_Texture(FONT::S);
 			break;
 		case BOSS_UI_HP:
@@ -84,6 +90,10 @@ void CBossHp::Render_GameObject(void)
 			dynamic_cast<CTexture*>(m_arrMap[BOSS_MAP_HP])->Render_Texture();
 			break;
 		case BOSS_UI_GUAGE:
+			_float MaxHp = dynamic_cast<CCreature*>(pGameObject)->Get_MaxHP();
+			_float CurHp = dynamic_cast<CCreature*>(pGameObject)->Get_HP();
+			m_CurHp = CurHp / MaxHp;
+			m_dRcTex->Edit_VB(m_CurHp);
 			Set_ViewMatrix_UI(0.f, 200.f, 146.f, 26.f);
 			dynamic_cast<CTexture*>(m_arrMap[BOSS_MAP_GUAGE])->Render_Texture();
 			m_dRcTex->Render_Component();

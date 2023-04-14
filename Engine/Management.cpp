@@ -91,8 +91,6 @@ void CManagement::Add_GameObject(CGameObject * pObj)
 
 CGameObject* CManagement::Get_GameObject(LAYERID LayerID, const _tchar * pObjTag)
 {
-	NULL_CHECK_RETURN(pObjTag, nullptr);
-
 	return m_pScene->Get_GameObject(LayerID, pObjTag);
 }
 

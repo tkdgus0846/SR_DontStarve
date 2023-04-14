@@ -8,6 +8,8 @@ class CTexture;
 
 END
 
+class CCreature;
+
 class CBossHp :
 	public CUI
 {
@@ -52,8 +54,8 @@ private:
 	CRcTex* m_dRcTex;
 	array<CComponent*, BOSS_MAP_END> m_arrMap;
 
-	_float m_BOSS1 = 1.f;
-
+	CGameObject* pGameObject = nullptr;
+	_float m_CurHp = 0;
 
 public:
 	static CBossHp*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -281,6 +281,7 @@
     </ClInclude>
     <ClInclude Include="NotCollisionWall.h" />
     <ClInclude Include="Pyramid.h" />
+    <ClInclude Include="ShopNpc.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="RoomMgr.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -303,6 +304,7 @@
     <ClInclude Include="TimeInLimit.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="UltimateUI.h" />
     <ClInclude Include="VortexBullet.h" />
     <ClInclude Include="Walker.h" />
     <ClInclude Include="Wall.h" />
@@ -381,6 +383,7 @@
     </ClCompile>
     <ClCompile Include="NotCollisionWall.cpp" />
     <ClCompile Include="Pyramid.cpp" />
+    <ClCompile Include="ShopNpc.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="RoomMgr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -408,6 +411,7 @@
     <ClCompile Include="TimeInLimit.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UltimateUI.cpp" />
     <ClCompile Include="VortexBullet.cpp" />
     <ClCompile Include="Walker.cpp" />
     <ClCompile Include="Wall.cpp" />

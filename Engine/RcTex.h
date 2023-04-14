@@ -13,14 +13,15 @@ private:
 public:
 	HRESULT		Ready_Buffer(VIBUFFER_FLAG bufferFlag = VB_STATIC);
 	void		Edit_VB(_float fX);
-	void		Edit_UV(_float fX);
+	void		Edit_U(_float fX);
+	void		Edit_V(_float fY);
 
 public:
 	static CRcTex*		Create(LPDIRECT3DDEVICE9 pGraphicDev, VIBUFFER_FLAG bufferFlag = VB_STATIC);
 	virtual CComponent*	Clone(void);
+
 private:
 	virtual void Free(void);
-
 };
 
 END

@@ -6,7 +6,7 @@
 
 CCreature::CCreature(LPDIRECT3DDEVICE9 pGrapicDev)
 	: CGameObject(pGrapicDev), m_fSpeed(0.f)
-	, m_iHp(0), m_iAttack(0)
+	, m_iHp(0), m_iAttack(0), m_iMaxHp(5)
 {
 }
 

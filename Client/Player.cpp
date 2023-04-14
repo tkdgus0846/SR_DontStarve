@@ -56,6 +56,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	/*cout << m_pTransform->m_vInfo[INFO_POS].x << " " << m_pTransform->m_vInfo[INFO_POS].y << " " << m_pTransform->m_vInfo[INFO_POS].z << endl;*/
 
+	cout << m_fUltimateGuage << endl;
 	Key_Input(fTimeDelta);
 
 	// m_planeVec
@@ -98,13 +99,10 @@ void CPlayer::Render_GameObject(void)
 	__super::Render_GameObject();
 	/*m_pCurWeapon->Render_GameObject();*/
 
-
 	//m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	
 }
 
 void CPlayer::OnCollisionEnter(const Collision * collsion)

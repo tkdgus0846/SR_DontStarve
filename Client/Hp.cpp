@@ -5,7 +5,6 @@ CHp::CHp(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
 {
 	Set_ObjTag(L"HP");
-
 }
 
 CHp::~CHp()
@@ -41,7 +40,7 @@ void CHp::Render_GameObject(void)
 	for (size_t i = 0; i < m_iMaxHp; i++)
 	{
 		m_iCurrentHp = Compute_Hp(PlayerHp);
-		Set_ViewMatrix_UI(-350 + (50.f * i) , 250.f);
+		Set_ViewMatrix_UI(-350 + (45.f * i) , 265.f);
 		m_pTextureCom->Render_Texture(m_iCurrentHp);
 		m_vecRc[i]->Render_Component();
 	}
@@ -70,7 +69,7 @@ void CHp::Set_ViewMatrix_UI(_float fX, _float fY)
 	D3DXMatrixIdentity(&matView);
 
 	_matrix matTrans;
-	D3DXMatrixScaling(&matView, 22.f, 20.f, 0.f);
+	D3DXMatrixScaling(&matView, 20.f, 18.5f, 0.f);
 	matTrans.Translation(fX, fY, 0.f);
 	D3DXMatrixMultiply(&matView, &matView, &matTrans);
 

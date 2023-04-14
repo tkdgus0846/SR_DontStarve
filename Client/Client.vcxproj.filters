@@ -86,6 +86,9 @@
     <Filter Include="GameObject\MapObject\Pyramid">
       <UniqueIdentifier>{3c856778-44ca-465a-90eb-65695009b097}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\ShopNpc">
+      <UniqueIdentifier>{950bbc09-db17-4371-b439-132eb03aeaef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -371,6 +374,12 @@
     <ClInclude Include="Slider.h">
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
+    <ClInclude Include="UltimateUI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopNpc.h">
+      <Filter>GameObject\ShopNpc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -642,6 +651,12 @@
     </ClCompile>
     <ClCompile Include="Slider.cpp">
       <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="UltimateUI.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopNpc.cpp">
+      <Filter>GameObject\ShopNpc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

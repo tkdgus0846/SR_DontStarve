@@ -2,11 +2,12 @@
 
 #include "Export_Function.h"
 
+#include "BossHp.h"
+
 CBub::CBub(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
 	Set_ObjTag(L"Bub");
-
 }
 
 CBub::~CBub()
@@ -15,9 +16,11 @@ CBub::~CBub()
 
 HRESULT CBub::Ready_GameObject(const _vec3& vPos)
 {
+
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
 	m_iHp = 5;
+
 
 	m_pTransform->m_vScale = { 2.4f, 2.4f, 2.4f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
