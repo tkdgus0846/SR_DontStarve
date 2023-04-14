@@ -21,7 +21,7 @@
 #include "HardPyramid.h"
 #include "Slider.h"
 
-static const char* cur_monster_item = "Baller";
+static const char* cur_item = "Baller";
 
 CImInspector::CImInspector(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CImWindow(pGraphicDev), m_pCurTarget(nullptr)
@@ -157,39 +157,52 @@ void CImInspector::Show_Create_Object()
 		ImGui::End();
 
 		ImGui::SeparatorText("Monster");
-		vector<const char*> items = FACTORY->GetTagVec(OBJ_MONSTER);
 
-		
-
-		if (ImGui::BeginCombo("##combo", cur_monster_item)) // The second parameter is the label previewed before opening the combo.
+		vector<const char*> monItems = FACTORY->GetTagVec(OBJ_MONSTER);
+		if (ImGui::BeginCombo("##combo", cur_item)) // The second parameter is the label previewed before opening the combo.
 		{
-			for (int n = 0; n < items.size(); n++)
+			for (int n = 0; n < monItems.size(); n++)
 			{
-				bool is_selected = (cur_monster_item == items[n]); // You can store your selection however you want, outside or inside your objects
-				if (ImGui::Selectable(items[n], is_selected))
-					cur_monster_item = items[n];
+				bool is_selected = (cur_item == monItems[n]); // You can store your selection however you want, outside or inside your objects
+				if (ImGui::Selectable(monItems[n], is_selected))
+					cur_item = monItems[n];
 				if (is_selected)
 					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
 			}
 			ImGui::EndCombo();
 		}
 
-		//ImGui::RadioButton("Baller", &iObjNum, 0); ImGui::SameLine();
-		//ImGui::RadioButton("Bub", &iObjNum, 1); ImGui::SameLine();
-		//ImGui::RadioButton("Guppi", &iObjNum, 2);
-		//ImGui::RadioButton("Turret", &iObjNum, 3); ImGui::SameLine();
-		//ImGui::RadioButton("Walker", &iObjNum, 4);
-
 		ImGui::SeparatorText("Environment");
-
-		ImGui::RadioButton("Dirt_Barrier", &iObjNum, 11); ImGui::SameLine();
-		ImGui::RadioButton("Mine", &iObjNum, 12);
+		//vector<const char*> envItems = FACTORY->GetTagVec(OBJ_ENVIRONMENT);
+		//if (ImGui::BeginCombo("##combo", cur_item)) // The second parameter is the label previewed before opening the combo.
+		//{
+		//	for (int n = 0; n < envItems.size(); n++)
+		//	{
+		//		bool is_selected = (cur_item == envItems[n]); // You can store your selection however you want, outside or inside your objects
+		//		if (ImGui::Selectable(envItems[n], is_selected))
+		//			cur_item = envItems[n];
+		//		if (is_selected)
+		//			ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+		//	}
+		//	ImGui::EndCombo();
+		//}
+		//ImGui::RadioButton("Dirt_Barrier", &iObjNum, 11); ImGui::SameLine();
+		//ImGui::RadioButton("Mine", &iObjNum, 12);
 
 		ImGui::SeparatorText("MapObject");
-
-		ImGui::RadioButton("Pyramid", &iObjNum, 20); ImGui::SameLine();
-		ImGui::RadioButton("HardPyramid", &iObjNum, 21); 
-		ImGui::RadioButton("ReflectBall", &iObjNum, 22);
+		vector<const char*> mapItems = FACTORY->GetTagVec(OBJ_MAPOBJ);
+		if (ImGui::BeginCombo("##combo2", cur_item)) // The second parameter is the label previewed before opening the combo.
+		{
+			for (int n = 0; n < mapItems.size(); n++)
+			{
+				bool is_selected = (cur_item == mapItems[n]); // You can store your selection however you want, outside or inside your objects
+				if (ImGui::Selectable(mapItems[n], is_selected))
+					cur_item = mapItems[n];
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+			}
+			ImGui::EndCombo();
+		}
 
 		ImGui::TreePop();
 		ImGui::Spacing();
@@ -205,20 +218,13 @@ void CImInspector::Show_Create_Object()
 		ImGui::Spacing();
 	}
 
-	if(ImGui::Button("CREATE!"))
-	{
-		CGameObject* pGameObject = nullptr;
-		const char* pName = nullptr;
-
-		pGameObject = FACTORY->CreateObj(OBJ_MONSTER, cur_monster_item);
-
-		if(dynamic_cast<CMonster*>(pGameObject))
-			m_vecMonster.push_back({ cur_monster_item, pGameObject });
-		else if(dynamic_cast<CMapObj*>(pGameObject))
-			m_vecMap.push_back({ pName, pGameObject });
-
-		m_pCurRoom->PushBack_GameObj(pGameObject);
-	}
+	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
+	pCamera->Set_Tag(cur_item);
+	ImGui::Checkbox("CHECK_PICK!", &pCamera->Get_Pick(PICK_OBJ));
+	ImGui::RadioButton("LeftUp", &pCamera->Get_Radio(), 0); ImGui::SameLine();
+	ImGui::RadioButton("RightUp", &pCamera->Get_Radio(), 1); 
+	ImGui::RadioButton("LeftBottom", &pCamera->Get_Radio(), 2); ImGui::SameLine();
+	ImGui::RadioButton("RightBottom", &pCamera->Get_Radio(), 3);
 }
 
 void CImInspector::Show_MonsterList()
@@ -270,7 +276,6 @@ void CImInspector::Show_MonsterList()
 		static _int iCurTileItemIdx = 0;
 		ImGui::EndListBox();
 	}
-
 }
 
 void CImInspector::Show_Components()
@@ -381,31 +386,7 @@ void CImInspector::Show_Components()
 void CImInspector::Show_Image(_int iObjNum)
 {
 	CTexture* pTexture = nullptr;
-	CGameObject* pGameObject = nullptr;
-
-	for (_int i = 0; i < FACTORY->Size(OBJ_MONSTER); ++i)
-	{
-		if (strcmp(cur_monster_item, FACTORY->GetTagVec(OBJ_MONSTER)[i]) == 0)
-		{
-			pGameObject = FACTORY->CreateObj(OBJ_MONSTER, cur_monster_item);
-			pTexture = pGameObject->Get_Texture();
-
-			Safe_Release(pGameObject);
-			break;
-		}
-	}
-
-	//if (strcmp(cur_monster_item, "Baller") == 0)
-	//	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Baller_Texture", nullptr));
-	//if (strcmp(cur_monster_item, "Bub") == 0)
-	//	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Bub_Texture", nullptr));
-	//if (strcmp(cur_monster_item, "Guppi") == 0)
-	//	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Guppi_Blue_Texture", nullptr));
-	//if (strcmp(cur_monster_item, "Turret") == 0)
-	//	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Turret_Texture", nullptr));
-	//if (strcmp(cur_monster_item, "Walker") == 0)
-	//	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Walker_Texture", nullptr));
-
+	pTexture = FACTORY->GetTexture(cur_item);
 
 	if (20 == iObjNum)
 		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Level1_Texture", nullptr));

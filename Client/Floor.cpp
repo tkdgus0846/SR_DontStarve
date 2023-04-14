@@ -41,6 +41,19 @@ void CFloor::Render_GameObject(void)
 	__super::Render_GameObject();
 }
 
+void CFloor::OnCollisionEnter(const Collision * collsion)
+{
+}
+
+void CFloor::OnCollisionStay(const Collision * collision)
+{
+
+}
+
+void CFloor::OnCollisionExit(const Collision * collision)
+{
+}
+
 HRESULT CFloor::Add_Component(void)
 {
 	CComponent* pComp;
@@ -52,10 +65,11 @@ HRESULT CFloor::Add_Component(void)
 	NULL_CHECK_RETURN(pComp, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"Floor_Level1_Texture", pComp });
 
-	pComp = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ENVIRONMENT));
-	NULL_CHECK_RETURN(pComp, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"Collider", pComp });
+	CCollider*	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ENVIRONMENT ));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 
+	pCollider->Set_BoundingBox({ 50.f,10.f,50.f }, { 25.f,-5.f,25.f });
 
 	return S_OK;
 }

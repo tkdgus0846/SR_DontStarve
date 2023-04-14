@@ -4,6 +4,7 @@
 
 BEGIN(Engine)
 	class CGameObject;
+	class CTexture;
 END
 
 class CMonster;
@@ -18,19 +19,30 @@ public:
 public:
 	HRESULT		Ready_CNogadaFactory(LPDIRECT3DDEVICE9 pGraphicDev);
 	void Release();
-	CGameObject* CreateObj(OBJ_TYPE eType, const char* tag, _vec3 vPos ={ 0.f, 0.f, 0.f });
-
-	CGameObject*Find_Obj(const char * pTag);
+	CGameObject* GetGameObj(const char* tag);
+	CTexture*	 GetTexture(const char* tag);
+	vector<const char*>& GetTagVec(OBJ_TYPE eType)
+	{
+		return m_vecTag[eType];
+	}
+	_int Size(OBJ_TYPE eType) {
+		return m_vecObj
+			[eType].size();
+	}
+	CGameObject* CreateObj(const char* tag);
 
 private:
-	void InsertObj(const char* tag, CGameObject* pObj)
+	CGameObject* Find_Obj(const char* tag);
+	void Push_Back(OBJ_TYPE eType, const char* tag, CGameObject* pObj)
 	{
-		m_mapTag.insert({ tag , pObj });
+		m_vecObj[eType].push_back(pObj);
+		m_vecTag[eType].push_back(tag);
 	}
 
 private:
-	LPDIRECT3DDEVICE9	m_pGraphicDev;
-	map<const char*, CGameObject*> m_mapTag;
+	LPDIRECT3DDEVICE9		m_pGraphicDev;
+	vector<CGameObject*>	m_vecObj[OBJ_END];
+	vector<const char*>		m_vecTag[OBJ_END];
 };
 
 #define FACTORY CNogadaFactory::GetInstance()

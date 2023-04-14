@@ -26,14 +26,16 @@ private:
 	void	Fix_Mouse();
 
 public:
+	void Set_Tag(const char* tag) { m_tag = tag; }
 	_bool& Get_Pick(PICK_TYPE ePickType) { return m_bPick[ePickType]; }
 	ClickInfo&	Get_ClickInfo() { return m_tPickInfo; }
+	void CreateObj();
+	_int&	Get_Radio() { return m_radio; }
 
 private:
 	// imgui에서 사용하는 함수들로 bool변수로 활성화 여부를 결정.
 	// ex) m_bPick[PICK_TILE]를 true로 만들어주면 CreateTile이 활성화된다.
 	void CreateTile();
-	void CreateObj(const _tchar* tag, _vec3 vPos = {0.f, 0.f, 0.f});
 
 private:
 	void SetClickInfo();
@@ -57,7 +59,9 @@ private:
 	CRoom*				tmp;
 	ClickInfo			m_tPickInfo;
 	const _tchar*		m_pCurTextureName;
+	const char*			m_tag;
 
+	_int				m_radio;
 public:
 	static CEditCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

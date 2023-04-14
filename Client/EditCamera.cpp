@@ -94,7 +94,7 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 	{
 		SetClickInfo();
 		CreateTile();
-		//CreateObj();
+		CreateObj();
 	}
 }
 
@@ -442,10 +442,37 @@ void CEditCamera::CreateTile()
 	}
 }
 
-void CEditCamera::CreateObj(const _tchar* tag, _vec3 vPos)
+void CEditCamera::CreateObj()
 {
 	if (!m_bPick[PICK_OBJ])
 		return;
+	
+	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
+		return;
 
-	//FACTORY->CreateObj(tag, vPos);
+	CGameObject* pObj = FACTORY->CreateObj(m_tag);
+	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
+	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
+
+	switch (m_radio)
+	{
+	case 0:
+		vPos.x -= (VTXCNTX - 1) * 0.5f;
+		vPos.z += (VTXCNTZ - 1) * 0.5f;
+		break;
+	case 1:
+		vPos.x += (VTXCNTX - 1) * 0.5f;
+		vPos.z += (VTXCNTZ - 1) * 0.5f;
+		break;
+	case 2:
+		vPos.x -= (VTXCNTX - 1) * 0.5f;
+		vPos.z -= (VTXCNTZ - 1) * 0.5f;
+		break;
+	case 3:
+		vPos.x += (VTXCNTX - 1) * 0.5f;
+		vPos.z -= (VTXCNTZ - 1) * 0.5f;
+		break;
+	}
+
+	pObj->m_pTransform->Set_Pos(vPos);
 }

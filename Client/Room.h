@@ -78,8 +78,8 @@ private:
 
 	// ������ ����,
 	// push_back���������� �������� PushBack_�ø��� �Լ���� ����.
-	vector<CGameObject*>	m_vecTile;		// IMGUI���� �����
-	vector<CGameObject*> m_vecGameObj;	// IMGUI���� �����
+	vector<CGameObject*>	m_vecTile;		// IMGUI���� 
+	vector<CGameObject*>	 m_vecGameObj;	// IMGUI���� �����
 	CFloor*				m_pFloor;
 	array<CWall*, 4>	m_apWall;
 	array<pair<_bool, CDoor*>, 4>	m_apDoor;
