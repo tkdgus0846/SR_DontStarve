@@ -86,6 +86,12 @@
     <Filter Include="GameObject\MapObject\Pyramid">
       <UniqueIdentifier>{3c856778-44ca-465a-90eb-65695009b097}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Monster\Enemy">
+      <UniqueIdentifier>{5b624f17-61ee-4804-bcc2-e9195a46d326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Monster\Boss">
+      <UniqueIdentifier>{eca07ded-532e-4ec6-9bd6-0e495dffff75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -187,21 +193,6 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>GameObject\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Turret.h">
-      <Filter>GameObject\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Walker.h">
-      <Filter>GameObject\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Baller.h">
-      <Filter>GameObject\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Bub.h">
-      <Filter>GameObject\Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="Guppi.h">
-      <Filter>GameObject\Monster</Filter>
     </ClInclude>
     <ClInclude Include="MyEdit.h">
       <Filter>Scene</Filter>
@@ -371,6 +362,33 @@
     <ClInclude Include="Slider.h">
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
+    <ClInclude Include="Baller.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Bub.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Cryder.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Guppi.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Rub.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Turret.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Walker.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="NubBoss.h">
+      <Filter>GameObject\Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkerBoss.h">
+      <Filter>GameObject\Monster\Boss</Filter>
+    </ClInclude>
     <ClInclude Include="RapidWeapon.h">
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
@@ -465,21 +483,6 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>GameObject\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Turret.cpp">
-      <Filter>GameObject\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Walker.cpp">
-      <Filter>GameObject\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Bub.cpp">
-      <Filter>GameObject\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Guppi.cpp">
-      <Filter>GameObject\Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="Baller.cpp">
-      <Filter>GameObject\Monster</Filter>
     </ClCompile>
     <ClCompile Include="MyEdit.cpp">
       <Filter>Scene</Filter>
@@ -651,6 +654,33 @@
     </ClCompile>
     <ClCompile Include="Slider.cpp">
       <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Baller.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Bub.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Cryder.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Guppi.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Rub.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Turret.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Walker.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="NubBoss.cpp">
+      <Filter>GameObject\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkerBoss.cpp">
+      <Filter>GameObject\Monster\Boss</Filter>
     </ClCompile>
     <ClCompile Include="RapidWeapon.cpp">
       <Filter>GameObject\Weapon</Filter>

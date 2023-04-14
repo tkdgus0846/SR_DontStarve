@@ -28,7 +28,7 @@ _int CAttack::Update_Component(const _float & fTimeDelta)
 {
 	m_fCurTime = Get_WorldTime();
 
-	if (m_fCurTime - m_fPreTime > 1.f)
+	if (m_fCurTime - m_fPreTime > m_fTimer)
 	{
 		CBullet* bullet = CBulletMgr::GetInstance()->Pop(
 			L"NormalBullet", m_pGraphicDev, 

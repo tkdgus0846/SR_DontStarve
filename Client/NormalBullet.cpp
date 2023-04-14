@@ -73,7 +73,7 @@ void CNormalBullet::Render_GameObject(void)
 
 void CNormalBullet::OnCollisionEnter(const Collision* collsion)
 {
-	
+
 }
 
 void CNormalBullet::OnCollisionStay(const Collision* collision)
@@ -85,6 +85,7 @@ void CNormalBullet::OnCollisionStay(const Collision* collision)
 		_vec3 pos = collision->intersectBox._max;
 		/*CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"RedBlood", pos, { 0.7f,0.7f,0.7f }, 0.1f);
 		Add_GameObject(effect);*/
+
 		monster->Get_Damaged(m_Damage);
 		SetDead();
 

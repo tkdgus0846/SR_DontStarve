@@ -29,9 +29,8 @@ public:
 	CWall* GetWallArray(_uint index) const { return m_apWall[index]; }
 
 	_int Get_Room_Index();
-
-	//void AddTile(CTile* pTile) { if (nullptr == pTile) return; m_vecTile.push_back(pTile); }
-	//void AddGameObject(CGameObject* pGameObject) { if (nullptr == pGameObject) return; m_vecGameObj.push_back(pGameObject); }
+	void Open_Doors();
+	void Close_Doors();
 
 	_bool& Cur_Door_State(DOOR_DIR eDir) { return m_apDoor[eDir].first; }
 	void Set_DoorType(DOOR_TYPE eType);
@@ -76,17 +75,15 @@ private:
 	_float				m_fVtxCntZ;
 	_float				m_fVtxItv;
 
-	// ������ ����,
-	// push_back���������� �������� PushBack_�ø��� �Լ���� ����.
-	vector<CGameObject*>	m_vecTile;		// IMGUI���� �����
-	vector<CGameObject*> m_vecGameObj;	// IMGUI���� �����
+	// push_back
+	vector<CGameObject*>	m_vecTile;	// IMGUI
+	vector<CGameObject*> m_vecGameObj;	// IMGUI
 	CFloor*				m_pFloor;
 	array<CWall*, 4>	m_apWall;
 	array<pair<_bool, CDoor*>, 4>	m_apDoor;
 	DOOR_TYPE			m_eDoorType;
 	
 private:
-	// sibal
 	vector<CLayer*> m_vecLayer;
 	list<CCollider*> m_ColliderList[COL_STATIC_END];
 

@@ -47,9 +47,11 @@ protected:
 	
 	HRESULT		Set_PatrolAndFollow_AI();
 	HRESULT		Set_PAF_JumpAI();
+	HRESULT		Set_PAF_DBJumpAI();
 	HRESULT		Set_PAF_LeapJumpAI();
 	HRESULT		Set_TurretAI();
 	HRESULT		Set_Boss1_AI();
+	HRESULT		Set_Boss2_AI();
 
 private:
 	CRoot*		m_pRoot;	// 모든 몬스터는 하나의 ai를 가지는걸로 가정.

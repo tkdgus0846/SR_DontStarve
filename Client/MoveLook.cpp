@@ -26,6 +26,10 @@ HRESULT CMoveLook::Ready_Behavior()
 
 _int CMoveLook::Update_Component(const _float & fTimeDelta)
 {
+	CAnimation* pAnimation = dynamic_cast<CAnimation*>(m_pGameObject->Get_Component(L"Animation", ID_ALL));
+	if (pAnimation)
+		pAnimation->SelectState(ANIM_WALK);
+
 	m_fCurTime += fTimeDelta;
 
 	_float fSpeed = 0.f;
