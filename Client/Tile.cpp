@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "Tile.h"
-
+#include "Player.h"
 #include "Export_Function.h"
 
 CTile::CTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
-	, m_iTileOption(0)
+	, m_eTileType(TILE_DEFAULT)
 {
 	Set_LayerID(LAYER_TRIGGER);
 	Set_ObjTag(L"Tile");
@@ -23,13 +23,12 @@ HRESULT CTile::Ready_GameObject(const _tchar* pTextureName)
 
 	m_pTransform->m_vScale *= VTXITV * 0.5f;
 	m_pTransform->Rot_Pitch(90.f, 1);
-
+	
 	return result;
 }
 
 _int CTile::Update_GameObject(const _float & fTimeDelta)
 {
-	
 	__super::Update_GameObject(fTimeDelta);
 
 	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
@@ -60,6 +59,59 @@ void CTile::ReadTextureName(HANDLE hFile, DWORD & dwByte)
 	ReadFile(hFile, pTextureName, sizeof(_tchar) * 64, &dwByte, nullptr);
 	const _tchar* tmp = const_cast<const _tchar*>(pTextureName);
 	Change_Texture(tmp);
+}
+
+void CTile::CalcColliderSize()
+{
+	// 타일 콜라이더 크기 조절 분기문(더러움주의)
+	if (fabs(this->NormalVectorFromTile().Degree(_vec3::Up())) < 0.1f
+		|| fabs(this->NormalVectorFromTile().Degree(-_vec3::Up())) < 0.1f)
+		this->GetCollider()->Set_BoundingBox({ 10.f, 1.f, 10.f });
+	else if (fabs(this->NormalVectorFromTile().Degree(_vec3::Right())) < 0.1f
+		|| fabs(this->NormalVectorFromTile().Degree(-_vec3::Right())) < 0.1f)
+		this->GetCollider()->Set_BoundingBox({ 1.f, 10.f, 10.f });
+	else
+		this->GetCollider()->Set_BoundingBox({ 10.f, 10.f, 1.f });
+}
+
+void CTile::OnCollisionStay(const Collision * collision)
+{
+	if (collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
+	{
+		switch (m_eTileType)
+		{
+		case TILE_BELT:
+			collision->OtherGameObject
+				->m_pTransform->Move_WalkWithVec(m_pTransform->m_vInfo[INFO_UP], 10.f, 0.016f);
+			break;
+		case TILE_BLOOD:
+			break;
+		case TILE_ELECTRIC:
+			break;
+		case TILE_LAVA:
+			break;
+		case TILE_OIL:
+			break;
+		case TILE_QUICKSAND:
+			break;
+		case TILE_SWAMP:
+			break;
+		case TILE_ICE:
+			break;
+		case TILE_SAND:
+			break;
+		case TILE_GRASS:
+			break;
+		case TILE_DEFAULT:
+			break;
+		case TILE_SNOW:
+			break;
+		case TILE_END:
+			break;
+		default:
+			break;
+		}
+	}	
 }
 
 _vec3 CTile::NormalVectorFromTile()
@@ -94,8 +146,11 @@ HRESULT CTile::Add_Component()
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
 
+	m_pAnimation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
+	NULL_CHECK_RETURN(m_pAnimation, E_FAIL);
+
 	Change_Texture(m_pTextureName);
-	
+
 	return S_OK;
 }
 
@@ -119,6 +174,28 @@ HRESULT CTile::Remove_TextureCom()
 	return E_FAIL;
 }
 
+void CTile::Set_TileType(const _tchar * pTextureName)
+{
+	if (0 == lstrcmp(pTextureName, L"FloorLava"))
+		m_eTileType = TILE_LAVA;
+	else if (0 == lstrcmp(pTextureName, L"FloorIce"))
+		m_eTileType = TILE_ICE;
+	else if (0 == lstrcmp(pTextureName, L"FloorSand #421867"))
+		m_eTileType = TILE_SAND;
+	else if (0 == lstrcmp(pTextureName, L"FloorGrass #421873"))
+		m_eTileType = TILE_GRASS;
+	else if (0 == lstrcmp(pTextureName, L"FloorElectric"))
+		m_eTileType = TILE_ELECTRIC;
+	else if (0 == lstrcmp(pTextureName, L"FloorSwamp"))
+		m_eTileType = TILE_SWAMP;
+	else if (0 == lstrcmp(pTextureName, L"FloorSnow"))
+		m_eTileType = TILE_SNOW;
+	else if (0 == lstrcmp(pTextureName, L"FloorBelt"))
+		m_eTileType = TILE_BELT;
+	else
+		m_eTileType = TILE_DEFAULT;
+}
+
 void CTile::Change_Texture(const _tchar * pTextureName)
 {
 	Remove_TextureCom();
@@ -129,8 +206,13 @@ void CTile::Change_Texture(const _tchar * pTextureName)
 	lstrcpy(m_pTextureName, tmp);
 	NULL_CHECK_RETURN(m_pTextureCom);
 	m_uMapComponent[ID_RENDER].emplace(m_pTextureName, m_pTextureCom);
+	Set_TileType(pTextureName);
 
 	Add_Render_Component();
+
+	m_pAnimation->BindAnimation(ANIM_IDLE, m_pTextureCom);
+	m_pAnimation->SelectState(ANIM_IDLE);
+	m_uMapComponent[ID_ALL].insert({ L"Animation", m_pAnimation });
 }
 
 CTile * CTile::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos,
@@ -145,7 +227,8 @@ CTile * CTile::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos,
 	}
 
 	pInstance->m_pTransform->m_vInfo[INFO_POS] = vPos;
-
+	pInstance->Update_GameObject(1/60.f);
+	pInstance->CalcColliderSize();
 	return pInstance;
 }
 

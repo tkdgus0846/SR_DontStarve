@@ -13,7 +13,7 @@
 #include "SoftPyramid.h"
 #include "HardPyramid.h"
 #include "Slider.h"
-
+#include "Tile.h"
 IMPLEMENT_SINGLETON(CRoomMgr)
 
 CRoomMgr::CRoomMgr()
@@ -63,12 +63,6 @@ void CRoomMgr::Create_Default_Room()
 	m_arrRoom[1]->Set_DoorType(DOOR_NW);
 	m_arrRoom[5]->Set_DoorType(DOOR_ES);
 	m_arrRoom[6]->Set_DoorType(DOOR_SW);
-
-	m_arrRoom[0]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(40.f, 3.f, 40.f)));
-	m_arrRoom[1]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(100.f, 1.f, 40.f)));
-	m_arrRoom[1]->PushBack_GameObj(CRub::Create(m_pGraphicDev, _vec3(90.f, 2.4f, 40.f)));
-	m_arrRoom[5]->PushBack_GameObj(CCryder::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 100.f)));
-	m_arrRoom[6]->PushBack_GameObj(CNubBoss::Create(m_pGraphicDev, _vec3(100.f, 0.6f, 100.f)));
 
 	//====== 임시 코드임 =======
 }

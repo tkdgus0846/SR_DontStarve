@@ -77,6 +77,23 @@ HRESULT CRoom::CreateSubset()
 	}
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
 
+	_int iCellX = (VTXCNTX - 1);
+	_int iCellZ = (VTXCNTZ - 1);
+	_int iCellNum = iCellX * iCellZ;
+	_int iOffsetX = VTXITV * 0.5f;
+	_int iOffsetZ = VTXITV * 0.5f;
+
+	for (_int i = 0; i < iCellZ; ++i)
+	{
+		for (_int j = 0; j < iCellX; ++j)
+		{
+			PushBack_GameObj(CTile::Create(m_pGraphicDev
+				, _vec3{ ((float)j * VTXITV) + iOffsetX
+				, 0.01f
+				,(float)i * VTXITV + iOffsetZ }
+				, L"FloorBelt"));
+		}
+	}
 	return S_OK;
 }
 
@@ -310,7 +327,6 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 			continue;
 		_tchar a[32];
 		lstrcpy(a, CBub::GetTag());
-		cout <<  m_vecGameObj[i]->Get_ObjTag() << endl;
 
 		// 어떤 객체인지 번호로 저장.
 		_int iObjNumber = 0;
@@ -384,22 +400,11 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	for (_int i = 0; i < iTileSize; ++i)
 	{
 		// 타일 트랜스폼 컴포넌트 정보 로드
-		CGameObject* objTmp = CTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }, L"Floor_Level1_Texture");
+		CTile* objTmp = CTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }, L"Floor_Level1_Texture");
 		PushBack_Tile(objTmp);
 
-		CTile* tmp = dynamic_cast<CTile*>(objTmp);
 		m_vecTile[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
 		dynamic_cast<CTile*>(m_vecTile[i])->ReadTextureName(hFile, dwByte);
-
-		// 타일 콜라이더 크기 조절 분기문(더러움주의)
-		if (fabs(tmp->NormalVectorFromTile().Degree(_vec3::Up())) < 0.1f
-			|| fabs(tmp->NormalVectorFromTile().Degree(-_vec3::Up())) < 0.1f)
-			tmp->GetCollider()->Set_BoundingBox({ 10.f, 1.f, 10.f });
-		else if(fabs(tmp->NormalVectorFromTile().Degree(_vec3::Right())) < 0.1f
-			|| fabs(tmp->NormalVectorFromTile().Degree(-_vec3::Right())) < 0.1f)
-			tmp->GetCollider()->Set_BoundingBox({ 1.f, 10.f, 10.f });
-		else
-			tmp->GetCollider()->Set_BoundingBox({ 10.f, 10.f, 1.f });
 	}
 
 	// 객체 로드
