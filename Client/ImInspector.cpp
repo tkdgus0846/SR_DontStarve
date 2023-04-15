@@ -120,7 +120,8 @@ void CImInspector::Show_TilePicking()
 
 	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
 
-	ImGui::Checkbox("CHECK_PICK!", &pCamera->Get_Pick(PICK_TILE));
+	ImGui::RadioButton("TILE_MODE", &((int&)pCamera->Get_Pick()), 0);
+	
 	ImGui::SeparatorText("Tile");
 
 	if (ImGui::RadioButton("Level1_Floor", &iTileNum, 20))
@@ -219,8 +220,8 @@ void CImInspector::Show_Create_Object()
 	}
 
 	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
-	pCamera->Set_Tag(cur_item);
-	ImGui::Checkbox("CHECK_PICK!", &pCamera->Get_Pick(PICK_OBJ));
+	//pCamera->Set_Tag(cur_item);
+	ImGui::RadioButton("OBJ_MODE", &((int&)pCamera->Get_Pick()), 1);
 	ImGui::RadioButton("LeftUp", &pCamera->Get_Radio(), 0); ImGui::SameLine();
 	ImGui::RadioButton("RightUp", &pCamera->Get_Radio(), 1); 
 	ImGui::RadioButton("LeftBottom", &pCamera->Get_Radio(), 2); ImGui::SameLine();

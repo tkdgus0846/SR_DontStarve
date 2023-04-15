@@ -93,17 +93,17 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CDiscItem::Create(m_pGraphicDev));
 
 	// Tennel
-	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);
-	CTennel* tennel2 = CTennel::Create(m_pGraphicDev);
+	//CTennel* tennel1 = CTennel::Create(m_pGraphicDev);
+	//CTennel* tennel2 = CTennel::Create(m_pGraphicDev);
 
-	tennel1->Set_Position(0);
-	tennel2->Set_Position(1);
+	//tennel1->Set_Position(0);
+	//tennel2->Set_Position(1);
 
-	Add_GameObject(tennel1);
-	Add_GameObject(tennel2);
+	//Add_GameObject(tennel1);
+	//Add_GameObject(tennel2);
 
-	ROOM_MGR->Set_Tennel(tennel1, 0);
-	ROOM_MGR->Set_Tennel(tennel2, 1);
+	//ROOM_MGR->Set_Tennel(tennel1, 0);
+	//ROOM_MGR->Set_Tennel(tennel2, 1);
 
 	/*D3DLIGHT9		tLightInfo;
 

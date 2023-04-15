@@ -11,6 +11,7 @@
 #include "Export_Function.h"
 #include "RoomMgr.h"
 #include "ParticleMgr.h"
+#include "TileFactory.h"
 
 // 주석 테스트용
 CMainApp::CMainApp()
@@ -28,7 +29,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 	srand((unsigned int)time(NULL));
 	FAILED_CHECK_RETURN(Ready_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
-
+	
 	return S_OK;
 }
 
@@ -109,6 +110,7 @@ CMainApp * CMainApp::Create(void)
 
 void CMainApp::Free(void)
 {
+	CLoader::DestroyInstance();
 	CRoomMgr::DestroyInstance();
 	CImManager::DestroyInstance();
 	CBulletMgr::DestroyInstance();

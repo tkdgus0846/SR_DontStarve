@@ -52,14 +52,6 @@ public:
 		return m_vecGameObj[iIndex];
 	}
 
-	_int TileNum() const { return m_vecTile.size(); }
-	CGameObject* GetTileByIndex(_int iIndex) const
-	{
-		if (iIndex < 0 || iIndex >= m_vecTile.size()) return nullptr;
-		return m_vecTile[iIndex];
-	}
-
-	void PushBack_Tile(CGameObject* pTile);
 	void PushBack_GameObj(CGameObject* pObj);
 
 public:
@@ -74,11 +66,8 @@ private:
 	_float				m_fVtxCntX;
 	_float				m_fVtxCntZ;
 	_float				m_fVtxItv;
-
-	// ������ ����,
-	// push_back���������� �������� PushBack_�ø��� �Լ���� ����.
-	vector<CGameObject*>	m_vecTile;		// IMGUI���� 
-	vector<CGameObject*>	 m_vecGameObj;	// IMGUI���� �����
+ 
+	vector<CGameObject*>	m_vecGameObj;	
 
 	CFloor*				m_pFloor;
 	array<CWall*, 4>	m_apWall;

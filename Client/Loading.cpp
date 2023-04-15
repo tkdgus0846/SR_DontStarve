@@ -115,6 +115,10 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Dock_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_%d.png", 15)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Open_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_14.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorCrate_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorCrate.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrass #421873", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrass #421873.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSand.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorIce", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorIce.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSnow", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSnow.png")), E_FAIL);
 
 	// Tile Multi Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBelt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBelt_%d.png", 4)), E_FAIL);

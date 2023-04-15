@@ -13,6 +13,8 @@
 #include "Tile.h"
 #include "Door.h"
 
+#include "ISaveTarget.h"
+#include "TileFactory.h"
 
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
@@ -71,9 +73,9 @@ HRESULT CRoom::CreateSubset()
 	PushBack_GameObj(m_pFloor);
 
 	//// 벽 4면 생성
-	for (auto& iter : m_apWall) {
-		iter = CWall::Create(m_pGraphicDev);
-		PushBack_GameObj(iter);
+	for (auto& Wall : m_apWall) {
+		Wall = CWall::Create(m_pGraphicDev);
+		PushBack_GameObj(Wall);
 	}
 
 	_int iCellXNum = (VTXCNTX - 1);
@@ -85,11 +87,11 @@ HRESULT CRoom::CreateSubset()
 	{
 		for (_int j = 0; j < iCellXNum; ++j)
 		{
-			PushBack_Tile(CTile::Create(m_pGraphicDev
-				, _vec3{ ((float)j * VTXITV) + iOffsetX
-				, 0.01f
-				,(float)i * VTXITV + iOffsetZ }
-			, L"Floor_Level1_Texture"));
+			//PushBack_GameObj(CTile::Create(m_pGraphicDev
+			//	, _vec3{ ((float)j * VTXITV) + iOffsetX
+			//	, 0.01f
+			//	,(float)i * VTXITV + iOffsetZ }
+			//, L"Floor_Level1_Texture"));
 		}
 	}
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
@@ -298,7 +300,6 @@ void CRoom::PlaceSubSet()
 
 _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 {
-	_int iTileSize = m_vecTile.size();
 	_int iObjSize = m_vecGameObj.size();
 
 	// 룸의 변수 저장
@@ -310,14 +311,7 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 	_int iDoorType = (_int)m_eDoorType;
 	WriteFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
 	m_pTransform->WriteTransformFile(hFile, dwByte);
-	
-	// 타일 컨테이너 저장
-	WriteFile(hFile, &iTileSize, sizeof(_int), &dwByte, nullptr);
-	for (_int i = 0; i < iTileSize; ++i)
-	{
-		m_vecTile[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
-		dynamic_cast<CTile*>(m_vecTile[i])->WriteTextureName(hFile, dwByte);
-	}
+
 	
 	// 객체 컨테이너 저장
 	WriteFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
@@ -368,10 +362,6 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
-	// 타일 해제
-	for_each(m_vecTile.begin(), m_vecTile.end(), Safe_Release<CGameObject*>);
-	m_vecTile.clear();
-
 	// 오브젝트 해제
 	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
 	m_vecGameObj.clear();
@@ -387,71 +377,21 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	//문 로드
 	_int iDoorType;
 	ReadFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
-
-	//Set_DoorType((DOOR_TYPE)iDoorType);
-
+	Set_DoorType((DOOR_TYPE)iDoorType);
 	m_pTransform->ReadTransformFile(hFile, dwByte);
-
-	// 타일 로드
-	ReadFile(hFile, &iTileSize, sizeof(_int), &dwByte, nullptr);
-	for (_int i = 0; i < iTileSize; ++i)
-	{
-		// 타일 트랜스폼 컴포넌트 정보 로드
-		CTile* objTmp = CTile::Create(m_pGraphicDev, _vec3{ 0.f, 0.f, 0.f }, L"Floor_Level1_Texture");
-		PushBack_Tile(objTmp);
-
-		m_vecTile[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
-		dynamic_cast<CTile*>(m_vecTile[i])->ReadTextureName(hFile, dwByte);
-	}
 
 	// 객체 로드
 	ReadFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
 	for (_int i = 0; i < iObjSize; ++i)
 	{
-		_int iObjNumber = 0;
-		ReadFile(hFile, &iObjNumber, sizeof(_int), &dwByte, nullptr);
-
-		if (1 == iObjNumber)
-		{
-			PushBack_GameObj(CBaller::Create(m_pGraphicDev, _vec3{}));
-		}
-		else if (2 == iObjNumber)
-		{
-			PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3{}));
-		}
-		else if (3 == iObjNumber)
-		{
-			PushBack_GameObj(CGuppi::Create(m_pGraphicDev, _vec3{}));
-		}
-		else if (4 == iObjNumber)
-		{
-			PushBack_GameObj(CTurret::Create(m_pGraphicDev, _vec3{}));
-		}
-		else if (5 == iObjNumber)
-		{
-			PushBack_GameObj(CWalker::Create(m_pGraphicDev, _vec3{}));
-		}
-		else
-			continue;
-		m_vecGameObj[i]->m_pTransform->ReadTransformFile(hFile, dwByte);
+		const _tchar* pObjTag;
+		ReadFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
+		CGameObject* pObj = LOADER->Load(hFile, dwByte, pObjTag);
+		if (pObj)
+			PushBack_GameObj(pObj);
 	}
+
 	return true;
-}
-
-void CRoom::PushBack_Tile(CGameObject * pTile)
-{
-	NULL_CHECK(pTile);
-	m_vecTile.push_back(pTile);
-	
-	OBJ_INFO objInfo = pTile->Get_ObjInfo();
-	m_vecLayer[objInfo.layerID]->Add_GameObject(objInfo.pObjTag, pTile);
-
-	for (int i = 0; i < objInfo.colNameVec.size(); i++)
-	{
-		CCollider* pCol = dynamic_cast<CCollider*>(pTile->Get_Component(objInfo.colNameVec[i], ID_ALL));
-		if (pCol)
-			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
-	}
 }
 
 void CRoom::PushBack_GameObj(CGameObject * pObj)
