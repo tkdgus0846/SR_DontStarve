@@ -35,6 +35,7 @@
 #include "Tennel.h"
 #include "Pyramid.h"
 #include "BootsItem.h"
+//#include "RenderTargetTest.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_iCurRoomIdx(0)
@@ -49,6 +50,8 @@ CStage::~CStage()
 HRESULT CStage::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
+
+	
 	
 	/*Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
 	dynamic_cast<CRoom*>(Get_GameObject(LAYER_ENVIRONMENT, L"Room"))->FloorSubSet();

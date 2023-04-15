@@ -5,6 +5,7 @@
 #include "MonoBehaviors.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "EffectManager.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev) : 
 	CCreature(pGraphicDev),
@@ -110,6 +111,19 @@ void CMonster::OnCollisionStay(const Collision * collision)
 void CMonster::OnCollisionExit(const Collision * collision)
 {
 	__super::OnCollisionExit(collision);
+}
+
+void CMonster::SetDead(_bool bDead /*= true*/)
+{
+	__super::SetDead(bDead);
+
+	if (bDead == true)
+	{
+		_vec3 pos = m_pTransform->m_vInfo[INFO_POS];
+		_vec3 scale = m_pTransform->Get_Scale();
+		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"Explosion_Texture", pos, scale, 0.1f);
+		Add_GameObject(effect);
+	}
 }
 
 HRESULT CMonster::Add_Component(void)

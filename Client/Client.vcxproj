@@ -236,6 +236,7 @@
     <ClInclude Include="DiscItem.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="EditCamera.h" />
+    <ClInclude Include="ExplosiveWeapon.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
@@ -303,6 +304,7 @@
     <ClInclude Include="BootsItem.h" />
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
+    <ClInclude Include="SpreadWeapon.h" />
     <ClInclude Include="SwordBullet.h" />
     <ClInclude Include="SwordWeapon.h" />
     <ClInclude Include="Tennel.h" />
@@ -343,6 +345,7 @@
     <ClCompile Include="DiscItem.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="EditCamera.cpp" />
+    <ClCompile Include="ExplosiveWeapon.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -412,6 +415,7 @@
     <ClCompile Include="BootsItem.cpp" />
     <ClCompile Include="SoftPyramid.cpp" />
     <ClCompile Include="Cryder.cpp" />
+    <ClCompile Include="SpreadWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

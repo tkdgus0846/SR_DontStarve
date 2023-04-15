@@ -27,6 +27,8 @@ public:
 	virtual void OnCollisionStay(const class Collision* collision);
 	virtual void OnCollisionExit(const class Collision* collision);
 
+	virtual void SetDead(_bool bDead = true) override;
+
 private:
 	virtual HRESULT Add_Component() override;
 

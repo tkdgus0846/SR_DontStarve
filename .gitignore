@@ -400,7 +400,8 @@ FodyWeavers.xsd
 *.sln.iml
 
 *.exp
-*.lib
+Client.lib
+Engine.lib
 *.dll
 *.exe
 *.idb

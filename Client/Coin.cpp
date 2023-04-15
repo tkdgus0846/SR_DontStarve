@@ -71,6 +71,7 @@ void CCoin::LateUpdate_GameObject(void)
 void CCoin::Render_GameObject(void)
 {
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
+	if (pPlayer == nullptr) return;
 
 	_int coin = pPlayer->Get_Coin();
 

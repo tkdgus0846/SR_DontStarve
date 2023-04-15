@@ -109,7 +109,10 @@ _int CDisc::Compute_Num(_int & pPlayerDisc)
 
 void CDisc::Redner_Disc()
 {
-	_int curDisc = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_Disc();
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
+	if (pPlayer == nullptr) return;
+
+	_int curDisc = pPlayer->Get_Disc();
 
 	for (size_t i = 0; i < m_MaxNumber; i++)
 	{

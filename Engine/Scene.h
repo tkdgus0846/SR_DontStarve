@@ -29,6 +29,8 @@ public:
 protected:
 	HRESULT			Add_GameObject(class CGameObject* pObj);
 	CGameObject*	Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
+	void			Play_SlowTime(const _float & fTimeDelta);
+	void			Reset_SlowTime(const _float & fTimeDelta);
 
 private:
 	CLayer* Get_Layer(LAYERID LayerID);
@@ -38,6 +40,8 @@ protected:
 
 	vector<CLayer*>*	m_StaticLayerArr;
 	vector<CLayer*>		m_DynamicLayerArr;
+
+	_float				m_SlowTime;
   
 protected:
 	virtual void	Free(void);

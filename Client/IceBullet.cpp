@@ -8,7 +8,7 @@ CIceBullet::CIceBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
 {
 	Set_ObjTag(L"IceBullet");
-	m_fSpeed = 10.f;
+	m_fSpeed = 20.f;
 	m_fLifeSpan = 5.f;
 	m_fAge = 0.f;
 	m_Damage = 5;

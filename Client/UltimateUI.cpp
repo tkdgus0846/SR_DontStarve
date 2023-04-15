@@ -50,8 +50,11 @@ void CUltimateUI::LateUpdate_GameObject(void)
 
 void CUltimateUI::Render_GameObject(void)
 {
-	_float Cur = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_UltiGuage();
-	_float Max = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_UltiMaxGuage();
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
+	if (pPlayer == nullptr) return;
+
+	_float Cur = pPlayer->Get_UltiGuage();
+	_float Max = pPlayer->Get_UltiMaxGuage();
 
 	m_dRcTex->Edit_V(Cur / Max);
 	Set_ViewMatrix_UI(-377.f, -231.f);
