@@ -307,6 +307,7 @@
     <ClInclude Include="SwordWeapon.h" />
     <ClInclude Include="Tennel.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TimeInLimit.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="UI.h" />
@@ -421,6 +422,7 @@
     <ClCompile Include="SwordWeapon.cpp" />
     <ClCompile Include="Tennel.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TimeInLimit.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="UI.cpp" />

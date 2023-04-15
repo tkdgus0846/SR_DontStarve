@@ -75,25 +75,25 @@ HRESULT CRoom::CreateSubset()
 		iter = CWall::Create(m_pGraphicDev);
 		PushBack_GameObj(iter);
 	}
-	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
 
-	_int iCellX = (VTXCNTX - 1);
-	_int iCellZ = (VTXCNTZ - 1);
-	_int iCellNum = iCellX * iCellZ;
+	_int iCellXNum = (VTXCNTX - 1);
+	_int iCellZNum = (VTXCNTZ - 1);
 	_int iOffsetX = VTXITV * 0.5f;
 	_int iOffsetZ = VTXITV * 0.5f;
 
-	for (_int i = 0; i < iCellZ; ++i)
+	for (_int i = 0; i < iCellZNum; ++i)
 	{
-		for (_int j = 0; j < iCellX; ++j)
+		for (_int j = 0; j < iCellXNum; ++j)
 		{
-			PushBack_GameObj(CTile::Create(m_pGraphicDev
+			PushBack_Tile(CTile::Create(m_pGraphicDev
 				, _vec3{ ((float)j * VTXITV) + iOffsetX
 				, 0.01f
 				,(float)i * VTXITV + iOffsetZ }
-				, L"FloorBelt"));
+			, L"Floor_Level1_Texture"));
 		}
 	}
+	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
+
 	return S_OK;
 }
 
@@ -375,9 +375,6 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	// 오브젝트 해제
 	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
 	m_vecGameObj.clear();
-
-	for (auto iter : m_apDoor)
-		Safe_Release(iter.second);
 
 	_int iTileSize;
 	_int iObjSize;

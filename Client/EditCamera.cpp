@@ -447,8 +447,8 @@ void CEditCamera::CreateObj()
 	if (!m_bPick[PICK_OBJ])
 		return;
 	
-	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
-		return;
+	//if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
+	//	return;
 
 	CGameObject* pObj = FACTORY->CreateObj(m_tag);
 	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);

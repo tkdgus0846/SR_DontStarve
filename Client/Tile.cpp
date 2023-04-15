@@ -10,6 +10,7 @@ CTile::CTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	Set_LayerID(LAYER_TRIGGER);
 	Set_ObjTag(L"Tile");
 
+
 }
 
 CTile::~CTile()
@@ -18,7 +19,8 @@ CTile::~CTile()
 
 HRESULT CTile::Ready_GameObject(const _tchar* pTextureName)
 {
-	lstrcpy(m_pTextureName, pTextureName);
+	//lstrcpy(m_pTextureName, pTextureName);
+	m_pTextureName = pTextureName;
 	HRESULT result = __super::Ready_GameObject();
 
 	m_pTransform->m_vScale *= VTXITV * 0.5f;
@@ -148,6 +150,7 @@ HRESULT CTile::Add_Component()
 
 	m_pAnimation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	NULL_CHECK_RETURN(m_pAnimation, E_FAIL);
+	//m_uMapComponent[ID_ALL].insert({ L"Animation", m_pAnimation });
 
 	Change_Texture(m_pTextureName);
 
@@ -160,12 +163,13 @@ HRESULT CTile::Remove_TextureCom()
 	{
 		for (auto iter = m_uMapComponent[i].begin(); iter != m_uMapComponent[i].end(); ++iter)
 		{
-			if (0 == lstrcmp(iter->first, m_pTextureName))
+			//if (0 == lstrcmp(iter->first, m_pTextureName))
+			if (iter->first == m_pTextureName)
 			{
 				Remove_Render_Component(iter->first);
 				m_uMapComponent[i].erase(iter);
 				Safe_Release(m_pTextureCom);
-				lstrcpy(m_pTextureName, L"");
+				m_pTextureName = L"";
 				return S_OK;
 			}
 		}
@@ -201,9 +205,10 @@ void CTile::Change_Texture(const _tchar * pTextureName)
 	Remove_TextureCom();
 	
 	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(pTextureName, this));
-	_tchar tmp[32];
+	/*_tchar tmp[32];
 	lstrcpy(tmp, pTextureName);
-	lstrcpy(m_pTextureName, tmp);
+	lstrcpy(m_pTextureName, tmp);*/
+	m_pTextureName = pTextureName;
 	NULL_CHECK_RETURN(m_pTextureCom);
 	m_uMapComponent[ID_RENDER].emplace(m_pTextureName, m_pTextureCom);
 	Set_TileType(pTextureName);

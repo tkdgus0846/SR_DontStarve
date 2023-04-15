@@ -37,7 +37,7 @@ public:
 	_vec3 NormalVectorFromTile();
 
 private:
-	_tchar		m_pTextureName[64];
+	const _tchar*		m_pTextureName;
 	Engine::CAnimation* m_pAnimation;
 	Engine::CTexture*	m_pTextureCom;
 	Engine::CCollider*	m_pCollider;
