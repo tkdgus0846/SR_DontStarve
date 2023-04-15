@@ -14,12 +14,16 @@ protected:
 
 protected:
 	typedef CGameObject* (*CreateObjectFunc)(LPDIRECT3DDEVICE9);
-	void Register(const wstring& objectType, CreateObjectFunc createFunc);
+	virtual void Register(const wstring& objectType, CreateObjectFunc createFunc);
 
 public:
 	CGameObject* CreateObject(const wstring& objectType);
+	const vector<wstring>& GetWTag() { return m_vecWstrTag; }
+	const vector<string>& GetSTag() { return m_vecStrTag; }
 
 protected:
 	map<wstring, CreateObjectFunc> m_creationMap;
+	vector<wstring> m_vecWstrTag;
+	vector<string>	m_vecStrTag;
 	LPDIRECT3DDEVICE9 m_pGraphicDev;
 };

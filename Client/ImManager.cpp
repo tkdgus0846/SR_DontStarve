@@ -20,12 +20,8 @@ CImManager::~CImManager()
 
 HRESULT CImManager::Ready_IMGUI(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CImInspector* pInstance = CImInspector::Create(pGraphicDev);
-
-	NULL_CHECK_RETURN(pInstance, E_FAIL);
-
-	m_vecImWindow.push_back(pInstance);
-	m_vecImWindow.push_back(CImMenuBar::Create(pGraphicDev));
+	Push_Back(CImInspector::Create(pGraphicDev));
+	Push_Back(CImMenuBar::Create(pGraphicDev));
 	return S_OK;
 }
 
@@ -57,4 +53,9 @@ void CImManager::Release()
 	ImGui_ImplDX9_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+}
+
+void CImManager::Push_Back(CImWindow * pWindow)
+{
+	m_vecImWindow.push_back(pWindow);
 }

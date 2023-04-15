@@ -34,6 +34,7 @@ HRESULT CTileFactory::Ready_TileFactory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CSnowTile::Tag(), &CSnowTile::Create);
 	Register(CSwampTile::Tag(), &CSwampTile::Create);
 	
+		
 	return hResult;
 }
 

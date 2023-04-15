@@ -455,6 +455,9 @@
     <ClInclude Include="Serializable.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="ImImage.h">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -795,6 +798,9 @@
     </ClCompile>
     <ClCompile Include="TileFactory.cpp">
       <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="ImImage.cpp">
+      <Filter>IMGUI\ImWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

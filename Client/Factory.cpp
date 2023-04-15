@@ -1,4 +1,5 @@
 #include "Factory.h"
+#include "FileSystem.h"
 
 CFactory::CFactory()
 {
@@ -11,6 +12,10 @@ CFactory::~CFactory()
 void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 {
 	m_creationMap[objectType] = createFunc;
+	m_vecWstrTag.push_back(objectType.c_str());
+
+	m_vecStrTag.push_back(CFileSystem::wstrToStr(objectType));
+
 }
 
 HRESULT CFactory::Ready_TileFactory(LPDIRECT3DDEVICE9 pGraphicDev)

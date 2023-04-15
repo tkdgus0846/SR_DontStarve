@@ -40,6 +40,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 		if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_RETURN))
 		{
 			CScene*	pScene = CMyEdit::Create(m_pGraphicDev);
+			TILE_FACTORY->Ready_TileFactory(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 
 			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev);

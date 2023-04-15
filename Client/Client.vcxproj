@@ -256,6 +256,7 @@
     <ClInclude Include="IceBeamWeapon.h" />
     <ClInclude Include="IceBullet.h" />
     <ClInclude Include="IceTile.h" />
+    <ClInclude Include="ImImage.h" />
     <ClInclude Include="ImInspector.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
@@ -379,6 +380,7 @@
     <ClCompile Include="IceBullet.cpp" />
     <ClCompile Include="IceTile.cpp" />
     <ClCompile Include="ImGuiFileDialog.cpp" />
+    <ClCompile Include="ImImage.cpp" />
     <ClCompile Include="ImInspector.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />

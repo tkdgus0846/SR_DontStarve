@@ -354,13 +354,14 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 
 		if (0 == lstrcmp(tag, L"Stop"))
 			break;
-		CGameObject* tmp2 = TILE_FACTORY->CreateObject(tag);
-		ISerializable* tmp = dynamic_cast<ISerializable*>(tmp2);
+		CGameObject* pGameObj = TILE_FACTORY->CreateObject(tag);
+		ISerializable* IsLoad = dynamic_cast<ISerializable*>(pGameObj);
 		
-		if (tmp)
-			PushBack_GameObj(tmp2);
-
-		tmp->Deserialization(hFile, dwByte);
+		if (IsLoad)
+		{
+			PushBack_GameObj(pGameObj);
+			IsLoad->Deserialization(hFile, dwByte);
+		}
 	}
 
 	cout << "load.." << endl;

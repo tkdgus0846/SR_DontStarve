@@ -39,7 +39,7 @@ int CMainApp::Update_MainApp(const _float & fTimeDelta)
 	
 	_long	dwMouse = 0;
 
-	if (Engine::Key_Down(DIK_S))
+	if (Engine::Key_Down(DIK_K))
 		CFileSystem::Save(L"as.dat");
 	if (Engine::Key_Down(DIK_L))
 		CFileSystem::Load(L"as.dat");
