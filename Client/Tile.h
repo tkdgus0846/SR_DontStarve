@@ -1,12 +1,13 @@
 #pragma once
 #include "GameObject.h"
-#include "ISaveTarget.h"
+#include "Serializable.h"
+
 BEGIN(Engine)
 class CTexture;
 class CAnimation;
 END
 
-class CTile : public CGameObject, public ISaveTarget
+class CTile : public CGameObject, public ISerializable
 {
 protected:
 	explicit CTile(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -38,7 +39,7 @@ protected:
 private:
 	virtual void Free(void) override;
 
-	// ISaveTarget을(를) 통해 상속됨
-	virtual void Save(HANDLE hFile, DWORD & dwByte) override;
-	virtual void Load(HANDLE hFile, DWORD & dwByte) override;
+	// ISerializable을(를) 통해 상속됨
+	virtual void Serialization(HANDLE hFile, DWORD & dwByte) override;
+	virtual void Deserialization(HANDLE hFile, DWORD & dwByte) override;
 };

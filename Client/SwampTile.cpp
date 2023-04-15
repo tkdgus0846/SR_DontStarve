@@ -4,14 +4,14 @@
 CSwampTile::CSwampTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
 {
-	Set_ObjTag(L"SwampTile");
+	Set_ObjTag(Tag());
 }
 
 CSwampTile::~CSwampTile()
 {
 }
 
-CSwampTile * CSwampTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CSwampTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CSwampTile* pInstance = new CSwampTile(pGraphicDev);
 
@@ -23,7 +23,7 @@ CSwampTile * CSwampTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CTile * CSwampTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CSwampTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	return Create(pGraphicDev);
 }

@@ -104,6 +104,19 @@ CBaller * CBaller::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 	return pInstance;
 }
 
+CGameObject * CBaller::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CBaller* pInstance = new CBaller(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
 void CBaller::Free(void)
 {
 	__super::Free();

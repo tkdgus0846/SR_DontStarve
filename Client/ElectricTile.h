@@ -7,7 +7,8 @@ private:
 	CElectricTile(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CElectricTile();
 public:
-	static CElectricTile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CGameObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"ElectricTile"; }
 	CTile* LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:

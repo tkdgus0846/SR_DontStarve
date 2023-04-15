@@ -4,14 +4,14 @@
 CBeltTile::CBeltTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
 {
-	Set_ObjTag(L"BeltTile");
+	Set_ObjTag(Tag());
 }
 
 CBeltTile::~CBeltTile()
 {
 }
 
-CBeltTile * CBeltTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CBeltTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CBeltTile* pInstance = new CBeltTile(pGraphicDev);
 

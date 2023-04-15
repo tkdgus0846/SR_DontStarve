@@ -443,10 +443,16 @@
     <ClInclude Include="SnowTile.h">
       <Filter>GameObject\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="loader.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
     <ClInclude Include="TileFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="ISaveTarget.h">
+    <ClInclude Include="Serializable.h">
       <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
@@ -780,6 +786,12 @@
     </ClCompile>
     <ClCompile Include="SnowTile.cpp">
       <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="loader.cpp">
+      <Filter>Factory</Filter>
     </ClCompile>
     <ClCompile Include="TileFactory.cpp">
       <Filter>Factory</Filter>

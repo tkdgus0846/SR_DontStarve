@@ -7,8 +7,9 @@ private:
 	CSnowTile(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CSnowTile();
 public:
-	static CSnowTile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	CTile* LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CGameObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"SnowTile"; }
+	CGameObject* LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual HRESULT Add_Component() override;

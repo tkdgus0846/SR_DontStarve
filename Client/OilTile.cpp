@@ -5,14 +5,14 @@
 COilTile::COilTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
 {
-	Set_ObjTag(L"OilTile");
+	Set_ObjTag(Tag());
 }
 
 COilTile::~COilTile()
 {
 }
 
-COilTile * COilTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * COilTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	COilTile* pInstance = new COilTile(pGraphicDev);
 
@@ -24,7 +24,7 @@ COilTile * COilTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CTile * COilTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * COilTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	return Create(pGraphicDev);
 }

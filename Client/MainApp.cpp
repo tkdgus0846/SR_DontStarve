@@ -12,7 +12,7 @@
 #include "RoomMgr.h"
 #include "ParticleMgr.h"
 #include "TileFactory.h"
-
+#include "FileSystem.h"
 // 주석 테스트용
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pManagementClass(nullptr), m_pGraphicDev(nullptr)
@@ -36,13 +36,13 @@ HRESULT CMainApp::Ready_MainApp(void)
 int CMainApp::Update_MainApp(const _float & fTimeDelta)
 {
 	Engine::Update_DInput();
-
+	
 	_long	dwMouse = 0;
 
-	/*if (dwMouse = Engine::Get_DIMouseMove(DIMS_Z))
-	{
-		int a = 0;
-	}*/
+	if (Engine::Key_Down(DIK_S))
+		CFileSystem::Save(L"as.dat");
+	if (Engine::Key_Down(DIK_L))
+		CFileSystem::Load(L"as.dat");
 
 	m_pManagementClass->Update_Management(fTimeDelta);
 
@@ -110,7 +110,8 @@ CMainApp * CMainApp::Create(void)
 
 void CMainApp::Free(void)
 {
-	CLoader::DestroyInstance();
+	CTileFactory::DestroyInstance();
+	//CLoader::DestroyInstance();
 	CRoomMgr::DestroyInstance();
 	CImManager::DestroyInstance();
 	CBulletMgr::DestroyInstance();

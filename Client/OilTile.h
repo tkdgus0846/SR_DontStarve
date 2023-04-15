@@ -7,8 +7,9 @@ private:
 	COilTile(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~COilTile();
 public:
-	static COilTile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	CTile* LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CGameObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"OilTile"; }
+	CGameObject* LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual HRESULT Add_Component() override;

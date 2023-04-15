@@ -7,8 +7,9 @@ private:
 	CLavaTile(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CLavaTile();
 public:
-	static CLavaTile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	CTile* LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CGameObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"LavaTile"; }
+	CGameObject* LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual HRESULT Add_Component() override;

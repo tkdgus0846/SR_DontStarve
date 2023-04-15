@@ -4,14 +4,14 @@
 CQuickSandTile::CQuickSandTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
 {
-	Set_ObjTag(L"QuickSandTile");
+	Set_ObjTag(Tag());
 }
 
 CQuickSandTile::~CQuickSandTile()
 {
 }
 
-CQuickSandTile * CQuickSandTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CQuickSandTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CQuickSandTile* pInstance = new CQuickSandTile(pGraphicDev);
 
@@ -23,7 +23,7 @@ CQuickSandTile * CQuickSandTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CTile * CQuickSandTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CQuickSandTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	return Create(pGraphicDev);
 }

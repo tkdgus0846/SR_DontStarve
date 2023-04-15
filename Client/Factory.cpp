@@ -26,12 +26,12 @@ void CFactory::Release()
 		m_pGraphicDev->Release();
 }
 
-CGameObject * CFactory::CreateObject(const wstring & objectType, LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CFactory::CreateObject(const wstring & objectType)
 {
 	auto it = m_creationMap.find(objectType);
 	if (it != m_creationMap.end())
 	{
-		return it->second(pGraphicDev);
+		return it->second(m_pGraphicDev);
 	}
 	return nullptr;
 }

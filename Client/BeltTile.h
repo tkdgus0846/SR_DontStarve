@@ -7,7 +7,8 @@ public:
 	CBeltTile(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CBeltTile();
 public:
-	static CBeltTile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CGameObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"BeltTile"; }
 
 private:
 	virtual HRESULT Add_Component() override;

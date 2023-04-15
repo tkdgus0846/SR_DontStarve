@@ -4,14 +4,14 @@
 CSandTile::CSandTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
 {
-	Set_ObjTag(L"SandTile");
+	Set_ObjTag(Tag());
 }
 
 CSandTile::~CSandTile()
 {
 }
 
-CSandTile * CSandTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CSandTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CSandTile* pInstance = new CSandTile(pGraphicDev);
 
@@ -23,7 +23,7 @@ CSandTile * CSandTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CTile * CSandTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CSandTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	return Create(pGraphicDev);
 }

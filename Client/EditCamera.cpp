@@ -368,9 +368,9 @@ void CEditCamera::LoadSaveTarget(const _tchar* tag)
 	if (PICK_TILE != m_ePick)
 		return;
 
-	CTile* pTile = LOADER->LoadSaveTarget(tag);
-	if (!pTile)
-		return;
+	//CTile* pTile = LOADER->Load(tag);
+	//if (!pTile)
+	//	return;
 
 	// Decide Tile Position
 
@@ -389,14 +389,14 @@ void CEditCamera::LoadSaveTarget(const _tchar* tag)
 		pCurRoom->PushBack_GameObj(pTile);*/ // 설치
 
 		// Decide Tile Rotation;
-		_vec3 vTileNormal = m_tPickInfo.tri.Normal();
-		vTileNormal.Normalize();
+		//_vec3 vTileNormal = m_tPickInfo.tri.Normal();
+		//vTileNormal.Normalize();
 
-		if (vTileNormal.Degree(_vec3::Up()) > 0.1f)
-		{
-			pTile->m_pTransform->Set_Dir(vTileNormal);
-		}
-		pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
+		//if (vTileNormal.Degree(_vec3::Up()) > 0.1f)
+		//{
+		//	pTile->m_pTransform->Set_Dir(vTileNormal);
+		//}
+		//pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
 	}
 }
 

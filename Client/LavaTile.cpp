@@ -4,14 +4,14 @@
 CLavaTile::CLavaTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
 {
-	Set_ObjTag(L"LavaTile");
+	Set_ObjTag(Tag());
 }
 
 CLavaTile::~CLavaTile()
 {
 }
 
-CLavaTile * CLavaTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CLavaTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CLavaTile* pInstance = new CLavaTile(pGraphicDev);
 
@@ -23,7 +23,7 @@ CLavaTile * CLavaTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CTile * CLavaTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CLavaTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	return Create(pGraphicDev);
 }

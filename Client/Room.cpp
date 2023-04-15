@@ -12,8 +12,7 @@
 #include "Wall.h"
 #include "Tile.h"
 #include "Door.h"
-
-#include "ISaveTarget.h"
+#include "Serializable.h"
 #include "TileFactory.h"
 
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -67,6 +66,10 @@ void CRoom::Render_GameObject(void)
 
 HRESULT CRoom::CreateSubset()
 {
+	//CGameObject* tmp = TILE_FACTORY->CreateObject(L"LavaTile");
+	//PushBack_GameObj(tmp);
+	//tmp->Set_Pos(_vec3{ 25.f, 0.f, 25.f });
+
 	// 바닥 생성
 	m_pFloor = CFloor::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(m_pFloor, E_FAIL);
@@ -83,17 +86,17 @@ HRESULT CRoom::CreateSubset()
 	_int iOffsetX = VTXITV * 0.5f;
 	_int iOffsetZ = VTXITV * 0.5f;
 
-	for (_int i = 0; i < iCellZNum; ++i)
-	{
-		for (_int j = 0; j < iCellXNum; ++j)
-		{
-			//PushBack_GameObj(CTile::Create(m_pGraphicDev
-			//	, _vec3{ ((float)j * VTXITV) + iOffsetX
-			//	, 0.01f
-			//	,(float)i * VTXITV + iOffsetZ }
-			//, L"Floor_Level1_Texture"));
-		}
-	}
+	//for (_int i = 0; i < iCellZNum; ++i)
+	//{
+	//	for (_int j = 0; j < iCellXNum; ++j)
+	//	{
+	//		PushBack_GameObj(CTile::Create(m_pGraphicDev
+	//			, _vec3{ ((float)j * VTXITV) + iOffsetX
+	//			, 0.01f
+	//			,(float)i * VTXITV + iOffsetZ }
+	//		, L"Floor_Level1_Texture"));
+	//	}
+	//}
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
 
 	return S_OK;
@@ -300,8 +303,6 @@ void CRoom::PlaceSubSet()
 
 _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 {
-	_int iObjSize = m_vecGameObj.size();
-
 	// 룸의 변수 저장
 	WriteFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
 	WriteFile(hFile, &m_fVtxCntZ, sizeof(_float), &dwByte, nullptr);
@@ -312,62 +313,27 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 	WriteFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
 	m_pTransform->WriteTransformFile(hFile, dwByte);
 
-	
-	// 객체 컨테이너 저장
-	WriteFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
-	for (_int i = 0; i < iObjSize; ++i)
-	{
-		if (!dynamic_cast<CMonster*>(m_vecGameObj[i]))
-			continue;
-		_tchar a[32];
-		lstrcpy(a, CBub::GetTag());
+	// m_vecGameObj에 저장된 객체 저장
+	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), [&](auto gameObj) {
+		ISerializable* pTmp = dynamic_cast<ISerializable*>(gameObj);
+		if (pTmp) {
+			pTmp->Serialization(hFile, dwByte);
+		}
+	});
 
-		// 어떤 객체인지 번호로 저장.
-		_int iObjNumber = 0;
-		if (dynamic_cast<CBaller*>(m_vecGameObj[i]))
-		{
-			iObjNumber = 1;
-		}
-		else if (dynamic_cast<CBub*>(m_vecGameObj[i]))
-		{
-			iObjNumber = 2;
-		}
-		else if (dynamic_cast<CGuppi*>(m_vecGameObj[i]))
-		{
-			iObjNumber = 3;
-		}
-		else if (dynamic_cast<CTurret*>(m_vecGameObj[i]))
-		{
-			iObjNumber = 4;
-		}
-		else if (dynamic_cast<CWalker*>(m_vecGameObj[i]))
-		{
-			iObjNumber = 5;
-		}
-
-		// 세이브 시 어떤 객체인지 정보를 알 수 없을 때 에러메시지 발생.
-		if (0 == iObjNumber && !m_vecGameObj.empty())
-		{
-			FAILED_CHECK_RETURN(E_FAIL, false);
-		}
-		else
-		{
-			WriteFile(hFile, &iObjNumber, sizeof(_int), &dwByte, nullptr);
-			m_vecGameObj[i]->m_pTransform->WriteTransformFile(hFile, dwByte);
-		}
-	}
-
+	// 다음 방으로 넘어가기 위한 토큰 저장
+	_tchar token[32];
+	lstrcpy(token, L"Stop");
+	WriteFile(hFile, token, sizeof(_tchar) * 32, &dwByte, nullptr);
+	cout << "save.." << endl;
 	return true;
 }
 
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
 	// 오브젝트 해제
-	for_each(m_vecGameObj.begin(), m_vecGameObj.end(), Safe_Release<CGameObject*>);
-	m_vecGameObj.clear();
-
-	_int iTileSize;
-	_int iObjSize;
+	//for_each(m_vecGameObj.begin(), m_vecGameObj.end(), //Safe_Release<CGameObject*>);
+//	m_vecGameObj.clear();
 
 	// 룸 변수 로드
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
@@ -380,17 +346,24 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	Set_DoorType((DOOR_TYPE)iDoorType);
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
-	// 객체 로드
-	ReadFile(hFile, &iObjSize, sizeof(_int), &dwByte, nullptr);
-	for (_int i = 0; i < iObjSize; ++i)
+	// 객체로드
+	while (true)
 	{
-		const _tchar* pObjTag;
-		ReadFile(hFile, &m_fVtxItv, sizeof(_float), &dwByte, nullptr);
-		CGameObject* pObj = LOADER->Load(hFile, dwByte, pObjTag);
-		if (pObj)
-			PushBack_GameObj(pObj);
+		_tchar tag[32];
+		ReadFile(hFile, tag, sizeof(_tchar) * 32, &dwByte, nullptr);
+
+		if (0 == lstrcmp(tag, L"Stop"))
+			break;
+		CGameObject* tmp2 = TILE_FACTORY->CreateObject(tag);
+		ISerializable* tmp = dynamic_cast<ISerializable*>(tmp2);
+		
+		if (tmp)
+			PushBack_GameObj(tmp2);
+
+		tmp->Deserialization(hFile, dwByte);
 	}
 
+	cout << "load.." << endl;
 	return true;
 }
 

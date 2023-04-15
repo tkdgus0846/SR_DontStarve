@@ -4,14 +4,14 @@
 CSnowTile::CSnowTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
 {
-	Set_ObjTag(L"SnowTile");
+	Set_ObjTag(Tag());
 }
 
 CSnowTile::~CSnowTile()
 {
 }
 
-CSnowTile * CSnowTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CSnowTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CSnowTile* pInstance = new CSnowTile(pGraphicDev);
 
@@ -23,7 +23,7 @@ CSnowTile * CSnowTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CTile * CSnowTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CSnowTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	return Create(pGraphicDev);
 }

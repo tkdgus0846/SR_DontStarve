@@ -5,14 +5,14 @@
 CElectricTile::CElectricTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
 {
-	Set_ObjTag(L"ElectricTile");
+	Set_ObjTag(Tag());
 }
 
 CElectricTile::~CElectricTile()
 {
 }
 
-CElectricTile * CElectricTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CElectricTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CElectricTile* pInstance = new CElectricTile(pGraphicDev);
 
@@ -24,10 +24,6 @@ CElectricTile * CElectricTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CTile * CElectricTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	return Create(pGraphicDev);
-}
 
 HRESULT CElectricTile::Add_Component()
 {

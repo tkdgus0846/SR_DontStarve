@@ -116,14 +116,22 @@ void CTile::Free(void)
 	__super::Free();
 }
 
-void CTile::Save(HANDLE hFile, DWORD & dwByte)
+void CTile::Serialization(HANDLE hFile, DWORD & dwByte)
 {
-	WriteFile(hFile, m_ObjInfo.pObjTag, lstrlen(m_ObjInfo.pObjTag), &dwByte, nullptr);
+	_tchar tmp[32];
+
+	lstrcpy(tmp, m_ObjInfo.pObjTag);
+	WriteFile(hFile, tmp, sizeof(_tchar) * 32, &dwByte, nullptr);
 	m_pTransform->WriteTransformFile(hFile, dwByte);
 }
 
-void CTile::Load(HANDLE hFile, DWORD & dwByte)
+void CTile::Deserialization(HANDLE hFile, DWORD & dwByte)
 {
+	_tchar tmp[32];
+
+	//ReadFile(hFile, tmp, sizeof(_tchar) * 32, &dwByte, nullptr);
+	//lstrcpy(tmp, m_ObjInfo.pObjTag);
+	m_pTransform->ReadTransformFile(hFile, dwByte);
 }
 
 //HRESULT CTile::Remove_TextureCom()

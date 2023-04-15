@@ -239,6 +239,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="EditCamera.h" />
     <ClInclude Include="ElectricTile.h" />
+    <ClInclude Include="Factory.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
@@ -265,7 +266,7 @@
     <ClInclude Include="ImMenuBar.h" />
     <ClInclude Include="ImTest.h" />
     <ClInclude Include="ImWindow.h" />
-    <ClInclude Include="ISaveTarget.h" />
+    <ClInclude Include="Serializable.h" />
     <ClInclude Include="IsNotRangeInPlayer.h" />
     <ClInclude Include="IsRangeInPlayer.h" />
     <ClInclude Include="Item.h" />
@@ -319,6 +320,7 @@
     <ClInclude Include="SwordWeapon.h" />
     <ClInclude Include="Tennel.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="loader.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TimeInLimit.h" />
     <ClInclude Include="Turret.h" />
@@ -359,6 +361,7 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="EditCamera.cpp" />
     <ClCompile Include="ElectricTile.cpp" />
+    <ClCompile Include="Factory.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -445,6 +448,7 @@
     <ClCompile Include="SwordWeapon.cpp" />
     <ClCompile Include="Tennel.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="loader.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TimeInLimit.cpp" />
     <ClCompile Include="Turret.cpp" />

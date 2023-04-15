@@ -4,14 +4,14 @@
 CGrassTile::CGrassTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
 {
-	Set_ObjTag(L"GrassTile");
+	Set_ObjTag(Tag());
 }
 
 CGrassTile::~CGrassTile()
 {
 }
 
-CGrassTile * CGrassTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CGrassTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CGrassTile* pInstance = new CGrassTile(pGraphicDev);
 
@@ -23,10 +23,6 @@ CGrassTile * CGrassTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CTile * CGrassTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	return Create(pGraphicDev);
-}
 
 HRESULT CGrassTile::Add_Component()
 {

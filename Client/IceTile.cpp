@@ -4,14 +4,14 @@
 CIceTile::CIceTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
 {
-	Set_ObjTag(L"IceTile");
+	Set_ObjTag(Tag());
 }
 
 CIceTile::~CIceTile()
 {
 }
 
-CIceTile * CIceTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CIceTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CIceTile* pInstance = new CIceTile(pGraphicDev);
 
@@ -23,7 +23,7 @@ CIceTile * CIceTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CTile * CIceTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CIceTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	return Create(pGraphicDev);
 }

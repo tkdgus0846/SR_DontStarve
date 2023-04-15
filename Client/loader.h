@@ -1,7 +1,9 @@
 #pragma once
 
-#include "ISaveTarget.h"
+
 #include "GameObject.h"
+#include "Serializable.h"
+
 class CLoader
 {
 	DECLARE_SINGLETON(CLoader)
@@ -16,12 +18,12 @@ public:
 	
 private:
 	void Release();
-	HRESULT	Insert_SaveTarget(const _tchar * pObjTag, ISaveTarget* pTile);
-	ISaveTarget * Find_SaveTarget(const _tchar * pObjTag);
+	HRESULT	Insert_SaveTarget(const _tchar * pObjTag, ISerializable* pTile);
+	ISerializable * Find_SaveTarget(const _tchar * pObjTag);
 
 private:
 	LPDIRECT3DDEVICE9 m_pGraphicDev;
-	map<const _tchar*, ISaveTarget*> m_mapSaveTarget;
+	map<const _tchar*, ISerializable*> m_mapSaveTarget;
 };
 
 #define LOADER CLoader::GetInstance()

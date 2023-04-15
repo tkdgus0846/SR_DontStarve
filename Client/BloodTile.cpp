@@ -11,7 +11,7 @@ CBloodTile::~CBloodTile()
 {
 }
 
-CBloodTile * CBloodTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CBloodTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CBloodTile* pInstance = new CBloodTile(pGraphicDev);
 
@@ -21,11 +21,6 @@ CBloodTile * CBloodTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		pInstance = nullptr;
 	}
 	return pInstance;
-}
-
-CTile * CBloodTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	return Create(pGraphicDev);
 }
 
 HRESULT CBloodTile::Add_Component()

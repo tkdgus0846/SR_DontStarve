@@ -104,6 +104,19 @@ CBub * CBub::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 	return pInstance;
 }
 
+CGameObject * CBub::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CBub* pInstance = new CBub(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
 void CBub::Free(void)
 {
 	__super::Free();

@@ -60,7 +60,8 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 		{
 			Start_WorldTimer();
 			CScene*	pScene = CStage::Create(m_pGraphicDev);
-			CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
+			TILE_FACTORY->Ready_TileFactory(m_pGraphicDev);
+			//CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 			
 			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev);
