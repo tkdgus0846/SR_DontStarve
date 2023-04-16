@@ -131,8 +131,7 @@ void CMonster::Get_Damaged(_int Damage)
 {
 	if (GetDead()) return;
 
-	m_iHp -= Damage;
-	PLAY_SOUND(L"sfxHurt.wav", SOUND_ENEMY, 1.f);
+	m_iHp -= Damage;	
 	if (m_iHp <= 0)
 	{
 		STOP_PLAY_SOUND(L"sfxKill.wav", SOUND_ENEMY, 1.f);

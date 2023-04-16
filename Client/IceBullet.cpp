@@ -3,6 +3,7 @@
 #include "Monster.h"
 #include "EffectManager.h"
 #include "Wall.h"
+#include "..\Engine\SoundMgr.h"
 
 CIceBullet::CIceBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
@@ -76,6 +77,7 @@ void CIceBullet::OnCollisionStay(const Collision * collision)
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 1.3f,1.3f,1.0f }, 0.1f);
 		Add_GameObject(effect);
 		monster->Get_Damaged(m_Damage);
+		STOP_PLAY_SOUND(L"sfxShatter.wav", SOUND_EFFECT, 0.6f);
 		SetDead();
 	}
 
@@ -85,6 +87,7 @@ void CIceBullet::OnCollisionStay(const Collision * collision)
 		_vec3 pos = collision->intersectBox._max;
 		SetDead();
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 1.3f,1.3f,1.0f }, 0.1f);
+		STOP_PLAY_SOUND(L"sfxShatter.wav", SOUND_ENVIRONMENT, 0.6f);
 		Add_GameObject(effect);
 		return;
 	}

@@ -4,6 +4,7 @@
 #include "GameObject.h"
 
 #include "Export_Function.h"
+#include "SoundMgr.h"
 
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -106,6 +107,7 @@ void CScene::Play_SlowTime(const _float & fTimeDelta)
 	/*m_SlowTime -= 0.0007f * fTimeDelta;
 	if (m_SlowTime < 0.f) m_SlowTime = 0.f;*/
 	m_SlowTime = 0.0001f;
+	PLAY_SOUND(L"sfxBootDown.wav", SOUND_ENVIRONMENT, 1.f);
 }
 
 void CScene::Reset_SlowTime(const _float & fTimeDelta)

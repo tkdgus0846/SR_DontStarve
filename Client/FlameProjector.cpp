@@ -53,8 +53,8 @@ CBullet* CFlameProjector::Shot_Setting()
 
 	CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"FireBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, { 1.4f,1.4f,1.f }, false);
 
-
-	PLAY_SOUND(L"sfxFireball.wav", SOUND_EFFECT, 1.f);
+		
+	PLAY_SOUND(L"flame.wav", SOUND_EJECT, 1.f);
 	return bullet;
 }
 

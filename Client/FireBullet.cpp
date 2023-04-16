@@ -4,6 +4,7 @@
 #include "EffectManager.h"
 #include "Player.h"
 #include "..\Engine\ParticleMgr.h"
+#include "..\Engine\SoundMgr.h"
 
 CFireBullet::CFireBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
@@ -73,6 +74,9 @@ void CFireBullet::OnCollisionEnter(const Collision * collsion)
 		_vec3 pos = collsion->intersectBox._max;
 		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"UpSmoke_Particle", 1, pos, {0.f,1.f,0.f});
 		/*CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"JumpSmoke_Particle", 100, pos, {0.f,0.f,0.f});*/
+
+		STOP_PLAY_SOUND(L"sfxSplode.wav", SOUND_EFFECT, 1.0f);
+		
 		Add_GameObject(particle);
 		monster->Get_Damaged(m_Damage);
 	}

@@ -9,6 +9,7 @@
 #include "ParticleMgr.h"
 #include "..\Engine\ColorParticle.h"
 #include "Wall.h"
+#include "..\Engine\SoundMgr.h"
 
 CNormalBullet::CNormalBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
@@ -98,6 +99,8 @@ void CNormalBullet::OnCollisionStay(const Collision* collision)
 		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
 		//CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"PyramidDestory_Particle", 20, pos);
 		//CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
+		
+		STOP_PLAY_SOUND(L"sfxHurt.wav", SOUND_EFFECT, 1.f);
 		Add_GameObject(particle);
 		return;
 	}
@@ -108,6 +111,7 @@ void CNormalBullet::OnCollisionStay(const Collision* collision)
 		_vec3 pos = collision->intersectBox._max;
 		SetDead();
 		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
+		STOP_PLAY_SOUND(L"sfxHurt.wav", SOUND_ENVIRONMENT, 1.f);
 		Add_GameObject(particle);
 		return;
 	}

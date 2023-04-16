@@ -8,6 +8,7 @@
 #include "ParticleMgr.h"
 #include "..\Engine\ColorParticle.h"
 #include "Wall.h"
+#include "..\Engine\SoundMgr.h"
 
 CSwordBullet::CSwordBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
@@ -85,7 +86,10 @@ void CSwordBullet::OnCollisionStay(const Collision* collision)
 		monster->Get_Damaged(m_Damage);
 		SetDead();
 
+		STOP_PLAY_SOUND(L"sfxShatter.wav", SOUND_EFFECT, 0.6f);
+
 		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
+
 		Add_GameObject(particle);
 		return;
 	}
@@ -98,6 +102,7 @@ void CSwordBullet::OnCollisionStay(const Collision* collision)
 		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
 		Add_GameObject(particle);
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 1.3f,1.3f,1.0f }, 0.1f);
+		STOP_PLAY_SOUND(L"sfxShatter.wav", SOUND_EFFECT, 0.6f);
 		Add_GameObject(effect);
 		return;
 	}
