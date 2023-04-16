@@ -127,7 +127,7 @@ void CTile::Serialization(HANDLE hFile, DWORD & dwByte)
 
 void CTile::Deserialization(HANDLE hFile, DWORD & dwByte)
 {
-	_tchar tmp[32];
+	_tchar tmp[32]{};
 
 	//ReadFile(hFile, tmp, sizeof(_tchar) * 32, &dwByte, nullptr);
 	//lstrcpy(tmp, m_ObjInfo.pObjTag);

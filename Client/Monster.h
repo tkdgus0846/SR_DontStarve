@@ -49,7 +49,7 @@ protected:
 	CSequence*	Make_RushAI();
 	CSequence*	Make_BossPattern1(const _float& fCoolTime = 6.f);
 	CSequence*	Make_BossPattern2(const _float& fCoolTime = 18.f);
-	// 지렁이 전용 패턴임..
+	CSequence*	Make_BossPattern3(const _float& fCoolTime = 12.f);
 	
 	
 	HRESULT		Set_PatrolAndFollow_AI();
@@ -59,6 +59,7 @@ protected:
 	HRESULT		Set_TurretAI();
 	HRESULT		Set_Boss1_AI();
 	HRESULT		Set_Boss2_AI();
+	HRESULT		Set_Boss3_AI();
 
 private:
 	CRoot*		m_pRoot;	// 모든 몬스터는 하나의 ai를 가지는걸로 가정.

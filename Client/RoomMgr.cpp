@@ -9,6 +9,7 @@
 #include "WalkerBoss.h"
 #include "WormHead.h"
 #include "WormBody.h"
+#include "WormTail.h"
 #include "Bub.h"
 #include "Rub.h"
 #include "Cryder.h"
@@ -72,6 +73,7 @@ void CRoomMgr::Create_Default_Room()
 	m_arrRoom[5]->Set_DoorType(DOOR_ES);
 	m_arrRoom[6]->Set_DoorType(DOOR_SW);
 
+
 	CWormHead* pHead = CWormHead::Create(m_pGraphicDev, _vec3(17.f, 2.f, 17.f));
 	m_arrRoom[0]->PushBack_GameObj(pHead);
 
@@ -89,6 +91,7 @@ void CRoomMgr::Create_Default_Room()
 //	m_arrRoom[6]->PushBack_GameObj(CNubBoss::Create(m_pGraphicDev, _vec3(100.f, 0.6f, 100.f)));
 ////====== 임시 코드임 =======
 	
+
 }
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)

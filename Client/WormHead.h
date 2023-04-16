@@ -6,6 +6,7 @@ class CAnimation;
 END
 
 class CWormBody;
+class CWormTail;
 class CWormHead : public CMonster
 {
 private:
@@ -27,8 +28,8 @@ private:
 	Engine::CAnimation*	m_pAnimation;
 
 	vector<CWormBody*>	m_vecBody;
-	_vec3		m_vDest;
-	_bool		m_bMove;
+	CWormTail*			m_pTail;
+	_bool				m_bMove;
 
 public:
 	static CWormHead*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);

@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Wall.h"
 
+#include "WormHead.h"
+#include "WormBody.h"
+#include "WormTail.h"
 #include "Export_Function.h"
 
 CWall::CWall(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -22,6 +25,11 @@ void CWall::OnCollisionEnter(const Collision* collision)
 
 void CWall::OnCollisionStay(const Collision* collision)
 {
+	if (dynamic_cast<CWormHead*>(collision->OtherGameObject) ||
+		dynamic_cast<CWormBody*>(collision->OtherGameObject) ||
+		dynamic_cast<CWormTail*>(collision->OtherGameObject))
+		return;
+
 	if (collision->MyCollider == Get_Component(L"Collider", ID_ALL) && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
 	{
 		_vec3 amountVec = collision->amountVec;

@@ -78,7 +78,7 @@ static void GetRandomVector(
 /* 특정 반지름을 가진 원의 벡터를 랜덤 반환 */
 static void GetRandomVectorIncircle(D3DXVECTOR3* out, _float radius)
 {
-	_float randNum = (rand() % 10000) * 0.0001;
+	_float randNum = (rand() % 10000) * 0.0001f;
 	*out = D3DXVECTOR3(randNum, 1 - randNum, 0.f);
 	D3DXVec3Normalize(out, out);
 	*out = *out * radius;

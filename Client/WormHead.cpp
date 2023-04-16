@@ -1,10 +1,11 @@
 #include "WormHead.h"
 
 #include "WormBody.h"
+#include "WormTail.h"
 #include "Export_Function.h"
 
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CMonster(pGraphicDev)
+	:CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
 {
 }
 
@@ -14,7 +15,7 @@ CWormHead::~CWormHead()
 
 HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 {
-	m_fSpeed = 7.f;
+	m_fSpeed = 9.f;
 	m_iAttack = 1;
 	m_iHp = 100;
 	m_iMaxHp = 100;
@@ -33,6 +34,11 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 
 	m_pTransform->Set_BillMode(true);
 
+	m_vecBody.reserve(vecBody.size());
+	for (_int i = 0; i < vecBody.size(); ++i)
+		m_vecBody.push_back(vecBody[i]);
+	m_pTail = pTail;
+
 	_int iSize = m_vecBody.size();
 
 	m_vecBody[0]->Chain_Head(this);
@@ -43,12 +49,13 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 		m_vecBody[i]->Chain_Back(m_vecBody[i + 1]);
 		m_vecBody[i]->Chain_Front(m_vecBody[i - 1]);
 		m_vecBody[i]->Set_Dest(m_vecBody[i - 1]->m_pTransform->m_vInfo[INFO_POS]);
-		m_vecBody[i]->m_pTransform->Set_Target(m_vecBody[i - 1]->m_pTransform->m_vInfo[INFO_POS]);
 	}
 	m_vecBody[iSize - 1]->Chain_Front(m_vecBody[iSize - 2]);
 	m_vecBody[iSize - 1]->Set_Dest(m_vecBody[iSize - 2]->m_pTransform->m_vInfo[INFO_POS]);
-	m_vecBody[iSize - 1]->m_pTransform->Set_Target(m_vecBody[iSize - 2]->m_pTransform->m_vInfo[INFO_POS]);
+	m_vecBody[iSize - 1]->Chain_Tail(m_pTail);
 
+	m_pTail->Chain_Front(m_vecBody[iSize - 1]);
+	m_pTail->Set_Dest(m_vecBody[iSize - 1]->m_pTransform->m_vInfo[INFO_POS]);
 	HRESULT result = __super::Ready_GameObject();
 
 	return result;
@@ -60,6 +67,8 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 
 	if (!Get_Player())
 		return OBJ_NOEVENT;
+    
+  _vec3 vDir{};
 
 	_vec3 vDir = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
 	vDir.Normalize();
@@ -70,11 +79,28 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 		m_bMove = true;
 	}
 
-	m_pTransform->Set_Target(Get_Player()->m_pTransform->m_vInfo[INFO_POS]);
-	if (bStart)
-		m_pTransform->m_vInfo[INFO_POS] += vDir * 5.f * fTimeDelta;
+	vDir = m_pTransform->m_vInfo[INFO_LOOK];
 
-	__super::Update_GameObject(fTimeDelta);
+	vDir.Normalize();
+	_vec3 vDirXZ = { vDir.x, 0.f, vDir.z };
+	vDirXZ.Normalize();
+	_float fAngle = vDir.Degree(_vec3(vDirXZ.x, 0.f, vDirXZ.z));
+
+	if (isnan(fAngle))
+		fAngle = 0.f;
+
+	_vec3 vAxis = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
+
+	m_pTransform->Rot_Bill(Get_Player()->m_pTransform->m_vInfo[INFO_POS], fAngle);
+
+	if (bStart)
+	{
+		if (Key_Pressing(DIK_SPACE))
+			m_pTransform->Move_Fly(-5.f, fTimeDelta);
+		else
+			m_pTransform->Move_Walk(5.f, fTimeDelta);
+	}
+
 	for (auto iter = m_vecBody.begin(); iter != m_vecBody.end(); )
 	{
 		_int iResult = (*iter)->Update_GameObject(fTimeDelta);
@@ -83,6 +109,9 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 		else
 			++iter;
 	}
+	if (m_pTail)
+		m_pTail->Update_GameObject(fTimeDelta);
+	__super::Update_GameObject(fTimeDelta);
 
 	if (GetDead()) return OBJ_DEAD;
 
@@ -135,18 +164,20 @@ void CWormHead::LateUpdate_GameObject(void)
 	else
 		m_pAnimation->SelectState(ANIM_FACE);
 
-	//cout << fAngleRight << ", " << fAngleUp << ", " << fAngleLook << endl;
-
-	__super::LateUpdate_GameObject();
 	for (auto iter : m_vecBody)
 		iter->LateUpdate_GameObject();
+	if (m_pTail)
+		m_pTail->LateUpdate_GameObject();
+	__super::LateUpdate_GameObject();
 }
 
 void CWormHead::Render_GameObject(void)
 {
-	__super::Render_GameObject();
 	for (auto iter : m_vecBody)
 		iter->LateUpdate_GameObject();
+	if (m_pTail)
+		m_pTail->Render_GameObject();
+	__super::Render_GameObject();
 }
 
 HRESULT CWormHead::Add_Component()
@@ -184,7 +215,7 @@ HRESULT CWormHead::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
-	pCollider->Set_BoundingBox({ 1.f, 1.f, 1.f });
+	pCollider->Set_BoundingBox({ 1.6f, 1.6f, 1.6f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
@@ -192,7 +223,8 @@ HRESULT CWormHead::Add_Component()
 	pCollider->Set_BoundingBox({ 70.f, 30.f, 70.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI());
-	FAILED_CHECK_RETURN(Set_PAF_DBJumpAI());
+	//FAILED_CHECK_RETURN(Set_PAF_JumpAI());
+	FAILED_CHECK_RETURN(Set_Boss3_AI());
 	FAILED_CHECK_RETURN(Init_AI_Behaviours());
 }
 

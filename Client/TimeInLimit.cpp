@@ -36,7 +36,6 @@ _int CTimeInLimit::Update_Component(const _float & fTimeDelta)
 
 void CTimeInLimit::LateUpdate_Component(void)
 {
-	__super::LateUpdate_Component();
 }
 
 void CTimeInLimit::Render_Component(void)

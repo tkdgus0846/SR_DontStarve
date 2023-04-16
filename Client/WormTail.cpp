@@ -1,28 +1,26 @@
-#include "WormBody.h"
+#include "WormTail.h"
 
 #include "WormHead.h"
-#include "WormTail.h"
+#include "WormBody.h"
 #include "Export_Function.h"
 
-CWormBody::CWormBody(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CMonster(pGraphicDev), m_pFrontBody(nullptr)
-	, m_pBackBody(nullptr), m_bMove(false), m_pHead(nullptr)
-	, m_pTail(nullptr), m_fDir(0.f)
+CWormTail::CWormTail(LPDIRECT3DDEVICE9 pGraphicDev)
+	:CMonster(pGraphicDev), m_pFrontBody(nullptr),
+	m_bMove(false), m_pHead(nullptr)
 {
 	ZeroMemory(m_vDest, sizeof(_vec3));
 }
 
-CWormBody::~CWormBody()
+CWormTail::~CWormTail()
 {
 }
 
-HRESULT CWormBody::Ready_GameObject(const _vec3 & vPos)
+HRESULT CWormTail::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 9.f;
 	m_iAttack = 1;
 	m_iHp = 20;
 	m_iMaxHp = 20;
-	m_fDir = 1.f;
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -35,28 +33,12 @@ HRESULT CWormBody::Ready_GameObject(const _vec3 & vPos)
 	return result;
 }
 
-_int CWormBody::Update_GameObject(const _float & fTimeDelta)
+_int CWormTail::Update_GameObject(const _float & fTimeDelta)
 {
 	if (GetDead())
 	{
 		if (m_pFrontBody)
-		{
-			m_pFrontBody->Chain_Back(m_pBackBody);
-
-			if (m_pBackBody)
-				m_pBackBody->Chain_Front(m_pFrontBody);
-
-			if (m_pTail)
-				m_pTail->Chain_Front(m_pFrontBody);
-		}
-		else
-		{
-			if (m_pBackBody)
-				m_pBackBody->Chain_Head(m_pHead);
-
-			if (m_pTail)
-				m_pTail->Chain_Head(m_pHead);
-		}
+			m_pFrontBody->Chain_Back(nullptr);
 
 		return OBJ_DEAD;
 	}
@@ -71,8 +53,8 @@ _int CWormBody::Update_GameObject(const _float & fTimeDelta)
 	if (m_pFrontBody)
 	{
 		m_fSpeed = m_pFrontBody->Get_Speed();
-		if (m_pFrontBody->m_bMove != m_bMove)
-			m_bMove = m_pFrontBody->m_bMove;
+		if (m_pFrontBody->Get_Move() != m_bMove)
+			m_bMove = m_pFrontBody->Get_Move();
 	}
 
 	if (m_bMove)
@@ -89,14 +71,11 @@ _int CWormBody::Update_GameObject(const _float & fTimeDelta)
 	return 0;
 }
 
-void CWormBody::LateUpdate_GameObject(void)
+void CWormTail::LateUpdate_GameObject(void)
 {
 	if (GetDead())
 		return;
-	if (!Get_Player())
-		return;
-    
-  m_fDir = 1.f;
+
 	m_pTransform->Set_Scale({ 1.f, 1.f, 1.f });
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
@@ -113,10 +92,7 @@ void CWormBody::LateUpdate_GameObject(void)
 	if (fAngleRight < 45.f)
 		m_pAnimation->SelectState(ANIM_SIDE);
 	else if (fAngleUp < 45.f)
-	{
 		m_pAnimation->SelectState(ANIM_TOP);
-		m_fDir = -1.f;
-	}
 	else if (fAngleLook < 45.f)
 		m_pAnimation->SelectState(ANIM_FACE);
 
@@ -124,7 +100,6 @@ void CWormBody::LateUpdate_GameObject(void)
 	{
 		m_pTransform->Set_Scale({ -1.f, 1.f, 1.f });
 		m_pAnimation->SelectState(ANIM_SIDE);
-		m_fDir = -1.f;
 	}
 
 	else if (fAngleLook > 135.f)
@@ -141,27 +116,27 @@ void CWormBody::LateUpdate_GameObject(void)
 	__super::LateUpdate_GameObject();
 }
 
-void CWormBody::Render_GameObject(void)
+void CWormTail::Render_GameObject(void)
 {
 	if (GetDead())
 		return;
 	__super::Render_GameObject();
 }
 
-HRESULT CWormBody::Add_Component()
+HRESULT CWormTail::Add_Component()
 {
 	m_pAnimation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	NULL_CHECK_RETURN(m_pAnimation, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"Animation", m_pAnimation);
 
-	CTexture* pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_WormBoss_Body_Side_Texture", this));
+	CTexture* pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_WormBoss_Tail_Side_Texture", this));
 	NULL_CHECK_RETURN(pTexture, E_FAIL);
-	m_uMapComponent[ID_STATIC].emplace(L"Monster_WormBoss_Body_Side_Texture", pTexture);
+	m_uMapComponent[ID_STATIC].emplace(L"Monster_WormBoss_Tail_Side_Texture", pTexture);
 	m_pAnimation->BindAnimation(ANIM_SIDE, pTexture, 0.05f);
 
-	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_WormBoss_Body_Top_Texture", this));
+	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_WormBoss_Tail_Top_Texture", this));
 	NULL_CHECK_RETURN(pTexture, E_FAIL);
-	m_uMapComponent[ID_STATIC].emplace(L"Monster_WormBoss_Body_Top_Texture", pTexture);
+	m_uMapComponent[ID_STATIC].emplace(L"Monster_WormBoss_Tail_Top_Texture", pTexture);
 	m_pAnimation->BindAnimation(ANIM_TOP, pTexture, 0.05f);
 
 	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_WormBoss_Drill_Back_Texture", this));
@@ -169,7 +144,7 @@ HRESULT CWormBody::Add_Component()
 	m_uMapComponent[ID_STATIC].emplace(L"Monster_WormBoss_Body_Face_Texture", pTexture);
 	m_pAnimation->BindAnimation(ANIM_FACE, pTexture, 0.05f);
 
-	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_WormBoss_Drill_Back_Texture", this));
+	pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_WormBoss_Tail_Back_Texture", this));
 	NULL_CHECK_RETURN(pTexture, E_FAIL);
 	m_uMapComponent[ID_STATIC].emplace(L"Monster_WormBoss_Body_Back_Texture", pTexture);
 	m_pAnimation->BindAnimation(ANIM_BACK, pTexture, 0.05f);
@@ -191,7 +166,7 @@ HRESULT CWormBody::Add_Component()
 	pCollider->Set_BoundingBox({ 1.f, 1.f, 1.f });
 }
 
-void CWormBody::Move(const _float & fTimeDelta)
+void CWormTail::Move(const _float & fTimeDelta)
 {
 	_vec3 vPos = m_pTransform->m_vInfo[INFO_POS];
 	_vec3 vDir = m_vDest - vPos;
@@ -210,20 +185,20 @@ void CWormBody::Move(const _float & fTimeDelta)
 			m_vDest = m_pFrontBody->m_pTransform->m_vInfo[INFO_POS];
 	}
 	m_pTransform->Set_Target(m_vDest);
+
 	vDir = m_pTransform->m_vInfo[INFO_LOOK];
 
 	vDir.Normalize();
 	_vec3 vDirXZ = { vDir.x, 0.f, vDir.z };
 	vDirXZ.Normalize();
-	_float fAngle = -vDir.Degree(_vec3(vDirXZ.x, 0.f, vDirXZ.z));
+	_float fAngle = vDir.Degree(_vec3(vDirXZ.x, 0.f, vDirXZ.z));
 
 	if (isnan(fAngle))
 		fAngle = 0.f;
-	if(m_pHead)
-		cout << fAngle << endl;
+
 	_vec3 vAxis = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
-	
-	m_pTransform->Rot_Bill(Get_Player()->m_pTransform->m_vInfo[INFO_POS], fAngle * m_fDir);
+
+	m_pTransform->Rot_Bill(Get_Player()->m_pTransform->m_vInfo[INFO_POS], fAngle);
 
 	if (fLength < 1.8f)
 		m_pTransform->Move_Walk(0.1f, fTimeDelta);
@@ -231,9 +206,9 @@ void CWormBody::Move(const _float & fTimeDelta)
 		m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 }
 
-CWormBody * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
+CWormTail * CWormTail::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
-	CWormBody* pInstance = new CWormBody(pGraphicDev);
+	CWormTail* pInstance = new CWormTail(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
@@ -243,7 +218,7 @@ CWormBody * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 	return pInstance;
 }
 
-void CWormBody::Free(void)
+void CWormTail::Free(void)
 {
 	__super::Free();
 }
