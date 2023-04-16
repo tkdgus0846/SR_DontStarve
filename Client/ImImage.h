@@ -28,4 +28,3 @@ private:
 	CFactory* m_pFactory;
 	CGameObject* m_pObj;
 };
-

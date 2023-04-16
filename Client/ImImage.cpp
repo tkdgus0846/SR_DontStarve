@@ -37,7 +37,6 @@ void ImImage::Set_Tag(wstring wstr)
 
 void ImImage::Set_Tag(string str)
 {
-
 	m_sTag = str.c_str();
 	m_wTag = CFileSystem::strToWStr(str).c_str();
 	Safe_Release(m_pObj);
