@@ -44,6 +44,8 @@ protected:
 	CSequence*	Make_RushAI();
 	CSequence*	Make_BossPattern1(const _float& fCoolTime = 6.f);
 	CSequence*	Make_BossPattern2(const _float& fCoolTime = 18.f);
+	// 지렁이 전용 패턴임..
+	
 	
 	HRESULT		Set_PatrolAndFollow_AI();
 	HRESULT		Set_PAF_JumpAI();

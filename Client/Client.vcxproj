@@ -323,6 +323,10 @@
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponItem.h" />
     <ClInclude Include="WeaponType.h" />
+    <ClInclude Include="WormBody.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="WormHead.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attack.cpp" />
@@ -433,6 +437,10 @@
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WeaponItem.cpp" />
     <ClCompile Include="WeaponType.cpp" />
+    <ClCompile Include="WormBody.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="WormHead.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter" />

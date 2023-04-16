@@ -7,8 +7,9 @@
 
 
 CCamera::CCamera(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CComponent(pGraphicDev), m_bSwitch(false),
-	m_pName(nullptr), m_fShackForce(0.f), m_fShackTime(0.f)
+	: CComponent(pGraphicDev), m_bSwitch(false)
+	, m_pName(nullptr), m_fShakeForce(0.f), m_fShakeTime(0.f)
+	, m_eType(SHAKE_END)
 {
 	//ZeroMemory(m_szName, sizeof(_tchar) * 256);
 	ZeroMemory(&m_tViewParams, sizeof(VIEWPARAMS));
@@ -16,9 +17,9 @@ CCamera::CCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 }
 
 CCamera::CCamera(const CCamera & rhs)
-	:CComponent(rhs), m_bSwitch(false),
-	m_pName(rhs.m_pName), m_fShackForce(rhs.m_fShackForce),
-	m_fShackTime(rhs.m_fShackTime)
+	:CComponent(rhs), m_bSwitch(false)
+	, m_pName(rhs.m_pName), m_fShakeForce(rhs.m_fShakeForce)
+	, m_fShakeTime(rhs.m_fShakeTime), m_eType(rhs.m_eType)
 {
 	//ZeroMemory(m_szName, sizeof(_tchar) * 256);
 	m_tViewParams = rhs.m_tViewParams;
@@ -52,13 +53,11 @@ _int CCamera::Update_Component(const _float & fTimeDelta)
 	if (!m_bSwitch)
 		return 0;
 
-
 	m_tViewParams.vEye = m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
 	m_tViewParams.vAt = m_tViewParams.vEye + m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK];
 
-	if (m_bShack)
+	if (m_bShake)
 		Shake(fTimeDelta);
-	//cout << vLook.x << " " << vLook.y << " " << vLook.z << endl;
 
 	m_tViewParams.LookAtLH(&m_matView);
 	m_tProjParams.PerspectiveLH(&m_matProj);
@@ -69,7 +68,15 @@ _int CCamera::Update_Component(const _float & fTimeDelta)
 	return 0;
 }
 
-void CCamera::Shake(const _float & fTimeDelta, const _float& fForce, const _float& fTime)
+void CCamera::On_Shake(SHAKE_TYPE eType, const _float & fForce, const _float & fTime)
+{
+	m_eType = eType;
+	m_bShake = true;
+	m_fShakeForce = fForce;
+	m_fShakeTime = fTime;
+}
+
+void CCamera::Shake_X(const _float & fTimeDelta)
 {
 	static _float fX = 0.f, fY = 0.f;
 
@@ -77,17 +84,47 @@ void CCamera::Shake(const _float & fTimeDelta, const _float& fForce, const _floa
 
 	fY = sinf(fX * 10.f) * sinf(fX * 10.f) * powf(0.4f, fX);
 
-	m_tViewParams.vEye.y += fY * 1.5f;
-	m_tViewParams.vAt.y += fY * 1.5f;
+	m_tViewParams.vEye.x += fY * m_fShakeForce;
+	m_tViewParams.vAt.x += fY * m_fShakeForce;
 
-	//m_tViewParams.vEye.x += fY * 1.5f;
-	//m_tViewParams.vAt.x += fY * 1.5f;
-
-	if (fX > 5.f)
+	if (fX > m_fShakeTime)
 	{
 		fX = 0.f;
 		fY = 0.f;
-		m_bShack = false;
+		m_bShake = false;
+	}
+}
+
+void CCamera::Shake_Y(const _float & fTimeDelta)
+{
+	static _float fX = 0.f, fY = 0.f;
+
+	fX += fTimeDelta * 5.f;
+
+	fY = sinf(fX * 10.f) * sinf(fX * 10.f) * powf(0.4f, fX);
+
+	m_tViewParams.vEye.y += fY * m_fShakeForce;
+	m_tViewParams.vAt.y += fY * m_fShakeForce;
+
+	if (fX > m_fShakeTime)
+	{
+		fX = 0.f;
+		fY = 0.f;
+		m_bShake = false;
+	}
+}
+
+void CCamera::Shake(const _float & fTimeDelta)
+{
+	switch (m_eType)
+	{
+	case Engine::SHAKE_X:
+		Shake_X(fTimeDelta);
+		break;
+
+	case Engine::SHAKE_Y:
+		Shake_Y(fTimeDelta);
+		break;
 	}
 }
 

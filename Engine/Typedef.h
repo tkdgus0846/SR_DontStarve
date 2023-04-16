@@ -55,11 +55,17 @@ typedef	struct MyVec3 : public D3DXVECTOR3
 
 	// 벡터 사이의 라디안을 반환하는 메서드입니다.
 	// ex) float fRadians = vMyVec.Radians(vOtherVec);
-	float Radians(D3DXVECTOR3& other) const { return acos(this->Dot(other) / (this->Length() * D3DXVec3Length(&other))); }
+	float Radians(D3DXVECTOR3& other) const 
+	{ 
+		return acos(this->Dot(other) / (this->Length() * D3DXVec3Length(&other))); 
+	}
 
 	// 벡터 사이의 각도(Degree)를 반환하는 메서드입니다.
 	// ex) float Degree = vMyVec.Degree(vOtherVec);
-	float Degree(D3DXVECTOR3& other) const { return D3DXToDegree(Radians(other)); }
+	float Degree(D3DXVECTOR3& other) const 
+	{ 
+		return D3DXToDegree(Radians(other)); 
+	}
 
 	// 두 벡터 사이를 선형적으로 보간하는 메서드입니다.
 	// ex) 

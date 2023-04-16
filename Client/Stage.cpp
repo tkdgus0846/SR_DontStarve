@@ -124,7 +124,8 @@ HRESULT CStage::Ready_Scene(void)
 
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
-	if(0 == (*m_StaticLayerArr)[LAYER_MONSTER]->Get_ObjectSize())
+	if(0 == (*m_StaticLayerArr)[LAYER_MONSTER]->Get_ObjectSize() &&
+		0 == (*m_StaticLayerArr)[LAYER_BOSS]->Get_ObjectSize())
 		ROOM_MGR->Get_CurRoom()->Open_Doors();
 
 	return __super::Update_Scene(fTimeDelta);
@@ -150,7 +151,6 @@ void CStage::LateUpdate_Scene(void)
 
 void CStage::Render_Scene(void)
 {
-
 }
 
 CStage * CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)

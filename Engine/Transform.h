@@ -38,6 +38,8 @@ public:
 	}
 
 	void Set_Scale(const _vec3& scale) { m_vScale = scale; }
+	void Set_BillMode(_bool bSwitch) { m_bIsBill = bSwitch; }
+	_bool Get_BillMode() { return m_bIsBill; }
 
 	// 제대로 돌아가는지 확인 해봐야함.
 	void Set_Dir(const _vec3& dir);
@@ -88,6 +90,7 @@ public:
 
 private:
 	MOVETYPE	m_eMoveType;
+	_bool		m_bIsBill;
 
 public:
 	_vec3		m_vInfo[INFO_END];

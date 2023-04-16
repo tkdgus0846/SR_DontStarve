@@ -310,7 +310,7 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 			continue;
 		_tchar a[32];
 		lstrcpy(a, CBub::GetTag());
-		cout <<  m_vecGameObj[i]->Get_ObjTag() << endl;
+		//cout <<  m_vecGameObj[i]->Get_ObjTag() << endl;
 
 		// 어떤 객체인지 번호로 저장.
 		_int iObjNumber = 0;

@@ -19,7 +19,7 @@ HRESULT CBub::Ready_GameObject(const _vec3& vPos)
 
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
-	m_iHp = 1000;
+	m_iHp = 100;
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;

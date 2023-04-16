@@ -5,6 +5,7 @@ CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev)
 	, m_vScale(1.f, 1.f, 1.f)
 	, m_eMoveType(LANDOBJECT)
+	, m_bIsBill(false)
 {
 	ZeroMemory(&m_vInfo, sizeof(m_vInfo));
 	D3DXMatrixIdentity(&m_matWorld);
@@ -280,10 +281,7 @@ HRESULT CTransform::Ready_Transform(void)
 
 _int CTransform::Update_Component(const _float & fTimeDelta)
 {
-	D3DXMatrixIdentity(&m_matWorld);
-
-	/*for (size_t i = 0; i < INFO_POS; ++i)
-		memcpy(&m_vInfo[i], &m_matWorld.m[i][0], sizeof(_vec3));*/
+	m_matWorld.Identity();
 
 	// 크기 변환
 	_matrix matScale;
@@ -292,13 +290,27 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	// 회전 변환
 	_vec3 vRight, vUp, vLook;
 
+	vRight = { 1.f, 0.f, 0.f };
+	vUp =	 { 0.f, 1.f, 0.f };
+	vLook =  { 0.f, 0.f, 1.f };
+
 	_matrix	matRotation;
-	D3DXMatrixIdentity(&matRotation);
+	_matrix matView;
+	matRotation.Identity();
+	matView.Identity();
+	m_matBill.Identity();
 
-	D3DXVec3Normalize(&vRight, &m_vInfo[INFO_RIGHT]);
-	D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]);
-	D3DXVec3Normalize(&vLook, &m_vInfo[INFO_LOOK]);
-
+	if (m_bIsBill)
+	{
+		m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+		Set_Billboard(&matView);
+	}
+	else
+	{
+		D3DXVec3Normalize(&vRight, &m_vInfo[INFO_RIGHT]);
+		D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]);
+		D3DXVec3Normalize(&vLook, &m_vInfo[INFO_LOOK]);
+	}
 	matRotation._11 = vRight.x; matRotation._12 = vRight.y; matRotation._13 = vRight.z;
 	matRotation._21 = vUp.x;	matRotation._22 = vUp.y;	matRotation._23 = vUp.z;
 	matRotation._31 = vLook.x;	matRotation._32 = vLook.y;	matRotation._33 = vLook.z;
@@ -308,7 +320,7 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
 
 	// 초기화값은 항등행렬이고 방금 SetBillBoard를 부르면 뷰의 역행렬
-	m_matWorld = matScale * m_matBill * matRotation * matTrans;
+	m_matWorld = matScale * matRotation * m_matBill * matTrans;
 
 	return 0;
 }

@@ -38,9 +38,9 @@ void CCameraMgr::On_Camera(const _tchar * pCamTag)
 	m_pCurCamera = pCamera;
 }
 
-void CCameraMgr::Shake_Camera()
+void CCameraMgr::On_Shake(SHAKE_TYPE eType, const _float& fForce, const _float& fTime)
 {
-	m_pCurCamera->Shake_Camera();
+	m_pCurCamera->On_Shake(eType, fForce, fTime);
 }
 
 void CCameraMgr::Add_Camera(const _tchar* pCamTag, CCamera * pCamera)

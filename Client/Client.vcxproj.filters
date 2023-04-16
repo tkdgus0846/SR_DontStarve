@@ -95,6 +95,9 @@
     <Filter Include="GameObject\Monster\Boss">
       <UniqueIdentifier>{eca07ded-532e-4ec6-9bd6-0e495dffff75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Monster\Boss\WormBoss">
+      <UniqueIdentifier>{a89517cf-c38f-437a-adb3-1e49553a0bdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -407,6 +410,12 @@
     <ClInclude Include="SwordWeapon.h">
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="WormBody.h">
+      <Filter>GameObject\Monster\Boss\WormBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="WormHead.h">
+      <Filter>GameObject\Monster\Boss\WormBoss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -705,6 +714,12 @@
     </ClCompile>
     <ClCompile Include="SwordWeapon.cpp">
       <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="WormBody.cpp">
+      <Filter>GameObject\Monster\Boss\WormBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="WormHead.cpp">
+      <Filter>GameObject\Monster\Boss\WormBoss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
