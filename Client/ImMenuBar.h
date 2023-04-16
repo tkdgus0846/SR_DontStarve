@@ -2,6 +2,7 @@
 
 #include "ImWindow.h"
 
+
 class CImMenuBar :
 	public CImWindow
 {

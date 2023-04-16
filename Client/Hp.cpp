@@ -35,7 +35,10 @@ void CHp::LateUpdate_GameObject(void)
 
 void CHp::Render_GameObject(void)
 {
-	_int PlayerHp = dynamic_cast<CCreature*>(Engine::Get_Player())->Get_HP();
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
+	if (pPlayer == nullptr) return;
+
+	_int PlayerHp = pPlayer->Get_HP();
 
 	for (size_t i = 0; i < m_iMaxHp; i++)
 	{

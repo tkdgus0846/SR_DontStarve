@@ -25,6 +25,8 @@ public:
 	void			Set_CameraName(const _tchar* pName) { m_pName = pName; }
 	void			Set_ProjParams(PROJPARAMS& tProjParam) { m_tProjParams = tProjParam; }
 
+	void			Set_FOV(_float fFov) { m_tProjParams.fFov = fFov; }
+
 private:
 	void			On_Camera() { m_bSwitch = true; }
 	void			Off_Camera() { m_bSwitch = false; }

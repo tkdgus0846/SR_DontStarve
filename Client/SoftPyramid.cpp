@@ -96,9 +96,9 @@ void CSoftPyramid::SetDead(_bool bDead)
 		, FLAMESHOT));
 
 	pSpawnPos.y = 0.1f;
-	CTile* pTile = CTile::Create(m_pGraphicDev, pSpawnPos, L"FloorCrate_Texture");
-	ROOM_MGR->Get_CurRoom()->PushBack_Tile(pTile);
-	pTile->m_pTransform->m_vScale *= 0.5f;
+	/*CTile* pTile = CTile::Create(m_pGraphicDev, pSpawnPos, L"FloorCrate_Texture");*/
+	//ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pTile);
+	//pTile->m_pTransform->m_vScale *= 0.5f;
 }
 
 void CSoftPyramid::Free(void)

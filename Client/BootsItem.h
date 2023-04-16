@@ -30,7 +30,7 @@ public:
 	virtual void OnCollisionEnter(const class Collision* collsion) final;
 	virtual void OnCollisionStay(const class Collision* collision) final;
 
-	void		WeaponRotationZ();
+	void		WeaponRotationZ(const _float & fTimeDelta);
 
 private:
 	virtual void Free(void) override;

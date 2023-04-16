@@ -3,6 +3,7 @@
 
 #include "BulletMgr.h"
 #include "SwordBullet.h"
+#include "..\Engine\SoundMgr.h"
 
 CSwordWeapon::CSwordWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
@@ -54,6 +55,8 @@ void CSwordWeapon::Gather_Sword(const _float& fTimeDelta)
 			m_SwordPreparedArr[0] = true;
 		else if (m_SwordPreparedArr[4] == false)
 			m_SwordPreparedArr[4] = true;
+
+		STOP_PLAY_SOUND(L"sfxFrozen.wav", SOUND_EJECT, 1.f);
 
 		SpendBullet();
 		m_GatheredSword += 1.f;

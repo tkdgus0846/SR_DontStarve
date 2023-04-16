@@ -101,8 +101,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(SolutionDir)Engine\;$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Output\;$(DXSDK_DIR)Lib\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)External\;$(SolutionDir)Engine\;$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)External\;$(SolutionDir)Output\;$(DXSDK_DIR)Lib\x86\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -222,6 +222,8 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BackJump.h" />
     <ClInclude Include="Baller.h" />
+    <ClInclude Include="BeltTile.h" />
+    <ClInclude Include="BloodTile.h" />
     <ClInclude Include="BossHp.h" />
     <ClInclude Include="Bub.h" />
     <ClInclude Include="Bullet.h" />
@@ -236,6 +238,9 @@
     <ClInclude Include="DiscItem.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="EditCamera.h" />
+    <ClInclude Include="ElectricTile.h" />
+    <ClInclude Include="Factory.h" />
+    <ClInclude Include="ExplosiveWeapon.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
@@ -243,6 +248,7 @@
     <ClInclude Include="FlameProjector.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Evasion.h" />
+    <ClInclude Include="GrassTile.h" />
     <ClInclude Include="GunUI.h" />
     <ClInclude Include="Guppi.h" />
     <ClInclude Include="HardPyramid.h" />
@@ -250,6 +256,8 @@
     <ClInclude Include="Hp.h" />
     <ClInclude Include="IceBeamWeapon.h" />
     <ClInclude Include="IceBullet.h" />
+    <ClInclude Include="IceTile.h" />
+    <ClInclude Include="ImImage.h" />
     <ClInclude Include="ImInspector.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
@@ -260,10 +268,12 @@
     <ClInclude Include="ImMenuBar.h" />
     <ClInclude Include="ImTest.h" />
     <ClInclude Include="ImWindow.h" />
+    <ClInclude Include="Serializable.h" />
     <ClInclude Include="IsNotRangeInPlayer.h" />
     <ClInclude Include="IsRangeInPlayer.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Jump.h" />
+    <ClInclude Include="LavaTile.h" />
     <ClInclude Include="LeapJump.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="Logo.h" />
@@ -281,7 +291,10 @@
     </ClInclude>
     <ClInclude Include="NotCollisionWall.h" />
     <ClInclude Include="NubBoss.h" />
+    <ClInclude Include="OilTile.h" />
     <ClInclude Include="Pyramid.h" />
+    <ClInclude Include="QuickSandTile.h" />
+    <ClInclude Include="SandTile.h" />
     <ClInclude Include="ShopNpc.h" />
     <ClInclude Include="Rub.h" />
     <ClInclude Include="RapidWeapon.h" />
@@ -301,12 +314,18 @@
     <ClInclude Include="Room.h" />
     <ClInclude Include="Rush.h" />
     <ClInclude Include="BootsItem.h" />
+    <ClInclude Include="SnowTile.h" />
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
+    <ClInclude Include="SpreaWeapon.h" />
+    <ClInclude Include="SwampTile.h" />
+    <ClInclude Include="SpreadWeapon.h" />
     <ClInclude Include="SwordBullet.h" />
     <ClInclude Include="SwordWeapon.h" />
     <ClInclude Include="Tennel.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="loader.h" />
+    <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TimeInLimit.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="UI.h" />
@@ -333,6 +352,8 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BackJump.cpp" />
     <ClCompile Include="Baller.cpp" />
+    <ClCompile Include="BeltTile.cpp" />
+    <ClCompile Include="BloodTile.cpp" />
     <ClCompile Include="BossHp.cpp" />
     <ClCompile Include="Bub.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -347,6 +368,9 @@
     <ClCompile Include="DiscItem.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="EditCamera.cpp" />
+    <ClCompile Include="ElectricTile.cpp" />
+    <ClCompile Include="Factory.cpp" />
+    <ClCompile Include="ExplosiveWeapon.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -354,6 +378,7 @@
     <ClCompile Include="FlameProjector.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Evasion.cpp" />
+    <ClCompile Include="GrassTile.cpp" />
     <ClCompile Include="GunUI.cpp" />
     <ClCompile Include="Guppi.cpp" />
     <ClCompile Include="HardPyramid.cpp" />
@@ -361,7 +386,9 @@
     <ClCompile Include="Hp.cpp" />
     <ClCompile Include="IceBeamWeapon.cpp" />
     <ClCompile Include="IceBullet.cpp" />
+    <ClCompile Include="IceTile.cpp" />
     <ClCompile Include="ImGuiFileDialog.cpp" />
+    <ClCompile Include="ImImage.cpp" />
     <ClCompile Include="ImInspector.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
@@ -378,6 +405,7 @@
     <ClCompile Include="IsRangeInPlayer.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jump.cpp" />
+    <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="LeapJump.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Logo.cpp" />
@@ -394,7 +422,10 @@
     </ClCompile>
     <ClCompile Include="NotCollisionWall.cpp" />
     <ClCompile Include="NubBoss.cpp" />
+    <ClCompile Include="OilTile.cpp" />
     <ClCompile Include="Pyramid.cpp" />
+    <ClCompile Include="QuickSandTile.cpp" />
+    <ClCompile Include="SandTile.cpp" />
     <ClCompile Include="ShopNpc.cpp" />
     <ClCompile Include="Rub.cpp" />
     <ClCompile Include="RapidWeapon.cpp" />
@@ -414,17 +445,23 @@
     <ClCompile Include="RotToFace.cpp" />
     <ClCompile Include="Rush.cpp" />
     <ClCompile Include="BootsItem.cpp" />
+    <ClCompile Include="SnowTile.cpp" />
     <ClCompile Include="SoftPyramid.cpp" />
     <ClCompile Include="Cryder.cpp" />
+    <ClCompile Include="SpreaWeapon.cpp" />
+    <ClCompile Include="SpreadWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SwampTile.cpp" />
     <ClCompile Include="SwordBullet.cpp" />
     <ClCompile Include="SwordWeapon.cpp" />
     <ClCompile Include="Tennel.cpp" />
     <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="loader.cpp" />
+    <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TimeInLimit.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="UI.cpp" />

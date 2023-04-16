@@ -24,9 +24,6 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	void		Set_ViewMatrix_UI();
-
-private:
 	D3DXMATRIX  matWorld, matView;
 
 public:

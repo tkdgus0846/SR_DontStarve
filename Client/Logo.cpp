@@ -7,6 +7,8 @@
 #include "FileSystem.h"
 #include "RoomMgr.h"
 #include "Loading.h"
+#include "TileFactory.h"
+#include "..\Engine\SoundMgr.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_pLoading(nullptr)
@@ -40,6 +42,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 		if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_RETURN))
 		{
 			CScene*	pScene = CMyEdit::Create(m_pGraphicDev);
+			TILE_FACTORY->Ready_TileFactory(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 
 			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev);
@@ -60,6 +63,8 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 		{
 			Start_WorldTimer();
 			CScene*	pScene = CStage::Create(m_pGraphicDev);
+			TILE_FACTORY->Ready_TileFactory(m_pGraphicDev);
+			//CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 			
 			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev);
@@ -72,7 +77,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
-
+			
 			//CFileSystem::Load(L"tmp.dat");
 			return 0;
 		}

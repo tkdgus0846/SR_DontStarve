@@ -99,6 +99,19 @@ CGuppi * CGuppi::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 	return pInstance;
 }
 
+CGameObject * CGuppi::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CGuppi* pInstance = new CGuppi(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
 void CGuppi::Free(void)
 {
 	__super::Free();

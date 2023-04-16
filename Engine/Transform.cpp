@@ -135,6 +135,20 @@ void CTransform::Move_Walk(const _float & fUnits, const _float& fTimeDelta)
 	}
 }
 
+void CTransform::Move_WalkWithVec(_vec3 vDir, const _float & fUnits, const _float& fTimeDelta)
+{
+	switch (m_eMoveType)
+	{
+	case Engine::CTransform::LANDOBJECT:
+		m_vInfo[INFO_POS] += _vec3(vDir.x, 0.f, vDir.z) * fUnits * fTimeDelta;
+		break;
+
+	case Engine::CTransform::AIRCRAFT:
+		m_vInfo[INFO_POS] += m_vInfo[INFO_LOOK] * fUnits * fTimeDelta;
+		break;
+	}
+}
+
 void CTransform::Move_Velocity(const _vec3& velocity)
 {
 	m_vInfo[INFO_POS] += velocity;

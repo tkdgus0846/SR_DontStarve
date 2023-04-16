@@ -24,10 +24,13 @@ HRESULT CBulletGauge::Ready_GameObject(void)
 
 _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 {
+	CPlayer* player = dynamic_cast<CPlayer*>(Engine::Get_Player());
+	if (player == nullptr) return 0;
 
-	CWeapon* pWeapon = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeapon();
+	CWeapon* pWeapon = player->Get_CurWeapon();
+	if (pWeapon == nullptr) return 0;
 
-	switch (dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeaponType())
+	switch (player->Get_CurWeaponType())
 	{
 	case BIGSHOT: 
 	{
@@ -56,6 +59,12 @@ _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 	}
 		break;
 	case SPREADSHOT:
+	{
+		m_pBufferCom->Edit_VB(m_SpreadGuage);
+		_float Max = pWeapon->Get_MaxBulletNum();
+		_float Cur = pWeapon->Get_CurBulletNum();
+		m_SpreadGuage = Cur / Max;
+	}
 		break;
 	case FREEZESHOT: 
 	{
@@ -104,7 +113,7 @@ HRESULT CBulletGauge::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex_Dynamic", pComponent });
 
-	cout << pComponent << endl;
+	//cout << pComponent << endl;
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"BulletGauge_Texture", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
@@ -118,10 +127,10 @@ void CBulletGauge::Set_ViewMatrix_UI()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	D3DXMatrixScaling(&matView, m_GaugeScale, 12.f, 0.f);
+	D3DXMatrixScaling(&matView, 106.f, 12.f, 0.f);
 
 	D3DXMATRIX translationMat;
-	D3DXMatrixTranslation(&translationMat, m_GaugePos, -230.f, 0.f);
+	D3DXMatrixTranslation(&translationMat, -203.f, -230.f, 0.f);
 	D3DXMatrixMultiply(&matView, &matView, &translationMat);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);

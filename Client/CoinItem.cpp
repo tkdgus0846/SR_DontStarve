@@ -51,7 +51,7 @@ HRESULT CCoinItem::Ready_GameObject(void)
 
 _int CCoinItem::Update_GameObject(const _float & fTimeDelta)
 {
-	if (m_bDrop == true) ItemPatrol();
+	if (m_bDrop == true) ItemPatrol(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
 
 	if (GetDead()) return OBJ_DEAD;
@@ -129,6 +129,11 @@ void CCoinItem::OnCollisionEnter(const Collision * collsion)
 
 void CCoinItem::OnCollisionStay(const Collision * collision)
 {
+	if (dynamic_cast<CPlayer*>(collision->OtherGameObject) == nullptr)
+	{
+		return;
+	}
+
 	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
 

@@ -11,6 +11,9 @@
 #include "Export_Function.h"
 #include "RoomMgr.h"
 #include "ParticleMgr.h"
+#include "TileFactory.h"
+#include "FileSystem.h"
+#include "SoundMgr.h"
 
 // 주석 테스트용
 CMainApp::CMainApp()
@@ -29,19 +32,22 @@ HRESULT CMainApp::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(Ready_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
+	SOUND->Init();
+	
+	PLAY_BGM(L"Title.wav", 1.f);
 	return S_OK;
 }
 
 int CMainApp::Update_MainApp(const _float & fTimeDelta)
 {
 	Engine::Update_DInput();
-
+	
 	_long	dwMouse = 0;
 
-	/*if (dwMouse = Engine::Get_DIMouseMove(DIMS_Z))
-	{
-		int a = 0;
-	}*/
+	if (Engine::Key_Down(DIK_K))
+		CFileSystem::Save(L"as.dat");
+	if (Engine::Key_Down(DIK_L))
+		CFileSystem::Load(L"as.dat");
 
 	m_pManagementClass->Update_Management(fTimeDelta);
 
@@ -69,6 +75,8 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	(*ppGraphicDev) = m_pDeviceClass->Get_GraphicDev();
 	(*ppGraphicDev)->AddRef();
+
+	
 
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"바탕", 15, 20, FW_HEAVY), E_FAIL);
 	/*FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"궁서", 15, 20, FW_HEAVY), E_FAIL);
@@ -109,11 +117,14 @@ CMainApp * CMainApp::Create(void)
 
 void CMainApp::Free(void)
 {
+	CTileFactory::DestroyInstance();
+	//CLoader::DestroyInstance();
 	CRoomMgr::DestroyInstance();
 	CImManager::DestroyInstance();
 	CBulletMgr::DestroyInstance();
 	CParticleMgr::DestroyInstance();
 	CEffectManager::DestroyInstance();
+	CSoundMgr::DestroyInstance();
 	
 
 	FreeConsole();

@@ -42,6 +42,7 @@ _int CJump::Update_Component(const _float & fTimeDelta)
 	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FAIL);
 	fSpeed *= 0.8f;
 
+	// 점프했을때 떨어지는 고점을 바꾸면 될거같긴한데
 	m_fTime += fTimeDelta * 7.f;
 
 	_float fY = fSpeed * m_fTime - 4.9f * m_fTime * m_fTime;

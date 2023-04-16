@@ -4,6 +4,7 @@
 #include "BulletMgr.h"
 #include "NormalBullet.h"
 #include "IceBullet.h"
+#include "SoundMgr.h"
 
 CNormalWeapon::CNormalWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
@@ -42,6 +43,8 @@ CBullet* CNormalWeapon::Shot_Setting()
 
 	CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, {0.5f,0.5f,1.f}, false, 40.f);
 
+	
+	STOP_PLAY_SOUND(L"sfxBigBullet.wav", SOUND_EJECT, 1.f);
 	m_CurBulletNum++;
 
 	return bullet;	

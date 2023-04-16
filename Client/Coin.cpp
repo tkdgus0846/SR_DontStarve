@@ -49,6 +49,8 @@ HRESULT CCoin::Add_Component()
 
 HRESULT CCoin::Ready_GameObject(void)
 {
+
+	m_vScale = { 12.f, 12.f, 0.f };
 	__super::Ready_GameObject();
 
 	return S_OK;
@@ -71,6 +73,7 @@ void CCoin::LateUpdate_GameObject(void)
 void CCoin::Render_GameObject(void)
 {
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
+	if (pPlayer == nullptr) return;
 
 	_int coin = pPlayer->Get_Coin();
 
@@ -89,49 +92,18 @@ void CCoin::Render_GameObject(void)
 		{
 			iNum = m_iStartNum + strCoin[k] - 48;
 		}
-		Set_ViewMatrix_UI(330 + (25.f * i), 250.f);
+		CUI::Set_ViewMatrix_UI(330 + (25.f * i), 250.f, 22.f, 20.f);
 		m_pTextureCom->Render_Texture(iNum);
 		m_vecRc[i]->Render_Component();
 	}
 
-	Set_ViewMatrix_UI();
+	Set_ViewMatrix_UI(300.f, 250.f, 12.f, 12.f);
 
 	__super::Render_GameObject();
 }
 
-void CCoin::Set_ViewMatrix_UI()
-{
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
-
-	_matrix matTrans;
-	matTrans.Translation(300.f, 250.f, 0.f);
-	D3DXMatrixScaling(&matView, 12.f, 12.f, 0.f);
-	D3DXMatrixMultiply(&matView, &matView, &matTrans);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-}
-
-void CCoin::Set_ViewMatrix_UI(_float fX, _float fY)
-{
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
-
-	_matrix matTrans;
-	D3DXMatrixScaling(&matView, 22.f, 20.f, 0.f);
-	matTrans.Translation(fX, fY, 0.f);
-	D3DXMatrixMultiply(&matView, &matView, &matTrans);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-}
-
 _int CCoin::Compute_Num(string pPlayerCoin)
-{/*
-	int _tempCoin = stoi(pPlayerCoin[1]);
-*/
-
+{
 
 	return _int();
 }

@@ -60,6 +60,9 @@ public:
 	void	Move_Walk(const _float& fUnits, const _float& fTimeDelta);  // Move-Look
 	void	Move_Velocity(const _vec3& velocity);
 
+	// 임의의 벡터로 움직이는 거
+	void CTransform::Move_WalkWithVec(_vec3 vDir, const _float & fUnits, const _float& fTimeDelta);
+
 	void	Rot_Pitch(const _float& fAngle, const _float& fTimeDelta);// Rot-Right
 	void	Rot_Yaw(const _float& fAngle, const _float& fTimeDelta);  // Rot-Up
 	void	Rot_Roll(const _float& fAngle, const _float& fTimeDelta); // Rot-Look

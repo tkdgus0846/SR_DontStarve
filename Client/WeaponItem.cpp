@@ -46,8 +46,8 @@ HRESULT CWeaponItem::Ready_GameObject(_vec3 vPos)
 
 _int CWeaponItem::Update_GameObject(const _float & fTimeDelta)
 {
-	WeaponRotationZ();
-	m_fAngle += 10.f;
+	WeaponRotationZ(fTimeDelta);
+	m_fAngle += 180.f * fTimeDelta;
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -68,19 +68,16 @@ void CWeaponItem::Render_GameObject(void)
 
 void CWeaponItem::OnCollisionEnter(const Collision * collsion)
 {
-	//if (collsion->MyCollider == Get_Component(L"Collider", ID_ALL) && collsion->Other)
-	//{
-
-	//}
 	__super::OnCollisionEnter(collsion);
 
-	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);	
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
+	if (pPlayer == nullptr) {return;}
 	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
 	{
+		if (pPlayer->Get_Coin() < 50) {return;}
 		pPlayer->Gain_Weapon(m_eID);
+		pPlayer->De_Coin(50);
 	}
-
-
 }
 
 void CWeaponItem::OnCollisionStay(const Collision * collision)
@@ -162,7 +159,7 @@ void CWeaponItem::Select_Type()
 	}
 }
 
-void CWeaponItem::WeaponRotationZ()
+void CWeaponItem::WeaponRotationZ(const _float & fTimeDelta) // 이게 Y네 Z가아니고 m_fAngle은 어디서 더해줌?
 {
 	_matrix matRot;
 	_vec3	vecRot{ 1.f, 0.f, 1.f };
