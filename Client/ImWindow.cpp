@@ -4,6 +4,7 @@
 
 CImWindow::CImWindow(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
+	, m_bEnable(true)
 {
 	m_pGraphicDev->AddRef();
 }

@@ -59,7 +59,10 @@ CTexture * CGameObject::Get_Texture()
 		for (auto& Component : m_uMapComponent[i])
 		{
 			if (pTexture = dynamic_cast<CTexture*>(Component.second))
+			{
 				return pTexture;
+			}
+				
 		}
 	}
 	return pTexture;

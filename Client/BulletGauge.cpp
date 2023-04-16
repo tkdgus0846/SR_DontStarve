@@ -107,7 +107,7 @@ HRESULT CBulletGauge::Add_Component(void)
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex_Dynamic", pComponent });
 
-	cout << pComponent << endl;
+	//cout << pComponent << endl;
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"BulletGauge_Texture", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);

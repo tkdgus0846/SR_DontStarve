@@ -62,9 +62,6 @@
     <Filter Include="GameObject\RoomMgr">
       <UniqueIdentifier>{faf346d6-e9d0-4c34-b171-1cc5742d40b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\RoomMgr\Tile">
-      <UniqueIdentifier>{910476eb-a1aa-4a0d-8173-4d5b22f9f1d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\RoomMgr\Room">
       <UniqueIdentifier>{d53ab2d1-8167-4ef5-b101-2ce8c0ce1569}</UniqueIdentifier>
     </Filter>
@@ -94,6 +91,12 @@
     </Filter>
     <Filter Include="GameObject\Monster\Boss">
       <UniqueIdentifier>{eca07ded-532e-4ec6-9bd6-0e495dffff75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Tile">
+      <UniqueIdentifier>{910476eb-a1aa-4a0d-8173-4d5b22f9f1d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{39e4b057-2349-4e9c-b70e-f395e838dd18}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -207,7 +210,7 @@
       <Filter>GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>GameObject\RoomMgr\Tile</Filter>
+      <Filter>GameObject\Tile</Filter>
     </ClInclude>
     <ClInclude Include="BulletBar.h">
       <Filter>GameObject\UI</Filter>
@@ -407,6 +410,54 @@
     <ClInclude Include="SwordWeapon.h">
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="BeltTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="BloodTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="ElectricTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="LavaTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="OilTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="QuickSandTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="SwampTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="IceTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="SandTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowTile.h">
+      <Filter>GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="loader.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="TileFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializable.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ImImage.h">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClInclude>
     <ClInclude Include="SpreadWeapon.h">
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
@@ -509,7 +560,7 @@
       <Filter>GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
-      <Filter>GameObject\RoomMgr\Tile</Filter>
+      <Filter>GameObject\Tile</Filter>
     </ClCompile>
     <ClCompile Include="BulletBar.cpp">
       <Filter>GameObject\UI</Filter>
@@ -711,6 +762,51 @@
     </ClCompile>
     <ClCompile Include="SwordWeapon.cpp">
       <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="BeltTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="BloodTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="ElectricTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="LavaTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="OilTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="QuickSandTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="SwampTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="IceTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="SandTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="SnowTile.cpp">
+      <Filter>GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="loader.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="TileFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="ImImage.cpp">
+      <Filter>IMGUI\ImWindow</Filter>
     </ClCompile>
     <ClCompile Include="SpreadWeapon.cpp">
       <Filter>GameObject\Weapon</Filter>

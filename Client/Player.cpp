@@ -59,7 +59,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	/*cout << m_pTransform->m_vInfo[INFO_POS].x << " " << m_pTransform->m_vInfo[INFO_POS].y << " " << m_pTransform->m_vInfo[INFO_POS].z << endl;*/
 
-	cout << m_fUltimateGuage << endl;
+
 	Key_Input(fTimeDelta);
 
 	// m_planeVec

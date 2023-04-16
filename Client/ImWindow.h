@@ -16,11 +16,13 @@ protected:
 public:
 	virtual HRESULT Ready_ImWindow();
 	virtual _int Update(float fTimeDelta) PURE;
+	_bool IsEnable() { return m_bEnable; }
+	void SetEnable(_bool bEnable) { m_bEnable = bEnable; }
 
-protected:
 	void Toggle(bool& _bVariable);
-	LPDIRECT3DDEVICE9 m_pGraphicDev;
-
+protected:
+	LPDIRECT3DDEVICE9	m_pGraphicDev;
+	_bool				m_bEnable;
 protected:
 	virtual void Free(void);
 };

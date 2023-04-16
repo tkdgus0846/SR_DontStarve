@@ -16,7 +16,7 @@ public:
 	virtual void OnCollisionEnter(const class Collision* collsion);
 	virtual void OnCollisionStay(const class Collision* collision);
 	virtual void OnCollisionExit(const class Collision* collision);
-
+	
 public:
 	virtual void	Get_Damaged(_int Damage)
 	{

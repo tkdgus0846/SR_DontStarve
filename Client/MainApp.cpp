@@ -11,6 +11,8 @@
 #include "Export_Function.h"
 #include "RoomMgr.h"
 #include "ParticleMgr.h"
+#include "TileFactory.h"
+#include "FileSystem.h"
 #include "SoundMgr.h"
 
 // 주석 테스트용
@@ -39,13 +41,13 @@ HRESULT CMainApp::Ready_MainApp(void)
 int CMainApp::Update_MainApp(const _float & fTimeDelta)
 {
 	Engine::Update_DInput();
-
+	
 	_long	dwMouse = 0;
 
-	/*if (dwMouse = Engine::Get_DIMouseMove(DIMS_Z))
-	{
-		int a = 0;
-	}*/
+	if (Engine::Key_Down(DIK_K))
+		CFileSystem::Save(L"as.dat");
+	if (Engine::Key_Down(DIK_L))
+		CFileSystem::Load(L"as.dat");
 
 	m_pManagementClass->Update_Management(fTimeDelta);
 
@@ -115,6 +117,8 @@ CMainApp * CMainApp::Create(void)
 
 void CMainApp::Free(void)
 {
+	CTileFactory::DestroyInstance();
+	//CLoader::DestroyInstance();
 	CRoomMgr::DestroyInstance();
 	CImManager::DestroyInstance();
 	CBulletMgr::DestroyInstance();
