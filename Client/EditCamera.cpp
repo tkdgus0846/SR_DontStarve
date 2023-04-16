@@ -6,7 +6,6 @@
 #include "Export_Function.h"
 #include "RoomMgr.h"
 #include "Floor.h"
-#include "NogadaFactory.h"
 #include "TileFactory.h"
 #include "ImManager.h"
 #include "ImInspector.h"
@@ -411,7 +410,7 @@ void CEditCamera::CreateObj()
 	//	return;
 
 	//CGameObject* pObj = FACTORY->CreateObj(m_tag);
-	//ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
+	//ROOM_MGR->Get_CurRoom()->PusstatehBack_GameObj(pObj);
 	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
 
 	switch (m_radio)
@@ -451,8 +450,9 @@ void CEditCamera::CreateTile()
 	
 	// 타일 생성
 	CGameObject* pObj = TILE_FACTORY->CreateObject(CurTileItem);
+	if (!pObj) return;
 	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
-
+	
 	// 타일 위치 정해주기.
 	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
 	vPos.y += 0.01f;

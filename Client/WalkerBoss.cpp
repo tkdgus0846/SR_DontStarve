@@ -6,7 +6,7 @@ CWalkerBoss::CWalkerBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
 	Set_LayerID(LAYER_MONSTER);
-	Set_ObjTag(L"WalkerBoss");
+	Set_ObjTag(Tag());
 }
 
 CWalkerBoss::~CWalkerBoss()
@@ -93,6 +93,18 @@ HRESULT CWalkerBoss::Add_Component()
 	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;
+}
+
+CGameObject * CWalkerBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CWalkerBoss* pInstance = new CWalkerBoss(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject({})))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+	return pInstance;
 }
 
 CWalkerBoss * CWalkerBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)

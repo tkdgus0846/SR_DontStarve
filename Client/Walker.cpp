@@ -5,8 +5,7 @@
 CWalker::CWalker(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(L"Walker");
-
+	Set_ObjTag(Tag());
 }
 
 CWalker::~CWalker()

@@ -6,7 +6,6 @@
 
 #include "Room.h"
 #include "RoomMgr.h"
-#include "NogadaFactory.h"
 #include "FileSystem.h"
 
 // 몬스터 헤더파일
@@ -21,10 +20,8 @@
 #include "HardPyramid.h"
 #include "Slider.h"
 #include "TileFactory.h"
-
-
-static const char* cur_item = "Baller";
-
+#include "MonsterFactory.h"
+#include "MapObjectFactory.h"
 
 CImInspector::CImInspector(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CImWindow(pGraphicDev)
@@ -43,8 +40,16 @@ CImInspector::~CImInspector()
 
 HRESULT CImInspector::Ready_ImWindow()
 {
+
+
 	m_pTileImage = ImImage::Create(m_pGraphicDev);
 	CImManager::GetInstance()->AddContainer(L"TileImage", m_pTileImage);
+
+	m_pMapObjImage = ImImage::Create(m_pGraphicDev);
+	CImManager::GetInstance()->AddContainer(L"MapObjImage", m_pMapObjImage);
+
+	m_pMonsterImage = ImImage::Create(m_pGraphicDev);
+	CImManager::GetInstance()->AddContainer(L"MonsterImage", m_pMonsterImage);
 
 	return S_OK;
 }
@@ -53,6 +58,8 @@ _int CImInspector::Update(float fTimeDelta)
 {
 	if (!IsEnable())
 		return 0;
+
+	m_pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
 
 	for(auto iter : m_vecMonster)
 		iter.second->Update_GameObject(fTimeDelta);
@@ -93,8 +100,7 @@ void CImInspector::Show_RoomInfo()
 	m_vObjectPos.y = 5.f;
 	m_vObjectPos.z = _float(item_current / 5 * 60 + 5);
 
-	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
-	pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 25.f, 25.f, m_vObjectPos.z + 25.f };
+	m_pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 25.f, 25.f, m_vObjectPos.z + 25.f };
 	ROOM_MGR->Set_CurRoom(item_current);
 	m_pCurRoom = ROOM_MGR->Get_CurRoom();
 
@@ -125,78 +131,49 @@ void CImInspector::Show_RoomInfo()
 
 void CImInspector::Show_TilePicking()
 {
-	static _int iTileNum = 0;
+	// 라디오 버튼
+	ImGui::RadioButton("TILE_MODE", &((int&)m_pCamera->Get_Pick()), 0);
+	IsPickMode(m_pTileImage, PICK_TILE);
 
-
-	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
-
-	ImGui::RadioButton("TILE_MODE", &((int&)pCamera->Get_Pick()), 0);
-	if (PICK_TILE == pCamera->Get_Pick())
-		m_pTileImage->SetEnable(true);
-	else
-		m_pTileImage->SetEnable(false);
-
-	//
+	// 콤보박스
 	vector<string> tileItems = TILE_FACTORY->GetSTag();
-
-	if (ImGui::BeginCombo("##combo", cur_tile_item.c_str())) // The second parameter is the label previewed before opening the combo.
+	if (ImGui::BeginCombo("##combo", m_CurTileItem.c_str())) // The second parameter is the label previewed before opening the combo.
 	{
 		for (int n = 0; n < tileItems.size(); n++)
 		{
-			bool is_selected = (tileItems[n].compare(cur_tile_item) == 0); // You can store your selection however you want, outside or inside your objects
+			bool is_selected = (tileItems[n].compare(m_CurTileItem) == 0); // You can store your selection however you want, outside or inside your objects
 			if (ImGui::Selectable(tileItems[n].c_str(), is_selected))
 			{
-				cur_tile_item = tileItems[n];
+				m_CurTileItem = tileItems[n];
 				
-				m_pTileImage->Set_Texture(TILE_FACTORY->FindTextureKeyByTag(TO_WSTR(cur_tile_item)));
+				m_pTileImage->Set_Texture(TILE_FACTORY->FindTextureKeyByTag(TO_WSTR(m_CurTileItem)));
 			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
 		}
 		ImGui::EndCombo();
 	}
-
-	ImGui::SeparatorText("Tile");
-
-	//if (ImGui::RadioButton("Level1_Floor", &iTileNum, 20))
-	//	pCamera->Change_Texture(L"Floor_Level1_Texture");
-
-	//ImGui::SameLine();
-
-	//if (ImGui::RadioButton("Level1_Wall", &iTileNum, 21))
-	//	pCamera->Change_Texture(L"Wall_Level1_Texture");
-
-	//if(ImGui::RadioButton("Level2_Floor", &iTileNum, 22))
-	//	pCamera->Change_Texture(L"Floor_Level2_Texture");
-
-	//ImGui::SameLine();
-
-	//if(ImGui::RadioButton("Level2_Wall", &iTileNum, 23))
-	//	pCamera->Change_Texture(L"Wall_Level2_Texture");
-
-	//if(ImGui::RadioButton("Level3_Floor", &iTileNum, 24))
-	//	pCamera->Change_Texture(L"Dock_Texture");
-
-	ImGui::SameLine();
-	ImGui::RadioButton("Level3_Wall", &iTileNum, 25);
 }
 
 void CImInspector::Show_Create_Object()
 {
+
+
+
 	static _int iObjNum = 0;
 
 	if (ImGui::TreeNode("Object_Type"))
 	{
 		ImGui::SeparatorText("Monster");
 
-		vector<const char*> monItems = FACTORY->GetTagVec(OBJ_MONSTER);
-		if (ImGui::BeginCombo("##combo", cur_item)) // The second parameter is the label previewed before opening the combo.
+		vector<string> monItems = MONSTER_FACTORY->GetSTag();
+		if (ImGui::BeginCombo("##combo", m_CurMonsterItem.c_str())) // The second parameter is the label previewed before opening the combo.
 		{
 			for (int n = 0; n < monItems.size(); n++)
 			{
-				bool is_selected = (cur_item == monItems[n]); // You can store your selection however you want, outside or inside your objects
-				if (ImGui::Selectable(monItems[n], is_selected))
-					cur_item = monItems[n];
+				bool is_selected = (m_CurMonsterItem.c_str() == monItems[n]); // You can store your selection however you want, outside or inside your objects
+				if (ImGui::Selectable(monItems[n].c_str(), is_selected))
+					m_CurMonsterItem = monItems[n].c_str();
 				if (is_selected)
 					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
 			}
@@ -221,14 +198,14 @@ void CImInspector::Show_Create_Object()
 		//ImGui::RadioButton("Mine", &iObjNum, 12);
 
 		ImGui::SeparatorText("MapObject");
-		vector<const char*> mapItems = FACTORY->GetTagVec(OBJ_MAPOBJ);
-		if (ImGui::BeginCombo("##combo2", cur_item)) // The second parameter is the label previewed before opening the combo.
+		vector<string> mapItems = MAPOBJ_FACTORY->GetSTag();
+		if (ImGui::BeginCombo("##combo2", m_CurMapObjItem.c_str())) // The second parameter is the label previewed before opening the combo.
 		{
 			for (int n = 0; n < mapItems.size(); n++)
 			{
-				bool is_selected = (cur_item == mapItems[n]); // You can store your selection however you want, outside or inside your objects
-				if (ImGui::Selectable(mapItems[n], is_selected))
-					cur_item = mapItems[n];
+				bool is_selected = (m_CurMapObjItem.c_str() == mapItems[n].c_str()); // You can store your selection however you want, outside or inside your objects
+				if (ImGui::Selectable(mapItems[n].c_str(), is_selected))
+					m_CurMapObjItem = mapItems[n].c_str();
 				if (is_selected)
 					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
 			}
@@ -249,13 +226,15 @@ void CImInspector::Show_Create_Object()
 		ImGui::Spacing();
 	}
 
-	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
-	//pCamera->Set_Tag(cur_item);
-	ImGui::RadioButton("OBJ_MODE", &((int&)pCamera->Get_Pick()), 1);
-	ImGui::RadioButton("LeftUp", &pCamera->Get_Radio(), 0); ImGui::SameLine();
-	ImGui::RadioButton("RightUp", &pCamera->Get_Radio(), 1); 
-	ImGui::RadioButton("LeftBottom", &pCamera->Get_Radio(), 2); ImGui::SameLine();
-	ImGui::RadioButton("RightBottom", &pCamera->Get_Radio(), 3);
+	//m_pCamera->Set_Tag(cur_item);
+	ImGui::RadioButton("OBJ_MODE", &((int&)m_pCamera->Get_Pick()), 1);
+	IsPickMode(m_pMonsterImage, PICK_OBJ);
+
+
+	ImGui::RadioButton("LeftUp", &m_pCamera->Get_Radio(), 0); ImGui::SameLine();
+	ImGui::RadioButton("RightUp", &m_pCamera->Get_Radio(), 1); 
+	ImGui::RadioButton("LeftBottom", &m_pCamera->Get_Radio(), 2); ImGui::SameLine();
+	ImGui::RadioButton("RightBottom", &m_pCamera->Get_Radio(), 3);
 }
 
 void CImInspector::Show_MonsterList()
@@ -364,6 +343,7 @@ void CImInspector::Show_Components()
 					ImGui::Spacing();
 				}
 			}
+
 			if (CCollider* pCollider = dynamic_cast<CCollider*>(iter.second))
 			{
 				char* p = (char*)iter.first;
@@ -412,6 +392,14 @@ void CImInspector::Show_Components()
 			}
 		}
 	}
+}
+
+void CImInspector::IsPickMode(ImImage * pImage, PICK_TYPE eType)
+{
+	if (eType == m_pCamera->Get_Pick())
+		pImage->SetEnable(true);
+	else
+		pImage->SetEnable(false);
 }
 
 CImInspector * CImInspector::Create(LPDIRECT3DDEVICE9 pGraphicDev)

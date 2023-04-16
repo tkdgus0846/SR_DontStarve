@@ -17,8 +17,8 @@ protected:
 	CFactory();
 	virtual ~CFactory();
 
-	HRESULT Ready_TileFactory(LPDIRECT3DDEVICE9 pGraphicDev);
-	void Release();
+	virtual HRESULT Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual void Release();
 
 protected:
 	virtual void Register(const wstring& objectType, CreateObjectFunc createFunc);

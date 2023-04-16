@@ -7,6 +7,7 @@
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
 {
+	Set_ObjTag(Tag());
 }
 
 CWormHead::~CWormHead()
@@ -230,6 +231,18 @@ CWormHead * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 	CWormHead* pInstance = new CWormHead(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+	return pInstance;
+}
+
+CGameObject * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CWormHead* pInstance = new CWormHead(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject({})))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

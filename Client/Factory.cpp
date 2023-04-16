@@ -1,5 +1,4 @@
 #include "Factory.h"
-
 #include "FileSystem.h"
 
 CFactory::CFactory()
@@ -29,7 +28,7 @@ void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 
 }
 
-HRESULT CFactory::Ready_TileFactory(LPDIRECT3DDEVICE9 pGraphicDev)
+HRESULT CFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	m_pGraphicDev = pGraphicDev;
 	m_pGraphicDev->AddRef();

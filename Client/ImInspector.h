@@ -8,6 +8,8 @@ END
 
 class CRoomMgr;
 class CRoom;
+class CEditCamera;
+
 class CImInspector : public CImWindow
 {
 private:
@@ -19,7 +21,7 @@ public:
 	virtual _int	Update(float fTimeDelta) override;
 
 	const string& Get_CurTileItem() const {
-		return cur_tile_item;
+		return m_CurTileItem;
 	}
 
 private:
@@ -29,12 +31,16 @@ private:
 	void Show_MonsterList();
 	void Show_Components();
 
+	void IsPickMode(ImImage* pImage, PICK_TYPE eType);
 private:
 	CRoom*			m_pCurRoom;
 	_vec3			m_vObjectPos;
 	CGameObject*	m_pCurTarget;
 
-	string			cur_tile_item = "a";
+	string			m_CurTileItem = "a";
+	string			m_CurMonsterItem = "a";
+	string			m_CurMapObjItem = "a";
+
 	vector<pair<const char*, CGameObject*>>	m_vecMonster;
 	vector<pair<const char*, CGameObject*>>	m_vecMap;
 
@@ -42,6 +48,7 @@ private:
 	ImImage*		m_pMapObjImage;
 	ImImage*		m_pTileImage;
 	
+	CEditCamera*	m_pCamera;
 
 public:
 	static CImInspector* Create(LPDIRECT3DDEVICE9 pGraphicDev);

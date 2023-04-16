@@ -5,7 +5,7 @@
 CTurret::CTurret(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(L"Turret");
+	Set_ObjTag(Tag());
 
 }
 

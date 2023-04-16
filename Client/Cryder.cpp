@@ -5,7 +5,7 @@
 CCryder::CCryder(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(L"Cryder");
+	Set_ObjTag(Tag());
 }
 
 CCryder::~CCryder()
