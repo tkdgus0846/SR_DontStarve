@@ -9,8 +9,7 @@ class CTexture;
 END
 
 class CPlayer;
-class CItem :
-	public CGameObject
+class CItem : public CGameObject
 {
 protected:
 	explicit CItem(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -34,7 +33,7 @@ protected:
 	_float					m_fMinY;
 
 protected:
-	virtual void		ItemPatrol();
+	virtual void		ItemPatrol(const _float& fTimeDelta);
 	virtual void		ItemMagnetic(CPlayer* pPlayer);
 	virtual void		ItemDrop(const _float & fTimeDelta);
 

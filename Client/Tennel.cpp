@@ -7,7 +7,7 @@
 #include "Tile.h"
 #include "Player.h"
 #include "Room.h"
-
+#include "LavaTile.h"
 CTennel::CTennel(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_pDoor(nullptr)
 	, m_pTile(nullptr)
@@ -37,7 +37,7 @@ _int CTennel::Update_GameObject(const _float & fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	// 널로 들어옴
-	m_pTile->Update_GameObject(fTimeDelta);
+//	m_pTile->Update_GameObject(fTimeDelta);
 	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
@@ -54,7 +54,7 @@ void CTennel::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
-	m_pTile->Render_GameObject();
+	//m_pTile->Render_GameObject();
 	__super::Render_GameObject();
 
 }
@@ -110,16 +110,16 @@ void CTennel::Set_Position(_int iFrontorBack)
 	if (0 == iFrontorBack)	// front 인 경우
 	{
 		m_pCollider->Set_BoundingBox({ 10.f, 10.f, 1.f }, _vec3(0.f, 0.f, 5.f));
-		m_pTile = CTile::Create(m_pGraphicDev, vPos + _vec3(0.f, 0.f, 5.f), L"Open_Texture");
+		//m_pTile = CLavaTile::Create(m_pGraphicDev, vPos + _vec3(0.f, 0.f, 5.f), L"Open_Texture");
 	}
 	else
 	{
 		m_pCollider->Set_BoundingBox({ 10.f, 10.f, 1.f }, -_vec3(0.f, 0.f, 5.f));
-		m_pTile = CTile::Create(m_pGraphicDev, vPos - _vec3(0.f, 0.f, 5.f), L"Open_Texture");
+		//m_pTile = CTile::Create(m_pGraphicDev, vPos - _vec3(0.f, 0.f, 5.f), L"Open_Texture");
 	}
-	m_pTile->m_pTransform->Rot_Pitch(90.f, 1.f);
-	m_pTile->m_pTransform->m_vInfo[INFO_POS] -= _vec3(0.f, 1.f, 0.f);
-	m_pTile->m_pTransform->m_vScale = { 5.f, 6.f, 5.f };
+	//m_pTile->m_pTransform->Rot_Pitch(90.f, 1.f);
+	//m_pTile->m_pTransform->m_vInfo[INFO_POS] -= _vec3(0.f, 1.f, 0.f);
+	//m_pTile->m_pTransform->m_vScale = { 5.f, 6.f, 5.f };
 }
 
 CTennel * CTennel::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -137,6 +137,6 @@ CTennel * CTennel::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CTennel::Free(void)
 {
-	Safe_Release(m_pTile);
+	//Safe_Release(m_pTile);
 	__super::Free();
 }

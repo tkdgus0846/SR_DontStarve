@@ -24,7 +24,7 @@ public:
 	_int Update(_float fTimeDelta);
 	void Render(LPDIRECT3DDEVICE9 pGraphicDev);
 	void Release();
-
+	void Push_Back(CImWindow* pWindow);
 public:
 	void AddList(CImWindow* pImWindow)
 	{

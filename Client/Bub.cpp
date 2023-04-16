@@ -19,7 +19,7 @@ HRESULT CBub::Ready_GameObject(const _vec3& vPos)
 
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
-	m_iHp = 1000;
+	m_iHp = 10;
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -96,6 +96,19 @@ CBub * CBub::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 	CBub* pInstance = new CBub(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
+CGameObject * CBub::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CBub* pInstance = new CBub(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

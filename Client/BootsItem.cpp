@@ -50,8 +50,8 @@ HRESULT CBootsItem::Ready_GameObject(_vec3 vPos)
 
 _int CBootsItem::Update_GameObject(const _float & fTimeDelta)
 {
-	WeaponRotationZ();
-	m_fAngle += 10.f;
+	WeaponRotationZ(fTimeDelta);
+	m_fAngle += 180.f * fTimeDelta;
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -111,7 +111,7 @@ void CBootsItem::OnCollisionStay(const Collision * collision)
 	ItemMagnetic(pPlayer);
 }
 
-void CBootsItem::WeaponRotationZ()
+void CBootsItem::WeaponRotationZ(const _float & fTimeDelta)
 {
 	_matrix matRot;
 	_vec3	vecRot{ 1.f, 0.f, 1.f };

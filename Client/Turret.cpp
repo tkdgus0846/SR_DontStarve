@@ -104,6 +104,19 @@ CTurret * CTurret::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 	return pInstance;
 }
 
+CGameObject * CTurret::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CTurret* pInstance = new CTurret(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
 void CTurret::Free(void)
 {
 	__super::Free();

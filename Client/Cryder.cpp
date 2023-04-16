@@ -111,6 +111,19 @@ CCryder * CCryder::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 	return pInstance;
 }
 
+CGameObject * CCryder::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CCryder* pInstance = new CCryder(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
 void CCryder::Free(void)
 {
 	__super::Free();

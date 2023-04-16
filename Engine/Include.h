@@ -23,6 +23,12 @@
 #include "Function.h"
 #include "Typedef.h"
 
+#include <io.h>
+
+#include "fmod.h"
+#include "fmod.hpp"
+#pragma comment(lib, "fmodex_vc.lib")
+#pragma comment(lib, "fmodex.dll")
 #pragma warning(disable : 4251)
 
 extern HWND		 g_hWnd;

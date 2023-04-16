@@ -7,6 +7,7 @@
 #include "RoomMgr.h"
 #include "Floor.h"
 #include "NogadaFactory.h"
+#include "TileFactory.h"
 
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -17,8 +18,6 @@ CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	Set_LayerID(LAYER_CAMERA);
 	Set_ObjTag(L"Edit_Camera");
 	ZeroMemory(&m_tPickInfo, sizeof(ClickInfo));
-	for (_int i = 0; i < PICK_END; ++i)
-		m_bPick[i] = false;
 }
 
 CEditCamera::~CEditCamera()
@@ -93,7 +92,7 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 	if (Engine::Mouse_Down(DIM_LB))
 	{
 		SetClickInfo();
-		CreateTile();
+		LoadSaveTarget(m_Tiletag);
 		CreateObj();
 	}
 }
@@ -244,50 +243,6 @@ _bool CEditCamera::IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGa
 		}
 	}
 
-	for (_int i = 0; i < pRoom->TileNum(); ++i)
-	{
-		if (IntersectRayGameObject(pGameObject = pRoom->GetTileByIndex(i), tri, index, fDist))
-		{
-			if (fMinDist > fDist)
-			{
-				fMinDist = fDist;
-				pTempObj = pGameObject;
-				tmpTri = tri;
-				tmpIndex = index;
-			}
-			success = true;
-		}
-	}
-
-	for (_int i = 0; i < 4; ++i)
-	{
-		if (IntersectRayGameObject(pGameObject = pRoom->GetWallArray(i), tri, index, fDist))
-		{
-			if (fMinDist > fDist)
-			{
-				fMinDist = fDist;
-				pTempObj = pGameObject;
-				tmpTri = tri;
-				tmpIndex = index;
-			}
-			success = true;
-		}
-
-	}
-
-	if (IntersectRayGameObject(pGameObject = pRoom->GetFloor(), tri, index, fDist))
-	{
-		if (fMinDist > fDist)
-		{
-			fMinDist = fDist;
-			pTempObj = pGameObject;
-			tmpTri = tri;
-			tmpIndex = index;
-		}
-
-		success = true;
-	}
-
 	if (success)
 	{
 		fDist = fMinDist;
@@ -295,7 +250,6 @@ _bool CEditCamera::IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGa
 		tri = tmpTri;
 		index = tmpIndex;
 	}
-
 
 	return success;
 }
@@ -409,49 +363,53 @@ _vec3 CEditCamera::CalcMiddlePoint(Triangle & tri)
 	return _vec3();
 }
 
-void CEditCamera::CreateTile()
+void CEditCamera::LoadSaveTarget(const _tchar* tag)
 {
-	if (!m_bPick[PICK_TILE])
+	if (PICK_TILE != m_ePick)
 		return;
 
-	CTile* pTile = nullptr;
+	//CTile* pTile = LOADER->Load(tag);
+	//if (!pTile)
+	//	return;
+
 	// Decide Tile Position
+
 	_vec3 vPos{ 0.f, 0.f, 0.f };
 	vPos = CalcMiddlePoint(m_tPickInfo.tri);
 	_vec3 vOffset = vPos - m_pTransform->m_vInfo[INFO_POS];
 	vPos.y += 0.01f;
 	CRoom* pCurRoom = ROOM_MGR->Get_CurRoom();
 
-	if (dynamic_cast<CTile*>(m_tPickInfo.pGameObj))	// 기존에 이미 설치된 타일인 경우
-		dynamic_cast<CTile*>(m_tPickInfo.pGameObj)->Change_Texture(m_pCurTextureName);
+	if (dynamic_cast<CTile*>(m_tPickInfo.pGameObj)) {}	// 기존에 이미 설치된 타일인 경우
+/*		dynamic_cast<CTile*>(m_tPickInfo.pGameObj)->Change_Texture(m_pCurTextureName);*/ // 부수고 재설치
 
 	else	// 설치된 타일이 없는 경우
 	{
-		pTile = CTile::Create(m_pGraphicDev, vPos, m_pCurTextureName);
-		pCurRoom->PushBack_Tile(pTile);
+		/*pTile = CTile::Create(m_pGraphicDev, vPos, m_pCurTextureName);
+		pCurRoom->PushBack_GameObj(pTile);*/ // 설치
 
 		// Decide Tile Rotation;
-		_vec3 vTileNormal = m_tPickInfo.tri.Normal();
-		vTileNormal.Normalize();
+		//_vec3 vTileNormal = m_tPickInfo.tri.Normal();
+		//vTileNormal.Normalize();
 
-		if (vTileNormal.Degree(_vec3::Up()) > 0.1f)
-		{
-			pTile->m_pTransform->Set_Dir(vTileNormal);
-		}
-		pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
+		//if (vTileNormal.Degree(_vec3::Up()) > 0.1f)
+		//{
+		//	pTile->m_pTransform->Set_Dir(vTileNormal);
+		//}
+		//pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
 	}
 }
 
 void CEditCamera::CreateObj()
 {
-	if (!m_bPick[PICK_OBJ])
+	if (PICK_OBJ != m_ePick)
 		return;
 	
-	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
-		return;
+	//if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
+	//	return;
 
-	CGameObject* pObj = FACTORY->CreateObj(m_tag);
-	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
+	//CGameObject* pObj = FACTORY->CreateObj(m_tag);
+	//ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
 	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
 
 	switch (m_radio)
@@ -474,5 +432,5 @@ void CEditCamera::CreateObj()
 		break;
 	}
 
-	pObj->m_pTransform->Set_Pos(vPos);
+	//pObj->m_pTransform->Set_Pos(vPos);
 }

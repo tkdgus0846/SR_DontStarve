@@ -73,16 +73,19 @@ _uint CLoading::Loading_ForStage(void)
 {
 	Set_String(L"Texture Loading....");
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Player_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture/Player/Sonic.png")), E_FAIL);
-
 	// Bullet Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"NormalBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/bigbullet_%d.png", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"IceBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/iceBeam_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FireBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/smallExplode_%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MeteorPoint_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/MeteorPoint.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FireBall_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/fireBall_%d.png", 4)), E_FAIL);
+
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"VortexBulletBefore_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/Energy_%d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"VortexBulletAfter_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/vortex.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SwordBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/sword.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"StarBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Star_%d.png",4)), E_FAIL);
+	
 
 	// Monster Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Bub_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/bub_%d.png", 2)), E_FAIL);
@@ -99,7 +102,10 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_WalkerBoss_Walk_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/WalkerBoss_%d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_WalkerBoss_Idle_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/WalkerBoss_0.png")), E_FAIL);
 
+	// Effect 텍스쳐
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ExplosionBlue", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/ExplosionBlue_%d.png",5)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Explosion_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/explosion_%d.png", 5)), E_FAIL);
+
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RedBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/redblood_%d.png", 4)), E_FAIL);
 
@@ -115,7 +121,29 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Dock_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_%d.png", 15)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Open_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_14.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorCrate_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorCrate.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrass #421873", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrass #421873.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSand.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorIce", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorIce.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSnow", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSnow.png")), E_FAIL);
 
+	// Tile Multi Texture
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBelt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBelt_%d.png", 4)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBeltCorner", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBeltCorner_%d.png", 4)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBlood_%d.png", 4)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorElectric", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorElectric_%d.png", 3)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLava", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorLava_%d.png", 4)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorOil", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorOil_%d.png", 4)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorQuicksand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorQuicksand_%d.png", 4)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSwamp", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorSwamp_%d.png", 4)), E_FAIL);
+
+	// Gun Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gun/Gun.png")), E_FAIL);
 
 	// Map Object

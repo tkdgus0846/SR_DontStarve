@@ -73,8 +73,12 @@ void CWeaponType::LateUpdate_GameObject(void)
 
 void CWeaponType::Render_GameObject(void)
 {
-	WEAPONTYPE type = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeaponType();
+  CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
+  if (pPlayer == nullptr) return;
+  
+	WEAPONTYPE type = pPlayer->Get_CurWeaponType();
 	Set_ViewMatrix_UI(-341.f, -230.f);
+
 	dynamic_cast<CTexture*>(m_arrTexture[type])->Render_Texture();
 	m_pRcTex->Render_Component();
 }

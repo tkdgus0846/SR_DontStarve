@@ -79,6 +79,10 @@ enum COL_DIR
 	DIR_END = 4
 };
 
+/* EJECT: 총을 쏠때 나는 소리, ENVIRONMENT: 환경요소와의 작용이 이뤄졌을때 나오는 소리
+	ENEMY: 적과의 작용이 이뤄졌을때 나오는소리 .....*/
+enum CHANNELID { SOUND_BGM, SOUND_EFFECT, SOUND_ENVIRONMENT, SOUND_ENEMY, SOUND_OBJ, SOUND_SUSTAIN, SOUND_EJECT, MAXCHANNEL };
+
 namespace Engine
 {
 	// ID_UPDATE: 업데이트랑 레이트 업데이트만 함.
@@ -176,4 +180,21 @@ enum OBJ_TYPE
 	OBJ_EFFECT,
 	OBJ_UI,
 	OBJ_END
+};
+
+enum TILE_TYPE
+{
+	TILE_BELT,
+	TILE_BLOOD,
+	TILE_ELECTRIC,
+	TILE_LAVA,
+	TILE_OIL,
+	TILE_QUICKSAND,
+	TILE_SWAMP,
+	TILE_ICE,
+	TILE_SAND,
+	TILE_GRASS,
+	TILE_DEFAULT,
+	TILE_SNOW,
+	TILE_END
 };

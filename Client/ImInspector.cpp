@@ -1,5 +1,5 @@
 #include "ImInspector.h"
-
+#include "ImManager.h"
 #include "Export_Function.h"
 
 #include "EditCamera.h"
@@ -20,12 +20,18 @@
 #include "SoftPyramid.h"
 #include "HardPyramid.h"
 #include "Slider.h"
+#include "TileFactory.h"
 
 static const char* cur_item = "Baller";
+static const char* cur_tile_item = NULL;
 
 CImInspector::CImInspector(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CImWindow(pGraphicDev), m_pCurTarget(nullptr)
+	: CImWindow(pGraphicDev)
+	, m_pCurTarget(nullptr)
 	, m_pCurRoom(nullptr)
+	, m_pMonsterImage(nullptr)
+	, m_pMapObjImage(nullptr)
+	, m_pTileImage(nullptr)
 {
 	ZeroMemory(m_vObjectPos, sizeof(_vec3));
 }
@@ -36,11 +42,17 @@ CImInspector::~CImInspector()
 
 HRESULT CImInspector::Ready_ImWindow()
 {
+	m_pTileImage = ImImage::Create(m_pGraphicDev, TILE_FACTORY);
+	CImManager::GetInstance()->Push_Back(m_pTileImage);
+
 	return S_OK;
 }
 
 _int CImInspector::Update(float fTimeDelta)
 {
+	if (!IsEnable())
+		return 0;
+
 	for(auto iter : m_vecMonster)
 		iter.second->Update_GameObject(fTimeDelta);
 
@@ -114,13 +126,39 @@ void CImInspector::Show_TilePicking()
 {
 	static _int iTileNum = 0;
 
-	ImGui::Begin("Image");
-	Show_Image(iTileNum);
-	ImGui::End();
+
 
 	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
 
-	ImGui::Checkbox("CHECK_PICK!", &pCamera->Get_Pick(PICK_TILE));
+	ImGui::RadioButton("TILE_MODE", &((int&)pCamera->Get_Pick()), 0);
+	if (PICK_TILE == pCamera->Get_Pick())
+	{
+		ImGui::Begin("Image");
+			m_pTileImage->SetEnable(true);
+		ImGui::End();
+	}
+	else
+		m_pTileImage->SetEnable(false);
+
+	//
+	vector<const char*> tileItems;
+	for (_int i = 0; i < TILE_FACTORY->GetSTag().size(); ++i)
+		tileItems.push_back(TILE_FACTORY->GetSTag()[i].c_str());
+	
+	if (ImGui::BeginCombo("##combo", cur_tile_item)) // The second parameter is the label previewed before opening the combo.
+	{
+		for (int n = 0; n < tileItems.size(); n++)
+		{
+			bool is_selected = (cur_tile_item == tileItems[n]); // You can store your selection however you want, outside or inside your objects
+			if (ImGui::Selectable(tileItems[n], is_selected))
+				cur_tile_item = tileItems[n];
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
+		}
+		if(NULL != cur_tile_item) m_pTileImage->Set_Tag(cur_tile_item);
+		ImGui::EndCombo();
+	}
+
 	ImGui::SeparatorText("Tile");
 
 	if (ImGui::RadioButton("Level1_Floor", &iTileNum, 20))
@@ -152,9 +190,7 @@ void CImInspector::Show_Create_Object()
 
 	if (ImGui::TreeNode("Object_Type"))
 	{
-		ImGui::Begin("Image");
-		Show_Image(iObjNum);
-		ImGui::End();
+
 
 		ImGui::SeparatorText("Monster");
 
@@ -219,8 +255,8 @@ void CImInspector::Show_Create_Object()
 	}
 
 	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
-	pCamera->Set_Tag(cur_item);
-	ImGui::Checkbox("CHECK_PICK!", &pCamera->Get_Pick(PICK_OBJ));
+	//pCamera->Set_Tag(cur_item);
+	ImGui::RadioButton("OBJ_MODE", &((int&)pCamera->Get_Pick()), 1);
 	ImGui::RadioButton("LeftUp", &pCamera->Get_Radio(), 0); ImGui::SameLine();
 	ImGui::RadioButton("RightUp", &pCamera->Get_Radio(), 1); 
 	ImGui::RadioButton("LeftBottom", &pCamera->Get_Radio(), 2); ImGui::SameLine();
@@ -381,26 +417,6 @@ void CImInspector::Show_Components()
 			}
 		}
 	}
-}
-
-void CImInspector::Show_Image(_int iObjNum)
-{
-	CTexture* pTexture = nullptr;
-	pTexture = FACTORY->GetTexture(cur_item);
-
-	if (20 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Level1_Texture", nullptr));
-	if (21 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Wall_Level1_Texture", nullptr));
-	if (22 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Level2_Texture", nullptr));
-	if (23 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Wall_Level2_Texture", nullptr));
-	if (24 == iObjNum)
-		pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Dock_Texture", nullptr));
-
-	if(pTexture)
-		ImGui::Image((void*)pTexture->Get_TextureCom(), ImVec2(100.f, 100.f));
 }
 
 CImInspector * CImInspector::Create(LPDIRECT3DDEVICE9 pGraphicDev)

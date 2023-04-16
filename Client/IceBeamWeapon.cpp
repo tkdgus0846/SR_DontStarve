@@ -3,6 +3,7 @@
 
 #include "BulletMgr.h"
 #include "IceBullet.h"
+#include "..\Engine\SoundMgr.h"
 
 CIceBeamWeapon::CIceBeamWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
@@ -41,6 +42,8 @@ CBullet* CIceBeamWeapon::Shot_Setting()
 
 	CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"IceBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, { 1.7f,1.7f,1.f }, false);
 
+	
+	STOP_PLAY_SOUND(L"sfxLaser.wav", SOUND_EJECT, 1.f);
 	return bullet;
 }
 

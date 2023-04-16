@@ -26,16 +26,14 @@ private:
 	void	Fix_Mouse();
 
 public:
-	void Set_Tag(const char* tag) { m_tag = tag; }
-	_bool& Get_Pick(PICK_TYPE ePickType) { return m_bPick[ePickType]; }
+	void Set_Tag(const _tchar* Tiletag) { m_Tiletag = Tiletag; }
+	PICK_TYPE& Get_Pick() { return m_ePick; }
 	ClickInfo&	Get_ClickInfo() { return m_tPickInfo; }
 	void CreateObj();
 	_int&	Get_Radio() { return m_radio; }
 
 private:
-	// imgui에서 사용하는 함수들로 bool변수로 활성화 여부를 결정.
-	// ex) m_bPick[PICK_TILE]를 true로 만들어주면 CreateTile이 활성화된다.
-	void CreateTile();
+	void LoadSaveTarget(const _tchar* tag);
 
 private:
 	void SetClickInfo();
@@ -55,11 +53,11 @@ public:
 private:
 	_float				m_fSpeed;
 	_bool				m_bFix;
-	_bool				m_bPick[PICK_END];
+	PICK_TYPE			m_ePick;
 	CRoom*				tmp;
 	ClickInfo			m_tPickInfo;
 	const _tchar*		m_pCurTextureName;
-	const char*			m_tag;
+	const _tchar*			m_Tiletag;
 
 	_int				m_radio;
 public:

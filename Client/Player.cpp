@@ -60,7 +60,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	/*cout << m_pTransform->m_vInfo[INFO_POS].x << " " << m_pTransform->m_vInfo[INFO_POS].y << " " << m_pTransform->m_vInfo[INFO_POS].z << endl;*/
 
-	cout << m_fUltimateGuage << endl;
+
 	Key_Input(fTimeDelta);
 
 	// m_planeVec
@@ -308,6 +308,28 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		if (m_eCurWeaponType == LASERSHOT)
 			m_pCurWeapon->Shot();
 	}
+
+	if (Engine::Mouse_Pressing(DIM_RB))
+	{
+		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
+
+		playerCamera->Set_FOV(D3DXToRadian(30.f));
+	}
+	
+	if (Engine::Mouse_Up(DIM_RB))
+	{
+		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
+
+		playerCamera->Set_FOV(D3DXToRadian(60.f));
+	}
+
+	if (Engine::Get_DIMouseMove(DIMS_Z) > 0.f)
+	{
+		Next_Weapon();
+	}
+
+	if (Engine::Get_DIMouseMove(DIMS_Z) < 0.f)
+		Prev_Weapon();
 
 
 	if (Engine::Key_Down(DIK_F))

@@ -24,10 +24,13 @@ HRESULT CBulletGauge::Ready_GameObject(void)
 
 _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 {
+	CPlayer* player = dynamic_cast<CPlayer*>(Engine::Get_Player());
+	if (player == nullptr) return 0;
 
-	CWeapon* pWeapon = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeapon();
+	CWeapon* pWeapon = player->Get_CurWeapon();
+	if (pWeapon == nullptr) return 0;
 
-	switch (dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeaponType())
+	switch (player->Get_CurWeaponType())
 	{
 	case BIGSHOT: 
 	{
@@ -109,6 +112,8 @@ HRESULT CBulletGauge::Add_Component(void)
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex_Dynamic", this));
 	NULL_CHECK_RETURN(m_pBufferCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex_Dynamic", pComponent });
+
+	//cout << pComponent << endl;
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"BulletGauge_Texture", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
