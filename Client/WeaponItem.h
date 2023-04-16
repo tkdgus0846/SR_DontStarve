@@ -26,7 +26,7 @@ private:
 	virtual void Free(void) override;
 	void		Set_ID(WEAPONTYPE eID) { m_eID = eID; }
 	void		Select_Type();
-	void		WeaponRotationZ();
+	void		WeaponRotationZ(const _float & fTimeDelta);
 
 private:
 	WEAPONTYPE	m_eID = WEAPONEND;

@@ -75,6 +75,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MyFont.h" />
     <ClInclude Include="PyramidDestoryParticle.h" />
+    <ClInclude Include="SoundMgr.h" />
     <ClInclude Include="TextureParticle.h" />
     <ClInclude Include="ProtoMgr.h" />
     <ClInclude Include="RcCol.h" />
@@ -145,6 +146,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MyFont.cpp" />
     <ClCompile Include="PyramidDestoryParticle.cpp" />
+    <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="TextureParticle.cpp" />
     <ClCompile Include="ProtoMgr.cpp" />
     <ClCompile Include="RcCol.cpp" />
@@ -250,8 +252,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)External\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\x86\;$(SolutionDir)External\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">
     <OutDir>$(SolutionDir)Output\</OutDir>

@@ -24,10 +24,13 @@ HRESULT CBulletGauge::Ready_GameObject(void)
 
 _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 {
+	CPlayer* player = dynamic_cast<CPlayer*>(Engine::Get_Player());
+	if (player == nullptr) return 0;
 
-	CWeapon* pWeapon = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeapon();
+	CWeapon* pWeapon = player->Get_CurWeapon();
+	if (pWeapon == nullptr) return 0;
 
-	switch (dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeaponType())
+	switch (player->Get_CurWeaponType())
 	{
 	case BIGSHOT: 
 	{

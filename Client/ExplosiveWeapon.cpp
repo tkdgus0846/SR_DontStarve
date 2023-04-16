@@ -1,26 +1,25 @@
-#include "NormalWeapon.h"
+#include "ExplosiveWeapon.h"
 #include "Export_Function.h"
 
 #include "BulletMgr.h"
 #include "NormalBullet.h"
 #include "IceBullet.h"
-#include "SoundMgr.h"
 
-CNormalWeapon::CNormalWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
+CExplosiveWeapon::CExplosiveWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CWeapon(pGraphicDev)
 {
-	Set_ObjTag(L"NormalWeapon");
+	Set_ObjTag(L"ExplosiveWeapon");
 
 	m_fCycle = 0.5f;
 	m_MaxBulletNum = 2;
 	m_CurBulletNum = 2;
 }
 
-CNormalWeapon::~CNormalWeapon()
+CExplosiveWeapon::~CExplosiveWeapon()
 {
 }
 
-CBullet* CNormalWeapon::Shot_Setting()
+CBullet* CExplosiveWeapon::Shot_Setting()
 {
 	CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
 
@@ -43,19 +42,17 @@ CBullet* CNormalWeapon::Shot_Setting()
 
 	CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, {0.5f,0.5f,1.f}, false, 40.f);
 
-	
-	STOP_PLAY_SOUND(L"sfxBigBullet.wav", SOUND_EJECT, 1.f);
 	m_CurBulletNum++;
 
 	return bullet;	
 }
 
-_int CNormalWeapon::Update_GameObject(const _float& fTimeDelta)
+_int CExplosiveWeapon::Update_GameObject(const _float& fTimeDelta)
 {
 	return __super::Update_GameObject(fTimeDelta);
 }
 
-HRESULT CNormalWeapon::Add_Component()
+HRESULT CExplosiveWeapon::Add_Component()
 {
 
 	/*CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
@@ -64,25 +61,25 @@ HRESULT CNormalWeapon::Add_Component()
 	return S_OK;
 }
 
-HRESULT CNormalWeapon::Ready_GameObject(void)
+HRESULT CExplosiveWeapon::Ready_GameObject(void)
 {
 	return __super::Ready_GameObject();
 }
 
-void CNormalWeapon::LateUpdate_GameObject(void)
+void CExplosiveWeapon::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
 }
 
-void CNormalWeapon::Render_GameObject(void)
+void CExplosiveWeapon::Render_GameObject(void)
 {
 	
 	__super::Render_GameObject();
 }
 
-CNormalWeapon* CNormalWeapon::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pOnwerTransform)
+CExplosiveWeapon* CExplosiveWeapon::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pOnwerTransform)
 {
-	CNormalWeapon*		pInstance = new CNormalWeapon(pGraphicDev);
+	CExplosiveWeapon*		pInstance = new CExplosiveWeapon(pGraphicDev);
 	pInstance->m_pOwnerTransform = pOnwerTransform;
 
 	if (FAILED(pInstance->Ready_GameObject()))
@@ -94,7 +91,7 @@ CNormalWeapon* CNormalWeapon::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* 
 	return pInstance;
 }
 
-void CNormalWeapon::Free(void)
+void CExplosiveWeapon::Free(void)
 {
 	__super::Free();
 }

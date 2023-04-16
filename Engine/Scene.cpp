@@ -3,6 +3,9 @@
 #include "Layer.h"
 #include "GameObject.h"
 
+#include "Export_Function.h"
+#include "SoundMgr.h"
+
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 {
@@ -13,6 +16,8 @@ CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	{
 		m_DynamicLayerArr[i] = CLayer::Create();
 	}
+
+	m_SlowTime = 0.f;
 }
 
 CScene::~CScene()
@@ -38,7 +43,24 @@ _int CScene::Update_Scene(const _float & fTimeDelta)
 		CLayer* curLayer = Get_Layer((LAYERID)i);
 		if (curLayer == nullptr) continue;
 
-		iResult = curLayer->Update_Layer(fTimeDelta);
+		if (Engine::Key_Pressing(DIK_T))
+		{
+			Play_SlowTime(fTimeDelta);
+				
+		}
+		else
+		{
+			Reset_SlowTime(fTimeDelta);
+		}
+
+		if (i == LAYER_PLAYER || i == LAYER_UI)
+			iResult = curLayer->Update_Layer(fTimeDelta);
+		else
+		{
+			iResult = curLayer->Update_Layer(m_SlowTime);
+		}
+		
+			
 		if (iResult & 0x80000000)
 			return iResult;
 	}
@@ -78,6 +100,19 @@ CGameObject * CScene::Get_GameObject(LAYERID LayerID, const _tchar * pObjTag)
 	if (curLayer == nullptr) nullptr;
 
 	return curLayer->Get_GameObject(pObjTag);
+}
+
+void CScene::Play_SlowTime(const _float & fTimeDelta)
+{
+	/*m_SlowTime -= 0.0007f * fTimeDelta;
+	if (m_SlowTime < 0.f) m_SlowTime = 0.f;*/
+	m_SlowTime = 0.0001f;
+	PLAY_SOUND(L"sfxBootDown.wav", SOUND_ENVIRONMENT, 1.f);
+}
+
+void CScene::Reset_SlowTime(const _float & fTimeDelta)
+{
+	m_SlowTime = fTimeDelta;
 }
 
 CLayer* CScene::Get_Layer(LAYERID LayerID)

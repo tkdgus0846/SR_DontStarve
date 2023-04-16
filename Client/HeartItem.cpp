@@ -51,7 +51,7 @@ HRESULT CHeartItem::Ready_GameObject(void)
 _int CHeartItem::Update_GameObject(const _float & fTimeDelta)
 {
 
-	if (m_bDrop == true) ItemPatrol();
+	if (m_bDrop == true) ItemPatrol(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
 
 	if (GetDead()) return OBJ_DEAD;

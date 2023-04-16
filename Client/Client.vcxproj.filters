@@ -458,6 +458,12 @@
     <ClInclude Include="ImImage.h">
       <Filter>IMGUI\ImWindow</Filter>
     </ClInclude>
+    <ClInclude Include="SpreadWeapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosiveWeapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -801,6 +807,12 @@
     </ClCompile>
     <ClCompile Include="ImImage.cpp">
       <Filter>IMGUI\ImWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="SpreadWeapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosiveWeapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

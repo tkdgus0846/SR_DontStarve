@@ -69,6 +69,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_FPS60"), FALSE);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame60", 60.f), FALSE);
+	FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame30", 30.f), FALSE);
 
 	ShowCursor(false);
 

@@ -307,6 +307,28 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			m_pCurWeapon->Shot();
 	}
 
+	if (Engine::Mouse_Pressing(DIM_RB))
+	{
+		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
+
+		playerCamera->Set_FOV(D3DXToRadian(30.f));
+	}
+	
+	if (Engine::Mouse_Up(DIM_RB))
+	{
+		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
+
+		playerCamera->Set_FOV(D3DXToRadian(60.f));
+	}
+
+	if (Engine::Get_DIMouseMove(DIMS_Z) > 0.f)
+	{
+		Next_Weapon();
+	}
+
+	if (Engine::Get_DIMouseMove(DIMS_Z) < 0.f)
+		Prev_Weapon();
+
 
 	if (Engine::Key_Down(DIK_F))
 	{
