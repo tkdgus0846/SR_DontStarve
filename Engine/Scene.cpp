@@ -87,7 +87,7 @@ void Engine::CScene::Set_StaticLayerArr(vector<CLayer*>* layerArr)
 HRESULT CScene::Add_GameObject(CGameObject* pObj)
 {
 	CLayer* curLayer = Get_Layer(pObj->Get_LayerID());
-	if (curLayer == nullptr) S_OK;
+	if (curLayer == nullptr) return S_OK;
 
 	FAILED_CHECK_RETURN(curLayer->Add_GameObject(pObj->Get_ObjTag(), pObj), E_FAIL);
 		

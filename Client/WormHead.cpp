@@ -13,12 +13,20 @@ CWormHead::~CWormHead()
 {
 }
 
-HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos, vector<CWormBody*>& vecBody, CWormTail* pTail)
+HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 9.f;
 	m_iAttack = 1;
 	m_iHp = 100;
 	m_iMaxHp = 100;
+	m_vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(18.f, 2.f, 18.f)));
+	m_vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(19.f, 2.f, 19.f)));
+	m_vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(20.f, 2.f, 20.f)));
+	m_vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(21.f, 2.f, 21.f)));
+	m_vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(22.f, 2.f, 22.f)));
+
+	for (auto iter : m_vecBody)
+		Add_Static_GameObject(iter);
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -56,7 +64,14 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos, vector<CWormBody*>& vecB
 _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 {
 	static _bool bStart = false;
-	_vec3 vDir{};
+
+	if (!Get_Player())
+		return OBJ_NOEVENT;
+    
+  _vec3 vDir{};
+
+	_vec3 vDir = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
+	vDir.Normalize();
 
 	if (Key_Down(DIK_0))
 	{
@@ -109,6 +124,9 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 
 void CWormHead::LateUpdate_GameObject(void)
 {
+	if (!Get_Player())
+		return;
+
 	m_pTransform->Set_Scale({ 1.f, 1.f, 1.f });
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
@@ -210,12 +228,11 @@ HRESULT CWormHead::Add_Component()
 	FAILED_CHECK_RETURN(Init_AI_Behaviours());
 }
 
-CWormHead * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, 
-	vector<CWormBody*>& vecBody, CWormTail* pTail)
+CWormHead * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
 	CWormHead* pInstance = new CWormHead(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(vPos, vecBody, pTail)))
+	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

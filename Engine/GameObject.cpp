@@ -1,4 +1,5 @@
 ﻿#include "GameObject.h"
+#include "GameObject.h"
 #include "stdafx.h"
 #include "GameObject.h"
 #include "Transform.h"
@@ -17,7 +18,8 @@ bool Compare_Component_Priority(pair<const _tchar*, CComponent*>& a, pair<const 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev) : 
 	m_pGraphicDev(pGraphicDev),
 	m_fViewZ(0.f),
-	m_bDead(FALSE)
+	m_bDead(FALSE),
+	m_pOwnerObject(nullptr)
 {
 	m_pGraphicDev->AddRef();
 
@@ -66,6 +68,22 @@ CTexture * CGameObject::Get_Texture()
 		}
 	}
 	return pTexture;
+}
+
+wstring CGameObject::Get_TextureKey()
+{
+	CTexture* pTexture = nullptr;
+	for (_ulong i = 0; i < ID_END; ++i)
+	{
+		for (auto& Component : m_uMapComponent[i])
+		{
+			if (pTexture = dynamic_cast<CTexture*>(Component.second))
+			{
+				return Component.first;
+			}
+		}
+	}
+	return nullptr;
 }
 
 HRESULT CGameObject::Ready_GameObject(void)
@@ -180,6 +198,20 @@ void CGameObject::Add_Render_Component()
 	sort(sortVec.begin(), sortVec.end(), Compare_Component_Priority);
 
 	m_RenderComponent = sortVec;
+}
+
+void CGameObject::Remove_InOwnerObject()
+{
+	if (m_pOwnerObject == nullptr) return;
+
+	for (auto& it = m_pOwnerObject->m_StaticObjectList.begin(); it != m_pOwnerObject->m_StaticObjectList.end(); it++)
+	{
+		if ((*it) == this)
+		{
+			m_pOwnerObject->m_StaticObjectList.erase(it);
+			break;
+		}
+	}
 }
 
 CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENTID eID)

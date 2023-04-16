@@ -30,6 +30,7 @@ public:
 	PICK_TYPE& Get_Pick() { return m_ePick; }
 	ClickInfo&	Get_ClickInfo() { return m_tPickInfo; }
 	void CreateObj();
+	void CreateTile();
 	_int&	Get_Radio() { return m_radio; }
 
 private:
@@ -47,8 +48,6 @@ private:
 
 	// 
 	_vec3 CalcMiddlePoint(Triangle& tri);
-public:
-	void Change_Texture(const _tchar* pTextureName) { m_pCurTextureName = pTextureName; }
 
 private:
 	_float				m_fSpeed;

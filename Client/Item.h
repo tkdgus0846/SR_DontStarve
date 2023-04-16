@@ -20,6 +20,9 @@ public:
 	virtual void OnCollisionEnter(const class Collision* collsion) override;
 	virtual void OnCollisionStay(const class Collision* collision) override;
 
+	void		Set_Loot(_bool state = true) { m_bCanLoot = state; }
+	_bool		Get_Loot() const { return m_bCanLoot; }
+
 public:
 	class CAnimation* m_pAniCom;
 	class CTexture*   m_pTextureCom;
@@ -31,6 +34,7 @@ protected:
 	_float					m_fSpeed;
 	_float					m_fMaxY;
 	_float					m_fMinY;
+	_bool					m_bCanLoot;
 
 protected:
 	virtual void		ItemPatrol(const _float& fTimeDelta);

@@ -27,7 +27,6 @@ typedef		D3DXVECTOR4				_vec4;
 //typedef		D3DXMATRIX				_matrix;
 
 
-
 typedef	struct MyVec3 : public D3DXVECTOR3
 {
 	MyVec3() : D3DXVECTOR3() {}

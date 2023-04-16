@@ -14,8 +14,7 @@ private:
 	virtual ~CWormHead();
 
 public:
-	virtual HRESULT Ready_GameObject(const _vec3& vPos, 
-		vector<CWormBody*>& vecBody, CWormTail* pTail);
+	virtual HRESULT Ready_GameObject(const _vec3& vPos);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
@@ -33,8 +32,7 @@ private:
 	_bool				m_bMove;
 
 public:
-	static CWormHead*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos,
-		vector<CWormBody*>& vecBody, CWormTail* pTail);
+	static CWormHead*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	static const _tchar* GetTag() { return L"WormBody"; }
 
 private:
