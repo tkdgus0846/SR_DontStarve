@@ -220,6 +220,9 @@
     <ClInclude Include="PyramidDestoryParticle.h">
       <Filter>Component\ParticleSystem\ObjectParticles</Filter>
     </ClInclude>
+    <ClInclude Include="SoundMgr.h">
+      <Filter>Manager\SoundMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -408,6 +411,9 @@
     <ClCompile Include="PyramidDestoryParticle.cpp">
       <Filter>Component\ParticleSystem\ObjectParticles</Filter>
     </ClCompile>
+    <ClCompile Include="SoundMgr.cpp">
+      <Filter>Manager\SoundMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Base.inl">
@@ -519,6 +525,9 @@
     </Filter>
     <Filter Include="Component\ParticleSystem\BulletParticles">
       <UniqueIdentifier>{31aaaa75-2907-47ea-a925-434355a0abad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\SoundMgr">
+      <UniqueIdentifier>{4fc3040c-ae28-483f-8372-b3c3d7b42cba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 #include "FileSystem.h"
 #include "RoomMgr.h"
 #include "Loading.h"
+#include "..\Engine\SoundMgr.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_pLoading(nullptr)

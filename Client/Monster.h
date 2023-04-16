@@ -29,6 +29,9 @@ public:
 
 	virtual void SetDead(_bool bDead = true) override;
 
+	virtual void	Get_Damaged(_int Damage) override;
+	
+
 private:
 	virtual HRESULT Add_Component() override;
 

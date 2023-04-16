@@ -101,8 +101,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(SolutionDir)Engine\;$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Output\;$(DXSDK_DIR)Lib\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)External\;$(SolutionDir)Engine\;$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)External\;$(SolutionDir)Output\;$(DXSDK_DIR)Lib\x86\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">
     <LinkIncremental>true</LinkIncremental>

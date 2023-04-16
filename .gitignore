@@ -402,6 +402,5 @@ FodyWeavers.xsd
 *.exp
 Client.lib
 Engine.lib
-*.dll
 *.exe
 *.idb

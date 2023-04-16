@@ -18,7 +18,7 @@ public:
 	virtual void OnCollisionExit(const class Collision* collision);
 
 public:
-	void	Get_Damaged(_int Damage)
+	virtual void	Get_Damaged(_int Damage)
 	{
 		if (GetDead()) return;
 

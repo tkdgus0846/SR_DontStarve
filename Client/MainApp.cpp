@@ -11,6 +11,7 @@
 #include "Export_Function.h"
 #include "RoomMgr.h"
 #include "ParticleMgr.h"
+#include "SoundMgr.h"
 
 // 주석 테스트용
 CMainApp::CMainApp()
@@ -29,6 +30,9 @@ HRESULT CMainApp::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(Ready_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
+	SOUND->Init();
+	
+	PLAY_BGM(L"Title.wav", 1.f);
 	return S_OK;
 }
 
@@ -69,6 +73,8 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	(*ppGraphicDev) = m_pDeviceClass->Get_GraphicDev();
 	(*ppGraphicDev)->AddRef();
+
+	
 
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"바탕", 15, 20, FW_HEAVY), E_FAIL);
 	/*FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"궁서", 15, 20, FW_HEAVY), E_FAIL);
@@ -114,6 +120,7 @@ void CMainApp::Free(void)
 	CBulletMgr::DestroyInstance();
 	CParticleMgr::DestroyInstance();
 	CEffectManager::DestroyInstance();
+	CSoundMgr::DestroyInstance();
 	
 
 	FreeConsole();

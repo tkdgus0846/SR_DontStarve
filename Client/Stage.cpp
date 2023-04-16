@@ -35,6 +35,7 @@
 #include "Tennel.h"
 #include "Pyramid.h"
 #include "BootsItem.h"
+#include "SoundMgr.h"
 //#include "RenderTargetTest.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -119,14 +120,18 @@ HRESULT CStage::Ready_Scene(void)
 	tLightInfo.Direction = _vec3(1.f, 1.f, 1.f);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);*/
-
+	
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	STOP_ALL_SOUND;
+	PLAY_BGM(L"Sector1.wav", 0.5f);
 
 	return S_OK;
 }
 
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
+	
 	if(0 == (*m_StaticLayerArr)[LAYER_MONSTER]->Get_ObjectSize())
 		ROOM_MGR->Get_CurRoom()->Open_Doors();
 
