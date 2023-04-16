@@ -13,6 +13,9 @@ CCrossHair::~CCrossHair()
 
 HRESULT CCrossHair::Ready_GameObject(void)
 {
+	m_vPos = { 0.f, 0.f, 0.f };
+	m_vScale = { 25.f, 25.f, 0.f };
+
 	__super::Ready_GameObject();
 
 	return S_OK;
@@ -57,18 +60,6 @@ HRESULT CCrossHair::Add_Component(void)
 
 	return S_OK;
 }
-
-void CCrossHair::Set_ViewMatrix_UI()
-{
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
-
-	D3DXMatrixScaling(&matView, 25.f, 25.f, 0.f);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-}
-
 
 CCrossHair * CCrossHair::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

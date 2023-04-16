@@ -303,6 +303,7 @@
     <ClInclude Include="BootsItem.h" />
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
+    <ClInclude Include="SpreaWeapon.h" />
     <ClInclude Include="SwordBullet.h" />
     <ClInclude Include="SwordWeapon.h" />
     <ClInclude Include="Tennel.h" />
@@ -412,6 +413,7 @@
     <ClCompile Include="BootsItem.cpp" />
     <ClCompile Include="SoftPyramid.cpp" />
     <ClCompile Include="Cryder.cpp" />
+    <ClCompile Include="SpreaWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

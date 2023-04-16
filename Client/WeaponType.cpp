@@ -51,6 +51,8 @@ HRESULT CWeaponType::Add_Component()
 
 HRESULT CWeaponType::Ready_GameObject(void)
 {
+	m_vScale = { 25.f, 25.f, 0.f };
+
 	__super::Ready_GameObject();
 
 	return S_OK;
@@ -72,23 +74,9 @@ void CWeaponType::LateUpdate_GameObject(void)
 void CWeaponType::Render_GameObject(void)
 {
 	WEAPONTYPE type = dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_CurWeaponType();
-	Set_ViewMatrix_UI();
+	Set_ViewMatrix_UI(-341.f, -230.f);
 	dynamic_cast<CTexture*>(m_arrTexture[type])->Render_Texture();
 	m_pRcTex->Render_Component();
-}
-
-void CWeaponType::Set_ViewMatrix_UI()
-{
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
-
-	_matrix matTrans;
-	D3DXMatrixScaling(&matView, 25.f, 25.f, 0.f);
-	D3DXMatrixTranslation(&matTrans, -341.f, -230.f, 0.f);
-	D3DXMatrixMultiply(&matView, &matView, &matTrans);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 }
 
 CWeaponType * CWeaponType::Create(LPDIRECT3DDEVICE9 pGraphicDev)

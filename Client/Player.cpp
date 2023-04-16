@@ -9,6 +9,7 @@
 #include "FlameProjector.h"
 #include "RapidWeapon.h"
 #include "SwordWeapon.h"
+#include "SpreaWeapon.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)
@@ -196,6 +197,7 @@ void CPlayer::Gain_Weapon(WEAPONTYPE eWeaponType)
 			gainWeapon = CRapidWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		case SPREADSHOT:
+			gainWeapon = CSpreaWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		case FREEZESHOT:
 			gainWeapon = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);

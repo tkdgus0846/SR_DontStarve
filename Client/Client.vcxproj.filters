@@ -407,6 +407,9 @@
     <ClInclude Include="SwordWeapon.h">
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="SpreaWeapon.h">
+      <Filter>GameObject\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -704,6 +707,9 @@
       <Filter>GameObject\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="SwordWeapon.cpp">
+      <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SpreaWeapon.cpp">
       <Filter>GameObject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>

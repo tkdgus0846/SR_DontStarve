@@ -89,11 +89,15 @@ void CBootsItem::OnCollisionEnter(const Collision * collsion)
 	__super::OnCollisionEnter(collsion);
 
 	
+
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
+	if (pPlayer == nullptr) { return; }
 
 	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
 	{
+		if (pPlayer->Get_Coin() < 50) { return; }
 		pPlayer->Plus_Speed(7);
+		pPlayer->De_Coin(50);
 	}
 
 }

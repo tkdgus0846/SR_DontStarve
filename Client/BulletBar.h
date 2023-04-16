@@ -23,9 +23,6 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	void		Set_ViewMatrix_UI();
-
-private:
 	Engine::CRcTex*			m_pBufferCom;
 	Engine::CTexture*		m_pTextureCom;
 	D3DXMATRIX  matWorld, matView;

@@ -24,8 +24,6 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	void		Set_ViewMatrix_UI();
-	void		Set_ViewMatrix_UI(_float fX, _float fY);
 	_int		Compute_Num(string PlayerCoin);
 
 private:
