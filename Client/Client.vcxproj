@@ -234,6 +234,7 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinItem.h" />
     <ClInclude Include="CrossHair.h" />
+    <ClInclude Include="Dig.h" />
     <ClInclude Include="Disc.h" />
     <ClInclude Include="DiscItem.h" />
     <ClInclude Include="Door.h" />
@@ -268,6 +269,7 @@
     <ClInclude Include="ImMenuBar.h" />
     <ClInclude Include="ImTest.h" />
     <ClInclude Include="ImWindow.h" />
+    <ClInclude Include="MoveUp.h" />
     <ClInclude Include="Serializable.h" />
     <ClInclude Include="IsNotRangeInPlayer.h" />
     <ClInclude Include="IsRangeInPlayer.h" />
@@ -346,6 +348,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="WormHead.h" />
+    <ClInclude Include="WormTail.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attack.cpp" />
@@ -364,6 +367,7 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinItem.cpp" />
     <ClCompile Include="CrossHair.cpp" />
+    <ClCompile Include="Dig.cpp" />
     <ClCompile Include="Disc.cpp" />
     <ClCompile Include="DiscItem.cpp" />
     <ClCompile Include="Door.cpp" />
@@ -414,6 +418,7 @@
     <ClCompile Include="MapObj.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MoveUp.cpp" />
     <ClCompile Include="NogadaFactory.cpp" />
     <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="MyEdit.cpp">
@@ -478,6 +483,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="WormHead.cpp" />
+    <ClCompile Include="WormTail.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter" />

@@ -8,7 +8,7 @@ class  CTimer : public CBase
 {
 private:
 	explicit CTimer();
-	virtual virtual ~CTimer();
+	virtual ~CTimer();
 
 public:
 	_float		Get_TimeDelta(void) { return m_fTimeDelta; }

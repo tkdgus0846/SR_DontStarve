@@ -9,6 +9,7 @@
 #include "WalkerBoss.h"
 #include "WormHead.h"
 #include "WormBody.h"
+#include "WormTail.h"
 #include "Bub.h"
 #include "Rub.h"
 #include "Cryder.h"
@@ -69,34 +70,18 @@ void CRoomMgr::Create_Default_Room()
 	m_arrRoom[5]->Set_DoorType(DOOR_ES);
 	m_arrRoom[6]->Set_DoorType(DOOR_SW);
 
+	CWormTail* pTail = CWormTail::Create(m_pGraphicDev, _vec3(33.f, 2.f, 33.f));
 	vector<CWormBody*> vecBody;
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(18.f, 2.f, 18.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(19.f, 2.f, 19.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(20.f, 2.f, 20.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(21.f, 2.f, 21.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(22.f, 2.f, 22.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(23.f, 2.f, 23.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(24.f, 2.f, 24.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(25.f, 2.f, 25.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(26.f, 2.f, 26.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(27.f, 2.f, 27.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(28.f, 2.f, 28.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(29.f, 2.f, 29.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(30.f, 2.f, 30.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(31.f, 2.f, 31.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(32.f, 2.f, 32.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(33.f, 2.f, 33.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(34.f, 2.f, 34.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(35.f, 2.f, 35.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(36.f, 2.f, 36.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(37.f, 2.f, 37.f)));
-	vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(38.f, 2.f, 38.f)));
+	for (_int i = 0; i < 15; ++i)
+		vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(_float(18 + i), 2.f, _float(18 + i))));
 
-	CWormHead* pHead = CWormHead::Create(m_pGraphicDev, _vec3(17.f, 2.f, 17.f), vecBody);
+	CWormHead* pHead = CWormHead::Create(m_pGraphicDev, _vec3(17.f, 2.f, 17.f), vecBody, pTail);
 
-	m_arrRoom[0]->PushBack_GameObj(pHead);
+	m_arrRoom[0]->PushBack_GameObj(pTail);
 	for (auto iter : vecBody)
 		m_arrRoom[0]->PushBack_GameObj(iter);
+	m_arrRoom[0]->PushBack_GameObj(pHead);
+
 	//m_arrRoom[0]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(40.f, 3.f, 40.f)));
 	//m_arrRoom[0]->PushBack_GameObj(CWormBoss::Create(m_pGraphicDev, _vec3(30.f, 3.f, 30.f), pHead, vecBody));
 	m_arrRoom[1]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(100.f, 1.f, 40.f)));
@@ -104,25 +89,22 @@ void CRoomMgr::Create_Default_Room()
 	m_arrRoom[5]->PushBack_GameObj(CCryder::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 100.f)));
 	m_arrRoom[6]->PushBack_GameObj(CNubBoss::Create(m_pGraphicDev, _vec3(100.f, 2.4f, 100.f)));
 
-	//====== 임시 코드임 =======
-
-//====== 임시 코드임 =======
-	m_arrRoom[0]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(40.f, 3.f, 40.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(40.f, 3.f, 40.f)));
 
 	//NPC 잠깐 넣어놓음
-	m_arrRoom[0]->PushBack_GameObj(CShopNpc::Create(m_pGraphicDev));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 1.f, 30.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(30.f, 1.f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(20.f, 1.f, 40.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CShopNpc::Create(m_pGraphicDev));
+	//
+	//m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 1.f, 30.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(30.f, 1.f, 40.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(20.f, 1.f, 40.f)));
 
 
 	m_arrRoom[1]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(100.f, 1.f, 40.f)));
 	m_arrRoom[1]->PushBack_GameObj(CRub::Create(m_pGraphicDev, _vec3(90.f, 2.4f, 40.f)));
 	m_arrRoom[5]->PushBack_GameObj(CCryder::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 100.f)));
 	m_arrRoom[6]->PushBack_GameObj(CNubBoss::Create(m_pGraphicDev, _vec3(100.f, 0.6f, 100.f)));
-//====== 임시 코드임 =======
-	
+
+	//====== 임시 코드임 =======
 }
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)
