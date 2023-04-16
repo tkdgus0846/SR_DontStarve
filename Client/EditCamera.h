@@ -29,7 +29,7 @@ public:
 	void Set_Tag(const _tchar* Tiletag) { m_Tiletag = Tiletag; }
 	PICK_TYPE& Get_Pick() { return m_ePick; }
 	ClickInfo&	Get_ClickInfo() { return m_tPickInfo; }
-	void CreateObj();
+	void CreateMonster();
 	void CreateTile();
 	_int&	Get_Radio() { return m_radio; }
 
@@ -56,7 +56,7 @@ private:
 	CRoom*				tmp;
 	ClickInfo			m_tPickInfo;
 	const _tchar*		m_pCurTextureName;
-	const _tchar*			m_Tiletag;
+	const _tchar*		m_Tiletag;
 
 	_int				m_radio;
 public:

@@ -23,6 +23,13 @@ public:
 	const string& Get_CurTileItem() const {
 		return m_CurTileItem;
 	}
+	const string& Get_CurMonsterItem() const {
+		return m_CurMonsterItem;
+	}
+	const string& Get_CurMapObjItem() const {
+		return m_CurMapObjItem;
+	}
+
 
 private:
 	void Show_RoomInfo();

@@ -157,9 +157,6 @@ void CImInspector::Show_TilePicking()
 
 void CImInspector::Show_Create_Object()
 {
-
-
-
 	static _int iObjNum = 0;
 
 	if (ImGui::TreeNode("Object_Type"))
@@ -227,9 +224,8 @@ void CImInspector::Show_Create_Object()
 	}
 
 	//m_pCamera->Set_Tag(cur_item);
-	ImGui::RadioButton("OBJ_MODE", &((int&)m_pCamera->Get_Pick()), 1);
-	IsPickMode(m_pMonsterImage, PICK_OBJ);
-
+	ImGui::RadioButton("MONSTER_MODE", &((int&)m_pCamera->Get_Pick()), 1);
+	IsPickMode(m_pMonsterImage, PICK_MONSTER);
 
 	ImGui::RadioButton("LeftUp", &m_pCamera->Get_Radio(), 0); ImGui::SameLine();
 	ImGui::RadioButton("RightUp", &m_pCamera->Get_Radio(), 1); 
