@@ -12,22 +12,26 @@ CWormHead::~CWormHead()
 {
 }
 
-HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos, vector<CWormBody*>& vecBody)
+HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 7.f;
 	m_iAttack = 1;
 	m_iHp = 100;
 	m_iMaxHp = 100;
+	m_vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(18.f, 2.f, 18.f)));
+	m_vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(19.f, 2.f, 19.f)));
+	m_vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(20.f, 2.f, 20.f)));
+	m_vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(21.f, 2.f, 21.f)));
+	m_vecBody.push_back(CWormBody::Create(m_pGraphicDev, _vec3(22.f, 2.f, 22.f)));
+
+	for (auto iter : m_vecBody)
+		Add_Static_GameObject(iter);
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 
 	m_pTransform->Set_BillMode(true);
-
-	m_vecBody.reserve(vecBody.size());
-	for (_int i = 0; i < vecBody.size(); ++i)
-		m_vecBody.push_back(vecBody[i]);
 
 	_int iSize = m_vecBody.size();
 
@@ -185,11 +189,11 @@ HRESULT CWormHead::Add_Component()
 	FAILED_CHECK_RETURN(Init_AI_Behaviours());
 }
 
-CWormHead * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos, vector<CWormBody*>& vecBody)
+CWormHead * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
 	CWormHead* pInstance = new CWormHead(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(vPos, vecBody)))
+	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

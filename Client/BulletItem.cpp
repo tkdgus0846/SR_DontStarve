@@ -42,6 +42,8 @@ HRESULT CBulletItem::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
 
+	m_pTransform->Set_BillMode(true);
+
 	return S_OK;
 }
 

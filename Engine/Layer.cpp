@@ -53,6 +53,8 @@ HRESULT CLayer::Ready_Layer(void)
 	return S_OK;
 }
 
+
+// 정적인 레이어에서 불렸다면?
 _int CLayer::Update_Layer(const _float & fTimeDelta)
 {
 	for (auto iter = m_uMapObject.begin(); iter != m_uMapObject.end(); )
@@ -61,6 +63,7 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 
 		if (result == OBJ_DEAD)
 		{
+			iter->second->Remove_InOwnerObject();
 			Engine::Remove_Collider(iter->second);
 			Safe_Release(iter->second);
 		}

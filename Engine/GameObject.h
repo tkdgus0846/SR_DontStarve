@@ -67,11 +67,27 @@ public:
 	vector<COLGROUP>				Get_ColGroupVec() { return m_ObjInfo.colGroupVec; }
 	OBJ_INFO						Get_ObjInfo() { return m_ObjInfo; }
 
+
+	
+	list<CGameObject*>* Get_Static_GameObject_List() { return &m_StaticObjectList; }
+
+	// 하위 객체가 죽었을때 처리해주기 위함이다.
+	void			Remove_InOwnerObject();
+
 protected:
 	// 에디터에서만 사용하세요.
 	void			Remove_Render_Component(const _tchar* pComponentTag);
 	// 에디터에서만 사용하세요.
 	void			Add_Render_Component();
+
+	// 게임 오브젝트가 게임오브젝트를 가지고있는 꼴의 정적 레이어 오브젝트들이라면, 이 함수를 호출하여야 한다. 동적 레이어 오브젝트면 굳이 부를 필요가 없다.
+	void			Add_Static_GameObject(CGameObject* childObject) 
+	{ 
+		childObject->m_pOwnerObject = this;
+		m_StaticObjectList.push_back(childObject); 
+	}	
+	
+	
 
 private:
 	CComponent*			Find_Component(const _tchar* pComponentTag, COMPONENTID eID);
@@ -87,6 +103,10 @@ private:
 	// 컴포넌트들의 렌더순서를 정해주는 벡터 컨테이너
 	vector<pair<const _tchar*, CComponent*>> m_RenderComponent;
 	_bool					m_bDead;
+
+	// 만약 게임오브젝트가 게임 오브젝트를 가지고 있는 정적 그룹의 객체라면 리스트에 오브젝트들을 추가해줘야한다.
+	list<CGameObject*>		m_StaticObjectList;
+	CGameObject*			m_pOwnerObject;
 
 public:
 	class CTransform*		m_pTransform;

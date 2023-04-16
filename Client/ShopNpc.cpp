@@ -2,10 +2,14 @@
 #include "Bullet.h"
 #include "Export_Function.h"
 #include "Player.h"
+#include "SellItem.h"
 CShopNpc::CShopNpc(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 {
+	Set_LayerID(LAYER_NPC);
 	Set_ObjTag(L"ShopNpc");
+
+	m_iHp = 1000;
 }
 
 CShopNpc::~CShopNpc()
@@ -39,6 +43,8 @@ HRESULT CShopNpc::Add_Component()
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
 	pCollider->Set_BoundingBox({ 6.f, 6.f, 6.f });
 
+	m_pTransform->Set_BillMode(true);
+
 	return S_OK;
 }
 
@@ -48,18 +54,18 @@ HRESULT CShopNpc::Ready_GameObject(void)
 	m_pTransform->Set_Pos(_vec3{ 30.f, 5.f, 30.f });
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
+	_vec3 Pos = m_pTransform->m_vInfo[INFO_POS];
+
+	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 50, FLAMESHOT);
+	Add_GameObject(item1);
+	m_ItemList.push_back(item1);
+
 	__super::Ready_GameObject();
 	return S_OK;
 }
 
 _int CShopNpc::Update_GameObject(const _float & fTimeDelta)
 {
-	if (CPlayer* pPlayer = dynamic_cast<CPlayer*>(Get_Player()))
-	{
-		m_pTransform->Set_Target(pPlayer->m_pTransform->m_vInfo[INFO_POS]);
-		cout << pPlayer->m_pTransform->m_vInfo[INFO_POS].x << endl;
-	}
-
 	__super::Update_GameObject(fTimeDelta);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
@@ -86,23 +92,27 @@ void CShopNpc::Render_GameObject(void)
 	__super::Render_GameObject();
 }
 
+void CShopNpc::Get_Damaged(_int Damage)
+{
+	__super::Get_Damaged(Damage);
+
+	Ani->SelectState(ANIM_DAMAGED);
+}
+
 void CShopNpc::OnCollisionEnter(const Collision * collsion)
 {
-	__super::OnCollisionEnter(collsion);
 
-	if (true)
-	{
-		int a = 0;
-	}
 }
 
 void CShopNpc::OnCollisionStay(const Collision * collision)
 {
-	__super::OnCollisionStay(collision);
-
-	if (true)
+	if (dynamic_cast<CBullet*>(collision->OtherGameObject) &&
+		collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL) &&
+		collision->MyCollider == Get_Component(L"BodyCollider", ID_ALL))
 	{
-		int a = 0;
+		m_redTexture = true;
+		m_fCurTime = Get_WorldTime();
+		m_fPreTime = Get_WorldTime();
 	}
 }
 
@@ -123,6 +133,5 @@ CShopNpc * CShopNpc::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CShopNpc::Free(void)
 {
-	Safe_Release(Ani);
 	__super::Free();
 }

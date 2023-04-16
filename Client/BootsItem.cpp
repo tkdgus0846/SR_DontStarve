@@ -9,6 +9,7 @@ CBootsItem::CBootsItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	Set_ObjTag(L"BootsItem");
 	m_bDrop = true;
 	m_bBill = false;
+	m_bCanLoot = false;
 }
 
 CBootsItem::~CBootsItem()
@@ -86,24 +87,23 @@ CBootsItem * CBootsItem::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 
 void CBootsItem::OnCollisionEnter(const Collision * collsion)
 {
+	if (m_bCanLoot == false) return;
 	__super::OnCollisionEnter(collsion);
 
 	
-
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
 	if (pPlayer == nullptr) { return; }
 
 	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
 	{
-		if (pPlayer->Get_Coin() < 50) { return; }
 		pPlayer->Plus_Speed(7);
-		pPlayer->De_Coin(50);
 	}
 
 }
 
 void CBootsItem::OnCollisionStay(const Collision * collision)
 {
+	if (m_bCanLoot == false) return;
 
 	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);

@@ -7,8 +7,9 @@ class CAnimation;
 
 END
 
-class CShopNpc :
-	public CMonster
+class CSellItem;
+
+class CShopNpc : public CMonster
 {
 public:
 	CShopNpc(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -21,12 +22,15 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
+	virtual void Get_Damaged(_int Damage) override;
+
 private:
 	D3DXMATRIX  matWorld, matView;
 	virtual void OnCollisionEnter(const class Collision* collsion) final;
 	virtual void OnCollisionStay(const class Collision* collision) final;
 
 	CAnimation* Ani;
+	vector<CSellItem*> m_ItemList;
 
 public:
 	static CShopNpc*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
