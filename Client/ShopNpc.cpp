@@ -41,7 +41,7 @@ HRESULT CShopNpc::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
-	pCollider->Set_BoundingBox({ 6.f, 6.f, 6.f });
+	pCollider->Set_BoundingBox({ 6.f, 10.f, 6.f });
 
 	m_pTransform->Set_BillMode(true);
 
@@ -51,11 +51,11 @@ HRESULT CShopNpc::Add_Component()
 HRESULT CShopNpc::Ready_GameObject(void)
 {
 	m_pTransform->m_vScale = { 5.f, 5.f, 5.f };
-	m_pTransform->Set_Pos(_vec3{ 25.f, 5.f, 25.f });
+	m_pTransform->Set_Pos(_vec3{ 25.f, -5.f, 25.f });
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	_vec3 Pos = m_pTransform->m_vInfo[INFO_POS];
-	Pos.y -= 4.f;
+	Pos.y += 6.f;
 	Pos.z -= 5.f;
 	
 	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 30, FLAMESHOT);

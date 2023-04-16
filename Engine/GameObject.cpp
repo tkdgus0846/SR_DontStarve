@@ -230,11 +230,12 @@ void CGameObject::Free(void)
 	for (auto child : m_StaticObjectList)
 	{
 		LAYERID layerID = child->Get_LayerID();
-		
+
 		Remove_GameObject(layerID, child);
 		Engine::Remove_Collider(child);
 		Safe_Release(child);
 	}
+	
 
 	for (size_t i = 0; i < ID_END; ++i)
 	{

@@ -11,6 +11,7 @@
 #include "Rub.h"
 #include "Turret.h"
 #include "Walker.h"
+#include "ShopNpc.h"
 
 IMPLEMENT_SINGLETON(CMonsterFactory)
 
@@ -40,6 +41,8 @@ HRESULT CMonsterFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CRub::Tag(),		&CRub::Create);
 	Register(CTurret::Tag(),	&CTurret::Create);
 	Register(CWalker::Tag(),	&CWalker::Create);
+	Register(CShopNpc::Tag(),	&CShopNpc::Create);
+
 
 	return hResult;
 }

@@ -8,6 +8,7 @@ CFactory::CFactory()
 
 CFactory::~CFactory()
 {
+	Release();
 }
 
 void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
@@ -17,13 +18,12 @@ void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 	m_vecWstrTag.push_back(objectType.c_str());
 
 	// 텍스처 키 저장
-	for_each(m_creationMap.begin(), m_creationMap.end(), [this](pair<const wstring, CInfo>& entry) {
+	/*for_each(m_creationMap.begin(), m_creationMap.end(), [this](pair<const wstring, CInfo>& entry) {
 		CGameObject* p = entry.second.CreateFunc(m_pGraphicDev);
-		entry.second.TextureKey = p->Get_TextureKey().c_str();
-
+		entry.second.TextureKey = p->Get_TextureKey().c_str();		
 		Safe_Release(p);
 	});
-
+*/
 	m_vecStrTag.push_back(CFileSystem::wstrToStr(objectType));
 
 }
