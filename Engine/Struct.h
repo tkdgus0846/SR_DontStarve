@@ -245,4 +245,5 @@ struct ClickInfo
 	float fDist;			// 카메라와 오브젝트 사이의 거리
 };
 
+
 END

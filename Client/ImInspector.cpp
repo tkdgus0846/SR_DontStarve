@@ -22,8 +22,9 @@
 #include "Slider.h"
 #include "TileFactory.h"
 
+
 static const char* cur_item = "Baller";
-static const char* cur_tile_item = NULL;
+
 
 CImInspector::CImInspector(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CImWindow(pGraphicDev)
@@ -42,8 +43,8 @@ CImInspector::~CImInspector()
 
 HRESULT CImInspector::Ready_ImWindow()
 {
-	m_pTileImage = ImImage::Create(m_pGraphicDev, TILE_FACTORY);
-	CImManager::GetInstance()->Push_Back(m_pTileImage);
+	m_pTileImage = ImImage::Create(m_pGraphicDev);
+	CImManager::GetInstance()->AddContainer(L"TileImage", m_pTileImage);
 
 	return S_OK;
 }
@@ -127,58 +128,54 @@ void CImInspector::Show_TilePicking()
 	static _int iTileNum = 0;
 
 
-
 	CEditCamera* pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
 
 	ImGui::RadioButton("TILE_MODE", &((int&)pCamera->Get_Pick()), 0);
 	if (PICK_TILE == pCamera->Get_Pick())
-	{
-		ImGui::Begin("Image");
-			m_pTileImage->SetEnable(true);
-		ImGui::End();
-	}
+		m_pTileImage->SetEnable(true);
 	else
 		m_pTileImage->SetEnable(false);
 
 	//
-	vector<const char*> tileItems;
-	for (_int i = 0; i < TILE_FACTORY->GetSTag().size(); ++i)
-		tileItems.push_back(TILE_FACTORY->GetSTag()[i].c_str());
-	
-	if (ImGui::BeginCombo("##combo", cur_tile_item)) // The second parameter is the label previewed before opening the combo.
+	vector<string> tileItems = TILE_FACTORY->GetSTag();
+
+	if (ImGui::BeginCombo("##combo", cur_tile_item.c_str())) // The second parameter is the label previewed before opening the combo.
 	{
 		for (int n = 0; n < tileItems.size(); n++)
 		{
-			bool is_selected = (cur_tile_item == tileItems[n]); // You can store your selection however you want, outside or inside your objects
-			if (ImGui::Selectable(tileItems[n], is_selected))
+			bool is_selected = (tileItems[n].compare(cur_tile_item) == 0); // You can store your selection however you want, outside or inside your objects
+			if (ImGui::Selectable(tileItems[n].c_str(), is_selected))
+			{
 				cur_tile_item = tileItems[n];
+				
+				m_pTileImage->Set_Texture(TILE_FACTORY->FindTextureKeyByTag(TO_WSTR(cur_tile_item)));
+			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
 		}
-		if(NULL != cur_tile_item) m_pTileImage->Set_Tag(cur_tile_item);
 		ImGui::EndCombo();
 	}
 
 	ImGui::SeparatorText("Tile");
 
-	if (ImGui::RadioButton("Level1_Floor", &iTileNum, 20))
-		pCamera->Change_Texture(L"Floor_Level1_Texture");
+	//if (ImGui::RadioButton("Level1_Floor", &iTileNum, 20))
+	//	pCamera->Change_Texture(L"Floor_Level1_Texture");
 
-	ImGui::SameLine();
+	//ImGui::SameLine();
 
-	if (ImGui::RadioButton("Level1_Wall", &iTileNum, 21))
-		pCamera->Change_Texture(L"Wall_Level1_Texture");
+	//if (ImGui::RadioButton("Level1_Wall", &iTileNum, 21))
+	//	pCamera->Change_Texture(L"Wall_Level1_Texture");
 
-	if(ImGui::RadioButton("Level2_Floor", &iTileNum, 22))
-		pCamera->Change_Texture(L"Floor_Level2_Texture");
+	//if(ImGui::RadioButton("Level2_Floor", &iTileNum, 22))
+	//	pCamera->Change_Texture(L"Floor_Level2_Texture");
 
-	ImGui::SameLine();
+	//ImGui::SameLine();
 
-	if(ImGui::RadioButton("Level2_Wall", &iTileNum, 23))
-		pCamera->Change_Texture(L"Wall_Level2_Texture");
+	//if(ImGui::RadioButton("Level2_Wall", &iTileNum, 23))
+	//	pCamera->Change_Texture(L"Wall_Level2_Texture");
 
-	if(ImGui::RadioButton("Level3_Floor", &iTileNum, 24))
-		pCamera->Change_Texture(L"Dock_Texture");
+	//if(ImGui::RadioButton("Level3_Floor", &iTileNum, 24))
+	//	pCamera->Change_Texture(L"Dock_Texture");
 
 	ImGui::SameLine();
 	ImGui::RadioButton("Level3_Wall", &iTileNum, 25);
@@ -190,8 +187,6 @@ void CImInspector::Show_Create_Object()
 
 	if (ImGui::TreeNode("Object_Type"))
 	{
-
-
 		ImGui::SeparatorText("Monster");
 
 		vector<const char*> monItems = FACTORY->GetTagVec(OBJ_MONSTER);
