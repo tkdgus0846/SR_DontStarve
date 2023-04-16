@@ -49,6 +49,7 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[RAPIDSHOT] = CRapidWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[LASERSHOT] = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
 
 	Change_Weapon(BIGSHOT);
 

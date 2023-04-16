@@ -1,6 +1,5 @@
-﻿#include "GameObject.h"
-#include "GameObject.h"
-#include "stdafx.h"
+﻿#include "stdafx.h"
+
 #include "GameObject.h"
 #include "Transform.h"
 #include "Export_Function.h"
@@ -200,6 +199,7 @@ void CGameObject::Add_Render_Component()
 	m_RenderComponent = sortVec;
 }
 
+// 죽었을때 자식 리스트에서 빼주기위한 함수
 void CGameObject::Remove_InOwnerObject()
 {
 	if (m_pOwnerObject == nullptr) return;

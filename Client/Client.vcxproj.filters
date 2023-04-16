@@ -488,6 +488,9 @@
     <ClInclude Include="SellItem.h">
       <Filter>GameObject\ShopNpc</Filter>
     </ClInclude>
+    <ClInclude Include="CoolTime.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -858,6 +861,9 @@
     </ClCompile>
     <ClCompile Include="SellItem.cpp">
       <Filter>GameObject\ShopNpc</Filter>
+    </ClCompile>
+    <ClCompile Include="CoolTime.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

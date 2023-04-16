@@ -101,14 +101,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\;$(SolutionDir)Client\stb\;$(SolutionDir)Client\imGui\;$(SolutionDir)Client\dirent\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)External\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\;$(SolutionDir)Client\stb\;$(SolutionDir)Client\imGui\;$(SolutionDir)Client\dirent\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)External\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -122,8 +122,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\;$(SolutionDir)Client\stb\;$(SolutionDir)Client\imGui\;$(SolutionDir)Client\dirent\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)External\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)Output\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -269,6 +270,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinItem.h" />
+    <ClInclude Include="CoolTime.h" />
     <ClInclude Include="CrossHair.h" />
     <ClInclude Include="Dig.h" />
     <ClInclude Include="Disc.h" />
@@ -403,6 +405,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinItem.cpp" />
+    <ClCompile Include="CoolTime.cpp" />
     <ClCompile Include="CrossHair.cpp" />
     <ClCompile Include="Dig.cpp" />
     <ClCompile Include="Disc.cpp" />

@@ -75,6 +75,7 @@ void CWormTail::LateUpdate_GameObject(void)
 {
 	if (GetDead())
 		return;
+	if (Get_Player() == nullptr) return;
 
 	m_pTransform->Set_Scale({ 1.f, 1.f, 1.f });
 

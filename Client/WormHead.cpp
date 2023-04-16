@@ -34,10 +34,9 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 
 	m_pTransform->Set_BillMode(true);
 
-	m_vecBody.reserve(vecBody.size());
-	for (_int i = 0; i < vecBody.size(); ++i)
-		m_vecBody.push_back(vecBody[i]);
-	m_pTail = pTail;
+	m_pTail = CWormTail::Create(m_pGraphicDev, {23.f, 2.f, 23.f});
+
+	Add_Static_GameObject(m_pTail);
 
 	_int iSize = m_vecBody.size();
 
@@ -68,8 +67,6 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 	if (!Get_Player())
 		return OBJ_NOEVENT;
     
-  _vec3 vDir{};
-
 	_vec3 vDir = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
 	vDir.Normalize();
 

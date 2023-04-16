@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Include.h"
-#include "ImWindow.h"
+//#include "ImWindow.h"
 BEGIN(Engine)
 
 class CFloorTex;
@@ -22,7 +22,7 @@ public:
 	_int Update(_float fTimeDelta);
 	void Render(LPDIRECT3DDEVICE9 pGraphicDev);
 	void Release();
-	CImWindow* FindByTag(wstring tag);
+	class CImWindow* FindByTag(wstring tag);
 
 public:
 	void AddContainer(wstring key, CImWindow* pImWindow);
