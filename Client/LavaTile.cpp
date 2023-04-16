@@ -36,7 +36,7 @@ HRESULT CLavaTile::Add_Component()
 	NULL_CHECK_RETURN(texture, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"FloorLava", texture });
 	m_pAnimation->BindAnimation(ANIM_IDLE, texture);
-	m_pAnimation->SelectState(ANIM_IDLE);
+
 
 	return result;
 }

@@ -144,6 +144,8 @@ void CAnimation::BindAnimation(ANIMSTATE state, CTexture* texture, float frameSp
 	animFrame.iFrame = 0;
 	animFrame.iMaxFrame = texture->Get_Size();
 	animFrame.pTexture = texture;
+
+	SelectState(state);
 }
 
 void CAnimation::Play_Animation()

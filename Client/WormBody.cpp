@@ -10,6 +10,7 @@ CWormBody::CWormBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pTail(nullptr), m_fDir(0.f)
 {
 	ZeroMemory(m_vDest, sizeof(_vec3));
+	Set_ObjTag(Tag());
 }
 
 CWormBody::~CWormBody()
@@ -237,6 +238,18 @@ CWormBody * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 	CWormBody* pInstance = new CWormBody(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+	return pInstance;
+}
+
+CGameObject * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CWormBody* pInstance = new CWormBody(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject({})))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

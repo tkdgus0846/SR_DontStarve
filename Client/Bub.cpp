@@ -7,7 +7,7 @@
 CBub::CBub(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(L"Bub");
+	Set_ObjTag(Tag());
 }
 
 CBub::~CBub()

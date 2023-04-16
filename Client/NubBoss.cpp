@@ -5,7 +5,7 @@
 CNubBoss::CNubBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(L"NubBoss");
+	Set_ObjTag(Tag());
 
 }
 
@@ -96,6 +96,19 @@ CNubBoss * CNubBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 	CNubBoss* pInstance = new CNubBoss(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
+CGameObject * CNubBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CNubBoss* pInstance = new CNubBoss(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject({})))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

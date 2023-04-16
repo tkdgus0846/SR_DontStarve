@@ -5,7 +5,7 @@
 CGuppi::CGuppi(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(L"Guppi");
+	Set_ObjTag(Tag());
 
 }
 

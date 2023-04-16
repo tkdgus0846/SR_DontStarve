@@ -5,7 +5,7 @@
 CBaller::CBaller(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(L"Baller");
+	Set_ObjTag(Tag());
 
 }
 

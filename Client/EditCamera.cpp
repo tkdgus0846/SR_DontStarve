@@ -6,8 +6,9 @@
 #include "Export_Function.h"
 #include "RoomMgr.h"
 #include "Floor.h"
-#include "NogadaFactory.h"
 #include "TileFactory.h"
+#include "MonsterFactory.h"
+#include "MapObjectFactory.h"
 #include "ImManager.h"
 #include "ImInspector.h"
 #include "FileSystem.h"
@@ -95,7 +96,7 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 	{
 		SetClickInfo();
 		CreateTile();
-		CreateObj();
+		CreateMonster();
 	}
 }
 
@@ -402,16 +403,21 @@ void CEditCamera::LoadSaveTarget(const _tchar* tag)
 	}
 }
 
-void CEditCamera::CreateObj()
+void CEditCamera::CreateMonster()
 {
-	if (PICK_OBJ != m_ePick)
+	if (PICK_MONSTER != m_ePick)
 		return;
 	
-	//if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
-	//	return;
+	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
+		return;
 
-	//CGameObject* pObj = FACTORY->CreateObj(m_tag);
-	//ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
+	CImInspector* pWindow = dynamic_cast<CImInspector*>(CImManager::GetInstance()->FindByTag(L"Inspector"));
+
+	CGameObject* pObj = MONSTER_FACTORY->CreateObject(TO_WSTR(pWindow->Get_CurMonsterItem()));
+	if (!pObj)
+		return;
+
+	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
 	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
 
 	switch (m_radio)
@@ -434,7 +440,7 @@ void CEditCamera::CreateObj()
 		break;
 	}
 
-	//pObj->m_pTransform->Set_Pos(vPos);
+	pObj->m_pTransform->Set_Pos(vPos);
 }
 
 void CEditCamera::CreateTile()
@@ -451,8 +457,9 @@ void CEditCamera::CreateTile()
 	
 	// 타일 생성
 	CGameObject* pObj = TILE_FACTORY->CreateObject(CurTileItem);
+	if (!pObj) return;
 	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
-
+	
 	// 타일 위치 정해주기.
 	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
 	vPos.y += 0.01f;

@@ -4,7 +4,7 @@
 CHardPyramid::CHardPyramid(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CPyramid(pGraphicDev)
 {
-	Set_ObjTag(L"HardPyramid");
+	Set_ObjTag(Tag());
 }
 
 CHardPyramid::~CHardPyramid()
@@ -25,7 +25,7 @@ HRESULT CHardPyramid::Add_Component()
 	return result;
 }
 
-CHardPyramid * CHardPyramid::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CHardPyramid::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CHardPyramid* pInstance = new CHardPyramid(pGraphicDev);
 

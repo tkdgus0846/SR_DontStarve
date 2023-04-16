@@ -9,7 +9,7 @@
 CSoftPyramid::CSoftPyramid(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CPyramid(pGraphicDev)
 {
-	Set_ObjTag(L"SoftPyramid");
+	Set_ObjTag(Tag());
 }
 
 CSoftPyramid::~CSoftPyramid()
@@ -73,7 +73,7 @@ HRESULT CSoftPyramid::Add_Component()
 	return result;
 }
 
-CSoftPyramid * CSoftPyramid::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CSoftPyramid::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CSoftPyramid* pInstance = new CSoftPyramid(pGraphicDev);
 

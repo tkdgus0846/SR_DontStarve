@@ -5,6 +5,7 @@
 CRub::CRub(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
+	Set_ObjTag(Tag());
 }
 
 CRub::~CRub()

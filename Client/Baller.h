@@ -21,6 +21,7 @@ private:
 public:
 	static CBaller*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"Baller"; }
 private:
 	virtual void Free(void) override;
 };

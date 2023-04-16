@@ -9,6 +9,7 @@ CWormTail::CWormTail(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_bMove(false), m_pHead(nullptr)
 {
 	ZeroMemory(m_vDest, sizeof(_vec3));
+	Set_ObjTag(Tag());
 }
 
 CWormTail::~CWormTail()
@@ -213,6 +214,18 @@ CWormTail * CWormTail::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 	CWormTail* pInstance = new CWormTail(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+	return pInstance;
+}
+
+CGameObject * CWormTail::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CWormTail* pInstance = new CWormTail(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject({})))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
