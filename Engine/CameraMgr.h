@@ -22,7 +22,7 @@ private:
 
 public:
 	void On_Camera(const _tchar* pCamTag);
-	void Shake_Camera();
+	void On_Shake(SHAKE_TYPE eType, const _float& fForce = 1.5f, const _float& fTime = 5.f);
 
 private:
 	CCamera*		m_pCurCamera;

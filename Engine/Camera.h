@@ -30,9 +30,10 @@ public:
 private:
 	void			On_Camera() { m_bSwitch = true; }
 	void			Off_Camera() { m_bSwitch = false; }
-	void			Shake_Camera() { m_bShack = true; }
-	void			Shake(const _float & fTimeDelta, 
-							const _float& fForce = 2.f, const _float& fTime = 10.f);
+	void			On_Shake(SHAKE_TYPE eType, const _float& fForce, const _float& fTime);
+	void			Shake_X(const _float & fTimeDelta);
+	void			Shake_Y(const _float & fTimeDelta);
+	void			Shake(const _float & fTimeDelta);
 
 private:
 	VIEWPARAMS		m_tViewParams;
@@ -43,9 +44,10 @@ private:
 
 	const _tchar*	m_pName;
 	_bool			m_bSwitch;
-	_bool			m_bShack;
-	_float			m_fShackForce;
-	_float			m_fShackTime;
+	_bool			m_bShake;
+	_float			m_fShakeForce;
+	_float			m_fShakeTime;
+	SHAKE_TYPE		m_eType;
 
 public:
 	static CCamera* Create(LPDIRECT3DDEVICE9 pGraphicDev, 

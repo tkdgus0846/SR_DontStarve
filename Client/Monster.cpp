@@ -34,11 +34,6 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	_matrix view;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
 
-	/*if (m_pTransform->m_vInfo[INFO_POS].y < 0.6f)
-	{
-		m_pTransform->m_vInfo[INFO_POS].y = 0.6f;
-	}*/
-
 	//m_pTransform->Set_Billboard(&view);
 	__super::Update_GameObject(fTimeDelta);
 	return 0;
@@ -353,6 +348,7 @@ CSequence * CMonster::Make_RushAI()
 	return pSQRush;
 }
 
+// 돌진 패턴
 CSequence* CMonster::Make_BossPattern1(const _float& fCoolTime)
 {
 	// 부품 생성
@@ -369,6 +365,7 @@ CSequence* CMonster::Make_BossPattern1(const _float& fCoolTime)
 	return pSQPattern1;
 }
 
+// 5연 돌진 패턴
 CSequence * CMonster::Make_BossPattern2(const _float & fCoolTime)
 {
 	// 부품 생성

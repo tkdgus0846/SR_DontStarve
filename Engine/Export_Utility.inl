@@ -157,9 +157,9 @@ void		On_Camera(const _tchar* pCamTag)
 	CCameraMgr::GetInstance()->On_Camera(pCamTag);
 }
 
-void Shake_Camera()
+void Shake_Camera(SHAKE_TYPE eType, const _float& fForce, const _float& fTime)
 {
-	CCameraMgr::GetInstance()->Shake_Camera();
+	CCameraMgr::GetInstance()->On_Shake(eType, fForce, fTime);
 }
 HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex)
 {

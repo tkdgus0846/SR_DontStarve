@@ -101,6 +101,13 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_NubBoss_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/boss1_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_WalkerBoss_Walk_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/WalkerBoss_%d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_WalkerBoss_Idle_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/WalkerBoss_0.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_WormBoss_Drill_Side_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/worm_drill_side_%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_WormBoss_Drill_Top_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/worm_drill_top_%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_WormBoss_Drill_Face_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/worm_face_%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_WormBoss_Drill_Back_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/body_front.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_WormBoss_Body_Side_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/body_side.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_WormBoss_Body_Top_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/body_top.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BossShadow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/bossShadow.png")), E_FAIL);
 
 	// Effect 텍스쳐
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ExplosionBlue", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/ExplosionBlue_%d.png",5)), E_FAIL);

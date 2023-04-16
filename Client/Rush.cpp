@@ -45,6 +45,7 @@ _int CRush::Update_Component(const _float & fTimeDelta)
 			if (dynamic_cast<CBullet*>(iter.second.OtherGameObject))
 				return BEHAVIOR_RUNNING;
 		}
+		Engine::Shake_Camera(SHAKE_Y, 1.5f, 5.f);
 		return BEHAVIOR_SUCCES;
 	}
 

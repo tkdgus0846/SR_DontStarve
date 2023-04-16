@@ -62,7 +62,7 @@ HRESULT CObjCamera::Add_Component(void)
 void CObjCamera::Key_Input(const _float & fTimeDelta)
 {
 	if (GetAsyncKeyState(VK_F2)) Engine::On_Camera(L"Obj_Camera");
-	if (GetAsyncKeyState(VK_F3)) Engine::Shake_Camera();
+	if (GetAsyncKeyState(VK_F3)) Engine::Shake_Camera(SHAKE_Y);
 }
 
 CObjCamera * CObjCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev)

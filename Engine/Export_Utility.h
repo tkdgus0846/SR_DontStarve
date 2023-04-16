@@ -94,7 +94,7 @@ inline void		Remove_Collider(CGameObject* gameObject);
 //inline void		Set_Collider(COLGROUP eGroup, CCollider* pCollider);
 //
 inline void		On_Camera(const _tchar* pCamTag);
-inline void		Shake_Camera();
+inline void		Shake_Camera(SHAKE_TYPE eType, const _float& fForce = 1.5f, const _float& fTime = 10.f);
 
 inline HRESULT			Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex);
 inline void						Release_Utility(void);

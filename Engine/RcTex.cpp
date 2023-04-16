@@ -1,7 +1,5 @@
-#include "RcTex.h"
 #include "stdafx.h"
 #include "RcTex.h"
-
 
 CRcTex::CRcTex(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CVIBuffer(pGraphicDev)
