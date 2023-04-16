@@ -18,6 +18,10 @@ public:
 	virtual HRESULT Ready_ImWindow() override;
 	virtual _int	Update(float fTimeDelta) override;
 
+	const string& Get_CurTileItem() const {
+		return cur_tile_item;
+	}
+
 private:
 	void Show_RoomInfo();
 	void Show_TilePicking();
@@ -29,6 +33,8 @@ private:
 	CRoom*			m_pCurRoom;
 	_vec3			m_vObjectPos;
 	CGameObject*	m_pCurTarget;
+
+	string			cur_tile_item = "a";
 	vector<pair<const char*, CGameObject*>>	m_vecMonster;
 	vector<pair<const char*, CGameObject*>>	m_vecMap;
 

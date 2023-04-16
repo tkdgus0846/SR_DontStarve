@@ -1,30 +1,26 @@
 #pragma once
 #include "ImWindow.h"
-#include "Factory.h"
-#include "FileSystem.h"
+#include "Texture.h"
+
+class CImManager;
 
 class ImImage :
 	public CImWindow
 {
+	friend CImManager;
 public:
 	ImImage(LPDIRECT3DDEVICE9 pGraphicDev);
 	~ImImage();
 
+private:
 	virtual _int Update(float fTimeDelta) override;
-	void	Set_Tag(wstring wstr);
-	void	Set_Tag(string str);
-	void	Set_Factory(CFactory* pFactory) 
-	{
-		m_pFactory = pFactory;
-	}
 
 public:
-	static ImImage* Create(LPDIRECT3DDEVICE9 pGraphicDev, CFactory* m_pFactory);
-	virtual void Free(void);
+	void	Set_Texture(wstring key);
+	void	Set_Name(string str) { m_name = str.c_str(); }
+	static ImImage* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	const _tchar* m_wTag = nullptr;
-	const char* m_sTag = nullptr;
-	CFactory* m_pFactory;
-	CGameObject* m_pObj;
+	CTexture* m_pTexture;
+	string	m_name;
 };

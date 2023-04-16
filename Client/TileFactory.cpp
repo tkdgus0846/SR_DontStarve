@@ -1,4 +1,6 @@
 #include "TileFactory.h"
+
+
 #include "BeltTile.h"
 #include "BloodTile.h"
 #include "ElectricTile.h"
@@ -34,7 +36,14 @@ HRESULT CTileFactory::Ready_TileFactory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CSnowTile::Tag(), &CSnowTile::Create);
 	Register(CSwampTile::Tag(), &CSwampTile::Create);
 	
-		
+	
+	//for_each(m_vecGameObj.begin(), m_vecGameObj.end(), [&](auto gameObj) {
+	//	ISerializable* pTmp = dynamic_cast<ISerializable*>(gameObj);
+	//	if (pTmp) {
+	//		pTmp->Serialization(hFile, dwByte);
+	//	}
+	//});
+
 	return hResult;
 }
 

@@ -57,6 +57,10 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 {
 	static _bool bStart = false;
+
+	if (!Get_Player())
+		return OBJ_NOEVENT;
+
 	_vec3 vDir = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
 	vDir.Normalize();
 
@@ -91,6 +95,9 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 
 void CWormHead::LateUpdate_GameObject(void)
 {
+	if (!Get_Player())
+		return;
+
 	m_pTransform->Set_Scale({ 1.f, 1.f, 1.f });
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];

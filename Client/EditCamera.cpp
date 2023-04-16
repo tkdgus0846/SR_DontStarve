@@ -8,7 +8,9 @@
 #include "Floor.h"
 #include "NogadaFactory.h"
 #include "TileFactory.h"
-
+#include "ImManager.h"
+#include "ImInspector.h"
+#include "FileSystem.h"
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 	, m_fSpeed(0.f)
@@ -92,7 +94,7 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 	if (Engine::Mouse_Down(DIM_LB))
 	{
 		SetClickInfo();
-		LoadSaveTarget(m_Tiletag);
+		CreateTile();
 		CreateObj();
 	}
 }
@@ -433,4 +435,27 @@ void CEditCamera::CreateObj()
 	}
 
 	//pObj->m_pTransform->Set_Pos(vPos);
+}
+
+void CEditCamera::CreateTile()
+{
+	if (PICK_TILE != m_ePick)
+		return;
+
+	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
+		return;
+
+	// IMGUI 콤보박스 정보 가져옴.
+	CImInspector* pInspector = static_cast<CImInspector*>(IM_MGR->FindByTag(L"Inspector"));
+	wstring CurTileItem = TO_WSTR(pInspector->Get_CurTileItem());
+	
+	// 타일 생성
+	CGameObject* pObj = TILE_FACTORY->CreateObject(CurTileItem);
+	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
+
+	// 타일 위치 정해주기.
+	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
+	vPos.y += 0.01f;
+	pObj->m_pTransform->Set_Pos(vPos);
+	
 }

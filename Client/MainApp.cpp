@@ -34,7 +34,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 	SOUND->Init();
 	
-	PLAY_BGM(L"Title.wav", 1.f);
+	//PLAY_BGM(L"Title.wav", 1.f);
 	return S_OK;
 }
 
