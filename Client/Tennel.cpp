@@ -37,7 +37,7 @@ _int CTennel::Update_GameObject(const _float & fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	// ³Î·Î µé¾î¿È
-//	m_pTile->Update_GameObject(fTimeDelta);
+	//m_pTile->Update_GameObject(fTimeDelta);
 	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);

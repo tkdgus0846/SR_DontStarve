@@ -66,7 +66,7 @@ void CDisc::LateUpdate_GameObject(void)
 
 void CDisc::Render_GameObject(void)
 {
-
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	Redner_Disc();
 
 	Set_ViewMatrix_UI();

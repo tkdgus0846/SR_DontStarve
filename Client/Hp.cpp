@@ -35,6 +35,7 @@ void CHp::LateUpdate_GameObject(void)
 
 void CHp::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
 	if (pPlayer == nullptr) return;
 

@@ -119,6 +119,7 @@ void CWormTail::LateUpdate_GameObject(void)
 
 void CWormTail::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	if (GetDead())
 		return;
 	__super::Render_GameObject();

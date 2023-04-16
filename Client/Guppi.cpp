@@ -44,6 +44,7 @@ void CGuppi::LateUpdate_GameObject(void)
 
 void CGuppi::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 

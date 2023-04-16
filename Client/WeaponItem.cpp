@@ -5,7 +5,7 @@
 CWeaponItem::CWeaponItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
-	Set_LayerID(LAYER_NPC);
+	Set_LayerID(LAYER_ROOM_ITEM);
 	Set_ObjTag(L"WeaponItem");
 	m_bDrop = true;
 	m_bBill = false;
@@ -65,6 +65,7 @@ void CWeaponItem::LateUpdate_GameObject(void)
 
 void CWeaponItem::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
@@ -74,13 +75,6 @@ void CWeaponItem::OnCollisionEnter(const Collision * collsion)
 
 	__super::OnCollisionEnter(collsion);
 
-	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
-	if (pPlayer == nullptr) {return;}
-	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
-	{
-		pPlayer->Gain_Weapon(m_eID);
-
-	}
 }
 
 void CWeaponItem::OnCollisionStay(const Collision * collision)
@@ -88,6 +82,14 @@ void CWeaponItem::OnCollisionStay(const Collision * collision)
 	if (m_bCanLoot == false) return;
 	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+
+	if (pPlayer == nullptr) return;
+
+	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
+	{
+		pPlayer->Gain_Weapon(m_eID);
+
+	}
 
 	ItemMagnetic(pPlayer);
 }

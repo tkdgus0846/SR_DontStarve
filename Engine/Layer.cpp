@@ -34,8 +34,16 @@ HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pGameObject
 	return S_OK;
 }
 
-HRESULT CLayer::Remove_Static_Layers()
+HRESULT CLayer::Remove_GameObject(CGameObject* obj)
 {
+	for (auto it = m_uMapObject.begin(); it != m_uMapObject.end(); it++)
+	{
+		if ((it->second) == obj)
+		{
+			m_uMapObject.erase(it);
+			break;
+		}
+	}
 
 	return S_OK;
 }

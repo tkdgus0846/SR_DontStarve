@@ -203,7 +203,7 @@ void CGameObject::Add_Render_Component()
 void CGameObject::Remove_InOwnerObject()
 {
 	if (m_pOwnerObject == nullptr) return;
-
+	
 	for (auto& it = m_pOwnerObject->m_StaticObjectList.begin(); it != m_pOwnerObject->m_StaticObjectList.end(); it++)
 	{
 		if ((*it) == this)
@@ -227,6 +227,15 @@ CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENT
 
 void CGameObject::Free(void)
 {
+	for (auto child : m_StaticObjectList)
+	{
+		LAYERID layerID = child->Get_LayerID();
+		
+		Remove_GameObject(layerID, child);
+		Engine::Remove_Collider(child);
+		Safe_Release(child);
+	}
+
 	for (size_t i = 0; i < ID_END; ++i)
 	{
 		for (auto iter = m_uMapComponent[i].begin(); iter != m_uMapComponent[i].end(); iter++)

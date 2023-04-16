@@ -38,6 +38,7 @@ void CBulletBar::LateUpdate_GameObject(void)
 
 void CBulletBar::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	Set_ViewMatrix_UI(-238.f, -230.f);
 
 	__super::Render_GameObject();

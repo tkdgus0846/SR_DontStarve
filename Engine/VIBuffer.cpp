@@ -92,8 +92,8 @@ void CVIBuffer::Render_Component()
 	// 3. 어디서부터 그리기 연산을 수행할 것인가
 	// 4. 어떤 단위로 그리기 연산을 수행할 것인가
 
-	const _matrix* mat = m_pGameObject->m_pTransform->Get_WorldMatrixPointer();
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, mat);
+	/*const _matrix* mat = m_pGameObject->m_pTransform->Get_WorldMatrixPointer();
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, mat);*/
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetStreamSource(0, m_pVB, 0, m_dwVtxSize);

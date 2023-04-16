@@ -100,6 +100,7 @@ void CBulletGauge::LateUpdate_GameObject(void)
 
 void CBulletGauge::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	Set_ViewMatrix_UI();
 
 	__super::Render_GameObject();

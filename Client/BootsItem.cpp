@@ -6,6 +6,7 @@
 CBootsItem::CBootsItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
+	Set_LayerID(LAYER_ROOM_ITEM);
 	Set_ObjTag(L"BootsItem");
 	m_bDrop = true;
 	m_bBill = false;
@@ -26,12 +27,12 @@ HRESULT CBootsItem::Add_Component()
 	NULL_CHECK_RETURN(Texture, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"BootsItem_Texture", Texture });
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ITEM));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ROOMITEM));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 	pCollider->Set_BoundingBox({ 1.0f, 1.0f, 1.0f });
 
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_ITEM));
+	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_ROOMITEM));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
@@ -70,6 +71,7 @@ void CBootsItem::LateUpdate_GameObject(void)
 
 void CBootsItem::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
