@@ -67,7 +67,8 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			//CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 			
-			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev);
+			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev); // 여기서 룸들을 싹다 만든다.
+
 			pScene->Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());
 			
 			for (int i = 0; i < COL_STATIC_END; i++)

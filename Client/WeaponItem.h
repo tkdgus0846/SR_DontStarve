@@ -16,6 +16,8 @@ public:
 	virtual void OnCollisionEnter(const class Collision* collsion) final;
 	virtual void OnCollisionStay(const class Collision* collision) final;
 
+	void		Set_ID(WEAPONTYPE eID) { m_eID = eID; }
+
 private:
 	D3DXMATRIX				matWorld, matView;
 
@@ -24,7 +26,7 @@ public:
 
 private:
 	virtual void Free(void) override;
-	void		Set_ID(WEAPONTYPE eID) { m_eID = eID; }
+	
 	void		Select_Type();
 	void		WeaponRotationZ(const _float & fTimeDelta);
 

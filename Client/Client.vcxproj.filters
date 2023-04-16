@@ -476,6 +476,9 @@
     <ClInclude Include="ExplosiveWeapon.h">
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="SellItem.h">
+      <Filter>GameObject\ShopNpc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -834,6 +837,9 @@
     </ClCompile>
     <ClCompile Include="ExplosiveWeapon.cpp">
       <Filter>GameObject\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SellItem.cpp">
+      <Filter>GameObject\ShopNpc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

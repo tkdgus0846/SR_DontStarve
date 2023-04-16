@@ -58,7 +58,7 @@ public:
 	vector<CLayer*>* GetLayerVec() { return &m_vecLayer; }
 	list<CCollider*>* GetColliderList(_int iIndex) 
 	{
-		if (iIndex >= LAYER_STATIC_END) return nullptr;
+		if (iIndex >= COL_STATIC_END) return nullptr;
 		return &m_ColliderList[iIndex];
 	}
 

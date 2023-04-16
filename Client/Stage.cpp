@@ -88,13 +88,18 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CMiniMap::Create(m_pGraphicDev));
 	Add_GameObject(CGunUI::Create(m_pGraphicDev));
 
+
+	// NPC 테스트용 코드
+	/*Add_GameObject(CShopNpc::Create(m_pGraphicDev));*/
+
+
 	// Item
-	Add_GameObject(CCoinItem::Create(m_pGraphicDev));	
+	/*Add_GameObject(CCoinItem::Create(m_pGraphicDev));	
 	Add_GameObject(CBulletItem::Create(m_pGraphicDev));
 	Add_GameObject(CHeartItem::Create(m_pGraphicDev));
 	Add_GameObject(CWeaponItem::Create(m_pGraphicDev, _vec3{ 15.f, 2.f, 15.f }, SPREADSHOT));
 	Add_GameObject(CBootsItem::Create(m_pGraphicDev, _vec3{ 20.f, 2.f, 20.f }));
-	Add_GameObject(CDiscItem::Create(m_pGraphicDev));
+	Add_GameObject(CDiscItem::Create(m_pGraphicDev));*/
 
 
 	// Tennel

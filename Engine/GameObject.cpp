@@ -18,7 +18,8 @@ bool Compare_Component_Priority(pair<const _tchar*, CComponent*>& a, pair<const 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev) : 
 	m_pGraphicDev(pGraphicDev),
 	m_fViewZ(0.f),
-	m_bDead(FALSE)
+	m_bDead(FALSE),
+	m_pOwnerObject(nullptr)
 {
 	m_pGraphicDev->AddRef();
 
@@ -197,6 +198,20 @@ void CGameObject::Add_Render_Component()
 	sort(sortVec.begin(), sortVec.end(), Compare_Component_Priority);
 
 	m_RenderComponent = sortVec;
+}
+
+void CGameObject::Remove_InOwnerObject()
+{
+	if (m_pOwnerObject == nullptr) return;
+
+	for (auto& it = m_pOwnerObject->m_StaticObjectList.begin(); it != m_pOwnerObject->m_StaticObjectList.end(); it++)
+	{
+		if ((*it) == this)
+		{
+			m_pOwnerObject->m_StaticObjectList.erase(it);
+			break;
+		}
+	}
 }
 
 CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENTID eID)

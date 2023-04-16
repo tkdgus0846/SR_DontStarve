@@ -65,6 +65,7 @@ void CManagement::LateUpdate_Management()
 	Engine::Check_Collision(COL_PLAYER, COL_DETECTION);
 	Engine::Check_Collision(COL_PLAYER, COL_TRIGGER);
 	Engine::Check_Collision(COL_PLAYER, COL_ENVIRONMENT);
+	Engine::Check_Collision(COL_PLAYER, COL_ROOMITEM);
 	/*Engine::Check_Collision(COL_TRIGGER, COL_PLAYERBULLET);*/
 	
 	// 몬스터와 다른 객체들의 관계

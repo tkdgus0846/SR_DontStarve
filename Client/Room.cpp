@@ -382,6 +382,11 @@ void CRoom::PushBack_GameObj(CGameObject * pObj)
 		if(pCol)
 			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
 	}
+
+	for (auto& item : *pObj->Get_Static_GameObject_List())
+	{
+		PushBack_GameObj(item);
+	}
 }
 
 HRESULT CRoom::Add_Component(void)
