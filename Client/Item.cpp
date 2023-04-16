@@ -65,7 +65,12 @@ void CItem::ItemPatrol(const _float& fTimeDelta)
 
 void CItem::ItemMagnetic(CPlayer* pPlayer)
 {
+	if (pPlayer == nullptr)
+	{
+		return;
+	}
 	_vec3 pPlayerInfo;
+
 	pPlayer->m_pTransform->Get_Info(INFO_POS, &pPlayerInfo);
 	_vec3 vDir = pPlayerInfo - m_pTransform->m_vInfo[INFO_POS];
 	D3DXVec3Normalize(&vDir, &vDir);

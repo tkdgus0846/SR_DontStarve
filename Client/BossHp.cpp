@@ -37,6 +37,8 @@ HRESULT CBossHp::Add_Component()
 
 HRESULT CBossHp::Ready_GameObject(void)
 {
+	m_vScale.x = 32.f;
+	m_vScale.y = 32.f;
 
 	__super::Ready_GameObject();
 
@@ -104,47 +106,10 @@ void CBossHp::Render_GameObject(void)
 	__super::Render_GameObject();
 }
 
-void CBossHp::Set_ViewMatrix_UI()
-{
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
 
-	_matrix matTrans;
-	D3DXMatrixScaling(&matView, 151.f, 33.f, 1.f);
-	D3DXMatrixTranslation(&matTrans, 100.f, 100.f, 0.f);
-	D3DXMatrixMultiply(&matView, &matView, &matTrans);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-}
 
-void CBossHp::Set_ViewMatrix_UI(_float posX, _float posY)
-{
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
 
-	_matrix matTrans;
-	D3DXMatrixScaling(&matView, 32.f, 32.f, 0.f);
-	matTrans.Translation(posX, posY, 0.f);
-	D3DXMatrixMultiply(&matView, &matView, &matTrans);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-}
-
-void CBossHp::Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scaleY)
-{
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
-
-	_matrix matTrans;
-	D3DXMatrixScaling(&matView, scaleX, scaleY, 0.f);
-	matTrans.Translation(posX, posY, 0.f);
-	D3DXMatrixMultiply(&matView, &matView, &matTrans);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-}
 
 CBossHp * CBossHp::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

@@ -129,6 +129,11 @@ void CCoinItem::OnCollisionEnter(const Collision * collsion)
 
 void CCoinItem::OnCollisionStay(const Collision * collision)
 {
+	if (dynamic_cast<CPlayer*>(collision->OtherGameObject) == nullptr)
+	{
+		return;
+	}
+
 	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
 

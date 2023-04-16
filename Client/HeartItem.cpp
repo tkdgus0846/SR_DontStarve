@@ -86,6 +86,7 @@ void CHeartItem::OnCollisionEnter(const Collision * collsion)
 {
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
 
+	if (pPlayer == nullptr) { return; }
 	_int curHp = pPlayer->Get_HP();
 	if (curHp == 20) { return; }
 
@@ -104,6 +105,7 @@ void CHeartItem::OnCollisionStay(const Collision * collision)
 {
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
 
+	if (pPlayer == nullptr) { return; }
 	_int curHp = pPlayer->Get_HP();
 	if (curHp == 20) { return; }
 

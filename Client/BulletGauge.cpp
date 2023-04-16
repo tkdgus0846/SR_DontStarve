@@ -59,6 +59,12 @@ _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 	}
 		break;
 	case SPREADSHOT:
+	{
+		m_pBufferCom->Edit_VB(m_SpreadGuage);
+		_float Max = pWeapon->Get_MaxBulletNum();
+		_float Cur = pWeapon->Get_CurBulletNum();
+		m_SpreadGuage = Cur / Max;
+	}
 		break;
 	case FREEZESHOT: 
 	{
@@ -121,10 +127,10 @@ void CBulletGauge::Set_ViewMatrix_UI()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&matView);
 
-	D3DXMatrixScaling(&matView, m_GaugeScale, 12.f, 0.f);
+	D3DXMatrixScaling(&matView, 106.f, 12.f, 0.f);
 
 	D3DXMATRIX translationMat;
-	D3DXMatrixTranslation(&translationMat, m_GaugePos, -230.f, 0.f);
+	D3DXMatrixTranslation(&translationMat, -203.f, -230.f, 0.f);
 	D3DXMatrixMultiply(&matView, &matView, &translationMat);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);

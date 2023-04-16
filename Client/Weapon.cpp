@@ -30,8 +30,7 @@ void CWeapon::Shot()
 			
 		m_bShooted = true;
 		m_bEnableShot = false;
-	}
-	
+	}	
 }
 
 _int CWeapon::Update_GameObject(const _float& fTimeDelta)

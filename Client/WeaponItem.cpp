@@ -68,19 +68,16 @@ void CWeaponItem::Render_GameObject(void)
 
 void CWeaponItem::OnCollisionEnter(const Collision * collsion)
 {
-	//if (collsion->MyCollider == Get_Component(L"Collider", ID_ALL) && collsion->Other)
-	//{
-
-	//}
 	__super::OnCollisionEnter(collsion);
 
-	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);	
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
+	if (pPlayer == nullptr) {return;}
 	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
 	{
+		if (pPlayer->Get_Coin() < 50) {return;}
 		pPlayer->Gain_Weapon(m_eID);
+		pPlayer->De_Coin(50);
 	}
-
-
 }
 
 void CWeaponItem::OnCollisionStay(const Collision * collision)

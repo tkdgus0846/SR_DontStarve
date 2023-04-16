@@ -38,6 +38,7 @@
 #include "SoundMgr.h"
 //#include "RenderTargetTest.h"
 
+#include "ShopNpc.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_iCurRoomIdx(0)
 	, m_iPreRoomIdx(0)
@@ -79,7 +80,6 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CBossHp::Create(m_pGraphicDev));
 	Add_GameObject(CUltimateUI::Create(m_pGraphicDev));
 
-
 	Add_GameObject(CCrossHair::Create(m_pGraphicDev));
 	Add_GameObject(CHp::Create(m_pGraphicDev));
 	Add_GameObject(CCoin::Create(m_pGraphicDev));
@@ -92,9 +92,10 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CCoinItem::Create(m_pGraphicDev));	
 	Add_GameObject(CBulletItem::Create(m_pGraphicDev));
 	Add_GameObject(CHeartItem::Create(m_pGraphicDev));
-	Add_GameObject(CWeaponItem::Create(m_pGraphicDev, _vec3{ 15.f, 2.f, 15.f }, FLAMESHOT));
+	Add_GameObject(CWeaponItem::Create(m_pGraphicDev, _vec3{ 15.f, 2.f, 15.f }, SPREADSHOT));
 	Add_GameObject(CBootsItem::Create(m_pGraphicDev, _vec3{ 20.f, 2.f, 20.f }));
 	Add_GameObject(CDiscItem::Create(m_pGraphicDev));
+
 
 	// Tennel
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);

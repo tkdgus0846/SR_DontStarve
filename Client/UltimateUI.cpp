@@ -5,7 +5,7 @@
 CUltimateUI::CUltimateUI(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CUI(pGraphicDev)
 {
-	Set_ObjTag(L"HP");
+	Set_ObjTag(L"UltimatUI");
 }
 
 
@@ -56,26 +56,14 @@ void CUltimateUI::Render_GameObject(void)
 	_float Cur = pPlayer->Get_UltiGuage();
 	_float Max = pPlayer->Get_UltiMaxGuage();
 
-	m_dRcTex->Edit_V(Cur / Max);
-	Set_ViewMatrix_UI(-377.f, -231.f);
+	if (Cur >= 1.f){ m_dRcTex->Edit_V(1.f);}
+	else { m_dRcTex->Edit_V(Cur / Max); }
+
+	Set_ViewMatrix_UI(-377.f, -231.f, 3.8f, 22.f);
 	dynamic_cast<CTexture*>(m_arrMap[ULTIMATE_GUAGE])->Render_Texture();
 	m_dRcTex->Render_Component();
 
 	__super::Render_GameObject();
-}
-
-void CUltimateUI::Set_ViewMatrix_UI(_float posX, _float posY)
-{
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
-
-	_matrix matTrans;
-	D3DXMatrixScaling(&matView, 4.f, 22.f, 0.f);
-	matTrans.Translation(posX, posY, 0.f);
-	D3DXMatrixMultiply(&matView, &matView, &matTrans);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 }
 
 CUltimateUI * CUltimateUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -75,8 +75,7 @@ void CManagement::LateUpdate_Management()
 	// 기타 등등
 	Engine::Check_Collision(COL_OBJ, COL_ENVIRONMENT);
 	
-
-
+	//////////////////////// debug
 }
 
 void CManagement::Render_Management(LPDIRECT3DDEVICE9 pGraphicDev)

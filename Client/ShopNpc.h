@@ -1,8 +1,14 @@
 #pragma once
-#include "GameObject.h"
+#include "Monster.h"
+
+BEGIN(Engine)
+
+class CAnimation;
+
+END
 
 class CShopNpc :
-	public CGameObject
+	public CMonster
 {
 public:
 	CShopNpc(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -16,10 +22,11 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	void		Set_ViewMatrix_UI();
-
-private:
 	D3DXMATRIX  matWorld, matView;
+	virtual void OnCollisionEnter(const class Collision* collsion) final;
+	virtual void OnCollisionStay(const class Collision* collision) final;
+
+	CAnimation* Ani;
 
 public:
 	static CShopNpc*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

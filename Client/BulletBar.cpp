@@ -15,6 +15,7 @@ CBulletBar::~CBulletBar()
 
 HRESULT CBulletBar::Ready_GameObject(void)
 {
+	m_vScale = { 151.f, 33.f, 1.f };
 	__super::Ready_GameObject();
 
 	return S_OK;
@@ -37,7 +38,7 @@ void CBulletBar::LateUpdate_GameObject(void)
 
 void CBulletBar::Render_GameObject(void)
 {
-	Set_ViewMatrix_UI();
+	Set_ViewMatrix_UI(-238.f, -230.f);
 
 	__super::Render_GameObject();
 }
@@ -57,20 +58,6 @@ HRESULT CBulletBar::Add_Component(void)
 	return S_OK;
 }
 
-void CBulletBar::Set_ViewMatrix_UI()
-{
-	D3DXMatrixIdentity(&matWorld);
-	D3DXMatrixIdentity(&matView);
-
-	D3DXMATRIX translationMat;
-	D3DXMatrixScaling(&matView, 151.f, 33.f, 1.f);
-	D3DXMatrixTranslation(&translationMat, -238.f, -230.f, 0.f);
-	D3DXMatrixMultiply(&matView, &matView, &translationMat);
-
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-}
 
 CBulletBar * CBulletBar::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
