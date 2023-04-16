@@ -1,5 +1,4 @@
 #include "ImManager.h"
-#include "ImWindow.h"
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
 #include "imgui.h"
@@ -20,8 +19,10 @@ CImManager::~CImManager()
 
 HRESULT CImManager::Ready_IMGUI(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	Push_Back(CImInspector::Create(pGraphicDev));
-	Push_Back(CImMenuBar::Create(pGraphicDev));
+	AddContainer(L"Inspector", CImInspector::Create(pGraphicDev));
+	AddContainer(L"MenuBar", CImMenuBar::Create(pGraphicDev));
+	AddContainer(L"TileImage", ImImage::Create(pGraphicDev));
+
 	return S_OK;
 }
 
@@ -31,8 +32,8 @@ _int CImManager::Update(_float fTimeDelta)
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	for (auto& iter : m_vecImWindow)
-		_int iResult = iter->Update(fTimeDelta);
+	for (auto& iter : m_mapImWindow)
+		_int iResult = iter.second->Update(fTimeDelta);
 
 	ImGui::EndFrame();
 
@@ -47,15 +48,25 @@ void CImManager::Render(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CImManager::Release()
 {
-	for (auto iter : m_vecImWindow)
-		Safe_Release(iter);
+	for_each(m_mapImWindow.begin(), m_mapImWindow.end(), CDeleteMap());
 
 	ImGui_ImplDX9_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 }
 
-void CImManager::Push_Back(CImWindow * pWindow)
+CImWindow* CImManager::FindByTag(wstring tag)
 {
-	m_vecImWindow.push_back(pWindow);
+	auto it = m_mapImWindow.find(tag);
+
+	if (it != m_mapImWindow.end())
+		return it->second;
+
+	return nullptr;
+}
+
+void CImManager::AddContainer(wstring key, CImWindow * pImWindow)
+{
+	NULL_CHECK(pImWindow);
+	m_mapImWindow.insert({ key, pImWindow });
 }

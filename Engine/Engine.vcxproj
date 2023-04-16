@@ -252,13 +252,29 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)External\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x86\;$(SolutionDir)External\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|x64'">
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

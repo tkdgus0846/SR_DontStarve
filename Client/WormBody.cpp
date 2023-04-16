@@ -78,6 +78,10 @@ void CWormBody::LateUpdate_GameObject(void)
 {
 	if (GetDead())
 		return;
+
+	if (!Get_Player())
+		return;
+
 	m_pTransform->Set_Scale({ 1.f, 1.f, 1.f });
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];

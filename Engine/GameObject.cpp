@@ -1,4 +1,5 @@
 ﻿#include "GameObject.h"
+#include "GameObject.h"
 #include "stdafx.h"
 #include "GameObject.h"
 #include "Transform.h"
@@ -66,6 +67,22 @@ CTexture * CGameObject::Get_Texture()
 		}
 	}
 	return pTexture;
+}
+
+wstring CGameObject::Get_TextureKey()
+{
+	CTexture* pTexture = nullptr;
+	for (_ulong i = 0; i < ID_END; ++i)
+	{
+		for (auto& Component : m_uMapComponent[i])
+		{
+			if (pTexture = dynamic_cast<CTexture*>(Component.second))
+			{
+				return Component.first;
+			}
+		}
+	}
+	return nullptr;
 }
 
 HRESULT CGameObject::Ready_GameObject(void)

@@ -107,20 +107,9 @@ void CRoomMgr::Create_Default_Room()
 	//====== 임시 코드임 =======
 
 //====== 임시 코드임 =======
-	m_arrRoom[0]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(40.f, 3.f, 40.f)));
-
-	//NPC 잠깐 넣어놓음
-	m_arrRoom[0]->PushBack_GameObj(CShopNpc::Create(m_pGraphicDev));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 1.f, 30.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(30.f, 1.f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(20.f, 1.f, 40.f)));
 
 
-	m_arrRoom[1]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(100.f, 1.f, 40.f)));
-	m_arrRoom[1]->PushBack_GameObj(CRub::Create(m_pGraphicDev, _vec3(90.f, 2.4f, 40.f)));
-	m_arrRoom[5]->PushBack_GameObj(CCryder::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 100.f)));
-	m_arrRoom[6]->PushBack_GameObj(CNubBoss::Create(m_pGraphicDev, _vec3(100.f, 0.6f, 100.f)));
+
 //====== 임시 코드임 =======
 	
 }
