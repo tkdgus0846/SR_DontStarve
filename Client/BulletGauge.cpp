@@ -7,12 +7,10 @@ CBulletGauge::CBulletGauge(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
 {
 	Set_ObjTag(L"BulletGauge");
-
 }
 
 CBulletGauge::~CBulletGauge()
 {
-
 }
 
 HRESULT CBulletGauge::Ready_GameObject(void)

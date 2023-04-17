@@ -67,6 +67,7 @@ public:
 	vector<COLGROUP>				Get_ColGroupVec() { return m_ObjInfo.colGroupVec; }
 	OBJ_INFO						Get_ObjInfo() { return m_ObjInfo; }
 
+
 protected:
 	// 에디터에서만 사용하세요.
 	void			Remove_Render_Component(const _tchar* pComponentTag);
@@ -82,6 +83,8 @@ protected:
 	_float					m_fViewZ = 0.f;
 
 	OBJ_INFO				m_ObjInfo;
+
+	_float					m_fZGap;
 	
 private:
 	// 컴포넌트들의 렌더순서를 정해주는 벡터 컨테이너

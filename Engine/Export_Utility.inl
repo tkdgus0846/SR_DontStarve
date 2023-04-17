@@ -1,3 +1,4 @@
+#include "Export_Utility.h"
 
 CGameObject* Get_Player()
 {
@@ -7,6 +8,11 @@ CGameObject* Get_Player()
 void			Set_Player(CGameObject* player)
 {
 	CManagement::GetInstance()->Set_Player(player);
+}
+
+inline CLayer * Get_Layer(LAYERID LayerID)
+{
+	return CManagement::GetInstance()->Get_Scene()->Get_Layer(LayerID);
 }
 
 HRESULT			Create_Management(CManagement** ppManagement)

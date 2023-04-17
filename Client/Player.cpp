@@ -9,7 +9,9 @@
 #include "FlameProjector.h"
 #include "RapidWeapon.h"
 #include "SwordWeapon.h"
-#include "SpreaWeapon.h"
+#include "SpreadWeapon.h"
+
+#include <algorithm>
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)
@@ -19,8 +21,6 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	Set_LayerID(LAYER_PLAYER);
 	Set_ObjTag(L"Player");
-
-	
 }
 
 CPlayer::~CPlayer()
@@ -40,7 +40,7 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_fSpeed = 12.f;
 	m_iHp = 20;
 
-	Set_Player(this);
+	Engine::Set_Player(this);
 
 	for (int i = 0; i < WEAPONEND; i++)
 		m_MyWeaponList[i] = nullptr;
@@ -178,7 +178,7 @@ void CPlayer::Gain_Weapon(WEAPONTYPE eWeaponType)
 			gainWeapon = CRapidWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		case SPREADSHOT:
-			gainWeapon = CSpreaWeapon::Create(m_pGraphicDev, m_pTransform);
+			gainWeapon = CSpreadWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		case FREEZESHOT:
 			gainWeapon = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
@@ -196,6 +196,7 @@ void CPlayer::Gain_Weapon(WEAPONTYPE eWeaponType)
 		m_MyWeaponList[eWeaponType]->GainBullet(10);
 	}
 }
+
 
 HRESULT CPlayer::Add_Component(void)
 {
@@ -279,6 +280,11 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			CSwordWeapon* weapon = dynamic_cast<CSwordWeapon*>(m_pCurWeapon);
 			weapon->Gather_Sword(fTimeDelta);
 		}
+		else if (m_eCurWeaponType == SPREADSHOT )
+		{
+			CSpreadWeapon* weapon = dynamic_cast<CSpreadWeapon*>(m_pCurWeapon);
+			weapon->Set_Input();
+		}
 		else
 		{
 			m_pCurWeapon->Shot();
@@ -292,14 +298,14 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Mouse_Pressing(DIM_RB))
 	{
-		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
+		CCamera* playerCamera = dynamic_cast<CCamera*>(Engine::Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
 
 		playerCamera->Set_FOV(D3DXToRadian(30.f));
 	}
 	
 	if (Engine::Mouse_Up(DIM_RB))
 	{
-		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
+		CCamera* playerCamera = dynamic_cast<CCamera*>(Engine::Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
 
 		playerCamera->Set_FOV(D3DXToRadian(60.f));
 	}
@@ -317,6 +323,11 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	{
 		CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"VortexBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS] + m_pTransform->m_vInfo[INFO_LOOK] * 1.3f, m_pTransform->m_vInfo[INFO_LOOK], { 1.f,1.f,1.f });
 		Add_GameObject(bullet);
+	}
+
+	if (Engine::Key_Down(DIK_G))
+	{
+		AimHack();
 	}
 }
 
@@ -341,4 +352,24 @@ void CPlayer::Fix_Mouse()
 
 	ClientToScreen(g_hWnd, &ptMouse);
 	SetCursorPos(ptMouse.x, ptMouse.y);
+}
+
+void CPlayer::AimHack()
+{
+	// 몬스터레이어의 오브젝트를 벡터에 저장.
+	if (m_vecMonster.empty())
+	{
+		CLayer* pLayer = Engine::Get_Layer(LAYER_MONSTER);
+		if (pLayer == nullptr) { return; }
+		pLayer->Get_GameObject_ALL(&m_vecMonster);
+	}
+
+	// 우선순위...
+	// 벡터를 순회하면서 가장가까운 적으로 정렬...
+/*
+	std::sort(m_vecMonster.begin(), m_vecMonster.end(), ZComp());
+
+*/
+
+
 }

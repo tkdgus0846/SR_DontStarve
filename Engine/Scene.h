@@ -32,7 +32,7 @@ protected:
 	void			Play_SlowTime(const _float & fTimeDelta);
 	void			Reset_SlowTime(const _float & fTimeDelta);
 
-private:
+public:
 	CLayer* Get_Layer(LAYERID LayerID);
 
 protected:

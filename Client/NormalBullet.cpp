@@ -30,10 +30,8 @@ void CNormalBullet::SetDead(_bool bDead)
 	__super::SetDead(bDead);
 	if (bDead == true)
 	{
-		CBulletMgr::GetInstance()->Push(L"NormalBullet", this);
-		
+		CBulletMgr::GetInstance()->Push(L"NormalBullet", this);	
 	}
-		
 }
 
 HRESULT CNormalBullet::Ready_GameObject(void)

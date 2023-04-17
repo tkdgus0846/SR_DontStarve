@@ -20,6 +20,7 @@ public:
 	HRESULT				Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject);
 	HRESULT				Remove_Static_Layers();
 	CGameObject*		Get_GameObject(const _tchar* pObjTag);
+	void				Get_GameObject_ALL(vector<CGameObject*>* pVec);
 
 	HRESULT				Ready_Layer(void);
 	_int				Update_Layer(const _float& fTimeDelta);

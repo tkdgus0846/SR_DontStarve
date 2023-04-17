@@ -419,9 +419,6 @@
     <ClInclude Include="WormHead.h">
       <Filter>GameObject\Monster\Boss\WormBoss</Filter>
     </ClInclude>
-    <ClInclude Include="SpreaWeapon.h">
-      <Filter>GameObject\Weapon</Filter>
-    </ClInclude>
     <ClInclude Include="BeltTile.h">
       <Filter>GameObject\Tile</Filter>
     </ClInclude>
@@ -470,10 +467,10 @@
     <ClInclude Include="ImImage.h">
       <Filter>IMGUI\ImWindow</Filter>
     </ClInclude>
-    <ClInclude Include="SpreadWeapon.h">
+    <ClInclude Include="ExplosiveWeapon.h">
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="ExplosiveWeapon.h">
+    <ClInclude Include="SpreadWeapon.h">
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
@@ -781,9 +778,6 @@
     <ClCompile Include="WormHead.cpp">
       <Filter>GameObject\Monster\Boss\WormBoss</Filter>
     </ClCompile>
-    <ClCompile Include="SpreaWeapon.cpp">
-      <Filter>GameObject\Weapon</Filter>
-    </ClCompile>
     <ClCompile Include="BeltTile.cpp">
       <Filter>GameObject\Tile</Filter>
     </ClCompile>
@@ -829,10 +823,10 @@
     <ClCompile Include="ImImage.cpp">
       <Filter>IMGUI\ImWindow</Filter>
     </ClCompile>
-    <ClCompile Include="SpreadWeapon.cpp">
+    <ClCompile Include="ExplosiveWeapon.cpp">
       <Filter>GameObject\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="ExplosiveWeapon.cpp">
+    <ClCompile Include="SpreadWeapon.cpp">
       <Filter>GameObject\Weapon</Filter>
     </ClCompile>
   </ItemGroup>

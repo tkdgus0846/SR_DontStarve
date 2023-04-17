@@ -42,10 +42,15 @@
 #include "JumpSmokeParticle.h"
 #include "PyramidDestoryParticle.h"
 
+#include "Scene.h"
+#include "Layer.h"
+
 BEGIN(Engine)
 
 inline CGameObject*		Get_Player();
 inline void				Set_Player(CGameObject* player);
+
+inline CLayer*			Get_Layer(LAYERID LayerID);
 
 inline HRESULT			Create_Management(CManagement** ppManagement);
 
