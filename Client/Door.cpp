@@ -72,6 +72,7 @@ void CDoor::LateUpdate_GameObject(void)
 
 void CDoor::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 
 	m_pAnimation->Render_Component();

@@ -37,8 +37,9 @@ private:
 	_bool		m_bMove;
 
 public:
-	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
-	static const _tchar* GetTag() { return L"WormTail"; }
+	static CWormTail*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"WormTail"; }
 
 private:
 	virtual void Free(void) override;

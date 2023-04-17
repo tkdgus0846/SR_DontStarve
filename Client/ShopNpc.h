@@ -33,7 +33,8 @@ private:
 	vector<CSellItem*> m_ItemList;
 
 public:
-	static CShopNpc*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"ShopNpc"; }
 
 private:
 	virtual void Free(void) override;

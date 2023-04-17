@@ -27,6 +27,8 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
+	virtual void SetDead(_bool bDead = true) override;
+
 private:
 	D3DXMATRIX				matWorld, matView;
 	COINTYPE				m_eID;

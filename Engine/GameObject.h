@@ -74,6 +74,7 @@ public:
 
 	// 하위 객체가 죽었을때 처리해주기 위함이다.
 	void			Remove_InOwnerObject();
+	void			Set_Flag(_bool state = FALSE);
 
 protected:
 	// 에디터에서만 사용하세요.
@@ -99,6 +100,7 @@ protected:
 	_float					m_fViewZ = 0.f;
 
 	OBJ_INFO				m_ObjInfo;
+	_bool					m_bReleaseFlag;
 	
 private:
 	// 컴포넌트들의 렌더순서를 정해주는 벡터 컨테이너

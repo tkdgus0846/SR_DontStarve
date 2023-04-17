@@ -1,5 +1,4 @@
 #include "Factory.h"
-
 #include "FileSystem.h"
 
 CFactory::CFactory()
@@ -9,6 +8,7 @@ CFactory::CFactory()
 
 CFactory::~CFactory()
 {
+	Release();
 }
 
 void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
@@ -21,6 +21,7 @@ void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 	for_each(m_creationMap.begin(), m_creationMap.end(), [this](pair<const wstring, CInfo>& entry) {
 		CGameObject* p = entry.second.CreateFunc(m_pGraphicDev);
 		entry.second.TextureKey = p->Get_TextureKey().c_str();
+		p->Set_Flag();
 
 		Safe_Release(p);
 	});
@@ -29,7 +30,7 @@ void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 
 }
 
-HRESULT CFactory::Ready_TileFactory(LPDIRECT3DDEVICE9 pGraphicDev)
+HRESULT CFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	m_pGraphicDev = pGraphicDev;
 	m_pGraphicDev->AddRef();

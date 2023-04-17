@@ -5,8 +5,7 @@
 CWalker::CWalker(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(L"Walker");
-
+	Set_ObjTag(Tag());
 }
 
 CWalker::~CWalker()
@@ -46,6 +45,7 @@ void CWalker::LateUpdate_GameObject(void)
 
 void CWalker::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 

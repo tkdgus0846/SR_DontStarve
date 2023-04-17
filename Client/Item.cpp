@@ -1,6 +1,7 @@
 #include "Item.h"
 #include "Export_Function.h"
 #include "Player.h"
+#include "SoundMgr.h"
 
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -10,6 +11,9 @@ CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_bBill = true;
 	m_fSpeed = 1.f; // 여기 이런식으로 작게줘서 작업하면 나중에 노가다가 심해짐 1초당으로 계산하는게 좋음
 	m_fTime = 0.f;
+
+	m_fAge = 0.f;
+	m_fLifeSpan = 3.f;
 }
 
 CItem::~CItem()
@@ -18,6 +22,7 @@ CItem::~CItem()
 
 _int CItem::Update_GameObject(const _float & fTimeDelta)
 {
+	
 	Add_RenderGroup(RENDER_ALPHA, this);
 
 	_matrix matView;
@@ -47,6 +52,14 @@ void CItem::OnCollisionEnter(const Collision * collsion)
 void CItem::OnCollisionStay(const Collision * collision)
 {
 	__super::OnCollisionStay(collision);
+
+	CPlayer* player = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+
+	if (player && collision->MyCollider == Get_Component(L"Collider", ID_ALL))
+	{
+		STOP_PLAY_SOUND(L"sfxpickup.wav", SOUND_EFFECT, 1.f);
+		SetDead();
+	}
 }
 
 

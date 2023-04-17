@@ -66,6 +66,7 @@ void CMiniMap::LateUpdate_GameObject(void)
 
 void CMiniMap::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	for (size_t i = 0; i < MINIMAPEND; i++)
 	{
 		if (m_arrMap[i] != nullptr)

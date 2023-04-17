@@ -2,7 +2,7 @@
 
 #include "Include.h"
 #include "Creature.h"
-
+#include "Serializable.h"
 BEGIN(Engine)
 class CRoot;
 class CTriCol;
@@ -11,7 +11,7 @@ class CCollider;
 class CSequence;
 END
 
-class CMonster : public CCreature
+class CMonster : public CCreature, public ISerializable
 {
 protected:
 	explicit CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -76,4 +76,8 @@ public:
 
 protected:
 	virtual void Free(void) override;
+
+	// ISerializable을(를) 통해 상속됨
+	virtual void Serialization(HANDLE hFile, DWORD & dwByte) override;
+	virtual void Deserialization(HANDLE hFile, DWORD & dwByte) override;
 };

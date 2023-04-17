@@ -5,7 +5,7 @@
 CBaller::CBaller(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(L"Baller");
+	Set_ObjTag(Tag());
 
 }
 
@@ -46,6 +46,7 @@ void CBaller::LateUpdate_GameObject(void)
 
 void CBaller::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 
 }

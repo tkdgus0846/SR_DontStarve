@@ -77,7 +77,8 @@ HRESULT CWall::Ready_GameObject(void)
 
 _int CWall::Update_GameObject(const _float & fTimeDelta)
 {
-	
+	if (GetDead()) return OBJ_DEAD;
+
 	__super::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -92,7 +93,7 @@ void CWall::LateUpdate_GameObject(void)
 
 void CWall::Render_GameObject(void)
 {
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 

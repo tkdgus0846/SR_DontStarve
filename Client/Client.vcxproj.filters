@@ -374,9 +374,6 @@
     <ClInclude Include="ShopNpc.h">
       <Filter>GameObject\ShopNpc</Filter>
     </ClInclude>
-    <ClInclude Include="NogadaFactory.h">
-      <Filter>Factory</Filter>
-    </ClInclude>
     <ClInclude Include="Baller.h">
       <Filter>GameObject\Monster\Enemy</Filter>
     </ClInclude>
@@ -458,9 +455,6 @@
     <ClInclude Include="Factory.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="loader.h">
-      <Filter>Factory</Filter>
-    </ClInclude>
     <ClInclude Include="TileFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
@@ -490,6 +484,15 @@
     </ClInclude>
     <ClInclude Include="CoolTime.h">
       <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObjectFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -751,9 +754,6 @@
     <ClCompile Include="ShopNpc.cpp">
       <Filter>GameObject\ShopNpc</Filter>
     </ClCompile>
-    <ClCompile Include="NogadaFactory.cpp">
-      <Filter>Factory</Filter>
-    </ClCompile>
     <ClCompile Include="Baller.cpp">
       <Filter>GameObject\Monster\Enemy</Filter>
     </ClCompile>
@@ -835,9 +835,6 @@
     <ClCompile Include="Factory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="loader.cpp">
-      <Filter>Factory</Filter>
-    </ClCompile>
     <ClCompile Include="TileFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
@@ -864,6 +861,15 @@
     </ClCompile>
     <ClCompile Include="CoolTime.cpp">
       <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObjectFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

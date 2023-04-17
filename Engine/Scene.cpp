@@ -79,6 +79,13 @@ void CScene::LateUpdate_Scene(void)
 	}	
 }
 
+void CScene::Remove_GameObject(LAYERID layerID, CGameObject* obj)
+{
+	if (layerID > LAYER_STATIC_END) return;
+
+	(*m_StaticLayerArr)[layerID]->Remove_GameObject(obj);
+}
+
 void Engine::CScene::Set_StaticLayerArr(vector<CLayer*>* layerArr)
 {
 	m_StaticLayerArr = layerArr;

@@ -157,6 +157,21 @@ void CMonster::Free(void)
 	__super::Free();
 }
 
+void CMonster::Serialization(HANDLE hFile, DWORD & dwByte)
+{
+	_tchar tmp[32];
+
+	lstrcpy(tmp, m_ObjInfo.pObjTag);
+	WriteFile(hFile, tmp, sizeof(_tchar) * 32, &dwByte, nullptr);
+
+	m_pTransform->WriteTransformFile(hFile, dwByte);
+}
+
+void CMonster::Deserialization(HANDLE hFile, DWORD & dwByte)
+{
+	m_pTransform->ReadTransformFile(hFile, dwByte);
+}
+
 HRESULT CMonster::Create_Root_AI()
 {
 	m_pRoot = dynamic_cast<CRoot*>(Engine::Clone_Proto(L"Root", this));

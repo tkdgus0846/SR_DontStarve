@@ -2,6 +2,8 @@
 #include "Floor.h"
 
 #include "Export_Function.h"
+#include "BossHp.h"
+#include "Creature.h"
 
 CFloor::CFloor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -23,6 +25,8 @@ HRESULT CFloor::Ready_GameObject(void)
 
 _int CFloor::Update_GameObject(const _float& fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
+
 	__super::Update_GameObject(fTimeDelta);
 	
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -37,7 +41,7 @@ void CFloor::LateUpdate_GameObject(void)
 
 void CFloor::Render_GameObject(void)
 {
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
@@ -47,7 +51,14 @@ void CFloor::OnCollisionEnter(const Collision * collsion)
 
 void CFloor::OnCollisionStay(const Collision * collision)
 {
+	CCreature* creature = dynamic_cast<CCreature*>(collision->OtherGameObject);
+	if (creature == nullptr) return;
 
+	if (collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
+	{
+		_float height = collision->amountVec.y;
+		creature->m_pTransform->m_vInfo[INFO_POS].y += height;
+	}
 }
 
 void CFloor::OnCollisionExit(const Collision * collision)

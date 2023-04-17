@@ -26,13 +26,14 @@ HRESULT CTile::Ready_GameObject()
 
 _int CTile::Update_GameObject(const _float & fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
 
 	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
-	return 0;
+	return OBJ_NOEVENT;
 }
 
 void CTile::LateUpdate_GameObject(void)
@@ -42,6 +43,7 @@ void CTile::LateUpdate_GameObject(void)
 
 void CTile::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
@@ -100,7 +102,7 @@ HRESULT CTile::Add_Component()
 	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pBufferCom });
 
-	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENVIRONMENT));
+	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ENVIRONMENT));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
 
@@ -127,10 +129,6 @@ void CTile::Serialization(HANDLE hFile, DWORD & dwByte)
 
 void CTile::Deserialization(HANDLE hFile, DWORD & dwByte)
 {
-	_tchar tmp[32]{};
-
-	//ReadFile(hFile, tmp, sizeof(_tchar) * 32, &dwByte, nullptr);
-	//lstrcpy(tmp, m_ObjInfo.pObjTag);
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 }
 

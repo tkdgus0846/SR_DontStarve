@@ -7,7 +7,7 @@ CShopNpc::CShopNpc(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 {
 	Set_LayerID(LAYER_NPC);
-	Set_ObjTag(L"ShopNpc");
+	Set_ObjTag(Tag());
 
 	m_iHp = 1000;
 }
@@ -41,7 +41,7 @@ HRESULT CShopNpc::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
-	pCollider->Set_BoundingBox({ 6.f, 6.f, 6.f });
+	pCollider->Set_BoundingBox({ 6.f, 10.f, 6.f });
 
 	m_pTransform->Set_BillMode(true);
 
@@ -51,14 +51,24 @@ HRESULT CShopNpc::Add_Component()
 HRESULT CShopNpc::Ready_GameObject(void)
 {
 	m_pTransform->m_vScale = { 5.f, 5.f, 5.f };
-	m_pTransform->Set_Pos(_vec3{ 30.f, 5.f, 30.f });
+	m_pTransform->Set_Pos(_vec3{ 25.f, -5.f, 25.f });
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	_vec3 Pos = m_pTransform->m_vInfo[INFO_POS];
+	Pos.y += 6.f;
+	Pos.z -= 5.f;
+	
+	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 30, FLAMESHOT);
+	Pos.x += 4.f;
+	
+	CSellItem* item2 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 50, SPREADSHOT);
+	Pos.x -= 8.f;
 
-	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 50, FLAMESHOT);
-	Add_GameObject(item1);
-	m_ItemList.push_back(item1);
+	CSellItem* item3 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 100, FREEZESHOT);
+
+	Add_Static_GameObject(item1);
+	Add_Static_GameObject(item2);
+	Add_Static_GameObject(item3);
 
 	__super::Ready_GameObject();
 	return S_OK;
@@ -66,9 +76,16 @@ HRESULT CShopNpc::Ready_GameObject(void)
 
 _int CShopNpc::Update_GameObject(const _float & fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
+
+	_matrix viewMat;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &viewMat);
+
+	viewMat.Inverse();
+	m_pTransform->Rot_Bill({ viewMat._41,viewMat._42,viewMat._43 }, 0.01f);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -89,6 +106,7 @@ void CShopNpc::LateUpdate_GameObject(void)
 
 void CShopNpc::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
@@ -117,7 +135,7 @@ void CShopNpc::OnCollisionStay(const Collision * collision)
 }
 
 
-CShopNpc * CShopNpc::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CShopNpc::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CShopNpc* pInstance = new CShopNpc(pGraphicDev);
 

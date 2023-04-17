@@ -10,6 +10,8 @@
 #include "..\Engine\ColorParticle.h"
 #include "Wall.h"
 #include "..\Engine\SoundMgr.h"
+#include "Floor.h"
+#include "SoftPyramid.h"
 
 CNormalBullet::CNormalBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
@@ -31,7 +33,6 @@ void CNormalBullet::SetDead(_bool bDead)
 	if (bDead == true)
 	{
 		CBulletMgr::GetInstance()->Push(L"NormalBullet", this);
-		
 	}
 		
 }
@@ -97,7 +98,7 @@ void CNormalBullet::OnCollisionStay(const Collision* collision)
 		SetDead();
 
 		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
-		//CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"PyramidDestory_Particle", 20, pos);
+		
 		//CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
 		
 		STOP_PLAY_SOUND(L"sfxHurt.wav", SOUND_EFFECT, 1.f);
@@ -106,10 +107,21 @@ void CNormalBullet::OnCollisionStay(const Collision* collision)
 	}
 
 	CWall* wall = dynamic_cast<CWall*>(collision->OtherGameObject);
-	if (wall)
+	CFloor* floor = dynamic_cast<CFloor*>(collision->OtherGameObject);
+	CSoftPyramid* softPyramid = dynamic_cast<CSoftPyramid*>(collision->OtherGameObject);
+	
+	if (wall || floor || softPyramid)
 	{
+		
 		_vec3 pos = collision->intersectBox._max;
 		SetDead();
+		if (softPyramid != nullptr)
+		{
+			CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"PyramidDestory_Particle", 30, pos);
+			Add_GameObject(particle);
+			//softPyramid->SetDead();
+			return;
+		}
 		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
 		STOP_PLAY_SOUND(L"sfxHurt.wav", SOUND_ENVIRONMENT, 1.f);
 		Add_GameObject(particle);

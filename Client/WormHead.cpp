@@ -7,6 +7,7 @@
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev), m_bMove(true), m_pTail(nullptr)
 {
+	Set_ObjTag(Tag());
 }
 
 CWormHead::~CWormHead()
@@ -61,6 +62,7 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 
 _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 {
+  if (GetDead()) return OBJ_DEAD;
 	if (!Get_Player())
 		return OBJ_NOEVENT;
 
@@ -68,20 +70,20 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 		m_fSpeed = 0.f;
 	__super::Update_GameObject(fTimeDelta);
 
-	if (GetDead() && m_vecBody.size() == 0 && m_pTail == nullptr)
-		return OBJ_DEAD;
-	else if (GetDead())
-	{
-		for (auto iter : m_vecBody)
-			iter->SetDead();
-		m_vecBody.clear();
-		if (m_pTail)
-		{
-			m_pTail->SetDead();
-			m_pTail = nullptr;
-		}
-		return OBJ_NOEVENT;
-	}
+	//if (GetDead() && m_vecBody.size() == 0 && m_pTail == nullptr)
+	//	return OBJ_DEAD;
+	//else if (GetDead())
+	//{
+	//	for (auto iter : m_vecBody)
+	//		iter->SetDead();
+	//	m_vecBody.clear();
+	//	if (m_pTail)
+	//	{
+	//		m_pTail->SetDead();
+	//		m_pTail = nullptr;
+	//	}
+	//	return OBJ_NOEVENT;
+  //	}
 
 	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 
@@ -175,6 +177,8 @@ void CWormHead::Render_GameObject(void)
 	if (GetDead())
 		return;
 
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+
 	for (auto iter : m_vecBody)
 		iter->LateUpdate_GameObject();
 	if (m_pTail)
@@ -234,6 +238,18 @@ CGameObject * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPo
 	CWormHead* pInstance = new CWormHead(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+	return pInstance;
+}
+
+CGameObject * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CWormHead* pInstance = new CWormHead(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject({})))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

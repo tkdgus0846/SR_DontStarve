@@ -25,6 +25,7 @@ public:
 	virtual void		Render_Scene(void)PURE;
 
 	void				Set_StaticLayerArr(vector<CLayer*>* layerArr);
+	void				Remove_GameObject(LAYERID layerID, class CGameObject* obj);
 
 protected:
 	HRESULT			Add_GameObject(class CGameObject* pObj);

@@ -55,6 +55,7 @@ void CManagement::LateUpdate_Management()
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_DETECTION);
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENVIRONMENT);
+	Engine::Check_Collision(COL_PLAYERBULLET, COL_OBJ);
 	Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
 	
 	// 플레이어와 다른 객체들의 관계
@@ -97,6 +98,11 @@ void CManagement::Add_GameObject(CGameObject * pObj)
 CGameObject* CManagement::Get_GameObject(LAYERID LayerID, const _tchar * pObjTag)
 {
 	return m_pScene->Get_GameObject(LayerID, pObjTag);
+}
+
+void CManagement::Remove_GameObject(LAYERID layerID, CGameObject* obj)
+{
+	m_pScene->Remove_GameObject(layerID, obj);
 }
 
 CGameObject * CManagement::Get_Player()

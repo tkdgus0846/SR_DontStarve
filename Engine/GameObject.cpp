@@ -18,7 +18,8 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev) :
 	m_pGraphicDev(pGraphicDev),
 	m_fViewZ(0.f),
 	m_bDead(FALSE),
-	m_pOwnerObject(nullptr)
+	m_pOwnerObject(nullptr),
+	m_bReleaseFlag(TRUE)
 {
 	m_pGraphicDev->AddRef();
 
@@ -203,7 +204,7 @@ void CGameObject::Add_Render_Component()
 void CGameObject::Remove_InOwnerObject()
 {
 	if (m_pOwnerObject == nullptr) return;
-
+	
 	for (auto& it = m_pOwnerObject->m_StaticObjectList.begin(); it != m_pOwnerObject->m_StaticObjectList.end(); it++)
 	{
 		if ((*it) == this)
@@ -211,6 +212,15 @@ void CGameObject::Remove_InOwnerObject()
 			m_pOwnerObject->m_StaticObjectList.erase(it);
 			break;
 		}
+	}
+}
+
+void CGameObject::Set_Flag(_bool state /*= FALSE*/)
+{
+	m_bReleaseFlag = state;
+	for (auto child : m_StaticObjectList)
+	{
+		child->Set_Flag();
 	}
 }
 
@@ -227,6 +237,21 @@ CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENT
 
 void CGameObject::Free(void)
 {
+	for (auto child : m_StaticObjectList)
+	{
+		LAYERID layerID = child->Get_LayerID();
+
+		if (m_bReleaseFlag == true)
+		{
+			Engine::Remove_GameObject(layerID, child);
+			Engine::Remove_Collider(child);
+		}
+		
+		
+		Safe_Release(child);
+	}
+	
+
 	for (size_t i = 0; i < ID_END; ++i)
 	{
 		for (auto iter = m_uMapComponent[i].begin(); iter != m_uMapComponent[i].end(); iter++)
