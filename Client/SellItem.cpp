@@ -93,7 +93,7 @@ _int CSellItem::Update_GameObject(const _float & fTimeDelta)
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &viewMat);
 
 	viewMat.Inverse();
-	m_pTransform->Rot_Bill({ viewMat._41,viewMat._42,viewMat._43 }, 0.01f);
+	m_pTransform->Rot_Bill( 0.01f);
 
 	__super::Update_GameObject(fTimeDelta);
 

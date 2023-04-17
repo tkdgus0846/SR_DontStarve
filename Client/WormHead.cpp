@@ -233,7 +233,7 @@ HRESULT CWormHead::Add_Component()
 	FAILED_CHECK_RETURN(Init_AI_Behaviours());
 }
 
-CGameObject * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
+CWormHead * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
 	CWormHead* pInstance = new CWormHead(pGraphicDev);
 

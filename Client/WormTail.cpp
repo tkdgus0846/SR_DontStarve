@@ -208,7 +208,7 @@ void CWormTail::Move(const _float & fTimeDelta)
 		m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 }
 
-CGameObject * CWormTail::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
+CWormTail * CWormTail::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
 	CWormTail* pInstance = new CWormTail(pGraphicDev);
 

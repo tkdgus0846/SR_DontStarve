@@ -28,6 +28,7 @@ HRESULT CTurret::Ready_GameObject(const _vec3& vPos)
 
 _int CTurret::Update_GameObject(const _float & fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
@@ -36,7 +37,7 @@ _int CTurret::Update_GameObject(const _float & fTimeDelta)
 
 	
 
-	return S_OK;
+	return OBJ_NOEVENT;
 }
 
 void CTurret::LateUpdate_GameObject(void)
