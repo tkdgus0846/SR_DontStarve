@@ -25,6 +25,8 @@ HRESULT CFloor::Ready_GameObject(void)
 
 _int CFloor::Update_GameObject(const _float& fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
+
 	__super::Update_GameObject(fTimeDelta);
 	
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);

@@ -26,6 +26,8 @@ HRESULT CSellItem::Add_Component()
 	m_uMapComponent[ID_STATIC].insert({ L"RcTex", RcTex });
 	m_CoinRc = RcTex;
 
+	m_CoinRc->Set_RenderFlag();
+
 	m_strNum = to_string(m_Price);
 
 	_int rcTexNum = m_Price;
@@ -34,6 +36,8 @@ HRESULT CSellItem::Add_Component()
 		RcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 		NULL_CHECK_RETURN(RcTex, E_FAIL);
 		m_RcVec.push_back(RcTex);
+
+		RcTex->Set_RenderFlag();
 	}
 	
 	
@@ -44,10 +48,10 @@ HRESULT CSellItem::Add_Component()
 	m_NumTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Num_Texture", this));
 	m_uMapComponent[ID_STATIC].insert({ L"Num_Texture", m_NumTexture });
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ROOMITEM));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
-	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
+	CCollider* m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ROOMITEM));
+	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
+	m_pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
 
 	
 	m_pTransform->Set_BillMode(true);

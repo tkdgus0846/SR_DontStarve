@@ -19,6 +19,9 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
+	void CreateMapObject();
+	
+
 private:
 	virtual	HRESULT Add_Component() override;
 	void	Key_Input(const _float& fTimeDelta);
@@ -32,6 +35,7 @@ public:
 	void CreateMonster();
 	void CreateTile();
 	_int&	Get_Radio() { return m_radio; }
+	void DeleteObject();
 
 private:
 	void LoadSaveTarget(const _tchar* tag);

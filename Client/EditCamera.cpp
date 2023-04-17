@@ -12,6 +12,8 @@
 #include "ImManager.h"
 #include "ImInspector.h"
 #include "FileSystem.h"
+#include "Creature.h"
+
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 	, m_fSpeed(0.f)
@@ -65,6 +67,47 @@ void CEditCamera::Render_GameObject(void)
 {
 }
 
+void CEditCamera::CreateMapObject()
+{
+	if (PICK_MAPOBJ != m_ePick)
+		return;
+
+	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj) 
+		&& !dynamic_cast<CTile*>(m_tPickInfo.pGameObj))
+		return;
+
+	CImInspector* pWindow = dynamic_cast<CImInspector*>(CImManager::GetInstance()->FindByTag(L"Inspector"));
+
+	CGameObject* pObj = MAPOBJ_FACTORY->CreateObject(TO_WSTR(pWindow->Get_CurMapObjItem()));
+	if (!pObj)
+		return;
+
+	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
+	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
+
+	switch (m_radio)
+	{
+	case 0:
+		vPos.x -= (VTXCNTX - 1) * 0.5f;
+		vPos.z += (VTXCNTZ - 1) * 0.5f;
+		break;
+	case 1:
+		vPos.x += (VTXCNTX - 1) * 0.5f;
+		vPos.z += (VTXCNTZ - 1) * 0.5f;
+		break;
+	case 2:
+		vPos.x -= (VTXCNTX - 1) * 0.5f;
+		vPos.z -= (VTXCNTZ - 1) * 0.5f;
+		break;
+	case 3:
+		vPos.x += (VTXCNTX - 1) * 0.5f;
+		vPos.z -= (VTXCNTZ - 1) * 0.5f;
+		break;
+	}
+
+	pObj->m_pTransform->Set_Pos(vPos);
+}
+
 HRESULT CEditCamera::Add_Component()
 {
 	CCamera* pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
@@ -97,6 +140,13 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 		SetClickInfo();
 		CreateTile();
 		CreateMonster();
+		CreateMapObject();
+	}
+
+	if (Engine::Mouse_Down(DIM_RB))
+	{
+		SetClickInfo();
+		DeleteObject();
 	}
 }
 
@@ -408,37 +458,23 @@ void CEditCamera::CreateMonster()
 	if (PICK_MONSTER != m_ePick)
 		return;
 	
-	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
+	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj)
+		&& !dynamic_cast<CTile*>(m_tPickInfo.pGameObj))
 		return;
 
 	CImInspector* pWindow = dynamic_cast<CImInspector*>(CImManager::GetInstance()->FindByTag(L"Inspector"));
 
 	CGameObject* pObj = MONSTER_FACTORY->CreateObject(TO_WSTR(pWindow->Get_CurMonsterItem()));
+	CCreature* creature = dynamic_cast<CCreature*>(pObj);
+
+	if (creature != nullptr)
+		creature->Set_Speed(0.f);
 	if (!pObj)
 		return;
 
 	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
 	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
-
-	switch (m_radio)
-	{
-	case 0:
-		vPos.x -= (VTXCNTX - 1) * 0.5f;
-		vPos.z += (VTXCNTZ - 1) * 0.5f;
-		break;
-	case 1:
-		vPos.x += (VTXCNTX - 1) * 0.5f;
-		vPos.z += (VTXCNTZ - 1) * 0.5f;
-		break;
-	case 2:
-		vPos.x -= (VTXCNTX - 1) * 0.5f;
-		vPos.z -= (VTXCNTZ - 1) * 0.5f;
-		break;
-	case 3:
-		vPos.x += (VTXCNTX - 1) * 0.5f;
-		vPos.z -= (VTXCNTZ - 1) * 0.5f;
-		break;
-	}
+	vPos.y += 2.f;
 
 	pObj->m_pTransform->Set_Pos(vPos);
 }
@@ -465,4 +501,16 @@ void CEditCamera::CreateTile()
 	vPos.y += 0.01f;
 	pObj->m_pTransform->Set_Pos(vPos);
 	
+}
+
+void CEditCamera::DeleteObject()
+{
+	if (dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
+		return;
+
+	if (dynamic_cast<CWall*>(m_tPickInfo.pGameObj))
+		return;
+
+	m_tPickInfo.pGameObj->SetDead();
+	ROOM_MGR->Get_CurRoom()->EraseGameObject(m_tPickInfo.pGameObj);
 }

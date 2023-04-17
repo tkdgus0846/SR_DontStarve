@@ -13,6 +13,8 @@
 #include "TileFactory.h"
 #include "FileSystem.h"
 #include "SoundMgr.h"
+#include "MonsterFactory.h"
+#include "MapObjectFactory.h"
 
 // 주석 테스트용
 CMainApp::CMainApp()
@@ -117,6 +119,8 @@ CMainApp * CMainApp::Create(void)
 void CMainApp::Free(void)
 {
 	CTileFactory::DestroyInstance();
+	CMonsterFactory::DestroyInstance();
+	CMapObjectFactory::DestroyInstance();
 	//CLoader::DestroyInstance();
 	CRoomMgr::DestroyInstance();
 	CImManager::DestroyInstance();

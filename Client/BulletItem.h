@@ -7,8 +7,7 @@ class CRcTex;
 
 END
 
-class CBulletItem :
-	public CItem
+class CBulletItem : public CItem
 {
 private:
 	CBulletItem(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -20,6 +19,9 @@ public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
+
+
+	virtual void SetDead(_bool bDead = true) override;
 
 private:
 	D3DXMATRIX				matWorld, matView;

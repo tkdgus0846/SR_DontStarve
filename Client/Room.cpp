@@ -247,6 +247,18 @@ void CRoom::Close_Doors()
 	}
 }
 
+void CRoom::EraseGameObject(CGameObject* obj)
+{
+	for (auto it = m_vecGameObj.begin(); it != m_vecGameObj.end(); it++)
+	{
+		if (*it == obj)
+		{
+			m_vecGameObj.erase(it);
+			return;
+		}
+	}
+}
+
 void CRoom::FloorSubSet()
 {
 	// 바닥 위치 조정

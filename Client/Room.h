@@ -41,6 +41,10 @@ private:
 	void	FreeSubset();
 	
 public:
+	
+	void EraseGameObject(CGameObject* obj);
+	
+
 	void FloorSubSet();
 	void PlaceSubSet();
 	_bool WriteRoomFile(HANDLE hFile, DWORD& dwByte);

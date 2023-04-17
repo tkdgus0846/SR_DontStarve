@@ -55,6 +55,7 @@ void CManagement::LateUpdate_Management()
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_DETECTION);
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENVIRONMENT);
+	Engine::Check_Collision(COL_PLAYERBULLET, COL_OBJ);
 	Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
 	
 	// 플레이어와 다른 객체들의 관계

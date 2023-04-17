@@ -491,6 +491,9 @@
     <ClInclude Include="MapObjectFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -864,6 +867,9 @@
     </ClCompile>
     <ClCompile Include="MapObjectFactory.cpp">
       <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

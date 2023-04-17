@@ -1,6 +1,7 @@
 #include "HeartItem.h"
 #include "Export_Function.h"
 #include "Player.h"
+#include "ItemManager.h"
 
 CHeartItem::CHeartItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CItem(pGraphicDev)
@@ -52,11 +53,11 @@ HRESULT CHeartItem::Ready_GameObject(void)
 
 _int CHeartItem::Update_GameObject(const _float & fTimeDelta)
 {
+	Aging(fTimeDelta);
+	if (GetDead()) return OBJ_RETPOOL;
 
 	if (m_bDrop == true) ItemPatrol(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
-
-	if (GetDead()) return OBJ_DEAD;
 
 	return OBJ_NOEVENT;
 }
@@ -70,6 +71,13 @@ void CHeartItem::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
+}
+
+void CHeartItem::SetDead(_bool bDead /*= true*/)
+{
+	__super::SetDead(bDead);
+	if (bDead == true)
+		CItemManager::GetInstance()->Push(L"HeartItem", this);
 }
 
 CHeartItem * CHeartItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)

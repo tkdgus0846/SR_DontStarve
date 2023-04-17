@@ -227,6 +227,9 @@ void CImInspector::Show_Create_Object()
 	ImGui::RadioButton("MONSTER_MODE", &((int&)m_pCamera->Get_Pick()), 1);
 	IsPickMode(m_pMonsterImage, PICK_MONSTER);
 
+	ImGui::RadioButton("MAPOBJ MODE", &((int&)m_pCamera->Get_Pick()), 2);
+	IsPickMode(m_pMonsterImage, PICK_MONSTER);
+
 	ImGui::RadioButton("LeftUp", &m_pCamera->Get_Radio(), 0); ImGui::SameLine();
 	ImGui::RadioButton("RightUp", &m_pCamera->Get_Radio(), 1); 
 	ImGui::RadioButton("LeftBottom", &m_pCamera->Get_Radio(), 2); ImGui::SameLine();

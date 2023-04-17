@@ -23,6 +23,10 @@ public:
 	LPDIRECT3DVERTEXBUFFER9 GetVertexBuffer() { return m_pVB; }
 	LPDIRECT3DINDEXBUFFER9	GetIndexBuffer() { return m_pIB; }
 
+	// 도저히 답이 없어서 임시방편으로 만들어놓은 코드다.
+	// 만약에 VIBuffer에 월드행렬을 먹이고 싶지않다면 이 플래그를 True로 만들어라.
+	void		Set_RenderFlag(_bool state = true) { m_bRenderFlag = state; }
+
 protected:
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 	LPDIRECT3DINDEXBUFFER9		m_pIB;
@@ -35,6 +39,7 @@ protected:
 	_ulong		m_dwIdxSize;
 	D3DFORMAT	m_IdxFmt;
 
+	_bool m_bRenderFlag;
 protected:
 	virtual void Free(void);
 

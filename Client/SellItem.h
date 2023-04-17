@@ -6,6 +6,7 @@ BEGIN(Engine)
 
 class CTexture;
 class CRcTex;
+class CCollider;
 
 END
 

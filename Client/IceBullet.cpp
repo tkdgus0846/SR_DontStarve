@@ -4,6 +4,7 @@
 #include "EffectManager.h"
 #include "Wall.h"
 #include "..\Engine\SoundMgr.h"
+#include "Floor.h"
 
 CIceBullet::CIceBullet(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CBullet(pGraphicDev)
@@ -82,7 +83,9 @@ void CIceBullet::OnCollisionStay(const Collision * collision)
 	}
 
 	CWall* wall = dynamic_cast<CWall*>(collision->OtherGameObject);
-	if (wall)
+	CFloor* floor = dynamic_cast<CFloor*>(collision->OtherGameObject);
+
+	if (wall || floor)
 	{
 		_vec3 pos = collision->intersectBox._max;
 		SetDead();

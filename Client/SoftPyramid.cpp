@@ -6,6 +6,8 @@
 #include "RoomMgr.h"
 #include "Room.h"
 
+#include "ItemManager.h"
+
 CSoftPyramid::CSoftPyramid(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CPyramid(pGraphicDev)
 {
@@ -90,12 +92,14 @@ void CSoftPyramid::SetDead(_bool bDead)
 {
 	__super::SetDead(bDead);
 	_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
-	pSpawnPos.y += 1.f;
-	Add_GameObject(CWeaponItem::Create(m_pGraphicDev
-		, pSpawnPos
-		, FLAMESHOT));
+	pSpawnPos.y += 3.f;
 
-	pSpawnPos.y = 0.1f;
+	
+	CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
+	Add_GameObject(item);
+	item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"CoinItem", pSpawnPos);
+	Add_GameObject(item);
+	
 	/*CTile* pTile = CTile::Create(m_pGraphicDev, pSpawnPos, L"FloorCrate_Texture");*/
 	//ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pTile);
 	//pTile->m_pTransform->m_vScale *= 0.5f;

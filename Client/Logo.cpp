@@ -67,9 +67,9 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 		{
 			Start_WorldTimer();
 			CScene*	pScene = CStage::Create(m_pGraphicDev);
-			/*TILE_FACTORY->Ready_Factory(m_pGraphicDev);
+			TILE_FACTORY->Ready_Factory(m_pGraphicDev);
 			MONSTER_FACTORY->Ready_Factory(m_pGraphicDev);
-			MAPOBJ_FACTORY->Ready_Factory(m_pGraphicDev);*/
+			MAPOBJ_FACTORY->Ready_Factory(m_pGraphicDev);
 			//CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 			
@@ -85,7 +85,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 			
-			//CFileSystem::Load(L"as.dat");
+			CFileSystem::Load(L"as.dat");
 			return 0;
 		}
 	}
@@ -131,6 +131,5 @@ CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CLogo::Free(void)
 {
 	Safe_Release(m_pLoading);
-
 	__super::Free();
 }

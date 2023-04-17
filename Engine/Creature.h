@@ -33,6 +33,7 @@ public:
 	_int	Get_HP() const { return m_iHp; }
 	_int	Get_MaxHP() const { return m_iMaxHp; }
 	_float	Get_Speed() const { return m_fSpeed; }
+	void	Set_Speed(const _float& speed) { m_fSpeed = speed; }
 
 	void	Plus_Speed (_float fSpeed = 1) { m_fSpeed += fSpeed; }
 

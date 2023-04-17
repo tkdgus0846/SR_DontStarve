@@ -1,6 +1,7 @@
 #include "WeaponItem.h"
 #include "Export_Function.h"
 #include "Player.h"
+#include "SoundMgr.h"
 
 CWeaponItem::CWeaponItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
@@ -86,9 +87,9 @@ void CWeaponItem::OnCollisionStay(const Collision * collision)
 	if (pPlayer == nullptr) return;
 
 	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
-	{
+	{		
+		STOP_PLAY_SOUND(L"sfxpickup.wav", SOUND_EFFECT, 1.f);
 		pPlayer->Gain_Weapon(m_eID);
-
 	}
 
 	ItemMagnetic(pPlayer);
