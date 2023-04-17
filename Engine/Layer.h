@@ -21,6 +21,7 @@ public:
 	HRESULT				Remove_GameObject(CGameObject* obj);
 
 	CGameObject*		Get_GameObject(const _tchar* pObjTag);
+	void				Get_GameObject_ALL(vector<CGameObject*>* pVec);
 
 	HRESULT				Ready_Layer(void);
 	_int				Update_Layer(const _float& fTimeDelta);

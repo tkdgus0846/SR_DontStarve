@@ -10,7 +10,16 @@ class CTexture;
 class CCollider;
 class CRigidbody;
 class CCamera;
+class CLayer;
 END
+//
+//struct ZComp
+//{
+//	const bool operator()(CGameObject* a, CGameObject* b)
+//	{
+//		return a->m_pTransform->m_vInfo[INFO_POS].z < b->m_pTransform->m_vInfo[INFO_POS].z;
+//	}
+//};
 
 class CPlayer : public CCreature
 {
@@ -51,6 +60,9 @@ public:
 	_int			Get_UltiGuage() { return m_fUltimateGuage; }
 	_int			Get_UltiMaxGuage() { return m_fUltimateMax; }
 
+	void			AimHack();
+
+
 private:
 	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);
@@ -69,6 +81,8 @@ private:
 	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;
 	class CWeapon*						m_pCurWeapon;
 	WEAPONTYPE							m_eCurWeaponType;
+
+	vector<CGameObject*>				m_vecMonster;
 
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -1,54 +1,84 @@
 #include "SpreadWeapon.h"
 #include "Export_Function.h"
-
 #include "BulletMgr.h"
 #include "NormalBullet.h"
-#include "IceBullet.h"
 
-CSpreadWeapon::CSpreadWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
-	CWeapon(pGraphicDev)
+
+CSpreadWeapon::CSpreadWeapon(LPDIRECT3DDEVICE9 pGraphicDev)
+	:CWeapon(pGraphicDev)
 {
 	Set_ObjTag(L"SpreadWeapon");
 
-	m_fCycle = 0.9f;
-	m_MaxBulletNum = 30;
-	m_CurBulletNum = 30;
+	this->m_fCycle = 1.f;
+	this->m_MaxBulletNum = 1000.f;
+	this->m_CurBulletNum = 1000.f;
 }
 
 CSpreadWeapon::~CSpreadWeapon()
 {
 }
 
-CBullet* CSpreadWeapon::Shot_Setting()
+
+void CSpreadWeapon::Shot()
 {
-	CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
+	if (CanShot() && m_fTime > 0.1f)
+	{
+		for (size_t j = 0; j < 3; j++)
+		{
+			CBullet* bullet = Shot_Setting(j * 10.f - 10.f);
 
-	if (playerCamera == nullptr) return nullptr;
+			if (bullet)
+			{
+				Add_GameObject(bullet);
+				SpendBullet();
+			}
+		}
+		m_fTime = 0.f;
+		m_iCount++;
+	}
 
 
-	VIEWPARAMS* cameraViewparams = playerCamera->Get_Camera_ViewParams();
-	_vec3 cameraAt = cameraViewparams->vAt;
-	_vec3 cameraEye = cameraViewparams->vEye;
-
-	_vec3 look = cameraAt - cameraEye;
-
-	look = look*30.f;
-
-	cameraAt = cameraEye + look;
-
-
-	_vec3 bulletDir = cameraAt - m_pTransform->m_vInfo[INFO_POS];
-	bulletDir.Normalize();
-
-	CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, {0.5f,0.5f,1.f}, false, 40.f);
-
-	m_CurBulletNum++;
-
-	return bullet;	
+	if (m_iCount >= 3)
+	{
+		m_bInput = false;
+		m_iCount = 0;
+		m_bShooted = true;
+		m_bEnableShot = false;
+	}
 }
 
-_int CSpreadWeapon::Update_GameObject(const _float& fTimeDelta)
+
+CBullet * CSpreadWeapon::Shot_Setting(_float fAngle)
 {
+	CCamera* pCamera = dynamic_cast<CCamera*>(Engine::Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
+	if (pCamera == nullptr)	{return nullptr;}
+
+	VIEWPARAMS* pCameraviewparams = pCamera->Get_Camera_ViewParams();
+
+	_vec3 vAt = pCameraviewparams->vAt;
+	_vec3 vEye = pCameraviewparams->vEye;
+
+	_vec3 Look = vAt - vEye;
+
+	D3DXVECTOR3 bulletDir;
+	D3DXMATRIX rotationMatrix;
+	D3DXMatrixRotationY(&rotationMatrix, D3DXToRadian(fAngle));
+	D3DXVec3TransformNormal(&bulletDir, &Look, &rotationMatrix);
+
+	D3DXVec3Normalize(&bulletDir, &bulletDir);
+	
+
+	CBullet* Bullet = CBulletMgr::GetInstance()->Pop(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, { 0.5f,0.5f,1.f }, false, 80.f);
+
+	return Bullet;
+}
+
+_int CSpreadWeapon::Update_GameObject(const _float & fTimeDelta)
+{
+	m_fTime += fTimeDelta;
+
+	if (m_bInput){ Shot(); }
+
 	return __super::Update_GameObject(fTimeDelta);
 }
 
@@ -69,19 +99,20 @@ void CSpreadWeapon::LateUpdate_GameObject(void)
 
 void CSpreadWeapon::Render_GameObject(void)
 {
-	
 	__super::Render_GameObject();
 }
 
-CSpreadWeapon* CSpreadWeapon::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pOnwerTransform)
+
+CSpreadWeapon * CSpreadWeapon::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform * pOnwerTransform)
 {
-	CSpreadWeapon*		pInstance = new CSpreadWeapon(pGraphicDev);
+	CSpreadWeapon* pInstance = new CSpreadWeapon(pGraphicDev);
+
 	pInstance->m_pOwnerTransform = pOnwerTransform;
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
-		return nullptr;
+		pInstance = nullptr;
 	}
 
 	return pInstance;

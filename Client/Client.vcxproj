@@ -360,9 +360,8 @@
     <ClInclude Include="SnowTile.h" />
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
-    <ClInclude Include="SpreaWeapon.h" />
-    <ClInclude Include="SwampTile.h" />
     <ClInclude Include="SpreadWeapon.h" />
+    <ClInclude Include="SwampTile.h" />
     <ClInclude Include="SwordBullet.h" />
     <ClInclude Include="SwordWeapon.h" />
     <ClInclude Include="Tennel.h" />
@@ -497,7 +496,6 @@
     <ClCompile Include="SnowTile.cpp" />
     <ClCompile Include="SoftPyramid.cpp" />
     <ClCompile Include="Cryder.cpp" />
-    <ClCompile Include="SpreaWeapon.cpp" />
     <ClCompile Include="SpreadWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">

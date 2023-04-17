@@ -34,7 +34,6 @@ void CNormalBullet::SetDead(_bool bDead)
 	{
 		CBulletMgr::GetInstance()->Push(L"NormalBullet", this);
 	}
-		
 }
 
 HRESULT CNormalBullet::Ready_GameObject(void)

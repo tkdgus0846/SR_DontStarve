@@ -67,8 +67,6 @@ public:
 	vector<const _tchar*>			Get_ColNameVec() { return m_ObjInfo.colNameVec; }
 	vector<COLGROUP>				Get_ColGroupVec() { return m_ObjInfo.colGroupVec; }
 	OBJ_INFO						Get_ObjInfo() { return m_ObjInfo; }
-
-
 	
 	list<CGameObject*>* Get_Static_GameObject_List() { return &m_StaticObjectList; }
 
@@ -100,6 +98,8 @@ protected:
 	_float					m_fViewZ = 0.f;
 
 	OBJ_INFO				m_ObjInfo;
+
+	_float					m_fZGap;
 	_bool					m_bReleaseFlag;
 	
 private:

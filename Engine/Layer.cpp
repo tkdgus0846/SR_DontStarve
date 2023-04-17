@@ -56,6 +56,16 @@ CGameObject* CLayer::Get_GameObject(const _tchar* pObjTag)
 	return iter->second;
 }
 
+void CLayer::Get_GameObject_ALL(vector<CGameObject*>* pVec)
+{
+	if (m_uMapObject.empty()) return;
+	auto iter = m_uMapObject.begin();
+	for (; iter != m_uMapObject.end(); iter++)
+	{
+		pVec->push_back(iter->second);
+	}
+}
+
 HRESULT CLayer::Ready_Layer(void)
 {
 	return S_OK;

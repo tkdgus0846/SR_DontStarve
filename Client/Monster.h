@@ -31,7 +31,6 @@ public:
 
 	virtual void	Get_Damaged(_int Damage) override;
 	
-
 private:
 	virtual HRESULT Add_Component() override;
 
