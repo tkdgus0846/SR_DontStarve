@@ -63,6 +63,8 @@ inline CComponent*			Get_Component(LAYERID LayerID, const _tchar* pObjTag, const
 inline void				Add_GameObject(class CGameObject* pObj);
 inline CGameObject*		Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
 
+inline void				Remove_GameObject(LAYERID LayerID, CGameObject* obj);
+
 inline HRESULT			Set_Scene(CScene* pScene);
 
 inline _int			Update_Management(const _float& fTimeDelta);
@@ -98,6 +100,7 @@ inline void		Remove_Collider(CCollider* collider, COLGROUP colID);
 inline void		Remove_Collider(CGameObject* gameObject);
 //inline void		Set_Collider(COLGROUP eGroup, CCollider* pCollider);
 //
+inline const	CCamera* Get_CurCamera();
 inline void		On_Camera(const _tchar* pCamTag);
 inline void		Shake_Camera(SHAKE_TYPE eType, const _float& fForce = 1.5f, const _float& fTime = 10.f);
 

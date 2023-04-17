@@ -32,6 +32,8 @@ HRESULT CEffect::Add_Component()
 	CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", rcTex });
+
+	m_pTransform->Set_BillMode(true);
 }
 
 _int CEffect::Update_GameObject(const _float& fTimeDelta)
@@ -45,7 +47,12 @@ _int CEffect::Update_GameObject(const _float& fTimeDelta)
 	
 	_matrix viewMat;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &viewMat);
-	m_pTransform->Set_Billboard(&viewMat);
+
+	viewMat.Inverse();
+
+
+	m_pTransform->Rot_Bill(0.01f);
+	
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	__super::Update_GameObject(fTimeDelta);

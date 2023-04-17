@@ -206,12 +206,11 @@ void Engine::CCollisionMgr::Find_Remove_Collider(CGameObject* gameObject, COLGRO
 
 void Engine::CCollisionMgr::Remove_Collider(CGameObject* gameObject)
 {
-	Find_Remove_Collider(gameObject, COL_PLAYER);
-	Find_Remove_Collider(gameObject, COL_ENEMY);
-	Find_Remove_Collider(gameObject, COL_OBJ);
-	Find_Remove_Collider(gameObject, COL_DETECTION);
-	Find_Remove_Collider(gameObject, COL_TRIGGER);
-	Find_Remove_Collider(gameObject, COL_ITEM);
+	for (int i = 0; i < COL_DYNAMIC_END; i++)
+	{
+		if (i == COL_STATIC_END) continue;
+		Find_Remove_Collider(gameObject, (COLGROUP)i);
+	}
 }
 
 void Engine::CCollisionMgr::Toggle_ColliderRender()

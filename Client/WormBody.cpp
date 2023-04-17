@@ -1,13 +1,16 @@
 #include "WormBody.h"
 
 #include "WormHead.h"
+#include "WormTail.h"
 #include "Export_Function.h"
 
 CWormBody::CWormBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_pFrontBody(nullptr)
-	, m_pBackBody(nullptr), m_bMove(false), m_pHead(nullptr)
+	, m_pBackBody(nullptr), m_bMove(true), m_pHead(nullptr)
+	, m_pTail(nullptr), m_fDir(0.f)
 {
 	ZeroMemory(m_vDest, sizeof(_vec3));
+	Set_ObjTag(Tag());
 }
 
 CWormBody::~CWormBody()
@@ -16,10 +19,11 @@ CWormBody::~CWormBody()
 
 HRESULT CWormBody::Ready_GameObject(const _vec3 & vPos)
 {
-	m_fSpeed = 7.f;
+	m_fSpeed = 9.f;
 	m_iAttack = 1;
 	m_iHp = 20;
 	m_iMaxHp = 20;
+	m_fDir = 1.f;
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -34,38 +38,48 @@ HRESULT CWormBody::Ready_GameObject(const _vec3 & vPos)
 
 _int CWormBody::Update_GameObject(const _float & fTimeDelta)
 {
-	if (Key_Down(DIK_9))
-	{
-		m_pTransform->Set_BillMode(false);
-		m_pTransform->Rot_Roll(90.f, 1.f);
-	}
+	__super::Update_GameObject(fTimeDelta);
 
 	if (GetDead())
 	{
 		if (m_pFrontBody)
+		{
 			m_pFrontBody->Chain_Back(m_pBackBody);
 
-		if (m_pBackBody)
-			m_pBackBody->Chain_Front(m_pFrontBody);
+			if (m_pBackBody)
+				m_pBackBody->Chain_Front(m_pFrontBody);
+
+			if (m_pTail)
+				m_pTail->Chain_Front(m_pFrontBody);
+		}
+		else
+		{
+			if (m_pBackBody)
+				m_pBackBody->Chain_Head(m_pHead);
+
+			if (m_pTail)
+				m_pTail->Chain_Head(m_pHead);
+		}
 
 		return OBJ_DEAD;
 	}
 
-	if(m_pHead && m_pHead->Get_Move() != m_bMove)
-		m_bMove = m_pHead->Get_Move();
+	if (m_pHead)
+	{
+		m_fSpeed = m_pHead->Get_Speed();
+		if (m_pHead->Get_Move() != m_bMove)
+			m_bMove = m_pHead->Get_Move();
+	}
 
-	else if (m_pFrontBody && m_pFrontBody->m_bMove != m_bMove)
-		m_bMove = m_pFrontBody->m_bMove;
+	if (m_pFrontBody)
+	{
+		m_fSpeed = m_pFrontBody->Get_Speed();
+		if (m_pFrontBody->m_bMove != m_bMove)
+			m_bMove = m_pFrontBody->m_bMove;
+	}
 
 	if (m_bMove)
 		Move(fTimeDelta);
-
-	__super::Update_GameObject(fTimeDelta);
-
-	if (false == m_pTransform->Get_BillMode())
-		m_pTransform->Set_BillMode(true);
-
-	if (GetDead()) return OBJ_DEAD;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -78,6 +92,10 @@ void CWormBody::LateUpdate_GameObject(void)
 {
 	if (GetDead())
 		return;
+	if (!Get_Player())
+		return;
+    
+  m_fDir = 1.f;
 	m_pTransform->Set_Scale({ 1.f, 1.f, 1.f });
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
@@ -94,7 +112,10 @@ void CWormBody::LateUpdate_GameObject(void)
 	if (fAngleRight < 45.f)
 		m_pAnimation->SelectState(ANIM_SIDE);
 	else if (fAngleUp < 45.f)
+	{
 		m_pAnimation->SelectState(ANIM_TOP);
+		m_fDir = -1.f;
+	}
 	else if (fAngleLook < 45.f)
 		m_pAnimation->SelectState(ANIM_FACE);
 
@@ -102,6 +123,7 @@ void CWormBody::LateUpdate_GameObject(void)
 	{
 		m_pTransform->Set_Scale({ -1.f, 1.f, 1.f });
 		m_pAnimation->SelectState(ANIM_SIDE);
+		m_fDir = -1.f;
 	}
 
 	else if (fAngleLook > 135.f)
@@ -115,13 +137,12 @@ void CWormBody::LateUpdate_GameObject(void)
 	else
 		m_pAnimation->SelectState(ANIM_FACE);
 
-	//cout << fAngleRight << ", " << fAngleUp << ", " << fAngleLook << endl;
-
 	__super::LateUpdate_GameObject();
 }
 
 void CWormBody::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	if (GetDead())
 		return;
 	__super::Render_GameObject();
@@ -162,7 +183,7 @@ HRESULT CWormBody::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
-	pCollider->Set_BoundingBox({ 1.f, 1.f, 1.f });
+	pCollider->Set_BoundingBox({ 1.6f, 1.6f, 1.6f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
@@ -189,20 +210,42 @@ void CWormBody::Move(const _float & fTimeDelta)
 			m_vDest = m_pFrontBody->m_pTransform->m_vInfo[INFO_POS];
 	}
 	m_pTransform->Set_Target(m_vDest);
+	vDir = m_pTransform->m_vInfo[INFO_LOOK];
 
-	vDir = m_vDest - vPos;
 	vDir.Normalize();
-	if (fLength < 1.f)
-		m_pTransform->Move_Walk(1.f, fTimeDelta);
+	_vec3 vDirXZ = { vDir.x, 0.f, vDir.z };
+	vDirXZ.Normalize();
+	_float fAngle = -vDir.Degree(_vec3(vDirXZ.x, 0.f, vDirXZ.z));
+
+	if (isnan(fAngle))
+		fAngle = 0.f;
+	_vec3 vAxis = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
+	
+	m_pTransform->Rot_Bill(fAngle * m_fDir);
+
+	if (fLength < 1.8f)
+		m_pTransform->Move_Walk(0.1f, fTimeDelta);
 	else
 		m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 }
 
-CWormBody * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
+CGameObject * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
 	CWormBody* pInstance = new CWormBody(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
+	{
+		Safe_Release(pInstance);
+		return nullptr;
+	}
+	return pInstance;
+}
+
+CGameObject * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CWormBody* pInstance = new CWormBody(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject({})))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

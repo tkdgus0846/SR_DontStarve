@@ -22,6 +22,7 @@ private:
 public:
 	static CTurret*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"Turret"; }
 
 private:
 	virtual void Free(void) override;

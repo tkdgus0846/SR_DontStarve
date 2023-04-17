@@ -67,6 +67,7 @@ void CBossHp::LateUpdate_GameObject(void)
 
 void CBossHp::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	for (size_t i = 0; i < BOSS_UI_END; i++)
 	{
 		switch (i)

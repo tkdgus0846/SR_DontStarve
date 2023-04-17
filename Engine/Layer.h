@@ -18,7 +18,8 @@ public:
 
 public:
 	HRESULT				Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject);
-	HRESULT				Remove_Static_Layers();
+	HRESULT				Remove_GameObject(CGameObject* obj);
+
 	CGameObject*		Get_GameObject(const _tchar* pObjTag);
 	void				Get_GameObject_ALL(vector<CGameObject*>* pVec);
 

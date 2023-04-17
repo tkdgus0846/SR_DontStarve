@@ -1,7 +1,6 @@
 #pragma once
 #include "Factory.h"
 
-
 class CTileFactory :
 	public CFactory
 {
@@ -11,9 +10,7 @@ private:
 	virtual ~CTileFactory();
 	
 public:
-	HRESULT Ready_TileFactory(LPDIRECT3DDEVICE9 pGraphicDev);
-	void Release();
-
+	HRESULT Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev);
 };
 
 #define TILE_FACTORY CTileFactory::GetInstance()

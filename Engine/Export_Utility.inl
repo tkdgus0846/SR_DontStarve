@@ -55,6 +55,11 @@ CGameObject*		Get_GameObject(LAYERID LayerID, const _tchar* pObjTag)
 	return CManagement::GetInstance()->Get_GameObject(LayerID, pObjTag);
 }
 
+void Remove_GameObject(LAYERID LayerID, CGameObject* obj)
+{
+	CManagement::GetInstance()->Remove_GameObject(LayerID, obj);
+}
+
 HRESULT			Set_Scene(CScene* pScene)
 {
 	return CManagement::GetInstance()->Set_Scene(pScene);
@@ -157,6 +162,11 @@ void		Remove_Collider(CGameObject* gameObject)
 //{
 //	CCollisionMgr::GetInstance()->Set_Collider(eGroup, pCollider);
 //}
+
+const	CCamera* Get_CurCamera()
+{
+	CCameraMgr::GetInstance()->Get_CurCamera();
+}
 
 void		On_Camera(const _tchar* pCamTag)
 {

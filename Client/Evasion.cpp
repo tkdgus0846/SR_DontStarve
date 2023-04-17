@@ -36,7 +36,7 @@ _int CEvasion::Update_Component(const _float & fTimeDelta)
 				- iter.second.OtherGameObject->m_pTransform->m_vInfo[INFO_POS];
 
 			_float fSpeed = 0.f;
-			m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed);
+			m_pBlackBoard->Get_Type(L"fSpeed", fSpeed);
 
 			if (0 > vDir.Dot(m_pGameObject->m_pTransform->m_vInfo[INFO_RIGHT]))
 				m_pGameObject->m_pTransform->Move_Strafe(-fSpeed * 2.f, fTimeDelta);

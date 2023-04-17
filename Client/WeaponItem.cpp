@@ -1,13 +1,16 @@
 #include "WeaponItem.h"
 #include "Export_Function.h"
 #include "Player.h"
+#include "SoundMgr.h"
 
 CWeaponItem::CWeaponItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
+	Set_LayerID(LAYER_ROOM_ITEM);
 	Set_ObjTag(L"WeaponItem");
 	m_bDrop = true;
 	m_bBill = false;
+	m_bCanLoot = false;
 }
 
 CWeaponItem::~CWeaponItem()
@@ -22,12 +25,12 @@ HRESULT CWeaponItem::Add_Component()
 
 	Select_Type();
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ITEM));
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ROOMITEM));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 	pCollider->Set_BoundingBox({ 1.5f, 3.0f, 1.5f });
 
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_ITEM));
+	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_ROOMITEM));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
@@ -63,27 +66,31 @@ void CWeaponItem::LateUpdate_GameObject(void)
 
 void CWeaponItem::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
 void CWeaponItem::OnCollisionEnter(const Collision * collsion)
 {
+	if (m_bCanLoot == false) return;
+
 	__super::OnCollisionEnter(collsion);
 
-	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collsion->OtherGameObject);
-	if (pPlayer == nullptr) {return;}
-	if (pPlayer && collsion->MyCollider == Get_Component(L"Collider", ID_ALL))
-	{
-		if (pPlayer->Get_Coin() < 50) {return;}
-		pPlayer->Gain_Weapon(m_eID);
-		pPlayer->De_Coin(50);
-	}
 }
 
 void CWeaponItem::OnCollisionStay(const Collision * collision)
 {
+	if (m_bCanLoot == false) return;
 	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+
+	if (pPlayer == nullptr) return;
+
+	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
+	{		
+		STOP_PLAY_SOUND(L"sfxpickup.wav", SOUND_EFFECT, 1.f);
+		pPlayer->Gain_Weapon(m_eID);
+	}
 
 	ItemMagnetic(pPlayer);
 }

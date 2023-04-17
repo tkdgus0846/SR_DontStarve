@@ -7,7 +7,7 @@
 CBub::CBub(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(L"Bub");
+	Set_ObjTag(Tag());
 }
 
 CBub::~CBub()
@@ -36,6 +36,8 @@ _int CBub::Update_GameObject(const _float & fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 	if (GetDead()) return OBJ_DEAD;
 
+	cout << m_pTransform->m_vInfo[INFO_POS].y << endl;
+
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
@@ -50,6 +52,7 @@ void CBub::LateUpdate_GameObject(void)
 
 void CBub::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
@@ -109,7 +112,8 @@ CGameObject * CBub::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CBub* pInstance = new CBub(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
+
+	if (FAILED(pInstance->Ready_GameObject(_vec3(0.f, 0.f, 0.f))))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

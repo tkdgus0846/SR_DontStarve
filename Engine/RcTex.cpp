@@ -9,6 +9,7 @@ CRcTex::CRcTex(LPDIRECT3DDEVICE9 pGraphicDev)
 CRcTex::CRcTex(const CRcTex & rhs)
 	: CVIBuffer(rhs)
 {
+	
 }
 
 CRcTex::~CRcTex()

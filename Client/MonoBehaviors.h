@@ -16,3 +16,6 @@
 #include "NotCollisionWall.h"
 #include "LookAtTarget.h"
 #include "Rush.h"
+#include "Dig.h"
+#include "MoveUp.h"
+#include "CoolTime.h"

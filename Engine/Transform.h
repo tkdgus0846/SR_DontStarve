@@ -66,6 +66,8 @@ public:
 	void	Rot_Pitch(const _float& fAngle, const _float& fTimeDelta);// Rot-Right
 	void	Rot_Yaw(const _float& fAngle, const _float& fTimeDelta);  // Rot-Up
 	void	Rot_Roll(const _float& fAngle, const _float& fTimeDelta); // Rot-Look
+	// 빌보드모드 일때만 적용됨.
+	void	Rot_Bill(const _float& fAngle);
 
 	// 룩 벡터 반전.
 	void	Reverse_Dir();
@@ -101,6 +103,7 @@ public:
 
 	_matrix		m_matWorld;
 	_matrix		m_matBill;
+	_matrix		m_matRotBill;
 
 public:
 	static CTransform*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

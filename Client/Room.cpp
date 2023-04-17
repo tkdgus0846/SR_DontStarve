@@ -14,7 +14,8 @@
 #include "Door.h"
 #include "Serializable.h"
 #include "TileFactory.h"
-
+#include "MonsterFactory.h"
+#include "MapObjectFactory.h"
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
 	m_fVtxCntZ(0.f), m_fVtxItv(0.f)
@@ -246,6 +247,18 @@ void CRoom::Close_Doors()
 	}
 }
 
+void CRoom::EraseGameObject(CGameObject* obj)
+{
+	for (auto it = m_vecGameObj.begin(); it != m_vecGameObj.end(); it++)
+	{
+		if (*it == obj)
+		{
+			m_vecGameObj.erase(it);
+			return;
+		}
+	}
+}
+
 void CRoom::FloorSubSet()
 {
 	// 바닥 위치 조정
@@ -355,6 +368,13 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 		if (0 == lstrcmp(tag, L"Stop"))
 			break;
 		CGameObject* pGameObj = TILE_FACTORY->CreateObject(tag);
+
+		if (!pGameObj)
+			pGameObj = MONSTER_FACTORY->CreateObject(tag);
+
+		if(!pGameObj)
+			pGameObj = MAPOBJ_FACTORY->CreateObject(tag);
+
 		ISerializable* IsLoad = dynamic_cast<ISerializable*>(pGameObj);
 		
 		if (IsLoad)
@@ -381,6 +401,11 @@ void CRoom::PushBack_GameObj(CGameObject * pObj)
 		CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(objInfo.colNameVec[i], ID_ALL));
 		if(pCol)
 			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
+	}
+
+	for (auto& item : *pObj->Get_Static_GameObject_List())
+	{
+		PushBack_GameObj(item);
 	}
 }
 

@@ -47,7 +47,12 @@ public:
 
 	void			Gain_Coin(_int coin = 1) { m_iCoin += coin; }
 	_int			Get_Coin() { return m_iCoin; }
-	void			De_Coin(_int coin) { m_iCoin -= coin; }
+	_bool			De_Coin(_int coin) 
+	{ 
+		if (m_iCoin - coin < 0) return false;
+		m_iCoin -= coin; 
+		return true;
+	}
 	void			Gain_Disc(_int disc = 1) { m_iDisc += disc; }
 	_int			Get_Disc() { return m_iDisc; }
 	void			Gain_Hp(_int Hp = 1) { m_iHp += Hp; }

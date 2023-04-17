@@ -2,7 +2,7 @@
 
 #include "Include.h"
 #include "Creature.h"
-
+#include "Serializable.h"
 BEGIN(Engine)
 class CRoot;
 class CTriCol;
@@ -11,7 +11,7 @@ class CCollider;
 class CSequence;
 END
 
-class CMonster : public CCreature
+class CMonster : public CCreature, public ISerializable
 {
 protected:
 	explicit CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -48,8 +48,7 @@ protected:
 	CSequence*	Make_RushAI();
 	CSequence*	Make_BossPattern1(const _float& fCoolTime = 6.f);
 	CSequence*	Make_BossPattern2(const _float& fCoolTime = 18.f);
-	// 지렁이 전용 패턴임..
-	
+	CSequence*	Make_BossPattern3(const _float& fCoolTime = 12.f);
 	
 	HRESULT		Set_PatrolAndFollow_AI();
 	HRESULT		Set_PAF_JumpAI();
@@ -58,6 +57,7 @@ protected:
 	HRESULT		Set_TurretAI();
 	HRESULT		Set_Boss1_AI();
 	HRESULT		Set_Boss2_AI();
+	HRESULT		Set_Boss3_AI();
 
 private:
 	CRoot*		m_pRoot;	// 모든 몬스터는 하나의 ai를 가지는걸로 가정.
@@ -75,4 +75,8 @@ public:
 
 protected:
 	virtual void Free(void) override;
+
+	// ISerializable을(를) 통해 상속됨
+	virtual void Serialization(HANDLE hFile, DWORD & dwByte) override;
+	virtual void Deserialization(HANDLE hFile, DWORD & dwByte) override;
 };

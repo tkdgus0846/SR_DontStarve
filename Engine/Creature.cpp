@@ -1,5 +1,5 @@
-#include "Creature.h"
 #include "stdafx.h"
+
 #include "Creature.h"
 #include "Collider.h"
 #include "Export_Function.h"

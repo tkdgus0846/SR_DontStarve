@@ -1,7 +1,6 @@
 #pragma once
 #include "Behavior.h"
 
-class CBlackBoard;
 class CMoveLook : public CBehavior
 {
 private:

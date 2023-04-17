@@ -16,3 +16,6 @@ public:
 	static void Save(const TCHAR* path);
 	static void Load(const TCHAR* path);
 };
+
+#define TO_STR(wstr)  CFileSystem::wstrToStr(wstr)
+#define TO_WSTR(str)  CFileSystem::strToWStr(str)

@@ -6,6 +6,7 @@ class CAnimation;
 END
 
 class CWormBody;
+class CWormTail;
 class CWormHead : public CMonster
 {
 private:
@@ -13,7 +14,7 @@ private:
 	virtual ~CWormHead();
 
 public:
-	virtual HRESULT Ready_GameObject(const _vec3& vPos, vector<CWormBody*>& vecBody);
+	virtual HRESULT Ready_GameObject(const _vec3& vPos);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
@@ -27,13 +28,13 @@ private:
 	Engine::CAnimation*	m_pAnimation;
 
 	vector<CWormBody*>	m_vecBody;
-	_vec3		m_vDest;
-	_bool		m_bMove;
+	CWormTail*			m_pTail;
+	_bool				m_bMove;
 
 public:
-	static CWormHead*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos,
-		vector<CWormBody*>& vecBody);
-	static const _tchar* GetTag() { return L"WormBody"; }
+	static CWormHead*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"WormHead"; }
 
 private:
 	virtual void Free(void) override;

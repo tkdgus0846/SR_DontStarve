@@ -6,7 +6,7 @@
 CSlider::CSlider(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMapObj(pGraphicDev)
 {
-	Set_ObjTag(L"Slider");
+	Set_ObjTag(Tag());
 }
 
 CSlider::~CSlider()
@@ -84,7 +84,7 @@ void CSlider::OnCollisionEnter(const Collision * collsion)
 	}
 }
 
-CSlider * CSlider::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CSlider::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CSlider* pInstance = new CSlider(pGraphicDev);
 

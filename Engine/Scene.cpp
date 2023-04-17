@@ -79,6 +79,13 @@ void CScene::LateUpdate_Scene(void)
 	}	
 }
 
+void CScene::Remove_GameObject(LAYERID layerID, CGameObject* obj)
+{
+	if (layerID > LAYER_STATIC_END) return;
+
+	(*m_StaticLayerArr)[layerID]->Remove_GameObject(obj);
+}
+
 void Engine::CScene::Set_StaticLayerArr(vector<CLayer*>* layerArr)
 {
 	m_StaticLayerArr = layerArr;
@@ -87,7 +94,7 @@ void Engine::CScene::Set_StaticLayerArr(vector<CLayer*>* layerArr)
 HRESULT CScene::Add_GameObject(CGameObject* pObj)
 {
 	CLayer* curLayer = Get_Layer(pObj->Get_LayerID());
-	if (curLayer == nullptr) S_OK;
+	if (curLayer == nullptr) return S_OK;
 
 	FAILED_CHECK_RETURN(curLayer->Add_GameObject(pObj->Get_ObjTag(), pObj), E_FAIL);
 		

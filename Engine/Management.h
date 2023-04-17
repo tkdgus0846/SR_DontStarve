@@ -28,6 +28,7 @@ public:
 
 	void			Add_GameObject(class CGameObject* pObj);
 	CGameObject*	Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
+	void			Remove_GameObject(LAYERID layerID, CGameObject* obj);
 
 	// 플레이어를 전역적으로 불러옴.
 	class CGameObject*	Get_Player();

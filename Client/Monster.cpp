@@ -157,6 +157,21 @@ void CMonster::Free(void)
 	__super::Free();
 }
 
+void CMonster::Serialization(HANDLE hFile, DWORD & dwByte)
+{
+	_tchar tmp[32];
+
+	lstrcpy(tmp, m_ObjInfo.pObjTag);
+	WriteFile(hFile, tmp, sizeof(_tchar) * 32, &dwByte, nullptr);
+
+	m_pTransform->WriteTransformFile(hFile, dwByte);
+}
+
+void CMonster::Deserialization(HANDLE hFile, DWORD & dwByte)
+{
+	m_pTransform->ReadTransformFile(hFile, dwByte);
+}
+
 HRESULT CMonster::Create_Root_AI()
 {
 	m_pRoot = dynamic_cast<CRoot*>(Engine::Clone_Proto(L"Root", this));
@@ -369,22 +384,55 @@ CSequence* CMonster::Make_BossPattern1(const _float& fCoolTime)
 CSequence * CMonster::Make_BossPattern2(const _float & fCoolTime)
 {
 	// 부품 생성
-	CSequence* pSQPattern1 = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
-	NULL_CHECK_RETURN(pSQPattern1, nullptr);
+	CSequence* pSQPattern = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQPattern, nullptr);
 
 	// 부품 초기설정
 
 	// 부품 조립
-	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_DBBackJump", Make_DBBackJumpAI(fCoolTime)), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"SQ_DBBackJump", Make_DBBackJumpAI(fCoolTime)), nullptr);
 
 	for (_uint i = 0; i < 5; ++i)
 	{
-		FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_Rush", Make_RushAI()), nullptr);
-		FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_JumpToPlayer", Make_JumpToPlayer()), nullptr);
+		FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"SQ_Rush", Make_RushAI()), nullptr);
+		FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"SQ_JumpToPlayer", Make_JumpToPlayer()), nullptr);
 	}
-	FAILED_CHECK_RETURN(pSQPattern1->Add_Component(ID_UPDATE, L"SQ_Jump", Make_JumpAI()), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"SQ_Jump", Make_JumpAI()), nullptr);
 
-	return pSQPattern1;
+	return pSQPattern;
+}
+
+CSequence * CMonster::Make_BossPattern3(const _float & fCoolTime)
+{
+	// 부품 생성
+	CSequence* pSQPattern = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQPattern, nullptr);
+
+	CDig* pTskDig = dynamic_cast<CDig*>(Engine::Clone_Proto(L"TSK_Dig", this));
+	NULL_CHECK_RETURN(pTskDig, nullptr);
+	CMoveLook* pTskMoveLook = dynamic_cast<CMoveLook*>(Engine::Clone_Proto(L"TSK_Move", this));
+	NULL_CHECK_RETURN(pTskMoveLook, nullptr);
+	CMoveUp* pTskMoveUp = dynamic_cast<CMoveUp*>(Engine::Clone_Proto(L"TSK_MoveUp", this));
+	NULL_CHECK_RETURN(pTskMoveUp);
+	CLookAtTarget* pTskLook = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
+	NULL_CHECK_RETURN(pTskLook);
+
+	// 부품 초기설정
+	pTskDig->Set_Timer(3.f);
+	pTskDig->Set_Magnifi();
+	pTskMoveLook->Set_Timer(5.f);
+	pTskMoveLook->Set_Magnifi();
+	pTskMoveUp->Set_Timer(3.f);
+	pTskMoveUp->Set_Magnifi();
+
+	// 부품 조립
+
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_Dig", pTskDig), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveLook", pTskMoveLook), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveUp", pTskMoveUp), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_LookAt", pTskLook), nullptr);
+
+	return pSQPattern;
 }
 
 HRESULT CMonster::Set_PatrolAndFollow_AI()
@@ -507,12 +555,27 @@ HRESULT CMonster::Set_Boss2_AI()
 
 	// 부품 초기설정
 
-
 	// 부품 조립
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(6.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern1", Make_BossPattern1()), E_FAIL);
+
+	return S_OK;
+}
+
+HRESULT CMonster::Set_Boss3_AI()
+{
+	// 부품 생성
+	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
+	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
+
+	// 부품 초기설정
+
+	// 부품 조립
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
+
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern3", Make_BossPattern3()), E_FAIL);
 
 	return S_OK;
 }

@@ -10,6 +10,7 @@ enum LAYERID
 	LAYER_NPC,
 	LAYER_MONSTER,
 	LAYER_BOSS,
+	LAYER_ROOM_ITEM,
 	LAYER_STATIC_END,
 
 	//////////////////////////////// 위는 방에서 가져올 게임오브젝트들 리스트이다.
@@ -44,6 +45,7 @@ enum COLGROUP
 	COL_DETECTION,
 	COL_TRIGGER,
 	COL_ENEMY,
+	COL_ROOMITEM,
 	COL_OBJ,
 	COL_STATIC_END,
 	// 위 까지가 룸에 있을 정보들
@@ -167,7 +169,8 @@ enum FONT
 enum PICK_TYPE
 {
 	PICK_TILE,
-	PICK_OBJ,
+	PICK_MONSTER,
+	PICK_MAPOBJ,
 	PICK_END
 };
 

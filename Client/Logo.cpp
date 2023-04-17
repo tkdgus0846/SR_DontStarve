@@ -8,6 +8,8 @@
 #include "RoomMgr.h"
 #include "Loading.h"
 #include "TileFactory.h"
+#include "MonsterFactory.h"
+#include "MapObjectFactory.h"
 #include "..\Engine\SoundMgr.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -42,7 +44,9 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 		if (Engine::Key_Pressing(DIK_LCONTROL) && Engine::Key_Down(DIK_RETURN))
 		{
 			CScene*	pScene = CMyEdit::Create(m_pGraphicDev);
-			TILE_FACTORY->Ready_TileFactory(m_pGraphicDev);
+			TILE_FACTORY->Ready_Factory(m_pGraphicDev);
+			MONSTER_FACTORY->Ready_Factory(m_pGraphicDev);
+			MAPOBJ_FACTORY->Ready_Factory(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 
 			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev);
@@ -63,11 +67,14 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 		{
 			Start_WorldTimer();
 			CScene*	pScene = CStage::Create(m_pGraphicDev);
-			TILE_FACTORY->Ready_TileFactory(m_pGraphicDev);
+			TILE_FACTORY->Ready_Factory(m_pGraphicDev);
+			MONSTER_FACTORY->Ready_Factory(m_pGraphicDev);
+			MAPOBJ_FACTORY->Ready_Factory(m_pGraphicDev);
 			//CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
 			
-			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev);
+			ROOM_MGR->Ready_RoomMgr(m_pGraphicDev); // 여기서 룸들을 싹다 만든다.
+
 			pScene->Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());
 			
 			for (int i = 0; i < COL_STATIC_END; i++)
@@ -78,7 +85,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 			
-			//CFileSystem::Load(L"tmp.dat");
+			CFileSystem::Load(L"as.dat");
 			return 0;
 		}
 	}
@@ -124,6 +131,5 @@ CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CLogo::Free(void)
 {
 	Safe_Release(m_pLoading);
-
 	__super::Free();
 }

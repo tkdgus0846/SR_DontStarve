@@ -2,6 +2,7 @@
 #include "Export_Function.h"
 #include "Player.h"
 #include "Weapon.h"
+#include "ItemManager.h"
 CBulletItem::CBulletItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -42,6 +43,8 @@ HRESULT CBulletItem::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
 
+	m_pTransform->Set_BillMode(true);
+
 	return S_OK;
 }
 
@@ -56,9 +59,13 @@ HRESULT CBulletItem::Ready_GameObject(void)
 
 _int CBulletItem::Update_GameObject(const _float & fTimeDelta)
 {
+	Aging(fTimeDelta);
+	if (GetDead())
+		return OBJ_RETPOOL;
+
 	if (m_bDrop == true) ItemPatrol(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
-	if (GetDead()) return OBJ_DEAD;
+	
 	return OBJ_NOEVENT;
 }
 
@@ -69,7 +76,15 @@ void CBulletItem::LateUpdate_GameObject(void)
 
 void CBulletItem::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
+}
+
+void CBulletItem::SetDead(_bool bDead /*= true*/)
+{
+	__super::SetDead(bDead);
+	if (bDead == true)
+		CItemManager::GetInstance()->Push(L"BulletItem", this);
 }
 
 CBulletItem * CBulletItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)

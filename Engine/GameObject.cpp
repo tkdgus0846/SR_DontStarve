@@ -1,5 +1,5 @@
-﻿#include "GameObject.h"
-#include "stdafx.h"
+﻿#include "stdafx.h"
+
 #include "GameObject.h"
 #include "Transform.h"
 #include "Export_Function.h"
@@ -16,7 +16,9 @@ bool Compare_Component_Priority(pair<const _tchar*, CComponent*>& a, pair<const 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev) : 
 	m_pGraphicDev(pGraphicDev),
 	m_fViewZ(0.f),
-	m_bDead(FALSE)
+	m_bDead(FALSE),
+	m_pOwnerObject(nullptr),
+	m_bReleaseFlag(TRUE)
 {
 	m_pGraphicDev->AddRef();
 
@@ -65,6 +67,22 @@ CTexture * CGameObject::Get_Texture()
 		}
 	}
 	return pTexture;
+}
+
+wstring CGameObject::Get_TextureKey()
+{
+	CTexture* pTexture = nullptr;
+	for (_ulong i = 0; i < ID_END; ++i)
+	{
+		for (auto& Component : m_uMapComponent[i])
+		{
+			if (pTexture = dynamic_cast<CTexture*>(Component.second))
+			{
+				return Component.first;
+			}
+		}
+	}
+	return nullptr;
 }
 
 HRESULT CGameObject::Ready_GameObject(void)
@@ -181,6 +199,30 @@ void CGameObject::Add_Render_Component()
 	m_RenderComponent = sortVec;
 }
 
+// 죽었을때 자식 리스트에서 빼주기위한 함수
+void CGameObject::Remove_InOwnerObject()
+{
+	if (m_pOwnerObject == nullptr) return;
+	
+	for (auto& it = m_pOwnerObject->m_StaticObjectList.begin(); it != m_pOwnerObject->m_StaticObjectList.end(); it++)
+	{
+		if ((*it) == this)
+		{
+			m_pOwnerObject->m_StaticObjectList.erase(it);
+			break;
+		}
+	}
+}
+
+void CGameObject::Set_Flag(_bool state /*= FALSE*/)
+{
+	m_bReleaseFlag = state;
+	for (auto child : m_StaticObjectList)
+	{
+		child->Set_Flag();
+	}
+}
+
 CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENTID eID)
 {
 	auto	iter = find_if(m_uMapComponent[eID].begin(), m_uMapComponent[eID].end(), CTag_Finder(pComponentTag));
@@ -194,6 +236,21 @@ CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENT
 
 void CGameObject::Free(void)
 {
+	for (auto child : m_StaticObjectList)
+	{
+		LAYERID layerID = child->Get_LayerID();
+
+		if (m_bReleaseFlag == true)
+		{
+			Engine::Remove_GameObject(layerID, child);
+			Engine::Remove_Collider(child);
+		}
+		
+		
+		Safe_Release(child);
+	}
+	
+
 	for (size_t i = 0; i < ID_END; ++i)
 	{
 		for (auto iter = m_uMapComponent[i].begin(); iter != m_uMapComponent[i].end(); iter++)

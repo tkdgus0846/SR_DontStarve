@@ -29,7 +29,7 @@ _int CRush::Update_Component(const _float & fTimeDelta)
 	CTransform* pTransform = m_pGameObject->m_pTransform;
 
 	_float fSpeed = 0.f;
-	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FAIL);
+	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", fSpeed), BEHAVIOR_FAIL);
 
 	auto uMap = pBodyCollider->Get_CollisionList();
 

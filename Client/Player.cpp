@@ -49,6 +49,7 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[RAPIDSHOT] = CRapidWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[LASERSHOT] = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
 
 	Change_Weapon(BIGSHOT);
 
@@ -87,6 +88,7 @@ void CPlayer::LateUpdate_GameObject(void)
 
 void CPlayer::Render_GameObject(void)
 {
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 

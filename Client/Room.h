@@ -41,6 +41,10 @@ private:
 	void	FreeSubset();
 	
 public:
+	
+	void EraseGameObject(CGameObject* obj);
+	
+
 	void FloorSubSet();
 	void PlaceSubSet();
 	_bool WriteRoomFile(HANDLE hFile, DWORD& dwByte);
@@ -58,7 +62,7 @@ public:
 	vector<CLayer*>* GetLayerVec() { return &m_vecLayer; }
 	list<CCollider*>* GetColliderList(_int iIndex) 
 	{
-		if (iIndex >= LAYER_STATIC_END) return nullptr;
+		if (iIndex >= COL_STATIC_END) return nullptr;
 		return &m_ColliderList[iIndex];
 	}
 

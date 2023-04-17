@@ -1,5 +1,6 @@
 #include "LavaTile.h"
 #include "Export_Function.h"
+#include "Creature.h"
 
 CLavaTile::CLavaTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CTile(pGraphicDev)
@@ -37,13 +38,41 @@ HRESULT CLavaTile::Add_Component()
 	m_uMapComponent[ID_STATIC].insert({ L"FloorLava", texture });
 	m_pAnimation->BindAnimation(ANIM_IDLE, texture);
 
+	//CalcColliderSize();
+	//m_pCollider->Calc
+	m_pCollider->Set_BoundingBox({ 10.f,2.4f,10.f });
+
+
 	return result;
 }
 
 void CLavaTile::OnCollisionStay(const Collision * collision)
 {
-	if (IsBodyCollider(collision))
+	CCreature* creature = dynamic_cast<CCreature*>(collision->OtherGameObject);
+	if (creature && IsBodyCollider(collision))
 	{
-		//TODO
+		_vec3 amountVec = collision->amountVec;
+		if (m_pTransform == nullptr) return;
+
+		_float fps60 = Engine::Get_Timer(L"Timer_FPS60");
+		const float amount = 20.f;
+		switch (collision->CollisionDir)
+		{
+
+		case DIR_LEFT:
+			collision->OtherGameObject->m_pTransform->m_vInfo[INFO_POS].x -= fps60 * amountVec.x * amount;
+			break;
+		case DIR_RIGHT:
+			collision->OtherGameObject->m_pTransform->m_vInfo[INFO_POS].x += fps60 * amountVec.x * amount;
+			break;
+		case DIR_FRONT:
+			collision->OtherGameObject->m_pTransform->m_vInfo[INFO_POS].z += fps60 * amountVec.z * amount;
+			break;
+		case DIR_BACK:
+			collision->OtherGameObject->m_pTransform->m_vInfo[INFO_POS].z -= fps60 * amountVec.z * amount;
+			break;
+		default:
+			break;
+		}
 	}
 }

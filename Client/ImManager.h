@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Include.h"
-
+//#include "ImWindow.h"
 BEGIN(Engine)
 
 class CFloorTex;
@@ -9,8 +9,6 @@ class CTransform;
 class CPickingSphere;
 
 END
-
-class CImWindow;
 
 class CImManager
 {
@@ -24,14 +22,14 @@ public:
 	_int Update(_float fTimeDelta);
 	void Render(LPDIRECT3DDEVICE9 pGraphicDev);
 	void Release();
-	void Push_Back(CImWindow* pWindow);
+	class CImWindow* FindByTag(wstring tag);
+
 public:
-	void AddList(CImWindow* pImWindow)
-	{
-		NULL_CHECK(pImWindow);
-		m_vecImWindow.push_back(pImWindow);
-	}
+	void AddContainer(wstring key, CImWindow* pImWindow);
 
 private:
-	vector<CImWindow*> m_vecImWindow;
+	map<wstring, CImWindow*> m_mapImWindow;
 };
+
+#define IM_MGR  CImManager::GetInstance()
+#define FIND_IM(tag) IM_MGR->FindByTag(tag)

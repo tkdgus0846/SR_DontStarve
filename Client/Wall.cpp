@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Wall.h"
 
+#include "WormHead.h"
+#include "WormBody.h"
+#include "WormTail.h"
 #include "Export_Function.h"
 
 CWall::CWall(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -22,6 +25,11 @@ void CWall::OnCollisionEnter(const Collision* collision)
 
 void CWall::OnCollisionStay(const Collision* collision)
 {
+	if (dynamic_cast<CWormHead*>(collision->OtherGameObject) ||
+		dynamic_cast<CWormBody*>(collision->OtherGameObject) ||
+		dynamic_cast<CWormTail*>(collision->OtherGameObject))
+		return;
+
 	if (collision->MyCollider == Get_Component(L"Collider", ID_ALL) && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
 	{
 		_vec3 amountVec = collision->amountVec;
@@ -69,7 +77,8 @@ HRESULT CWall::Ready_GameObject(void)
 
 _int CWall::Update_GameObject(const _float & fTimeDelta)
 {
-	
+	if (GetDead()) return OBJ_DEAD;
+
 	__super::Update_GameObject(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -84,7 +93,7 @@ void CWall::LateUpdate_GameObject(void)
 
 void CWall::Render_GameObject(void)
 {
-	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 

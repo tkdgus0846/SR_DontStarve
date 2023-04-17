@@ -101,26 +101,35 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(SolutionDir)External\;$(SolutionDir)Engine\;$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)External\;$(SolutionDir)Output\;$(DXSDK_DIR)Lib\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\;$(SolutionDir)Client\stb\;$(SolutionDir)Client\imGui\;$(SolutionDir)Client\dirent\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)External\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Output\</OutDir>
-    <IncludePath>$(SolutionDir)Engine\;$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Output\;$(DXSDK_DIR)Lib\x86\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\;$(SolutionDir)Client\stb\;$(SolutionDir)Client\imGui\;$(SolutionDir)Client\dirent\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)External\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\;$(SolutionDir)Client\stb\;$(SolutionDir)Client\imGui\;$(SolutionDir)Client\dirent\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)External\;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)Output\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(DXSDK_DIR)Include\;$(SolutionDir)Engine\;$(SolutionDir)External\</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86\;$(SolutionDir)Output\;$(SolutionDir)Engine\;$(SolutionDir)External\</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -129,11 +138,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">
@@ -143,11 +156,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -157,10 +174,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|x64'">
@@ -170,10 +192,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -185,12 +212,17 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -202,12 +234,17 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -233,7 +270,9 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinItem.h" />
+    <ClInclude Include="CoolTime.h" />
     <ClInclude Include="CrossHair.h" />
+    <ClInclude Include="Dig.h" />
     <ClInclude Include="Disc.h" />
     <ClInclude Include="DiscItem.h" />
     <ClInclude Include="Door.h" />
@@ -268,6 +307,11 @@
     <ClInclude Include="ImMenuBar.h" />
     <ClInclude Include="ImTest.h" />
     <ClInclude Include="ImWindow.h" />
+    <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="MapObjectFactory.h" />
+    <ClInclude Include="MonsterFactory.h" />
+    <ClInclude Include="MoveUp.h" />
+    <ClInclude Include="SellItem.h" />
     <ClInclude Include="Serializable.h" />
     <ClInclude Include="IsNotRangeInPlayer.h" />
     <ClInclude Include="IsRangeInPlayer.h" />
@@ -283,7 +327,6 @@
     <ClInclude Include="MiniMap.h" />
     <ClInclude Include="MonoBehaviors.h" />
     <ClInclude Include="Monster.h" />
-    <ClInclude Include="NogadaFactory.h" />
     <ClInclude Include="MoveLook.h" />
     <ClInclude Include="MyEdit.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -323,7 +366,6 @@
     <ClInclude Include="SwordWeapon.h" />
     <ClInclude Include="Tennel.h" />
     <ClInclude Include="Tile.h" />
-    <ClInclude Include="loader.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TimeInLimit.h" />
     <ClInclude Include="Turret.h" />
@@ -345,6 +387,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="WormHead.h" />
+    <ClInclude Include="WormTail.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attack.cpp" />
@@ -362,7 +405,9 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinItem.cpp" />
+    <ClCompile Include="CoolTime.cpp" />
     <ClCompile Include="CrossHair.cpp" />
+    <ClCompile Include="Dig.cpp" />
     <ClCompile Include="Disc.cpp" />
     <ClCompile Include="DiscItem.cpp" />
     <ClCompile Include="Door.cpp" />
@@ -403,6 +448,7 @@
     <ClCompile Include="IsNotRangeInPlayer.cpp" />
     <ClCompile Include="IsRangeInPlayer.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="Jump.cpp" />
     <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="LeapJump.cpp" />
@@ -411,9 +457,11 @@
     <ClCompile Include="LookAtTarget.cpp" />
     <ClCompile Include="MainApp.cpp" />
     <ClCompile Include="MapObj.cpp" />
+    <ClCompile Include="MapObjectFactory.cpp" />
     <ClCompile Include="MiniMap.cpp" />
     <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="NogadaFactory.cpp" />
+    <ClCompile Include="MonsterFactory.cpp" />
+    <ClCompile Include="MoveUp.cpp" />
     <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="MyEdit.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -425,6 +473,7 @@
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="QuickSandTile.cpp" />
     <ClCompile Include="SandTile.cpp" />
+    <ClCompile Include="SellItem.cpp" />
     <ClCompile Include="ShopNpc.cpp" />
     <ClCompile Include="Rub.cpp" />
     <ClCompile Include="RapidWeapon.cpp" />
@@ -458,7 +507,6 @@
     <ClCompile Include="SwordWeapon.cpp" />
     <ClCompile Include="Tennel.cpp" />
     <ClCompile Include="Tile.cpp" />
-    <ClCompile Include="loader.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TimeInLimit.cpp" />
     <ClCompile Include="Turret.cpp" />
@@ -476,6 +524,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="WormHead.cpp" />
+    <ClCompile Include="WormTail.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter" />

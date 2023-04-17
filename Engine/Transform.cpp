@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Transform.h"
 
+#include "Export_Function.h"
+
 CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev)
 	, m_vScale(1.f, 1.f, 1.f)
@@ -168,8 +170,8 @@ void CTransform::Rot_Pitch(const _float & fAngle, const _float& fTimeDelta)
 	case Engine::CTransform::AIRCRAFT:
 		D3DXMatrixRotationAxis(&matRot, &m_vInfo[INFO_RIGHT], D3DXToRadian(fAngle) * fTimeDelta);
 
-		D3DXVec3TransformCoord(&m_vInfo[INFO_UP], &m_vInfo[INFO_UP], &matRot);
-		D3DXVec3TransformCoord(&m_vInfo[INFO_LOOK], &m_vInfo[INFO_LOOK], &matRot);
+		D3DXVec3TransformNormal(&m_vInfo[INFO_UP], &m_vInfo[INFO_UP], &matRot);
+		D3DXVec3TransformNormal(&m_vInfo[INFO_LOOK], &m_vInfo[INFO_LOOK], &matRot);
 		break;
 	}
 }
@@ -192,8 +194,8 @@ void CTransform::Rot_Yaw(const _float & fAngle, const _float& fTimeDelta)
 		break;
 	}
 
-	D3DXVec3TransformCoord(&m_vInfo[INFO_RIGHT], &m_vInfo[INFO_RIGHT], &matRot);
-	D3DXVec3TransformCoord(&m_vInfo[INFO_LOOK], &m_vInfo[INFO_LOOK], &matRot);
+	D3DXVec3TransformNormal(&m_vInfo[INFO_RIGHT], &m_vInfo[INFO_RIGHT], &matRot);
+	D3DXVec3TransformNormal(&m_vInfo[INFO_LOOK], &m_vInfo[INFO_LOOK], &matRot);
 }
 
 void CTransform::Reverse_Dir()
@@ -223,10 +225,20 @@ void CTransform::Rot_Roll(const _float & fAngle, const _float& fTimeDelta)
 
 	case Engine::CTransform::AIRCRAFT:
 		D3DXMatrixRotationAxis(&matRot, &m_vInfo[INFO_LOOK], D3DXToRadian(fAngle) * fTimeDelta);
-		D3DXVec3TransformCoord(&m_vInfo[INFO_UP], &m_vInfo[INFO_UP], &matRot);
-		D3DXVec3TransformCoord(&m_vInfo[INFO_RIGHT], &m_vInfo[INFO_RIGHT], &matRot);
+		D3DXVec3TransformNormal(&m_vInfo[INFO_UP], &m_vInfo[INFO_UP], &matRot);
+		D3DXVec3TransformNormal(&m_vInfo[INFO_RIGHT], &m_vInfo[INFO_RIGHT], &matRot);
 		break;
 	}
+}
+
+void CTransform::Rot_Bill(const _float & fAngle)
+{
+	_matrix matView{};
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	matView.Inverse();
+
+	_vec3 vAxis = _vec3(matView._41, matView._42, matView._43) - m_vInfo[INFO_POS];
+	D3DXMatrixRotationAxis(&m_matRotBill, &vAxis, D3DXToRadian(fAngle));
 }
 
 void Engine::CTransform::Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta)
@@ -289,7 +301,7 @@ HRESULT CTransform::Ready_Transform(void)
 
 	for (size_t i = 0; i < INFO_END; ++i)
 		memcpy(&m_vInfo[i], &m_matWorld.m[i][0], sizeof(_vec3));
-
+	m_matRotBill.Identity();
 	return S_OK;
 }
 
@@ -312,12 +324,13 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	_matrix matView;
 	matRotation.Identity();
 	matView.Identity();
-	m_matBill.Identity();
+	m_matBill.Identity(); 
 
 	if (m_bIsBill)
 	{
 		m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 		Set_Billboard(&matView);
+		m_matBill *= m_matRotBill;
 	}
 	else
 	{
@@ -325,6 +338,7 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 		D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]);
 		D3DXVec3Normalize(&vLook, &m_vInfo[INFO_LOOK]);
 	}
+
 	matRotation._11 = vRight.x; matRotation._12 = vRight.y; matRotation._13 = vRight.z;
 	matRotation._21 = vUp.x;	matRotation._22 = vUp.y;	matRotation._23 = vUp.z;
 	matRotation._31 = vLook.x;	matRotation._32 = vLook.y;	matRotation._33 = vLook.z;
@@ -334,7 +348,7 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
 
 	// 초기화값은 항등행렬이고 방금 SetBillBoard를 부르면 뷰의 역행렬
-	m_matWorld = matScale * matRotation * m_matBill * matTrans;
+	m_matWorld = matScale * m_matBill * matRotation * matTrans;
 
 	return 0;
 }

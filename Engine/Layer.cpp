@@ -34,8 +34,16 @@ HRESULT CLayer::Add_GameObject(const _tchar * pObjTag, CGameObject * pGameObject
 	return S_OK;
 }
 
-HRESULT CLayer::Remove_Static_Layers()
+HRESULT CLayer::Remove_GameObject(CGameObject* obj)
 {
+	for (auto it = m_uMapObject.begin(); it != m_uMapObject.end(); it++)
+	{
+		if ((it->second) == obj)
+		{
+			m_uMapObject.erase(it);
+			break;
+		}
+	}
 
 	return S_OK;
 }
@@ -63,6 +71,8 @@ HRESULT CLayer::Ready_Layer(void)
 	return S_OK;
 }
 
+
+// 정적인 레이어에서 불렸다면?
 _int CLayer::Update_Layer(const _float & fTimeDelta)
 {
 	for (auto iter = m_uMapObject.begin(); iter != m_uMapObject.end(); )
@@ -71,6 +81,7 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 
 		if (result == OBJ_DEAD)
 		{
+			iter->second->Remove_InOwnerObject();
 			Engine::Remove_Collider(iter->second);
 			Safe_Release(iter->second);
 		}
