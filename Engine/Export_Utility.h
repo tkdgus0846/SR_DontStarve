@@ -95,6 +95,7 @@ inline void		Remove_Collider(CCollider* collider, COLGROUP colID);
 inline void		Remove_Collider(CGameObject* gameObject);
 //inline void		Set_Collider(COLGROUP eGroup, CCollider* pCollider);
 //
+inline const	CCamera* Get_CurCamera();
 inline void		On_Camera(const _tchar* pCamTag);
 inline void		Shake_Camera(SHAKE_TYPE eType, const _float& fForce = 1.5f, const _float& fTime = 10.f);
 

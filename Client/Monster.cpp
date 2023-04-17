@@ -414,6 +414,8 @@ CSequence * CMonster::Make_BossPattern3(const _float & fCoolTime)
 	NULL_CHECK_RETURN(pTskMoveLook, nullptr);
 	CMoveUp* pTskMoveUp = dynamic_cast<CMoveUp*>(Engine::Clone_Proto(L"TSK_MoveUp", this));
 	NULL_CHECK_RETURN(pTskMoveUp);
+	CLookAtTarget* pTskLook = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
+	NULL_CHECK_RETURN(pTskLook);
 
 	// 부품 초기설정
 	pTskDig->Set_Timer(3.f);
@@ -424,11 +426,13 @@ CSequence * CMonster::Make_BossPattern3(const _float & fCoolTime)
 	pTskMoveUp->Set_Magnifi();
 
 	// 부품 조립
+
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_Dig", pTskDig), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveLook", pTskMoveLook), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveUp", pTskMoveUp), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_LookAt", pTskLook), nullptr);
 
-	return nullptr;
+	return pSQPattern;
 }
 
 HRESULT CMonster::Set_PatrolAndFollow_AI()
@@ -551,7 +555,6 @@ HRESULT CMonster::Set_Boss2_AI()
 
 	// 부품 초기설정
 
-
 	// 부품 조립
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
@@ -563,17 +566,16 @@ HRESULT CMonster::Set_Boss2_AI()
 
 HRESULT CMonster::Set_Boss3_AI()
 {
-	//// 부품 생성
-	//CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
-	//NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
+	// 부품 생성
+	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
+	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
-	//// 부품 초기설정
+	// 부품 초기설정
 
+	// 부품 조립
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
-	//// 부품 조립
-	//FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
-
-	//FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern3", Make_BossPattern3()), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern3", Make_BossPattern3()), E_FAIL);
 
 	return S_OK;
 }

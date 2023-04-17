@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Transform.h"
 
+#include "Export_Function.h"
+
 CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev)
 	, m_vScale(1.f, 1.f, 1.f)
@@ -229,9 +231,13 @@ void CTransform::Rot_Roll(const _float & fAngle, const _float& fTimeDelta)
 	}
 }
 
-void CTransform::Rot_Bill(const _vec3 & vPos, const _float & fAngle)
+void CTransform::Rot_Bill(const _float & fAngle)
 {
-	_vec3 vAxis = vPos - m_vInfo[INFO_POS];
+	_matrix matView{};
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	matView.Inverse();
+
+	_vec3 vAxis = _vec3(matView._41, matView._42, matView._43) - m_vInfo[INFO_POS];
 	D3DXMatrixRotationAxis(&m_matRotBill, &vAxis, D3DXToRadian(fAngle));
 }
 

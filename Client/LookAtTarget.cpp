@@ -23,10 +23,7 @@ HRESULT CLookAtTarget::Ready_Behavior()
 
 _int CLookAtTarget::Update_Component(const _float & fTimeDelta)
 {
-	CTransform* pTargetTransform = dynamic_cast<CTransform*>(Engine::Get_Component(LAYER_PLAYER, L"Player", L"Transform", ID_UPDATE));
-	NULL_CHECK_RETURN(pTargetTransform, BEHAVIOR_FAIL);
-
-	m_pGameObject->m_pTransform->Set_Target(pTargetTransform->m_vInfo[INFO_POS]);
+	m_pGameObject->m_pTransform->Set_Target(Get_Player()->m_pTransform->m_vInfo[INFO_POS]);
 
 	return BEHAVIOR_SUCCES;
 }

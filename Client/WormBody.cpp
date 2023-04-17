@@ -6,7 +6,7 @@
 
 CWormBody::CWormBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_pFrontBody(nullptr)
-	, m_pBackBody(nullptr), m_bMove(false), m_pHead(nullptr)
+	, m_pBackBody(nullptr), m_bMove(true), m_pHead(nullptr)
 	, m_pTail(nullptr), m_fDir(0.f)
 {
 	ZeroMemory(m_vDest, sizeof(_vec3));
@@ -38,6 +38,8 @@ HRESULT CWormBody::Ready_GameObject(const _vec3 & vPos)
 
 _int CWormBody::Update_GameObject(const _float & fTimeDelta)
 {
+	__super::Update_GameObject(fTimeDelta);
+
 	if (GetDead())
 	{
 		if (m_pFrontBody)
@@ -78,10 +80,6 @@ _int CWormBody::Update_GameObject(const _float & fTimeDelta)
 
 	if (m_bMove)
 		Move(fTimeDelta);
-
-	__super::Update_GameObject(fTimeDelta);
-
-	if (GetDead()) return OBJ_DEAD;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -221,11 +219,9 @@ void CWormBody::Move(const _float & fTimeDelta)
 
 	if (isnan(fAngle))
 		fAngle = 0.f;
-	if(m_pHead)
-		cout << fAngle << endl;
 	_vec3 vAxis = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
 	
-	m_pTransform->Rot_Bill(Get_Player()->m_pTransform->m_vInfo[INFO_POS], fAngle * m_fDir);
+	m_pTransform->Rot_Bill(fAngle * m_fDir);
 
 	if (fLength < 1.8f)
 		m_pTransform->Move_Walk(0.1f, fTimeDelta);
@@ -233,7 +229,7 @@ void CWormBody::Move(const _float & fTimeDelta)
 		m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 }
 
-CWormBody * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
+CGameObject * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
 	CWormBody* pInstance = new CWormBody(pGraphicDev);
 

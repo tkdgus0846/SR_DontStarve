@@ -21,6 +21,7 @@ private:
 	void Remove_Camera(const _tchar* pCamTag);
 
 public:
+	const CCamera* Get_CurCamera() const { return m_pCurCamera; }
 	void On_Camera(const _tchar* pCamTag);
 	void On_Shake(SHAKE_TYPE eType, const _float& fForce = 1.5f, const _float& fTime = 5.f);
 
