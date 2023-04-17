@@ -109,7 +109,7 @@ CGameObject * CBub::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CBub* pInstance = new CBub(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
+	if (FAILED(pInstance->Ready_GameObject(_vec3(0.f, 0.f, 0.f))))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

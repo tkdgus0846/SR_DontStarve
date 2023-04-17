@@ -33,7 +33,7 @@ _int CMoveLook::Update_Component(const _float & fTimeDelta)
 	m_fCurTime += fTimeDelta;
 
 	_float fSpeed = 0.f;
-	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", &fSpeed), BEHAVIOR_FAIL);
+	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", fSpeed), BEHAVIOR_FAIL);
 
 	m_pGameObject->m_pTransform->Move_Walk(fSpeed * m_fMagnification, fTimeDelta);
 

@@ -35,6 +35,8 @@ HRESULT CWormTail::Ready_GameObject(const _vec3 & vPos)
 
 _int CWormTail::Update_GameObject(const _float & fTimeDelta)
 {
+	__super::Update_GameObject(fTimeDelta);
+
 	if (GetDead())
 	{
 		if (m_pFrontBody)
@@ -60,10 +62,6 @@ _int CWormTail::Update_GameObject(const _float & fTimeDelta)
 	if (m_bMove)
 		Move(fTimeDelta);
 
-	__super::Update_GameObject(fTimeDelta);
-
-	if (GetDead()) return OBJ_DEAD;
-
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
@@ -75,6 +73,7 @@ void CWormTail::LateUpdate_GameObject(void)
 {
 	if (GetDead())
 		return;
+
 	if (Get_Player() == nullptr) return;
 
 	m_pTransform->Set_Scale({ 1.f, 1.f, 1.f });
@@ -199,7 +198,7 @@ void CWormTail::Move(const _float & fTimeDelta)
 
 	_vec3 vAxis = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
 
-	m_pTransform->Rot_Bill(Get_Player()->m_pTransform->m_vInfo[INFO_POS], fAngle);
+	m_pTransform->Rot_Bill(fAngle);
 
 	if (fLength < 1.8f)
 		m_pTransform->Move_Walk(0.1f, fTimeDelta);
@@ -207,7 +206,7 @@ void CWormTail::Move(const _float & fTimeDelta)
 		m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 }
 
-CWormTail * CWormTail::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
+CGameObject * CWormTail::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
 	CWormTail* pInstance = new CWormTail(pGraphicDev);
 

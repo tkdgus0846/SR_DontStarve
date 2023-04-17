@@ -152,6 +152,11 @@ void		Remove_Collider(CGameObject* gameObject)
 //	CCollisionMgr::GetInstance()->Set_Collider(eGroup, pCollider);
 //}
 
+const	CCamera* Get_CurCamera()
+{
+	CCameraMgr::GetInstance()->Get_CurCamera();
+}
+
 void		On_Camera(const _tchar* pCamTag)
 {
 	CCameraMgr::GetInstance()->On_Camera(pCamTag);

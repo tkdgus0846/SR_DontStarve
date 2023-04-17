@@ -43,7 +43,7 @@ private:
 	_float		m_fDir;
 
 public:
-	static CWormBody*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	static const _tchar* GetTag() { return L"WormBody"; }
 
 private:

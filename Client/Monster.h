@@ -51,7 +51,6 @@ protected:
 	CSequence*	Make_BossPattern2(const _float& fCoolTime = 18.f);
 	CSequence*	Make_BossPattern3(const _float& fCoolTime = 12.f);
 	
-	
 	HRESULT		Set_PatrolAndFollow_AI();
 	HRESULT		Set_PAF_JumpAI();
 	HRESULT		Set_PAF_DBJumpAI();

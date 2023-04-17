@@ -51,7 +51,7 @@ _int CEffect::Update_GameObject(const _float& fTimeDelta)
 	viewMat.Inverse();
 
 
-	m_pTransform->Rot_Bill({viewMat._41,viewMat._42,viewMat._43}, 0.01f);
+	m_pTransform->Rot_Bill(0.01f);
 	
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
