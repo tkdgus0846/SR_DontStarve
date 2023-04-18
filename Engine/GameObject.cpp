@@ -107,6 +107,20 @@ HRESULT CGameObject::Ready_GameObject(void)
 
 _int CGameObject::Update_GameObject(const _float & fTimeDelta)
 {
+	for (auto iter = m_StaticObjectList.begin(); iter != m_StaticObjectList.end();)
+	{
+		_int result = (*iter)->Update_GameObject(fTimeDelta);
+
+		if (result == OBJ_DEAD)
+		{
+			Engine::Remove_Collider(*iter);
+			Safe_Release(*iter);
+			iter = m_StaticObjectList.erase(iter);
+		}
+		else
+			iter++;
+	}
+
 	for (auto& iter : m_uMapComponent[ID_UPDATE])
 		iter.second->Update_Component(fTimeDelta);
 
@@ -118,6 +132,11 @@ _int CGameObject::Update_GameObject(const _float & fTimeDelta)
 
 void CGameObject::LateUpdate_GameObject(void)
 {
+	for (auto iter = m_StaticObjectList.begin(); iter != m_StaticObjectList.end(); ++iter)
+	{
+		(*iter)->LateUpdate_GameObject();
+	}
+
 	for (auto& iter : m_uMapComponent[ID_UPDATE])
 		iter.second->LateUpdate_Component();
 
@@ -127,6 +146,11 @@ void CGameObject::LateUpdate_GameObject(void)
 
 void CGameObject::Render_GameObject(void)
 {
+	/*for (auto iter = m_StaticObjectList.begin(); iter != m_StaticObjectList.end(); ++iter)
+	{
+		(*iter)->Render_GameObject();
+	}*/
+
 	for (auto& iter : m_RenderComponent)
 		iter.second->Render_Component();
 
@@ -236,21 +260,16 @@ CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENT
 
 void CGameObject::Free(void)
 {
-	for (auto child : m_StaticObjectList)
-	{
-		LAYERID layerID = child->Get_LayerID();
+	/*if (m_bReleaseFlag == true)
+		Engine::Remove_Collider(this);*/
 
+	for (auto it = m_StaticObjectList.begin(); it != m_StaticObjectList.end(); it++)
+	{
 		if (m_bReleaseFlag == true)
-		{
-			Engine::Remove_GameObject(layerID, child);
-			Engine::Remove_Collider(child);
-		}
-		
-		
-		Safe_Release(child);
+			Engine::Remove_Collider(*it); // 자식오브젝트가 있는 경우에 콜리젼 매니저에서 내 콜라이더를 제거
+		Safe_Release(*it);
 	}
 	
-
 	for (size_t i = 0; i < ID_END; ++i)
 	{
 		for (auto iter = m_uMapComponent[i].begin(); iter != m_uMapComponent[i].end(); iter++)

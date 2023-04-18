@@ -62,7 +62,17 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 
 _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 {
-  if (GetDead()) return OBJ_DEAD;
+	if (GetDead())
+	{
+		for (CWormBody* body : m_vecBody)
+		{
+			body->SetDead();
+		}
+		m_pTail->SetDead();
+		return OBJ_DEAD;
+	}
+	  
+
 	if (!Get_Player())
 		return OBJ_NOEVENT;
 
@@ -97,21 +107,6 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 
 	m_pTransform->Rot_Bill(fAngle);
 
-	for (auto iter = m_vecBody.begin(); iter != m_vecBody.end(); )
-	{
-		_int iResult = (*iter)->Update_GameObject(fTimeDelta);
-		if (iResult == OBJ_DEAD)
-			iter = m_vecBody.erase(iter);
-		else
-			++iter;
-	}
-
-	if (m_pTail)
-	{
-		_int iResult = m_pTail->Update_GameObject(fTimeDelta);
-		if (iResult == OBJ_DEAD)
-			m_pTail = nullptr;
-	}
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -165,10 +160,6 @@ void CWormHead::LateUpdate_GameObject(void)
 	else
 		m_pAnimation->SelectState(ANIM_FACE);
 
-	for (auto iter : m_vecBody)
-		iter->LateUpdate_GameObject();
-	if (m_pTail)
-		m_pTail->LateUpdate_GameObject();
 	__super::LateUpdate_GameObject();
 }
 
@@ -179,10 +170,6 @@ void CWormHead::Render_GameObject(void)
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
-	for (auto iter : m_vecBody)
-		iter->LateUpdate_GameObject();
-	if (m_pTail)
-		m_pTail->Render_GameObject();
 	__super::Render_GameObject();
 }
 

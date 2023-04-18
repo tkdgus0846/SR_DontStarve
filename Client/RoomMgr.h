@@ -31,6 +31,7 @@ public:
 	vector<CLayer*>* Get_CurLayerVec();
 	list<CCollider*>* Get_CurColliderList(_int iIndex);
 	CRoom* Get_Room(const _int iIndex) { return m_arrRoom[iIndex]; }
+	
 
 private:
 	void			Create_Default_Room();
