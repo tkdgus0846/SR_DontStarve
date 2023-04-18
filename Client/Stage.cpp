@@ -130,7 +130,7 @@ HRESULT CStage::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	STOP_ALL_SOUND;
-	PLAY_BGM(L"Sector1.wav", 0.5f);
+	PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD1, 0.5f);
 
 	return S_OK;
 }
@@ -152,7 +152,7 @@ void CStage::LateUpdate_Scene(void)
 
 	if (m_iCurRoomIdx != m_iPreRoomIdx)
 	{
-		Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());
+		CManagement::GetInstance()->Set_StaticLayerArr_Management(ROOM_MGR->Get_CurLayerVec());
 
 		for (int i = 0; i < COL_STATIC_END; i++)
 			CCollisionMgr::GetInstance()->Set_StaticColliderList(ROOM_MGR->Get_CurColliderList(i), i);

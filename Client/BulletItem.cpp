@@ -43,17 +43,21 @@ HRESULT CBulletItem::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
 
-	m_pTransform->Set_BillMode(true);
+	
 
 	return S_OK;
 }
 
 HRESULT CBulletItem::Ready_GameObject(void)
 {
-	_vec3 vScale = { 1.f, 1.f, 0.f };
+	_vec3 vScale = { 0.5f, 0.5f, 1.f };
 	m_pTransform->Set_Pos(20.f, 1.f, 20.f);
 	m_pTransform->Set_Scale(vScale);
 	__super::Ready_GameObject();
+
+	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
+
 	return S_OK;
 }
 
@@ -65,6 +69,8 @@ _int CBulletItem::Update_GameObject(const _float & fTimeDelta)
 
 	if (m_bDrop == true) ItemPatrol(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
+
+	Add_RenderGroup(RENDER_ALPHA, this);
 	
 	return OBJ_NOEVENT;
 }

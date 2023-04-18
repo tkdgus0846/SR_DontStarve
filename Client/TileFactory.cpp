@@ -37,5 +37,7 @@ HRESULT CTileFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CSnowTile::Tag(), &CSnowTile::Create);
 	Register(CSwampTile::Tag(), &CSwampTile::Create);
 
+	ExtractTextureKey();
+
 	return hResult;
 }

@@ -11,6 +11,7 @@ END
 class CVortexBullet : public CBullet
 {
 	friend class CBulletPool;
+	friend class CBulletMgr;
 private:
 	explicit CVortexBullet(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CVortexBullet();

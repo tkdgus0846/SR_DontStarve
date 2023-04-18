@@ -44,5 +44,7 @@ HRESULT CMonsterFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CShopNpc::Tag(),	&CShopNpc::Create);
 
 
+	ExtractTextureKey();
+
 	return hResult;
 }

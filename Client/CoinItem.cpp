@@ -47,6 +47,10 @@ HRESULT CCoinItem::Add_Component()
 HRESULT CCoinItem::Ready_GameObject(void)
 {
 	__super::Ready_GameObject();
+
+	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
+
 	return S_OK;
 }
 

@@ -24,5 +24,7 @@ HRESULT CMapObjectFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CSoftPyramid::Tag(),	&CSoftPyramid::Create);
 	Register(CSlider::Tag(),		&CSlider::Create);
 
+	ExtractTextureKey();
+
 	return hResult;
 }

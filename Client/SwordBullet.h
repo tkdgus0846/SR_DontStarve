@@ -4,6 +4,7 @@
 class CSwordBullet : public CBullet
 {
 	friend class CBulletPool;
+	friend class CBulletMgr;
 private:
 	explicit CSwordBullet(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CSwordBullet();

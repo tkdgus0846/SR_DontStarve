@@ -9,7 +9,8 @@ IMPLEMENT_SINGLETON(CManagement)
 CManagement::CManagement() :
 	m_pPlayer(nullptr),
 	m_fWorldTime(0.f),
-	m_bPlayingWorldTimer(false)
+	m_bPlayingWorldTimer(false),
+	m_bChangeRoom(false)
 {
 }
 
@@ -50,6 +51,12 @@ void CManagement::LateUpdate_Management()
 {
 	NULL_CHECK(m_pScene);
 	m_pScene->LateUpdate_Scene();
+
+	if (m_bChangeRoom == true)
+	{
+		m_bChangeRoom = false;
+		return;
+	}
 
 	// ÃÑ¾Ë°ú °´Ã¼µéÀÇ °ü°è
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
@@ -127,9 +134,10 @@ void CManagement::Stop_WorldTimer()
 	m_bPlayingWorldTimer = false;
 }
 
-void CManagement::Set_StaticLayerArr(vector<CLayer*>* layerArr)
+void CManagement::Set_StaticLayerArr_Management(vector<CLayer*>* layerArr)
 {
 	m_pScene->Set_StaticLayerArr(layerArr);
+	m_bChangeRoom = true;
 }
 
 void CManagement::Free(void)

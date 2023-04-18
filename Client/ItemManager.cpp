@@ -98,6 +98,32 @@ CItem * CItemManager::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar * name, const 
 }
 
 
+void CItemManager::Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name)
+{
+	for (int i = 0; i < cnt; i++)
+	{
+		CItem* pItem = nullptr;
+		if (name == L"BulletItem")
+		{
+			pItem = CBulletItem::Create(pDevice);
+		}
+		else if (name == L"CoinItem")
+		{
+			pItem = CCoinItem::Create(pDevice);
+		}
+		else if (name == L"HeartItem")
+		{
+			pItem = CHeartItem::Create(pDevice);
+		}
+
+		if (m_ItemPool[name] == nullptr)
+		{
+			m_ItemPool[name] = CItemPool::Create();
+		}
+		Push(name, pItem);
+	}
+}
+
 void CItemManager::Push(const _tchar* name, CItem* pItem)
 {
 	if (m_ItemPool[name] == nullptr) return;
