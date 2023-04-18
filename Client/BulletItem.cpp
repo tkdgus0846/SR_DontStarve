@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Weapon.h"
 #include "ItemManager.h"
+#include "..\Engine\SoundMgr.h"
 CBulletItem::CBulletItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -128,7 +129,12 @@ void CBulletItem::OnCollisionStay(const Collision * collision)
 {
 	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+	if (pPlayer == nullptr) return;
 
+	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
+	{
+		PLAY_SOUND(L"sfxpickup.wav", SOUND_LOOT, 1.f);
+	}
 	ItemMagnetic(pPlayer);
 }
 

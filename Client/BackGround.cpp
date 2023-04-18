@@ -66,16 +66,23 @@ void CBackGround::Render_GameObject(void)
 
 HRESULT CBackGround::Add_Component(void)
 {
-	CComponent*		pComponent = nullptr;
-
-	pComponent  = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex",this));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pComponent });
+	m_LogoBuffer = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex",this));
+	NULL_CHECK_RETURN(m_LogoBuffer, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"Logo_RcTex", m_LogoBuffer });
 
 
-	pComponent  = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Logo_Texture",this));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"Logo_Texture", pComponent });
+	m_LogoTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Logo_Texture",this));
+	NULL_CHECK_RETURN(m_LogoTexture, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"Logo_Texture", m_LogoTexture });
+
+	/*m_BackgroundBuffer = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
+	NULL_CHECK_RETURN(m_BackgroundBuffer, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Background_RcTex", m_BackgroundBuffer });
+
+
+	m_BackgroundTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Logo_Texture", this));
+	NULL_CHECK_RETURN(m_BackgroundTexture, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Background_Texture", m_BackgroundTexture });*/
 
 	return S_OK;
 }

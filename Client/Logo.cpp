@@ -33,6 +33,9 @@ HRESULT CLogo::Ready_Scene(void)
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	//STOP_ALL_SOUND;
+	//PLAY_BGM(L"Title.wav", SOUND_BGM, 0.5f);
 	
 	return S_OK;
 }
@@ -77,7 +80,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 			
-			CFileSystem::Load(L"as.dat");
+			
 			
 			return 0;
 		}

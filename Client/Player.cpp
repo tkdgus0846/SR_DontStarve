@@ -68,7 +68,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	/*cout << m_pTransform->m_vInfo[INFO_POS].x << " " << m_pTransform->m_vInfo[INFO_POS].y << " " << m_pTransform->m_vInfo[INFO_POS].z << endl;*/
 	
-	cout << ROOM_MGR->Get_Tennel(0) << " " << ROOM_MGR->Get_Tennel(1) << endl;
+	/*cout << ROOM_MGR->Get_Tennel(0) << " " << ROOM_MGR->Get_Tennel(1) << endl;*/
 	
 	//cout << ROOM_MGR->Get_Room(3)->m_vecLayer[LAYER_NPC]->Get_GameObject(L"ShopNpc")->m_pTransform->m_vInfo[INFO_POS].x << endl;
 	/*cout << ROOM_MGR->Get_Room(3)->m_vecLayer[LAYER_NPC]->Get_ObjectSize() << endl;*/

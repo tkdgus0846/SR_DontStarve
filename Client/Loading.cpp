@@ -12,6 +12,7 @@
 #include "TileFactory.h"
 #include "MonsterFactory.h"
 #include "MapObjectFactory.h"
+#include "FileSystem.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -307,9 +308,9 @@ _uint CLoading::Loading_ForStage(void)
 
 	ROOM_MGR->Ready_RoomMgr(m_pGraphicDev); // 여기서 룸들을 싹다 만든다.
 
+	CFileSystem::Load(L"as.dat");
 
 	m_bFinish = true;
-	
 	Set_String(L"Loading Complete!!!!!!!!");
 
 	return 0;

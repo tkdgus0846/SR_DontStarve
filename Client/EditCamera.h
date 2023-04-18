@@ -45,7 +45,7 @@ public:
 	void DeleteObject();
 
 private:
-	void SetClickInfo();
+	_bool SetClickInfo();
 
 	// Functions that fill in mouse click information
 	_bool IntersectRayRoom(const CRoom* pRoom, ClickInfo& tClickInfo);

@@ -7,6 +7,7 @@
 #include "Bullet.h"
 #include "EffectManager.h"
 #include "..\Engine\SoundMgr.h"
+#include "ItemManager.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev) : 
 	CCreature(pGraphicDev),
@@ -118,6 +119,14 @@ void CMonster::SetDead(_bool bDead /*= true*/)
 		_vec3 scale = m_pTransform->Get_Scale();
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"Explosion_Texture", pos, scale, 0.1f);
 		Add_GameObject(effect);
+
+
+		_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
+		pSpawnPos.y += 3.f;
+		CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
+		Add_GameObject(item);
+		item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"CoinItem", pSpawnPos);
+		Add_GameObject(item);
 	}
 }
 

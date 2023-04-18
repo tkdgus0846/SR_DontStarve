@@ -88,7 +88,7 @@ void CWeaponItem::OnCollisionStay(const Collision * collision)
 
 	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
 	{		
-		STOP_PLAY_SOUND(L"sfxpickup.wav", SOUND_EFFECT, 1.f);
+		PLAY_SOUND(L"sfxpickup.wav", SOUND_LOOT, 1.f);
 		pPlayer->Gain_Weapon(m_eID);
 	}
 
