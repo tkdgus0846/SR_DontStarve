@@ -13,11 +13,11 @@ CFactory::~CFactory()
 
 void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 {
-	// CreateÇÔ¼ö ÁÖ¼Ò ÀúÀå.
+	// Createí•¨ìˆ˜ ì£¼ì†Œ ì €ì¥.
 	m_creationMap[objectType].CreateFunc = createFunc;
 	m_vecWstrTag.push_back(objectType.c_str());
 
-	// ÅØ½ºÃ³ Å° ÀúÀå
+	// í…ìŠ¤ì²˜ í‚¤ ì €ì¥
 	for_each(m_creationMap.begin(), m_creationMap.end(), [this](pair<const wstring, CInfo>& entry) {
 		CGameObject* p = entry.second.CreateFunc(m_pGraphicDev);
 		entry.second.TextureKey = p->Get_TextureKey().c_str();
@@ -39,7 +39,7 @@ HRESULT CFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CFactory::Release()
 {
-	
+
 }
 
 CGameObject * CFactory::CreateObject(const wstring & objectType)

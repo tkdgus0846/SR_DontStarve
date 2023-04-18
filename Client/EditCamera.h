@@ -1,12 +1,23 @@
 #pragma once
 #include "GameObject.h"
 
+// This struct that fills in information about something intersect with a ray
+typedef struct tagClickInfo
+{
+	Triangle tri;			// Three vertices of a face
+	INDEX32 index;			// Index of a vertex
+	CGameObject* pGameObj;	// Address of an clicked object
+	float fDist;			// Distance between a camera and an object
+	_vec3 ClickedPos;		// Intersection position of a ray
+}ClickInfo;
+
 BEGIN(Engine)
 class CCamera;
 class CTexture;
 END
-
+class CImInspector;
 class CRoom;
+
 class CEditCamera : public CGameObject
 {
 private:
@@ -19,9 +30,6 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
-	void CreateMapObject();
-	
-
 private:
 	virtual	HRESULT Add_Component() override;
 	void	Key_Input(const _float& fTimeDelta);
@@ -29,44 +37,33 @@ private:
 	void	Fix_Mouse();
 
 public:
-	void Set_Tag(const _tchar* Tiletag) { m_Tiletag = Tiletag; }
-	PICK_TYPE& Get_Pick() { return m_ePick; }
 	ClickInfo&	Get_ClickInfo() { return m_tPickInfo; }
-	void CreateMonster();
-	void CreateTile();
-	_int&	Get_Radio() { return m_radio; }
-	void DeleteObject();
 
-private:
-	void LoadSaveTarget(const _tchar* tag);
+	void CreateMonster(CImInspector * pWindow);
+	void CreateTile(CImInspector * pWindow);
+	void CreateMapObject(CImInspector * pWindow);
+	void DeleteObject();
 
 private:
 	void SetClickInfo();
 
 	// Functions that fill in mouse click information
-	_bool IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
-	_bool IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
-	_bool Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist);
+	_bool IntersectRayRoom(const CRoom* pRoom, ClickInfo& tClickInfo);
+	_bool IntersectRayGameObject(ClickInfo& tClickInfo);
+	_bool Compute_RayCastHitGameObject(const Ray* pRay, ClickInfo& tClickInfo);
 	Ray CalcRaycast(POINT ptMouse);
 	POINT GetMousePos();
 
-	// 
 	_vec3 CalcMiddlePoint(Triangle& tri);
 
 private:
 	_float				m_fSpeed;
 	_bool				m_bFix;
-	PICK_TYPE			m_ePick;
-	CRoom*				tmp;
 	ClickInfo			m_tPickInfo;
-	const _tchar*		m_pCurTextureName;
-	const _tchar*		m_Tiletag;
 
-	_int				m_radio;
 public:
 	static CEditCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free() override;
 };
-

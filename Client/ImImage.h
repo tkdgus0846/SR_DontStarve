@@ -12,7 +12,7 @@ public:
 	ImImage(LPDIRECT3DDEVICE9 pGraphicDev);
 	~ImImage();
 
-private:
+public:
 	virtual _int Update(float fTimeDelta) override;
 
 public:

@@ -29,9 +29,9 @@ HRESULT CMonsterFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	HRESULT hResult = __super::Ready_Factory(pGraphicDev);
 
-	Register(CWormBody::Tag(),	&CWormBody::Create);
 	Register(CWormHead::Tag(),	&CWormHead::Create);
-	Register(CWormTail::Tag(),	&CWormTail::Create);
+	//Register(CWormBody::Tag(),	&CWormBody::Create);
+	//Register(CWormTail::Tag(),	&CWormTail::Create);
 	Register(CNubBoss::Tag(),	&CNubBoss::Create);
 	Register(CWalkerBoss::Tag(),&CWalkerBoss::Create);
 	Register(CBaller::Tag(),	&CBaller::Create);

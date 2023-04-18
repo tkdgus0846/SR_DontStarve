@@ -22,13 +22,18 @@ HRESULT CSlider::Ready_GameObject(void)
 
 _int CSlider::Update_GameObject(const _float & fTimeDelta)
 {
-	__super::Update_GameObject(fTimeDelta);
 	if (GetDead())
 		return OBJ_DEAD;
 
+	__super::Update_GameObject(fTimeDelta);
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+
+#ifdef _IMGUI
+	// IMGUI에서는 랜더그룹에만 넣어주고 움직임 로직을 막음.
+	return OBJ_NOEVENT;
+#endif
 
 	_matrix viewMat;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &viewMat);
