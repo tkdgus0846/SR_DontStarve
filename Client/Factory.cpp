@@ -18,7 +18,6 @@ void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 	m_vecWstrTag.push_back(objectType.c_str());
 
 	m_vecStrTag.push_back(CFileSystem::wstrToStr(objectType));
-
 }
 
 void CFactory::ExtractTextureKey()

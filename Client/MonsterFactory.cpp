@@ -43,6 +43,7 @@ HRESULT CMonsterFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CWalker::Tag(),	&CWalker::Create);
 	Register(CShopNpc::Tag(),	&CShopNpc::Create);
 
+	ExtractTextureKey();
 
 	ExtractTextureKey();
 

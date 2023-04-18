@@ -347,19 +347,19 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
 	// 오브젝트 해제
-	//for (auto& iter = m_vecGameObj.begin(); iter != m_vecGameObj.end();)
-	//{
-	//	if (dynamic_cast<CFloor*>(*iter) || dynamic_cast<CWall*>(*iter)
-	//		|| dynamic_cast<CDoor*>(*iter) || dynamic_cast<CShopNpc*>(*iter))
-	//	{
-	//		++iter;
-	//	}
-	//	else
-	//	{
-	//		Safe_Release(*iter);
-	//		iter = m_vecGameObj.erase(iter);
-	//	}
-	//}
+	for (auto& iter = m_vecGameObj.begin(); iter != m_vecGameObj.end();)
+	{
+		if (dynamic_cast<CFloor*>(*iter) || dynamic_cast<CWall*>(*iter)
+			|| dynamic_cast<CDoor*>(*iter) || dynamic_cast<CShopNpc*>(*iter))
+		{
+			++iter;
+		}
+		else
+		{
+			(*iter)->SetDead();
+			iter = m_vecGameObj.erase(iter);
+		}
+	}
 
 	// 룸 변수 로드
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);

@@ -1,7 +1,7 @@
 #pragma once
-#include "Tile.h"
+#include "FloorTile.h"
 class CLavaTile :
-	public CTile
+	public CFloorTile
 {
 private:
 	CLavaTile(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -1,7 +1,7 @@
 #pragma once
-#include "Tile.h"
+#include "FloorTile.h"
 class CSnowTile :
-	public CTile
+	public CFloorTile
 {
 private:
 	CSnowTile(LPDIRECT3DDEVICE9 pGraphicDev);
