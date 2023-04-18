@@ -1,13 +1,11 @@
 #pragma once
-
 #include "Behavior.h"
-
-class CTimeInLimit : public CBehavior
+class COnPlayer : public CBehavior
 {
 private:
-	explicit CTimeInLimit(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CTimeInLimit(const CTimeInLimit& rhs);
-	virtual ~CTimeInLimit();
+	explicit COnPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit COnPlayer(const COnPlayer& rhs);
+	virtual ~COnPlayer();
 
 public:
 	virtual HRESULT Ready_Behavior() override;
@@ -15,11 +13,8 @@ public:
 	virtual void LateUpdate_Component(void) override;
 	virtual void Render_Component(void) override;
 
-private:
-	_bool m_bIsCall;
-
 public:
-	static CTimeInLimit* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static COnPlayer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
 
 private:

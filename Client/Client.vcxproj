@@ -260,6 +260,7 @@
     <ClInclude Include="BackJump.h" />
     <ClInclude Include="Baller.h" />
     <ClInclude Include="BeltTile.h" />
+    <ClInclude Include="BigJump.h" />
     <ClInclude Include="BloodTile.h" />
     <ClInclude Include="BossHp.h" />
     <ClInclude Include="Bub.h" />
@@ -311,6 +312,7 @@
     <ClInclude Include="MapObjectFactory.h" />
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="MoveUp.h" />
+    <ClInclude Include="OnPlayer.h" />
     <ClInclude Include="SellItem.h" />
     <ClInclude Include="Serializable.h" />
     <ClInclude Include="IsNotRangeInPlayer.h" />
@@ -395,6 +397,7 @@
     <ClCompile Include="BackJump.cpp" />
     <ClCompile Include="Baller.cpp" />
     <ClCompile Include="BeltTile.cpp" />
+    <ClCompile Include="BigJump.cpp" />
     <ClCompile Include="BloodTile.cpp" />
     <ClCompile Include="BossHp.cpp" />
     <ClCompile Include="Bub.cpp" />
@@ -470,6 +473,7 @@
     <ClCompile Include="NotCollisionWall.cpp" />
     <ClCompile Include="NubBoss.cpp" />
     <ClCompile Include="OilTile.cpp" />
+    <ClCompile Include="OnPlayer.cpp" />
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="QuickSandTile.cpp" />
     <ClCompile Include="SandTile.cpp" />

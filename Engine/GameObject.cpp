@@ -236,7 +236,7 @@ CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENT
 
 void CGameObject::Free(void)
 {
-	for (auto child : m_StaticObjectList)
+	/*for (auto child : m_StaticObjectList)
 	{
 		LAYERID layerID = child->Get_LayerID();
 
@@ -250,7 +250,7 @@ void CGameObject::Free(void)
 		Safe_Release(child);
 	}
 	
-
+*/
 	for (size_t i = 0; i < ID_END; ++i)
 	{
 		for (auto iter = m_uMapComponent[i].begin(); iter != m_uMapComponent[i].end(); iter++)
