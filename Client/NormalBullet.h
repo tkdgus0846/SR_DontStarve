@@ -3,6 +3,7 @@
 
 class CNormalBullet : public CBullet
 {
+	friend class CBulletMgr;
 	friend class CBulletPool;
 private:
 	explicit CNormalBullet(LPDIRECT3DDEVICE9 pGraphicDev);

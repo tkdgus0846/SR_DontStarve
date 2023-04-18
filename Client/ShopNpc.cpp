@@ -9,7 +9,7 @@ CShopNpc::CShopNpc(LPDIRECT3DDEVICE9 pGraphicDev)
 	Set_LayerID(LAYER_NPC);
 	Set_ObjTag(Tag());
 
-	m_iHp = 10;
+	m_iHp = 1000;
 }
 
 CShopNpc::~CShopNpc()
@@ -51,13 +51,14 @@ HRESULT CShopNpc::Add_Component()
 HRESULT CShopNpc::Ready_GameObject(void)
 {
 	m_pTransform->m_vScale = { 5.f, 5.f, 5.f };
-	m_pTransform->Set_Pos(_vec3{ 25.f, -5.f, 25.f });
+	m_pTransform->Set_Pos(_vec3{ 25.f, -5.f, 85.f });
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	_vec3 Pos = m_pTransform->m_vInfo[INFO_POS];
 	Pos.y += 6.f;
 	Pos.z -= 5.f;
-	
+
+	//Pos.x += 5.5f;
 	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 30, FLAMESHOT);
 	Pos.x += 4.f;
 	
@@ -70,6 +71,7 @@ HRESULT CShopNpc::Ready_GameObject(void)
 	Add_Static_GameObject(item2);
 	Add_Static_GameObject(item3);
 
+
 	__super::Ready_GameObject();
 	return S_OK;
 }
@@ -78,6 +80,7 @@ _int CShopNpc::Update_GameObject(const _float & fTimeDelta)
 {
 	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
+	
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -156,8 +159,6 @@ void CShopNpc::Free(void)
 
 void CShopNpc::Serialization(HANDLE hFile, DWORD & dwByte)
 {
-	__super::Serialization(hFile, dwByte);
-
 }
 
 void CShopNpc::Deserialization(HANDLE hFile, DWORD & dwByte)

@@ -228,7 +228,7 @@ _int CRoom::Get_Room_Index()
 	_int iX = _int(m_pTransform->m_vInfo[INFO_POS].x / 60.f);
 	_int iZ = _int(m_pTransform->m_vInfo[INFO_POS].z / 60.f);
 
-	return iZ * 5 + iX;
+	return iZ * 3 + iX;
 }
 
 void CRoom::Open_Doors()
@@ -369,7 +369,8 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	//문 로드
 	_int iDoorType;
 	ReadFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
-	Set_DoorType((DOOR_TYPE)iDoorType);
+	//Set_DoorType((DOOR_TYPE)iDoorType);
+	
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
 	// 객체로드

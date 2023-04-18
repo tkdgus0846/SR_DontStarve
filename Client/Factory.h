@@ -3,7 +3,7 @@
 #include "Include.h"
 #include "GameObject.h"
 
-// Å¬·¡½º°¡ °¡Áö´Â °íÀ¯ÇÑ Á¤º¸¸¦ ÀúÀåÇÔ.
+// í´ë˜ìŠ¤ê°€ ê°€ì§€ëŠ” ê³ ìœ í•œ ì •ë³´ë¥¼ ì €ì¥í•¨.
 typedef CGameObject* (*CreateObjectFunc)(LPDIRECT3DDEVICE9);
 typedef struct tagClassInfo
 {

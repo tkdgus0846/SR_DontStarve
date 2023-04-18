@@ -5,6 +5,13 @@
 #include "MonoBehaviors.h"
 
 #include "RoomMgr.h"
+#include "BulletMgr.h"
+#include "ItemManager.h"
+#include "EffectManager.h"
+
+#include "TileFactory.h"
+#include "MonsterFactory.h"
+#include "MapObjectFactory.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -282,6 +289,23 @@ _uint CLoading::Loading_ForStage(void)
 		if (dynamic_cast<CTexture*>(iter.second))
 			m_listTags.push_back(iter.first);
 	}
+
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 25, L"NormalBullet");
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 30, L"FireBullet");
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"IceBullet");
+	/*CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 2, L"VortexBullet");*/
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"SwordBullet");
+
+	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"BulletItem");
+	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"CoinItem");
+	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"HeartItem");
+
+	TILE_FACTORY->Ready_Factory(m_pGraphicDev);
+	MONSTER_FACTORY->Ready_Factory(m_pGraphicDev);
+	MAPOBJ_FACTORY->Ready_Factory(m_pGraphicDev);
+	//CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
+
+	ROOM_MGR->Ready_RoomMgr(m_pGraphicDev); // 여기서 룸들을 싹다 만든다.
 
 
 	m_bFinish = true;

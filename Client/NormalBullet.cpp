@@ -46,7 +46,8 @@ HRESULT CNormalBullet::Ready_GameObject(void)
 _int CNormalBullet::Update_GameObject(const _float& fTimeDelta)
 {
 	Aging(fTimeDelta);
-	if (GetDead()) return OBJ_RETPOOL;
+	if (GetDead()) 
+		return OBJ_RETPOOL;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 	

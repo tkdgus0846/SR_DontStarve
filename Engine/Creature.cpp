@@ -45,6 +45,9 @@ void CCreature::OnCollisionEnter(const Collision * collsion)
 void CCreature::OnCollisionStay(const Collision * collision)
 {
 	// 생명체들끼리 밀어내는 코드.
+	if (Get_WorldTime() < 3.f) 
+		return;
+
 	if (collision->MyCollider == Get_Component(L"BodyCollider", ID_ALL) && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
 	{
 		_vec3 amountVec = collision->amountVec;
