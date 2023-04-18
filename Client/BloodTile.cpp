@@ -34,6 +34,7 @@ HRESULT CBloodTile::Add_Component()
 	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"FloorBlood", this));
 	NULL_CHECK_RETURN(texture, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"FloorBlood", texture });
+
 	m_pAnimation->BindAnimation(ANIM_IDLE, texture);
 
 	return result;

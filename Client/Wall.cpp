@@ -105,9 +105,9 @@ HRESULT CWall::Add_Component()
 	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"WallTex", pBufferCom });
 
-	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Wall_Level1_Texture", this));
+	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"WallPanels", this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"Wall_Level1_Texture", m_pTextureCom });
+	m_uMapComponent[ID_RENDER].insert({ L"WallPanels", m_pTextureCom });
 
 
 	// Wall이랑 Floor 룸의 콜라이더 리스트에 넣어줘야함.

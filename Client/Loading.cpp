@@ -132,17 +132,124 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Green.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Red_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Red.png")), E_FAIL);
 
+	static vector<wstring> decoratTile;
 	// Tile Texture
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Level1_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421865.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Wall_Level1_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Level2_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Wall_Level2_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420377.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLarge #421865", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421865.png")), E_FAIL);
+	decoratTile.push_back(L"FloorLarge #421865");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLarge #421874", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
+	decoratTile.push_back(L"FloorLarge #421874");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorDirt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorDirt.png")), E_FAIL);
+	decoratTile.push_back(L"FloorDirt");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorEmpty #421205", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorEmpty #421205.png")), E_FAIL);
+	decoratTile.push_back(L"FloorEmpty #421205");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorEmpty #421414", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorEmpty #421414.png")), E_FAIL);
+	decoratTile.push_back(L"FloorEmpty #421414");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorEmpty #421730", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorEmpty #421730.png")), E_FAIL);
+	decoratTile.push_back(L"FloorEmpty #421730");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorEmpty #421769", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorEmpty #421769.png")), E_FAIL);
+	decoratTile.push_back(L"FloorEmpty #421769");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorEmpty", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorEmpty.png")), E_FAIL);
+	decoratTile.push_back(L"FloorEmpty");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrass #421563", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrass #421563.png")), E_FAIL);
+	decoratTile.push_back(L"FloorGrass #421563");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrass.png")), E_FAIL);
+	decoratTile.push_back(L"FloorGrass");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassE #421561", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassE #421561.png")), E_FAIL);
+	decoratTile.push_back(L"FloorGrassE #421561");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassN", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassN.png")), E_FAIL);
+		decoratTile.push_back(L"FloorGrassN");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassNE #421562", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassNE #421562.png")), E_FAIL); 
+	decoratTile.push_back(L"FloorGrassNE #421562");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassNE", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassNE.png")), E_FAIL);
+	decoratTile.push_back(L"FloorGrassNE");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassNW", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassNW.png")), E_FAIL);
+		decoratTile.push_back(L"FloorGrassNW");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassS #421564", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassS #421564.png")), E_FAIL);
+		decoratTile.push_back(L"FloorGrassS #421564");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassS", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassS.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorGrassS");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassSE #421553", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassSE #421553.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorGrassSE #421553");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassSW", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassSW.png")), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassW #421566", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassW #421566.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorGrassW #421566");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassW", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassW.png")), E_FAIL);
+		decoratTile.push_back(L"FloorGrassW");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorHole #421407", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorHole #421407.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorHole #421407");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorHole #421573", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorHole #421573.png")), E_FAIL);
+		decoratTile.push_back(L"FloorHole #421573");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorHole #421724", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorHole #421724.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorHole #421724");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorHole #421777", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorHole #421777.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorHole #421777");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #420592", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #420592.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #420592");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421201", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421201.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421201");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421410", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421410.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421410");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421572", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421572.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421572");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421575", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421575.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421575");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421723", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421723.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421723");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421733", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421733.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421733");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall");
+
+
+
+	// WallTexture
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallPanels", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallPanels #420377", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420377.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Dock_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_%d.png", 15)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Open_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_14.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorCrate_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorCrate.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrass #421873", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrass #421873.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSand.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorIce", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorIce.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSnow", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSnow.png")), E_FAIL);
 
 	// Tile Multi Texture
