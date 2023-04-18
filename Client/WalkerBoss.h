@@ -20,6 +20,7 @@ public:
 	
 	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static const _tchar* Tag() { return L"WalkerBoss"; }
+
 private:
 	virtual void Free(void) override;
 };

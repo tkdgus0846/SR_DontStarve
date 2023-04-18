@@ -19,3 +19,5 @@
 #include "Dig.h"
 #include "MoveUp.h"
 #include "CoolTime.h"
+#include "BigJump.h"
+#include "OnPlayer.h"

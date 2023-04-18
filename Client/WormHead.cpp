@@ -62,17 +62,19 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 
 _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 {
-	if (GetDead())
-	{
-		for (CWormBody* body : m_vecBody)
-		{
-			body->SetDead();
-		}
-		m_pTail->SetDead();
-		return OBJ_DEAD;
-	}
-	  
 
+  if (GetDead()) return OBJ_DEAD;
+
+	//if (GetDead())
+	//{
+	//	for (CWormBody* body : m_vecBody)
+	//	{
+	//		body->SetDead();
+	//	}
+	//	m_pTail->SetDead();
+	//	return OBJ_DEAD;
+	//}
+	  
 	if (!Get_Player())
 		return OBJ_NOEVENT;
 
@@ -80,20 +82,20 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 		m_fSpeed = 0.f;
 	__super::Update_GameObject(fTimeDelta);
 
-	//if (GetDead() && m_vecBody.size() == 0 && m_pTail == nullptr)
-	//	return OBJ_DEAD;
-	//else if (GetDead())
-	//{
-	//	for (auto iter : m_vecBody)
-	//		iter->SetDead();
-	//	m_vecBody.clear();
-	//	if (m_pTail)
-	//	{
-	//		m_pTail->SetDead();
-	//		m_pTail = nullptr;
-	//	}
-	//	return OBJ_NOEVENT;
-  //	}
+	if (GetDead() && m_vecBody.size() == 0 && m_pTail == nullptr)
+		return OBJ_DEAD;
+	else if (GetDead())
+	{
+		for (auto iter : m_vecBody)
+			iter->SetDead();
+		m_vecBody.clear();
+		if (m_pTail)
+		{
+			m_pTail->SetDead();
+			m_pTail = nullptr;
+		}
+		return OBJ_NOEVENT;
+  	}
 
 	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 
@@ -216,7 +218,7 @@ HRESULT CWormHead::Add_Component()
 	pCollider->Set_BoundingBox({ 70.f, 30.f, 70.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI());
-	FAILED_CHECK_RETURN(Set_Boss3_AI());
+	//FAILED_CHECK_RETURN(Set_Boss3_AI());
 	FAILED_CHECK_RETURN(Init_AI_Behaviours());
 }
 

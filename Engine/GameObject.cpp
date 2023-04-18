@@ -260,6 +260,7 @@ CComponent * CGameObject::Find_Component(const _tchar * pComponentTag, COMPONENT
 
 void CGameObject::Free(void)
 {
+
 	/*if (m_bReleaseFlag == true)
 		Engine::Remove_Collider(this);*/
 

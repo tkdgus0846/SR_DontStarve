@@ -77,14 +77,12 @@ void CRoomMgr::Create_Default_Room()
 
 	m_arrRoom[6]->Set_DoorType(DOOR_SW);
 
-
-	CWormHead* pH = CWormHead::Create(m_pGraphicDev, _vec3(17.f, 2.f, 17.f));
-	m_arrRoom[1]->PushBack_GameObj(pH);
-//
-//////====== 임시 코드임 =======
 	m_arrRoom[0]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(40.f, 3.f, 40.f)));
 
+	/*m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
+
 	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
+
 	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(30.f, -3.f, 40.f)));
 	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(20.f, -3.f, 40.f)));
 //

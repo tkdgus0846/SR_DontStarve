@@ -1,12 +1,11 @@
 #pragma once
 #include "Behavior.h"
-class CBackJump : public CBehavior
+class CBigJump : public CBehavior
 {
-public:
 private:
-	explicit CBackJump(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CBackJump(const CBackJump& rhs);
-	virtual ~CBackJump();
+	explicit CBigJump(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CBigJump(const CBigJump& rhs);
+	virtual ~CBigJump();
 
 public:
 	virtual HRESULT Ready_Behavior() override;
@@ -15,14 +14,17 @@ public:
 	virtual void Render_Component(void) override;
 
 	void Set_Force(const _float& fForce) { m_fForce = fForce; }
+	void Set_Stop(_bool bSwitch) { m_bSetStop = bSwitch; m_bStop = bSwitch; }
 
 private:
 	_float m_fTime;
 	_float m_fForce;
 	_float m_fInit;
+	_bool m_bStop;
+	_bool m_bSetStop;
 
 public:
-	static CBackJump* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CBigJump* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
 
 private:
