@@ -72,9 +72,9 @@ HRESULT CFloor::Add_Component(void)
 	NULL_CHECK_RETURN(pComp, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"FloorTex", pComp });
 
-	pComp = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Floor_Level1_Texture",this));
+	pComp = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"FloorLarge #421865",this));
 	NULL_CHECK_RETURN(pComp, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"Floor_Level1_Texture", pComp });
+	m_uMapComponent[ID_RENDER].insert({ L"FloorLarge #421865", pComp });
 
 	CCollider*	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ENVIRONMENT ));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);

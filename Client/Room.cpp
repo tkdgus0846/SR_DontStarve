@@ -97,7 +97,7 @@ HRESULT CRoom::CreateSubset()
 	//			, _vec3{ ((float)j * VTXITV) + iOffsetX
 	//			, 0.01f
 	//			,(float)i * VTXITV + iOffsetZ }
-	//		, L"Floor_Level1_Texture"));
+	//		, L"FloorLarge #421865"));
 	//	}
 	//}
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);

@@ -1,14 +1,14 @@
 #pragma once
 #include "FloorTile.h"
-class CElectricTile :
+class FloorGrassS :
 	public CFloorTile
 {
-private:
-	CElectricTile(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CElectricTile();
+public:
+	FloorGrassS(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~FloorGrassS();
 public:
 	static CGameObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	static const _tchar* Tag() { return L"ElectricTile"; }
+	static const _tchar* Tag() { return L"FloorGrassS"; }
 
 private:
 	virtual HRESULT Add_Component() override;
