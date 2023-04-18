@@ -55,6 +55,11 @@ CGameObject*		Get_GameObject(LAYERID LayerID, const _tchar* pObjTag)
 	return CManagement::GetInstance()->Get_GameObject(LayerID, pObjTag);
 }
 
+//void Set_StaticLayerArr(vector<CLayer*>* layerArr)
+//{
+//	CManagement::GetInstance()->Set_StaticLayerArr(layerArr);
+//}
+
 void Remove_GameObject(LAYERID LayerID, CGameObject* obj)
 {
 	CManagement::GetInstance()->Remove_GameObject(LayerID, obj);

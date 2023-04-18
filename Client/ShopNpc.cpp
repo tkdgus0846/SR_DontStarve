@@ -9,7 +9,7 @@ CShopNpc::CShopNpc(LPDIRECT3DDEVICE9 pGraphicDev)
 	Set_LayerID(LAYER_NPC);
 	Set_ObjTag(Tag());
 
-	m_iHp = 1000;
+	m_iHp = 10;
 }
 
 CShopNpc::~CShopNpc()
@@ -152,4 +152,16 @@ CGameObject * CShopNpc::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CShopNpc::Free(void)
 {
 	__super::Free();
+}
+
+void CShopNpc::Serialization(HANDLE hFile, DWORD & dwByte)
+{
+	__super::Serialization(hFile, dwByte);
+
+
+}
+
+void CShopNpc::Deserialization(HANDLE hFile, DWORD & dwByte)
+{
+	
 }

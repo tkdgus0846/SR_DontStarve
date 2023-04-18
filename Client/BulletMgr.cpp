@@ -32,6 +32,7 @@ void CBulletPool::Push(CBullet * pObj)
 
 		if (collider == nullptr) continue;
 
+		collider->Get_CollisionList().clear();
 		collider->Set_Enable(FALSE);
 	}
 

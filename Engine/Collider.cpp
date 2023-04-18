@@ -45,6 +45,12 @@ _int CCollider::Update_Component(const _float& fTimeDelta)
 	_int iExit = __super::Update_Component(fTimeDelta);
 	if (iExit != 0) return iExit;
 
+	cout << m_CollisionList.size() << endl;
+	if (m_CollisionList.size() != 0)
+	{
+		int i = 0;
+	}
+
 	_vec3 offsetPoint;
 	m_pGameObject->m_pTransform->Get_Info(INFO_POS, &offsetPoint);
 	
@@ -190,6 +196,20 @@ void CCollider::Free(void)
 	{
 		Engine::Remove_Collider(this, m_eColGroup);
 	}*/
+
+	// 콜라이더가 삭제될때 나랑 충돌하고있던놈들로 가서 나를 빼주는거죠
+	for (auto OtherCollider : m_CollisionList)
+	{
+		for (auto& iter : OtherCollider.first->m_CollisionList)
+		{
+			if (iter.first == this)
+			{
+				OtherCollider.first->m_CollisionList.erase(this);
+				break;
+			}
+		}	
+	}
+	
 	m_CollisionList.clear();
 	Safe_Delete(m_pBoundingBox);
 	Safe_Release(m_pMesh);

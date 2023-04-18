@@ -127,6 +127,11 @@ void CManagement::Stop_WorldTimer()
 	m_bPlayingWorldTimer = false;
 }
 
+void CManagement::Set_StaticLayerArr(vector<CLayer*>* layerArr)
+{
+	m_pScene->Set_StaticLayerArr(layerArr);
+}
+
 void CManagement::Free(void)
 {
 	Safe_Release(m_pScene);

@@ -20,6 +20,18 @@ CBullet::~CBullet()
 {
 }
 
+void CBullet::Free(void)
+{
+	OBJ_INFO objInfo = Get_ObjInfo();
+	for (int i = 0; i < objInfo.colNameVec.size(); i++)
+	{
+		CCollider* pCol = dynamic_cast<CCollider*>(Get_Component(objInfo.colNameVec[i], ID_ALL));
+		if (pCol)
+			pCol->Get_CollisionList().clear();
+	}
+	__super::Free();
+}
+
 void CBullet::OnCollisionStay(const Collision * collision)
 {
 	CMonster* monster = dynamic_cast<CMonster*>(collision->OtherGameObject);

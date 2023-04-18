@@ -21,8 +21,8 @@ void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 	for_each(m_creationMap.begin(), m_creationMap.end(), [this](pair<const wstring, CInfo>& entry) {
 		CGameObject* p = entry.second.CreateFunc(m_pGraphicDev);
 		entry.second.TextureKey = p->Get_TextureKey().c_str();
+		
 		p->Set_Flag();
-
 		Safe_Release(p);
 	});
 
@@ -33,14 +33,13 @@ void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 HRESULT CFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	m_pGraphicDev = pGraphicDev;
-	m_pGraphicDev->AddRef();
+
 	return S_OK;
 }
 
 void CFactory::Release()
 {
-	if(m_pGraphicDev)
-		m_pGraphicDev->Release();
+	
 }
 
 CGameObject * CFactory::CreateObject(const wstring & objectType)
