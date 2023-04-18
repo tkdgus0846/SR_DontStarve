@@ -1,6 +1,5 @@
 #pragma once
 #include "ImWindow.h"
-#include "ImImage.h"
 
 BEGIN(Engine)
 class CGameObject;
@@ -9,6 +8,8 @@ END
 class CRoomMgr;
 class CRoom;
 class CEditCamera;
+class CImPickBox;
+class CFactory;
 
 class CImInspector : public CImWindow
 {
@@ -19,43 +20,27 @@ private:
 public:
 	virtual HRESULT Ready_ImWindow() override;
 	virtual _int	Update(float fTimeDelta) override;
-
-	const string& Get_CurTileItem() const {
-		return m_CurTileItem;
-	}
-	const string& Get_CurMonsterItem() const {
-		return m_CurMonsterItem;
-	}
-	const string& Get_CurMapObjItem() const {
-		return m_CurMapObjItem;
-	}
-
+	_int	Get_PickType() { return m_iCurPickType; }
+	wstring	Get_CurTag() { return m_CurTag; }
+	_int	Get_Radio() { return m_radio; }
 
 private:
 	void Show_RoomInfo();
-	void Show_TilePicking();
-	void Show_Create_Object();
-	void Show_MonsterList();
 	void Show_Components();
+	void Show_PlaceMode();
 
-	void IsPickMode(ImImage* pImage, PICK_TYPE eType);
 private:
 	CRoom*			m_pCurRoom;
 	_vec3			m_vObjectPos;
 	CGameObject*	m_pCurTarget;
-
-	string			m_CurTileItem = "a";
-	string			m_CurMonsterItem = "a";
-	string			m_CurMapObjItem = "a";
-
-	vector<pair<const char*, CGameObject*>>	m_vecMonster;
-	vector<pair<const char*, CGameObject*>>	m_vecMap;
-
-	ImImage*		m_pMonsterImage;
-	ImImage*		m_pMapObjImage;
-	ImImage*		m_pTileImage;
-	
 	CEditCamera*	m_pCamera;
+
+	// PickMode
+	_int		m_radio;
+	_int		m_iCurPickType;
+	wstring		m_CurTag;
+	CImPickBox*		m_pPickBox[PICK_END];
+	vector<pair<string, CFactory*>> items;
 
 public:
 	static CImInspector* Create(LPDIRECT3DDEVICE9 pGraphicDev);

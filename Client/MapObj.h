@@ -3,6 +3,7 @@
 #include "Include.h"
 #include "GameObject.h"
 #include "Serializable.h"
+
 class CMapObj :
 	public CGameObject, public ISerializable
 {

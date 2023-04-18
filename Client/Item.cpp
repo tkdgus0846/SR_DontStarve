@@ -118,6 +118,13 @@ void CItem::ItemDrop(const _float& fTimeDelta)
 
 void CItem::Free()
 {
+	OBJ_INFO objInfo = Get_ObjInfo();
+	for (int i = 0; i < objInfo.colNameVec.size(); i++)
+	{
+		CCollider* pCol = dynamic_cast<CCollider*>(Get_Component(objInfo.colNameVec[i], ID_ALL));
+		if (pCol)
+			pCol->Get_CollisionList().clear();
+	}
 	Safe_Release(m_pAniCom);
 	Safe_Release(m_pTextureCom);
 	__super::Free();

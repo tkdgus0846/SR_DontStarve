@@ -80,8 +80,7 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 		_int result = iter->second->Update_GameObject(fTimeDelta);
 
 		if (result == OBJ_DEAD)
-		{
-			iter->second->Remove_InOwnerObject();
+		{		
 			Engine::Remove_Collider(iter->second);
 			Safe_Release(iter->second);
 		}
@@ -89,7 +88,7 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 		if (result != OBJ_NOEVENT) 
 			iter = m_uMapObject.erase(iter);
 		else 
-			++iter;
+			++iter; 
 	}
 	return 0;
 }
@@ -116,6 +115,10 @@ CLayer * CLayer::Create(void)
 
 void CLayer::Free(void)
 {
-	for_each(m_uMapObject.begin(), m_uMapObject.end(), CDeleteMap());
+	for (auto it : m_uMapObject)
+	{
+		Engine::Remove_Collider(it.second);
+		Safe_Release(it.second);
+	}
 	m_uMapObject.clear();
 }

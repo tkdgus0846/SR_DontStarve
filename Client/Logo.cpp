@@ -84,7 +84,7 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 			
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 			
-			CFileSystem::Load(L"as.dat");
+			//CFileSystem::Load(L"as.dat");
 			return 0;
 		}
 	}

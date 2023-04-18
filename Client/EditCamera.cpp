@@ -18,7 +18,6 @@ CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 	, m_fSpeed(0.f)
 	, m_bFix(true)
-	, m_pCurTextureName(L"Floor_Level1_Texture")
 {
 	Set_LayerID(LAYER_CAMERA);
 	Set_ObjTag(L"Edit_Camera");
@@ -67,41 +66,41 @@ void CEditCamera::Render_GameObject(void)
 {
 }
 
-void CEditCamera::CreateMapObject()
+void CEditCamera::CreateMapObject(CImInspector * pWindow)
 {
-	if (PICK_MAPOBJ != m_ePick)
+	if (PICK_MAPOBJ != (PICK_TYPE)pWindow->Get_PickType())
 		return;
 
 	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj) 
 		&& !dynamic_cast<CTile*>(m_tPickInfo.pGameObj))
 		return;
 
-	CImInspector* pWindow = dynamic_cast<CImInspector*>(CImManager::GetInstance()->FindByTag(L"Inspector"));
-
-	CGameObject* pObj = MAPOBJ_FACTORY->CreateObject(TO_WSTR(pWindow->Get_CurMapObjItem()));
+	CGameObject* pObj = MAPOBJ_FACTORY->CreateObject(pWindow->Get_CurTag());
 	if (!pObj)
 		return;
 
 	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
 	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
 
-	switch (m_radio)
+	switch (pWindow->Get_Radio())
 	{
-	case 0:
-		vPos.x -= (VTXCNTX - 1) * 0.5f;
-		vPos.z += (VTXCNTZ - 1) * 0.5f;
-		break;
 	case 1:
-		vPos.x += (VTXCNTX - 1) * 0.5f;
+		vPos.x -= (VTXCNTX - 1) * 0.5f;
 		vPos.z += (VTXCNTZ - 1) * 0.5f;
 		break;
 	case 2:
+		vPos.x += (VTXCNTX - 1) * 0.5f;
+		vPos.z += (VTXCNTZ - 1) * 0.5f;
+		break;
+	case 3:
 		vPos.x -= (VTXCNTX - 1) * 0.5f;
 		vPos.z -= (VTXCNTZ - 1) * 0.5f;
 		break;
-	case 3:
+	case 4:
 		vPos.x += (VTXCNTX - 1) * 0.5f;
 		vPos.z -= (VTXCNTZ - 1) * 0.5f;
+		break;
+	default:
 		break;
 	}
 
@@ -138,9 +137,11 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 	if (Engine::Mouse_Down(DIM_LB))
 	{
 		SetClickInfo();
-		CreateTile();
-		CreateMonster();
-		CreateMapObject();
+
+		CImInspector* pWindow = dynamic_cast<CImInspector*>(CImManager::GetInstance()->FindByTag(L"Inspector"));
+		CreateTile(pWindow);
+		CreateMonster(pWindow);
+		CreateMapObject(pWindow);
 	}
 
 	if (Engine::Mouse_Down(DIM_RB))
@@ -169,20 +170,6 @@ void CEditCamera::Fix_Mouse()
 	SetCursorPos(ptMouse.x, ptMouse.y);
 }
 
-/*
-Ray PickingRay(POINT pt);
-1. 카메라 위치에서 마우스로 광선을 쏨.
--> 뷰포트 to 투영
--> 투영 to 뷰 스페이스
--> 뷰 스페이스 to 월드
--> ray객체 반환.
-
-
-_bool IntersectRayTri(Ray ray, CVIBuffer _pVB, OUT float& distance, OUT _vec3& _InterPos)
-2. 현재 room안에 있는 모든 객체들의 버텍스 버퍼와 광선이 교차하는지 검사한다.
--> VIBuffer컴포넌트를 매개 변수의 인자로 받는다.
--> 광선과 VIBuffer의 삼각형들이 교차하는지 검사한다.*/
-
 CEditCamera * CEditCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CEditCamera*		pInstance = new CEditCamera(pGraphicDev);
@@ -201,10 +188,10 @@ void CEditCamera::Free()
 	__super::Free();
 }
 
-_bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist)
+_bool CEditCamera::Compute_RayCastHitGameObject(const Ray* pRay, ClickInfo& tClickInfo)
 {
-	CVIBuffer* pVIBuffer = pGameObject->Get_VIBuffer();
-	CTransform* pTransform = pGameObject->m_pTransform;
+	CVIBuffer* pVIBuffer = tClickInfo.pGameObj->Get_VIBuffer();
+	CTransform* pTransform = tClickInfo.pGameObj->m_pTransform;
 
 	_matrix matWorld = *pTransform->Get_WorldMatrixPointer();
 
@@ -213,6 +200,7 @@ _bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pG
 
 	_bool success = false;
 	_float u, v;
+	_vec3 ClickedPos;
 	_float dist = FLT_MAX;
 	_float distTemp = 0.f;
 	VTXTEX* vertices = nullptr;
@@ -246,12 +234,18 @@ _bool CEditCamera::Compute_RayCastHitGameObject(IN Ray* pRay, IN CGameObject* pG
 			, (const D3DXVECTOR3*)(&pRay->vDirection)
 			, &u, &v, &distTemp);
 
+		_float w = 1.0f - u - v;
+		ClickedPos = w * tmpTri.v[0] + u * tmpTri.v[1] + v * tmpTri.v[2];
+
 		if (tempSuccess && (dist > distTemp))
 		{
-			fDist = dist = distTemp;
+			tClickInfo.fDist = dist = distTemp;
 			success = tempSuccess;
-			tri = tmpTri;
-			index = indices[i];
+			tClickInfo.tri = tmpTri;
+			tClickInfo.index = indices[i];
+			tClickInfo.ClickedPos = ClickedPos;
+
+			cout << ClickedPos.x << "\t" << ClickedPos.y << "\t" << ClickedPos.z << endl;
 		}
 	}
 
@@ -267,65 +261,42 @@ void CEditCamera::SetClickInfo()
 	proj.PerspectiveFovLH();
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &proj);
 
-	CRoomMgr* pRoomMgr = ROOM_MGR;
+	CRoom* pRoom = ROOM_MGR->Get_CurRoom();
 	// Variables for Output about InstersectRayRoom Method
 
-	IntersectRayRoom(pRoomMgr->Get_CurRoom(), m_tPickInfo.pGameObj, m_tPickInfo.tri, m_tPickInfo.index, m_tPickInfo.fDist);
+	if (IntersectRayRoom(pRoom, m_tPickInfo))
+		int a = 0;
 }
 
-_bool CEditCamera::IntersectRayRoom(IN const CRoom* pRoom, OUT CGameObject*& pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist)
+_bool CEditCamera::IntersectRayRoom(const CRoom* pRoom, ClickInfo& tClickInfo)
 {
-	CGameObject* pTempObj = nullptr;
 	_bool success = false;
-	Triangle tmpTri;
-	INDEX32 tmpIndex;
+	ClickInfo TempClickInfo;
 	float fMinDist = FLT_MAX;
 
 	for (_int i = 0; i < pRoom->ObjNum(); ++i)
 	{
-		if (IntersectRayGameObject(pGameObject = pRoom->GetObjByIndex(i), tri, index, fDist))
+		TempClickInfo.pGameObj = pRoom->GetObjByIndex(i);
+		if (IntersectRayGameObject(TempClickInfo))
 		{
-			if (fMinDist > fDist)
+			if (fMinDist > TempClickInfo.fDist)
 			{
-				fMinDist = fDist;
-				pTempObj = pGameObject;
-				tmpTri = tri;
-				tmpIndex = index;
+				fMinDist = TempClickInfo.fDist;
+				tClickInfo = TempClickInfo;
 			}
 			success = true;
 		}
 	}
 
-	if (success)
-	{
-		fDist = fMinDist;
-		pGameObject = pTempObj;
-		tri = tmpTri;
-		index = tmpIndex;
-	}
-
 	return success;
 }
 
-_bool CEditCamera::IntersectRayGameObject(IN CGameObject* pGameObject, OUT Triangle& tri, OUT INDEX32& index, OUT float& fDist)
+_bool CEditCamera::IntersectRayGameObject(ClickInfo& tClickInfo)
 {
-	Triangle tTri;
-	INDEX32 index32;
 	Ray ray = CalcRaycast(GetMousePos());
-
-	_bool success = Compute_RayCastHitGameObject(&ray, pGameObject, tTri, index32, fDist);
-
-	if (success)
-	{
-		memcpy(&tri, &tTri, sizeof(Triangle));
-		memcpy(&index, &index32, sizeof(INDEX32));
-		return true;
-	}
-
-	return false;
+	_bool bSuccess = Compute_RayCastHitGameObject(&ray, tClickInfo);
+	return bSuccess;
 }
-
-
 
 Ray CEditCamera::CalcRaycast(POINT ptMouse)
 {
@@ -353,11 +324,9 @@ Ray CEditCamera::CalcRaycast(POINT ptMouse)
 	D3DXVec3TransformNormal(&ray.vDirection, &ray.vDirection, &matView);
 	D3DXVec3Normalize(&ray.vDirection, &ray.vDirection);
 
-
-	//cout << ray.vDirection.x << "\t" << ray.vDirection.y << "\t" << ray.vDirection.z << endl;
-
 	return ray;
 }
+
 
 POINT CEditCamera::GetMousePos()
 {
@@ -416,55 +385,17 @@ _vec3 CEditCamera::CalcMiddlePoint(Triangle & tri)
 	return _vec3();
 }
 
-void CEditCamera::LoadSaveTarget(const _tchar* tag)
+
+void CEditCamera::CreateMonster(CImInspector * pWindow)
 {
-	if (PICK_TILE != m_ePick)
-		return;
-
-	//CTile* pTile = LOADER->Load(tag);
-	//if (!pTile)
-	//	return;
-
-	// Decide Tile Position
-
-	_vec3 vPos{ 0.f, 0.f, 0.f };
-	vPos = CalcMiddlePoint(m_tPickInfo.tri);
-	_vec3 vOffset = vPos - m_pTransform->m_vInfo[INFO_POS];
-	vPos.y += 0.01f;
-	CRoom* pCurRoom = ROOM_MGR->Get_CurRoom();
-
-	if (dynamic_cast<CTile*>(m_tPickInfo.pGameObj)) {}	// 기존에 이미 설치된 타일인 경우
-/*		dynamic_cast<CTile*>(m_tPickInfo.pGameObj)->Change_Texture(m_pCurTextureName);*/ // 부수고 재설치
-
-	else	// 설치된 타일이 없는 경우
-	{
-		/*pTile = CTile::Create(m_pGraphicDev, vPos, m_pCurTextureName);
-		pCurRoom->PushBack_GameObj(pTile);*/ // 설치
-
-		// Decide Tile Rotation;
-		//_vec3 vTileNormal = m_tPickInfo.tri.Normal();
-		//vTileNormal.Normalize();
-
-		//if (vTileNormal.Degree(_vec3::Up()) > 0.1f)
-		//{
-		//	pTile->m_pTransform->Set_Dir(vTileNormal);
-		//}
-		//pTile->m_pTransform->Move_Walk(-0.01f, 1.f);
-	}
-}
-
-void CEditCamera::CreateMonster()
-{
-	if (PICK_MONSTER != m_ePick)
+	if (PICK_MONSTER != pWindow->Get_PickType())
 		return;
 	
 	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj)
 		&& !dynamic_cast<CTile*>(m_tPickInfo.pGameObj))
 		return;
 
-	CImInspector* pWindow = dynamic_cast<CImInspector*>(CImManager::GetInstance()->FindByTag(L"Inspector"));
-
-	CGameObject* pObj = MONSTER_FACTORY->CreateObject(TO_WSTR(pWindow->Get_CurMonsterItem()));
+	CGameObject* pObj = MONSTER_FACTORY->CreateObject(pWindow->Get_CurTag());
 	CCreature* creature = dynamic_cast<CCreature*>(pObj);
 
 	if (creature != nullptr)
@@ -473,15 +404,15 @@ void CEditCamera::CreateMonster()
 		return;
 
 	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
-	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
+	_vec3 vPos = m_tPickInfo.ClickedPos;
 	vPos.y += 2.f;
 
 	pObj->m_pTransform->Set_Pos(vPos);
 }
 
-void CEditCamera::CreateTile()
+void CEditCamera::CreateTile(CImInspector * pWindow)
 {
-	if (PICK_TILE != m_ePick)
+	if (PICK_TILE != pWindow->Get_PickType())
 		return;
 
 	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
@@ -489,10 +420,10 @@ void CEditCamera::CreateTile()
 
 	// IMGUI 콤보박스 정보 가져옴.
 	CImInspector* pInspector = static_cast<CImInspector*>(IM_MGR->FindByTag(L"Inspector"));
-	wstring CurTileItem = TO_WSTR(pInspector->Get_CurTileItem());
+	//wstring CurTileItem = TO_WSTR(pInspector->Get_CurTileItem());
 	
 	// 타일 생성
-	CGameObject* pObj = TILE_FACTORY->CreateObject(CurTileItem);
+	CGameObject* pObj = TILE_FACTORY->CreateObject(pWindow->Get_CurTag());
 	if (!pObj) return;
 	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
 	
@@ -500,7 +431,6 @@ void CEditCamera::CreateTile()
 	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
 	vPos.y += 0.01f;
 	pObj->m_pTransform->Set_Pos(vPos);
-	
 }
 
 void CEditCamera::DeleteObject()
@@ -513,4 +443,5 @@ void CEditCamera::DeleteObject()
 
 	m_tPickInfo.pGameObj->SetDead();
 	ROOM_MGR->Get_CurRoom()->EraseGameObject(m_tPickInfo.pGameObj);
+	m_tPickInfo.pGameObj = nullptr;
 }

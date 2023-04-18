@@ -81,7 +81,7 @@ void CScene::LateUpdate_Scene(void)
 
 void CScene::Remove_GameObject(LAYERID layerID, CGameObject* obj)
 {
-	if (layerID > LAYER_STATIC_END) return;
+	if (layerID > LAYER_STATIC_END || layerID < 0) return;
 
 	(*m_StaticLayerArr)[layerID]->Remove_GameObject(obj);
 }

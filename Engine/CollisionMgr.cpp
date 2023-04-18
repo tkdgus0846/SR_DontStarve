@@ -185,22 +185,36 @@ list<CCollider*>* CCollisionMgr::Get_ColliderList(COLGROUP colID)
 
 void Engine::CCollisionMgr::Find_Remove_Collider(CGameObject* gameObject, COLGROUP colID)
 {
-	for (auto it = Get_ColliderList(colID)->begin(); it != Get_ColliderList(colID)->end(); )
+	// 콜리전 매니져에 들어와있는 콜라이더들을 싹다 돌면서 그놈의 게임오브젝트 주소와 매개변수로 넣은 게임오브젝트 주소가 같으면, 자기를 콜리젼매니저에서 빼버리고 자기랑 충돌하고있던 놈의 콜리젼리스트에서도 빠지게 함.
+
+	//for (auto it = Get_ColliderList(colID)->begin(); it != Get_ColliderList(colID)->end(); )
+	//{
+	//	if ((*it)->Get_GameObject() == gameObject)
+	//	{
+	//		// 나의 콜리젼리스트를 돌면서 충돌한놈의 목록을 체크한다.
+	//		for (auto& iter : (*it)->Get_CollisionList())
+	//		{
+	//			// 상대방의 콜리젼 리스트에서 제거해주는 거임 나의 콜라이더를
+	//			iter.first->m_CollisionList.erase(*it);
+	//		}
+	//		it = Get_ColliderList(colID)->erase(it);
+	//	}
+	//	else
+	//	{
+	//		++it;
+	//	}
+	//}
+
+	if (Get_ColliderList(colID) == nullptr) return;
+
+	for (auto it = Get_ColliderList(colID)->begin(); it != Get_ColliderList(colID)->end();)
 	{
 		if ((*it)->Get_GameObject() == gameObject)
 		{
-			// 나의 콜리젼리스트를 돌면서 충돌한놈의 목록을 체크한다.
-			for (auto& iter : (*it)->m_CollisionList)
-			{
-				// 상대방의 콜리젼 리스트에서 제거해주는 거임 나의 콜라이더를
-				iter.first->m_CollisionList.erase(*it);
-			}
 			it = Get_ColliderList(colID)->erase(it);
 		}
 		else
-		{
-			++it;
-		}
+			it++;
 	}
 }
 

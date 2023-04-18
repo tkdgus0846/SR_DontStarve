@@ -56,7 +56,7 @@ public:
 		return m_vecGameObj[iIndex];
 	}
 
-	void PushBack_GameObj(CGameObject* pObj);
+	void PushBack_GameObj(CGameObject* pObj, _bool bObjectHead = true);
 
 public:
 	vector<CLayer*>* GetLayerVec() { return &m_vecLayer; }

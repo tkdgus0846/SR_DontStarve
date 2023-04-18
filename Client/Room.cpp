@@ -16,6 +16,8 @@
 #include "TileFactory.h"
 #include "MonsterFactory.h"
 #include "MapObjectFactory.h"
+#include "ShopNpc.h"
+
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
 	m_fVtxCntZ(0.f), m_fVtxItv(0.f)
@@ -345,8 +347,19 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
 	// 오브젝트 해제
-	//for_each(m_vecGameObj.begin(), m_vecGameObj.end(), //Safe_Release<CGameObject*>);
-//	m_vecGameObj.clear();
+	//for (auto& iter = m_vecGameObj.begin(); iter != m_vecGameObj.end();)
+	//{
+	//	if (dynamic_cast<CFloor*>(*iter) || dynamic_cast<CWall*>(*iter)
+	//		|| dynamic_cast<CDoor*>(*iter) || dynamic_cast<CShopNpc*>(*iter))
+	//	{
+	//		++iter;
+	//	}
+	//	else
+	//	{
+	//		Safe_Release(*iter);
+	//		iter = m_vecGameObj.erase(iter);
+	//	}
+	//}
 
 	// 룸 변수 로드
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
@@ -388,14 +401,17 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	return true;
 }
 
-void CRoom::PushBack_GameObj(CGameObject * pObj)
+void CRoom::PushBack_GameObj(CGameObject * pObj, _bool bObjectHead)
 {
 	NULL_CHECK(pObj);
-	m_vecGameObj.push_back(pObj);
-	OBJ_INFO objInfo = pObj->Get_ObjInfo();
-	
-	m_vecLayer[objInfo.layerID]->Add_GameObject(objInfo.pObjTag, pObj);
 
+	OBJ_INFO objInfo = pObj->Get_ObjInfo();
+	if (bObjectHead == true)
+	{
+		m_vecGameObj.push_back(pObj);
+		m_vecLayer[objInfo.layerID]->Add_GameObject(objInfo.pObjTag, pObj);
+	}
+	
 	for (int i = 0; i < objInfo.colNameVec.size(); i++)
 	{
 		CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(objInfo.colNameVec[i], ID_ALL));
@@ -403,9 +419,10 @@ void CRoom::PushBack_GameObj(CGameObject * pObj)
 			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
 	}
 
-	for (auto& item : *pObj->Get_Static_GameObject_List())
+	list<CGameObject*>* listObj = pObj->Get_Static_GameObject_List();
+	for (auto iter : (*listObj))
 	{
-		PushBack_GameObj(item);
+		PushBack_GameObj(iter, false);
 	}
 }
 

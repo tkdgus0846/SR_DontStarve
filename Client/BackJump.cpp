@@ -3,12 +3,14 @@
 #include "Export_Function.h"
 
 CBackJump::CBackJump(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CBehavior(pGraphicDev)
+	:CBehavior(pGraphicDev), m_fTime(0.f),
+	m_fInit(0.f), m_fForce(0.f)
 {
 }
 
 CBackJump::CBackJump(const CBackJump & rhs)
-	: CBehavior(rhs)
+	: CBehavior(rhs), m_fTime(rhs.m_fTime),
+	m_fInit(rhs.m_fInit), m_fForce(rhs.m_fForce)
 {
 }
 
@@ -36,11 +38,10 @@ _int CBackJump::Update_Component(const _float & fTimeDelta)
 
 	_float fSpeed = 0.f;
 	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", fSpeed), BEHAVIOR_FAIL);
-	//fSpeed *= 0.8f;
 
 	m_fTime += fTimeDelta * 7.f;
 
-	_float fY = fSpeed * m_fTime - 4.9f * m_fTime * m_fTime;
+	_float fY = m_fForce * m_fTime - 4.9f * m_fTime * m_fTime;
 
 	m_pGameObject->m_pTransform->Move_Walk(-fSpeed * 2.f, fTimeDelta);
 

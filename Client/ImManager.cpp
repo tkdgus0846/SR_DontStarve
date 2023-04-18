@@ -21,8 +21,6 @@ HRESULT CImManager::Ready_IMGUI(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	AddContainer(L"Inspector", CImInspector::Create(pGraphicDev));
 	AddContainer(L"MenuBar", CImMenuBar::Create(pGraphicDev));
-	AddContainer(L"TileImage", ImImage::Create(pGraphicDev));
-
 	return S_OK;
 }
 

@@ -39,16 +39,18 @@ protected:
 	HRESULT		Init_AI_Behaviours();		// AI작업 마지막에 무조건 실행 시켜야 함.
 
 	CSequence*	Make_Patrol_AI(const _float& fWaitTime = 1.f, const _float& fMoveTime = 0.5f);
-	CSequence*	Make_Follow_AI(const _float& fTimer = 100.f);	// 디폴트값은 계속(이라고 하지만 아님) 쫒아옴
-	CSequence*	Make_JumpAI(const _float& fTimer = 0.f);
-	CSequence*	Make_DBJumpAI(const _float& fTimer = 1.f);
-	CSequence*	Make_DBBackJumpAI(const _float& fTimer = 1.f);
+	CSequence*	Make_Follow_AI(const _float& fTimer = 100.f, _bool bIsRangeCheck = true);	// 디폴트값은 계속(이라고 하지만 아님) 쫒아옴
+	CSequence*	Make_JumpAI(const _float& fForce, const _float& fTimer = 0.f);
+	CSequence*	Make_BigJumpAI(const _float& fForce, const _float& fTimer = 0.f);
+	CSequence*	Make_DBJumpAI(const _float& fTimer = 0.f);
+	CSequence*	Make_DBBackJumpAI(const _float& fTimer = 0.f);
 	CSequence*	Make_LeapJumpAI(const _float& fTimer = 0.f);
 	CSequence*	Make_JumpToPlayer();
 	CSequence*	Make_RushAI();
 	CSequence*	Make_BossPattern1(const _float& fCoolTime = 6.f);
 	CSequence*	Make_BossPattern2(const _float& fCoolTime = 18.f);
 	CSequence*	Make_BossPattern3(const _float& fCoolTime = 12.f);
+	CSequence*	Make_BossPattern4(const _float& fCoolTime = 12.f);
 	
 	HRESULT		Set_PatrolAndFollow_AI();
 	HRESULT		Set_PAF_JumpAI();

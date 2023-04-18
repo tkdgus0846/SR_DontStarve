@@ -101,6 +101,12 @@
     <Filter Include="Interface">
       <UniqueIdentifier>{39e4b057-2349-4e9c-b70e-f395e838dd18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IMGUI\ImWindow\ImInspector">
+      <UniqueIdentifier>{4a6315fe-b6fd-44a8-8e8c-f6a5484ee82a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IMGUI\ImWindow\ImInspector\ImPickBox">
+      <UniqueIdentifier>{26ca083a-e5bf-4679-8f24-0bd552114f05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -226,9 +232,6 @@
     </ClInclude>
     <ClInclude Include="Hp.h">
       <Filter>GameObject\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="ImInspector.h">
-      <Filter>IMGUI\ImWindow</Filter>
     </ClInclude>
     <ClInclude Include="ImTest.h">
       <Filter>IMGUI\ImWindow</Filter>
@@ -494,6 +497,18 @@
     <ClInclude Include="Calculator.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="ImInspector.h">
+      <Filter>IMGUI\ImWindow\ImInspector</Filter>
+    </ClInclude>
+    <ClInclude Include="ImPickBox.h">
+      <Filter>IMGUI\ImWindow\ImInspector\ImPickBox</Filter>
+    </ClInclude>
+    <ClInclude Include="BigJump.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="OnPlayer.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -603,9 +618,6 @@
     </ClCompile>
     <ClCompile Include="Hp.cpp">
       <Filter>GameObject\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="ImInspector.cpp">
-      <Filter>IMGUI\ImWindow</Filter>
     </ClCompile>
     <ClCompile Include="ImTest.cpp">
       <Filter>IMGUI\ImWindow</Filter>
@@ -870,6 +882,18 @@
     </ClCompile>
     <ClCompile Include="Calculator.cpp">
       <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ImInspector.cpp">
+      <Filter>IMGUI\ImWindow\ImInspector</Filter>
+    </ClCompile>
+    <ClCompile Include="ImPickBox.cpp">
+      <Filter>IMGUI\ImWindow\ImInspector\ImPickBox</Filter>
+    </ClCompile>
+    <ClCompile Include="BigJump.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="OnPlayer.cpp">
+      <Filter>Monobehaviours\Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,9 @@ public:
 	virtual void LateUpdate_Component(void) override {}
 	virtual void Render_Component(void) override {}
 
+private:
+	_bool m_bIsCall;
+
 public:
 	static CCoolTime* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;

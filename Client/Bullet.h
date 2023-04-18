@@ -7,6 +7,9 @@ protected:
 	explicit CBullet(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CBullet();
 
+
+	virtual void Free(void) override;
+
 protected:
 	// 적 총알인지 우리 총알인지 판단하기 위한 변수
 	_bool		m_bIsEnemy;
