@@ -82,7 +82,6 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 				CCollisionMgr::GetInstance()->Set_StaticColliderList(ROOM_MGR->Get_CurColliderList(i), i);
 			}
 			
-
 			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 			
 			CFileSystem::Load(L"as.dat");
