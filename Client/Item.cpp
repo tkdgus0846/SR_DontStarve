@@ -14,6 +14,16 @@ CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	m_fAge = 0.f;
 	m_fLifeSpan = 3.f;
+
+	m_randNum = rand() % 360;
+	_matrix matRot;
+	D3DXMatrixIdentity(&matRot);
+
+	D3DXMatrixRotationY(&matRot, D3DXToRadian(m_randNum));
+
+	D3DXVec3TransformNormal(&m_pTransform->m_vInfo[INFO_LOOK],
+		&m_pTransform->m_vInfo[INFO_LOOK],
+		&matRot);
 }
 
 CItem::~CItem()
@@ -93,6 +103,9 @@ void CItem::ItemMagnetic(CPlayer* pPlayer)
 void CItem::ItemDrop(const _float& fTimeDelta)
 {
 	m_pTransform->m_vInfo[INFO_POS].y += 2.f * m_fTime - (4.9f * m_fTime * m_fTime) * 0.5f;
+
+	m_pTransform->m_vInfo[INFO_POS] += m_pTransform->m_vInfo[INFO_LOOK] * ((_float)(rand() % 2) / 2);
+
 	m_fTime += 0.1f;
 
 	if (m_pTransform->m_vInfo[INFO_POS].y < 0.f)

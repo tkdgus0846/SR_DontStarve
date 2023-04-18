@@ -60,6 +60,7 @@ protected:
 
 private:
 	_float m_fTime;
+	_float m_randNum;
 
 protected:
 	virtual void Free() override;

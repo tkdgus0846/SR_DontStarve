@@ -10,7 +10,9 @@
 #include "RapidWeapon.h"
 #include "SwordWeapon.h"
 #include "SpreadWeapon.h"
+#include "Calculator.h"
 
+#include "Monster.h"
 #include <algorithm>
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -50,6 +52,7 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_MyWeaponList[RAPIDSHOT] = CRapidWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[LASERSHOT] = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[SPREADSHOT] = CSpreadWeapon::Create(m_pGraphicDev, m_pTransform);
 
 	Change_Weapon(BIGSHOT);
 
@@ -64,6 +67,16 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	Key_Input(fTimeDelta);
 
+	if (m_bAimHack)
+	{
+		m_AimHackTime += fTimeDelta;
+		AimHack();
+		if (m_AimHackTime > 10.f)
+		{
+			m_bAimHack = false;
+			m_AimHackTime = 0.f;
+		}
+	}
 	// m_planeVec
 	if (m_bFix)
 	{
@@ -261,6 +274,7 @@ void CPlayer::Free(void)
 
 	for (auto it : m_MyWeaponList)
 		Safe_Release(it);
+
 	__super::Free();
 }
 
@@ -337,7 +351,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Key_Down(DIK_G))
 	{
-		AimHack();
+		m_bAimHack = true;
 	}
 }
 
@@ -364,6 +378,36 @@ void CPlayer::Fix_Mouse()
 	SetCursorPos(ptMouse.x, ptMouse.y);
 }
 
+struct ZComp
+{
+	const bool operator()(CGameObject* a, CGameObject* b)
+	{
+		if (a == nullptr || b == nullptr) { return false; }
+		CMonster* pMonsterA = dynamic_cast<CMonster*>(a);
+		CMonster* pMonsterB = dynamic_cast<CMonster*>(b);
+		if (pMonsterA == nullptr || pMonsterB == nullptr) { return false; }
+
+		_vec3 aPos = pMonsterA->m_pTransform->m_vInfo[INFO_POS];
+		_vec3 bPos = pMonsterB->m_pTransform->m_vInfo[INFO_POS];
+
+		_float aDistance = CCalculator::DistanceToPlayer(aPos);
+		_float bDistance = CCalculator::DistanceToPlayer(bPos);
+
+		return aDistance < bDistance;
+	}
+};
+
+bool CPlayer::IsObjectInFOV(_float fDistance, _float fRadius, _float fFov)
+{
+	// 객체의 반지름을 포함한 객체 대각선의 길이
+	_float fDiagonal = sqrtf(fRadius * fRadius + fRadius * fRadius);
+
+	// 객체와 카메라 사이의 각도
+	_float fAngle = atanf(fDiagonal / fDistance);
+
+	return fAngle >= (fFov / 2.f);
+}
+
 void CPlayer::AimHack()
 {
 	// 몬스터레이어의 오브젝트를 벡터에 저장.
@@ -374,12 +418,81 @@ void CPlayer::AimHack()
 		pLayer->Get_GameObject_ALL(&m_vecMonster);
 	}
 
-	// 우선순위...
-	// 벡터를 순회하면서 가장가까운 적으로 정렬...
-/*
+	// 벡터를 순회하면서 가장가까운 적으로 정렬
+	if (m_vecMonster.empty()) { return; }
 	std::sort(m_vecMonster.begin(), m_vecMonster.end(), ZComp());
 
-*/
+	auto iter = m_vecMonster.begin();
 
+	// 가까운적 에임 고정
+	CCollider* pCollider = dynamic_cast<CCollider*>((*iter)->Get_Component(L"BodyCollider", ID_ALL));
 
+	_vec3 vDir = pCollider->Get_BoundCenter() - m_pTransform->m_vInfo[INFO_POS];
+	_vec3 vUp, vRight;
+
+	vUp = { 0.f, 1.f, 0.f };
+	vDir.Normalize();
+
+	vRight = vUp.Cross(vDir);
+	vUp = vDir.Cross(vRight);
+
+	m_pTransform->m_vInfo[INFO_LOOK] = vDir;
+	m_pTransform->m_vInfo[INFO_RIGHT] = vRight;
+	m_pTransform->m_vInfo[INFO_UP] = vUp;
+
+	cout << pCollider->Get_BoundCenter().x << " " << pCollider->Get_BoundCenter().y << " " << pCollider->Get_BoundCenter().z << endl;
+
+	m_vecMonster.clear();
 }
+
+
+
+//
+//void CPlayer::AimHack()
+//{
+//	// 몬스터레이어의 오브젝트를 벡터에 저장.
+//	if (m_vecMonster.empty())
+//	{
+//		CLayer* pLayer = Engine::Get_Layer(LAYER_MONSTER);
+//		if (pLayer == nullptr) { return; }
+//		pLayer->Get_GameObject_ALL(&m_vecMonster);
+//	}
+//
+//	// 벡터를 순회하면서 가장가까운 적으로 정렬...
+//	if (m_vecMonster.empty()) { return; }
+//	std::sort(m_vecMonster.begin(), m_vecMonster.end(), ZComp());
+//
+//	auto iter = m_vecMonster.begin();
+//
+//	_matrix matProj;
+//	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+//
+//	_float fFov = CCalculator::CalculateFOV(m_pGraphicDev);
+//
+//	for (; iter != m_vecMonster.end(); ++iter)
+//	{
+//		CCollider* pCollider = dynamic_cast<CCollider*>((*iter)->Get_Component(L"BodyCollider", ID_ALL));
+//		_float fLength = D3DXVec3Length(&(pCollider->Get_BoundCenter() - m_pTransform->m_vInfo[INFO_POS]));
+//
+//		// Fov 안에 들어와있는지 체크
+//		if (IsObjectInFOV(fLength, 5.f, fFov))
+//		{
+//			// 박스 센터로 에임 고정 계속 반복
+//			_vec3 vDir = pCollider->Get_BoundCenter() - m_pTransform->m_vInfo[INFO_POS];
+//			_vec3 vUp, vRight;
+//
+//			vUp = { 0.f, 1.f, 0.f };
+//			vDir.Normalize();
+//
+//			vRight = vUp.Cross(vDir);
+//			vUp = vDir.Cross(vRight);
+//
+//			m_pTransform->m_vInfo[INFO_LOOK] = vDir;
+//			m_pTransform->m_vInfo[INFO_RIGHT] = vRight;
+//			m_pTransform->m_vInfo[INFO_UP] = vUp;
+//
+//			m_vecMonster.clear();
+//			break;
+//		}
+//	}
+//}

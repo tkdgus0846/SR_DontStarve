@@ -62,6 +62,8 @@ public:
 
 	void			AimHack();
 
+	bool IsObjectInFOV(_float fDistance, _float fRadius, _float fFov);
+
 
 private:
 	virtual HRESULT Add_Component() override;
@@ -71,6 +73,9 @@ private:
 
 private:
 	_bool					m_bFix;
+
+	_bool					m_bAimHack = false;
+	_float					m_AimHackTime = 0.f;
 
 	_int					m_iCoin = 777;
 	_int					m_iDisc = 0;
