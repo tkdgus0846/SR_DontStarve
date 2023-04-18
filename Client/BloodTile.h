@@ -1,7 +1,7 @@
 #pragma once
-#include "Tile.h"
+#include "FloorTile.h"
 class CBloodTile :
-	public CTile
+	public CFloorTile
 {
 private:
 	CBloodTile(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -2,7 +2,7 @@
 #include "Export_Function.h"
 
 CSandTile::CSandTile(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CTile(pGraphicDev)
+	: CFloorTile(pGraphicDev)
 {
 	Set_ObjTag(Tag());
 }

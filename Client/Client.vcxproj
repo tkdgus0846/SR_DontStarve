@@ -289,6 +289,7 @@
     <ClInclude Include="FlameProjector.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Evasion.h" />
+    <ClInclude Include="FloorTile.h" />
     <ClInclude Include="GrassTile.h" />
     <ClInclude Include="GunUI.h" />
     <ClInclude Include="Guppi.h" />
@@ -384,6 +385,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Wait.h" />
+    <ClInclude Include="WallTile.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponItem.h" />
     <ClInclude Include="WeaponType.h" />
@@ -428,6 +430,7 @@
     <ClCompile Include="FlameProjector.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Evasion.cpp" />
+    <ClCompile Include="FloorTile.cpp" />
     <ClCompile Include="GrassTile.cpp" />
     <ClCompile Include="GunUI.cpp" />
     <ClCompile Include="Guppi.cpp" />
@@ -525,6 +528,7 @@
     <ClCompile Include="WalkerBoss.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Wait.cpp" />
+    <ClCompile Include="WallTile.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WeaponItem.cpp" />
     <ClCompile Include="WeaponType.cpp" />

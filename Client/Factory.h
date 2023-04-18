@@ -18,10 +18,12 @@ protected:
 	virtual ~CFactory();
 
 	virtual HRESULT Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev);
+
 	virtual void Release();
 
 protected:
 	virtual void Register(const wstring& objectType, CreateObjectFunc createFunc);
+	void ExtractTextureKey();
 
 public:
 	CGameObject*	CreateObject(const wstring& objectType);

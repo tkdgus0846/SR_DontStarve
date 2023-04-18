@@ -3,7 +3,7 @@
 
 
 COilTile::COilTile(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CTile(pGraphicDev)
+	: CFloorTile(pGraphicDev)
 {
 	Set_ObjTag(Tag());
 }

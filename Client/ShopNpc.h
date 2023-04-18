@@ -41,7 +41,6 @@ private:
 protected:
 	virtual void Serialization(HANDLE hFile, DWORD & dwByte) override;
 
-
 	virtual void Deserialization(HANDLE hFile, DWORD & dwByte) override;
 
 };

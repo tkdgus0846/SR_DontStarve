@@ -154,6 +154,13 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSwamp", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorSwamp_%d.png", 4)), E_FAIL);
 
+	// Wall Texture
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ShortWall #420376", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/ShortWall #420376.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ShortWall #420588", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/ShortWall #420588.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ShortWall #420740", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/ShortWall #420740.png")), E_FAIL);
+
 	// Gun Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gun/Gun.png")), E_FAIL);
 

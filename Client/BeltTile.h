@@ -1,7 +1,8 @@
 #pragma once
-#include "Tile.h"
+#include "FloorTile.h"
+
 class CBeltTile :
-	public CTile
+	public CFloorTile
 {
 public:
 	CBeltTile(LPDIRECT3DDEVICE9 pGraphicDev);

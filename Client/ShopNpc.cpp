@@ -158,7 +158,6 @@ void CShopNpc::Serialization(HANDLE hFile, DWORD & dwByte)
 {
 	__super::Serialization(hFile, dwByte);
 
-
 }
 
 void CShopNpc::Deserialization(HANDLE hFile, DWORD & dwByte)
