@@ -97,7 +97,7 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 		return OBJ_NOEVENT;
   	}
 
-	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
+	//m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 
 	_vec3 vDir = m_pTransform->m_vInfo[INFO_LOOK];
 	vDir.Normalize();
