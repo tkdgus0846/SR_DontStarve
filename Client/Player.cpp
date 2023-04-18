@@ -251,6 +251,14 @@ CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CPlayer::Free(void)
 {
+	OBJ_INFO objInfo = Get_ObjInfo();
+	for (int i = 0; i < objInfo.colNameVec.size(); i++)
+	{
+		CCollider* pCol = dynamic_cast<CCollider*>(Get_Component(objInfo.colNameVec[i], ID_ALL));
+		if (pCol)
+			pCol->Get_CollisionList().clear();
+	}
+
 	for (auto it : m_MyWeaponList)
 		Safe_Release(it);
 	__super::Free();

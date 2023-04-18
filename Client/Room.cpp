@@ -401,14 +401,17 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	return true;
 }
 
-void CRoom::PushBack_GameObj(CGameObject * pObj)
+void CRoom::PushBack_GameObj(CGameObject * pObj, _bool bObjectHead)
 {
 	NULL_CHECK(pObj);
-	m_vecGameObj.push_back(pObj);
-	OBJ_INFO objInfo = pObj->Get_ObjInfo();
-	
-	m_vecLayer[objInfo.layerID]->Add_GameObject(objInfo.pObjTag, pObj);
 
+	OBJ_INFO objInfo = pObj->Get_ObjInfo();
+	if (bObjectHead == true)
+	{
+		m_vecGameObj.push_back(pObj);
+		m_vecLayer[objInfo.layerID]->Add_GameObject(objInfo.pObjTag, pObj);
+	}
+	
 	for (int i = 0; i < objInfo.colNameVec.size(); i++)
 	{
 		CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(objInfo.colNameVec[i], ID_ALL));
@@ -416,9 +419,10 @@ void CRoom::PushBack_GameObj(CGameObject * pObj)
 			m_ColliderList[objInfo.colGroupVec[i]].push_back(pCol);
 	}
 
-	for (auto& item : *pObj->Get_Static_GameObject_List())
+	list<CGameObject*>* listObj = pObj->Get_Static_GameObject_List();
+	for (auto iter : (*listObj))
 	{
-		PushBack_GameObj(item);
+		PushBack_GameObj(iter, false);
 	}
 }
 

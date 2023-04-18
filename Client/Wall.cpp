@@ -131,12 +131,5 @@ CWall * CWall::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CWall::Free(void)
 {
-	static int cnt = 1;
-
-	if (cnt == 34)
-	{
-		int i = 0;
-	}
 	__super::Free();
-	cnt++;
 }

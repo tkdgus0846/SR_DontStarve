@@ -31,8 +31,8 @@ private:
 	const _tchar*		m_Name;
 
 	// 아래 두개 텍스쳐는 디버깅 용도로 넣었음. 나중에 지울거임.
-	IDirect3DBaseTexture9*			m_GreenTexture;
-	IDirect3DBaseTexture9*			m_RedTexture;
+	LPDIRECT3DBASETEXTURE9			m_GreenTexture;
+	LPDIRECT3DBASETEXTURE9			m_RedTexture;
 
 	
 public:

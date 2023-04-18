@@ -63,6 +63,8 @@ inline CComponent*			Get_Component(LAYERID LayerID, const _tchar* pObjTag, const
 inline void				Add_GameObject(class CGameObject* pObj);
 inline CGameObject*		Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
 
+//inline void				Set_StaticLayerArr(vector<CLayer*>* layerArr);
+
 inline void				Remove_GameObject(LAYERID LayerID, CGameObject* obj);
 
 inline HRESULT			Set_Scene(CScene* pScene);

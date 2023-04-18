@@ -3,12 +3,12 @@
 #include "Export_Function.h"
 
 CCoolTime::CCoolTime(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CBehavior(pGraphicDev)
+	:CBehavior(pGraphicDev), m_bIsCall(false)
 {
 }
 
 CCoolTime::CCoolTime(const CCoolTime & rhs)
-	: CBehavior(rhs)
+	: CBehavior(rhs), m_bIsCall(rhs.m_bIsCall)
 {
 }
 
@@ -18,16 +18,26 @@ CCoolTime::~CCoolTime()
 
 HRESULT CCoolTime::Ready_Behavior()
 {
+	m_fCurTime = Get_WorldTime();
+	m_fPreTime = Get_WorldTime();
 	return S_OK;
 }
 
 _int CCoolTime::Update_Component(const _float & fTimeDelta)
 {
-	m_fCurTime = Get_WorldTime();
+	if(m_bIsCall)
+		m_fCurTime = Get_WorldTime();
+	else
+	{
+		m_bIsCall = true;
+		m_fPreTime = Get_WorldTime();
+		return BEHAVIOR_FAIL;
+	}
 
 	if (m_fCurTime - m_fPreTime > m_fTimer)
 	{
 		m_fPreTime = m_fCurTime;
+		m_bIsCall = false;
 		return BEHAVIOR_SUCCES;
 	}
 

@@ -500,6 +500,12 @@
     <ClInclude Include="ImPickBox.h">
       <Filter>IMGUI\ImWindow\ImInspector\ImPickBox</Filter>
     </ClInclude>
+    <ClInclude Include="BigJump.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="OnPlayer.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -876,6 +882,12 @@
     </ClCompile>
     <ClCompile Include="ImPickBox.cpp">
       <Filter>IMGUI\ImWindow\ImInspector\ImPickBox</Filter>
+    </ClCompile>
+    <ClCompile Include="BigJump.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="OnPlayer.cpp">
+      <Filter>Monobehaviours\Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

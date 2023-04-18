@@ -38,6 +38,7 @@ public:
 	void				Stop_WorldTimer();
 	_float				Get_WorldTime() const { return m_fWorldTime; }
 
+	void				Set_StaticLayerArr(vector<class CLayer*>* layerArr);
 private:
 	CScene*			m_pScene = nullptr;
 	class CGameObject*	m_pPlayer;
