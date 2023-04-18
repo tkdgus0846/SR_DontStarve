@@ -33,14 +33,13 @@ void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 HRESULT CFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	m_pGraphicDev = pGraphicDev;
-	m_pGraphicDev->AddRef();
+
 	return S_OK;
 }
 
 void CFactory::Release()
 {
-	if(m_pGraphicDev)
-		m_pGraphicDev->Release();
+
 }
 
 CGameObject * CFactory::CreateObject(const wstring & objectType)

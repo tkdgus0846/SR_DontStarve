@@ -7,6 +7,7 @@
 #include "Room.h"
 #include "RoomMgr.h"
 #include "FileSystem.h"
+#include "ImPickBox.h"
 
 // 몬스터 헤더파일
 #include "Baller.h"
@@ -14,7 +15,7 @@
 #include "Guppi.h"
 #include "Turret.h"
 #include "Walker.h"
-
+#include "Factory.h"
 // 맵 오브젝트 헤더파일
 #include "SoftPyramid.h"
 #include "HardPyramid.h"
@@ -23,34 +24,32 @@
 #include "MonsterFactory.h"
 #include "MapObjectFactory.h"
 
+
 CImInspector::CImInspector(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CImWindow(pGraphicDev)
 	, m_pCurTarget(nullptr)
 	, m_pCurRoom(nullptr)
-	, m_pMonsterImage(nullptr)
-	, m_pMapObjImage(nullptr)
-	, m_pTileImage(nullptr)
+
 {
 	ZeroMemory(m_vObjectPos, sizeof(_vec3));
 }
 
 CImInspector::~CImInspector()
 {
+	for (auto& PickBox : m_pPickBox)
+		Safe_Release(PickBox);
 }
 
 HRESULT CImInspector::Ready_ImWindow()
 {
+	items.push_back({ "Tile", TILE_FACTORY });
+	items.push_back({ "Monster", MONSTER_FACTORY });
+	items.push_back({ "MapObject", MAPOBJ_FACTORY });
 
-
-	m_pTileImage = ImImage::Create(m_pGraphicDev);
-	CImManager::GetInstance()->AddContainer(L"TileImage", m_pTileImage);
-
-	m_pMapObjImage = ImImage::Create(m_pGraphicDev);
-	CImManager::GetInstance()->AddContainer(L"MapObjImage", m_pMapObjImage);
-
-	m_pMonsterImage = ImImage::Create(m_pGraphicDev);
-	CImManager::GetInstance()->AddContainer(L"MonsterImage", m_pMonsterImage);
-
+	for (_int i = 0; i < items.size(); ++i)
+	{
+		m_pPickBox[i] = CImPickBox::Create(m_pGraphicDev, items[i].first, items[i].second);
+	}
 	return S_OK;
 }
 
@@ -61,22 +60,16 @@ _int CImInspector::Update(float fTimeDelta)
 
 	m_pCamera = dynamic_cast<CEditCamera*>(Get_GameObject(LAYER_CAMERA, L"Edit_Camera"));
 
-	for(auto iter : m_vecMonster)
-		iter.second->Update_GameObject(fTimeDelta);
-
 	ImGui::Begin("Inspector");
 
 	if (ImGui::CollapsingHeader("RommInfo"))
 		Show_RoomInfo();
 
-	if (ImGui::CollapsingHeader("TilePicking"))
-		Show_TilePicking();
-
-	if (ImGui::CollapsingHeader("CreateObject"))
-		Show_Create_Object();
+	if (ImGui::CollapsingHeader("PlaceMode"))
+		Show_PlaceMode();
 
 	if (ImGui::CollapsingHeader("ObjectList"))
-		Show_MonsterList();
+		//Show_MonsterList();
 
 	if(ImGui::CollapsingHeader("Components"))
 		Show_Components();
@@ -126,164 +119,6 @@ void CImInspector::Show_RoomInfo()
 	{
 		m_pCurRoom->Set_DoorType((DOOR_TYPE)iObjNum);
 		iPre = iObjNum;
-	}
-}
-
-void CImInspector::Show_TilePicking()
-{
-	// 라디오 버튼
-	ImGui::RadioButton("TILE_MODE", &((int&)m_pCamera->Get_Pick()), 0);
-	IsPickMode(m_pTileImage, PICK_TILE);
-
-	// 콤보박스
-	vector<string> tileItems = TILE_FACTORY->GetSTag();
-	if (ImGui::BeginCombo("##combo", m_CurTileItem.c_str())) // The second parameter is the label previewed before opening the combo.
-	{
-		for (int n = 0; n < tileItems.size(); n++)
-		{
-			bool is_selected = (tileItems[n].compare(m_CurTileItem) == 0); // You can store your selection however you want, outside or inside your objects
-			if (ImGui::Selectable(tileItems[n].c_str(), is_selected))
-			{
-				m_CurTileItem = tileItems[n];
-				
-				m_pTileImage->Set_Texture(TILE_FACTORY->FindTextureKeyByTag(TO_WSTR(m_CurTileItem)));
-			}
-			if (is_selected)
-				ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
-		}
-		ImGui::EndCombo();
-	}
-}
-
-void CImInspector::Show_Create_Object()
-{
-	static _int iObjNum = 0;
-
-	if (ImGui::TreeNode("Object_Type"))
-	{
-		ImGui::SeparatorText("Monster");
-
-		vector<string> monItems = MONSTER_FACTORY->GetSTag();
-		if (ImGui::BeginCombo("##combo", m_CurMonsterItem.c_str())) // The second parameter is the label previewed before opening the combo.
-		{
-			for (int n = 0; n < monItems.size(); n++)
-			{
-				bool is_selected = (m_CurMonsterItem.c_str() == monItems[n]); // You can store your selection however you want, outside or inside your objects
-				if (ImGui::Selectable(monItems[n].c_str(), is_selected))
-					m_CurMonsterItem = monItems[n].c_str();
-				if (is_selected)
-					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
-			}
-			ImGui::EndCombo();
-		}
-
-		ImGui::SeparatorText("Environment");
-		//vector<const char*> envItems = FACTORY->GetTagVec(OBJ_ENVIRONMENT);
-		//if (ImGui::BeginCombo("##combo", cur_item)) // The second parameter is the label previewed before opening the combo.
-		//{
-		//	for (int n = 0; n < envItems.size(); n++)
-		//	{
-		//		bool is_selected = (cur_item == envItems[n]); // You can store your selection however you want, outside or inside your objects
-		//		if (ImGui::Selectable(envItems[n], is_selected))
-		//			cur_item = envItems[n];
-		//		if (is_selected)
-		//			ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
-		//	}
-		//	ImGui::EndCombo();
-		//}
-		//ImGui::RadioButton("Dirt_Barrier", &iObjNum, 11); ImGui::SameLine();
-		//ImGui::RadioButton("Mine", &iObjNum, 12);
-
-		ImGui::SeparatorText("MapObject");
-		vector<string> mapItems = MAPOBJ_FACTORY->GetSTag();
-		if (ImGui::BeginCombo("##combo2", m_CurMapObjItem.c_str())) // The second parameter is the label previewed before opening the combo.
-		{
-			for (int n = 0; n < mapItems.size(); n++)
-			{
-				bool is_selected = (m_CurMapObjItem.c_str() == mapItems[n].c_str()); // You can store your selection however you want, outside or inside your objects
-				if (ImGui::Selectable(mapItems[n].c_str(), is_selected))
-					m_CurMapObjItem = mapItems[n].c_str();
-				if (is_selected)
-					ImGui::SetItemDefaultFocus();   // You may set the initial focus when opening the combo (scrolling + for keyboard navigation support)
-			}
-			ImGui::EndCombo();
-		}
-
-		ImGui::TreePop();
-		ImGui::Spacing();
-	}
-
-	if (ImGui::TreeNode("Object_Info"))
-	{
-		ImGui::SeparatorText("Transform");
-
-		ImGui::SeparatorText("Collider");
-
-		ImGui::TreePop();
-		ImGui::Spacing();
-	}
-
-	//m_pCamera->Set_Tag(cur_item);
-	ImGui::RadioButton("MONSTER_MODE", &((int&)m_pCamera->Get_Pick()), 1);
-	IsPickMode(m_pMonsterImage, PICK_MONSTER);
-
-	ImGui::RadioButton("MAPOBJ MODE", &((int&)m_pCamera->Get_Pick()), 2);
-	IsPickMode(m_pMonsterImage, PICK_MONSTER);
-
-	ImGui::RadioButton("LeftUp", &m_pCamera->Get_Radio(), 0); ImGui::SameLine();
-	ImGui::RadioButton("RightUp", &m_pCamera->Get_Radio(), 1); 
-	ImGui::RadioButton("LeftBottom", &m_pCamera->Get_Radio(), 2); ImGui::SameLine();
-	ImGui::RadioButton("RightBottom", &m_pCamera->Get_Radio(), 3);
-}
-
-void CImInspector::Show_MonsterList()
-{
-	if (ImGui::BeginListBox("Monster"))
-	{
-		static _int iCurMonserItemIdx = 0;
-		for (_uint i = 0; i < m_vecMonster.size(); ++i)
-		{
-			bool is_selected = (iCurMonserItemIdx == i);
-			if (ImGui::Selectable(m_vecMonster[i].first, is_selected, 4914304))
-			{
-				m_pCurTarget = m_vecMonster[i].second;
-				iCurMonserItemIdx = i;
-			}
-
-			if (is_selected)
-				ImGui::SetItemDefaultFocus();
-		}
-		ImGui::EndListBox();
-	}
-	if (ImGui::BeginListBox("Environment"))
-	{
-		static _int iCurEnvItemIdx = 0;
-
-		ImGui::EndListBox();
-	}
-
-	if (ImGui::BeginListBox("MapObject"))
-	{
-		static _int iCurMapObjItemIdx = 0;
-		for (_uint i = 0; i < m_vecMap.size(); ++i)
-		{
-			bool is_selected = (iCurMapObjItemIdx == i);
-			if (ImGui::Selectable(m_vecMap[i].first, is_selected, 4914304))
-			{
-				m_pCurTarget = m_vecMap[i].second;
-				iCurMapObjItemIdx = i;
-			}
-
-			if (is_selected)
-				ImGui::SetItemDefaultFocus();
-		}
-		ImGui::EndListBox();
-	}
-
-	if (ImGui::BeginListBox("Tile"))
-	{
-		static _int iCurTileItemIdx = 0;
-		ImGui::EndListBox();
 	}
 }
 
@@ -393,12 +228,24 @@ void CImInspector::Show_Components()
 	}
 }
 
-void CImInspector::IsPickMode(ImImage * pImage, PICK_TYPE eType)
+void CImInspector::Show_PlaceMode()
 {
-	if (eType == m_pCamera->Get_Pick())
-		pImage->SetEnable(true);
-	else
-		pImage->SetEnable(false);
+	for (_int i = 0; i < PICK_END; ++i)
+	{
+		ImGui::RadioButton(items[i].first.c_str(), &m_iCurPickType, i);
+		if(PICK_END - 1 != i) ImGui::SameLine();
+	}
+	m_pPickBox[m_iCurPickType]->Update(1.f);
+	m_CurTag = TO_WSTR(m_pPickBox[m_iCurPickType]->Get_CurItem());
+
+	if (PICK_MAPOBJ == m_iCurPickType)
+	{
+		ImGui::RadioButton("None", &m_radio, 0);
+		ImGui::RadioButton("LeftUp", &m_radio, 1); ImGui::SameLine();
+		ImGui::RadioButton("RightUp", &m_radio, 2); 
+		ImGui::RadioButton("LeftDown", &m_radio, 3); ImGui::SameLine();
+		ImGui::RadioButton("RightDown", &m_radio, 4);
+	}
 }
 
 CImInspector * CImInspector::Create(LPDIRECT3DDEVICE9 pGraphicDev)

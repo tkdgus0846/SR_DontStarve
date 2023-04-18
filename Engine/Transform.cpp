@@ -282,6 +282,31 @@ _bool	CTransform::ReadTransformFile(HANDLE hFile, DWORD& dwByte)
 	return true;
 }
 
+
+_bool CTransform::WriteTransformFileForMonster(HANDLE hFile, DWORD& dwByte)
+{
+	WriteFile(hFile, &m_eMoveType, sizeof(MOVETYPE), &dwByte, nullptr);
+	for (_int i = 0; i < INFO_POS; ++i)
+		WriteFile(hFile, &m_vInfo[i], sizeof(_vec3), &dwByte, nullptr);
+	m_vInfo[INFO_POS].y = 0.f;
+	WriteFile(hFile, &m_vInfo[INFO_POS], sizeof(_vec3), &dwByte, nullptr);
+	WriteFile(hFile, &m_vScale, sizeof(_vec3), &dwByte, nullptr);
+
+	return true;
+}
+
+_bool	CTransform::ReadTransformFileForMonster(HANDLE hFile, DWORD& dwByte)
+{
+	ReadFile(hFile, &m_eMoveType, sizeof(MOVETYPE), &dwByte, nullptr);
+	for (_int i = 0; i < INFO_POS; ++i)
+		ReadFile(hFile, &m_vInfo[i], sizeof(_vec3), &dwByte, nullptr);
+	ReadFile(hFile, &m_vInfo[INFO_POS], sizeof(_vec3), &dwByte, nullptr);
+	ReadFile(hFile, &m_vScale, sizeof(_vec3), &dwByte, nullptr);
+
+	return true;
+}
+
+
 _matrix* Engine::CTransform::Compute_Lookattarget(const _vec3* pTargetPos)
 {
 	_vec3	vDir = *pTargetPos - m_vInfo[INFO_POS];

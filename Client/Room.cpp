@@ -16,6 +16,8 @@
 #include "TileFactory.h"
 #include "MonsterFactory.h"
 #include "MapObjectFactory.h"
+#include "ShopNpc.h"
+
 CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fVtxCntX(0.f), 
 	m_fVtxCntZ(0.f), m_fVtxItv(0.f)
@@ -345,8 +347,19 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
 	// 오브젝트 해제
-	//for_each(m_vecGameObj.begin(), m_vecGameObj.end(), //Safe_Release<CGameObject*>);
-//	m_vecGameObj.clear();
+	//for (auto& iter = m_vecGameObj.begin(); iter != m_vecGameObj.end();)
+	//{
+	//	if (dynamic_cast<CFloor*>(*iter) || dynamic_cast<CWall*>(*iter)
+	//		|| dynamic_cast<CDoor*>(*iter) || dynamic_cast<CShopNpc*>(*iter))
+	//	{
+	//		++iter;
+	//	}
+	//	else
+	//	{
+	//		Safe_Release(*iter);
+	//		iter = m_vecGameObj.erase(iter);
+	//	}
+	//}
 
 	// 룸 변수 로드
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);

@@ -311,6 +311,7 @@
     <ClInclude Include="MapObjectFactory.h" />
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="MoveUp.h" />
+    <ClInclude Include="ImPickBox.h" />
     <ClInclude Include="SellItem.h" />
     <ClInclude Include="Serializable.h" />
     <ClInclude Include="IsNotRangeInPlayer.h" />
@@ -470,6 +471,7 @@
     <ClCompile Include="NotCollisionWall.cpp" />
     <ClCompile Include="NubBoss.cpp" />
     <ClCompile Include="OilTile.cpp" />
+    <ClCompile Include="ImPickBox.cpp" />
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="QuickSandTile.cpp" />
     <ClCompile Include="SandTile.cpp" />

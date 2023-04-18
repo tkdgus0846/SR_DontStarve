@@ -164,12 +164,12 @@ void CMonster::Serialization(HANDLE hFile, DWORD & dwByte)
 	lstrcpy(tmp, m_ObjInfo.pObjTag);
 	WriteFile(hFile, tmp, sizeof(_tchar) * 32, &dwByte, nullptr);
 
-	m_pTransform->WriteTransformFile(hFile, dwByte);
+	m_pTransform->WriteTransformFileForMonster(hFile, dwByte);
 }
 
 void CMonster::Deserialization(HANDLE hFile, DWORD & dwByte)
 {
-	m_pTransform->ReadTransformFile(hFile, dwByte);
+	m_pTransform->ReadTransformFileForMonster(hFile, dwByte);
 }
 
 HRESULT CMonster::Create_Root_AI()
