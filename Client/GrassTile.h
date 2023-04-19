@@ -1,7 +1,7 @@
 #pragma once
-#include "Tile.h"
+#include "FloorTile.h"
 class CGrassTile :
-	public CTile
+	public CFloorTile
 {
 private:
 	CGrassTile(LPDIRECT3DDEVICE9 pGraphicDev);

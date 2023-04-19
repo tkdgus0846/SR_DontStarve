@@ -30,7 +30,7 @@ public:
 
 public:
 	const unordered_map<const _tchar*, class CComponent*>& Get_ProtoMap() const { return m_uMapProto; }
-
+	
 private:
 	class CComponent*	Find_Proto(const _tchar* pProtoTag);
 

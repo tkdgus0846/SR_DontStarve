@@ -31,6 +31,8 @@ private:
 	virtual ~CItemManager();
 
 public:
+	void Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name);
+
 	CItem* CItemManager::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* name, const _vec3 & vPos);
 
 	void		Push(const _tchar* name, CItem* pItem);

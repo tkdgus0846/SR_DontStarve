@@ -2,6 +2,7 @@
 #include "Export_Function.h"
 #include "Player.h"
 #include "ItemManager.h"
+#include "..\Engine\SoundMgr.h"
 
 CHeartItem::CHeartItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CItem(pGraphicDev)
@@ -119,6 +120,13 @@ void CHeartItem::OnCollisionStay(const Collision * collision)
 	if (pPlayer == nullptr) { return; }
 	_int curHp = pPlayer->Get_HP();
 	if (curHp == 20) { return; }
+
+	if (pPlayer == nullptr) return;
+
+	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
+	{
+		PLAY_SOUND(L"sfxpickup.wav", SOUND_LOOT, 1.f);
+	}
 
 	__super::OnCollisionEnter(collision);
 

@@ -1,6 +1,7 @@
 #include "DiscItem.h"
 #include "Export_Function.h"
 #include "Player.h"
+#include "..\Engine\SoundMgr.h"
 CDiscItem::CDiscItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -107,7 +108,12 @@ void CDiscItem::OnCollisionStay(const Collision * collision)
 {
 	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+	if (pPlayer == nullptr) return;
 
+	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
+	{
+		PLAY_SOUND(L"sfxpickup.wav", SOUND_LOOT, 1.f);
+	}
 	ItemMagnetic(pPlayer);
 }
 

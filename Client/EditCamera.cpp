@@ -136,12 +136,13 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Mouse_Down(DIM_LB))
 	{
-		SetClickInfo();
+		if (!SetClickInfo()) return;
 
 		CImInspector* pWindow = dynamic_cast<CImInspector*>(CImManager::GetInstance()->FindByTag(L"Inspector"));
 		CreateTile(pWindow);
 		CreateMonster(pWindow);
 		CreateMapObject(pWindow);
+
 	}
 
 	if (Engine::Mouse_Down(DIM_RB))
@@ -255,17 +256,22 @@ _bool CEditCamera::Compute_RayCastHitGameObject(const Ray* pRay, ClickInfo& tCli
 	return success;
 }
 
-void CEditCamera::SetClickInfo()
+_bool CEditCamera::SetClickInfo()
 {
+	_bool result = true;
+
 	_matrix proj;
 	proj.PerspectiveFovLH();
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &proj);
 
+	
 	CRoom* pRoom = ROOM_MGR->Get_CurRoom();
+	cout << pRoom << endl;
 	// Variables for Output about InstersectRayRoom Method
 
-	if (IntersectRayRoom(pRoom, m_tPickInfo))
-		int a = 0;
+	if (!IntersectRayRoom(pRoom, m_tPickInfo)) result = false;
+
+	return result;	
 }
 
 _bool CEditCamera::IntersectRayRoom(const CRoom* pRoom, ClickInfo& tClickInfo)

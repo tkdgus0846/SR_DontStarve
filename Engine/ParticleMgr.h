@@ -31,6 +31,8 @@ private:
 	virtual ~CParticleMgr();
 
 public:
+	void Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name);
+
 	CParticle* CParticleMgr::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleName, _int ParticleNum, const _vec3& vPos, const _vec3& Origin = {0.f,0.f,0.f});
 
 	void		Push(const _tchar* name, CParticle* pParticle);

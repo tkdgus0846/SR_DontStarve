@@ -55,6 +55,7 @@ HRESULT CSellItem::Add_Component()
 
 	
 	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
 
 	return S_OK;
 }
@@ -93,7 +94,7 @@ _int CSellItem::Update_GameObject(const _float & fTimeDelta)
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &viewMat);
 
 	viewMat.Inverse();
-	m_pTransform->Rot_Bill( 0.01f);
+	
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -117,10 +118,13 @@ void CSellItem::Render_GameObject(void)
 	coinPos.y += 2.f;
 
 	_matrix TransMat, ScaleMat, WorldMatrix;
+
 	TransMat.Translation(coinPos.x, coinPos.y, coinPos.z);
 	ScaleMat.Scaling(0.5f, 0.5f, 0.5f);
 
-	WorldMatrix = ScaleMat*TransMat;
+	// 지금 VIBuffer에서 월드행렬 적용시켜주고 있어서 이 지랄해야됨
+
+	WorldMatrix = ScaleMat *TransMat;
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &WorldMatrix);
 	m_CoinTexture->Render_Texture();

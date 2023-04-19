@@ -97,7 +97,7 @@ HRESULT CRoom::CreateSubset()
 	//			, _vec3{ ((float)j * VTXITV) + iOffsetX
 	//			, 0.01f
 	//			,(float)i * VTXITV + iOffsetZ }
-	//		, L"Floor_Level1_Texture"));
+	//		, L"FloorLarge #421865"));
 	//	}
 	//}
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
@@ -228,7 +228,7 @@ _int CRoom::Get_Room_Index()
 	_int iX = _int(m_pTransform->m_vInfo[INFO_POS].x / 60.f);
 	_int iZ = _int(m_pTransform->m_vInfo[INFO_POS].z / 60.f);
 
-	return iZ * 5 + iX;
+	return iZ * 3 + iX;
 }
 
 void CRoom::Open_Doors()
@@ -347,19 +347,19 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
 	// 오브젝트 해제
-	//for (auto& iter = m_vecGameObj.begin(); iter != m_vecGameObj.end();)
-	//{
-	//	if (dynamic_cast<CFloor*>(*iter) || dynamic_cast<CWall*>(*iter)
-	//		|| dynamic_cast<CDoor*>(*iter) || dynamic_cast<CShopNpc*>(*iter))
-	//	{
-	//		++iter;
-	//	}
-	//	else
-	//	{
-	//		Safe_Release(*iter);
-	//		iter = m_vecGameObj.erase(iter);
-	//	}
-	//}
+	for (auto& iter = m_vecGameObj.begin(); iter != m_vecGameObj.end();)
+	{
+		if (dynamic_cast<CFloor*>(*iter) || dynamic_cast<CWall*>(*iter)
+			|| dynamic_cast<CDoor*>(*iter) || dynamic_cast<CShopNpc*>(*iter))
+		{
+			++iter;
+		}
+		else
+		{
+			(*iter)->SetDead();
+			iter = m_vecGameObj.erase(iter);
+		}
+	}
 
 	// 룸 변수 로드
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
@@ -369,7 +369,8 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	//문 로드
 	_int iDoorType;
 	ReadFile(hFile, &iDoorType, sizeof(_int), &dwByte, nullptr);
-	Set_DoorType((DOOR_TYPE)iDoorType);
+	//Set_DoorType((DOOR_TYPE)iDoorType);
+	
 	m_pTransform->ReadTransformFile(hFile, dwByte);
 
 	// 객체로드

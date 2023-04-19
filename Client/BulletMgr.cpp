@@ -146,6 +146,40 @@ CBulletMgr::~CBulletMgr()
 
 
 
+void CBulletMgr::Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name)
+{
+	for (int i = 0; i < cnt; i++)
+	{
+		CBullet* pBullet = nullptr;
+		if (name == L"FireBullet")
+		{
+			pBullet = CFireBullet::Create(pDevice);
+		}
+		else if (name == L"NormalBullet")
+		{
+			pBullet = CNormalBullet::Create(pDevice);
+		}
+		else if (name == L"IceBullet")
+		{
+			pBullet = CIceBullet::Create(pDevice);
+		}
+		else if (name == L"VortexBullet")
+		{
+			pBullet = CVortexBullet::Create(pDevice);
+		}
+		else if (name == L"SwordBullet")
+		{
+			pBullet = CSwordBullet::Create(pDevice);
+		}
+
+		if (m_BulletPool[name] == nullptr)
+		{
+			m_BulletPool[name] = CBulletPool::Create();
+		}
+		Push(name, pBullet);
+	}
+}
+
 void CBulletMgr::Push(const _tchar* name, CBullet* pBullet)
 {
 	if (m_BulletPool[name] == nullptr) return;

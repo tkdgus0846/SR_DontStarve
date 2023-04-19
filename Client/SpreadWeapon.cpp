@@ -2,6 +2,7 @@
 #include "Export_Function.h"
 #include "BulletMgr.h"
 #include "NormalBullet.h"
+#include "..\Engine\SoundMgr.h"
 
 
 CSpreadWeapon::CSpreadWeapon(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -23,6 +24,7 @@ void CSpreadWeapon::Shot()
 {
 	if (CanShot() && m_fTime > 0.1f)
 	{
+		STOP_PLAY_SOUND(L"sfxBullet.wav", SOUND_EJECT, 1.f);
 		for (size_t j = 0; j < 3; j++)
 		{
 			CBullet* bullet = Shot_Setting(j * 10.f - 10.f);

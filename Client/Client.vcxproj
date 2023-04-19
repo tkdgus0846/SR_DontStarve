@@ -274,6 +274,7 @@
     <ClInclude Include="CoinItem.h" />
     <ClInclude Include="CoolTime.h" />
     <ClInclude Include="CrossHair.h" />
+    <ClInclude Include="DecoratorTile.h" />
     <ClInclude Include="Dig.h" />
     <ClInclude Include="Disc.h" />
     <ClInclude Include="DiscItem.h" />
@@ -289,6 +290,24 @@
     <ClInclude Include="FlameProjector.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Evasion.h" />
+    <ClInclude Include="FloorGrassS.h" />
+    <ClInclude Include="FloorGrassSE421553.h" />
+    <ClInclude Include="FloorGrassSW.h" />
+    <ClInclude Include="FloorGrassW.h" />
+    <ClInclude Include="FloorGrassW421566.h" />
+    <ClInclude Include="FloorHole421407.h" />
+    <ClInclude Include="FloorHole421573.h" />
+    <ClInclude Include="FloorHole421724.h" />
+    <ClInclude Include="FloorHole421777.h" />
+    <ClInclude Include="FloorSmall.h" />
+    <ClInclude Include="FloorSmall420592.h" />
+    <ClInclude Include="FloorSmall421201.h" />
+    <ClInclude Include="FloorSmall421410.h" />
+    <ClInclude Include="FloorSmall421572.h" />
+    <ClInclude Include="FloorSmall421575.h" />
+    <ClInclude Include="FloorSmall421723.h" />
+    <ClInclude Include="FloorSmall421733.h" />
+    <ClInclude Include="FloorTile.h" />
     <ClInclude Include="GrassTile.h" />
     <ClInclude Include="GunUI.h" />
     <ClInclude Include="Guppi.h" />
@@ -311,6 +330,7 @@
     <ClInclude Include="ImWindow.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="LaserBullet.h" />
+    <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="MoveUp.h" />
@@ -366,6 +386,7 @@
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
     <ClInclude Include="SpreadWeapon.h" />
+    <ClInclude Include="Stage2.h" />
     <ClInclude Include="SwampTile.h" />
     <ClInclude Include="SwordBullet.h" />
     <ClInclude Include="SwordWeapon.h" />
@@ -385,6 +406,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Wait.h" />
+    <ClInclude Include="WallTile.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponItem.h" />
     <ClInclude Include="WeaponType.h" />
@@ -414,6 +436,7 @@
     <ClCompile Include="CoinItem.cpp" />
     <ClCompile Include="CoolTime.cpp" />
     <ClCompile Include="CrossHair.cpp" />
+    <ClCompile Include="DecoratorTile.cpp" />
     <ClCompile Include="Dig.cpp" />
     <ClCompile Include="Disc.cpp" />
     <ClCompile Include="DiscItem.cpp" />
@@ -429,6 +452,24 @@
     <ClCompile Include="FlameProjector.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Evasion.cpp" />
+    <ClCompile Include="FloorGrassS.cpp" />
+    <ClCompile Include="FloorGrassSE421553.cpp" />
+    <ClCompile Include="FloorGrassSW.cpp" />
+    <ClCompile Include="FloorGrassW.cpp" />
+    <ClCompile Include="FloorGrassW421566.cpp" />
+    <ClCompile Include="FloorHole421407.cpp" />
+    <ClCompile Include="FloorHole421573.cpp" />
+    <ClCompile Include="FloorHole421724.cpp" />
+    <ClCompile Include="FloorHole421777.cpp" />
+    <ClCompile Include="FloorSmall.cpp" />
+    <ClCompile Include="FloorSmall420592.cpp" />
+    <ClCompile Include="FloorSmall421201.cpp" />
+    <ClCompile Include="FloorSmall421410.cpp" />
+    <ClCompile Include="FloorSmall421572.cpp" />
+    <ClCompile Include="FloorSmall421575.cpp" />
+    <ClCompile Include="FloorSmall421723.cpp" />
+    <ClCompile Include="FloorSmall421733.cpp" />
+    <ClCompile Include="FloorTile.cpp" />
     <ClCompile Include="GrassTile.cpp" />
     <ClCompile Include="GunUI.cpp" />
     <ClCompile Include="Guppi.cpp" />
@@ -461,6 +502,7 @@
     <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="LeapJump.cpp" />
     <ClCompile Include="Loading.cpp" />
+    <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="LookAtTarget.cpp" />
     <ClCompile Include="MainApp.cpp" />
@@ -508,6 +550,7 @@
     <ClCompile Include="Cryder.cpp" />
     <ClCompile Include="SpreadWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="Stage2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">Create</PrecompiledHeader>
@@ -527,6 +570,7 @@
     <ClCompile Include="WalkerBoss.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Wait.cpp" />
+    <ClCompile Include="WallTile.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WeaponItem.cpp" />
     <ClCompile Include="WeaponType.cpp" />

@@ -32,10 +32,7 @@ private:
 
 public:
 
-	void Reserve(_uint cnt) 
-	{
-		
-	}
+	void Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name);
 
 	class CBullet* CBulletMgr::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _vec3& vPos, const _vec3& vDir, const _vec3& vScale = { 1.f,1.f,1.f }, bool bIsEnemyBullet = false, const _float& fSpeed = -1.0f);
 	

@@ -16,7 +16,6 @@ public:
 	const _tchar*		Get_String(void)	{ return m_szString; }
 	void				Set_String(_tchar* pString) { lstrcpy(m_szString, pString); }
 
-
 public:
 	static unsigned int CALLBACK Thread_Main(void* pArg);
 

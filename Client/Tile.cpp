@@ -102,10 +102,6 @@ HRESULT CTile::Add_Component()
 	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pBufferCom });
 
-	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ENVIRONMENT));
-	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
-
 	m_pAnimation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	NULL_CHECK_RETURN(m_pAnimation, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Animation", m_pAnimation });

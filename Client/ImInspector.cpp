@@ -81,17 +81,19 @@ _int CImInspector::Update(float fTimeDelta)
 
 void CImInspector::Show_RoomInfo()
 {
-	const char* items[25] = { "0", "1", "2", "3", "4",
+	/*const char* items[25] = { "0", "1", "2", "3", "4",
 		"5", "6", "7", "8", "9",
 		"10", "11", "12", "13", "14",
 		"15", "16", "17", "18", "19",
-		"20", "21", "22", "23", "24" };
+		"20", "21", "22", "23", "24" };*/
+	const char* items[9] = { "0", "1", "2", "3", "4",
+		"5", "6", "7", "8" };
 	static int item_current = 0;
 	ImGui::Combo("Room_Index", &item_current, items, IM_ARRAYSIZE(items));
 
-	m_vObjectPos.x = _float(item_current % 5 * 60 + 5);
+	m_vObjectPos.x = _float(item_current % 3 * 60 + 5);
 	m_vObjectPos.y = 5.f;
-	m_vObjectPos.z = _float(item_current / 5 * 60 + 5);
+	m_vObjectPos.z = _float(item_current / 3 * 60 + 5);
 
 	m_pCamera->m_pTransform->m_vInfo[INFO_POS] = { m_vObjectPos.x + 25.f, 25.f, m_vObjectPos.z + 25.f };
 	ROOM_MGR->Set_CurRoom(item_current);
