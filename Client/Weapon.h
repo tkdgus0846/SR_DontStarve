@@ -27,9 +27,15 @@ public:
 		if (m_CurBulletNum > m_MaxBulletNum) m_CurBulletNum = m_MaxBulletNum;
 	}
 
+	void	Set_TacticalScope() { m_bTacticalScope = true; }
+	_bool	Get_TacticalScope() { return m_bTacticalScope ; }
+
 private:
 	_float	m_fAccTime;
 	
+	_bool	m_bTacticalScope = false;
+	_vec3	m_TacticalDir;
+
 protected:
 	_int	m_MaxBulletNum; // 가질 수 있는 총알 최대량
 	_int	m_CurBulletNum; // 현재 총알 수
@@ -41,9 +47,9 @@ protected:
 	class CTransform* m_pOwnerTransform;
 	_vec3	m_vOffsetTrans;
 
+
 protected:
 	virtual class CBullet*	Shot_Setting() PURE;
 	_bool	CanShot() const { return m_bEnableShot && !Is_BulletEmpty(); }
-	
 };
 

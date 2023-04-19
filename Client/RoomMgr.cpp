@@ -65,11 +65,11 @@ void CRoomMgr::Create_Default_Room()
 
 	//====== 임시 코드임 =======
 
-	//NPC 잠깐 넣어놓음
-	m_arrRoom[1]->PushBack_GameObj(CShopNpc::Create(m_pGraphicDev));
+	////NPC 잠깐 넣어놓음
+	//m_arrRoom[1]->PushBack_GameObj(CShopNpc::Create(m_pGraphicDev));
 
-	CWormHead* pHead = CWormHead::Create(m_pGraphicDev, _vec3(17.f, 2.f, 17.f));
-	m_arrRoom[0]->PushBack_GameObj(pHead);
+	//CWormHead* pHead = CWormHead::Create(m_pGraphicDev, _vec3(17.f, 2.f, 17.f));
+	//m_arrRoom[0]->PushBack_GameObj(pHead);
 
 	m_arrRoom[0]->Set_DoorType(DOOR_NE);
 	m_arrRoom[1]->Set_DoorType(DOOR_NW);
@@ -79,7 +79,7 @@ void CRoomMgr::Create_Default_Room()
 
 	m_arrRoom[0]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(40.f, 3.f, 40.f)));
 
-	/*m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
+	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
 
 	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
 
@@ -89,7 +89,7 @@ void CRoomMgr::Create_Default_Room()
 	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 1.f, 40.f)));
 	m_arrRoom[0]->PushBack_GameObj(CRub::Create(m_pGraphicDev, _vec3(90.f, 2.4f, 40.f)));
 	m_arrRoom[0]->PushBack_GameObj(CCryder::Create(m_pGraphicDev, _vec3(40.f, 0.6f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CNubBoss::Create(m_pGraphicDev, _vec3(100.f, 0.6f, 40.f))); */
+	m_arrRoom[0]->PushBack_GameObj(CNubBoss::Create(m_pGraphicDev, _vec3(100.f, 0.6f, 40.f)));
 }
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)
