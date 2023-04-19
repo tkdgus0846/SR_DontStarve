@@ -116,6 +116,15 @@
     <Filter Include="GameObject\Tile\Deco">
       <UniqueIdentifier>{3c10bd6f-46e5-423e-9398-d4793b6ed6c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\Stages">
+      <UniqueIdentifier>{6ecb9bc0-eaa4-48b3-872b-0e59c2001cec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MiniGames">
+      <UniqueIdentifier>{ac88bb82-5e52-468b-9233-038025542397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MiniGames\SonicMiniGame">
+      <UniqueIdentifier>{57907439-c9b3-4127-a8b9-a86a8ec065a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -138,9 +147,6 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Logo.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Client.h">
@@ -578,15 +584,21 @@
     <ClInclude Include="FloorHole421777.h">
       <Filter>GameObject\Tile\Deco</Filter>
     </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>Scene\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage2.h">
+      <Filter>Scene\Stages</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Logo.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="MainApp.cpp">
@@ -1023,6 +1035,15 @@
     </ClCompile>
     <ClCompile Include="FloorSmall420592.cpp">
       <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage2.cpp">
+      <Filter>Scene\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>Scene\Stages</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -92,7 +92,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"VortexBulletBefore_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/Energy_%d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"VortexBulletAfter_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/vortex.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SwordBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/sword.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"StarBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Star_%d.png",4)), E_FAIL);
+	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"StarBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Star_%d.png",4)), E_FAIL);*/ // -> 로고에서 해주고있음.
 	
 
 	// Monster Texture
@@ -293,7 +293,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Hp_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/hud_hearts_%d.png", 5)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Coin_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/sprBigCoin_strip6_%d.png", 6)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Disc_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/data_%d.png", 4)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Num_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Text/tigl_font2_DEPRECATE_%d.png", 42)), E_FAIL);
+	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Num_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Text/tigl_font2_DEPRECATE_%d.png", 42)), E_FAIL);*/
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BossHpBar_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/BossHpBar.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BossHpGuage_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/BossHpGuage.png")), E_FAIL);
 
@@ -341,7 +341,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collider", CCollider::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RigidBody", CRigidbody::Create(m_pGraphicDev)), E_FAIL);
 	
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Animation", CAnimation::Create(m_pGraphicDev)), E_FAIL);
+	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Animation", CAnimation::Create(m_pGraphicDev)), E_FAIL);*/
 	
 	/////////////////////////// 파티클
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Particle", CSnow::Create(m_pGraphicDev)), E_FAIL);
@@ -386,9 +386,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Selector", CSelector::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Root", CRoot::Create(m_pGraphicDev)), E_FAIL);
 
-	Set_String(L"Room Loading..........");
-
-	
+	Set_String(L"Room Loading..........");	
 	// ==임시 코드==
 	const auto& uMapProto = Engine::CProtoMgr::GetInstance()->Get_ProtoMap();
 
@@ -398,6 +396,7 @@ _uint CLoading::Loading_ForStage(void)
 			m_listTags.push_back(iter.first);
 	}
 
+	Set_String(L"ObjectPool Loading..........");
 	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 25, L"NormalBullet");
 	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 30, L"FireBullet");
 	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"IceBullet");
@@ -408,13 +407,15 @@ _uint CLoading::Loading_ForStage(void)
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"CoinItem");
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"HeartItem");
 
+	Set_String(L"Room Loading..........");
+
 	TILE_FACTORY->Ready_Factory(m_pGraphicDev);
 	MONSTER_FACTORY->Ready_Factory(m_pGraphicDev);
 	MAPOBJ_FACTORY->Ready_Factory(m_pGraphicDev);
 	//CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
 
 	ROOM_MGR->Ready_RoomMgr(m_pGraphicDev); // 여기서 룸들을 싹다 만든다.
-
+	
 	CFileSystem::Load(L"as.dat");
 
 	m_bFinish = true;

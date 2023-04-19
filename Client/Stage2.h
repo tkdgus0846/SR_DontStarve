@@ -1,12 +1,11 @@
 #pragma once
-
 #include "Scene.h"
 
-class CStage : public Engine::CScene
+class CStage2 : public CScene
 {
 private:
-	explicit CStage(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CStage();
+	explicit CStage2(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CStage2();
 
 public:
 	// CScene을(를) 통해 상속됨
@@ -20,7 +19,7 @@ private:
 	_int				m_iPreRoomIdx;
 
 public:
-	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CStage2*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void		Free(void);

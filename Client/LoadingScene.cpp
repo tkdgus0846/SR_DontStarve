@@ -1,4 +1,4 @@
-#include "Logo.h"
+#include "LoadingScene.h"
 
 #include "Export_Function.h"
 #include "BackGround.h"
@@ -14,16 +14,16 @@
 #include "MapObjectFactory.h"
 
 
-CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
+CLoadingScene::CLoadingScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_pLoading(nullptr)
 {
 }
 
-CLogo::~CLogo()
+CLoadingScene::~CLoadingScene()
 {
 }
 
-HRESULT CLogo::Ready_Scene(void)
+HRESULT CLoadingScene::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 
@@ -39,11 +39,11 @@ HRESULT CLogo::Ready_Scene(void)
 
 	/*m_pLoading = CLoading::Create(m_pGraphicDev, LOADING_STAGE);
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);*/
-	
+
 	return S_OK;
 }
 
-_int CLogo::Update_Scene(const _float & fTimeDelta)
+_int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 {
 	int iExit = __super::Update_Scene(fTimeDelta);
 
@@ -84,17 +84,17 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 		{
 			Start_WorldTimer();
 			CScene*	pScene = CStage::Create(m_pGraphicDev);
-			
+
 			NULL_CHECK_RETURN(pScene, -1);
 
 			pScene->Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());
-			
+
 			for (int i = 0; i < COL_STATIC_END; i++)
 			{
 				CCollisionMgr::GetInstance()->Set_StaticColliderList(ROOM_MGR->Get_CurColliderList(i), i);
 			}
-			
-			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);		
+
+			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
 			return 0;
 		}
 	}
@@ -102,27 +102,27 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 	return iExit;
 }
 
-void CLogo::LateUpdate_Scene(void)
+void CLoadingScene::LateUpdate_Scene(void)
 {
 	__super::LateUpdate_Scene();
 }
 
-void CLogo::Render_Scene(void)
+void CLoadingScene::Render_Scene(void)
 {
-	// _DEBUG �� ���	
+	// _DEBUG ?? ???	
 	if (m_pLoading == nullptr) return;
 
 	Engine::Render_Font(L"Font_Default", m_pLoading->Get_String(), &_vec2(20.f, 20.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
 }
 
-HRESULT CLogo::Ready_Proto(void)
+HRESULT CLoadingScene::Ready_Proto(void)
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Logo_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Logo/title3D.png")), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Background_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Logo/BackGround.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"StarBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Star_%d.png",4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"StarBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Star_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SelectArrow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/SelectArrow.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Num_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Text/tigl_font2_DEPRECATE_%d.png", 42)), E_FAIL);
 
@@ -134,9 +134,9 @@ HRESULT CLogo::Ready_Proto(void)
 	return S_OK;
 }
 
-CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CLoadingScene * CLoadingScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CLogo *	pInstance = new CLogo(pGraphicDev);
+	CLoadingScene *	pInstance = new CLoadingScene(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Scene()))
 	{
@@ -147,7 +147,7 @@ CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CLogo::Free(void)
+void CLoadingScene::Free(void)
 {
 	Safe_Release(m_pLoading);
 	__super::Free();

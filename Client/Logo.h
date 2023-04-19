@@ -20,6 +20,9 @@ private:
 	
 private:
 	class CLoading*			m_pLoading;
+	class CBackGround*      m_pBackGround;
+
+	_bool					m_bLoadingCreated;
 
 public:
 	static CLogo*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

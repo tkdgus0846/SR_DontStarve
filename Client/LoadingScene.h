@@ -1,12 +1,10 @@
 #pragma once
-
 #include "Scene.h"
-
-class CStage : public Engine::CScene
+class CLoadingScene : public CScene
 {
 private:
-	explicit CStage(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CStage();
+	explicit CLoadingScene(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CLoadingScene();
 
 public:
 	// CScene을(를) 통해 상속됨
@@ -16,11 +14,16 @@ public:
 	virtual void		Render_Scene(void) override;
 
 private:
-	_int				m_iCurRoomIdx;
-	_int				m_iPreRoomIdx;
+	HRESULT				Ready_Proto(void);
+
+private:
+	class CLoading*			m_pLoading;
+	class CBackGround*      m_pBackGround;
+
+	_bool					m_bLoadingCreated;
 
 public:
-	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CLoadingScene*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void		Free(void);

@@ -80,6 +80,7 @@ HRESULT CFloor::Add_Component(void)
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 
+	m_pTransform->Set_Scale({ 1.f, 1.f, 1.f });
 	pCollider->Set_BoundingBox({ 50.f,10.f,50.f }, { 25.f,-5.f,25.f });
 
 	return S_OK;

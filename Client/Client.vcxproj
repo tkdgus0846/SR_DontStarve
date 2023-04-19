@@ -329,6 +329,7 @@
     <ClInclude Include="ImTest.h" />
     <ClInclude Include="ImWindow.h" />
     <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="MoveUp.h" />
@@ -384,6 +385,7 @@
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
     <ClInclude Include="SpreadWeapon.h" />
+    <ClInclude Include="Stage2.h" />
     <ClInclude Include="SwampTile.h" />
     <ClInclude Include="SwordBullet.h" />
     <ClInclude Include="SwordWeapon.h" />
@@ -498,6 +500,7 @@
     <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="LeapJump.cpp" />
     <ClCompile Include="Loading.cpp" />
+    <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="LookAtTarget.cpp" />
     <ClCompile Include="MainApp.cpp" />
@@ -545,6 +548,7 @@
     <ClCompile Include="Cryder.cpp" />
     <ClCompile Include="SpreadWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="Stage2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">Create</PrecompiledHeader>
