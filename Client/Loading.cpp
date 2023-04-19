@@ -66,7 +66,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 	// 6. 쓰레드 ID반환
 	
 	m_hThread = (HANDLE)_beginthreadex(nullptr, 0, Thread_Main, this, 0, nullptr);
-
+	
 	m_eID = eID;
 
 	// 빨간색으로 블랜딩할 멀티 텍스처 용도의 텍스처 파일
@@ -87,13 +87,15 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FireBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/smallExplode_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MeteorPoint_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/MeteorPoint.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FireBall_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/fireBall_%d.png", 4)), E_FAIL);
-
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"EnemyBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/sprEnemyBullet_%d.png", 2)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"VortexBulletBefore_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/Energy_%d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"VortexBulletAfter_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/vortex.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Laser_Red_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/laserbullet-red.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Laser_Blue_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/laserbullet.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SwordBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/sword.png")), E_FAIL);
+
 	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"StarBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Star_%d.png",4)), E_FAIL);*/ // -> 로고에서 해주고있음.
-	
 
 	// Monster Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Bub_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/bub_%d.png", 2)), E_FAIL);
@@ -121,10 +123,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BossShadow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/bossShadow.png")), E_FAIL);
 
 	// Effect 텍스쳐
-	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Explosion_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/explosion_%d.png", 5)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ExplosionBlue", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/ExplosionBlue_%d.png", 5)), E_FAIL);
-
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RedBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/redblood_%d.png", 4)), E_FAIL);
 
@@ -254,19 +254,12 @@ _uint CLoading::Loading_ForStage(void)
 
 	// Tile Multi Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBelt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBelt_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBeltCorner", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBeltCorner_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBlood_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorElectric", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorElectric_%d.png", 3)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLava", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorLava_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorOil", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorOil_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorQuicksand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorQuicksand_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSwamp", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorSwamp_%d.png", 4)), E_FAIL);
 
 	// Wall Texture

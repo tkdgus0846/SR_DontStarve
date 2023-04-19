@@ -77,7 +77,7 @@ void CSwordWeapon::Shot()
 
 		if (bullet)
 		{
-			cout << m_CurBulletNum << endl;
+			//cout << m_CurBulletNum << endl;
 		}
 	}
 

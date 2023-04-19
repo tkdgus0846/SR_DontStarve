@@ -28,6 +28,7 @@ HRESULT CGuppi::Ready_GameObject(const _vec3& vPos)
 
 _int CGuppi::Update_GameObject(const _float & fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);

@@ -45,7 +45,5 @@ HRESULT CMonsterFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	ExtractTextureKey();
 
-	ExtractTextureKey();
-
 	return hResult;
 }

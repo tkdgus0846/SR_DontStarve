@@ -488,6 +488,9 @@
     <ClInclude Include="OnPlayer.h">
       <Filter>Monobehaviours\Task</Filter>
     </ClInclude>
+    <ClInclude Include="LaserBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
     <ClInclude Include="FloorTile.h">
       <Filter>GameObject\Tile\FloorTile</Filter>
     </ClInclude>
@@ -939,6 +942,9 @@
     </ClCompile>
     <ClCompile Include="OnPlayer.cpp">
       <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="LaserBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="FloorTile.cpp">
       <Filter>GameObject\Tile\FloorTile</Filter>

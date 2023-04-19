@@ -1,6 +1,6 @@
 #include "TileFactory.h"
 
-// Å¸ÀÏÇì´õ ÆÄÀÏ ¸ğÀ½
+// Ã…Â¸Ã€ÃÃ‡Ã¬Â´Ãµ Ã†Ã„Ã€Ã Â¸Ã°Ã€Â½
 #include "BeltTile.h"
 #include "BloodTile.h"
 #include "ElectricTile.h"
@@ -55,6 +55,7 @@ HRESULT CTileFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CSandTile::Tag(), &CSandTile::Create);
 	Register(CSnowTile::Tag(), &CSnowTile::Create);
 	Register(CSwampTile::Tag(), &CSwampTile::Create);
+
 	//Register(CDecoratorTile::Tag(), &CDecoratorTile::Create);
 
 	Register(FloorGrassS::Tag(),		FloorGrassS::Create);

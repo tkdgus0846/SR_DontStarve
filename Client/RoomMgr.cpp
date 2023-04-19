@@ -81,13 +81,6 @@ void CRoomMgr::Create_Default_Room()
 	//NPC 잠깐 넣어놓음
 	m_arrRoom[3]->PushBack_GameObj(CShopNpc::Create(m_pGraphicDev));
 
-	/*CWormHead* pHead = CWormHead::Create(m_pGraphicDev, _vec3(17.f, 2.f, 17.f));
-	m_arrRoom[0]->PushBack_GameObj(pHead);*/
-
-	
-
-	/*m_arrRoom[0]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(40.f, 3.f, 40.f)));*/
-
 	/*m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
 
 	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));

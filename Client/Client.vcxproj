@@ -329,6 +329,7 @@
     <ClInclude Include="ImTest.h" />
     <ClInclude Include="ImWindow.h" />
     <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="LaserBullet.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
     <ClInclude Include="MonsterFactory.h" />
@@ -497,6 +498,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="Jump.cpp" />
+    <ClCompile Include="LaserBullet.cpp" />
     <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="LeapJump.cpp" />
     <ClCompile Include="Loading.cpp" />

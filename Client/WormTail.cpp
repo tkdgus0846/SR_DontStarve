@@ -23,7 +23,7 @@ HRESULT CWormTail::Ready_GameObject(const _vec3 & vPos)
 	m_iHp = 20;
 	m_iMaxHp = 20;
 
-	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
+	m_pTransform->m_vScale = { 1.5f, 1.5f, 1.5f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 
@@ -77,7 +77,7 @@ void CWormTail::LateUpdate_GameObject(void)
 
 	if (Get_Player() == nullptr) return;
 
-	m_pTransform->Set_Scale({ 1.f, 1.f, 1.f });
+	m_pTransform->Set_Scale({ 1.5f, 1.5f, 1.5f });
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
 	_vec3 vDir = vPos - m_pTransform->m_vInfo[INFO_POS];
@@ -99,7 +99,7 @@ void CWormTail::LateUpdate_GameObject(void)
 
 	else if (fAngleRight > 135.f)
 	{
-		m_pTransform->Set_Scale({ -1.f, 1.f, 1.f });
+		m_pTransform->Set_Scale({ -1.5f, 1.5f, 1.5f });
 		m_pAnimation->SelectState(ANIM_SIDE);
 	}
 
@@ -108,7 +108,7 @@ void CWormTail::LateUpdate_GameObject(void)
 
 	else if (fAngleUp < 135.f)
 	{
-		m_pTransform->Set_Scale({ -1.f, 1.f, 1.f });
+		m_pTransform->Set_Scale({ -1.5f, 1.5f, 1.5f });
 		m_pAnimation->SelectState(ANIM_TOP);
 	}
 	else
@@ -160,7 +160,7 @@ HRESULT CWormTail::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
-	pCollider->Set_BoundingBox({ 1.6f, 1.6f, 1.6f });
+	pCollider->Set_BoundingBox({ 1.8f, 1.8f, 1.8f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
@@ -202,8 +202,10 @@ void CWormTail::Move(const _float & fTimeDelta)
 
 	m_pTransform->Rot_Bill(fAngle);
 
-	if (fLength < 1.8f)
+	if (fLength < 2.f)
 		m_pTransform->Move_Walk(0.1f, fTimeDelta);
+	else if (fLength > 3.5f)
+		m_pTransform->Move_Walk(m_fSpeed * 1.5f, fTimeDelta);
 	else
 		m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 }

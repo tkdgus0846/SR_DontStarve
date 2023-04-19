@@ -447,7 +447,7 @@ void CPlayer::AimHack()
 	m_pTransform->m_vInfo[INFO_RIGHT] = vRight;
 	m_pTransform->m_vInfo[INFO_UP] = vUp;
 
-	cout << pCollider->Get_BoundCenter().x << " " << pCollider->Get_BoundCenter().y << " " << pCollider->Get_BoundCenter().z << endl;
+	//cout << pCollider->Get_BoundCenter().x << " " << pCollider->Get_BoundCenter().y << " " << pCollider->Get_BoundCenter().z << endl;
 
 	m_vecMonster.clear();
 }

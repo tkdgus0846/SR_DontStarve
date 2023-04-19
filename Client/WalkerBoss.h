@@ -1,5 +1,11 @@
 #pragma once
 #include "Monster.h"
+
+BEGIN(Engine)
+class CTexture;
+class CRcTex;
+END
+
 class CWalkerBoss : public CMonster
 {
 private:
@@ -14,6 +20,8 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
+	CTexture* m_pTextureCom;
+	CRcTex* m_pShadow;
 
 public:
 	static CWalkerBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);

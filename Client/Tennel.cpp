@@ -12,7 +12,6 @@
 
 CTennel::CTennel(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_pDoor(nullptr)
-	, m_pTile(nullptr)
 {
 	Set_LayerID(LAYER_TENNEL);
 	Set_ObjTag(L"Tennel");
@@ -38,8 +37,6 @@ _int CTennel::Update_GameObject(const _float & fTimeDelta)
 	
 	__super::Update_GameObject(fTimeDelta);
 
-	// ³Î·Î µé¾î¿È
-	//m_pTile->Update_GameObject(fTimeDelta);
 	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
@@ -56,7 +53,6 @@ void CTennel::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
-	//m_pTile->Render_GameObject();
 	__super::Render_GameObject();
 
 }
@@ -121,9 +117,11 @@ void CTennel::Set_Position(_int iFrontorBack)
 	m_pTransform->m_vInfo[INFO_POS] += _vec3(0.f, 0.f, -10.f) * iFrontorBack;
 	_vec3 vPos = m_pTransform->m_vInfo[INFO_POS];
 	
-	if (0 == iFrontorBack)	// front ÀÎ °æ¿ì
+	if (0 == iFrontorBack)	// front Ã€ÃŽ Â°Ã¦Â¿Ã¬
 	{
 		m_pCollider->Set_BoundingBox({ 10.f, 10.f, 1.f }, _vec3(0.f, 0.f, 5.f));
+
+		//m_pTile = CTile::Create(m_pGraphicDev, vPos + _vec3(0.f, 0.f, 5.f), L"Open_Texture");
 	}
 	else
 	{
