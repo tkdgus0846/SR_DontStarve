@@ -101,9 +101,12 @@ HRESULT CFloorTex::Ready_Buffer(const _ulong& dwCntX,
 			m_pPos[dwIndex] = pVertex[dwIndex].vPos;
 
 			pVertex[dwIndex].vTexUV = { _float(j) / (dwCntX - 1) * X,
-										_float(i) / (dwCntZ - 1) * Z };
+										_float(i) / (dwCntZ - 1) * -1 * Z };
 		}
 	}
+
+	// 0 0 ~ 25 25
+	// 0 0 ~ -25 25
 
 	m_pVB->Unlock();
 

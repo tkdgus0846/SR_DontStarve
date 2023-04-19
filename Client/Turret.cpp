@@ -71,7 +71,7 @@ HRESULT CTurret::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox({ 1.6f, 1.6f, 1.6f });
+	pCollider->Set_BoundingBox({ 1.6f, 4.f, 1.6f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);

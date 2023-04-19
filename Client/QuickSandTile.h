@@ -1,7 +1,7 @@
 #pragma once
-#include "Tile.h"
+#include "FloorTile.h"
 class CQuickSandTile :
-	public CTile
+	public CFloorTile
 {
 private:
 	CQuickSandTile(LPDIRECT3DDEVICE9 pGraphicDev);

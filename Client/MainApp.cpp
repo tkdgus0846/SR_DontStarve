@@ -36,7 +36,7 @@ HRESULT CMainApp::Ready_MainApp(void)
 
 	SOUND->Init();
 	
-	//PLAY_BGM(L"Title.wav", 1.f);
+	PLAY_BGM(L"Title.wav",SOUND_BGM, 1.f);
 	return S_OK;
 }
 
@@ -45,11 +45,6 @@ int CMainApp::Update_MainApp(const _float & fTimeDelta)
 	Engine::Update_DInput();
 	
 	_long	dwMouse = 0;
-
-	if (Engine::Key_Down(DIK_K))
-		CFileSystem::Save(L"as.dat");
-	if (Engine::Key_Down(DIK_L))
-		CFileSystem::Load(L"as.dat");
 
 	m_pManagementClass->Update_Management(fTimeDelta);
 

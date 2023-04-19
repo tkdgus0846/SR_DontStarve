@@ -81,6 +81,14 @@ CEffect * CEffectManager::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar * name, co
 }
 
 
+void CEffectManager::Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name)
+{
+	for (int i = 0; i < cnt; i++)
+	{
+		Pop(pDevice, name, { 0.f,-50.f,0.f }, { 0.f,0.f,0.f }, 0.001f, false, 0.01f);
+	}
+}
+
 void CEffectManager::Push(const _tchar* name, CEffect* pEffect)
 {
 	if (m_EffectPool[name] == nullptr) return;

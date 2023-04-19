@@ -82,6 +82,11 @@ CParticle * CParticleMgr::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleN
 }
 
 
+void CParticleMgr::Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name)
+{
+	
+}
+
 void CParticleMgr::Push(const _tchar* name, CParticle* pParticle)
 {
 	if (m_ParticlePool[name] == nullptr) return;

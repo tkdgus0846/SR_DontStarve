@@ -2,7 +2,7 @@
 #include "Export_Function.h"
 
 CSwampTile::CSwampTile(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CTile(pGraphicDev)
+	: CFloorTile(pGraphicDev)
 {
 	Set_ObjTag(Tag());
 }

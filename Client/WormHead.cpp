@@ -5,7 +5,7 @@
 #include "Export_Function.h"
 
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CMonster(pGraphicDev), m_bMove(true), m_pTail(nullptr)
+	:CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
 {
 	Set_ObjTag(Tag());
 }
@@ -21,20 +21,20 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 	m_iHp = 100;
 	m_iMaxHp = 100;
 
-	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
+	m_pTransform->m_vScale = { 1.5f, 1.5f, 1.5f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
+	_vec3 vBodyPos = m_pTransform->m_vInfo[INFO_POS];
 
 	for (_int i = 0; i < 10; ++i)
-		m_vecBody.push_back(dynamic_cast<CWormBody*>(CWormBody::Create(m_pGraphicDev, _vec3(18.f + i, 2.f, 18.f + i))));
+		m_vecBody.push_back(dynamic_cast<CWormBody*>(CWormBody::Create(m_pGraphicDev, _vec3(vBodyPos.x + i + 1.f, vBodyPos.y, vBodyPos.z + i + 1.f))));
 
 	for (auto iter : m_vecBody)
 		Add_Static_GameObject(iter);
 
 	m_pTransform->Set_BillMode(true);
 
-	_vec3 vBodyPos = m_vecBody.back()->m_pTransform->m_vInfo[INFO_POS];
-	m_pTail = dynamic_cast<CWormTail*>(CWormTail::Create(m_pGraphicDev, { vBodyPos.x + 2.f, 2.f, vBodyPos.z + 2.f}));
+	m_pTail = dynamic_cast<CWormTail*>(CWormTail::Create(m_pGraphicDev, _vec3(vBodyPos.x + 13.f, vBodyPos.y, vBodyPos.z + 13.f)));
 
 	Add_Static_GameObject(m_pTail);
 
@@ -62,53 +62,29 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 
 _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 {
-
-  if (GetDead()) return OBJ_DEAD;
-
-	//if (GetDead())
-	//{
-	//	for (CWormBody* body : m_vecBody)
-	//	{
-	//		body->SetDead();
-	//	}
-	//	m_pTail->SetDead();
-	//	return OBJ_DEAD;
-	//}
-	  
 	if (!Get_Player())
 		return OBJ_NOEVENT;
 
+	if (GetDead()) return OBJ_DEAD;
+
 	if (Key_Down(DIK_SPACE))
-		m_fSpeed = 0.f;
+		m_bMove = !m_bMove;
+
 	__super::Update_GameObject(fTimeDelta);
 
-	if (GetDead() && m_vecBody.size() == 0 && m_pTail == nullptr)
-		return OBJ_DEAD;
-	else if (GetDead())
-	{
-		for (auto iter : m_vecBody)
-			iter->SetDead();
-		m_vecBody.clear();
-		if (m_pTail)
-		{
-			m_pTail->SetDead();
-			m_pTail = nullptr;
-		}
-		return OBJ_NOEVENT;
-  	}
-
-	//m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
+	if(m_bMove)
+		m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 
 	_vec3 vDir = m_pTransform->m_vInfo[INFO_LOOK];
 	vDir.Normalize();
 	_vec3 vDirXZ = { vDir.x, 0.f, vDir.z };
 	vDirXZ.Normalize();
 	_float fAngle = vDir.Degree(_vec3(vDirXZ.x, 0.f, vDirXZ.z));
+
 	if (isnan(fAngle))
 		fAngle = 0.f;
 
 	m_pTransform->Rot_Bill(fAngle);
-
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -125,7 +101,7 @@ void CWormHead::LateUpdate_GameObject(void)
 	if (GetDead())
 		return;
 
-	m_pTransform->Set_Scale({ 1.f, 1.f, 1.f });
+	m_pTransform->Set_Scale({ 1.5f, 1.5f, 1.5f });
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
 	_vec3 vDir = vPos - m_pTransform->m_vInfo[INFO_POS];
@@ -147,7 +123,7 @@ void CWormHead::LateUpdate_GameObject(void)
 
 	else if (fAngleRight > 135.f)
 	{
-		m_pTransform->Set_Scale({ -1.f, 1.f, 1.f });
+		m_pTransform->Set_Scale({ -1.5f, 1.5f, 1.5f });
 		m_pAnimation->SelectState(ANIM_SIDE);
 	}
 
@@ -156,7 +132,7 @@ void CWormHead::LateUpdate_GameObject(void)
 
 	else if (fAngleUp < 135.f)
 	{
-		m_pTransform->Set_Scale({ -1.f, 1.f, 1.f });
+		m_pTransform->Set_Scale({ -1.5f, 1.5f, 1.5f });
 		m_pAnimation->SelectState(ANIM_TOP);
 	}
 	else
@@ -210,7 +186,7 @@ HRESULT CWormHead::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
-	pCollider->Set_BoundingBox({ 1.5f, 1.5f, 1.5f });
+	pCollider->Set_BoundingBox({ 1.8f, 1.8f, 1.8f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
@@ -218,7 +194,7 @@ HRESULT CWormHead::Add_Component()
 	pCollider->Set_BoundingBox({ 70.f, 30.f, 70.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI());
-	//FAILED_CHECK_RETURN(Set_Boss3_AI());
+	FAILED_CHECK_RETURN(Set_Boss3_AI());
 	FAILED_CHECK_RETURN(Init_AI_Behaviours());
 }
 

@@ -29,8 +29,8 @@ HRESULT CRub::Ready_GameObject(const _vec3 & vPos)
 
 _int CRub::Update_GameObject(const _float & fTimeDelta)
 {
-	__super::Update_GameObject(fTimeDelta);
 	if (GetDead()) return OBJ_DEAD;
+	__super::Update_GameObject(fTimeDelta);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 

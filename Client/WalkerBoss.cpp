@@ -15,7 +15,7 @@ CWalkerBoss::~CWalkerBoss()
 
 HRESULT CWalkerBoss::Ready_GameObject(const _vec3 & vPos)
 {
-	m_fSpeed = 10.f;
+	m_fSpeed = 20.f;
 	m_iAttack = 1;
 	m_iHp = 100;
 	m_iMaxHp = 100;
@@ -25,6 +25,8 @@ HRESULT CWalkerBoss::Ready_GameObject(const _vec3 & vPos)
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	HRESULT result = __super::Ready_GameObject();
+
+	m_pShadow->Set_RenderFlag();
 
 	return result;
 }
@@ -37,7 +39,7 @@ _int CWalkerBoss::Update_GameObject(const _float & fTimeDelta)
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
+	
 	return 0;
 }
 
@@ -48,8 +50,41 @@ void CWalkerBoss::LateUpdate_GameObject(void)
 
 void CWalkerBoss::Render_GameObject(void)
 {
+	static _float fCurTime = 0.f, fPreTime = 0.f;
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
+
+	_vec3 vPos = m_pTransform->m_vInfo[INFO_POS];
+	_matrix matWorld, matScale, matRot, matTrans;
+	matWorld.Identity();
+	
+	_float fScale = vPos.y / 3.f;
+
+	if (fScale < 3.f)
+		fScale = 3.f;
+	else if (fScale > 100.f)
+	{
+		fCurTime = Get_WorldTime();
+		if (fCurTime - fPreTime > 4.f)
+			fScale -= (fCurTime - fPreTime) * 15.f;
+	}
+	else
+		fPreTime = Get_WorldTime();
+
+	cout << fScale << endl;
+
+	D3DXMatrixScaling(&matScale, fScale, fScale, fScale);
+
+	D3DXMatrixRotationX(&matRot, D3DXToRadian(90.f));
+
+	D3DXMatrixTranslation(&matTrans, vPos.x, 0.1f, vPos.z);
+
+	matWorld = matScale * matRot * matTrans;
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+
+	m_pTextureCom->Render_Component();
+	m_pShadow->Render_Component();
 }
 
 HRESULT CWalkerBoss::Add_Component()
@@ -58,6 +93,10 @@ HRESULT CWalkerBoss::Add_Component()
 	NULL_CHECK_RETURN(pTexture, E_FAIL);
 	m_uMapComponent[ID_STATIC].emplace(L"Monster_WalkerBoss_Walk_Texture", pTexture);
 	
+	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"BossShadow_Texture", this));
+	NULL_CHECK_RETURN(pTexture, E_FAIL);
+	m_uMapComponent[ID_STATIC].emplace(L"BossShadow_Texture", pTexture);
+
 	CAnimation* pAnimation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	NULL_CHECK_RETURN(pAnimation, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"Animation", pAnimation);
@@ -73,6 +112,10 @@ HRESULT CWalkerBoss::Add_Component()
 	CRcTex* pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].emplace(L"RcTex", pBufferCom);
+
+	m_pShadow = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
+	NULL_CHECK_RETURN(m_pShadow, E_FAIL);
+	m_uMapComponent[ID_STATIC].emplace(L"RcTexShadow", m_pShadow);
 
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);

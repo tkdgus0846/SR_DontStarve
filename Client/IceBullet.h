@@ -4,6 +4,7 @@
 class CIceBullet : public CBullet
 {
 	friend class CBulletPool;
+	friend class CBulletMgr;
 private:
 	explicit CIceBullet(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CIceBullet();

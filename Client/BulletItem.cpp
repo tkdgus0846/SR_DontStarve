@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Weapon.h"
 #include "ItemManager.h"
+#include "..\Engine\SoundMgr.h"
 CBulletItem::CBulletItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -43,17 +44,21 @@ HRESULT CBulletItem::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 10.f, 3.0f, 10.f });
 
-	m_pTransform->Set_BillMode(true);
+	
 
 	return S_OK;
 }
 
 HRESULT CBulletItem::Ready_GameObject(void)
 {
-	_vec3 vScale = { 1.f, 1.f, 0.f };
+	_vec3 vScale = { 0.5f, 0.5f, 1.f };
 	m_pTransform->Set_Pos(20.f, 1.f, 20.f);
 	m_pTransform->Set_Scale(vScale);
 	__super::Ready_GameObject();
+
+	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
+
 	return S_OK;
 }
 
@@ -65,6 +70,8 @@ _int CBulletItem::Update_GameObject(const _float & fTimeDelta)
 
 	if (m_bDrop == true) ItemPatrol(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
+
+	Add_RenderGroup(RENDER_ALPHA, this);
 	
 	return OBJ_NOEVENT;
 }
@@ -122,7 +129,12 @@ void CBulletItem::OnCollisionStay(const Collision * collision)
 {
 	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+	if (pPlayer == nullptr) return;
 
+	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
+	{
+		PLAY_SOUND(L"sfxpickup.wav", SOUND_LOOT, 1.f);
+	}
 	ItemMagnetic(pPlayer);
 }
 

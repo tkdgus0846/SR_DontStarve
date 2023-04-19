@@ -38,7 +38,7 @@ private:
 			
 private:
 	class CRoom*		m_pCurRoom;
-	array<CRoom*, 25>	m_arrRoom;
+	array<CRoom*, 9>	m_arrRoom;
 
 	class CTennel*		m_pTennel[2];	
 

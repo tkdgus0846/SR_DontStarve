@@ -19,6 +19,7 @@ HRESULT CNubBoss::Ready_GameObject(const _vec3 & vPos)
 	m_iAttack = 1;
 	m_iHp = 1;
 
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(25.f, 4.6f, 25.f);
 	m_pTransform->m_vScale = { 2.4f, 2.4f, 2.4f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
@@ -30,6 +31,7 @@ HRESULT CNubBoss::Ready_GameObject(const _vec3 & vPos)
 
 _int CNubBoss::Update_GameObject(const _float & fTimeDelta)
 {
+	cout << m_pTransform->m_vInfo[INFO_POS].y;
 	__super::Update_GameObject(fTimeDelta);
 
 	if (GetDead()) return OBJ_DEAD;

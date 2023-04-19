@@ -32,9 +32,6 @@ HRESULT CDoor::Ready_GameObject(DOOR_DIR eDir, CRoom* pRoom)
 	m_eDir = eDir;
 	m_pRoom = pRoom;
 
-	m_pInTennel = CRoomMgr::GetInstance()->Get_Tennel(0);
-	m_pOutTennel = CRoomMgr::GetInstance()->Get_Tennel(1);
-
 	Set_Door_State();
 
 	return Result;
@@ -42,6 +39,12 @@ HRESULT CDoor::Ready_GameObject(DOOR_DIR eDir, CRoom* pRoom)
 
 _int CDoor::Update_GameObject(const _float & fTimeDelta)
 {
+	if (m_pInTennel == nullptr)
+	{
+		m_pInTennel = CRoomMgr::GetInstance()->Get_Tennel(0);
+		m_pOutTennel = CRoomMgr::GetInstance()->Get_Tennel(1);
+	}
+
 	if (m_bIsOpen)
 	{
 		m_pAnimation->SetInverse(false);
@@ -94,12 +97,12 @@ void CDoor::OnCollisionEnter(const Collision * collsion)
 		switch (m_eDir)
 		{
 		case Engine::DOOR_NORTH:
-			iNextRoomIdx = m_pRoom->Get_Room_Index() + 5;
+			iNextRoomIdx = m_pRoom->Get_Room_Index() + 3;
 			eNextDoor = DOOR_SOUTH;
 			break;
 
 		case Engine::DOOR_SOUTH:
-			iNextRoomIdx = m_pRoom->Get_Room_Index() - 5;
+			iNextRoomIdx = m_pRoom->Get_Room_Index() - 3;
 			eNextDoor = DOOR_NORTH;
 			break;
 

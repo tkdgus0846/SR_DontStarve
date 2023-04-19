@@ -22,6 +22,7 @@ HRESULT CBulletGauge::Ready_GameObject(void)
 
 _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 {
+	
 	CPlayer* player = dynamic_cast<CPlayer*>(Engine::Get_Player());
 	if (player == nullptr) return 0;
 

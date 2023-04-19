@@ -28,13 +28,12 @@ HRESULT CBaller::Ready_GameObject(const _vec3& vPos)
 
 _int CBaller::Update_GameObject(const _float & fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
-	
 
 	return S_OK;
 }
@@ -48,7 +47,6 @@ void CBaller::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
-
 }
 
 HRESULT CBaller::Add_Component()

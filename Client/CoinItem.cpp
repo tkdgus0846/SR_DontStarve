@@ -2,6 +2,7 @@
 #include "Export_Function.h"
 #include "Player.h"
 #include "ItemManager.h"
+#include "..\Engine\SoundMgr.h"
 
 CCoinItem::CCoinItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
@@ -47,6 +48,10 @@ HRESULT CCoinItem::Add_Component()
 HRESULT CCoinItem::Ready_GameObject(void)
 {
 	__super::Ready_GameObject();
+
+	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
+
 	return S_OK;
 }
 
@@ -145,6 +150,12 @@ void CCoinItem::OnCollisionStay(const Collision * collision)
 
 	__super::OnCollisionStay(collision);
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+	if (pPlayer == nullptr) return;
+
+	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
+	{
+		PLAY_SOUND(L"sfxpickup.wav", SOUND_LOOT, 1.f);
+	}
 
 	ItemMagnetic(pPlayer);
 }

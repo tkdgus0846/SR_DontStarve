@@ -21,6 +21,7 @@
 #include "imgui.h"
 #include "ImManager.h"
 #include "FileSystem.h"
+#include "..\Engine\SoundMgr.h"
 CMyEdit::CMyEdit(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_iCurRoomIdx(0)
 	, m_iPreRoomIdx(0)
@@ -68,6 +69,7 @@ HRESULT CMyEdit::Ready_Scene(void)
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	
+	STOP_ALL_BGM;
 	return S_OK;
 }
 

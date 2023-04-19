@@ -78,7 +78,7 @@ private:
 	_bool					m_bAimHack = false;
 	_float					m_AimHackTime = 0.f;
 
-	_int					m_iCoin = 777;
+	_int					m_iCoin;
 	_int					m_iDisc = 0;
 
 	_float					m_fUltimateMax = 100.f;

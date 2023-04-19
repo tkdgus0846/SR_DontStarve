@@ -5,6 +5,14 @@
 #include "MonoBehaviors.h"
 
 #include "RoomMgr.h"
+#include "BulletMgr.h"
+#include "ItemManager.h"
+#include "EffectManager.h"
+
+#include "TileFactory.h"
+#include "MonsterFactory.h"
+#include "MapObjectFactory.h"
+#include "FileSystem.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -58,7 +66,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 	// 6. 쓰레드 ID반환
 	
 	m_hThread = (HANDLE)_beginthreadex(nullptr, 0, Thread_Main, this, 0, nullptr);
-
+	
 	m_eID = eID;
 
 	// 빨간색으로 블랜딩할 멀티 텍스처 용도의 텍스처 파일
@@ -79,13 +87,15 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FireBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/smallExplode_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MeteorPoint_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/MeteorPoint.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FireBall_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/fireBall_%d.png", 4)), E_FAIL);
-
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"EnemyBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/sprEnemyBullet_%d.png", 2)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"VortexBulletBefore_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/Energy_%d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"VortexBulletAfter_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/vortex.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Laser_Red_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/laserbullet-red.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Laser_Blue_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/laserbullet.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SwordBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/sword.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"StarBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Star_%d.png",4)), E_FAIL);
-	
+
+	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"StarBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Star_%d.png",4)), E_FAIL);*/ // -> 로고에서 해주고있음.
 
 	// Monster Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Bub_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/bub_%d.png", 2)), E_FAIL);
@@ -113,10 +123,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BossShadow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Boss/bossShadow.png")), E_FAIL);
 
 	// Effect 텍스쳐
-	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Explosion_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/explosion_%d.png", 5)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ExplosionBlue", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/ExplosionBlue_%d.png", 5)), E_FAIL);
-
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RedBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/redblood_%d.png", 4)), E_FAIL);
 
@@ -124,35 +132,142 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Green.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Red_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Red.png")), E_FAIL);
 
+	static vector<wstring> decoratTile;
 	// Tile Texture
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Level1_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421865.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Wall_Level1_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Floor_Level2_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Wall_Level2_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420377.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLarge #421865", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421865.png")), E_FAIL);
+	decoratTile.push_back(L"FloorLarge #421865");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLarge #421874", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421874.png")), E_FAIL);
+	decoratTile.push_back(L"FloorLarge #421874");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorDirt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorDirt.png")), E_FAIL);
+	decoratTile.push_back(L"FloorDirt");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorEmpty #421205", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorEmpty #421205.png")), E_FAIL);
+	decoratTile.push_back(L"FloorEmpty #421205");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorEmpty #421414", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorEmpty #421414.png")), E_FAIL);
+	decoratTile.push_back(L"FloorEmpty #421414");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorEmpty #421730", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorEmpty #421730.png")), E_FAIL);
+	decoratTile.push_back(L"FloorEmpty #421730");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorEmpty #421769", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorEmpty #421769.png")), E_FAIL);
+	decoratTile.push_back(L"FloorEmpty #421769");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorEmpty", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorEmpty.png")), E_FAIL);
+	decoratTile.push_back(L"FloorEmpty");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrass #421563", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrass #421563.png")), E_FAIL);
+	decoratTile.push_back(L"FloorGrass #421563");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrass.png")), E_FAIL);
+	decoratTile.push_back(L"FloorGrass");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassE #421561", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassE #421561.png")), E_FAIL);
+	decoratTile.push_back(L"FloorGrassE #421561");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassN", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassN.png")), E_FAIL);
+		decoratTile.push_back(L"FloorGrassN");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassNE #421562", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassNE #421562.png")), E_FAIL); 
+	decoratTile.push_back(L"FloorGrassNE #421562");
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassNE", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassNE.png")), E_FAIL);
+	decoratTile.push_back(L"FloorGrassNE");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassNW", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassNW.png")), E_FAIL);
+		decoratTile.push_back(L"FloorGrassNW");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassS #421564", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassS #421564.png")), E_FAIL);
+		decoratTile.push_back(L"FloorGrassS #421564");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassS", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassS.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorGrassS");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassSE #421553", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassSE #421553.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorGrassSE #421553");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassSW", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassSW.png")), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassW #421566", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassW #421566.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorGrassW #421566");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrassW", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrassW.png")), E_FAIL);
+		decoratTile.push_back(L"FloorGrassW");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorHole #421407", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorHole #421407.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorHole #421407");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorHole #421573", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorHole #421573.png")), E_FAIL);
+		decoratTile.push_back(L"FloorHole #421573");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorHole #421724", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorHole #421724.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorHole #421724");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorHole #421777", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorHole #421777.png")), E_FAIL); 
+		decoratTile.push_back(L"FloorHole #421777");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #420592", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #420592.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #420592");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421201", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421201.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421201");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421410", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421410.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421410");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421572", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421572.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421572");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421575", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421575.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421575");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421723", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421723.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421723");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall #421733", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall #421733.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall #421733");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall.png")), E_FAIL);
+		decoratTile.push_back(L"FloorSmall");
+
+
+
+	// WallTexture
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallPanels", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallPanels #420377", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420377.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Dock_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_%d.png", 15)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Open_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_14.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorCrate_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorCrate.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorGrass #421873", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorGrass #421873.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSand.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorIce", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorIce.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSnow", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSnow.png")), E_FAIL);
 
 	// Tile Multi Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBelt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBelt_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBeltCorner", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBeltCorner_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBlood_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorElectric", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorElectric_%d.png", 3)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLava", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorLava_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorOil", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorOil_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorQuicksand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorQuicksand_%d.png", 4)), E_FAIL);
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSwamp", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorSwamp_%d.png", 4)), E_FAIL);
+
+	// Wall Texture
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ShortWall #420376", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/ShortWall #420376.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ShortWall #420588", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/ShortWall #420588.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ShortWall #420740", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/ShortWall #420740.png")), E_FAIL);
 
 	// Gun Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gun", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gun/Gun.png")), E_FAIL);
@@ -171,7 +286,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Hp_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/hud_hearts_%d.png", 5)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Coin_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/sprBigCoin_strip6_%d.png", 6)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Disc_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/data_%d.png", 4)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Num_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Text/tigl_font2_DEPRECATE_%d.png", 42)), E_FAIL);
+	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Num_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Text/tigl_font2_DEPRECATE_%d.png", 42)), E_FAIL);*/
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BossHpBar_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/BossHpBar.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BossHpGuage_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/BossHpGuage.png")), E_FAIL);
 
@@ -219,7 +334,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collider", CCollider::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RigidBody", CRigidbody::Create(m_pGraphicDev)), E_FAIL);
 	
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Animation", CAnimation::Create(m_pGraphicDev)), E_FAIL);
+	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Animation", CAnimation::Create(m_pGraphicDev)), E_FAIL);*/
 	
 	/////////////////////////// 파티클
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Particle", CSnow::Create(m_pGraphicDev)), E_FAIL);
@@ -264,9 +379,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Selector", CSelector::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Root", CRoot::Create(m_pGraphicDev)), E_FAIL);
 
-	Set_String(L"Room Loading..........");
-
-	
+	Set_String(L"Room Loading..........");	
 	// ==임시 코드==
 	const auto& uMapProto = Engine::CProtoMgr::GetInstance()->Get_ProtoMap();
 
@@ -276,9 +389,29 @@ _uint CLoading::Loading_ForStage(void)
 			m_listTags.push_back(iter.first);
 	}
 
+	Set_String(L"ObjectPool Loading..........");
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 25, L"NormalBullet");
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 30, L"FireBullet");
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"IceBullet");
+	/*CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 2, L"VortexBullet");*/
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"SwordBullet");
+
+	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"BulletItem");
+	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"CoinItem");
+	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"HeartItem");
+
+	Set_String(L"Room Loading..........");
+
+	TILE_FACTORY->Ready_Factory(m_pGraphicDev);
+	MONSTER_FACTORY->Ready_Factory(m_pGraphicDev);
+	MAPOBJ_FACTORY->Ready_Factory(m_pGraphicDev);
+	//CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
+
+	ROOM_MGR->Ready_RoomMgr(m_pGraphicDev); // 여기서 룸들을 싹다 만든다.
+	
+	CFileSystem::Load(L"as.dat");
 
 	m_bFinish = true;
-	
 	Set_String(L"Loading Complete!!!!!!!!");
 
 	return 0;

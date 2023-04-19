@@ -27,13 +27,12 @@ HRESULT CWalker::Ready_GameObject(const _vec3& vPos)
 
 _int CWalker::Update_GameObject(const _float & fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
-	
 
 	return S_OK;
 }
