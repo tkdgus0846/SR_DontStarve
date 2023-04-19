@@ -318,7 +318,14 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		}
 		else
 		{
-			m_pCurWeapon->Shot();
+			if (m_pCurWeapon->Get_TacticalScope())
+			{
+				m_pCurWeapon->Shot();
+			}
+			else
+			{
+				m_pCurWeapon->Shot();
+			}
 		}	
 	}
 	else if (Engine::Mouse_Up(DIM_LB))
@@ -359,6 +366,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (Engine::Key_Down(DIK_G))
 	{
 		m_bAimHack = true;
+	}
+
+	if (Engine::Key_Down(DIK_H))
+	{
+		_vec3 Bullet_Dir = Tactical_Bullet_Dir();
+		m_pCurWeapon->Set_TacticalScope();
 	}
 }
 
@@ -431,9 +444,30 @@ void CPlayer::AimHack()
 
 	auto iter = m_vecMonster.begin();
 
-	// 가까운적 에임 고정
-	CCollider* pCollider = dynamic_cast<CCollider*>((*iter)->Get_Component(L"BodyCollider", ID_ALL));
+	for (; iter < m_vecMonster.end();)
+	{
+		// 시야각 범위 설정 (60도)
+		_float fov = D3DXToRadian(77.f);
 
+		// 플레이어 시점에서 몬스터 위치까지의 방향벡터와 거리 구하기
+		D3DXVECTOR3 vDir = (*iter)->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
+		_float fLength = D3DXVec3Length(&vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		// 시야각 범위 내부에 있는 모든 벡터의 내적 구하기
+		_float maxDot = cosf(fov / 2.0f);
+		_float fDot = D3DXVec3Dot(&m_pTransform->m_vInfo[INFO_LOOK], &vDir);
+		if (fDot >= maxDot && fLength <= 500.f)
+		{
+			CCollider* pCollider = dynamic_cast<CCollider*>((*iter)->Get_Component(L"BodyCollider", ID_ALL));
+			Fix_Aim(pCollider);
+			break;
+		} else {++iter;}	
+	}
+}
+
+void CPlayer::Fix_Aim(CCollider* pCollider)
+{
 	_vec3 vDir = pCollider->Get_BoundCenter() - m_pTransform->m_vInfo[INFO_POS];
 	_vec3 vUp, vRight;
 
@@ -451,6 +485,51 @@ void CPlayer::AimHack()
 
 	m_vecMonster.clear();
 }
+
+_vec3 CPlayer::Tactical_Bullet_Dir()
+{
+	if (m_vecMonster.empty())
+	{
+		CLayer* pLayer = Engine::Get_Layer(LAYER_MONSTER);
+		if (pLayer == nullptr) { return _vec3{ 0.f,0.f,0.f }; }
+		pLayer->Get_GameObject_ALL(&m_vecMonster);
+	}
+
+	if (m_vecMonster.empty()) { return _vec3{ 0.f,0.f,0.f }; }
+	std::sort(m_vecMonster.begin(), m_vecMonster.end(), ZComp());
+
+	auto iter = m_vecMonster.begin();
+
+	for (; iter < m_vecMonster.end();)
+	{
+		_float fov = D3DXToRadian(77.f);
+
+		D3DXVECTOR3 vDir = (*iter)->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
+		_float fLength = D3DXVec3Length(&vDir);
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		_float maxDot = cosf(fov / 2.0f);
+		_float fDot = D3DXVec3Dot(&m_pTransform->m_vInfo[INFO_LOOK], &vDir);
+		if (fDot >= maxDot && fLength <= 500.f)
+		{
+			CCollider* pCollider = dynamic_cast<CCollider*>((*iter)->Get_Component(L"BodyCollider", ID_ALL));
+			_vec3 vDir = pCollider->Get_BoundCenter() - m_pTransform->m_vInfo[INFO_POS];
+			_vec3 vUp, vRight;
+
+			vUp = { 0.f, 1.f, 0.f };
+			vDir.Normalize();
+
+			vRight = vUp.Cross(vDir);
+			vUp = vDir.Cross(vRight);
+
+			m_vecMonster.clear();
+
+			return vDir;
+		}
+		else { ++iter; }
+	}
+}
+
 
 
 

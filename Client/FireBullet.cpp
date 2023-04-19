@@ -60,8 +60,6 @@ void CFireBullet::Render_GameObject(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	_vec3 scale = m_pTransform->Get_Scale();
 
-	
-	
 	__super::Render_GameObject();
 }
 

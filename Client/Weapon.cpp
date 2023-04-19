@@ -7,7 +7,9 @@ CWeapon::CWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	m_fAccTime(0.f),
 	m_bEnableShot(true),
 	m_fCycle(1.0f),
-	m_bShooted(false)
+	m_bShooted(false),
+	m_TacticalDir({ 0.f, 0.f, 0.f })
+
 {
 	m_vOffsetTrans = { 0.65f,-1.0f,3.7f };
 }
@@ -27,10 +29,10 @@ void CWeapon::Shot()
 			Add_GameObject(bullet);
 			SpendBullet();
 		}
-			
+
 		m_bShooted = true;
 		m_bEnableShot = false;
-	}	
+	}
 }
 
 _int CWeapon::Update_GameObject(const _float& fTimeDelta)

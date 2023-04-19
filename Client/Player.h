@@ -61,9 +61,10 @@ public:
 	_int			Get_UltiMaxGuage() { return m_fUltimateMax; }
 
 	void			AimHack();
+	void			Fix_Aim(CCollider* pCollider);
+	_vec3			Tactical_Bullet_Dir();
 
 	bool IsObjectInFOV(_float fDistance, _float fRadius, _float fFov);
-
 
 private:
 	virtual HRESULT Add_Component() override;

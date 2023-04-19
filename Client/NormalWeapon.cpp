@@ -50,6 +50,7 @@ CBullet* CNormalWeapon::Shot_Setting()
 	return bullet;	
 }
 
+
 _int CNormalWeapon::Update_GameObject(const _float& fTimeDelta)
 {
 	return __super::Update_GameObject(fTimeDelta);
