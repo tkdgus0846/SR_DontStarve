@@ -33,10 +33,10 @@ HRESULT CBub::Ready_GameObject(const _vec3& vPos)
 
 _int CBub::Update_GameObject(const _float & fTimeDelta)
 {
-	__super::Update_GameObject(fTimeDelta);
 	if (GetDead()) return OBJ_DEAD;
+	__super::Update_GameObject(fTimeDelta);
 
-	cout << m_pTransform->m_vInfo[INFO_POS].y << endl;
+	//cout << m_pTransform->m_vInfo[INFO_POS].y << endl;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 

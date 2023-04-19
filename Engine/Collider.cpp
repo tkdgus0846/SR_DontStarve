@@ -45,7 +45,7 @@ _int CCollider::Update_Component(const _float& fTimeDelta)
 	_int iExit = __super::Update_Component(fTimeDelta);
 	if (iExit != 0) return iExit;
 
-	cout << m_CollisionList.size() << endl;
+	//cout << m_CollisionList.size() << endl;
 	if (m_CollisionList.size() != 0)
 	{
 		int i = 0;

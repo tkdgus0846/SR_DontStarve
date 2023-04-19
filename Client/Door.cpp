@@ -94,12 +94,12 @@ void CDoor::OnCollisionEnter(const Collision * collsion)
 		switch (m_eDir)
 		{
 		case Engine::DOOR_NORTH:
-			iNextRoomIdx = m_pRoom->Get_Room_Index() + 5;
+			iNextRoomIdx = m_pRoom->Get_Room_Index() + 3;
 			eNextDoor = DOOR_SOUTH;
 			break;
 
 		case Engine::DOOR_SOUTH:
-			iNextRoomIdx = m_pRoom->Get_Room_Index() - 5;
+			iNextRoomIdx = m_pRoom->Get_Room_Index() - 3;
 			eNextDoor = DOOR_NORTH;
 			break;
 

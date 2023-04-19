@@ -509,6 +509,9 @@
     <ClInclude Include="OnPlayer.h">
       <Filter>Monobehaviours\Task</Filter>
     </ClInclude>
+    <ClInclude Include="LaserBullet.h">
+      <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -894,6 +897,9 @@
     </ClCompile>
     <ClCompile Include="OnPlayer.cpp">
       <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="LaserBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

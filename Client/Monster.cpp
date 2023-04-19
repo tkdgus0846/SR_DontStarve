@@ -34,7 +34,6 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	_matrix view;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
 
-	//m_pTransform->Set_Billboard(&view);
 	__super::Update_GameObject(fTimeDelta);
 	return 0;
 }
@@ -642,12 +641,39 @@ HRESULT CMonster::Set_Boss3_AI()
 	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
 	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
+	CSequence* pSQChaseAtk = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQChaseAtk, E_FAIL);
+
+	CLookAtTarget* pLook = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
+	NULL_CHECK_RETURN(pLook, E_FAIL);
+	CRandomLook* pRandom = dynamic_cast<CRandomLook*>(Engine::Clone_Proto(L"TSK_RandomLook", this));
+	NULL_CHECK_RETURN(pRandom, E_FAIL);
+
+	CCoolTime* pDecCoolTime1 = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
+	NULL_CHECK_RETURN(pDecCoolTime1, E_FAIL);
+	CCoolTime* pDecCoolTime2 = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
+	NULL_CHECK_RETURN(pDecCoolTime2, E_FAIL);
+	//CMoveLook* pMove = dynamic_cast<CMoveLook*>(Engine::Clone_Proto(L"TSK_Move", this));
+	//NULL_CHECK_RETURN(pMove);
+
 	// 부품 초기설정
+	//pMove->Set_Magnifi(1.f);
+	//pMove->Set_Timer(0.3f);
+	pDecCoolTime1->Set_Timer(7.f);
+	pDecCoolTime2->Set_Timer(10.f);
 
 	// 부품 조립
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern3", Make_BossPattern3()), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SL_RootAI", pSQChaseAtk), E_FAIL);
+
+	//FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime1), E_FAIL);
+	//FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"SQ_1", pRandom), E_FAIL);
+	//FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime2), E_FAIL);
+	FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"SQ_1", pLook), E_FAIL);
+	//FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"SQ_2", pMove), E_FAIL);
+	//FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern3", Make_BossPattern3()), E_FAIL);
+	//FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(10.f, false)), E_FAIL);
 
 	return S_OK;
 }

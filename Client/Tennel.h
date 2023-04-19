@@ -33,7 +33,6 @@ private:
 	Engine::CCollider*		m_pCollider;
 	Engine::CTexture*		m_pTextureCom;
 
-	CTile*		m_pTile;
 	CDoor*		m_pDoor;	// 통로와 연결되어있는 문의 포인터.
 
 public:

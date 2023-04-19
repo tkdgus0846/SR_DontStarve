@@ -22,6 +22,7 @@ protected:
 
 protected:
 	virtual void Register(const wstring& objectType, CreateObjectFunc createFunc);
+	void ExtractTextureKey();
 
 public:
 	CGameObject*	CreateObject(const wstring& objectType);
