@@ -254,4 +254,16 @@ typedef	struct MyMatrix : public D3DXMATRIX
 
 		D3DXMatrixInverse(this, 0, this);
 	}
+
+	// 행렬의 x회전 성분을 추출하는 메서드 입니다.
+
+	_vec3 ExtractRotationX()
+	{
+		_vec3 vRotationXBuffer = { _11, _12, _13 };
+		float fScaleX = vRotationXBuffer.Length();
+		vRotationXBuffer /= fScaleX;
+
+		return vRotationXBuffer;
+	}
+
 }_matrix;

@@ -90,6 +90,7 @@ public:
 
 	_bool	WriteTransformFileForMonster(HANDLE hFile, DWORD& dwByte);
 	_bool	ReadTransformFileForMonster(HANDLE hFile, DWORD& dwByte);
+
 public:
 	HRESULT		Ready_Transform(void);
 	virtual		_int	Update_Component(const _float& fTimeDelta);

@@ -17,7 +17,7 @@
 #include "HardPyramid.h"
 #include "Slider.h"
 #include "ShopNpc.h"
-#include "Tile.h"
+#include  "OnlyCollisionObj.h"
 
 IMPLEMENT_SINGLETON(CRoomMgr)
 
@@ -77,20 +77,7 @@ void CRoomMgr::Create_Default_Room()
 	m_pCurRoom = m_arrRoom[0];
 
 	//====== 임시 코드임 =======
-
-
-	//NPC 잠깐 넣어놓음
-	m_arrRoom[3]->PushBack_GameObj(CShopNpc::Create(m_pGraphicDev));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(30.f, -3.f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(20.f, -3.f, 40.f)));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 1.f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CRub::Create(m_pGraphicDev, _vec3(90.f, 2.4f, 40.f)));
+	m_arrRoom[0]->PushBack_GameObj(COnlyCollisionObj::Create(m_pGraphicDev, _vec3(25.f, 0.f, 25.f),_vec3(20.f, 20.f ,20.f)));
 }
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)
