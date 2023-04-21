@@ -333,6 +333,7 @@
     <ClInclude Include="LoadingBackground.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
+    <ClInclude Include="MiniMapBack.h" />
     <ClInclude Include="MiniGame.h" />
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="MoveUp.h" />
@@ -514,6 +515,7 @@
     <ClCompile Include="MapObjectFactory.cpp" />
     <ClCompile Include="MiniGame.cpp" />
     <ClCompile Include="MiniMap.cpp" />
+    <ClCompile Include="MiniMapBack.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterFactory.cpp" />
     <ClCompile Include="MoveUp.cpp" />

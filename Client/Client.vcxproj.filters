@@ -587,6 +587,9 @@
     <ClInclude Include="LoadingScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="MiniMapBack.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>  
     <ClInclude Include="Door.h">
       <Filter>GameObject\RoomManager\Room</Filter>
     </ClInclude>
@@ -1050,6 +1053,9 @@
     </ClCompile>
     <ClCompile Include="LoadingScene.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMapBack.cpp">
+      <Filter>GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>GameObject\RoomManager\Room</Filter>

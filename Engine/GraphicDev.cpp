@@ -41,7 +41,7 @@ HRESULT CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode, const _uint & iS
 	d3dpp.BackBufferWidth = iSizeX;
 	d3dpp.BackBufferHeight = iSizeY;
 	d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;
-	d3dpp.BackBufferCount = 1;
+	d3dpp.BackBufferCount = 2;
 
 	d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
 	d3dpp.MultiSampleQuality = 0;
@@ -65,6 +65,8 @@ HRESULT CGraphicDev::Ready_GraphicDev(HWND hWnd, WINMODE eMode, const _uint & iS
 
 void CGraphicDev::Render_Begin(D3DXCOLOR Color)
 {
+	
+
 	m_pGraphicDev->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, Color, 1.f, 0);
 	m_pGraphicDev->BeginScene();
 }

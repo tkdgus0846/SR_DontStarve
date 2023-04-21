@@ -5,7 +5,6 @@ CMiniMap::CMiniMap(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
 {
 	Set_ObjTag(L"MiniMap");
-
 }
 
 CMiniMap::~CMiniMap()
@@ -45,12 +44,6 @@ HRESULT CMiniMap::Ready_GameObject(void)
 
 _int CMiniMap::Update_GameObject(const _float & fTimeDelta)
 {
-	_matrix matView;
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	matView.Inverse();
-
-	_vec3 pos = { matView._41, matView._42, matView._43 };
-	Compute_ViewZ(&pos);
 	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
 	
 	__super::Update_GameObject(fTimeDelta);
@@ -102,6 +95,10 @@ void CMiniMap::Render_GameObject(void)
 void CMiniMap::Set_ViewMatrix_UI()
 {
 	D3DXMatrixIdentity(&matWorld);
+	_matrix transmatrix;
+	transmatrix.Translation(0.f, 0.f, 1.f);
+	matWorld = transmatrix;
+
 	D3DXMatrixIdentity(&matView);
 
 	_matrix matTrans;
