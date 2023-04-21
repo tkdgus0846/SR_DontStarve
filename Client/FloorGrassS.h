@@ -14,4 +14,3 @@ private:
 	virtual HRESULT Add_Component() override;
 	virtual void OnCollisionStay(const class Collision* collision);
 };
-

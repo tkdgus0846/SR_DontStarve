@@ -17,8 +17,6 @@ void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 	m_creationMap[objectType].CreateFunc = createFunc;
 	m_vecWstrTag.push_back(objectType.c_str());
 	m_vecStrTag.push_back(CFileSystem::wstrToStr(objectType));
-
-	m_vecStrTag.push_back(CFileSystem::wstrToStr(objectType));
 }
 
 void CFactory::ExtractTextureKey()
@@ -41,7 +39,9 @@ HRESULT CFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CFactory::Release()
 {
-
+	m_creationMap.clear();
+	m_vecWstrTag.clear();
+	m_vecStrTag.clear();
 }
 
 CGameObject * CFactory::CreateObject(const wstring & objectType)

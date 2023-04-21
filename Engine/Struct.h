@@ -130,7 +130,7 @@ public:
 		OtherGameObject(nullptr),
 		intersectBox(BoundingBox())
 	{}
-
+	
 	// 충돌한 방향
 	COL_DIR				CollisionDir;
 	// 내 콜라이더

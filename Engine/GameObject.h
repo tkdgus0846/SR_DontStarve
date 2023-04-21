@@ -59,7 +59,8 @@ public:
 	void			Set_Dir(const _vec3& dir);
 
 	virtual void	SetDead(_bool bDead = true) { m_bDead = bDead; }
-	_bool			GetDead() const { return m_bDead; }
+	_bool			GetDead() const { 
+		return m_bDead; }
 
 	void			Add_Colldier_Info(const _tchar* colName, COLGROUP colGroup);
 	void			Set_LayerID(LAYERID layerID);

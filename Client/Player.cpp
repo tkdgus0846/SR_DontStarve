@@ -11,6 +11,7 @@
 #include "SwordWeapon.h"
 #include "SpreadWeapon.h"
 #include "Calculator.h"
+#include "LaserWeapon.h"
 
 #include "Monster.h"
 #include <algorithm>
@@ -74,9 +75,10 @@ HRESULT CPlayer::Ready_GameObject(void)
 	m_MyWeaponList[BIGSHOT] = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[RAPIDSHOT] = CRapidWeapon::Create(m_pGraphicDev, m_pTransform);
-	m_MyWeaponList[LASERSHOT] = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[EXPLOSIVESHOT] = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[SPREADSHOT] = CSpreadWeapon::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[LASERSHOT] = CLaserWeapon::Create(m_pGraphicDev, m_pTransform);
 
 	Change_Weapon(BIGSHOT);
 
@@ -344,7 +346,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Mouse_Pressing(DIM_LB))
 	{
-		if (m_eCurWeaponType == LASERSHOT)
+		if (m_eCurWeaponType == EXPLOSIVESHOT)
 		{
 			CSwordWeapon* weapon = dynamic_cast<CSwordWeapon*>(m_pCurWeapon);
 			weapon->Gather_Sword(fTimeDelta);
@@ -368,7 +370,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	}
 	else if (Engine::Mouse_Up(DIM_LB))
 	{
-		if (m_eCurWeaponType == LASERSHOT)
+		if (m_eCurWeaponType == EXPLOSIVESHOT)
 			m_pCurWeapon->Shot();
 	}
 

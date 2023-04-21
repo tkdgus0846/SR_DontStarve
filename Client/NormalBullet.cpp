@@ -93,7 +93,6 @@ void CNormalBullet::OnCollisionStay(const Collision* collision)
 		/*CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"RedBlood", pos, { 0.7f,0.7f,0.7f }, 0.1f);
 		Add_GameObject(effect);*/
 
-
 		monster->Get_Damaged(m_Damage);
 		SetDead();
 

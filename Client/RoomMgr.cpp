@@ -17,7 +17,7 @@
 #include "HardPyramid.h"
 #include "Slider.h"
 #include "ShopNpc.h"
-#include "Tile.h"
+#include  "OnlyCollisionObj.h"
 
 IMPLEMENT_SINGLETON(CRoomMgr)
 
