@@ -19,7 +19,7 @@ private:
 	virtual ~CRoom();
 
 public:
-	HRESULT Ready_GameObject(const _float& fVtxCntX, const _float& fVtxCntZ, const _float& fVtxItv);
+	HRESULT Ready_GameObject(STAGEINFO stageInfo, const _float& fVtxCntX, const _float& fVtxCntZ, const _float& fVtxItv);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
@@ -37,7 +37,7 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
-	HRESULT CreateSubset();
+	HRESULT CreateSubset(STAGEINFO stageInfo);
 	void	FreeSubset();
 	
 public:
@@ -83,8 +83,7 @@ private:
 	list<CCollider*> m_ColliderList[COL_STATIC_END];
 
 public:
-	static CRoom*		Create(LPDIRECT3DDEVICE9 pGraphicDev, 
-	const	_float& fVtxCntX = VTXCNTX, const _float& fVtxCntZ = VTXCNTZ, const _float& fVtxItv = VTXITV);
+	static CRoom*		Create(LPDIRECT3DDEVICE9 pGraphicDev, STAGEINFO stageInfo,  const	_float& fVtxCntX = VTXCNTX, const _float& fVtxCntZ = VTXCNTZ, const _float& fVtxItv = VTXITV);
 
 private:
 	virtual void Free(void) override;

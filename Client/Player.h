@@ -12,14 +12,8 @@ class CRigidbody;
 class CCamera;
 class CLayer;
 END
-//
-//struct ZComp
-//{
-//	const bool operator()(CGameObject* a, CGameObject* b)
-//	{
-//		return a->m_pTransform->m_vInfo[INFO_POS].z < b->m_pTransform->m_vInfo[INFO_POS].z;
-//	}
-//};
+
+
 
 class CPlayer : public CCreature
 {

@@ -28,6 +28,7 @@ private:
 public:
 	void Set_Position(_int iFrontorBack);
 	void Set_Door(CDoor* pRoom) { m_pDoor = pRoom; }
+	void Set_Tennel_Texture(STAGEINFO stageInfo);
 
 private:
 	Engine::CCollider*		m_pCollider;

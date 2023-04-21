@@ -34,6 +34,11 @@ HRESULT CMainApp::Ready_MainApp(void)
 	FAILED_CHECK_RETURN(Ready_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
+
+	//SECTION_MGR->Ready_SectionMgr(m_pGraphicDev);
+
+	ROOM_MGR->Ready_RoomMgr(m_pGraphicDev);
+
 	SOUND->Init();
 	
 	PLAY_BGM(L"Title.wav",SOUND_BGM, 1.f);
@@ -58,7 +63,7 @@ void CMainApp::LateUpdate_MainApp(void)
 
 void CMainApp::Render_MainApp(void)
 {
-	Engine::Render_Begin(D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.f));
+	Engine::Render_Begin(D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.f));
 
 	m_pManagementClass->Render_Management(m_pGraphicDev);
 
@@ -119,6 +124,7 @@ void CMainApp::Free(void)
 	CMapObjectFactory::DestroyInstance();
 	//CLoader::DestroyInstance();
 	CRoomMgr::DestroyInstance();
+	//CSectionMgr::DestroyInstance();
 	CImManager::DestroyInstance();
 	CBulletMgr::DestroyInstance();
 	CParticleMgr::DestroyInstance();

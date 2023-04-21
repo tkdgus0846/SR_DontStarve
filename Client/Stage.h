@@ -15,9 +15,15 @@ public:
 	virtual void		LateUpdate_Scene(void)override;
 	virtual void		Render_Scene(void) override;
 
+	void				Next_Stage();
+	
+
 private:
 	_int				m_iCurRoomIdx;
 	_int				m_iPreRoomIdx;
+
+	LOADINGID			m_StageInfo;
+	_bool				m_bNextStageCondition;
 
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

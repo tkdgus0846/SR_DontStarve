@@ -100,10 +100,6 @@ HRESULT CTennel::Add_Component()
 	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"CubeTex", pBufferCom });
 
-	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Level1_Tennel_Texture", this));
-	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"Level1_Tennel_Texture", m_pTextureCom });
-
 	m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_TENNEL));
 	NULL_CHECK_RETURN(m_pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Collider", m_pCollider });
@@ -128,6 +124,28 @@ void CTennel::Set_Position(_int iFrontorBack)
 		m_pCollider->Set_BoundingBox({ 10.f, 10.f, 1.f }, -_vec3(0.f, 0.f, 5.f));
 	}
 
+}
+
+void CTennel::Set_Tennel_Texture(STAGEINFO stageInfo)
+{
+	switch (stageInfo)
+	{
+	case STAGE1:
+		Change_Texture(L"Tennel_Texture", L"Level1_Tennel_Texture");
+		break;
+	case STAGE2:
+		Change_Texture(L"Tennel_Texture", L"Level2_Tennel_Texture");
+		break;
+	case STAGE3:
+		Change_Texture(L"Tennel_Texture", L"Level3_Tennel_Texture");
+		break;
+	case STAGE4:
+		Change_Texture(L"Tennel_Texture", L"Level4_Tennel_Texture");
+		break;
+	default:
+		break;
+	}
+	
 }
 
 CTennel * CTennel::Create(LPDIRECT3DDEVICE9 pGraphicDev)

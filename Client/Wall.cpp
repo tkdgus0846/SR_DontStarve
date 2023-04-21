@@ -70,8 +70,27 @@ void CWall::OnCollisionExit(const Collision* collision)
 {
 }
 
-HRESULT CWall::Ready_GameObject(void)
+HRESULT CWall::Ready_GameObject(STAGEINFO stageInfo)
 {
+
+	switch (stageInfo)
+	{
+	case STAGE1:
+		m_WallTextureName = L"WallPanels";
+		break;
+	case STAGE2:
+		m_WallTextureName = L"WallPanels #420377";
+		break;
+	case STAGE3:
+		m_WallTextureName = L"WallPanels #420744";
+		break;
+	case STAGE4:
+		m_WallTextureName = L"WallPanels #420595";
+		break;
+	default:
+		break;
+	}
+	
 	HRESULT result = __super::Ready_GameObject();
 
 	return result;
@@ -105,9 +124,9 @@ HRESULT CWall::Add_Component()
 	NULL_CHECK_RETURN(pBufferCom, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"WallTex", pBufferCom });
 
-	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"WallPanels", this));
+	m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(m_WallTextureName, this));
 	NULL_CHECK_RETURN(m_pTextureCom, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"WallPanels", m_pTextureCom });
+	m_uMapComponent[ID_RENDER].insert({ m_WallTextureName, m_pTextureCom });
 
 
 	// Wall이랑 Floor 룸의 콜라이더 리스트에 넣어줘야함.
@@ -118,11 +137,11 @@ HRESULT CWall::Add_Component()
 	return S_OK;
 }
 
-CWall * CWall::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CWall * CWall::Create(LPDIRECT3DDEVICE9 pGraphicDev, STAGEINFO stageInfo)
 {
 	CWall*		pInstance = new CWall(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(stageInfo)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

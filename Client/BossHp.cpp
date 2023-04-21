@@ -47,7 +47,7 @@ HRESULT CBossHp::Ready_GameObject(void)
 
 _int CBossHp::Update_GameObject(const _float & fTimeDelta)
 {
-	if (Get_GameObject(LAYER_MONSTER, L"WalkerBoss") == nullptr)
+	if (Get_GameObject(LAYER_BOSS, L"WalkerBoss") == nullptr)
 		return OBJ_NOEVENT;
 	else
 	{
