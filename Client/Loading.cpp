@@ -448,8 +448,11 @@ _uint CLoading::Loading_ForStage(void)
 	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 25, L"NormalBullet");
 	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 30, L"FireBullet");
 	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"IceBullet");
-	/*CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 2, L"VortexBullet");*/
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"LaserBullet");
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 15, L"EnemyBullet");
+	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 30, L"RedLaserBullet");
 	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"SwordBullet");
+
 
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"BulletItem");
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"CoinItem");
@@ -513,6 +516,7 @@ _uint CLoading::Loading_ForStage4(void)
 	ROOM_MGR->Create_Default_Room(STAGE4); // 여기서 룸들을 싹다 만든다.
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+
 	CFileSystem::Load(L"as.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");

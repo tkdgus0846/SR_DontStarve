@@ -589,7 +589,7 @@
     </ClInclude>
     <ClInclude Include="MiniMapBack.h">
       <Filter>GameObject\UI</Filter>
-    </ClInclude>  
+    </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>GameObject\RoomManager\Room</Filter>
     </ClInclude>
@@ -628,6 +628,9 @@
     </ClInclude>
     <ClInclude Include="TreeBoss.h">
       <Filter>GameObject\Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="LaserBullet.h">
+      <Filter>GameObject\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1116,6 +1119,9 @@
     </ClCompile>
     <ClCompile Include="TreeBoss.cpp">
       <Filter>GameObject\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="LaserBullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

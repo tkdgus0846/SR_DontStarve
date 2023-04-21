@@ -77,11 +77,5 @@ void CMiniMapBack::Free(void)
 		Safe_Release(*iter);
 	}
 
-	auto iter = m_arrBool.begin();
-	for (; iter < m_arrBool.end(); iter++)
-	{
-		Safe_Release(*iter);
-	}
-
 	__super::Free();
 }
