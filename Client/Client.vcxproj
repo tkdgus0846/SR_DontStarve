@@ -331,8 +331,11 @@
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="LaserBullet.h" />
     <ClInclude Include="LaserWeapon.h" />
+    <ClInclude Include="LoadingBackground.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
+    <ClInclude Include="MiniMapBack.h" />
+    <ClInclude Include="MiniGame.h" />
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="MoveUp.h" />
     <ClInclude Include="ImPickBox.h" />
@@ -387,8 +390,9 @@
     <ClInclude Include="SnowTile.h" />
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
+    <ClInclude Include="Sonic.h" />
+    <ClInclude Include="SonicGame.h" />
     <ClInclude Include="SpreadWeapon.h" />
-    <ClInclude Include="Stage2.h" />
     <ClInclude Include="SwampTile.h" />
     <ClInclude Include="SwordBullet.h" />
     <ClInclude Include="SwordWeapon.h" />
@@ -505,13 +509,16 @@
     <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="LeapJump.cpp" />
     <ClCompile Include="Loading.cpp" />
+    <ClCompile Include="LoadingBackground.cpp" />
     <ClCompile Include="LoadingScene.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="LookAtTarget.cpp" />
     <ClCompile Include="MainApp.cpp" />
     <ClCompile Include="MapObj.cpp" />
     <ClCompile Include="MapObjectFactory.cpp" />
+    <ClCompile Include="MiniGame.cpp" />
     <ClCompile Include="MiniMap.cpp" />
+    <ClCompile Include="MiniMapBack.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterFactory.cpp" />
     <ClCompile Include="MoveUp.cpp" />
@@ -552,9 +559,10 @@
     <ClCompile Include="SnowTile.cpp" />
     <ClCompile Include="SoftPyramid.cpp" />
     <ClCompile Include="Cryder.cpp" />
+    <ClCompile Include="Sonic.cpp" />
+    <ClCompile Include="SonicGame.cpp" />
     <ClCompile Include="SpreadWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="Stage2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">Create</PrecompiledHeader>

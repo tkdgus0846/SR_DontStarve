@@ -27,8 +27,11 @@ public:
 	void				Set_StaticLayerArr(vector<CLayer*>* layerArr);
 	void				Remove_GameObject(LAYERID layerID, class CGameObject* obj);
 
-protected:
+	void				Reset_Scene();
 	HRESULT			Add_GameObject(class CGameObject* pObj);
+
+protected:
+	
 	CGameObject*	Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
 	void			Play_SlowTime(const _float & fTimeDelta);
 	void			Reset_SlowTime(const _float & fTimeDelta);

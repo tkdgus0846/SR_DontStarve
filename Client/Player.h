@@ -12,14 +12,8 @@ class CRigidbody;
 class CCamera;
 class CLayer;
 END
-//
-//struct ZComp
-//{
-//	const bool operator()(CGameObject* a, CGameObject* b)
-//	{
-//		return a->m_pTransform->m_vInfo[INFO_POS].z < b->m_pTransform->m_vInfo[INFO_POS].z;
-//	}
-//};
+
+
 
 class CPlayer : public CCreature
 {
@@ -77,6 +71,8 @@ private:
 
 	_bool					m_bAimHack = false;
 	_float					m_AimHackTime = 0.f;
+	_bool					m_bTactic = false;
+	_float					m_TacticTime = 0.f;
 
 	_int					m_iCoin;
 	_int					m_iDisc = 0;

@@ -41,6 +41,14 @@ public:
 	void Set_BillMode(_bool bSwitch) { m_bIsBill = bSwitch; }
 	_bool Get_BillMode() { return m_bIsBill; }
 
+
+	void Rot_Reset()
+	{
+		m_vInfo[0] = { 1.f,0.f,0.f };
+		m_vInfo[1] = { 0.f,1.f,0.f };
+		m_vInfo[2] = { 0.f,0.f,1.f };
+	}
+
 	// 제대로 돌아가는지 확인 해봐야함.
 	void Set_Dir(const _vec3& dir);
 

@@ -36,6 +36,9 @@ public:
 	// 순수 가상함수 왜냐하면 게임오브젝트에 컴포넌트가 추가되지 않을일은 없으니까
 	virtual HRESULT		Add_Component() PURE;
 
+	void				Remove_Texture(const _tchar* name, COMPONENTID componentID = ID_RENDER);
+	void				Change_Texture(const _tchar* beforeName, const _tchar* afterName, COMPONENTID componentID = ID_RENDER);
+
 	// 에디터에서만 사용해야됨.
 	unordered_map<const _tchar*, CComponent*>* Get_ComponentMap() { return m_uMapComponent; }
 
@@ -77,7 +80,7 @@ public:
 
 protected:
 	// 에디터에서만 사용하세요.
-	void			Remove_Render_Component(const _tchar* pComponentTag);
+	/*void			Remove_Render_Component(const _tchar* pComponentTag);*/
 	// 에디터에서만 사용하세요.
 	void			Add_Render_Component();
 

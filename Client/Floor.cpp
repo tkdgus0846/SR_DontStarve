@@ -16,9 +16,27 @@ CFloor::~CFloor()
 {
 }
 
-HRESULT CFloor::Ready_GameObject(void)
+HRESULT CFloor::Ready_GameObject(STAGEINFO stageInfo)
 {
-	HRESULT result = __super::Ready_GameObject();
+	switch (stageInfo)
+	{
+	case STAGE1:
+		m_FloorTextureName = L"FloorLarge #421865";
+		break;
+	case STAGE2:
+		m_FloorTextureName = L"FloorLarge #421874";
+		break;
+	case STAGE3:
+		m_FloorTextureName = L"FloorLarge #421871";
+		break;
+	case STAGE4:
+		m_FloorTextureName = L"FloorLarge #421204";
+		break;
+	default:
+		break;
+	}
+
+	HRESULT result = __super::Ready_GameObject(); // 컴포넌트 추가해주는작업
 
 	return result;
 }
@@ -51,6 +69,10 @@ void CFloor::OnCollisionEnter(const Collision * collsion)
 
 void CFloor::OnCollisionStay(const Collision * collision)
 {
+
+	if (Get_WorldTime() < 3.f)
+		return;
+
 	CCreature* creature = dynamic_cast<CCreature*>(collision->OtherGameObject);
 	if (creature == nullptr) return;
 
@@ -65,6 +87,11 @@ void CFloor::OnCollisionExit(const Collision * collision)
 {
 }
 
+void CFloor::SetTextureName(const _tchar* name)
+{
+	m_FloorTextureName = name;
+}
+
 HRESULT CFloor::Add_Component(void)
 {
 	CComponent* pComp;
@@ -72,9 +99,9 @@ HRESULT CFloor::Add_Component(void)
 	NULL_CHECK_RETURN(pComp, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"FloorTex", pComp });
 
-	pComp = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"FloorLarge #421865",this));
+	pComp = dynamic_cast<CTexture*>(Engine::Clone_Proto(m_FloorTextureName,this));
 	NULL_CHECK_RETURN(pComp, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"FloorLarge #421865", pComp });
+	m_uMapComponent[ID_RENDER].insert({ m_FloorTextureName, pComp });
 
 	CCollider*	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ENVIRONMENT ));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
@@ -86,11 +113,11 @@ HRESULT CFloor::Add_Component(void)
 	return S_OK;
 }
 
-CFloor* CFloor::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CFloor* CFloor::Create(LPDIRECT3DDEVICE9 pGraphicDev, STAGEINFO stageInfo)
 {
 	CFloor*		pInstance = new CFloor(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(stageInfo)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

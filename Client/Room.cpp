@@ -39,7 +39,7 @@ CRoom::~CRoom()
 {
 }
 
-HRESULT CRoom::Ready_GameObject(const _float& fVtxCntX, const _float& fVtxCntZ, const _float& fVtxItv)
+HRESULT CRoom::Ready_GameObject(STAGEINFO stageInfo, const _float& fVtxCntX, const _float& fVtxCntZ, const _float& fVtxItv)
 {
 	m_fVtxItv = fVtxItv;
 	m_fVtxCntX = fVtxCntX;
@@ -49,7 +49,7 @@ HRESULT CRoom::Ready_GameObject(const _float& fVtxCntX, const _float& fVtxCntZ, 
 		m_vecLayer.push_back(CLayer::Create());
 
 	HRESULT result = __super::Ready_GameObject();
-	FAILED_CHECK_RETURN(CreateSubset(), E_FAIL);
+	FAILED_CHECK_RETURN(CreateSubset(stageInfo), E_FAIL);
 	
 	return result;
 }
@@ -67,20 +67,20 @@ void CRoom::Render_GameObject(void)
 {
 }
 
-HRESULT CRoom::CreateSubset()
+HRESULT CRoom::CreateSubset(STAGEINFO stageInfo)
 {
 	//CGameObject* tmp = TILE_FACTORY->CreateObject(L"LavaTile");
 	//PushBack_GameObj(tmp);
 	//tmp->Set_Pos(_vec3{ 25.f, 0.f, 25.f });
 
 	// 바닥 생성
-	m_pFloor = CFloor::Create(m_pGraphicDev);
+	m_pFloor = CFloor::Create(m_pGraphicDev, stageInfo);
 	NULL_CHECK_RETURN(m_pFloor, E_FAIL);
 	PushBack_GameObj(m_pFloor);
 
 	//// 벽 4면 생성
 	for (auto& Wall : m_apWall) {
-		Wall = CWall::Create(m_pGraphicDev);
+		Wall = CWall::Create(m_pGraphicDev, stageInfo);
 		PushBack_GameObj(Wall);
 	}
 
@@ -347,19 +347,19 @@ _bool CRoom::WriteRoomFile(HANDLE hFile, DWORD& dwByte)
 _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 {
 	// 오브젝트 해제
-	for (auto& iter = m_vecGameObj.begin(); iter != m_vecGameObj.end();)
-	{
-		if (dynamic_cast<CFloor*>(*iter) || dynamic_cast<CWall*>(*iter)
-			|| dynamic_cast<CDoor*>(*iter) || dynamic_cast<CShopNpc*>(*iter))
-		{
-			++iter;
-		}
-		else
-		{
-			(*iter)->SetDead();
-			iter = m_vecGameObj.erase(iter);
-		}
-	}
+	//for (auto& iter = m_vecGameObj.begin(); iter != m_vecGameObj.end();)
+	//{
+	//	if (dynamic_cast<CFloor*>(*iter) || dynamic_cast<CWall*>(*iter)
+	//		|| dynamic_cast<CDoor*>(*iter) || dynamic_cast<CShopNpc*>//(*iter))
+	//	{
+	//		++iter;
+	//	}
+	//	else
+	//	{
+	//		(*iter)->SetDead();
+	//		iter = m_vecGameObj.erase(iter);
+	//	}
+	//}
 
 	// 룸 변수 로드
 	ReadFile(hFile, &m_fVtxCntX, sizeof(_float), &dwByte, nullptr);
@@ -432,12 +432,11 @@ HRESULT CRoom::Add_Component(void)
 	return S_OK;
 }
 
-CRoom* CRoom::Create(LPDIRECT3DDEVICE9 pGraphicDev,
-	const _float& fVtxCntX, const _float& fVtxCntZ, const _float& fVtxItv)
+CRoom* CRoom::Create(LPDIRECT3DDEVICE9 pGraphicDev, STAGEINFO stageInfo, const _float& fVtxCntX, const _float& fVtxCntZ, const _float& fVtxItv)
 {
 	CRoom*		pInstance = new CRoom(pGraphicDev);
 	
-	if (FAILED(pInstance->Ready_GameObject(fVtxCntX, fVtxCntZ, fVtxItv)))
+	if (FAILED(pInstance->Ready_GameObject(stageInfo, fVtxCntX, fVtxCntZ, fVtxItv)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

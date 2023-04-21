@@ -1,6 +1,7 @@
 #pragma once
 #include "UI.h"
 #include "Player.h"
+#include "MiniMapBack.h"
 BEGIN(Engine)
 
 class CRcTex;
@@ -45,4 +46,3 @@ public:
 private:
 	virtual void Free(void) override;
 };
-

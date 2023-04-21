@@ -8,6 +8,8 @@ class CCollider;
 class CLayer;
 END
 
+
+
 class CRoomMgr : public CBase
 {
 	DECLARE_SINGLETON(CRoomMgr);
@@ -18,6 +20,7 @@ public:
 
 public:
 	HRESULT Ready_RoomMgr(LPDIRECT3DDEVICE9	pGraphicDev);
+	void	Release_All_Room();
 
 	class CRoom*		Get_CurRoom() { return m_pCurRoom; }
 	void				Set_CurRoom(const _uint iIndex);
@@ -32,15 +35,17 @@ public:
 	list<CCollider*>* Get_CurColliderList(_int iIndex);
 	CRoom* Get_Room(const _int iIndex) { return m_arrRoom[iIndex]; }
 	
+	void			Create_Default_Room(STAGEINFO stageInfo);
+	void			Push_Back_Obj(_int iIndex, CGameObject* pObj);
 
-private:
-	void			Create_Default_Room();
+	void			Set_Tennel_Texture(STAGEINFO stageInfo);
 			
 private:
 	class CRoom*		m_pCurRoom;
 	array<CRoom*, 9>	m_arrRoom;
 
 	class CTennel*		m_pTennel[2];	
+
 
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 

@@ -13,6 +13,7 @@
 #include "MonsterFactory.h"
 #include "MapObjectFactory.h"
 #include "FileSystem.h"
+#include "ShopNpc.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -36,10 +37,21 @@ unsigned int CLoading::Thread_Main(void * pArg)
 
 	switch (pLoading->Get_LoadingID())
 	{
+	case LOADING_EDITSTAGE:
+		iFlag = pLoading->Loading_ForEditStage();
+		break;
 	case LOADING_STAGE:
 		iFlag = pLoading->Loading_ForStage();
 		break;
-	
+	case LOADING_STAGE2:
+		iFlag = pLoading->Loading_ForStage2();
+		break;
+	case LOADING_STAGE3:
+		iFlag = pLoading->Loading_ForStage3();
+		break;
+	case LOADING_STAGE4:
+		iFlag = pLoading->Loading_ForStage4();
+		break;
 	case LOADING_BOSS:
 		break;
 	}
@@ -64,22 +76,32 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 	// 4. 쓰레드 함수를 통해 가공하고자 하는 데이터의 주소
 	// 5. 쓰레드의 생성 및 실행을 조절하기 위한 FLAG 값, 기본 값으로 0
 	// 6. 쓰레드 ID반환
+
+	m_bFinish = false;
 	
 	m_hThread = (HANDLE)_beginthreadex(nullptr, 0, Thread_Main, this, 0, nullptr);
 	
 	m_eID = eID;
 
 	// 빨간색으로 블랜딩할 멀티 텍스처 용도의 텍스처 파일
-	IDirect3DBaseTexture9*			redTexture;
-	FAILED_CHECK_RETURN(D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/CollisionDebug/Red.png", (LPDIRECT3DTEXTURE9*)&redTexture), E_FAIL);
-	m_pGraphicDev->SetTexture(1, redTexture);
-
 	return S_OK;
+}
+
+_uint CLoading::Loading_ForEditStage(void)
+{
+	Loading_ForStage();
+
+	return 0;
 }
 
 _uint CLoading::Loading_ForStage(void)
 {
 	Set_String(L"Texture Loading....");
+
+	IDirect3DBaseTexture9*			redTexture;
+	FAILED_CHECK_RETURN(D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/CollisionDebug/Red.png", (LPDIRECT3DTEXTURE9*)&redTexture), E_FAIL);
+	m_pGraphicDev->SetTexture(1, redTexture);
+
 
 	// Bullet Texture
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"NormalBullet_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Bullet/bigbullet_%d.png", 2)), E_FAIL);
@@ -232,13 +254,33 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSmall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorSmall.png")), E_FAIL);
 		decoratTile.push_back(L"FloorSmall");
 
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLarge #421871", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421871.png")), E_FAIL);
+		decoratTile.push_back(L"FloorLarge #421871");
+
+		/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLarge #421871", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421871.png")), E_FAIL);
+		decoratTile.push_back(L"FloorLarge #421871");*/
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLarge #421204", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421204.png")), E_FAIL);
+		decoratTile.push_back(L"FloorLarge #421204");
+
 
 
 	// WallTexture
 
+	// 기본
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallPanels", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels.png")), E_FAIL);
 
+	// 정글
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallPanels #420377", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420377.png")), E_FAIL);
+
+	// 설원
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallPanels #420595", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420595.png")), E_FAIL);
+	
+	// 사막
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallPanels #420744", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/WallPanels #420744.png")), E_FAIL);
+
+
+
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Dock_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_%d.png", 15)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Open_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/dock_14.png")), E_FAIL);
@@ -302,7 +344,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MiniMap_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/hud_map.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MapPos_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/mapPos.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ESWN_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/ESWN.png")), E_FAIL);
-	
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MiniMapBack_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/MiniMapBack_%d.png", 15)), E_FAIL);
+
 	// Item
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SmallCoin_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/sprCoin_strip6_%d.png", 6)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BulletItem_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/sprBullet_%d.png", 2)), E_FAIL);
@@ -313,6 +356,8 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Level1_Tennel_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Level/Level1_Tennel.dds")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Level2_Tennel_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Level/Level2_Tennel.dds")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Level3_Tennel_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Level/Level3_Tennel.dds")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Level4_Tennel_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Level/Level4_Tennel.dds")), E_FAIL);
 
 	// NPC
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"shopkeeperidle_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/shopkeeperidle_0.png")), E_FAIL);
@@ -400,20 +445,68 @@ _uint CLoading::Loading_ForStage(void)
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"CoinItem");
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"HeartItem");
 
-	Set_String(L"Room Loading..........");
+	Set_String(L"Factory Loading..........");
 
 	TILE_FACTORY->Ready_Factory(m_pGraphicDev);
 	MONSTER_FACTORY->Ready_Factory(m_pGraphicDev);
 	MAPOBJ_FACTORY->Ready_Factory(m_pGraphicDev);
 	//CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
 
-	ROOM_MGR->Ready_RoomMgr(m_pGraphicDev); // 여기서 룸들을 싹다 만든다.
+	Set_String(L"Room Loading..........");
+	
+	ROOM_MGR->Create_Default_Room(STAGE1);	
+	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 	
 	CFileSystem::Load(L"as.dat");
-
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");
 
+	return 0;
+}
+
+_uint CLoading::Loading_ForStage2(void)
+{
+	Set_String(L"Room Loading..........");
+	//SECTION_MGR->Create_Section2();
+	ROOM_MGR->Release_All_Room();
+	ROOM_MGR->Set_Tennel_Texture(STAGE2);
+	ROOM_MGR->Create_Default_Room(STAGE2); // 여기서 룸들을 싹다 만든다.
+
+	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+	CFileSystem::Load(L"as.dat");
+
+	Set_String(L"Loading Complete!!!!!!!!");
+	m_bFinish = true;
+	return 0;
+}
+
+_uint CLoading::Loading_ForStage3(void)
+{
+	Set_String(L"Room Loading..........");
+	ROOM_MGR->Release_All_Room();
+	ROOM_MGR->Set_Tennel_Texture(STAGE3);
+	ROOM_MGR->Create_Default_Room(STAGE3); // 여기서 룸들을 싹다 만든다.
+
+	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+	CFileSystem::Load(L"as.dat");
+
+	Set_String(L"Loading Complete!!!!!!!!");
+	m_bFinish = true;
+	return 0;
+}
+
+_uint CLoading::Loading_ForStage4(void)
+{
+	Set_String(L"Room Loading..........");
+	ROOM_MGR->Release_All_Room();
+	ROOM_MGR->Set_Tennel_Texture(STAGE4);
+	ROOM_MGR->Create_Default_Room(STAGE4); // 여기서 룸들을 싹다 만든다.
+
+	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+	CFileSystem::Load(L"as.dat");
+
+	Set_String(L"Loading Complete!!!!!!!!");
+	m_bFinish = true;
 	return 0;
 }
 

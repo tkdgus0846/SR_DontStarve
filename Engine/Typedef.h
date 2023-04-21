@@ -223,7 +223,7 @@ typedef	struct MyMatrix : public D3DXMATRIX
 	// ex)
 	// MyMatrix matProj;
 	// matProj.PerspectiveFovLH();
-	void PerspectiveFovLH(_float fov = D3DXToRadian(60.f), _float aspect = (WINCX / WINCY), _float zn = 1.f, _float zf = 1000.f)
+	void PerspectiveFovLH(_float fov = D3DXToRadian(60.f), _float aspect = ((_float)WINCX / WINCY), _float zn = 1.f, _float zf = 1000.f)
 	{
 		D3DXMatrixPerspectiveFovLH(this, fov, aspect, zn, zf);
 	}
