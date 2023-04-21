@@ -77,7 +77,7 @@ void CRoomMgr::Create_Default_Room()
 	m_pCurRoom = m_arrRoom[0];
 
 	//====== 임시 코드임 =======
-	m_arrRoom[0]->PushBack_GameObj(COnlyCollisionObj::Create(m_pGraphicDev, _vec3(25.f, 0.f, 25.f),_vec3(20.f, 20.f ,20.f)));
+
 }
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)
