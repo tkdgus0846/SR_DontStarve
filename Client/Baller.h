@@ -1,6 +1,7 @@
 #pragma once
-#include "Monster.h"
-class CBaller : public CMonster
+#include "Enemy.h"
+
+class CBaller : public CEnemy
 {
 private:
 	explicit CBaller(LPDIRECT3DDEVICE9 pGraphicDev);

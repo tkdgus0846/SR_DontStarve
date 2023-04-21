@@ -64,6 +64,7 @@ void CManagement::LateUpdate_Management()
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENVIRONMENT);
 	Engine::Check_Collision(COL_PLAYERBULLET, COL_OBJ);
 	Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
+	Engine::Check_Collision(COL_ENEMYBULLET, COL_ENVIRONMENT);
 	
 	// 플레이어와 다른 객체들의 관계
 	Engine::Check_Collision(COL_PLAYER, COL_OBJ);
@@ -74,6 +75,7 @@ void CManagement::LateUpdate_Management()
 	Engine::Check_Collision(COL_PLAYER, COL_TRIGGER);
 	Engine::Check_Collision(COL_PLAYER, COL_ENVIRONMENT);
 	Engine::Check_Collision(COL_PLAYER, COL_ROOMITEM);
+	Engine::Check_Collision(COL_PLAYER, COL_EXPLOSION);
 	/*Engine::Check_Collision(COL_TRIGGER, COL_PLAYERBULLET);*/
 	
 	// 몬스터와 다른 객체들의 관계

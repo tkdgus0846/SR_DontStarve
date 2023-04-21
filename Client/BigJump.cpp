@@ -18,7 +18,7 @@ CBigJump::~CBigJump()
 
 HRESULT CBigJump::Ready_Behavior()
 {
-	m_fInit = m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y;
+	m_fInit = m_pGameObject->m_pTransform->m_vScale.y;
 	m_fCurTime = 0.f;
 	m_fPreTime = 0.f;
 	return S_OK;
@@ -41,7 +41,8 @@ _int CBigJump::Update_Component(const _float & fTimeDelta)
 
 	if (fY < 0 && m_bStop)
 	{
-		_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
+		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y = 220.f;
+		m_pGameObject->m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 		m_fCurTime = Get_WorldTime();
 
 		if (bJump)
@@ -64,6 +65,7 @@ _int CBigJump::Update_Component(const _float & fTimeDelta)
 
 	if (m_fInit > m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y)
 	{
+		m_pGameObject->m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y = m_fInit;
 		m_fPreTime = m_fCurTime;
 		m_fTime = 0.f;

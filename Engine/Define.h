@@ -1,5 +1,7 @@
 #pragma once
 
+#define		Default_Window_Pos		2200
+
 #define		OBJ_NOEVENT		0
 #define		OBJ_DEAD		1
 #define		OBJ_RETPOOL		2

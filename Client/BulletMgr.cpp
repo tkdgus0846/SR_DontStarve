@@ -5,6 +5,8 @@
 #include "IceBullet.h"
 #include "VortexBullet.h"
 #include "SwordBullet.h"
+#include "RedLaserBullet.h"
+#include "EnemyBullet.h"
 
 IMPLEMENT_SINGLETON(CBulletMgr)
 
@@ -79,6 +81,14 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 		else if (name == L"SwordBullet")
 		{
 			pBullet = CSwordBullet::Create(pDevice);
+		}
+		else if (name == L"RedLaserBullet")
+		{
+			pBullet = CRedLaserBullet::Create(pDevice);
+		}
+		else if (name == L"EnemyBullet")
+		{
+			pBullet = CEnemyBullet::Create(pDevice);
 		}
 		++m_iCreateCnt;
 		//cout << m_iCreateCnt << endl;

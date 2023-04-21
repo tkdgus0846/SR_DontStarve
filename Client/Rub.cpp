@@ -3,7 +3,7 @@
 #include "Export_Function.h"
 
 CRub::CRub(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CMonster(pGraphicDev)
+	:CEnemy(pGraphicDev)
 {
 	Set_ObjTag(Tag());
 }
@@ -24,7 +24,7 @@ HRESULT CRub::Ready_GameObject(const _vec3 & vPos)
 
 	HRESULT result = __super::Ready_GameObject();
 
-	return S_OK;
+	return result;
 }
 
 _int CRub::Update_GameObject(const _float & fTimeDelta)
@@ -76,11 +76,6 @@ HRESULT CRub::Add_Component()
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 70.f, 10.f, 70.f });
-
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"EvasBullet", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
-	pCollider->Set_BoundingBox({ 15.f, 6.f, 15.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
 	FAILED_CHECK_RETURN(Set_PatrolAndFollow_AI(), E_FAIL);

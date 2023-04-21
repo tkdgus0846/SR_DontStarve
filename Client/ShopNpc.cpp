@@ -156,12 +156,3 @@ void CShopNpc::Free(void)
 {
 	__super::Free();
 }
-
-void CShopNpc::Serialization(HANDLE hFile, DWORD & dwByte)
-{
-}
-
-void CShopNpc::Deserialization(HANDLE hFile, DWORD & dwByte)
-{
-	
-}

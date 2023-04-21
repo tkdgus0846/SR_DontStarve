@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Floor.h"
 
+#include "WormHead.h"
+#include "WormBody.h"
+#include "WormTail.h"
 #include "Export_Function.h"
 #include "BossHp.h"
 #include "Creature.h"
@@ -19,7 +22,7 @@ CFloor::~CFloor()
 HRESULT CFloor::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
-
+	
 	return result;
 }
 
@@ -51,6 +54,11 @@ void CFloor::OnCollisionEnter(const Collision * collsion)
 
 void CFloor::OnCollisionStay(const Collision * collision)
 {
+	if (dynamic_cast<CWormHead*>(collision->OtherGameObject) ||
+		dynamic_cast<CWormBody*>(collision->OtherGameObject) ||
+		dynamic_cast<CWormTail*>(collision->OtherGameObject))
+		return;
+
 	CCreature* creature = dynamic_cast<CCreature*>(collision->OtherGameObject);
 	if (creature == nullptr) return;
 

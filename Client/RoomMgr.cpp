@@ -7,6 +7,7 @@
 
 #include "NubBoss.h"
 #include "WalkerBoss.h"
+#include "TreeBoss.h"
 #include "WormHead.h"
 #include "WormBody.h"
 #include "WormTail.h"
@@ -16,6 +17,7 @@
 #include "SoftPyramid.h"
 #include "HardPyramid.h"
 #include "Slider.h"
+#include "Speyeder.h"
 #include "ShopNpc.h"
 #include "Tile.h"
 
@@ -80,17 +82,24 @@ void CRoomMgr::Create_Default_Room()
 
 
 	//NPC 잠깐 넣어놓음
-	m_arrRoom[3]->PushBack_GameObj(CShopNpc::Create(m_pGraphicDev));
+	//m_arrRoom[3]->PushBack_GameObj(CShopNpc::Create(m_pGraphicDev));
 
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(30.f, -3.f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(20.f, -3.f, 40.f)));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 1.f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CRub::Create(m_pGraphicDev, _vec3(90.f, 2.4f, 40.f)));
+	// 보스 테스트용
+	m_arrRoom[6]->PushBack_GameObj(CNubBoss::Create(m_pGraphicDev, _vec3(25.f, 0.f, 145.f)));
+	m_arrRoom[7]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(85.f, 0.f, 145.f)));
+	//m_arrRoom[4]->PushBack_GameObj(CWormHead::Create(m_pGraphicDev, _vec3(85.f, 0.f, 85.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CWormHead::Create(m_pGraphicDev, _vec3(25.f, 0.f, 25.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CWalkerBoss::Create(m_pGraphicDev, _vec3(25.f, 0.f, 25.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CNubBoss::Create(m_pGraphicDev, _vec3(25.f, 0.f, 25.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CSpeyeder::Create(m_pGraphicDev, _vec3(25.f, 0.f, 25.f)));
+	m_arrRoom[0]->PushBack_GameObj(CTreeBoss::Create(m_pGraphicDev, _vec3(25.f, 0.f, 25.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
+	
+	//m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(30.f, -3.f, 40.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(20.f, -3.f, 40.f)));
+	
+	//m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 1.f, 40.f)));
+	//m_arrRoom[0]->PushBack_GameObj(CRub::Create(m_pGraphicDev, _vec3(90.f, 2.4f, 40.f)));
 }
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)

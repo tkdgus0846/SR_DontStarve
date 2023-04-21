@@ -22,7 +22,7 @@ CJump::~CJump()
 
 HRESULT CJump::Ready_Behavior()
 {
-	m_fInit = m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y;
+	m_fInit = m_pGameObject->m_pTransform->m_vScale.y;
 
 	return S_OK;
 }
@@ -38,7 +38,6 @@ _int CJump::Update_Component(const _float & fTimeDelta)
 	if (pAnimation)
 		pAnimation->SelectState(ANIM_JUMP);
 
-	// 점프했을때 떨어지는 고점을 바꾸면 될거같긴한데
 	m_fTime += fTimeDelta * 7.f;
 
 	_float fY = m_fForce * m_fTime - 4.9f * m_fTime * m_fTime;

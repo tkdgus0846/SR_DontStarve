@@ -258,7 +258,7 @@ HRESULT CPlayer::Add_Component(void)
 
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CPlayer*		pInstance = new CPlayer(pGraphicDev);
+	CPlayer* pInstance = new CPlayer(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -287,8 +287,8 @@ void CPlayer::Free(void)
 
 void CPlayer::Key_Input(const _float & fTimeDelta)
 {
-	_vec3		vDir;
-	_vec3		vRight;
+	_vec3 vDir;
+	_vec3 vRight;
 	m_pTransform->Get_Info(INFO_LOOK, &vDir);
 	m_pTransform->Get_Info(INFO_RIGHT, &vRight);
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "Monster.h"
+#include "Enemy.h"
 
 BEGIN(Engine)
 
@@ -38,10 +38,5 @@ public:
 
 private:
 	virtual void Free(void) override;
-protected:
-	virtual void Serialization(HANDLE hFile, DWORD & dwByte) override;
-
-	virtual void Deserialization(HANDLE hFile, DWORD & dwByte) override;
-
 };
 

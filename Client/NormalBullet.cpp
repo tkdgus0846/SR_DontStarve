@@ -50,13 +50,11 @@ _int CNormalBullet::Update_GameObject(const _float& fTimeDelta)
 		return OBJ_RETPOOL;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
-	
 
 	__super::Update_GameObject(fTimeDelta);
 
 	m_pTransform->Move_Walk(m_fSpeed*2.f, fTimeDelta);
 
-	
 	Add_RenderGroup(RENDER_ALPHA, this);
 	
 	return OBJ_NOEVENT;
@@ -71,17 +69,14 @@ void CNormalBullet::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
-	
 }
 
 void CNormalBullet::OnCollisionEnter(const Collision* collsion)
 {
-
 }
 
 void CNormalBullet::OnCollisionStay(const Collision* collision)
 {
-
 	__super::OnCollisionStay(collision);
 
 	CMonster* monster = dynamic_cast<CMonster*>(collision->OtherGameObject);
@@ -98,8 +93,6 @@ void CNormalBullet::OnCollisionStay(const Collision* collision)
 		SetDead();
 
 		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
-		
-		//CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
 		
 		STOP_PLAY_SOUND(L"sfxHurt.wav", SOUND_EFFECT, 1.f);
 		Add_GameObject(particle);
@@ -131,7 +124,6 @@ void CNormalBullet::OnCollisionStay(const Collision* collision)
 
 void CNormalBullet::OnCollisionExit(const Collision* collision)
 {
-	
 }
 
 HRESULT CNormalBullet::Add_Component()

@@ -6,7 +6,6 @@ CWalkerBoss::CWalkerBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
 	Set_LayerID(LAYER_MONSTER);
-	Set_ObjTag(Tag());
 }
 
 CWalkerBoss::~CWalkerBoss()
@@ -58,20 +57,18 @@ void CWalkerBoss::Render_GameObject(void)
 	_matrix matWorld, matScale, matRot, matTrans;
 	matWorld.Identity();
 	
-	_float fScale = vPos.y / 3.f;
+	_float fScale = vPos.y / 2.3;
 
 	if (fScale < 3.f)
 		fScale = 3.f;
-	else if (fScale > 100.f)
+	else if (fScale > 80.f)
 	{
 		fCurTime = Get_WorldTime();
-		if (fCurTime - fPreTime > 4.f)
-			fScale -= (fCurTime - fPreTime) * 15.f;
+		if (fCurTime - fPreTime > 4.2f)
+			fScale -= (fCurTime - fPreTime) * 5.5f;
 	}
 	else
 		fPreTime = Get_WorldTime();
-
-	cout << fScale << endl;
 
 	D3DXMatrixScaling(&matScale, fScale, fScale, fScale);
 
@@ -125,12 +122,7 @@ HRESULT CWalkerBoss::Add_Component()
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"Range", pCollider);
-	pCollider->Set_BoundingBox({ 70.f, 10.f, 70.f });
-
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"EvasBullet", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].emplace(L"EvasBullet", pCollider);
-	pCollider->Set_BoundingBox({ 15.f, 6.f, 15.f });
+	pCollider->Set_BoundingBox({ 100.f, 10.f, 100.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Boss2_AI(), E_FAIL);

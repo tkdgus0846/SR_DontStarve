@@ -1,7 +1,7 @@
 #pragma once
-#include "Monster.h"
+#include "Enemy.h"
 class CRub :
-	public CMonster
+	public CEnemy
 {
 private:
 	explicit CRub(LPDIRECT3DDEVICE9 pGraphicDev);

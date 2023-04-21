@@ -4,12 +4,12 @@
 #include "Export_Utility.h"
 
 CRandomLook::CRandomLook(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CBehavior(pGraphicDev)
+	: CBehavior(pGraphicDev), m_bIsAircraft(true)
 {
 }
 
 CRandomLook::CRandomLook(const CRandomLook & rhs)
-	: CBehavior(rhs)
+	: CBehavior(rhs), m_bIsAircraft(rhs.m_bIsAircraft)
 {
 }
 
@@ -28,16 +28,20 @@ _int CRandomLook::Update_Component(const _float & fTimeDelta)
 	_vec3 vMin(-180.f, 0.f, -180.f);
 	_vec3 vMax(180.f, 0.f, 180.f);
 
+	if (m_bIsAircraft)
+	{
+		vMin = { -10.f, -210.f, -10.f };
+		vMax = { 10.f, -110.f, 10.f };
+	}
+
 	GetRandomVector(&vRandomLook, &vMin, &vMax);
 	vRandomLook.Normalize();
 
-	m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK] = vRandomLook;
+	if (m_bIsAircraft)
+		m_pGameObject->m_pTransform->Set_Dir(vRandomLook);
+	else
+		m_pGameObject->m_pTransform->Set_Dir(_vec3(vRandomLook.x, vRandomLook.y, vRandomLook.z));
 
-	_vec3 vLookPos = m_pGameObject->m_pTransform->m_vInfo[INFO_POS] +
-		m_pGameObject->m_pTransform->m_vInfo[INFO_LOOK];
-
-	m_pGameObject->m_pTransform->Set_Target(vLookPos);
-	
 	return BEHAVIOR_SUCCES;
 }
 

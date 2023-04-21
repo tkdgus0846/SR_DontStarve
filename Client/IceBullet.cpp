@@ -37,13 +37,16 @@ HRESULT CIceBullet::Ready_GameObject(void)
 _int CIceBullet::Update_GameObject(const _float & fTimeDelta)
 {
 	Aging(fTimeDelta);
-	if (GetDead()) return OBJ_RETPOOL;
+
+	if (GetDead()) 
+		return OBJ_RETPOOL;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	__super::Update_GameObject(fTimeDelta);
 
 	m_pTransform->Move_Walk(m_fSpeed*2.f, fTimeDelta);
+
 	Add_RenderGroup(RENDER_ALPHA, this);
 
 	return OBJ_NOEVENT;
@@ -52,7 +55,6 @@ _int CIceBullet::Update_GameObject(const _float & fTimeDelta)
 void CIceBullet::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
-
 }
 
 void CIceBullet::Render_GameObject(void)
@@ -63,7 +65,6 @@ void CIceBullet::Render_GameObject(void)
 
 void CIceBullet::OnCollisionEnter(const Collision * collsion)
 {
-	
 }
 
 void CIceBullet::OnCollisionStay(const Collision * collision)

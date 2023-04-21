@@ -10,7 +10,6 @@ CWormBody::CWormBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pTail(nullptr), m_fDir(0.f)
 {
 	ZeroMemory(m_vDest, sizeof(_vec3));
-	Set_ObjTag(Tag());
 }
 
 CWormBody::~CWormBody()
@@ -185,12 +184,13 @@ HRESULT CWormBody::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
-	pCollider->Set_BoundingBox({ 1.8f, 1.8f, 1.8f });
+	pCollider->Set_BoundingBox({ 2.9f, 2.9f, 2.9f });
 
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].emplace(L"Range", pCollider);
-	pCollider->Set_BoundingBox({ 1.f, 1.f, 1.f });
+	//FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
+	//FAILED_CHECK_RETURN(Set_Basic_Attack(L"EnemyBullet", 1.f, 10.f));
+	//FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
+
+	return S_OK;
 }
 
 void CWormBody::Move(const _float & fTimeDelta)
@@ -225,9 +225,9 @@ void CWormBody::Move(const _float & fTimeDelta)
 	
 	m_pTransform->Rot_Bill(fAngle * m_fDir);
 
-	if (fLength < 2.f)
+	if (fLength < 2.7f)
 		m_pTransform->Move_Walk(0.1f, fTimeDelta);
-	else if(fLength > 3.5f)
+	else if(fLength > 4.f)
 		m_pTransform->Move_Walk(m_fSpeed * 1.5f, fTimeDelta);
 	else
 		m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
@@ -238,18 +238,6 @@ CGameObject * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPo
 	CWormBody* pInstance = new CWormBody(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
-	{
-		Safe_Release(pInstance);
-		return nullptr;
-	}
-	return pInstance;
-}
-
-CGameObject * CWormBody::Create(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	CWormBody* pInstance = new CWormBody(pGraphicDev);
-
-	if (FAILED(pInstance->Ready_GameObject({})))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

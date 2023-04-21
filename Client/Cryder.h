@@ -1,7 +1,7 @@
 #pragma once
-#include "Monster.h"
+#include "Enemy.h"
 
-class CCryder : public CMonster
+class CCryder : public CEnemy
 {
 private:
 	explicit CCryder(LPDIRECT3DDEVICE9 pGraphicDev);

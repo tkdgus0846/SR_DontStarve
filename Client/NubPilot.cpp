@@ -1,32 +1,31 @@
-#include "Guppi.h"
+#include "NubPilot.h"
 
 #include "Export_Function.h"
 
-CGuppi::CGuppi(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CMonster(pGraphicDev)
+CNubPilot::CNubPilot(LPDIRECT3DDEVICE9 pGraphicDev)
+	:CEnemy(pGraphicDev)
 {
 	Set_ObjTag(Tag());
-
 }
 
-CGuppi::~CGuppi()
+CNubPilot::~CNubPilot()
 {
 }
 
-HRESULT CGuppi::Ready_GameObject(const _vec3& vPos)
+HRESULT CNubPilot::Ready_GameObject(const _vec3& vPos)
 {
 	m_fSpeed = 10.f;
 
-	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
+	m_pTransform->m_vScale = { 1.2f, 1.2f, 1.2f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 
 	HRESULT result = __super::Ready_GameObject();
 
-	return S_OK;
+	return result;
 }
 
-_int CGuppi::Update_GameObject(const _float & fTimeDelta)
+_int CNubPilot::Update_GameObject(const _float & fTimeDelta)
 {
 	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
@@ -38,29 +37,28 @@ _int CGuppi::Update_GameObject(const _float & fTimeDelta)
 	return S_OK;
 }
 
-void CGuppi::LateUpdate_GameObject(void)
+void CNubPilot::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
 }
 
-void CGuppi::Render_GameObject(void)
+void CNubPilot::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
-HRESULT CGuppi::Add_Component()
+HRESULT CNubPilot::Add_Component()
 {
-	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Guppi_Blue_Texture", this));
-	NULL_CHECK_RETURN(texture, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Monster_Guppi_Blue_Texture", texture });
-
 	CAnimation* animation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	NULL_CHECK_RETURN(animation, E_FAIL);
-
-	animation->BindAnimation(ANIM_WALK, texture, 0.3f);
+	m_uMapComponent[ID_ALL].emplace(L"Animation", animation);
 	animation->SelectState(ANIM_WALK);
-	m_uMapComponent[ID_ALL].insert({ L"Animation", animation });
+
+	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Nub_Pilot_Texture", this));
+	NULL_CHECK_RETURN(texture, E_FAIL);
+	m_uMapComponent[ID_STATIC].insert({ L"Monster_Nub_Pilot_Texture", texture });
+	animation->BindAnimation(ANIM_WALK, texture, 0.3f);
 
 	CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
@@ -69,28 +67,23 @@ HRESULT CGuppi::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox({ 0.6f, 0.6f, 0.6f });
+	pCollider->Set_BoundingBox({ 2.4f, 2.4f, 2.4f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
-	pCollider->Set_BoundingBox({ 50.f, 10.f, 50.f });
-
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"EvasBullet", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
-	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
+	pCollider->Set_BoundingBox({ 50.f, 20.f, 50.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
-	FAILED_CHECK_RETURN(Set_PatrolAndFollow_AI(), E_FAIL);
+	FAILED_CHECK_RETURN(Set_PAF_AttckAI(L"RedLaserBullet"), E_FAIL);
 	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;
 }
 
-CGuppi * CGuppi::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
+CNubPilot * CNubPilot::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 {
-	CGuppi* pInstance = new CGuppi(pGraphicDev);
+	CNubPilot* pInstance = new CNubPilot(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
@@ -101,9 +94,9 @@ CGuppi * CGuppi::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 	return pInstance;
 }
 
-CGameObject * CGuppi::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CNubPilot::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CGuppi* pInstance = new CGuppi(pGraphicDev);
+	CNubPilot* pInstance = new CNubPilot(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
 	{
@@ -114,7 +107,7 @@ CGameObject * CGuppi::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CGuppi::Free(void)
+void CNubPilot::Free(void)
 {
 	__super::Free();
 }

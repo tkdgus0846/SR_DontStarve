@@ -3,7 +3,7 @@
 #include "Export_Function.h"
 
 CTurret::CTurret(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CMonster(pGraphicDev)
+	:CEnemy(pGraphicDev)
 {
 	Set_ObjTag(Tag());
 
@@ -23,7 +23,7 @@ HRESULT CTurret::Ready_GameObject(const _vec3& vPos)
 
 	HRESULT result = __super::Ready_GameObject();
 
-	return S_OK;
+	return result;
 }
 
 _int CTurret::Update_GameObject(const _float & fTimeDelta)
@@ -78,13 +78,8 @@ HRESULT CTurret::Add_Component()
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 50.f, 10.f, 50.f });
 
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"EvasBullet", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
-	pCollider->Set_BoundingBox({ 2.5f, 2.5f, 2.5f });
-
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
-	FAILED_CHECK_RETURN(Set_TurretAI(), E_FAIL);
+	FAILED_CHECK_RETURN(Set_TurretAI(1.f), E_FAIL);
 	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;

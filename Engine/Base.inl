@@ -16,9 +16,7 @@ unsigned long CBase::Release(void)
 	if (0 == m_dwRefCnt)
 	{
 		Free();
-
 		delete this;
-
 		return 0;
 	}
 

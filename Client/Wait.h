@@ -15,6 +15,11 @@ public:
 	virtual void LateUpdate_Component(void) override {};
 	virtual void Render_Component(void) override {};
 
+	void Set_ReturnValue(_bool bReturn) { m_bRetVal = bReturn; }
+
+private:
+	_bool m_bRetVal;
+
 public:
 	static CWait* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
