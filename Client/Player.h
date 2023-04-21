@@ -77,6 +77,8 @@ private:
 
 	_bool					m_bAimHack = false;
 	_float					m_AimHackTime = 0.f;
+	_bool					m_bTactic = false;
+	_float					m_TacticTime = 0.f;
 
 	_int					m_iCoin;
 	_int					m_iDisc = 0;

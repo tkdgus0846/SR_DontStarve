@@ -84,6 +84,20 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 			m_AimHackTime = 0.f;
 		}
 	}
+
+	if (m_bTactic)
+	{
+		m_TacticTime += fTimeDelta;
+		_vec3 Bullet_Dir = Tactical_Bullet_Dir();
+		m_pCurWeapon->Set_TacticalScopeOn(Bullet_Dir);
+		if (m_TacticTime > 10.f)
+		{
+			m_bTactic = false;
+			m_pCurWeapon->Set_TacticalScopeOff();
+			m_AimHackTime = 0.f;
+		}
+	}
+
 	// m_planeVec
 	if (m_bFix)
 	{
@@ -370,8 +384,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Key_Down(DIK_H))
 	{
-		_vec3 Bullet_Dir = Tactical_Bullet_Dir();
-		m_pCurWeapon->Set_TacticalScope();
+		m_bTactic = true;
 	}
 }
 
@@ -491,11 +504,11 @@ _vec3 CPlayer::Tactical_Bullet_Dir()
 	if (m_vecMonster.empty())
 	{
 		CLayer* pLayer = Engine::Get_Layer(LAYER_MONSTER);
-		if (pLayer == nullptr) { return _vec3{ 0.f,0.f,0.f }; }
+		if (pLayer == nullptr) { return m_pTransform->m_vInfo[INFO_LOOK]; }
 		pLayer->Get_GameObject_ALL(&m_vecMonster);
 	}
 
-	if (m_vecMonster.empty()) { return _vec3{ 0.f,0.f,0.f }; }
+	if (m_vecMonster.empty()) { return _vec3{ 0,0,0 }; }
 	std::sort(m_vecMonster.begin(), m_vecMonster.end(), ZComp());
 
 	auto iter = m_vecMonster.begin();

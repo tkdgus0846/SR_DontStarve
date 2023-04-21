@@ -332,6 +332,7 @@
     <ClInclude Include="LaserBullet.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
+    <ClInclude Include="MiniMapBack.h" />
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="MoveUp.h" />
     <ClInclude Include="ImPickBox.h" />
@@ -509,6 +510,7 @@
     <ClCompile Include="MapObj.cpp" />
     <ClCompile Include="MapObjectFactory.cpp" />
     <ClCompile Include="MiniMap.cpp" />
+    <ClCompile Include="MiniMapBack.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterFactory.cpp" />
     <ClCompile Include="MoveUp.cpp" />

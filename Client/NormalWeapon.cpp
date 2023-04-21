@@ -41,13 +41,23 @@ CBullet* CNormalWeapon::Shot_Setting()
 	_vec3 bulletDir = cameraAt - m_pTransform->m_vInfo[INFO_POS];
 	bulletDir.Normalize();
 
-	CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, {0.5f,0.5f,1.f}, false, 40.f);
+	if (m_bTacticalScope && m_TacticalDir != _vec3{ 0,0,0 })
+	{
+		CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], m_TacticalDir, { 0.5f,0.5f,1.f }, false, 40.f);
+		STOP_PLAY_SOUND(L"sfxBigBullet.wav", SOUND_EJECT, 1.f);
+		m_CurBulletNum++;
 
-	
-	STOP_PLAY_SOUND(L"sfxBigBullet.wav", SOUND_EJECT, 1.f);
-	m_CurBulletNum++;
+		return bullet;
+	}
+	else
+	{
+		CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"NormalBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS], bulletDir, { 0.5f,0.5f,1.f }, false, 40.f);
+		STOP_PLAY_SOUND(L"sfxBigBullet.wav", SOUND_EJECT, 1.f);
+		m_CurBulletNum++;
 
-	return bullet;	
+		return bullet;
+	}
+
 }
 
 

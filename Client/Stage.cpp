@@ -23,6 +23,7 @@
 #include "Disc.h"
 #include "WeaponType.h"
 #include "MiniMap.h"
+#include "MiniMapBack.h"
 #include "BossHp.h"
 #include "UltimateUI.h"
 
@@ -86,6 +87,7 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CDisc::Create(m_pGraphicDev));
 	Add_GameObject(CWeaponType::Create(m_pGraphicDev));
 	Add_GameObject(CMiniMap::Create(m_pGraphicDev));
+	Add_GameObject(CMiniMapBack::Create(m_pGraphicDev));
 	Add_GameObject(CGunUI::Create(m_pGraphicDev));
 
 
