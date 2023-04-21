@@ -87,7 +87,7 @@ HRESULT CPlayer::Ready_GameObject(void)
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
 	if (GetDead()) return OBJ_DEAD;
-
+	InteractTile(fTimeDelta);
 	/*cout << m_pTransform->m_vInfo[INFO_LOOK].x << " " << m_pTransform->m_vInfo[INFO_LOOK].y << " " << m_pTransform->m_vInfo[INFO_LOOK].z << endl;*/
 	cout << m_pTransform->m_vInfo[INFO_POS].y << endl;
 	/*cout << ROOM_MGR->Get_Tennel(0) << " " << ROOM_MGR->Get_Tennel(1) << endl;*/
@@ -435,6 +435,18 @@ void CPlayer::Fix_Mouse()
 
 	ClientToScreen(g_hWnd, &ptMouse);
 	SetCursorPos(ptMouse.x, ptMouse.y);
+}
+
+void CPlayer::InteractTile(_float fTimeDelta)
+{
+	CFloorTile* pTile = CRoomMgr::GetInstance()->Get_CurRoom()->GetCurFloorTile(this);
+
+	if (!pTile) return;
+
+	InteractInfo tInfo;
+	tInfo.pGameObject = this;
+	tInfo._fTimeDelta = fTimeDelta;
+	pTile->InteractGameObject(&tInfo);
 }
 
 bool CPlayer::IsObjectInFOV(_float fDistance, _float fRadius, _float fFov)

@@ -632,6 +632,12 @@
     <ClInclude Include="LaserBullet.h">
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="NullFloorTile.h">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClInclude>
+    <ClInclude Include="IInteractableTile.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1122,6 +1128,9 @@
     </ClCompile>
     <ClCompile Include="LaserBullet.cpp">
       <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="NullFloorTile.cpp">
+      <Filter>GameObject\Tile\FloorTile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

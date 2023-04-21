@@ -65,7 +65,7 @@ private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Move(const _float& fTimeDelta);
 	void		Fix_Mouse();
-
+	void		InteractTile(_float fTimeDelta);
 private:
 	_bool					m_bFix;
 

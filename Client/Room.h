@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "FloorTile.h"
 
 class CWall;
 class CTile;
@@ -24,6 +25,7 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
+	CFloorTile* GetCurFloorTile(CGameObject* pGameObject);
 	CDoor* Get_Door(DOOR_DIR eDir) { return m_apDoor[eDir].second; }
 	CFloor* GetFloor() const { return m_pFloor; }
 	CWall* GetWallArray(_uint index) const { return m_apWall[index]; }
@@ -41,9 +43,7 @@ private:
 	void	FreeSubset();
 	
 public:
-	
 	void EraseGameObject(CGameObject* obj);
-	
 
 	void FloorSubSet();
 	void PlaceSubSet();
@@ -77,6 +77,8 @@ private:
 	array<CWall*, 4>	m_apWall;
 	array<pair<_bool, CDoor*>, 4>	m_apDoor;
 	DOOR_TYPE			m_eDoorType;
+
+	array<array<CFloorTile*, VTXCNTX - 1>, VTXCNTZ - 1> m_pTileArray;
 	
 private:
 	vector<CLayer*> m_vecLayer;
