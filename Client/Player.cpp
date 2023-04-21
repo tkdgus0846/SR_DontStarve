@@ -18,6 +18,26 @@
 
 #include "SoundMgr.h"
 
+struct ZComp
+{
+	const bool operator()(CGameObject* a, CGameObject* b)
+	{
+		if (a == nullptr || b == nullptr) { return false; }
+		CMonster* pMonsterA = dynamic_cast<CMonster*>(a);
+		CMonster* pMonsterB = dynamic_cast<CMonster*>(b);
+		if (pMonsterA == nullptr || pMonsterB == nullptr) { return false; }
+
+		_vec3 aPos = pMonsterA->m_pTransform->m_vInfo[INFO_POS];
+		_vec3 bPos = pMonsterB->m_pTransform->m_vInfo[INFO_POS];
+
+		_float aDistance = CCalculator::DistanceToPlayer(aPos);
+		_float bDistance = CCalculator::DistanceToPlayer(bPos);
+
+		return aDistance < bDistance;
+	}
+};
+
+
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCreature(pGraphicDev)
 	, m_bFix(true)
@@ -66,8 +86,8 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
 	if (GetDead()) return OBJ_DEAD;
 
-	/*cout << m_pTransform->m_vInfo[INFO_POS].x << " " << m_pTransform->m_vInfo[INFO_POS].y << " " << m_pTransform->m_vInfo[INFO_POS].z << endl;*/
-	
+	/*cout << m_pTransform->m_vInfo[INFO_LOOK].x << " " << m_pTransform->m_vInfo[INFO_LOOK].y << " " << m_pTransform->m_vInfo[INFO_LOOK].z << endl;*/
+	cout << m_pTransform->m_vInfo[INFO_POS].y << endl;
 	/*cout << ROOM_MGR->Get_Tennel(0) << " " << ROOM_MGR->Get_Tennel(1) << endl;*/
 	
 	//cout << ROOM_MGR->Get_Room(3)->m_vecLayer[LAYER_NPC]->Get_GameObject(L"ShopNpc")->m_pTransform->m_vInfo[INFO_POS].x << endl;
@@ -80,6 +100,10 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		AimHack();
 		if (m_AimHackTime > 10.f)
 		{
+			_vec3 lookDir = m_pTransform->m_vInfo[INFO_LOOK];
+			lookDir.y = 0.f;
+			m_pTransform->Set_Dir(lookDir);
+
 			m_bAimHack = false;
 			m_AimHackTime = 0.f;
 		}
@@ -336,14 +360,14 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Mouse_Pressing(DIM_RB))
 	{
-		CCamera* playerCamera = dynamic_cast<CCamera*>(Engine::Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
+		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Component(L"Player_Camera", ID_UPDATE));
 
 		playerCamera->Set_FOV(D3DXToRadian(30.f));
 	}
 	
 	if (Engine::Mouse_Up(DIM_RB))
 	{
-		CCamera* playerCamera = dynamic_cast<CCamera*>(Engine::Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE));
+		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Component(L"Player_Camera", ID_UPDATE));
 
 		playerCamera->Set_FOV(D3DXToRadian(60.f));
 	}
@@ -398,25 +422,6 @@ void CPlayer::Fix_Mouse()
 	SetCursorPos(ptMouse.x, ptMouse.y);
 }
 
-struct ZComp
-{
-	const bool operator()(CGameObject* a, CGameObject* b)
-	{
-		if (a == nullptr || b == nullptr) { return false; }
-		CMonster* pMonsterA = dynamic_cast<CMonster*>(a);
-		CMonster* pMonsterB = dynamic_cast<CMonster*>(b);
-		if (pMonsterA == nullptr || pMonsterB == nullptr) { return false; }
-
-		_vec3 aPos = pMonsterA->m_pTransform->m_vInfo[INFO_POS];
-		_vec3 bPos = pMonsterB->m_pTransform->m_vInfo[INFO_POS];
-
-		_float aDistance = CCalculator::DistanceToPlayer(aPos);
-		_float bDistance = CCalculator::DistanceToPlayer(bPos);
-
-		return aDistance < bDistance;
-	}
-};
-
 bool CPlayer::IsObjectInFOV(_float fDistance, _float fRadius, _float fFov)
 {
 	// 객체의 반지름을 포함한 객체 대각선의 길이
@@ -469,17 +474,8 @@ void CPlayer::AimHack()
 void CPlayer::Fix_Aim(CCollider* pCollider)
 {
 	_vec3 vDir = pCollider->Get_BoundCenter() - m_pTransform->m_vInfo[INFO_POS];
-	_vec3 vUp, vRight;
-
-	vUp = { 0.f, 1.f, 0.f };
-	vDir.Normalize();
-
-	vRight = vUp.Cross(vDir);
-	vUp = vDir.Cross(vRight);
-
-	m_pTransform->m_vInfo[INFO_LOOK] = vDir;
-	m_pTransform->m_vInfo[INFO_RIGHT] = vRight;
-	m_pTransform->m_vInfo[INFO_UP] = vUp;
+	
+	m_pTransform->Set_Dir(vDir);
 
 	//cout << pCollider->Get_BoundCenter().x << " " << pCollider->Get_BoundCenter().y << " " << pCollider->Get_BoundCenter().z << endl;
 

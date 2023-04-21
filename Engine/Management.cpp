@@ -32,6 +32,18 @@ HRESULT CManagement::Set_Scene(CScene * pScene)
 
 	m_pScene = pScene;
 
+	m_bChangingStage = false;
+
+	return S_OK;
+}
+
+HRESULT CManagement::Set_Scene_NotDelete(CScene* pScene)
+{
+	Engine::Clear_RenderGroup();
+	m_pScene = pScene;
+
+	m_bChangingStage = true;
+
 	return S_OK;
 }
 
@@ -58,33 +70,40 @@ void CManagement::LateUpdate_Management()
 		return;
 	}
 
-	// 총알과 객체들의 관계
-	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
-	Engine::Check_Collision(COL_PLAYERBULLET, COL_DETECTION);
-	Engine::Check_Collision(COL_PLAYERBULLET, COL_ENVIRONMENT);
-	Engine::Check_Collision(COL_PLAYERBULLET, COL_OBJ);
-	Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
+	if (m_bChangingStage == true) return;
+
+	// 스테이지가 로딩되고 있으면 아래의 충돌검사를 수행하면 안된다.
+	if (m_bChangingStage == false)
+	{
+		// 총알과 객체들의 관계
+		Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
+		Engine::Check_Collision(COL_PLAYERBULLET, COL_DETECTION);
+		Engine::Check_Collision(COL_PLAYERBULLET, COL_ENVIRONMENT);
+		Engine::Check_Collision(COL_PLAYERBULLET, COL_OBJ);
+		Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
+
+		// 플레이어와 다른 객체들의 관계
+		Engine::Check_Collision(COL_PLAYER, COL_OBJ);
+		Engine::Check_Collision(COL_PLAYER, COL_ITEM);
+		Engine::Check_Collision(COL_PLAYER, COL_TENNEL);
+		Engine::Check_Collision(COL_PLAYER, COL_ENEMY);
+		Engine::Check_Collision(COL_PLAYER, COL_DETECTION);
+		Engine::Check_Collision(COL_PLAYER, COL_TRIGGER);
+		Engine::Check_Collision(COL_PLAYER, COL_ENVIRONMENT);
+		Engine::Check_Collision(COL_PLAYER, COL_ROOMITEM);
+		/*Engine::Check_Collision(COL_TRIGGER, COL_PLAYERBULLET);*/
+
+		// 몬스터와 다른 객체들의 관계
+		Engine::Check_Collision(COL_ENEMY, COL_ENEMY);
+		Engine::Check_Collision(COL_ENEMY, COL_ENVIRONMENT);
+		Engine::Check_Collision(COL_ENEMY, COL_OBJ);
+
+		// 기타 등등
+		Engine::Check_Collision(COL_OBJ, COL_ENVIRONMENT);
+
+		//////////////////////// debug
+	}
 	
-	// 플레이어와 다른 객체들의 관계
-	Engine::Check_Collision(COL_PLAYER, COL_OBJ);
-	Engine::Check_Collision(COL_PLAYER, COL_ITEM);
-	Engine::Check_Collision(COL_PLAYER, COL_TENNEL);
-	Engine::Check_Collision(COL_PLAYER, COL_ENEMY);	
-	Engine::Check_Collision(COL_PLAYER, COL_DETECTION);
-	Engine::Check_Collision(COL_PLAYER, COL_TRIGGER);
-	Engine::Check_Collision(COL_PLAYER, COL_ENVIRONMENT);
-	Engine::Check_Collision(COL_PLAYER, COL_ROOMITEM);
-	/*Engine::Check_Collision(COL_TRIGGER, COL_PLAYERBULLET);*/
-	
-	// 몬스터와 다른 객체들의 관계
-	Engine::Check_Collision(COL_ENEMY, COL_ENEMY);
-	Engine::Check_Collision(COL_ENEMY, COL_ENVIRONMENT);
-	Engine::Check_Collision(COL_ENEMY, COL_OBJ);
-	
-	// 기타 등등
-	Engine::Check_Collision(COL_OBJ, COL_ENVIRONMENT);
-	
-	//////////////////////// debug
 }
 
 void CManagement::Render_Management(LPDIRECT3DDEVICE9 pGraphicDev)

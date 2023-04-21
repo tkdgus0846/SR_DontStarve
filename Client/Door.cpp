@@ -43,6 +43,9 @@ _int CDoor::Update_GameObject(const _float & fTimeDelta)
 	{
 		m_pInTennel = CRoomMgr::GetInstance()->Get_Tennel(0);
 		m_pOutTennel = CRoomMgr::GetInstance()->Get_Tennel(1);
+
+		/*m_pInTennel = SECTION_MGR->Get_Tennel(0);
+		m_pOutTennel = SECTION_MGR->Get_Tennel(1);*/
 	}
 
 	if (m_bIsOpen)

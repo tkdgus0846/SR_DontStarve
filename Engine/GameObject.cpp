@@ -1,4 +1,6 @@
-﻿#include "stdafx.h"
+﻿#include "GameObject.h"
+#include "GameObject.h"
+#include "stdafx.h"
 
 #include "GameObject.h"
 #include "Transform.h"
@@ -85,6 +87,36 @@ wstring CGameObject::Get_TextureKey()
 	return nullptr;
 }
 
+void CGameObject::Remove_Texture(const _tchar * name, COMPONENTID componentID)
+{
+	Safe_Release(m_uMapComponent[componentID][name]);
+}
+
+void CGameObject::Change_Texture(const _tchar * beforeName, const _tchar * afterName, COMPONENTID componentID)
+{
+	Remove_Texture(beforeName, componentID);
+
+	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(afterName, this));
+	NULL_CHECK(texture);
+	m_uMapComponent[componentID][beforeName] = texture;
+
+	// 여기 아래 부분은 굳이 안봐도 됩니다.
+	vector <pair<const _tchar*, CComponent*>> VecRender(m_uMapComponent[ID_RENDER].begin(), m_uMapComponent[ID_RENDER].end());
+	vector <pair<const _tchar*, CComponent*>> VecAll(m_uMapComponent[ID_ALL].begin(), m_uMapComponent[ID_ALL].end());
+
+	vector <pair<const _tchar*, CComponent*>> sortVec;
+
+	sortVec.insert(sortVec.begin(), VecRender.begin(), VecRender.end());
+	sortVec.insert(sortVec.end(), VecAll.begin(), VecAll.end());
+
+	sort(sortVec.begin(), sortVec.end(), Compare_Component_Priority);
+
+	// 렌더 우선순위를 통해서 렌더될 순서를 정해준다음에 벡터에 넣어주는거,
+	// 그러니까 별개임
+	m_RenderComponent = sortVec;
+
+}
+
 HRESULT CGameObject::Ready_GameObject(void)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -100,6 +132,8 @@ HRESULT CGameObject::Ready_GameObject(void)
 
 	sort(sortVec.begin(), sortVec.end(), Compare_Component_Priority);
 
+	// 렌더 우선순위를 통해서 렌더될 순서를 정해준다음에 벡터에 넣어주는거,
+	// 그러니까 별개임
 	m_RenderComponent = sortVec;
 
 	return S_OK;
@@ -196,17 +230,17 @@ void Engine::CGameObject::Set_ObjTag(const _tchar* pObjTag)
 	m_ObjInfo.pObjTag = pObjTag;
 }
 
-void CGameObject::Remove_Render_Component(const _tchar * pComponentTag)
-{
-	for (auto iter = m_RenderComponent.begin(); iter != m_RenderComponent.end(); ++iter)
-	{
-		if (0 == lstrcmp(pComponentTag, iter->first))
-		{
-			m_RenderComponent.erase(iter);
-			return;
-		}
-	}
-}
+//void CGameObject::Remove_Render_Component(const _tchar * pComponentTag)
+//{
+//	for (auto iter = m_RenderComponent.begin(); iter != m_RenderComponent.end(); ++iter)
+//	{
+//		if (0 == lstrcmp(pComponentTag, iter->first))
+//		{
+//			m_RenderComponent.erase(iter);
+//			return;
+//		}
+//	}
+//}
 
 void CGameObject::Add_Render_Component()
 {

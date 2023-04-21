@@ -39,6 +39,7 @@
 //#include "RenderTargetTest.h"
 
 #include "ShopNpc.h"
+#include "LoadingScene.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_iCurRoomIdx(0)
 	, m_iPreRoomIdx(0)
@@ -53,7 +54,7 @@ HRESULT CStage::Ready_Scene(void)
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
 
-	
+	m_StageInfo = LOADING_STAGE;
 	
 	/*Add_GameObject(LAYER_ENVIRONMENT, L"Room", CRoom::Create(m_pGraphicDev));
 	dynamic_cast<CRoom*>(Get_GameObject(LAYER_ENVIRONMENT, L"Room"))->FloorSubSet();
@@ -88,20 +89,6 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CMiniMap::Create(m_pGraphicDev));
 	Add_GameObject(CGunUI::Create(m_pGraphicDev));
 
-
-	// NPC 테스트용 코드
-	/*Add_GameObject(CShopNpc::Create(m_pGraphicDev));*/
-
-
-	// Item
-	/*Add_GameObject(CCoinItem::Create(m_pGraphicDev));	
-	Add_GameObject(CBulletItem::Create(m_pGraphicDev));
-	Add_GameObject(CHeartItem::Create(m_pGraphicDev));
-	Add_GameObject(CWeaponItem::Create(m_pGraphicDev, _vec3{ 15.f, 2.f, 15.f }, SPREADSHOT));
-	Add_GameObject(CBootsItem::Create(m_pGraphicDev, _vec3{ 20.f, 2.f, 20.f }));
-	Add_GameObject(CDiscItem::Create(m_pGraphicDev));*/
-
-
 	// Tennel
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);
 	CTennel* tennel2 = CTennel::Create(m_pGraphicDev);
@@ -114,6 +101,8 @@ HRESULT CStage::Ready_Scene(void)
 
 	ROOM_MGR->Set_Tennel(tennel1, 0);
 	ROOM_MGR->Set_Tennel(tennel2, 1);
+
+	ROOM_MGR->Set_Tennel_Texture(STAGE1);
 
 	/*D3DLIGHT9		tLightInfo;
 
@@ -137,6 +126,14 @@ HRESULT CStage::Ready_Scene(void)
 
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
+	//if (m_bNextStageCondition == true) return 0;
+	/* 임시 테스트 코드임. */
+	if (Key_Down(DIK_I))
+	{
+		Next_Stage();
+		return 0;
+	}
+
 	if(0 == (*m_StaticLayerArr)[LAYER_MONSTER]->Get_ObjectSize() &&
 		0 == (*m_StaticLayerArr)[LAYER_BOSS]->Get_ObjectSize())
 		ROOM_MGR->Get_CurRoom()->Open_Doors();
@@ -146,6 +143,8 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 
 void CStage::LateUpdate_Scene(void)
 {
+	//if (m_bNextStageCondition == true) return;
+
 	__super::LateUpdate_Scene();
 
 	m_iCurRoomIdx = ROOM_MGR->Get_CurRoom()->Get_Room_Index();
@@ -164,6 +163,17 @@ void CStage::LateUpdate_Scene(void)
 
 void CStage::Render_Scene(void)
 {
+}
+
+void CStage::Next_Stage()
+{
+	m_StageInfo = (LOADINGID)((int)m_StageInfo + 1);
+	CLoadingScene* loadingScene = CLoadingScene::Create(m_pGraphicDev, m_StageInfo, this);
+
+	
+	CManagement::GetInstance()->Set_Scene_NotDelete(loadingScene);
+
+	//m_bNextStageCondition = true;
 }
 
 CStage * CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)

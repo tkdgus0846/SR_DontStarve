@@ -21,21 +21,20 @@ public:
 	virtual void OnCollisionExit(const class Collision* collision) override;
 
 public:
-	virtual HRESULT Ready_GameObject(void) override;
+	HRESULT Ready_GameObject(STAGEINFO stageInfo);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
 private:
 	Engine::CCollider*	m_pCollider;
-
-private:
 	Engine::CTexture*	m_pTextureCom;
+	const _tchar*		m_WallTextureName;
 
 	virtual HRESULT Add_Component() override;
 
 public:
-	static CWall*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CWall*		Create(LPDIRECT3DDEVICE9 pGraphicDev, STAGEINFO stageInfo);
 
 private:
 	virtual void Free(void) override;

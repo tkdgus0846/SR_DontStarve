@@ -37,13 +37,24 @@ HRESULT CRoomMgr::Ready_RoomMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	m_pGraphicDev = pGraphicDev;
 	m_pGraphicDev->AddRef();
-	Create_Default_Room();
 	
-
 	return S_OK;
 }
 
-void CRoomMgr::Create_Default_Room()
+void CRoomMgr::Release_All_Room()
+{
+	for (auto Room : m_arrRoom)
+	{
+		CManagement::GetInstance()->Set_StaticLayerArr_Management(Room->GetLayerVec());
+		for (int i = 0; i < COL_STATIC_END; i++)
+		{
+			CCollisionMgr::GetInstance()->Set_StaticColliderList(Room->GetColliderList(i), i);
+		}
+		Safe_Release(Room);
+	}
+}
+
+void CRoomMgr::Create_Default_Room(STAGEINFO stageInfo)
 {
 	DOOR_TYPE tmp[9] = 
 	{	DOOR_NE, 
@@ -63,34 +74,29 @@ void CRoomMgr::Create_Default_Room()
 		{
 			_uint iIndex = i * 3 + j;
 
-			CRoom* pRoom = CRoom::Create(m_pGraphicDev);
+			CRoom* pRoom = CRoom::Create(m_pGraphicDev, stageInfo);
 
 			pRoom->m_pTransform->m_vInfo[INFO_POS] = { j * 60.01f, 0.f, i * 60.01f };
 			pRoom->FloorSubSet();
 			pRoom->PlaceSubSet();
-
+			
 			m_arrRoom[iIndex] = pRoom;
 			m_arrRoom[iIndex]->Set_DoorType(tmp[iIndex]);
 		}
 	}
 
 	m_pCurRoom = m_arrRoom[0];
+}
 
-	//====== 임시 코드임 =======
+void CRoomMgr::Push_Back_Obj(_int iIndex, CGameObject* pObj)
+{
+	m_arrRoom[iIndex]->PushBack_GameObj(pObj);
+}
 
-
-	//NPC 잠깐 넣어놓음
-	m_arrRoom[3]->PushBack_GameObj(CShopNpc::Create(m_pGraphicDev));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(30.f, -3.f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(20.f, -3.f, 40.f)));
-
-	m_arrRoom[0]->PushBack_GameObj(CBub::Create(m_pGraphicDev, _vec3(40.f, 1.f, 40.f)));
-	m_arrRoom[0]->PushBack_GameObj(CRub::Create(m_pGraphicDev, _vec3(90.f, 2.4f, 40.f)));
+void CRoomMgr::Set_Tennel_Texture(STAGEINFO stageInfo)
+{
+	m_pTennel[0]->Set_Tennel_Texture(stageInfo);
+	m_pTennel[1]->Set_Tennel_Texture(stageInfo);
 }
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)
@@ -101,6 +107,9 @@ void CRoomMgr::Set_CurRoom(const _uint iIndex)
 void CRoomMgr::Set_Tennel(CTennel* tennel, _int iIndex)
 {
 	m_pTennel[iIndex] = tennel;
+
+	if (iIndex == 0)
+		tennel->m_pTransform->Rot_Yaw(180.f, 1.f);
 }
 
 _bool CRoomMgr::WriteMapFile(HANDLE hFile, DWORD& dwByte)
@@ -151,8 +160,5 @@ void CRoomMgr::Free()
 		}
 		Safe_Release(Room);
 	}
-		
-
-
 	Safe_Release(m_pGraphicDev);
 }

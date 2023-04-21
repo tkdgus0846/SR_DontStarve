@@ -86,6 +86,20 @@ void CScene::Remove_GameObject(LAYERID layerID, CGameObject* obj)
 	(*m_StaticLayerArr)[layerID]->Remove_GameObject(obj);
 }
 
+void CScene::Reset_Scene()
+{
+	CGameObject* player = Get_Player();
+	if (player == nullptr) return;
+
+
+	/*m_pTransform->m_vInfo[INFO_POS] = { 20.f,4.f,20.f };
+	m_pTransform->m_vInfo[INFO_LOOK] = { 0.f, 0.f, 1.f };*/
+	player->m_pTransform->m_vInfo[INFO_POS] = { 20.f,4.f,20.f };
+
+	player->m_pTransform->Set_Dir({ 0.f,0.f,1.f });
+	//player->m_pTransform->m_vInfo[INFO_LOOK] = { 0.f, 0.f, 1.f };
+}
+
 void Engine::CScene::Set_StaticLayerArr(vector<CLayer*>* layerArr)
 {
 	m_StaticLayerArr = layerArr;
