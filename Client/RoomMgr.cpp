@@ -7,6 +7,7 @@
 
 #include "NubBoss.h"
 #include "WalkerBoss.h"
+#include "TreeBoss.h"
 #include "WormHead.h"
 #include "WormBody.h"
 #include "WormTail.h"
@@ -16,6 +17,7 @@
 #include "SoftPyramid.h"
 #include "HardPyramid.h"
 #include "Slider.h"
+#include "Speyeder.h"
 #include "ShopNpc.h"
 #include  "OnlyCollisionObj.h"
 
@@ -97,7 +99,9 @@ void CRoomMgr::Set_Tennel_Texture(STAGEINFO stageInfo)
 {
 	m_pTennel[0]->Set_Tennel_Texture(stageInfo);
 	m_pTennel[1]->Set_Tennel_Texture(stageInfo);
+
 }
+
 
 void CRoomMgr::Set_CurRoom(const _uint iIndex)
 {

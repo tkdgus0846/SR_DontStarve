@@ -1,7 +1,7 @@
 #pragma once
-#include "Monster.h"
+#include "Enemy.h"
 
-class CTurret : public CMonster
+class CTurret : public CEnemy
 {
 private:
 	explicit CTurret(LPDIRECT3DDEVICE9 pGraphicDev);

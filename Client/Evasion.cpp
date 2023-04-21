@@ -24,14 +24,14 @@ HRESULT CEvasion::Ready_Behavior()
 
 _int CEvasion::Update_Component(const _float & fTimeDelta)
 {
-	CCollider* pBodyCollider = dynamic_cast<CCollider*>(m_pGameObject->Get_Component(L"BodyCollider", ID_ALL));
-	CComponent* pComponent = m_pGameObject->Get_Component(L"EvasBullet", ID_ALL);
+	//CCollider* pBodyCollider = dynamic_cast<CCollider*>(m_pGameObject->Get_Component(L"BodyCollider", ID_ALL));
+	CCollider* pComponent = dynamic_cast<CCollider*>(m_pGameObject->Get_Component(L"EvasBullet", ID_ALL));
 
-	for (auto iter : dynamic_cast<CCollider*>(pComponent)->Get_CollisionList())
+	for (auto iter : pComponent->Get_CollisionList())
 	{
 		if (nullptr != dynamic_cast<CBullet*>(iter.second.OtherGameObject))
 		{
-			pBodyCollider->Set_Enable(false);
+			//pBodyCollider->Set_Enable(false);
 			_vec3 vDir = m_pGameObject->m_pTransform->m_vInfo[INFO_POS]
 				- iter.second.OtherGameObject->m_pTransform->m_vInfo[INFO_POS];
 
@@ -47,8 +47,8 @@ _int CEvasion::Update_Component(const _float & fTimeDelta)
 		}
 	}
 
-	if(false == pBodyCollider->Get_Enable())
-		pBodyCollider->Set_Enable(true);
+	//if(false == pBodyCollider->Get_Enable())
+	//	pBodyCollider->Set_Enable(true);
 	return BEHAVIOR_SUCCES;
 }
 

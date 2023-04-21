@@ -26,13 +26,14 @@ _int COnPlayer::Update_Component(const _float & fTimeDelta)
 {
 	m_fCurTime += fTimeDelta;
 
-	if (m_fCurTime > m_fTimer)
+	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
+	m_pGameObject->m_pTransform->m_vInfo[INFO_POS] = { vPos.x, m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y, vPos.z };
+	
+	if (m_fCurTime >= m_fTimer)
 	{
 		m_fCurTime = 0.f;
 		return BEHAVIOR_SUCCES;
 	}
-	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
-	m_pGameObject->m_pTransform->m_vInfo[INFO_POS] = { vPos.x, m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y, vPos.z };
 
 	return BEHAVIOR_RUNNING;
 }

@@ -1,6 +1,6 @@
 #pragma once
-#include "Monster.h"
-class CWalker : public CMonster
+#include "Enemy.h"
+class CWalker : public CEnemy
 {
 private:
 	explicit CWalker(LPDIRECT3DDEVICE9 pGraphicDev);

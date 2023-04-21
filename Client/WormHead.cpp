@@ -7,7 +7,7 @@
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
 {
-	Set_ObjTag(Tag());
+	Set_LayerID(LAYER_MONSTER);
 }
 
 CWormHead::~CWormHead()
@@ -186,16 +186,18 @@ HRESULT CWormHead::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
-	pCollider->Set_BoundingBox({ 1.8f, 1.8f, 1.8f });
+	pCollider->Set_BoundingBox({ 2.7f, 2.7f, 2.7f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"Range", pCollider);
 	pCollider->Set_BoundingBox({ 70.f, 30.f, 70.f });
 
-	FAILED_CHECK_RETURN(Create_Root_AI());
-	FAILED_CHECK_RETURN(Set_Boss3_AI());
-	FAILED_CHECK_RETURN(Init_AI_Behaviours());
+	//FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
+	//FAILED_CHECK_RETURN(Set_Boss3_AI(), E_FAIL);
+	//FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
+
+	return S_OK;
 }
 
 CWormHead * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
@@ -203,18 +205,6 @@ CWormHead * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 	CWormHead* pInstance = new CWormHead(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
-	{
-		Safe_Release(pInstance);
-		return nullptr;
-	}
-	return pInstance;
-}
-
-CGameObject * CWormHead::Create(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	CWormHead* pInstance = new CWormHead(pGraphicDev);
-
-	if (FAILED(pInstance->Ready_GameObject({})))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

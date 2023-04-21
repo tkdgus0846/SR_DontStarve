@@ -281,6 +281,9 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="EditCamera.h" />
     <ClInclude Include="ElectricTile.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBullet.h" />
+    <ClInclude Include="Evasioner.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="ExplosiveWeapon.h" />
     <ClInclude Include="FileSystem.h" />
@@ -310,7 +313,7 @@
     <ClInclude Include="FloorTile.h" />
     <ClInclude Include="GrassTile.h" />
     <ClInclude Include="GunUI.h" />
-    <ClInclude Include="Guppi.h" />
+    <ClInclude Include="NubPilot.h" />
     <ClInclude Include="HardPyramid.h" />
     <ClInclude Include="HeartItem.h" />
     <ClInclude Include="Hp.h" />
@@ -332,6 +335,7 @@
     <ClInclude Include="LaserBullet.h" />
     <ClInclude Include="LaserWeapon.h" />
     <ClInclude Include="LoadingBackground.h" />
+    <ClInclude Include="RedLaserBullet.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
     <ClInclude Include="MiniMapBack.h" />
@@ -392,6 +396,7 @@
     <ClInclude Include="Cryder.h" />
     <ClInclude Include="Sonic.h" />
     <ClInclude Include="SonicGame.h" />
+    <ClInclude Include="Speyeder.h" />
     <ClInclude Include="SpreadWeapon.h" />
     <ClInclude Include="SwampTile.h" />
     <ClInclude Include="SwordBullet.h" />
@@ -400,6 +405,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="TimeInLimit.h" />
+    <ClInclude Include="TreeBoss.h" />
     <ClInclude Include="Turret.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UltimateUI.h" />
@@ -449,6 +455,9 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="EditCamera.cpp" />
     <ClCompile Include="ElectricTile.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBullet.cpp" />
+    <ClCompile Include="Evasioner.cpp" />
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="ExplosiveWeapon.cpp" />
     <ClCompile Include="FileSystem.cpp" />
@@ -478,7 +487,7 @@
     <ClCompile Include="FloorTile.cpp" />
     <ClCompile Include="GrassTile.cpp" />
     <ClCompile Include="GunUI.cpp" />
-    <ClCompile Include="Guppi.cpp" />
+    <ClCompile Include="NubPilot.cpp" />
     <ClCompile Include="HardPyramid.cpp" />
     <ClCompile Include="HeartItem.cpp" />
     <ClCompile Include="Hp.cpp" />
@@ -506,6 +515,7 @@
     <ClCompile Include="Jump.cpp" />
     <ClCompile Include="LaserBullet.cpp" />
     <ClCompile Include="LaserWeapon.cpp" />
+    <ClCompile Include="RedLaserBullet.cpp" />
     <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="LeapJump.cpp" />
     <ClCompile Include="Loading.cpp" />
@@ -561,6 +571,7 @@
     <ClCompile Include="Cryder.cpp" />
     <ClCompile Include="Sonic.cpp" />
     <ClCompile Include="SonicGame.cpp" />
+    <ClCompile Include="Speyeder.cpp" />
     <ClCompile Include="SpreadWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -574,6 +585,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="TimeInLimit.cpp" />
+    <ClCompile Include="TreeBoss.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="UltimateUI.cpp" />

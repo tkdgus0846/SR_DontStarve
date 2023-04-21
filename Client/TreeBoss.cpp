@@ -1,23 +1,25 @@
-#include "Baller.h"
+#include "TreeBoss.h"
 
 #include "Export_Function.h"
 
-CBaller::CBaller(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CEnemy(pGraphicDev)
+CTreeBoss::CTreeBoss(LPDIRECT3DDEVICE9 pGraphicDev)
+	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(Tag());
-
+	Set_LayerID(LAYER_MONSTER);
 }
 
-CBaller::~CBaller()
+CTreeBoss::~CTreeBoss()
 {
 }
 
-HRESULT CBaller::Ready_GameObject(const _vec3& vPos)
+HRESULT CTreeBoss::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
+	m_iAttack = 1;
+	m_iHp = 100;
+	m_iMaxHp = 100;
 
-	m_pTransform->m_vScale = { 1.f, 3.f, 1.f };
+	m_pTransform->m_vScale = { 4.f, 4.f, 4.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
@@ -26,41 +28,47 @@ HRESULT CBaller::Ready_GameObject(const _vec3& vPos)
 	return result;
 }
 
-_int CBaller::Update_GameObject(const _float & fTimeDelta)
+_int CTreeBoss::Update_GameObject(const _float & fTimeDelta)
 {
-	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
+
+	if (GetDead()) 
+		return OBJ_DEAD;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
-	return S_OK;
+	return OBJ_NOEVENT;
 }
 
-void CBaller::LateUpdate_GameObject(void)
+void CTreeBoss::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
 }
 
-void CBaller::Render_GameObject(void)
+void CTreeBoss::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
-HRESULT CBaller::Add_Component()
+HRESULT CTreeBoss::Add_Component()
 {
-	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Baller_Texture", this));
-	NULL_CHECK_RETURN(texture, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Monster_Bub_Texture", texture });
-
 	CAnimation* animation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	NULL_CHECK_RETURN(animation, E_FAIL);
+	m_uMapComponent[ID_ALL].emplace(L"Animation", animation);
+	animation->SelectState(ANIM_IDLE);
 
-	animation->BindAnimation(ANIM_WALK, texture, 0.07f);
-	animation->SelectState(ANIM_WALK);
-	m_uMapComponent[ID_ALL].insert({ L"Animation", animation });
+	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_TreeBoss_Summon_Texture", this));
+	NULL_CHECK_RETURN(texture, E_FAIL);
+	m_uMapComponent[ID_STATIC].emplace(L"Monster_TreeBoss_Summon_Texture", texture);
+	animation->BindAnimation(ANIM_ATTACK, texture, 0.25f);
+
+	texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_TreeBoss_Idle_Texture", this));
+	NULL_CHECK_RETURN(texture, E_FAIL);
+	m_uMapComponent[ID_STATIC].emplace(L"Monster_TreeBoss_Idle_Texture", texture);
+	animation->BindAnimation(ANIM_IDLE, texture, 0.25f);
 
 	CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
@@ -69,47 +77,33 @@ HRESULT CBaller::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox({ 2.f, 6.f, 2.f });
+	pCollider->Set_BoundingBox({ 8.f, 8.f, 8.f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
-	pCollider->Set_BoundingBox({ 50.f, 10.f, 50.f });
-	
+	pCollider->Set_BoundingBox({ 70.f, 10.f, 70.f });
+
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
-	FAILED_CHECK_RETURN(Set_PatrolAndFollow_AI(), E_FAIL);
+	//FAILED_CHECK_RETURN(Set_Boss1_AI(), E_FAIL);
 	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;
 }
 
-CBaller * CBaller::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
+CTreeBoss * CTreeBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
-	CBaller* pInstance = new CBaller(pGraphicDev);
+	CTreeBoss* pInstance = new CTreeBoss(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
 	}
-
 	return pInstance;
 }
 
-CGameObject * CBaller::Create(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	CBaller* pInstance = new CBaller(pGraphicDev);
-
-	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
-	{
-		Safe_Release(pInstance);
-		return nullptr;
-	}
-
-	return pInstance;
-}
-
-void CBaller::Free(void)
+void CTreeBoss::Free(void)
 {
 	__super::Free();
 }

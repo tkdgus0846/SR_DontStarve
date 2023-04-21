@@ -2,7 +2,6 @@
 #include "Room.h"
 #include "Baller.h"
 #include "Bub.h"
-#include "Guppi.h"
 #include "Turret.h"
 #include "Walker.h"
 #include "Export_Function.h"
@@ -350,7 +349,7 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 	//for (auto& iter = m_vecGameObj.begin(); iter != m_vecGameObj.end();)
 	//{
 	//	if (dynamic_cast<CFloor*>(*iter) || dynamic_cast<CWall*>(*iter)
-	//		|| dynamic_cast<CDoor*>(*iter) || dynamic_cast<CShopNpc*>//(*iter))
+	//		|| dynamic_cast<CDoor*>(*iter) || dynamic_cast<CShopNpc*>(*iter))
 	//	{
 	//		++iter;
 	//	}

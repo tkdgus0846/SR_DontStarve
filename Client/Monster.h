@@ -2,7 +2,7 @@
 
 #include "Include.h"
 #include "Creature.h"
-#include "Serializable.h"
+
 BEGIN(Engine)
 class CRoot;
 class CTriCol;
@@ -11,7 +11,11 @@ class CCollider;
 class CSequence;
 END
 
-class CMonster : public CCreature, public ISerializable
+class CJump;
+class CAttack;
+class CBigJump;
+class CLeapJump;
+class CMonster : public CCreature
 {
 protected:
 	explicit CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -40,23 +44,28 @@ protected:
 
 	CSequence*	Make_Patrol_AI(const _float& fWaitTime = 1.f, const _float& fMoveTime = 0.5f);
 	CSequence*	Make_Follow_AI(const _float& fTimer = 100.f, _bool bIsRangeCheck = true);	// 디폴트값은 계속(이라고 하지만 아님) 쫒아옴
-	CSequence*	Make_JumpAI(const _float& fForce, const _float& fTimer = 0.f);
-	CSequence*	Make_BigJumpAI(const _float& fForce, const _float& fTimer = 0.f);
-	CSequence*	Make_DBJumpAI(const _float& fTimer = 0.f);
-	CSequence*	Make_DBBackJumpAI(const _float& fTimer = 0.f);
-	CSequence*	Make_LeapJumpAI(const _float& fTimer = 0.f);
+	CJump*	Make_JumpAI(const _float& fForce, const _float& fTimer = 0.f);
+	CBigJump*	Make_BigJumpAI(const _float& fForce, const _float& fTimer = 0.f);
+	CSequence*	Make_DBJumpAI(const _float& fForce, const _float& fTimer = 0.f);
+	CSequence*	Make_DBBackJumpAI(const _float& fForce, const _float& fTimer = 0.f);
+	CLeapJump*	Make_LeapJumpAI(const _float& fForce, const _float& fTimer = 0.f);
 	CSequence*	Make_JumpToPlayer();
+	CAttack*	Make_Attack(const _tchar* BulletKey, const _float& fSpeed, const _float& fCoolTime);
 	CSequence*	Make_RushAI();
 	CSequence*	Make_BossPattern1(const _float& fCoolTime = 6.f);
-	CSequence*	Make_BossPattern2(const _float& fCoolTime = 18.f);
+	CSequence*	Make_BossPattern1_1(const _float& fCoolTime = 18.f);
+	CSequence*	Make_BossPattern2(const _float& fCoolTime = 12.f);
+	CSequence*	Make_BossPattern2_1(const _float& fCoolTime = 12.f);
+	CSequence*	Make_BossPattern2_2(const _float& fCoolTime = 0.f);
 	CSequence*	Make_BossPattern3(const _float& fCoolTime = 12.f);
-	CSequence*	Make_BossPattern4(const _float& fCoolTime = 12.f);
 	
 	HRESULT		Set_PatrolAndFollow_AI();
 	HRESULT		Set_PAF_JumpAI();
 	HRESULT		Set_PAF_DBJumpAI();
+	HRESULT		Set_PAF_AttckAI(const _tchar* pBulletKey);
 	HRESULT		Set_PAF_LeapJumpAI();
-	HRESULT		Set_TurretAI();
+	HRESULT		Set_EvasionAndAttack();
+	HRESULT		Set_TurretAI(const _float& fCoolTime, _bool bIsCheckPlayer = true);
 	HRESULT		Set_Boss1_AI();
 	HRESULT		Set_Boss2_AI();
 	HRESULT		Set_Boss3_AI();
@@ -77,8 +86,4 @@ public:
 
 protected:
 	virtual void Free(void) override;
-
-	// ISerializable을(를) 통해 상속됨
-	virtual void Serialization(HANDLE hFile, DWORD & dwByte) override;
-	virtual void Deserialization(HANDLE hFile, DWORD & dwByte) override;
 };

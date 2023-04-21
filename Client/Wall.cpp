@@ -4,6 +4,7 @@
 #include "WormHead.h"
 #include "WormBody.h"
 #include "WormTail.h"
+#include "Evasioner.h"
 #include "Export_Function.h"
 
 CWall::CWall(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -29,10 +30,14 @@ void CWall::OnCollisionStay(const Collision* collision)
 		dynamic_cast<CWormBody*>(collision->OtherGameObject) ||
 		dynamic_cast<CWormTail*>(collision->OtherGameObject))
 		return;
+
 	if (Get_WorldTime() < 3.f)
 		return;
 
-	if (collision->MyCollider == Get_Component(L"Collider", ID_ALL) && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
+	if ((collision->MyCollider == Get_Component(L"Collider", ID_ALL) && 
+		collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL)) ||
+		(collision->MyCollider == Get_Component(L"Collider", ID_ALL) &&
+		dynamic_cast<CEvasioner*>(collision->OtherGameObject)))
 	{		
 		_vec3 amountVec = collision->amountVec;
 		if (m_pTransform == nullptr) return;

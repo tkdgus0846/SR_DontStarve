@@ -5,8 +5,7 @@
 CNubBoss::CNubBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_ObjTag(Tag());
-
+	Set_LayerID(LAYER_MONSTER);
 }
 
 CNubBoss::~CNubBoss()
@@ -17,9 +16,9 @@ HRESULT CNubBoss::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
-	m_iHp = 1;
+	m_iHp = 100;
+	m_iMaxHp = 100;
 
-	m_pTransform->m_vInfo[INFO_POS] = _vec3(25.f, 4.6f, 25.f);
 	m_pTransform->m_vScale = { 2.4f, 2.4f, 2.4f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
@@ -31,10 +30,10 @@ HRESULT CNubBoss::Ready_GameObject(const _vec3 & vPos)
 
 _int CNubBoss::Update_GameObject(const _float & fTimeDelta)
 {
-	cout << m_pTransform->m_vInfo[INFO_POS].y;
 	__super::Update_GameObject(fTimeDelta);
 
-	if (GetDead()) return OBJ_DEAD;
+	if (GetDead()) 
+		return OBJ_DEAD;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -80,11 +79,6 @@ HRESULT CNubBoss::Add_Component()
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
 	pCollider->Set_BoundingBox({ 70.f, 10.f, 70.f });
-
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"EvasBullet", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
-	pCollider->Set_BoundingBox({ 15.f, 6.f, 15.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Boss1_AI(), E_FAIL);

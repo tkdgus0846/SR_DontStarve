@@ -72,17 +72,17 @@ void CManagement::LateUpdate_Management()
 
 	if (m_bChangingStage == true) return;
 
-	// ½ºÅ×ÀÌÁö°¡ ·ÎµùµÇ°í ÀÖÀ¸¸é ¾Æ·¡ÀÇ Ãæµ¹°Ë»ç¸¦ ¼öÇàÇÏ¸é ¾ÈµÈ´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ç°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½æµ¹ï¿½Ë»ç¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ÈµÈ´ï¿½.
 	if (m_bChangingStage == false)
 	{
-		// ÃÑ¾Ë°ú °´Ã¼µéÀÇ °ü°è
+		// ï¿½Ñ¾Ë°ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
 		Engine::Check_Collision(COL_PLAYERBULLET, COL_DETECTION);
 		Engine::Check_Collision(COL_PLAYERBULLET, COL_ENVIRONMENT);
 		Engine::Check_Collision(COL_PLAYERBULLET, COL_OBJ);
 		Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
 
-		// ÇÃ·¹ÀÌ¾î¿Í ´Ù¸¥ °´Ã¼µéÀÇ °ü°è
+		// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		Engine::Check_Collision(COL_PLAYER, COL_OBJ);
 		Engine::Check_Collision(COL_PLAYER, COL_ITEM);
 		Engine::Check_Collision(COL_PLAYER, COL_TENNEL);
@@ -93,12 +93,12 @@ void CManagement::LateUpdate_Management()
 		Engine::Check_Collision(COL_PLAYER, COL_ROOMITEM);
 		/*Engine::Check_Collision(COL_TRIGGER, COL_PLAYERBULLET);*/
 
-		// ¸ó½ºÅÍ¿Í ´Ù¸¥ °´Ã¼µéÀÇ °ü°è
+		// ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		Engine::Check_Collision(COL_ENEMY, COL_ENEMY);
 		Engine::Check_Collision(COL_ENEMY, COL_ENVIRONMENT);
 		Engine::Check_Collision(COL_ENEMY, COL_OBJ);
 
-		// ±âÅ¸ µîµî
+		// ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½
 		Engine::Check_Collision(COL_OBJ, COL_ENVIRONMENT);
 
 		//////////////////////// debug
@@ -133,13 +133,13 @@ void CManagement::Remove_GameObject(LAYERID layerID, CGameObject* obj)
 
 CGameObject * CManagement::Get_Player()
 {
-	//NULL_CHECK_RETURN_MSG(m_pPlayer, nullptr, L"ÇÃ·¹ÀÌ¾î°¡ ¾ÆÁ÷ Ãß°¡µÈ Àû ¾øÀ½.");
+	//NULL_CHECK_RETURN_MSG(m_pPlayer, nullptr, L"ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.");
 	return m_pPlayer;
 }
 
 void CManagement::Set_Player(CGameObject* player)
 {
-	if (m_pPlayer) MessageBox(NULL, L"ÀÌ¹Ì ÇÃ·¹ÀÌ¾î°¡ ÁöÁ¤µÇ¾î ÀÖÀ½", L"System Message", MB_OK);
+	if (m_pPlayer) MessageBox(NULL, L"ï¿½Ì¹ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½", L"System Message", MB_OK);
 	m_pPlayer = player;
 }
 

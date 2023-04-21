@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Floor.h"
 
+#include "WormHead.h"
+#include "WormBody.h"
+#include "WormTail.h"
 #include "Export_Function.h"
 #include "BossHp.h"
 #include "Creature.h"
@@ -36,7 +39,7 @@ HRESULT CFloor::Ready_GameObject(STAGEINFO stageInfo)
 		break;
 	}
 
-	HRESULT result = __super::Ready_GameObject(); // ÄÄÆ÷³ÍÆ® Ãß°¡ÇØÁÖ´ÂÀÛ¾÷
+	HRESULT result = __super::Ready_GameObject(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß°ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½Û¾ï¿½
 
 	return result;
 }
@@ -70,7 +73,11 @@ void CFloor::OnCollisionEnter(const Collision * collsion)
 void CFloor::OnCollisionStay(const Collision * collision)
 {
 
-	if (Get_WorldTime() < 3.f)
+	if (Get_WorldTime() < 3.f) return;
+	
+	if (dynamic_cast<CWormHead*>(collision->OtherGameObject) ||
+		dynamic_cast<CWormBody*>(collision->OtherGameObject) ||
+		dynamic_cast<CWormTail*>(collision->OtherGameObject))
 		return;
 
 	CCreature* creature = dynamic_cast<CCreature*>(collision->OtherGameObject);

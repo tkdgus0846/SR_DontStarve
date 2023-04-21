@@ -1,11 +1,16 @@
 #pragma once
 #include "Enemy.h"
 
-class CBub : public CEnemy
+BEGIN(Engine)
+class CAnimation;
+class CCollider;
+END
+
+class CSpeyeder : public CEnemy
 {
 private:
-	explicit CBub(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CBub();
+	explicit CSpeyeder(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CSpeyeder();
 
 public:
 	virtual HRESULT Ready_GameObject(const _vec3& vPos);
@@ -13,13 +18,20 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
+	virtual void OnCollisionStay(const class Collision* collision);
+
+private:
+	CAnimation* m_pAnimation;
+	CCollider* m_pColExplosion;
+
 private:
 	virtual HRESULT Add_Component() override;
 
 public:
-	static CBub*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+	static CSpeyeder*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	static const _tchar* Tag() { return L"Bub"; }
+	static const _tchar* Tag() { return L"Speyeder"; }
+
 private:
 	virtual void Free(void) override;
 };

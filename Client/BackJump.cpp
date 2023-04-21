@@ -20,7 +20,7 @@ CBackJump::~CBackJump()
 
 HRESULT CBackJump::Ready_Behavior()
 {
-	m_fInit = m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y;
+	m_fInit = m_pGameObject->m_pTransform->m_vScale.y;
 
 	return S_OK;
 }

@@ -4,12 +4,12 @@
 #include "Export_Utility.h"
 
 CWait::CWait(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CBehavior(pGraphicDev)
+	: CBehavior(pGraphicDev), m_bRetVal(false)
 {
 }
 
 CWait::CWait(const CWait & rhs)
-	: CBehavior(rhs)
+	: CBehavior(rhs), m_bRetVal(rhs.m_bRetVal)
 {
 }
 
@@ -35,7 +35,11 @@ _int CWait::Update_Component(const _float & fTimeDelta)
 	if (m_fCurTime - m_fPreTime >= m_fTimer)
 	{
 		m_fPreTime = m_fCurTime;
-		return BEHAVIOR_FAIL;
+
+		if (m_bRetVal == true)
+			return BEHAVIOR_SUCCES;
+		else
+			return BEHAVIOR_FAIL;
 	}
 
 	return BEHAVIOR_RUNNING;
