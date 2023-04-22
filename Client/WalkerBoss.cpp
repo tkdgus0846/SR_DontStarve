@@ -5,7 +5,8 @@
 CWalkerBoss::CWalkerBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
-	Set_LayerID(LAYER_MONSTER);
+	Set_LayerID(LAYER_BOSS);
+	Set_ObjTag(L"WalkerBoss");
 }
 
 CWalkerBoss::~CWalkerBoss()

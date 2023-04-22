@@ -637,6 +637,17 @@
     </ClInclude>
     <ClInclude Include="IInteractableTile.h">
       <Filter>Interface</Filter>
+    <ClInclude Include="SonicGround.h">
+      <Filter>Scene\MiniGames\SonicMiniGame</Filter>
+    </ClInclude>
+    <ClInclude Include="SonicBird.h">
+      <Filter>Scene\MiniGames\SonicMiniGame</Filter>
+    </ClInclude>
+    <ClInclude Include="SonicCloud.h">
+      <Filter>Scene\MiniGames\SonicMiniGame</Filter>
+    </ClInclude>
+    <ClInclude Include="SonicUI.h">
+      <Filter>Scene\MiniGames\SonicMiniGame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1131,6 +1142,18 @@
     </ClCompile>
     <ClCompile Include="NullFloorTile.cpp">
       <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClCompile>
+    <ClCompile Include="SonicGround.cpp">
+      <Filter>Scene\MiniGames\SonicMiniGame</Filter>
+    </ClCompile>
+    <ClCompile Include="SonicBird.cpp">
+      <Filter>Scene\MiniGames\SonicMiniGame</Filter>
+    </ClCompile>
+    <ClCompile Include="SonicCloud.cpp">
+      <Filter>Scene\MiniGames\SonicMiniGame</Filter>
+    </ClCompile>
+    <ClCompile Include="SonicUI.cpp">
+      <Filter>Scene\MiniGames\SonicMiniGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

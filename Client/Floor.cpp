@@ -73,7 +73,7 @@ void CFloor::OnCollisionEnter(const Collision * collsion)
 void CFloor::OnCollisionStay(const Collision * collision)
 {
 
-	if (Get_WorldTime() < 3.f) return;
+	/*if (Get_WorldTime() < COLLISON_IGNORE_TIME) return;*/
 	
 	if (dynamic_cast<CWormHead*>(collision->OtherGameObject) ||
 		dynamic_cast<CWormBody*>(collision->OtherGameObject) ||

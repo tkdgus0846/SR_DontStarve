@@ -31,8 +31,8 @@ void CWall::OnCollisionStay(const Collision* collision)
 		dynamic_cast<CWormTail*>(collision->OtherGameObject))
 		return;
 
-	if (Get_WorldTime() < 3.f)
-		return;
+	/*if (Get_WorldTime() < COLLISON_IGNORE_TIME)
+		return;*/
 
 	if ((collision->MyCollider == Get_Component(L"Collider", ID_ALL) && 
 		collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL)) ||

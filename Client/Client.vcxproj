@@ -397,7 +397,11 @@
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
     <ClInclude Include="Sonic.h" />
+    <ClInclude Include="SonicBird.h" />
+    <ClInclude Include="SonicCloud.h" />
     <ClInclude Include="SonicGame.h" />
+    <ClInclude Include="SonicGround.h" />
+    <ClInclude Include="SonicUI.h" />
     <ClInclude Include="Speyeder.h" />
     <ClInclude Include="SpreadWeapon.h" />
     <ClInclude Include="SwampTile.h" />
@@ -573,7 +577,11 @@
     <ClCompile Include="SoftPyramid.cpp" />
     <ClCompile Include="Cryder.cpp" />
     <ClCompile Include="Sonic.cpp" />
+    <ClCompile Include="SonicBird.cpp" />
+    <ClCompile Include="SonicCloud.cpp" />
     <ClCompile Include="SonicGame.cpp" />
+    <ClCompile Include="SonicGround.cpp" />
+    <ClCompile Include="SonicUI.cpp" />
     <ClCompile Include="Speyeder.cpp" />
     <ClCompile Include="SpreadWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />

@@ -67,7 +67,7 @@ inline CGameObject*		Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
 
 inline void				Remove_GameObject(LAYERID LayerID, CGameObject* obj);
 
-inline HRESULT			Set_Scene(CScene* pScene);
+inline HRESULT			Set_Scene(CScene* pScene, _bool bChangingStage = false);
 
 inline _int			Update_Management(const _float& fTimeDelta);
 inline void			LateUpdate_Management();

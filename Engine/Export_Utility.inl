@@ -65,9 +65,9 @@ void Remove_GameObject(LAYERID LayerID, CGameObject* obj)
 	CManagement::GetInstance()->Remove_GameObject(LayerID, obj);
 }
 
-HRESULT			Set_Scene(CScene* pScene)
+HRESULT			Set_Scene(CScene* pScene, _bool bChangingStage)
 {
-	return CManagement::GetInstance()->Set_Scene(pScene);
+	return CManagement::GetInstance()->Set_Scene(pScene, bChangingStage);
 }
 
 _int			Update_Management(const _float& fTimeDelta)

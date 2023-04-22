@@ -1,6 +1,13 @@
 #pragma once
 #include "Scene.h"
 
+BEGIN(Engine)
+
+class CTexture;
+class CRcTex;
+
+END
+
 class CMiniGame : public CScene
 {
 public:

@@ -40,7 +40,11 @@ void CCollisionMgr::Check_Collision(COLGROUP ID1, COLGROUP ID2)
 			if (ID1 == ID2 && iterID1 == iterID2) continue;
 
 			CCollider* collider1 = *iterID1;
-			CCollider* collider2 = *iterID2;		
+			CCollider* collider2 = *iterID2;
+
+			if (collider1 == nullptr || collider2 == nullptr) break;
+
+			if (collider1->m_pBoundingBox == nullptr || collider2->m_pBoundingBox == nullptr) break;
 			
 			auto* colliderList1 = &collider1->m_CollisionList;
 			auto* colliderList2 = &collider2->m_CollisionList;
@@ -233,6 +237,8 @@ void Engine::CCollisionMgr::Toggle_ColliderRender()
 	for (int i = 0; i < COL_DYNAMIC_END; i++)
 	{
 		if (i == COL_STATIC_END) continue;
+		if (Get_ColliderList((COLGROUP)i) == nullptr) continue;
+
 		for (auto col : *Get_ColliderList((COLGROUP)i))
 			col->Set_IsRender(m_bIsRender);
 	}	
