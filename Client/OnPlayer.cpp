@@ -24,6 +24,9 @@ HRESULT COnPlayer::Ready_Behavior()
 
 _int COnPlayer::Update_Component(const _float & fTimeDelta)
 {
+	if (!Get_Player())
+		return BEHAVIOR_FAIL;
+
 	m_fCurTime += fTimeDelta;
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];

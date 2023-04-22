@@ -5,7 +5,8 @@
 #include "Export_Function.h"
 
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
+	: CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
+	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime(0.f), m_fPreTime(0.f)
 {
 	Set_LayerID(LAYER_MONSTER);
 }
@@ -18,25 +19,32 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 9.f;
 	m_iAttack = 1;
-	m_iHp = 100;
-	m_iMaxHp = 100;
+	m_iHp = 0;
 
 	m_pTransform->m_vScale = { 1.5f, 1.5f, 1.5f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
+
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 	_vec3 vBodyPos = m_pTransform->m_vInfo[INFO_POS];
 
 	for (_int i = 0; i < 10; ++i)
 		m_vecBody.push_back(dynamic_cast<CWormBody*>(CWormBody::Create(m_pGraphicDev, _vec3(vBodyPos.x + i + 1.f, vBodyPos.y, vBodyPos.z + i + 1.f))));
+		
 
 	for (auto iter : m_vecBody)
-		Add_Static_GameObject(iter);
+	{
+		Add_Static_GameObject(iter); 
+		m_iHp += iter->Get_HP();
+	}
 
 	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
 
 	m_pTail = dynamic_cast<CWormTail*>(CWormTail::Create(m_pGraphicDev, _vec3(vBodyPos.x + 13.f, vBodyPos.y, vBodyPos.z + 13.f)));
 
 	Add_Static_GameObject(m_pTail);
+	m_iHp += m_pTail->Get_HP() + 50;
+	m_iMaxHp = m_iHp;
 
 	_int iSize = m_vecBody.size();
 
@@ -45,17 +53,26 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 	m_vecBody[0]->Chain_Back(m_vecBody[1]);
 	for (_int i = 1; i < iSize - 1; ++i)
 	{
+		m_vecBody[i]->Chain_Head(this);
 		m_vecBody[i]->Chain_Back(m_vecBody[i + 1]);
 		m_vecBody[i]->Chain_Front(m_vecBody[i - 1]);
 		m_vecBody[i]->Set_Dest(m_vecBody[i - 1]->m_pTransform->m_vInfo[INFO_POS]);
 	}
+	m_vecBody[iSize - 1]->Chain_Head(this);
 	m_vecBody[iSize - 1]->Chain_Front(m_vecBody[iSize - 2]);
 	m_vecBody[iSize - 1]->Set_Dest(m_vecBody[iSize - 2]->m_pTransform->m_vInfo[INFO_POS]);
 	m_vecBody[iSize - 1]->Chain_Tail(m_pTail);
 
+	m_pTail->Chain_Head(this);
 	m_pTail->Chain_Front(m_vecBody[iSize - 1]);
 	m_pTail->Set_Dest(m_vecBody[iSize - 1]->m_pTransform->m_vInfo[INFO_POS]);
 	HRESULT result = __super::Ready_GameObject();
+
+	static _int iIndexX = _int(m_pTransform->m_vInfo[INFO_POS].x / 60.f);
+	static _int iIndexZ = _int(m_pTransform->m_vInfo[INFO_POS].z / 60.f);
+
+	Get_BlackBoard()->Add_Type(L"iIndexX", iIndexX);
+	Get_BlackBoard()->Add_Type(L"iIndexZ", iIndexZ);
 
 	return result;
 }
@@ -65,7 +82,8 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 	if (!Get_Player())
 		return OBJ_NOEVENT;
 
-	if (GetDead()) return OBJ_DEAD;
+	if (GetDead()) 
+		return OBJ_DEAD;
 
 	if (Key_Down(DIK_SPACE))
 		m_bMove = !m_bMove;
@@ -74,17 +92,6 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 
 	if(m_bMove)
 		m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
-
-	_vec3 vDir = m_pTransform->m_vInfo[INFO_LOOK];
-	vDir.Normalize();
-	_vec3 vDirXZ = { vDir.x, 0.f, vDir.z };
-	vDirXZ.Normalize();
-	_float fAngle = vDir.Degree(_vec3(vDirXZ.x, 0.f, vDirXZ.z));
-
-	if (isnan(fAngle))
-		fAngle = 0.f;
-
-	m_pTransform->Rot_Bill(fAngle);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -95,13 +102,38 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 
 void CWormHead::LateUpdate_GameObject(void)
 {
-	if (!Get_Player())
-		return;
-
 	if (GetDead())
 		return;
 
-	m_pTransform->Set_Scale({ 1.5f, 1.5f, 1.5f });
+	if (!Get_Player())
+		return;
+
+	m_fCurTime = Get_WorldTime();
+
+	_vec3 vLook = m_pTransform->m_vInfo[INFO_LOOK];
+	_vec3 vLookXZ = { vLook.x, 0.f, vLook.z };
+	vLook.Normalize();
+	vLookXZ.Normalize();
+	m_fCurAngle = vLook.Dot(vLookXZ);
+
+	_float fResult = 0.f;
+
+	if (m_fCurTime - m_fPreTime > 0.1f)
+	{
+		fResult = m_fCurAngle - m_fPreAngle;
+		m_fPreAngle = m_fCurAngle;
+		m_fPreTime = m_fCurTime;
+	}
+
+	if (!isnan(m_fCurAngle) && fResult != 0)
+	{
+		if (fResult > 0)
+			m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
+		else
+			m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
+	}
+
+	m_pTransform->m_vScale.x = 1.5f;
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
 	_vec3 vDir = vPos - m_pTransform->m_vInfo[INFO_POS];
@@ -117,22 +149,34 @@ void CWormHead::LateUpdate_GameObject(void)
 	if (fAngleRight < 45.f)
 		m_pAnimation->SelectState(ANIM_SIDE);
 	else if (fAngleUp < 45.f)
+	{
+		m_pTransform->Rot_Bill(90.f);
 		m_pAnimation->SelectState(ANIM_TOP);
+	}
 	else if (fAngleLook < 45.f)
 		m_pAnimation->SelectState(ANIM_FACE);
 
 	else if (fAngleRight > 135.f)
 	{
-		m_pTransform->Set_Scale({ -1.5f, 1.5f, 1.5f });
+		if (!isnan(m_fCurAngle) && fResult != 0)
+		{
+			if (fResult > 0)
+				m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
+			else
+				m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
+		}
+		m_pTransform->m_vScale.x = -1.5f;
 		m_pAnimation->SelectState(ANIM_SIDE);
 	}
-
 	else if (fAngleLook > 135.f)
+	{
+		m_pTransform->m_vScale.x = -1.5f;
 		m_pAnimation->SelectState(ANIM_BACK);
+	}
 
 	else if (fAngleUp < 135.f)
 	{
-		m_pTransform->Set_Scale({ -1.5f, 1.5f, 1.5f });
+		m_pTransform->Rot_Bill(90.f);
 		m_pAnimation->SelectState(ANIM_TOP);
 	}
 	else
@@ -188,14 +232,9 @@ HRESULT CWormHead::Add_Component()
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
 	pCollider->Set_BoundingBox({ 2.7f, 2.7f, 2.7f });
 
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].emplace(L"Range", pCollider);
-	pCollider->Set_BoundingBox({ 70.f, 30.f, 70.f });
-
-	//FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
-	//FAILED_CHECK_RETURN(Set_Boss3_AI(), E_FAIL);
-	//FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
+	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
+	FAILED_CHECK_RETURN(Set_Boss3_AI(), E_FAIL);
+	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;
 }

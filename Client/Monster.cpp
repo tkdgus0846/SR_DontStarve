@@ -174,6 +174,11 @@ void CMonster::Free(void)
 	__super::Free();
 }
 
+Engine::CBlackBoard * CMonster::Get_BlackBoard()
+{
+	return m_pRoot->m_pBlackBoard; 
+}
+
 HRESULT CMonster::Create_Root_AI()
 {
 	m_pRoot = dynamic_cast<CRoot*>(Engine::Clone_Proto(L"Root", this));
@@ -440,36 +445,104 @@ CSequence * CMonster::Make_BossPattern1_1(const _float & fCoolTime)
 	return pSQPattern;
 }
 
-// 지렁이 패턴
+// 지렁이 패턴 크게 포물선 이동
 CSequence * CMonster::Make_BossPattern3(const _float & fCoolTime)
 {
 	// 부품 생성
 	CSequence* pSQPattern = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQPattern, nullptr);
 
-	CDig* pTskDig = dynamic_cast<CDig*>(Engine::Clone_Proto(L"TSK_Dig", this));
-	NULL_CHECK_RETURN(pTskDig, nullptr);
-	CMoveLook* pTskMoveLook = dynamic_cast<CMoveLook*>(Engine::Clone_Proto(L"TSK_Move", this));
-	NULL_CHECK_RETURN(pTskMoveLook, nullptr);
-	CMoveUp* pTskMoveUp = dynamic_cast<CMoveUp*>(Engine::Clone_Proto(L"TSK_MoveUp", this));
-	NULL_CHECK_RETURN(pTskMoveUp);
-	CLookAtTarget* pTskLook = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
-	NULL_CHECK_RETURN(pTskLook);
+	CParabola* pTskParabola = dynamic_cast<CParabola*>(Engine::Clone_Proto(L"TSK_Parabola", this));
+	NULL_CHECK_RETURN(pTskParabola, nullptr);
+	CMoveY* pTskMoveDown = dynamic_cast<CMoveY*>(Engine::Clone_Proto(L"TSK_MoveY", this));
+	NULL_CHECK_RETURN(pTskMoveDown, nullptr);
+	CMoveY* pTskMoveUp = dynamic_cast<CMoveY*>(Engine::Clone_Proto(L"TSK_MoveY", this));
+	NULL_CHECK_RETURN(pTskMoveUp, nullptr);
+	CMovePoint* pTskMovePoint = dynamic_cast<CMovePoint*>(Engine::Clone_Proto(L"TSK_MovePoint", this));
+	NULL_CHECK_RETURN(pTskMovePoint, nullptr);
+
+	CCoolTime* pDecCoolTime = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
+	NULL_CHECK_RETURN(pDecCoolTime);
 
 	// 부품 초기설정
-	pTskDig->Set_Timer(3.f);
-	pTskDig->Set_Magnifi();
-	pTskMoveLook->Set_Timer(5.f);
-	pTskMoveLook->Set_Magnifi();
-	pTskMoveUp->Set_Timer(3.f);
-	pTskMoveUp->Set_Magnifi();
+	pDecCoolTime->Set_Timer(fCoolTime);
+	pTskMoveDown->Set_Dir_Down();
+	pTskMoveUp->Set_Dir_Up(0.f);
 
 	// 부품 조립
 
-	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_Dig", pTskDig), nullptr);
-	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveLook", pTskMoveLook), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveUp", pTskMoveUp), nullptr);
-	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_LookAt", pTskLook), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_Parabola", pTskParabola), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveDown", pTskMoveDown), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MovePoint", pTskMovePoint), nullptr);
+
+	return pSQPattern;
+}
+
+// 지렁이 코사인 이동
+CSequence * CMonster::Make_BossPattern3_1(const _float & fCoolTime)
+{
+	// 부품 생성
+	CSequence* pSQPattern = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQPattern, nullptr);
+
+	CMoveCos* pTskMoveCos = dynamic_cast<CMoveCos*>(Engine::Clone_Proto(L"TSK_MoveCos", this));
+	NULL_CHECK_RETURN(pTskMoveCos, nullptr);
+	CMoveY* pTskMoveY = dynamic_cast<CMoveY*>(Engine::Clone_Proto(L"TSK_MoveY", this));
+	NULL_CHECK_RETURN(pTskMoveY, nullptr);
+	CMoveY* pTskMoveUp = dynamic_cast<CMoveY*>(Engine::Clone_Proto(L"TSK_MoveY", this));
+	NULL_CHECK_RETURN(pTskMoveUp, nullptr);
+	CMovePoint* pTskMovePoint = dynamic_cast<CMovePoint*>(Engine::Clone_Proto(L"TSK_MovePoint", this));
+	NULL_CHECK_RETURN(pTskMovePoint, nullptr);
+
+	CCoolTime* pDecCoolTime = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
+	NULL_CHECK_RETURN(pDecCoolTime);
+
+	// 부품 초기설정
+	pDecCoolTime->Set_Timer(fCoolTime);
+	pTskMoveY->Set_Dir_Down();
+	pTskMoveUp->Set_Dir_Up(1.f);
+
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveUp", pTskMoveUp), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveCos", pTskMoveCos), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveDown", pTskMoveY), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MovePoint", pTskMovePoint), nullptr);
+
+	return pSQPattern;
+}
+
+// 지렁이 플레이어 쫒아오는거임
+CSequence * CMonster::Make_BossPattern3_2(const _float & fCoolTime)
+{
+	// 부품 생성
+	CSequence* pSQPattern = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQPattern, nullptr);
+
+	CMoveY* pTskMoveY = dynamic_cast<CMoveY*>(Engine::Clone_Proto(L"TSK_MoveY", this));
+	NULL_CHECK_RETURN(pTskMoveY, nullptr);
+	CLookAtPlayer* pTskLookAt = dynamic_cast<CLookAtPlayer*>(Engine::Clone_Proto(L"TSK_LookAtPlayer", this));
+	NULL_CHECK_RETURN(pTskLookAt, nullptr);
+	CMoveY* pTskMoveDown = dynamic_cast<CMoveY*>(Engine::Clone_Proto(L"TSK_MoveY", this));
+	NULL_CHECK_RETURN(pTskMoveDown, nullptr);
+	CMovePoint* pTskMovePoint = dynamic_cast<CMovePoint*>(Engine::Clone_Proto(L"TSK_MovePoint", this));
+	NULL_CHECK_RETURN(pTskMovePoint, nullptr);
+
+	CCoolTime* pDecCoolTime = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
+	NULL_CHECK_RETURN(pDecCoolTime);
+
+	// 부품 초기설정
+	pDecCoolTime->Set_Timer(fCoolTime);
+	pTskLookAt->Set_Timer(16.f);
+	pTskMoveY->Set_Dir_Up();
+	pTskMoveDown->Set_Dir_Down();
+
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveUp", pTskMoveY), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_FollowPlayer", pTskLookAt), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveDown", pTskMoveDown), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MovePoint", pTskMovePoint), nullptr);
 
 	return pSQPattern;
 }
@@ -588,6 +661,19 @@ CSequence * CMonster::Make_BossPattern2_2(const _float & fCoolTime)
 	return pSQPattern;
 }
 
+HRESULT CMonster::Set_AttackToPlayer(const _tchar * BulletKey, const _float & fSpeed, const _float & fCoolTime)
+{
+	CAttackToPlayer* pTskAtkToPlayer = dynamic_cast<CAttackToPlayer*>(Engine::Clone_Proto(L"TSK_ATKToPlayer", this));
+	NULL_CHECK_RETURN(pTskAtkToPlayer, E_FAIL);
+
+	pTskAtkToPlayer->Set_BulletKey(BulletKey);
+	pTskAtkToPlayer->Set_BulletSpeed(fSpeed);
+	pTskAtkToPlayer->Set_Timer(fCoolTime);
+
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pTskAtkToPlayer), E_FAIL);
+	return S_OK;
+}
+
 HRESULT CMonster::Set_PatrolAndFollow_AI()
 {
 	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
@@ -697,7 +783,7 @@ HRESULT CMonster::Set_TurretAI(const _float& fCoolTime, _bool bIsCheckPlayer)
 	CSequence* pSQChaseAtk = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQChaseAtk, E_FAIL);
 
-	CRotToFace* pTskRot = dynamic_cast<CRotToFace*>(Engine::Clone_Proto(L"TSK_Rot", this));
+	CLookAtTarget* pTskRot = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
 	NULL_CHECK_RETURN(pTskRot, E_FAIL);
 	CAttack* pTskAttack = dynamic_cast<CAttack*>(Engine::Clone_Proto(L"TSK_Attack", this));
 	NULL_CHECK_RETURN(pTskAttack, E_FAIL);
@@ -769,40 +855,18 @@ HRESULT CMonster::Set_Boss3_AI()
 	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
 	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
-	CSequence* pSQChaseAtk = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
-	NULL_CHECK_RETURN(pSQChaseAtk, E_FAIL);
-
 	CLookAtTarget* pLook = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
 	NULL_CHECK_RETURN(pLook, E_FAIL);
-	CRandomLook* pRandom = dynamic_cast<CRandomLook*>(Engine::Clone_Proto(L"TSK_RandomLook", this));
-	NULL_CHECK_RETURN(pRandom, E_FAIL);
-
-	CCoolTime* pDecCoolTime1 = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
-	NULL_CHECK_RETURN(pDecCoolTime1, E_FAIL);
-	CCoolTime* pDecCoolTime2 = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
-	NULL_CHECK_RETURN(pDecCoolTime2, E_FAIL);
-	//CMoveLook* pMove = dynamic_cast<CMoveLook*>(Engine::Clone_Proto(L"TSK_Move", this));
-	//NULL_CHECK_RETURN(pMove);
 
 	// 부품 초기설정
-	//pMove->Set_Magnifi(1.f);
-	//pMove->Set_Timer(0.3f);
-	pRandom->Set_IsLook_Aircraft(true);
-	pDecCoolTime1->Set_Timer(7.f);
-	pDecCoolTime2->Set_Timer(10.f);
 
 	// 부품 조립
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SL_RootAI", pSQChaseAtk), E_FAIL);
-
-	//FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime1), E_FAIL);
-	//FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"SQ_1", pRandom), E_FAIL);
-	//FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime2), E_FAIL);
-	FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"SQ_1", pLook), E_FAIL);
-	//FAILED_CHECK_RETURN(pSQChaseAtk->Add_Component(ID_UPDATE, L"SQ_2", pMove), E_FAIL);
-	//FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern3", Make_BossPattern3()), E_FAIL);
-	//FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(10.f, false)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern3", Make_BossPattern3_2(10.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern2", Make_BossPattern3_1(6.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern1", Make_BossPattern3(12.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_PatternDefault", pLook), E_FAIL);
 
 	return S_OK;
 }
@@ -812,7 +876,7 @@ HRESULT CMonster::Init_AI_Behaviours()
 	// 조립된 트리 전체 초기화
 	FAILED_CHECK_RETURN(dynamic_cast<CRoot*>(m_pRoot)->Ready_Behavior(), E_FAIL);
 
-	// 루트의 블랙보드에 자료형 채우기
+	// 루트의 블랙보드에 자료형 채우기(공통 요소들은 여기에)
 	FAILED_CHECK_RETURN(m_pRoot->m_pBlackBoard->Add_Type(L"fSpeed", m_fSpeed), E_FAIL);
 
 	return S_OK;

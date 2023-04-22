@@ -61,7 +61,7 @@ void CSpeyeder::OnCollisionStay(const Collision * collision)
 			m_fPreTime = Get_WorldTime();
 
 		m_fCurTime = Get_WorldTime();
-		cout << m_fCurTime - m_fPreTime << endl;
+		//cout << m_fCurTime - m_fPreTime << endl;
 		__super::OnCollisionStay(collision);
 		m_pAnimation->SelectState(ANIM_ATTACK);
 		m_fSpeed = 0.f;

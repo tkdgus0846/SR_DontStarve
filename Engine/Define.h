@@ -19,6 +19,7 @@
 #define		BEHAVIOR_RUNNING	1
 #define		BEHAVIOR_SUCCES		2
 #define		BEHAVIOR_FAIL		3
+#define		BEHAVIOR_ERROR		4
 
 #define		PURE			= 0
 

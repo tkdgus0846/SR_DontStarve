@@ -256,6 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Attack.h" />
+    <ClInclude Include="AttackToPlayer.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BackJump.h" />
     <ClInclude Include="Baller.h" />
@@ -275,7 +276,8 @@
     <ClInclude Include="CoolTime.h" />
     <ClInclude Include="CrossHair.h" />
     <ClInclude Include="DecoratorTile.h" />
-    <ClInclude Include="Dig.h" />
+    <ClInclude Include="LookAtPlayer.h" />
+    <ClInclude Include="MoveY.h" />
     <ClInclude Include="Disc.h" />
     <ClInclude Include="DiscItem.h" />
     <ClInclude Include="Door.h" />
@@ -313,6 +315,8 @@
     <ClInclude Include="FloorTile.h" />
     <ClInclude Include="GrassTile.h" />
     <ClInclude Include="GunUI.h" />
+    <ClInclude Include="MoveCos.h" />
+    <ClInclude Include="MovePoint.h" />
     <ClInclude Include="IInteractableTile.h" />
     <ClInclude Include="NubPilot.h" />
     <ClInclude Include="HardPyramid.h" />
@@ -336,6 +340,7 @@
     <ClInclude Include="LaserBullet.h" />
     <ClInclude Include="LaserWeapon.h" />
     <ClInclude Include="LoadingBackground.h" />
+    <ClInclude Include="Parabola.h" />
     <ClInclude Include="NullFloorTile.h" />
     <ClInclude Include="RedLaserBullet.h" />
     <ClInclude Include="LoadingScene.h" />
@@ -343,7 +348,6 @@
     <ClInclude Include="MiniMapBack.h" />
     <ClInclude Include="MiniGame.h" />
     <ClInclude Include="MonsterFactory.h" />
-    <ClInclude Include="MoveUp.h" />
     <ClInclude Include="ImPickBox.h" />
     <ClInclude Include="OnlyCollisionObj.h" />
     <ClInclude Include="OnPlayer.h" />
@@ -419,7 +423,6 @@
     <ClInclude Include="Walker.h" />
     <ClInclude Include="WalkerBoss.h" />
     <ClInclude Include="Wall.h" />
-    <ClInclude Include="RotToFace.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -432,10 +435,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="WormHead.h" />
+    <ClInclude Include="WormMoveCtrl.h" />
     <ClInclude Include="WormTail.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attack.cpp" />
+    <ClCompile Include="AttackToPlayer.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BackJump.cpp" />
     <ClCompile Include="Baller.cpp" />
@@ -455,7 +460,8 @@
     <ClCompile Include="CoolTime.cpp" />
     <ClCompile Include="CrossHair.cpp" />
     <ClCompile Include="DecoratorTile.cpp" />
-    <ClCompile Include="Dig.cpp" />
+    <ClCompile Include="LookAtPlayer.cpp" />
+    <ClCompile Include="MoveY.cpp" />
     <ClCompile Include="Disc.cpp" />
     <ClCompile Include="DiscItem.cpp" />
     <ClCompile Include="Door.cpp" />
@@ -493,6 +499,8 @@
     <ClCompile Include="FloorTile.cpp" />
     <ClCompile Include="GrassTile.cpp" />
     <ClCompile Include="GunUI.cpp" />
+    <ClCompile Include="MoveCos.cpp" />
+    <ClCompile Include="MovePoint.cpp" />
     <ClCompile Include="NubPilot.cpp" />
     <ClCompile Include="HardPyramid.cpp" />
     <ClCompile Include="HeartItem.cpp" />
@@ -521,6 +529,7 @@
     <ClCompile Include="Jump.cpp" />
     <ClCompile Include="LaserBullet.cpp" />
     <ClCompile Include="LaserWeapon.cpp" />
+    <ClCompile Include="Parabola.cpp" />
     <ClCompile Include="NullFloorTile.cpp" />
     <ClCompile Include="RedLaserBullet.cpp" />
     <ClCompile Include="LavaTile.cpp" />
@@ -538,7 +547,6 @@
     <ClCompile Include="MiniMapBack.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterFactory.cpp" />
-    <ClCompile Include="MoveUp.cpp" />
     <ClCompile Include="MoveLook.cpp" />
     <ClCompile Include="MyEdit.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -570,7 +578,6 @@
     <ClCompile Include="RangeCheck.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RandomLook.cpp" />
-    <ClCompile Include="RotToFace.cpp" />
     <ClCompile Include="Rush.cpp" />
     <ClCompile Include="BootsItem.cpp" />
     <ClCompile Include="SnowTile.cpp" />
@@ -613,6 +620,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="WormHead.cpp" />
+    <ClCompile Include="WormMoveCtrl.cpp" />
     <ClCompile Include="WormTail.cpp" />
   </ItemGroup>
   <ItemGroup>

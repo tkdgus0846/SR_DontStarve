@@ -25,7 +25,9 @@ CAttack::~CAttack()
 
 HRESULT CAttack::Ready_Behavior()
 {
-	return S_OK;
+	HRESULT result = __super::Ready_Behavior();
+
+	return result;
 }
 
 _int CAttack::Update_Component(const _float & fTimeDelta)

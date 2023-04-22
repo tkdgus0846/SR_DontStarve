@@ -14,7 +14,7 @@ CBlackBoard::~CBlackBoard()
 {
 }
 
-HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN _int & iType)
+HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN _int& iType)
 {
 	auto iter = find_if(m_mapInt.begin(), m_mapInt.end(), CTag_Finder(pTypename));
 
@@ -26,7 +26,7 @@ HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN _int & iType)
 	return E_FAIL;
 }
 
-HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN _float & fType)
+HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN _float& fType)
 {
 	auto iter = find_if(m_mapFloat.begin(), m_mapFloat.end(), CTag_Finder(pTypename));
 
@@ -38,7 +38,7 @@ HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN _float & fType)
 	return E_FAIL;
 }
 
-HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN _bool & bType)
+HRESULT CBlackBoard::Add_Type(IN const _tchar * pTypename, IN _bool& bType)
 {
 	auto iter = find_if(m_mapBool.begin(), m_mapBool.end(), CTag_Finder(pTypename));
 
@@ -79,10 +79,7 @@ HRESULT CBlackBoard::Get_Type(IN const _tchar * pTypename, OUT _int& pOut)
 	auto iter = find_if(m_mapInt.begin(), m_mapInt.end(), CTag_Finder(pTypename));
 
 	if (iter == m_mapInt.end())
-	{
-		pOut = 0;
 		return E_FAIL;
-	}
 
 	pOut = iter->second;
 	return S_OK;
@@ -93,10 +90,7 @@ HRESULT CBlackBoard::Get_Type(IN const _tchar * pTypename, OUT _float& pOut)
 	auto iter = find_if(m_mapFloat.begin(), m_mapFloat.end(), CTag_Finder(pTypename));
 
 	if (iter == m_mapFloat.end())
-	{
-		pOut = 0;
 		return E_FAIL;
-	}
 
 	pOut = iter->second;
 	return S_OK;
@@ -107,10 +101,7 @@ HRESULT CBlackBoard::Get_Type(IN const _tchar * pTypename, OUT _bool& pOut)
 	auto iter = find_if(m_mapBool.begin(), m_mapBool.end(), CTag_Finder(pTypename));
 
 	if (iter == m_mapBool.end())
-	{
-		pOut = 0;
 		return E_FAIL;
-	}
 
 	pOut = iter->second;
 	return S_OK;
@@ -121,10 +112,7 @@ HRESULT CBlackBoard::Get_Type(IN const _tchar* pTypename, OUT _vec3& pOut)
 	auto iter = find_if(m_mapVec.begin(), m_mapVec.end(), CTag_Finder(pTypename));
 
 	if (iter == m_mapVec.end())
-	{
-		pOut = _vec3(0.f, 0.f, 0.f);
 		return E_FAIL;
-	}
 
 	pOut = iter->second;
 	return S_OK;
@@ -135,11 +123,56 @@ HRESULT CBlackBoard::Get_Type(IN const _tchar* pTypename, OUT CGameObject* pOut)
 	auto iter = find_if(m_mapGameObject.begin(), m_mapGameObject.end(), CTag_Finder(pTypename));
 
 	if (iter == m_mapGameObject.end())
-	{
-		pOut = nullptr;
 		return E_FAIL;
-	}
 
 	pOut = iter->second;
+	return S_OK;
+}
+
+HRESULT CBlackBoard::Set_Type(IN const _tchar * pTypename, IN _int& iType)
+{
+	auto iter = find_if(m_mapInt.begin(), m_mapInt.end(), CTag_Finder(pTypename));
+
+	if (iter == m_mapInt.end())
+		return E_FAIL;
+
+	iter->second = iType;
+
+	return S_OK;
+}
+
+HRESULT CBlackBoard::Set_Type(IN const _tchar * pTypename, IN _float& fType)
+{
+	auto iter = find_if(m_mapFloat.begin(), m_mapFloat.end(), CTag_Finder(pTypename));
+
+	if (iter == m_mapFloat.end())
+		return E_FAIL;
+
+	iter->second = fType;
+
+	return S_OK;
+}
+
+HRESULT CBlackBoard::Set_Type(IN const _tchar * pTypename, IN _bool& bType)
+{
+	auto iter = find_if(m_mapBool.begin(), m_mapBool.end(), CTag_Finder(pTypename));
+
+	if (iter == m_mapBool.end())
+		return E_FAIL;
+
+	iter->second = bType;
+
+	return S_OK;
+}
+
+HRESULT CBlackBoard::Set_Type(IN const _tchar * pTypename, IN _vec3& vType)
+{
+	auto iter = find_if(m_mapVec.begin(), m_mapVec.end(), CTag_Finder(pTypename));
+
+	if (iter == m_mapVec.end())
+		return E_FAIL;
+
+	iter->second = vType;
+
 	return S_OK;
 }

@@ -125,6 +125,9 @@
     <Filter Include="Scene\MiniGames\SonicMiniGame">
       <UniqueIdentifier>{57907439-c9b3-4127-a8b9-a86a8ec065a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Monobehaviours\Task\WormTask">
+      <UniqueIdentifier>{92d9d8a8-9622-4a34-9786-00f66b5c1770}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -332,9 +335,6 @@
     <ClInclude Include="RandomLook.h">
       <Filter>Monobehaviours\Task</Filter>
     </ClInclude>
-    <ClInclude Include="RotToFace.h">
-      <Filter>Monobehaviours\Task</Filter>
-    </ClInclude>
     <ClInclude Include="Wait.h">
       <Filter>Monobehaviours\Task</Filter>
     </ClInclude>
@@ -442,12 +442,6 @@
     </ClInclude>
     <ClInclude Include="WormTail.h">
       <Filter>GameObject\Monster\Boss\WormBoss</Filter>
-    </ClInclude>
-    <ClInclude Include="Dig.h">
-      <Filter>Monobehaviours\Task</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveUp.h">
-      <Filter>Monobehaviours\Task</Filter>
     </ClInclude>
     <ClInclude Include="SellItem.h">
       <Filter>GameObject\ShopNpc</Filter>
@@ -631,6 +625,27 @@
     </ClInclude>
     <ClInclude Include="LaserBullet.h">
       <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Parabola.h">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClInclude>
+    <ClInclude Include="MovePoint.h">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCos.h">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveY.h">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClInclude>
+    <ClInclude Include="LookAtPlayer.h">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackToPlayer.h">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClInclude>
+    <ClInclude Include="WormMoveCtrl.h">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
     </ClInclude>
     <ClInclude Include="NullFloorTile.h">
       <Filter>GameObject\Tile\FloorTile</Filter>
@@ -843,9 +858,6 @@
     <ClCompile Include="RandomLook.cpp">
       <Filter>Monobehaviours\Task</Filter>
     </ClCompile>
-    <ClCompile Include="RotToFace.cpp">
-      <Filter>Monobehaviours\Task</Filter>
-    </ClCompile>
     <ClCompile Include="Wait.cpp">
       <Filter>Monobehaviours\Task</Filter>
     </ClCompile>
@@ -950,12 +962,6 @@
     </ClCompile>
     <ClCompile Include="WormTail.cpp">
       <Filter>GameObject\Monster\Boss\WormBoss</Filter>
-    </ClCompile>
-    <ClCompile Include="Dig.cpp">
-      <Filter>Monobehaviours\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveUp.cpp">
-      <Filter>Monobehaviours\Task</Filter>
     </ClCompile>
     <ClCompile Include="SellItem.cpp">
       <Filter>GameObject\ShopNpc</Filter>
@@ -1139,6 +1145,27 @@
     </ClCompile>
     <ClCompile Include="LaserBullet.cpp">
       <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Parabola.cpp">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClCompile>
+    <ClCompile Include="MovePoint.cpp">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveCos.cpp">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveY.cpp">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClCompile>
+    <ClCompile Include="LookAtPlayer.cpp">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackToPlayer.cpp">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
+    </ClCompile>
+    <ClCompile Include="WormMoveCtrl.cpp">
+      <Filter>Monobehaviours\Task\WormTask</Filter>
     </ClCompile>
     <ClCompile Include="NullFloorTile.cpp">
       <Filter>GameObject\Tile\FloorTile</Filter>

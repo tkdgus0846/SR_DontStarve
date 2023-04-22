@@ -1,11 +1,12 @@
 #pragma once
 #include "Behavior.h"
-class CBigJump : public CBehavior
+
+class CParabola : public CBehavior
 {
 private:
-	explicit CBigJump(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CBigJump(const CBigJump& rhs);
-	virtual ~CBigJump();
+	explicit CParabola(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CParabola(const CParabola& rhs);
+	virtual ~CParabola();
 
 public:
 	virtual HRESULT Ready_Behavior() override;
@@ -13,19 +14,15 @@ public:
 	virtual void LateUpdate_Component(void) override {}
 	virtual void Render_Component(void) override;
 
-	void Set_Force(const _float& fForce) { m_fForce = fForce; }
-	void Set_Stop(_bool bSwitch) { m_bSetStop = bSwitch; m_bStop = bSwitch; }
-
 private:
+	_vec3 m_vDir;	// y 성분을 제외한 이동 방향.
 	_float m_fTime;
 	_float m_fForce;
-	_float m_fInit;
-	_bool m_bStop;
-	_bool m_bSetStop;
-	_bool m_bJump;
+	_float m_FstSpeed;
+	_bool  m_bStart;
 
 public:
-	static CBigJump* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CParabola* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
 
 private:

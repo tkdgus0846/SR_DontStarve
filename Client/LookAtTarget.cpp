@@ -23,10 +23,8 @@ HRESULT CLookAtTarget::Ready_Behavior()
 
 _int CLookAtTarget::Update_Component(const _float & fTimeDelta)
 {
-	if (!Get_Player())
-		return BEHAVIOR_FAIL;
-
-	m_pGameObject->m_pTransform->Set_Target(Get_Player()->m_pTransform->m_vInfo[INFO_POS]);
+	if(Get_Player())
+		m_pGameObject->m_pTransform->Set_Target(Get_Player()->m_pTransform->m_vInfo[INFO_POS]);
 
 	return BEHAVIOR_SUCCES;
 }

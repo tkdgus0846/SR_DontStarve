@@ -102,8 +102,8 @@ HRESULT CLogo::Ready_Proto(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Dynamic", CRcTex::Create(m_pGraphicDev, VB_DYNAMIC)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collider", CCollider::Create(m_pGraphicDev)), E_FAIL);
-
-	/////////////////// Sonic Texture ¡ﬂø‰«‘ /////////////// §æ
+  
+  ////////////////////////////////////////////////////////// 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SonicWalk_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Sonic_Walk_%d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SonicRun_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Sonic_Run_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SonicDead_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Sonic_Dead.png")), E_FAIL);

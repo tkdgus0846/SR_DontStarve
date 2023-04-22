@@ -50,7 +50,7 @@ typedef	struct MyVec3 : public D3DXVECTOR3
 
 	// 단위 벡터로 만드는 메서드입니다.
 	// ex) vVec.Normalize();
-	void Normalize() { D3DXVec3Normalize(this, this); }
+	MyVec3 Normalize() { return MyVec3(*D3DXVec3Normalize(this, this)); }
 
 	// 벡터 사이의 라디안을 반환하는 메서드입니다.
 	// ex) float fRadians = vMyVec.Radians(vOtherVec);
