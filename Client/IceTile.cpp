@@ -1,6 +1,7 @@
 #include "IceTile.h"
 #include "Export_Function.h"
 #include "Player.h"
+#include "Pyramid.h"
 
 CIceTile::CIceTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CFloorTile(pGraphicDev)
@@ -66,7 +67,21 @@ void CIceTile::OnCollisionExit(const Collision * collision)
 
 void CIceTile::InteractGameObject(const InteractInfo* tInteractInfo)
 {
-	m_vDir = tInteractInfo->pGameObject->m_pTransform->m_vInfo[INFO_LOOK];
-	m_vDir.Normalize();
-	tInteractInfo->pGameObject->m_pTransform->Move_WalkWithVec(m_vDir, 10.f, 0.016f);
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(tInteractInfo->pGameObject);
+	if (pPlayer)
+	{
+		CCollider* pCol = dynamic_cast<CCollider*>(pPlayer->Get_Component(L"BodyCollider", ID_ALL));
+		
+		if (!pCol)
+			return;
+
+		for (auto& Object : pCol->Get_CollisionList())
+			if (dynamic_cast<CPyramid*>(Object.second.OtherGameObject))
+				return;
+		
+		pPlayer->IsOnIceTile(true);
+		_vec3 vDir = pPlayer->m_pTransform->GetDeltaVec();
+		vDir.Normalize();
+		pPlayer->m_pTransform->Move_WalkWithVec(vDir, 3.f, tInteractInfo->_fTimeDelta);
+	}
 }
