@@ -32,6 +32,8 @@ CRoom::CRoom(LPDIRECT3DDEVICE9 pGraphicDev)
 	{
 		iter = nullptr;
 	}
+
+
 }
 
 CRoom::~CRoom()
@@ -64,6 +66,24 @@ void CRoom::LateUpdate_GameObject(void)
 
 void CRoom::Render_GameObject(void)
 {
+}
+
+CFloorTile * CRoom::GetCurFloorTile(CGameObject * pGameObject)
+{
+	pGameObject->m_pTransform->m_vInfo[INFO_POS];
+
+	_int x = round(pGameObject->m_pTransform->m_vInfo[INFO_POS].x);
+	_int z = round(pGameObject->m_pTransform->m_vInfo[INFO_POS].z);
+
+	x %= (VTXCNTX - 1) * VTXITV;
+	z %= (VTXCNTZ - 1) * VTXITV;
+	x /= VTXITV;
+	z /= VTXITV;
+
+	if (x < 0 || z < 0 || x > 1000000 || z > 1000000)
+		return nullptr;
+	
+	return m_pTileArray[z][x];
 }
 
 HRESULT CRoom::CreateSubset(STAGEINFO stageInfo)
@@ -99,6 +119,15 @@ HRESULT CRoom::CreateSubset(STAGEINFO stageInfo)
 	//		, L"FloorLarge #421865"));
 	//	}
 	//}
+
+	for (_uint i = 0; i < VTXCNTZ - 1; ++i)
+	{
+		for (auto& InteractTile : m_pTileArray)
+		{
+			InteractTile[i] = nullptr;
+		} 
+	}
+
 	NULL_CHECK_RETURN(m_apWall[0], E_FAIL);
 
 	return S_OK;
@@ -107,6 +136,7 @@ HRESULT CRoom::CreateSubset(STAGEINFO stageInfo)
 void CRoom::FreeSubset()
 {
 	for_each(m_vecLayer.begin(), m_vecLayer.end(), CDeleteObj());
+	
 }
 
 void CRoom::Set_DoorType(DOOR_TYPE eType)
@@ -394,6 +424,18 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 		{
 			PushBack_GameObj(pGameObj);
 			IsLoad->Deserialization(hFile, dwByte);
+			if (dynamic_cast<CFloorTile*>(pGameObj))
+			{
+				_int x = round(pGameObj->m_pTransform->m_vInfo[INFO_POS].x);
+				_int z = round(pGameObj->m_pTransform->m_vInfo[INFO_POS].z);
+				
+				x %= (VTXCNTX - 1) * VTXITV;
+				z %= (VTXCNTZ - 1) * VTXITV;
+				x /= VTXITV;
+				z /= VTXITV;
+
+				m_pTileArray[z][x] = dynamic_cast<CFloorTile*>(pGameObj);
+			}
 		}
 	}
 
@@ -412,6 +454,9 @@ void CRoom::PushBack_GameObj(CGameObject * pObj, _bool bObjectHead)
 		m_vecLayer[objInfo.layerID]->Add_GameObject(objInfo.pObjTag, pObj);
 	}
 	
+	if (dynamic_cast<CFloor*>(pObj))
+		int a = 0;
+
 	for (int i = 0; i < objInfo.colNameVec.size(); i++)
 	{
 		CCollider* pCol = dynamic_cast<CCollider*>(pObj->Get_Component(objInfo.colNameVec[i], ID_ALL));

@@ -313,6 +313,7 @@
     <ClInclude Include="FloorTile.h" />
     <ClInclude Include="GrassTile.h" />
     <ClInclude Include="GunUI.h" />
+    <ClInclude Include="IInteractableTile.h" />
     <ClInclude Include="NubPilot.h" />
     <ClInclude Include="HardPyramid.h" />
     <ClInclude Include="HeartItem.h" />
@@ -335,6 +336,7 @@
     <ClInclude Include="LaserBullet.h" />
     <ClInclude Include="LaserWeapon.h" />
     <ClInclude Include="LoadingBackground.h" />
+    <ClInclude Include="NullFloorTile.h" />
     <ClInclude Include="RedLaserBullet.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
@@ -519,6 +521,7 @@
     <ClCompile Include="Jump.cpp" />
     <ClCompile Include="LaserBullet.cpp" />
     <ClCompile Include="LaserWeapon.cpp" />
+    <ClCompile Include="NullFloorTile.cpp" />
     <ClCompile Include="RedLaserBullet.cpp" />
     <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="LeapJump.cpp" />

@@ -632,6 +632,11 @@
     <ClInclude Include="LaserBullet.h">
       <Filter>GameObject\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="NullFloorTile.h">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClInclude>
+    <ClInclude Include="IInteractableTile.h">
+      <Filter>Interface</Filter>
     <ClInclude Include="SonicGround.h">
       <Filter>Scene\MiniGames\SonicMiniGame</Filter>
     </ClInclude>
@@ -1134,6 +1139,9 @@
     </ClCompile>
     <ClCompile Include="LaserBullet.cpp">
       <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="NullFloorTile.cpp">
+      <Filter>GameObject\Tile\FloorTile</Filter>
     </ClCompile>
     <ClCompile Include="SonicGround.cpp">
       <Filter>Scene\MiniGames\SonicMiniGame</Filter>

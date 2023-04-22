@@ -237,7 +237,16 @@ struct Triangle
 	_vec3 v[3];
 };
 
+typedef struct Vertex4
+{
+	_vec3 _v1; _vec3 _v2;
+	_vec3 _v3; _vec3 _v4;
+};
 
-
+typedef struct tagInteractInfo
+{
+	class CGameObject* pGameObject;
+	_float _fTimeDelta;
+}InteractInfo;
 
 END

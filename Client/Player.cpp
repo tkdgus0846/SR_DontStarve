@@ -87,7 +87,7 @@ HRESULT CPlayer::Ready_GameObject(void)
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
 	if (GetDead()) return OBJ_DEAD;
-
+	InteractTile(fTimeDelta);
 	/*cout << m_pTransform->m_vInfo[INFO_LOOK].x << " " << m_pTransform->m_vInfo[INFO_LOOK].y << " " << m_pTransform->m_vInfo[INFO_LOOK].z << endl;*/
 	cout << m_pTransform->m_vInfo[INFO_POS].y << endl;
 	/*cout << ROOM_MGR->Get_Tennel(0) << " " << ROOM_MGR->Get_Tennel(1) << endl;*/
@@ -332,10 +332,14 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	m_pTransform->Get_Info(INFO_LOOK, &vDir);
 	m_pTransform->Get_Info(INFO_RIGHT, &vRight);
 
-	if (Engine::Key_Pressing(DIK_W))	m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
-	if (Engine::Key_Pressing(DIK_S))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
-	if (Engine::Key_Pressing(DIK_A))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
-	if (Engine::Key_Pressing(DIK_D))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
+	if (!m_bIsOnTile)
+	{
+		if (Engine::Key_Pressing(DIK_W)) m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
+		if (Engine::Key_Pressing(DIK_S))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
+		if (Engine::Key_Pressing(DIK_A))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
+		if (Engine::Key_Pressing(DIK_D))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
+	}
+		
 	if (Engine::Key_Down(DIK_Q))	Prev_Weapon();
 	if (Engine::Key_Down(DIK_E))	Next_Weapon();
 	if (Engine::Key_Down(DIK_P))	Get_Damaged(1);
@@ -425,7 +429,7 @@ void CPlayer::Mouse_Move(const _float& fTimeDelta)
 
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
 	{
-		m_pTransform->Rot_Yaw(_float(dwMouseMove) * 5.f, fTimeDelta);
+		m_pTransform->Rot_Yaw(_float(dwMouseMove) * 5.f,fTimeDelta);
 	}
 }
 
@@ -435,6 +439,19 @@ void CPlayer::Fix_Mouse()
 
 	ClientToScreen(g_hWnd, &ptMouse);
 	SetCursorPos(ptMouse.x, ptMouse.y);
+}
+
+void CPlayer::InteractTile(_float fTimeDelta)
+{
+	IsOnIceTile(false);
+	CFloorTile* pTile = CRoomMgr::GetInstance()->Get_CurRoom()->GetCurFloorTile(this);
+
+	if (!pTile) return;
+
+	InteractInfo tInfo;
+	tInfo.pGameObject = this;
+	tInfo._fTimeDelta = fTimeDelta;
+	pTile->InteractGameObject(&tInfo);
 }
 
 bool CPlayer::IsObjectInFOV(_float fDistance, _float fRadius, _float fFov)

@@ -40,7 +40,7 @@ public:
 	void Set_Scale(const _vec3& scale) { m_vScale = scale; }
 	void Set_BillMode(_bool bSwitch) { m_bIsBill = bSwitch; }
 	_bool Get_BillMode() { return m_bIsBill; }
-
+	_vec3	GetDeltaVec() { return m_vInfo[INFO_POS] - m_vPrevInfo[INFO_POS]; }
 
 	void Rot_Reset()
 	{
@@ -107,9 +107,10 @@ public:
 private:
 	MOVETYPE	m_eMoveType;
 	_bool		m_bIsBill;
-
+	
 public:
 	_vec3		m_vInfo[INFO_END];
+	_vec3		m_vPrevInfo[INFO_END];
 	_vec3		m_vScale;
 
 	_matrix		m_matWorld;

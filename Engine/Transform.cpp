@@ -10,6 +10,7 @@ CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_bIsBill(false)
 {
 	ZeroMemory(&m_vInfo, sizeof(m_vInfo));
+	ZeroMemory(&m_vPrevInfo, sizeof(m_vPrevInfo));
 	D3DXMatrixIdentity(&m_matWorld);
 	D3DXMatrixIdentity(&m_matBill);
 }
@@ -146,7 +147,7 @@ void CTransform::Move_WalkWithVec(_vec3 vDir, const _float & fUnits, const _floa
 		break;
 
 	case Engine::CTransform::AIRCRAFT:
-		m_vInfo[INFO_POS] += m_vInfo[INFO_LOOK] * fUnits * fTimeDelta;
+		m_vInfo[INFO_POS] += vDir * fUnits * fTimeDelta;
 		break;
 	}
 }
@@ -373,9 +374,12 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	_matrix			matTrans;
 	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
 
+	for (_uint i = 0; i < INFO_END; ++i)
+		memcpy(m_vPrevInfo[i], m_vInfo[i], sizeof(_vec3));
+
 	// 초기화값은 항등행렬이고 방금 SetBillBoard를 부르면 뷰의 역행렬
 	m_matWorld = matScale * m_matBill * matRotation * matTrans;
-
+	
 	return 0;
 }
 
