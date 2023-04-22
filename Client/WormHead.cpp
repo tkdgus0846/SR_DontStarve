@@ -7,7 +7,8 @@
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
 {
-	Set_LayerID(LAYER_MONSTER);
+	Set_LayerID(LAYER_BOSS);
+	Set_ObjTag(L"WormHead");
 }
 
 CWormHead::~CWormHead()

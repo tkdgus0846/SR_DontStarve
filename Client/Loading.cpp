@@ -14,6 +14,10 @@
 #include "MapObjectFactory.h"
 #include "FileSystem.h"
 #include "ShopNpc.h"
+#include "NubBoss.h"
+#include "WalkerBoss.h"
+#include "TreeBoss.h"
+#include "WormHead.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -354,7 +358,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MiniMap_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/hud_map.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MapPos_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/mapPos.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ESWN_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/ESWN.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MiniMapBack_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/MiniMapBack_%d.png", 15)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MiniMapBack_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Gui/Map/MiniMapBack_%d.png", 19)), E_FAIL);
 
 	// Item
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SmallCoin_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Item/sprCoin_strip6_%d.png", 6)), E_FAIL);
@@ -469,6 +473,8 @@ _uint CLoading::Loading_ForStage(void)
 	
 	ROOM_MGR->Create_Default_Room(STAGE1);	
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+
+	// 첫번째 인자 : 방번호, 
 	
 	CFileSystem::Load(L"as.dat");
 	m_bFinish = true;

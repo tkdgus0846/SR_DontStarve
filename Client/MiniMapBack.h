@@ -15,6 +15,8 @@ struct MiniMapCheck
 {
 	_bool		m_bCheck = false;
 	_bool		m_bInRange = false;
+
+	_int		m_iTextureNum = 0;
 };
 
 class CMiniMapBack :
@@ -38,11 +40,21 @@ private:
 	CTexture* m_pTexture;
 
 	array<CComponent*, 3 * 3> m_arrMap;
-	array<MiniMapCheck, 3 * 3> m_arrBool;
+	array<MiniMapCheck, 3 * 3> m_arrMapInfo;
 
-	_float		m_fPosX = 100.f;
-	_float		m_fPosY = 100.f;
+	_float		m_fPosX = 300.f;
+	_float		m_fPosY = -200.f;
 
+	_float		m_pPlayerX = 0.f;
+	_float		m_pPlayerZ = 0.f;
+
+	_float		m_pPlayerMoveX = 0.1f;
+	_float		m_pPlayerMoveZ = 0.1f;
+
+
+	void		MiniMapMove();
+	void		MiniMapCheck();
+	void		MiniMapInRange();
 
 public:
 	static CMiniMapBack*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

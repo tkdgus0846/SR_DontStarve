@@ -47,8 +47,9 @@ private:
 	CRcTex* m_dRcTex;
 	array<CComponent*, BOSS_MAP_END> m_arrMap;
 
-	CGameObject* pGameObject = nullptr;
 	_float m_CurHp = 0;
+
+	vector<CGameObject*> vecBoss;
 
 public:
 	static CBossHp*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

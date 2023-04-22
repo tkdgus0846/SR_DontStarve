@@ -25,6 +25,7 @@ public:
 	virtual void Render_GameObject(void) override;
 
 	CDoor* Get_Door(DOOR_DIR eDir) { return m_apDoor[eDir].second; }
+	DOOR_TYPE Get_DoorType() { return m_eDoorType; }
 	CFloor* GetFloor() const { return m_pFloor; }
 	CWall* GetWallArray(_uint index) const { return m_apWall[index]; }
 
