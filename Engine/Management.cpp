@@ -3,7 +3,6 @@
 #include "Layer.h"
 #include "Scene.h"
 
-
 IMPLEMENT_SINGLETON(CManagement)
 
 CManagement::CManagement() :
@@ -25,14 +24,14 @@ CComponent * CManagement::Get_Component(LAYERID LayerID, const _tchar * pObjTag,
 	return m_pScene->Get_Component(LayerID, pObjTag, pComponentTag, eID);
 }
 
-HRESULT CManagement::Set_Scene(CScene * pScene)
+HRESULT CManagement::Set_Scene(CScene * pScene, _bool bChangingStage)
 {
 	Safe_Release(m_pScene);
 	Engine::Clear_RenderGroup();
 
 	m_pScene = pScene;
 
-	m_bChangingStage = false;
+	m_bChangingStage = bChangingStage;
 
 	return S_OK;
 }
@@ -70,19 +69,20 @@ void CManagement::LateUpdate_Management()
 		return;
 	}
 
-	if (m_bChangingStage == true) return;
+	if (m_bChangingStage == true) 
+	{
+		Engine::Check_Collision(COL_PLAYER, COL_ENEMYBULLET);
+		return;
+	}
 
-	// ���������� �ε��ǰ� ������ �Ʒ��� �浹�˻縦 �����ϸ� �ȵȴ�.
 	if (m_bChangingStage == false)
 	{
-		// �Ѿ˰� ��ü���� ����
 		Engine::Check_Collision(COL_PLAYERBULLET, COL_ENEMY);
 		Engine::Check_Collision(COL_PLAYERBULLET, COL_DETECTION);
 		Engine::Check_Collision(COL_PLAYERBULLET, COL_ENVIRONMENT);
 		Engine::Check_Collision(COL_PLAYERBULLET, COL_OBJ);
 		Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
 
-		// �÷��̾�� �ٸ� ��ü���� ����
 		Engine::Check_Collision(COL_PLAYER, COL_OBJ);
 		Engine::Check_Collision(COL_PLAYER, COL_ITEM);
 		Engine::Check_Collision(COL_PLAYER, COL_TENNEL);
@@ -93,12 +93,10 @@ void CManagement::LateUpdate_Management()
 		Engine::Check_Collision(COL_PLAYER, COL_ROOMITEM);
 		/*Engine::Check_Collision(COL_TRIGGER, COL_PLAYERBULLET);*/
 
-		// ���Ϳ� �ٸ� ��ü���� ����
 		Engine::Check_Collision(COL_ENEMY, COL_ENEMY);
 		Engine::Check_Collision(COL_ENEMY, COL_ENVIRONMENT);
 		Engine::Check_Collision(COL_ENEMY, COL_OBJ);
 
-		// ��Ÿ ���
 		Engine::Check_Collision(COL_OBJ, COL_ENVIRONMENT);
 
 		//////////////////////// debug

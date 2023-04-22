@@ -75,6 +75,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MyFont.h" />
     <ClInclude Include="PyramidDestoryParticle.h" />
+    <ClInclude Include="SandDigParticle.h" />
     <ClInclude Include="SoundMgr.h" />
     <ClInclude Include="TextureParticle.h" />
     <ClInclude Include="ProtoMgr.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MyFont.cpp" />
     <ClCompile Include="PyramidDestoryParticle.cpp" />
+    <ClCompile Include="SandDigParticle.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="TextureParticle.cpp" />
     <ClCompile Include="ProtoMgr.cpp" />

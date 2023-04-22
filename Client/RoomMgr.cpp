@@ -45,7 +45,8 @@ HRESULT CRoomMgr::Ready_RoomMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CRoomMgr::Release_All_Room()
 {
-	for (auto Room : m_arrRoom)
+	_int iIndex = 0;
+	for (auto Room : m_arrRoom) // 방의 개수는 9 개. 콜리젼 그룹과 같지 않다.
 	{
 		CManagement::GetInstance()->Set_StaticLayerArr_Management(Room->GetLayerVec());
 		for (int i = 0; i < COL_STATIC_END; i++)
@@ -53,7 +54,10 @@ void CRoomMgr::Release_All_Room()
 			CCollisionMgr::GetInstance()->Set_StaticColliderList(Room->GetColliderList(i), i);
 		}
 		Safe_Release(Room);
+
+		
 	}
+	CCollisionMgr::GetInstance()->Clear_Static_ColliderList();
 }
 
 void CRoomMgr::Create_Default_Room(STAGEINFO stageInfo)

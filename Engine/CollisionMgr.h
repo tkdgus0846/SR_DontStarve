@@ -29,12 +29,20 @@ public:
 	void		Remove_Collider(CGameObject* gameObject);
 	
 	void		Set_StaticColliderList(list<CCollider*>* pStaticColliderList, _int iIndex);
+	void		Clear_Static_ColliderList()
+	{
+		for (int i = 0; i < COL_STATIC_END; i++)
+			m_StaticColliderList[i] = nullptr;
+	}
+
 
 private:
 	list<CCollider*>* Get_ColliderList(COLGROUP colID);
 	void		Find_Remove_Collider(CGameObject* gameObject, COLGROUP colID);
 	bool		Collision_Box(CCollider* pSrc, CCollider* pDest, COL_DIR& colDir, BoundingBox& bound, _vec3& amountVec);
 	_bool		Check_BoundingBox(CCollider * pSrc, CCollider * pDest, _float * pX, _float * pY, _float * pZ);
+
+	
 	
 private:
 	list<CCollider*>*	m_StaticColliderList[COL_STATIC_END]; // 룸에 있을 콜라이더들의 리스트

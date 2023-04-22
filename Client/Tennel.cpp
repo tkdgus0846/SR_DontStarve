@@ -73,10 +73,26 @@ void CTennel::OnCollisionEnter(const Collision * collsion)
 		}
 		else
 		{
-			if (!IS_PLAYING(SOUND_BGM_FIELD1))
+			if (!IS_PLAYING(SOUND_BGM_FIELD))
 			{
 				STOP_ALL_BGM;
-				PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD1, 0.5f);
+
+				switch (m_eStageInfo)
+				{
+				case STAGE1:
+					PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD, 0.5f);
+					break;
+				case STAGE2:
+					PLAY_BGM(L"Sector2.wav", SOUND_BGM_FIELD, 0.5f);
+					break;
+				case STAGE3:
+					PLAY_BGM(L"Sector3.wav", SOUND_BGM_FIELD, 0.5f);
+					break;
+				case STAGE4:
+					PLAY_BGM(L"Sector4.wav", SOUND_BGM_FIELD, 0.5f);
+					break;
+				}
+				
 			}
 		}
 
@@ -128,6 +144,7 @@ void CTennel::Set_Position(_int iFrontorBack)
 
 void CTennel::Set_Tennel_Texture(STAGEINFO stageInfo)
 {
+	m_eStageInfo = stageInfo;
 	switch (stageInfo)
 	{
 	case STAGE1:

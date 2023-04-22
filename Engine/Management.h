@@ -19,7 +19,7 @@ public:
 	CComponent*			Get_Component(LAYERID LayerID, const _tchar* pObjTag, const _tchar* pComponentTag, COMPONENTID eID);
 
 public:
-	HRESULT			Set_Scene(CScene* pScene);
+	HRESULT			Set_Scene(CScene* pScene, _bool bChangingStage = false);
 	HRESULT			Set_Scene_NotDelete(CScene* pScene);
 	CScene*			Get_Scene() { return m_pScene; }
 

@@ -1,10 +1,12 @@
 #pragma once
 
-#define		Default_Window_Pos		2200
+#define		Default_Window_Pos		300
 
 #define		OBJ_NOEVENT		0
 #define		OBJ_DEAD		1
 #define		OBJ_RETPOOL		2
+
+#define		COLLISON_IGNORE_TIME	0.5f
 
 #define		WINCX		800
 #define		WINCY		600

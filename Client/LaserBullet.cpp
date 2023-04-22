@@ -88,7 +88,7 @@ void CLaserBullet::OnCollisionStay(const Collision * collision)
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 0.7f,0.7f,0.7f }, 0.1f);
 		Add_GameObject(effect);
 
-		STOP_PLAY_SOUND(L"sfxSplode.wav", SOUND_EFFECT, 1.0f);
+		STOP_PLAY_SOUND(L"sfxShatter.wav", SOUND_EFFECT, 0.5f);
 
 		monster->Get_Damaged(m_Damage);
 	}
@@ -101,6 +101,7 @@ void CLaserBullet::OnCollisionStay(const Collision * collision)
 	{
 		_vec3 pos = collision->intersectBox._max;
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"ExplosionBlue", pos, { 1.3f,1.3f,1.0f }, 0.1f);
+		STOP_PLAY_SOUND(L"sfxShatter.wav", SOUND_EFFECT, 0.5f);
 		Add_GameObject(effect);
 		SetDead();
 		if (softPyramid != nullptr)

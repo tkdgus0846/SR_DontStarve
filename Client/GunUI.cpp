@@ -20,7 +20,7 @@ _int CGunUI::Update_GameObject(const _float& fTimeDelta)
 
 	_vec3 pos = { matView._41, matView._42, matView._43 };
 	Compute_ViewZ(&pos);
-	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
+	Engine::Add_RenderGroup(RENDER_AFTER_ALPHA_UI, this);
 	return __super::Update_GameObject(fTimeDelta);
 }
 
