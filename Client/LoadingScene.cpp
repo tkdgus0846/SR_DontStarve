@@ -20,7 +20,9 @@
 
 
 CLoadingScene::CLoadingScene(LPDIRECT3DDEVICE9 pGraphicDev) :
-	CScene(pGraphicDev)
+	CScene(pGraphicDev),
+	m_pLoadingBackground(nullptr),
+	m_fLoadingTime(0.f)
 {
 }
 
@@ -35,16 +37,26 @@ HRESULT CLoadingScene::Ready_Scene(void)
 	m_bLoadingCreated = false;
 	m_pLoading = CLoading::Create(m_pGraphicDev, m_eLoadingID);
 
+	m_pLoadingBackground = CLoadingBackground::Create(m_pGraphicDev);
+	Add_GameObject(m_pLoadingBackground);
+
+	STOP_ALL_BGM;
+	PLAY_BGM(L"SectorA.wav", SOUND_BGM, 0.4f);
+
+	CManagement::GetInstance()->Reset_WorldTime();
 	switch (m_eLoadingID)
 	{
 	case LOADING_STAGE:
 		m_pMiniGame = CSonicGame::Create(m_pGraphicDev);
 		break;
 	case LOADING_STAGE2:
+		m_pMiniGame = CSonicGame::Create(m_pGraphicDev);
 		break;
 	case LOADING_STAGE3:
+		m_pMiniGame = CSonicGame::Create(m_pGraphicDev);
 		break;
 	case LOADING_STAGE4:
+		m_pMiniGame = CSonicGame::Create(m_pGraphicDev);
 		break;
 	default:
 		break;
@@ -63,10 +75,29 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 	if (m_pMiniGame != nullptr)
 		exitNum = m_pMiniGame->Update_Scene(fTimeDelta);
 
-	
-	
-	if (m_pLoading->Get_Finish() == true)
+
+	if (m_pLoading->Get_Finish() == false)
 	{
+		if (m_pLoadingBackground != nullptr)
+		{
+			m_pLoadingBackground->Update_GameObject(fTimeDelta);
+			m_fLoadingTime += fTimeDelta;
+
+			if (m_fLoadingTime > 0.5f)
+			{
+				m_pLoadingBackground->Loading_Next_Text();
+				m_fLoadingTime = 0.f;
+			}
+		}
+	}	
+	else
+	{
+		if (m_pLoadingBackground != nullptr)
+		{
+			m_pLoadingBackground->Update_GameObject(fTimeDelta);
+			m_pLoadingBackground->Loading_Complete_Text();
+		}
+		
 		if (Key_Down(DIK_RETURN))
 		{
 			switch (m_eLoadingID)
@@ -90,8 +121,7 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 			}
 			break;
 			case LOADING_STAGE:
-			{
-				Start_WorldTimer();
+			{			
 				m_pScene = CStage::Create(m_pGraphicDev);
 
 				NULL_CHECK_RETURN(m_pScene, -1);
@@ -113,6 +143,19 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 			default:
 			{
 				NULL_CHECK_RETURN(m_pScene, -1);
+				STOP_ALL_BGM;
+				if (m_eLoadingID == LOADING_STAGE2)
+				{
+					PLAY_BGM(L"Sector2.wav", SOUND_BGM_FIELD, 0.5f);
+				}
+				else if (m_eLoadingID == LOADING_STAGE3)
+				{	
+					PLAY_BGM(L"Sector3.wav", SOUND_BGM_FIELD, 0.5f);
+				}
+				else if (m_eLoadingID == LOADING_STAGE4)
+				{
+					PLAY_BGM(L"Sector4.wav", SOUND_BGM_FIELD, 0.5f);
+				}
 
 				m_pScene->Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());
 				m_pScene->Reset_Scene();
@@ -148,18 +191,20 @@ void CLoadingScene::LateUpdate_Scene(void)
 	}
 }
 
+
+
+
 void CLoadingScene::Render_Scene(void)
 {
 	// _DEBUG ?? ???	
 	if (m_pLoading == nullptr) return;
 	
-	Engine::Render_Font(L"Font_Default", m_pLoading->Get_String(), &_vec2(20.f, 20.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	/*Engine::Render_Font(L"Font_Default", m_pLoading->Get_String(), &_vec2(20.f, 20.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));*/
 
 }
 
 HRESULT CLoadingScene::Ready_Proto(void)
 {
-	
 
 	return S_OK;
 }

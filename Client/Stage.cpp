@@ -120,7 +120,7 @@ HRESULT CStage::Ready_Scene(void)
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	STOP_ALL_SOUND;
-	PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD1, 0.5f);
+	PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD, 0.5f);
 
 	return S_OK;
 }
@@ -171,9 +171,7 @@ void CStage::Next_Stage()
 	m_StageInfo = (LOADINGID)((int)m_StageInfo + 1);
 	CLoadingScene* loadingScene = CLoadingScene::Create(m_pGraphicDev, m_StageInfo, this);
 
-	
 	CManagement::GetInstance()->Set_Scene_NotDelete(loadingScene);
-
 	//m_bNextStageCondition = true;
 }
 

@@ -30,6 +30,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Render_Alpha(pGraphicDev);
 	Render_UI(pGraphicDev);
 	Render_AlphaUI(pGraphicDev);
+	Render_After_AlphaUI(pGraphicDev);
 
 	Clear_RenderGroup();
 }
@@ -81,6 +82,12 @@ void Engine::CRenderer::Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	for (auto& iter : m_RenderGroup[RENDER_ALPHA_UI])
+		iter->Render_GameObject();	
+}
+
+void Engine::CRenderer::Render_After_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	for (auto& iter : m_RenderGroup[RENDER_AFTER_ALPHA_UI])
 		iter->Render_GameObject();
 
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);

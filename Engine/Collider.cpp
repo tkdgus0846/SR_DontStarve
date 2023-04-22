@@ -91,7 +91,7 @@ void CCollider::Render_Component()
 
 void CCollider::OnCollisionEnter(const Collision * collision)
 {
-	if (Get_WorldTime() < 2.f) return;
+	if (Get_WorldTime() < COLLISON_IGNORE_TIME) return;
 	if (m_bEnabled == false) return;
 	if (m_pGameObject->GetDead()) return;
 
@@ -101,7 +101,7 @@ void CCollider::OnCollisionEnter(const Collision * collision)
 
 void CCollider::OnCollisionStay(const Collision * collision)
 {
-	if (Get_WorldTime() < 2.f) return;
+	if (Get_WorldTime() < COLLISON_IGNORE_TIME) return;
 	if (m_bEnabled == false) return;
 	if (m_pGameObject->GetDead()) return;
 
@@ -111,7 +111,7 @@ void CCollider::OnCollisionStay(const Collision * collision)
 
 void CCollider::OnCollisionExit(const Collision * collision)
 {
-	if (Get_WorldTime() < 2.f) return;
+	if (Get_WorldTime() < COLLISON_IGNORE_TIME) return;
 	if (m_bEnabled == false) return;
 	if (m_pGameObject->GetDead()) return;
 

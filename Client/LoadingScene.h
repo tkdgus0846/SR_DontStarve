@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+
 class CLoadingScene : public CScene
 {
 private:
@@ -27,17 +28,21 @@ public:
 		m_eLoadingID = loadingID;
 	}
 
+	
+
 private:
 	HRESULT				Ready_Proto(void);
 
 private:
 	class CLoading*			m_pLoading;
-
 	CScene*					m_pScene;
 	class CMiniGame*		m_pMiniGame;
-
 	_bool					m_bLoadingCreated;
 	LOADINGID				m_eLoadingID;
+
+	_float					m_fLoadingTime;
+
+	class CLoadingBackground* m_pLoadingBackground;
 
 public:
 	static CLoadingScene*		Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID loadingID, CScene* stageScene = nullptr);

@@ -317,6 +317,7 @@
     <ClInclude Include="GunUI.h" />
     <ClInclude Include="MoveCos.h" />
     <ClInclude Include="MovePoint.h" />
+    <ClInclude Include="IInteractableTile.h" />
     <ClInclude Include="NubPilot.h" />
     <ClInclude Include="HardPyramid.h" />
     <ClInclude Include="HeartItem.h" />
@@ -340,6 +341,7 @@
     <ClInclude Include="LaserWeapon.h" />
     <ClInclude Include="LoadingBackground.h" />
     <ClInclude Include="Parabola.h" />
+    <ClInclude Include="NullFloorTile.h" />
     <ClInclude Include="RedLaserBullet.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
@@ -399,7 +401,11 @@
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
     <ClInclude Include="Sonic.h" />
+    <ClInclude Include="SonicBird.h" />
+    <ClInclude Include="SonicCloud.h" />
     <ClInclude Include="SonicGame.h" />
+    <ClInclude Include="SonicGround.h" />
+    <ClInclude Include="SonicUI.h" />
     <ClInclude Include="Speyeder.h" />
     <ClInclude Include="SpreadWeapon.h" />
     <ClInclude Include="SwampTile.h" />
@@ -524,6 +530,7 @@
     <ClCompile Include="LaserBullet.cpp" />
     <ClCompile Include="LaserWeapon.cpp" />
     <ClCompile Include="Parabola.cpp" />
+    <ClCompile Include="NullFloorTile.cpp" />
     <ClCompile Include="RedLaserBullet.cpp" />
     <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="LeapJump.cpp" />
@@ -577,7 +584,11 @@
     <ClCompile Include="SoftPyramid.cpp" />
     <ClCompile Include="Cryder.cpp" />
     <ClCompile Include="Sonic.cpp" />
+    <ClCompile Include="SonicBird.cpp" />
+    <ClCompile Include="SonicCloud.cpp" />
     <ClCompile Include="SonicGame.cpp" />
+    <ClCompile Include="SonicGround.cpp" />
+    <ClCompile Include="SonicUI.cpp" />
     <ClCompile Include="Speyeder.cpp" />
     <ClCompile Include="SpreadWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />

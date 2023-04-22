@@ -223,6 +223,9 @@
     <ClInclude Include="SoundMgr.h">
       <Filter>Manager\SoundMgr</Filter>
     </ClInclude>
+    <ClInclude Include="SandDigParticle.h">
+      <Filter>Component\ParticleSystem\SandParticles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -414,6 +417,9 @@
     <ClCompile Include="SoundMgr.cpp">
       <Filter>Manager\SoundMgr</Filter>
     </ClCompile>
+    <ClCompile Include="SandDigParticle.cpp">
+      <Filter>Component\ParticleSystem\SandParticles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Base.inl">
@@ -528,6 +534,9 @@
     </Filter>
     <Filter Include="Manager\SoundMgr">
       <UniqueIdentifier>{4fc3040c-ae28-483f-8372-b3c3d7b42cba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ParticleSystem\SandParticles">
+      <UniqueIdentifier>{51b59956-d973-4b03-94e1-1f0a7ea9ea92}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

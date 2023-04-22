@@ -59,13 +59,15 @@ public:
 	_vec3			Tactical_Bullet_Dir();
 
 	bool IsObjectInFOV(_float fDistance, _float fRadius, _float fFov);
+	void			IsOnIceTile(_bool _IsOnIceTile) {
+		m_bIsOnTile = _IsOnIceTile;	}
 
 private:
 	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Move(const _float& fTimeDelta);
 	void		Fix_Mouse();
-
+	void		InteractTile(_float fTimeDelta);
 private:
 	_bool					m_bFix;
 
@@ -86,6 +88,8 @@ private:
 
 	vector<CGameObject*>				m_vecMonster;
 
+	_bool				m_bIsOnTile = false;
+		;
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

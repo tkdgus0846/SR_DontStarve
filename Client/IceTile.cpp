@@ -1,5 +1,7 @@
 #include "IceTile.h"
 #include "Export_Function.h"
+#include "Player.h"
+#include "Pyramid.h"
 
 CIceTile::CIceTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CFloorTile(pGraphicDev)
@@ -14,18 +16,13 @@ CIceTile::~CIceTile()
 CGameObject * CIceTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CIceTile* pInstance = new CIceTile(pGraphicDev);
-
+	
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		delete pInstance;
 		pInstance = nullptr;
 	}
 	return pInstance;
-}
-
-CGameObject * CIceTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	return Create(pGraphicDev);
 }
 
 HRESULT CIceTile::Add_Component()
@@ -37,38 +34,54 @@ HRESULT CIceTile::Add_Component()
 	m_uMapComponent[ID_STATIC].insert({ L"FloorIce", texture });
 	m_pAnimation->BindAnimation(ANIM_IDLE, texture);
 
-	//CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_TRIGGER));
-	//pCollider->Set_BoundingBox({ 10.f, 5.f, 10.f });
-	//m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ENVIRONMENT));
+	pCollider->Set_BoundingBox({ 10.f, 5.f, 10.f });
+	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
+	
 	return result;
 }
 
 void CIceTile::OnCollisionEnter(const Collision * collision)
 {
-	if (IsBodyCollider(collision))
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(collision->OtherGameObject);
+
+	if (pPlayer && IsBodyCollider(collision))
 	{
-		//TODO
-		m_vDir = collision->OtherGameObject->m_pTransform->m_vInfo[INFO_LOOK];
-		m_vDir.Normalize();
+		//if (IntersectPoint(&pPlayer->m_pTransform->m_vInfo[INFO_POS]))
+		//	Set_Trigger(true);
+
+
+
 	}
 }
 
 void CIceTile::OnCollisionStay(const Collision * collision)
 {
-	if (IsBodyCollider(collision))
-	{
-		cout << m_vDir.x << "\t" << m_vDir.y << "\t" << m_vDir.z << endl;
-		//TODO
-		collision->OtherGameObject->m_pTransform->Move_WalkWithVec(m_vDir, 10.f, 0.016f);
-	}
+
 }
 
 void CIceTile::OnCollisionExit(const Collision * collision)
 {
-	if (IsBodyCollider(collision))
+
+}
+
+void CIceTile::InteractGameObject(const InteractInfo* tInteractInfo)
+{
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(tInteractInfo->pGameObject);
+	if (pPlayer)
 	{
-		//TODO
-		m_vDir = {};
+		CCollider* pCol = dynamic_cast<CCollider*>(pPlayer->Get_Component(L"BodyCollider", ID_ALL));
+		
+		if (!pCol)
+			return;
+
+		for (auto& Object : pCol->Get_CollisionList())
+			if (dynamic_cast<CPyramid*>(Object.second.OtherGameObject))
+				return;
+		
+		pPlayer->IsOnIceTile(true);
+		_vec3 vDir = pPlayer->m_pTransform->GetDeltaVec();
+		vDir.Normalize();
+		pPlayer->m_pTransform->Move_WalkWithVec(vDir, 3.f, tInteractInfo->_fTimeDelta);
 	}
 }

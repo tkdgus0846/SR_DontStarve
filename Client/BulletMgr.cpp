@@ -8,6 +8,7 @@
 #include "LaserBullet.h"
 #include "RedLaserBullet.h"
 #include "EnemyBullet.h"
+#include "SonicBird.h"
 
 IMPLEMENT_SINGLETON(CBulletMgr)
 
@@ -94,6 +95,10 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 		else if (name == L"EnemyBullet")
 		{
 			pBullet = CEnemyBullet::Create(pDevice);
+		}
+		else if (name == L"SonicBird")
+		{
+			pBullet = CSonicBird::Create(pDevice);
 		}
 		++m_iCreateCnt;
 		//cout << m_iCreateCnt << endl;

@@ -383,7 +383,6 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TriCol", CTriCol::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcCol", CRcCol::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Dynamic", CRcTex::Create(m_pGraphicDev, VB_DYNAMIC)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RoomTex", CRoomTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorTex", CFloorTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
@@ -391,7 +390,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"WallTex", CWallTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FrustrumNormalTex", CFrustrumNormalTex::Create(m_pGraphicDev)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collider", CCollider::Create(m_pGraphicDev)), E_FAIL);
+	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RigidBody", CRigidbody::Create(m_pGraphicDev)), E_FAIL);
 	
 	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Animation", CAnimation::Create(m_pGraphicDev)), E_FAIL);*/
@@ -484,7 +483,7 @@ _uint CLoading::Loading_ForStage(void)
 	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	
-	CFileSystem::Load(L"as.dat");
+	//CFileSystem::Load(L"as.dat");
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");
 
@@ -500,7 +499,7 @@ _uint CLoading::Loading_ForStage2(void)
 	ROOM_MGR->Create_Default_Room(STAGE2); // 여기서 룸들을 싹다 만든다.
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
-	CFileSystem::Load(L"as.dat");
+	//CFileSystem::Load(L"as.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
 	m_bFinish = true;
@@ -515,7 +514,7 @@ _uint CLoading::Loading_ForStage3(void)
 	ROOM_MGR->Create_Default_Room(STAGE3); // 여기서 룸들을 싹다 만든다.
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
-	CFileSystem::Load(L"as.dat");
+	//CFileSystem::Load(L"as.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
 	m_bFinish = true;
@@ -531,7 +530,7 @@ _uint CLoading::Loading_ForStage4(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 
-	CFileSystem::Load(L"as.dat");
+	//CFileSystem::Load(L"as.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
 	m_bFinish = true;
