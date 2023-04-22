@@ -10,8 +10,8 @@ CLaserWeapon::CLaserWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 	Set_ObjTag(L"LaserWeapon");
 
 	m_fCycle = 0.5f;
-	m_MaxBulletNum = 2;
-	m_CurBulletNum = 2;
+	m_MaxBulletNum = 30.f;
+	m_CurBulletNum = 30.f;
 }
 
 CLaserWeapon::~CLaserWeapon()
@@ -44,7 +44,7 @@ CBullet* CLaserWeapon::Shot_Setting()
 	bullet->m_pTransform->Rot_Yaw(-90.f, 1.f);
 
 	STOP_PLAY_SOUND(L"sfxLaser.wav", SOUND_ENVIRONMENT, 1.f);
-	m_CurBulletNum++;
+	//m_CurBulletNum++;
 
 	return bullet;
 }

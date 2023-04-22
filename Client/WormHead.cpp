@@ -8,7 +8,8 @@ CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
 	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime(0.f), m_fPreTime(0.f)
 {
-	Set_LayerID(LAYER_MONSTER);
+	Set_LayerID(LAYER_BOSS);
+	Set_ObjTag(L"WormHead");
 }
 
 CWormHead::~CWormHead()

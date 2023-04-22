@@ -1,6 +1,6 @@
 #pragma once
 
-#define		Default_Window_Pos		300
+#define		Default_Window_Pos		200
 
 #define		OBJ_NOEVENT		0
 #define		OBJ_DEAD		1
@@ -22,6 +22,9 @@
 #define		BEHAVIOR_ERROR		4
 
 #define		PURE			= 0
+
+#define		ROOMX	3
+#define		ROOMY	3
 
 #ifndef			MSG_BOX
 #define			MSG_BOX(_message)			MessageBox(NULL, TEXT(_message), L"System Message", MB_OK)

@@ -21,7 +21,7 @@ HRESULT CWalkerBoss::Ready_GameObject(const _vec3 & vPos)
 	m_iMaxHp = 100;
 
 	m_pTransform->m_vScale = { 3.f, 3.f, 3.f };
-	m_pTransform->m_vInfo[INFO_POS] = vPos;
+	m_pTransform->m_vInfo[INFO_POS] = {25.f, 0.f, 145.f};
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	HRESULT result = __super::Ready_GameObject();

@@ -47,13 +47,7 @@ HRESULT CBossHp::Ready_GameObject(void)
 
 _int CBossHp::Update_GameObject(const _float & fTimeDelta)
 {
-	if (Get_GameObject(LAYER_BOSS, L"WalkerBoss") == nullptr)
-		return OBJ_NOEVENT;
-	else
-	{
-		pGameObject = Get_GameObject(LAYER_MONSTER, L"WalkerBoss");
-	}
-	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
+	Add_RenderGroup(RENDER_ALPHA_UI, this);
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -67,6 +61,14 @@ void CBossHp::LateUpdate_GameObject(void)
 
 void CBossHp::Render_GameObject(void)
 {
+	CLayer* pLayer = Engine::Get_Layer(LAYER_BOSS);
+	if (pLayer == nullptr) { return; }
+
+	pLayer->Get_GameObject_ALL(&vecBoss);
+	if (vecBoss.empty()) { return; }
+
+	auto iter = *vecBoss.begin();
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	for (size_t i = 0; i < BOSS_UI_END; i++)
 	{
@@ -89,15 +91,15 @@ void CBossHp::Render_GameObject(void)
 			dynamic_cast<CTexture*>(m_arrMap[BOSS_MAP_FONT])->Render_Texture(FONT::S);
 			break;
 		case BOSS_UI_HP:
-			Set_ViewMatrix_UI(0.f, 200.f, 150.f, 30.f);
+			Set_ViewMatrix_UI(0.f, 220.f, 150.f, 15.f);
 			dynamic_cast<CTexture*>(m_arrMap[BOSS_MAP_HP])->Render_Texture();
 			break;
 		case BOSS_UI_GUAGE:
-			_float MaxHp = dynamic_cast<CCreature*>(pGameObject)->Get_MaxHP();
-			_float CurHp = dynamic_cast<CCreature*>(pGameObject)->Get_HP();
+			_float MaxHp = dynamic_cast<CCreature*>(iter)->Get_MaxHP();
+			_float CurHp = dynamic_cast<CCreature*>(iter)->Get_HP();
 			m_CurHp = CurHp / MaxHp;
 			m_dRcTex->Edit_VB(m_CurHp);
-			Set_ViewMatrix_UI(0.f, 200.f, 146.f, 26.f);
+			Set_ViewMatrix_UI(0.f, 220.f, 146.f, 13.f);
 			dynamic_cast<CTexture*>(m_arrMap[BOSS_MAP_GUAGE])->Render_Texture();
 			m_dRcTex->Render_Component();
 			continue;
@@ -105,11 +107,9 @@ void CBossHp::Render_GameObject(void)
 		m_sRcTex->Render_Component();
 	}
 	__super::Render_GameObject();
+
+	vecBoss.clear();
 }
-
-
-
-
 
 
 CBossHp * CBossHp::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -131,9 +131,12 @@ void CBossHp::Free(void)
 	Safe_Release(m_dRcTex);
 
 	auto iter = m_arrMap.begin();
-	for (; iter < m_arrMap.end(); iter++)
+	for (; iter != m_arrMap.end(); iter++)
 	{
 		Safe_Release(*iter);
 	}
+
+	for_each(vecBoss.begin(), vecBoss.end(), CDeleteObj());
+
 	__super::Free();
 }

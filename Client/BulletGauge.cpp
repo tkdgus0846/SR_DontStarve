@@ -39,6 +39,12 @@ _int CBulletGauge::Update_GameObject(const _float & fTimeDelta)
 	}
 		break;
 	case EXPLOSIVESHOT:
+	{
+		m_pBufferCom->Edit_VB(m_ExplosiveGuage);
+		_float Max = pWeapon->Get_MaxBulletNum();
+		_float Cur = pWeapon->Get_CurBulletNum();
+		m_ExplosiveGuage = Cur / Max;
+	}
 		break;
 	case FLAMESHOT: 
 	{
