@@ -1,5 +1,6 @@
 #include "Evasioner.h"
 
+#include "Bullet.h"
 #include "Export_Function.h"
 
 CEvasioner::CEvasioner(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -53,7 +54,8 @@ void CEvasioner::Render_GameObject(void)
 
 void CEvasioner::OnCollisionStay(const Collision * collision)
 {
-	m_pAnimation->SelectState(ANIM_WALK);
+	if(dynamic_cast<CBullet*>(collision->OtherGameObject))
+		m_pAnimation->SelectState(ANIM_WALK);
 }
 
 void CEvasioner::OnCollisionExit(const Collision * collision)

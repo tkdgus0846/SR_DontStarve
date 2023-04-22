@@ -96,7 +96,7 @@ HRESULT CLogo::Ready_Proto(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 
-	/////////////////// Sonic Texture 중요함 /////////////// ㅎ
+	/////////////////// Sonic Texture 중요함 /////////////// 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SonicWalk_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Sonic_Walk_%d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SonicRun_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Sonic_Run_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SonicDead_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Sonic_Dead.png")), E_FAIL);

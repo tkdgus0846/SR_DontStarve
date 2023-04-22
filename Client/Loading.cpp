@@ -15,6 +15,11 @@
 #include "FileSystem.h"
 #include "ShopNpc.h"
 
+#include "NubBoss.h"
+#include "TreeBoss.h"
+#include "WormHead.h"
+#include "WalkerBoss.h"
+
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_bFinish(false)
@@ -408,7 +413,6 @@ _uint CLoading::Loading_ForStage(void)
 
 	Set_String(L"AI Loading..........");
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Move", CMoveLook::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Rot", CRotToFace::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Wait", CWait::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_RandomLook", CRandomLook::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Jump", CJump::Create(m_pGraphicDev)), E_FAIL);
@@ -419,9 +423,14 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_BackJump", CBackJump::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_LookAtTarget", CLookAtTarget::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Rush", CRush::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Dig", CDig::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_MoveUp", CMoveUp::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_OnPlayer", COnPlayer::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_Parabola", CParabola::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_MovePoint", CMovePoint::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_MoveCos", CMoveCos::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_MoveY", CMoveY::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_LookAtPlayer", CLookAtPlayer::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_ATKToPlayer", CAttackToPlayer::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_WormMoveCtrl", CWormMoveCtrl::Create(m_pGraphicDev)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_TimeInLimit", CTimeInLimit::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_RangeCheck", CRangeCheck::Create(m_pGraphicDev)), E_FAIL);
@@ -469,6 +478,11 @@ _uint CLoading::Loading_ForStage(void)
 	
 	ROOM_MGR->Create_Default_Room(STAGE1);	
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+
+	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	
 	CFileSystem::Load(L"as.dat");
 	m_bFinish = true;

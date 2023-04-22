@@ -19,6 +19,7 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
+	void Set_Move(_bool bSwitch) { m_bMove = bSwitch; }
 	_bool Get_Move() { return m_bMove; }
 
 private:
@@ -30,6 +31,10 @@ private:
 	vector<CWormBody*>	m_vecBody;
 	CWormTail*			m_pTail;
 	_bool				m_bMove;
+	_float				m_fCurAngle;
+	_float				m_fPreAngle;
+	_float				m_fCurTime;
+	_float				m_fPreTime;
 
 public:
 	static CWormHead*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);

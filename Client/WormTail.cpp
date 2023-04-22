@@ -5,8 +5,8 @@
 #include "Export_Function.h"
 
 CWormTail::CWormTail(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CMonster(pGraphicDev), m_pFrontBody(nullptr),
-	m_bMove(false), m_pHead(nullptr)
+	: CMonster(pGraphicDev), m_pFrontBody(nullptr), m_bMove(false), m_pHead(nullptr)
+	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime(0.f), m_fPreTime(0.f)
 {
 	ZeroMemory(m_vDest, sizeof(_vec3));
 }
@@ -27,6 +27,7 @@ HRESULT CWormTail::Ready_GameObject(const _vec3 & vPos)
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 
 	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
 
 	HRESULT result = __super::Ready_GameObject();
 
@@ -35,7 +36,16 @@ HRESULT CWormTail::Ready_GameObject(const _vec3 & vPos)
 
 _int CWormTail::Update_GameObject(const _float & fTimeDelta)
 {
+	if (nullptr == Get_Player())
+		return OBJ_NOEVENT;
+
 	__super::Update_GameObject(fTimeDelta);
+
+	if (m_iHp != m_iMaxHp)
+	{
+		m_pHead->Get_Damaged(m_iMaxHp - m_iHp);
+		m_iMaxHp = m_iHp;
+	}
 
 	if (GetDead())
 	{
@@ -45,19 +55,9 @@ _int CWormTail::Update_GameObject(const _float & fTimeDelta)
 		return OBJ_DEAD;
 	}
 
-	if (m_pHead)
-	{
-		m_fSpeed = m_pHead->Get_Speed();
-		if (m_pHead->Get_Move() != m_bMove)
-			m_bMove = m_pHead->Get_Move();
-	}
-
-	if (m_pFrontBody)
-	{
-		m_fSpeed = m_pFrontBody->Get_Speed();
-		if (m_pFrontBody->Get_Move() != m_bMove)
-			m_bMove = m_pFrontBody->Get_Move();
-	}
+	m_fSpeed = m_pHead->Get_Speed();
+	if (m_pHead->Get_Move() != m_bMove)
+		m_bMove = m_pHead->Get_Move();
 
 	if (m_bMove)
 		Move(fTimeDelta);
@@ -66,7 +66,7 @@ _int CWormTail::Update_GameObject(const _float & fTimeDelta)
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
-	return 0;
+	return OBJ_NOEVENT;
 }
 
 void CWormTail::LateUpdate_GameObject(void)
@@ -74,9 +74,35 @@ void CWormTail::LateUpdate_GameObject(void)
 	if (GetDead())
 		return;
 
-	if (Get_Player() == nullptr) return;
+	if (!Get_Player())
+		return;
 
-	m_pTransform->Set_Scale({ 1.5f, 1.5f, 1.5f });
+	m_fCurTime = Get_WorldTime();
+
+	_vec3 vLook = m_pTransform->m_vInfo[INFO_LOOK];
+	_vec3 vLookXZ = { vLook.x, 0.f, vLook.z };
+	vLook.Normalize();
+	vLookXZ.Normalize();
+	m_fCurAngle = vLook.Dot(vLookXZ);
+
+	_float fResult = 0.f;
+
+	if (m_fCurTime - m_fPreTime > 0.1f)
+	{
+		fResult = m_fCurAngle - m_fPreAngle;
+		m_fPreAngle = m_fCurAngle;
+		m_fPreTime = m_fCurTime;
+	}
+
+	if (!isnan(m_fCurAngle) && fResult != 0)
+	{
+		if (fResult > 0)
+			m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
+		else
+			m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
+	}
+
+	m_pTransform->m_vScale.x = 1.5f;
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
 	_vec3 vDir = vPos - m_pTransform->m_vInfo[INFO_POS];
@@ -92,22 +118,34 @@ void CWormTail::LateUpdate_GameObject(void)
 	if (fAngleRight < 45.f)
 		m_pAnimation->SelectState(ANIM_SIDE);
 	else if (fAngleUp < 45.f)
+	{
+		m_pTransform->Rot_Bill(90.f);
 		m_pAnimation->SelectState(ANIM_TOP);
+	}
 	else if (fAngleLook < 45.f)
 		m_pAnimation->SelectState(ANIM_FACE);
 
 	else if (fAngleRight > 135.f)
 	{
-		m_pTransform->Set_Scale({ -1.5f, 1.5f, 1.5f });
+		if (!isnan(m_fCurAngle) && fResult != 0)
+		{
+			if (fResult > 0)
+				m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
+			else
+				m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
+		}
+		m_pTransform->m_vScale.x = -1.5f;
 		m_pAnimation->SelectState(ANIM_SIDE);
 	}
-
 	else if (fAngleLook > 135.f)
+	{
+		m_pTransform->m_vScale.x = -1.5f;
 		m_pAnimation->SelectState(ANIM_BACK);
+	}
 
 	else if (fAngleUp < 135.f)
 	{
-		m_pTransform->Set_Scale({ -1.5f, 1.5f, 1.5f });
+		m_pTransform->Rot_Bill(90.f);
 		m_pAnimation->SelectState(ANIM_TOP);
 	}
 	else
@@ -170,35 +208,47 @@ void CWormTail::Move(const _float & fTimeDelta)
 	_vec3 vDir = m_vDest - vPos;
 	_float fLength = 0.f;
 
-	if (m_pHead)
+	if (m_pFrontBody)
 	{
-		fLength = _vec3(m_pHead->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS]).Length();
-		if (vDir.Length() < 0.1f)
-			m_vDest = m_pHead->m_pTransform->m_vInfo[INFO_POS];
+		fLength = _vec3(m_pFrontBody->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS]).Length();
+		if (vDir.Length() < 0.5f)
+			m_vDest = m_pFrontBody->m_pTransform->m_vInfo[INFO_POS];
 	}
 	else
 	{
-		fLength = _vec3(m_pFrontBody->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS]).Length();
-		if (vDir.Length() < 0.1f)
-			m_vDest = m_pFrontBody->m_pTransform->m_vInfo[INFO_POS];
+		fLength = _vec3(m_pHead->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS]).Length();
+		if (vDir.Length() < 0.5f)
+			m_vDest = m_pHead->m_pTransform->m_vInfo[INFO_POS];
 	}
+
 	m_pTransform->Set_Target(m_vDest);
 
-	vDir = m_pTransform->m_vInfo[INFO_LOOK];
+	m_fCurTime = Get_WorldTime();
 
-	vDir.Normalize();
-	_vec3 vDirXZ = { vDir.x, 0.f, vDir.z };
-	vDirXZ.Normalize();
-	_float fAngle = vDir.Degree(_vec3(vDirXZ.x, 0.f, vDirXZ.z));
+	_vec3 vLook = m_pTransform->m_vInfo[INFO_LOOK];
+	_vec3 vLookXZ = { vLook.x, 0.f, vLook.z };
+	vLook.Normalize();
+	vLookXZ.Normalize();
+	m_fCurAngle = vLook.Dot(vLookXZ);
 
-	if (isnan(fAngle))
-		fAngle = 0.f;
+	_float fResult = 0.f;
 
-	_vec3 vAxis = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
+	if (m_fCurTime - m_fPreTime > 0.3f)
+	{
+		fResult = m_fCurAngle - m_fPreAngle;
+		m_fPreAngle = m_fCurAngle;
+		m_fPreTime = m_fCurTime;
+	}
 
-	m_pTransform->Rot_Bill(fAngle);
+	if (!isnan(m_fCurAngle) && fResult != 0)
+	{
+		if (fResult > 0)
+			m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
+		else
+			m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
+	}
 
-	if (fLength < 2.7f)
+	if (fLength < 2.5f)
 		m_pTransform->Move_Walk(0.1f, fTimeDelta);
 	else if (fLength > 4.f)
 		m_pTransform->Move_Walk(m_fSpeed * 1.5f, fTimeDelta);

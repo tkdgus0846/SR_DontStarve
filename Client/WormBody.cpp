@@ -7,7 +7,7 @@
 CWormBody::CWormBody(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_pFrontBody(nullptr)
 	, m_pBackBody(nullptr), m_bMove(true), m_pHead(nullptr)
-	, m_pTail(nullptr), m_fDir(0.f)
+	, m_pTail(nullptr), m_fCurAngle(0.f), m_fPreAngle(0.f)
 {
 	ZeroMemory(m_vDest, sizeof(_vec3));
 }
@@ -22,13 +22,16 @@ HRESULT CWormBody::Ready_GameObject(const _vec3 & vPos)
 	m_iAttack = 1;
 	m_iHp = 20;
 	m_iMaxHp = 20;
-	m_fDir = 1.f;
+
+	m_fCurTime = Get_WorldTime();
+	m_fPreTime = Get_WorldTime();
 
 	m_pTransform->m_vScale = { 1.5f, 1.5f, 1.5f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 
 	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
 
 	HRESULT result = __super::Ready_GameObject();
 
@@ -37,7 +40,16 @@ HRESULT CWormBody::Ready_GameObject(const _vec3 & vPos)
 
 _int CWormBody::Update_GameObject(const _float & fTimeDelta)
 {
+	if (nullptr == Get_Player())
+		return OBJ_NOEVENT;
+
 	__super::Update_GameObject(fTimeDelta);
+
+	if (m_iHp != m_iMaxHp)
+	{
+		m_pHead->Get_Damaged(m_iMaxHp - m_iHp);
+		m_iMaxHp = m_iHp;
+	}
 
 	if (GetDead())
 	{
@@ -53,29 +65,19 @@ _int CWormBody::Update_GameObject(const _float & fTimeDelta)
 		}
 		else
 		{
-			if (m_pBackBody)
-				m_pBackBody->Chain_Head(m_pHead);
+			if(m_pBackBody)
+				m_pBackBody->Chain_Front(nullptr);
 
 			if (m_pTail)
-				m_pTail->Chain_Head(m_pHead);
+				m_pTail->Chain_Front(nullptr);
 		}
 
 		return OBJ_DEAD;
 	}
-
-	if (m_pHead)
-	{
-		m_fSpeed = m_pHead->Get_Speed();
-		if (m_pHead->Get_Move() != m_bMove)
-			m_bMove = m_pHead->Get_Move();
-	}
-
-	if (m_pFrontBody)
-	{
-		m_fSpeed = m_pFrontBody->Get_Speed();
-		if (m_pFrontBody->m_bMove != m_bMove)
-			m_bMove = m_pFrontBody->m_bMove;
-	}
+	
+	m_fSpeed = m_pHead->Get_Speed();
+	if (m_pHead->Get_Move() != m_bMove)
+		m_bMove = m_pHead->Get_Move();
 
 	if (m_bMove)
 		Move(fTimeDelta);
@@ -94,9 +96,33 @@ void CWormBody::LateUpdate_GameObject(void)
 
 	if (!Get_Player())
 		return;
-    
-	m_fDir = 1.f;
-	m_pTransform->Set_Scale({ 1.5f, 1.5f, 1.5f });
+
+	m_fCurTime = Get_WorldTime();
+
+	_vec3 vLook = m_pTransform->m_vInfo[INFO_LOOK];
+	_vec3 vLookXZ = { vLook.x, 0.f, vLook.z };
+	vLook.Normalize();
+	vLookXZ.Normalize();
+	m_fCurAngle = vLook.Dot(vLookXZ);
+
+	_float fResult = 0.f;
+
+	if (m_fCurTime - m_fPreTime > 0.1f)
+	{
+		fResult = m_fCurAngle - m_fPreAngle;
+		m_fPreAngle = m_fCurAngle;
+		m_fPreTime = m_fCurTime;
+	}
+
+	if (!isnan(m_fCurAngle) && fResult != 0)
+	{
+		if (fResult > 0)
+			m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
+		else
+			m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
+	}
+
+	m_pTransform->m_vScale.x = 1.5f;
 
 	_vec3 vPos = Get_Player()->m_pTransform->m_vInfo[INFO_POS];
 	_vec3 vDir = vPos - m_pTransform->m_vInfo[INFO_POS];
@@ -113,25 +139,33 @@ void CWormBody::LateUpdate_GameObject(void)
 		m_pAnimation->SelectState(ANIM_SIDE);
 	else if (fAngleUp < 45.f)
 	{
+		m_pTransform->Rot_Bill(90.f);
 		m_pAnimation->SelectState(ANIM_TOP);
-		m_fDir = -1.f;
 	}
 	else if (fAngleLook < 45.f)
 		m_pAnimation->SelectState(ANIM_FACE);
 
 	else if (fAngleRight > 135.f)
 	{
-		m_pTransform->Set_Scale({ -1.5f, 1.5f, 1.5f });
+		if (!isnan(m_fCurAngle) && fResult != 0)
+		{
+			if (fResult > 0)
+				m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
+			else
+				m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
+		}
+		m_pTransform->m_vScale.x = -1.5f;
 		m_pAnimation->SelectState(ANIM_SIDE);
-		m_fDir = -1.f;
 	}
-
 	else if (fAngleLook > 135.f)
+	{
+		m_pTransform->m_vScale.x = -1.5f;
 		m_pAnimation->SelectState(ANIM_BACK);
+	}
 
 	else if (fAngleUp < 135.f)
 	{
-		m_pTransform->Set_Scale({ -1.5f, 1.5f, 1.5f });
+		m_pTransform->Rot_Bill(90.f);
 		m_pAnimation->SelectState(ANIM_TOP);
 	}
 	else
@@ -186,9 +220,9 @@ HRESULT CWormBody::Add_Component()
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
 	pCollider->Set_BoundingBox({ 2.9f, 2.9f, 2.9f });
 
-	//FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
-	//FAILED_CHECK_RETURN(Set_Basic_Attack(L"EnemyBullet", 1.f, 10.f));
-	//FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
+	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
+	FAILED_CHECK_RETURN(Set_AttackToPlayer(L"EnemyBullet", 20.f, 10.f));
+	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;
 }
@@ -199,33 +233,23 @@ void CWormBody::Move(const _float & fTimeDelta)
 	_vec3 vDir = m_vDest - vPos;
 	_float fLength = 0.f;
 
-	if (m_pHead)
+	if (m_pFrontBody)
 	{
-		fLength = _vec3(m_pHead->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS]).Length();
-		if (vDir.Length() < 0.1f)
-			m_vDest = m_pHead->m_pTransform->m_vInfo[INFO_POS];
+		fLength = _vec3(m_pFrontBody->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS]).Length();
+		if (vDir.Length() < 0.5f)
+			m_vDest = m_pFrontBody->m_pTransform->m_vInfo[INFO_POS];
 	}
 	else
 	{
-		fLength = _vec3(m_pFrontBody->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS]).Length();
-		if (vDir.Length() < 0.1f)
-			m_vDest = m_pFrontBody->m_pTransform->m_vInfo[INFO_POS];
+		fLength = _vec3(m_pHead->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS]).Length();
+		if (vDir.Length() < 0.5f)
+			m_vDest = m_pHead->m_pTransform->m_vInfo[INFO_POS];
 	}
+
 	m_pTransform->Set_Target(m_vDest);
 	vDir = m_pTransform->m_vInfo[INFO_LOOK];
 
-	vDir.Normalize();
-	_vec3 vDirXZ = { vDir.x, 0.f, vDir.z };
-	vDirXZ.Normalize();
-	_float fAngle = -vDir.Degree(_vec3(vDirXZ.x, 0.f, vDirXZ.z));
-
-	if (isnan(fAngle))
-		fAngle = 0.f;
-	_vec3 vAxis = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
-	
-	m_pTransform->Rot_Bill(fAngle * m_fDir);
-
-	if (fLength < 2.7f)
+	if (fLength < 2.5f)
 		m_pTransform->Move_Walk(0.1f, fTimeDelta);
 	else if(fLength > 4.f)
 		m_pTransform->Move_Walk(m_fSpeed * 1.5f, fTimeDelta);

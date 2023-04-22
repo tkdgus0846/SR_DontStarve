@@ -9,6 +9,7 @@ class CTriCol;
 class CTransform;
 class CCollider;
 class CSequence;
+class CBlackBoard;
 END
 
 class CJump;
@@ -33,12 +34,14 @@ public:
 
 	virtual void SetDead(_bool bDead = true) override;
 
-	virtual void	Get_Damaged(_int Damage) override;
+	virtual void Get_Damaged(_int Damage) override;
 	
 private:
 	virtual HRESULT Add_Component() override;
 
 protected:
+	Engine::CBlackBoard* Get_BlackBoard();
+
 	HRESULT		Create_Root_AI();			// AI 생성 시 제일 먼저 실행 시켜야 함.
 	HRESULT		Init_AI_Behaviours();		// AI작업 마지막에 무조건 실행 시켜야 함.
 
@@ -58,7 +61,10 @@ protected:
 	CSequence*	Make_BossPattern2_1(const _float& fCoolTime = 12.f);
 	CSequence*	Make_BossPattern2_2(const _float& fCoolTime = 0.f);
 	CSequence*	Make_BossPattern3(const _float& fCoolTime = 12.f);
+	CSequence*	Make_BossPattern3_1(const _float& fCoolTime = 12.f);
+	CSequence*	Make_BossPattern3_2(const _float& fCoolTime = 12.f);
 	
+	HRESULT		Set_AttackToPlayer(const _tchar* BulletKey, const _float& fSpeed, const _float& fCoolTime);
 	HRESULT		Set_PatrolAndFollow_AI();
 	HRESULT		Set_PAF_JumpAI();
 	HRESULT		Set_PAF_DBJumpAI();

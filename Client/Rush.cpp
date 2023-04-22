@@ -25,11 +25,11 @@ HRESULT CRush::Ready_Behavior()
 _int CRush::Update_Component(const _float & fTimeDelta)
 {
 	CCollider* pBodyCollider = dynamic_cast<CCollider*>(m_pGameObject->Get_Component(L"BodyCollider", ID_ALL));
-	NULL_CHECK_RETURN(pBodyCollider, BEHAVIOR_FAIL);
+	NULL_CHECK_RETURN(pBodyCollider, BEHAVIOR_ERROR);
 	CTransform* pTransform = m_pGameObject->m_pTransform;
 
 	_float fSpeed = 0.f;
-	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", fSpeed), BEHAVIOR_FAIL);
+	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", fSpeed), BEHAVIOR_ERROR);
 
 	auto uMap = pBodyCollider->Get_CollisionList();
 
@@ -49,7 +49,7 @@ _int CRush::Update_Component(const _float & fTimeDelta)
 		return BEHAVIOR_SUCCES;
 	}
 
-	return BEHAVIOR_FAIL;
+	return BEHAVIOR_ERROR;
 }
 
 CRush * CRush::Create(LPDIRECT3DDEVICE9 pGraphicDev)
