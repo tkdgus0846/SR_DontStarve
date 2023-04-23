@@ -140,16 +140,7 @@ void CWormBody::LateUpdate_GameObject(void)
 		return;
 
 	if (fAngleRight < 45.f)
-	{
-		if (!isnan(m_fCurAngle) && fResult != 0)
-		{
-			if (fResult > 0)
-				m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
-			else
-				m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
-		}
 		m_pAnimation->SelectState(ANIM_SIDE);
-	}
 	else if (fAngleUp < 45.f)
 	{
 		m_pTransform->Rot_Bill(90.f);
