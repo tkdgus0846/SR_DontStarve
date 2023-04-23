@@ -41,6 +41,7 @@ public:
 
 	void CreateMonster(CImInspector * pWindow);
 	void CreateTile(CImInspector * pWindow);
+	void CreateWall(CImInspector * pWindow);
 	void CreateMapObject(CImInspector * pWindow);
 	void DeleteObject();
 

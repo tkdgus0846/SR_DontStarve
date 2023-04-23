@@ -1,6 +1,5 @@
 #include "TileFactory.h"
 
-// Å¸ÀÏÇì´õ ÆÄÀÏ ¸ðÀ½
 #include "BeltTile.h"
 #include "BloodTile.h"
 #include "ElectricTile.h"
