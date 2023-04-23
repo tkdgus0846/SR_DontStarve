@@ -2,6 +2,8 @@
 
 #include "WormBody.h"
 #include "WormTail.h"
+#include "EffectManager.h"
+#include "ItemManager.h"
 #include "Export_Function.h"
 
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -83,8 +85,10 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 	if (!Get_Player())
 		return OBJ_NOEVENT;
 
-	if (GetDead())
+	if (GetDead() && Dead_Production())
 		return OBJ_DEAD;
+	else if (!GetDead())
+		m_fPreTime = Get_WorldTime();
 
 	if (Key_Down(DIK_SPACE))
 		m_bMove = !m_bMove;
@@ -148,7 +152,16 @@ void CWormHead::LateUpdate_GameObject(void)
 		return;
 
 	if (fAngleRight < 45.f)
+	{
+		if (!isnan(m_fCurAngle) && fResult != 0)
+		{
+			if (fResult > 0)
+				m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
+			else
+				m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
+		}
 		m_pAnimation->SelectState(ANIM_SIDE);
+	}
 	else if (fAngleUp < 45.f)
 	{
 		m_pTransform->Rot_Bill(90.f);
@@ -194,6 +207,36 @@ void CWormHead::Render_GameObject(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
 	__super::Render_GameObject();
+}
+
+_bool CWormHead::Dead_Production()
+{
+	static _float fDest = 0.2f;
+	m_fCurTime = Get_WorldTime();
+	if (m_fCurTime - m_fPreTime < 3.5f)
+	{
+		_vec3 vEPos{};
+		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
+		_vec3 vPos = m_pTransform->m_vInfo[INFO_POS] + vEPos;
+		GetRandomVector(&vEPos, &_vec3(1.f, 1.f, 1.f), &_vec3(1.7f, 1.7f, 1.7f));
+
+		CEffect* pEffect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"Explosion_Texture", vPos, vEPos, 0.1f);
+		Add_GameObject(pEffect);
+
+		if (m_fCurTime - m_fPreTime > fDest)
+		{
+			_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
+			pSpawnPos.y += 3.f;
+			CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
+			Add_GameObject(item);
+			item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"CoinItem", pSpawnPos);
+			Add_GameObject(item);
+			fDest += 0.2f;
+		}
+		return false;
+	}
+	__super::SetDead(true);
+	return true;
 }
 
 HRESULT CWormHead::Add_Component()
