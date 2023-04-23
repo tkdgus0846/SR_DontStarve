@@ -9,7 +9,6 @@ private:
 public:
 	static CGameObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static const _tchar* Tag() { return L"GrassTile"; }
-	CTile* LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual HRESULT Add_Component() override;

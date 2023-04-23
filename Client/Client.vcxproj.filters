@@ -665,6 +665,126 @@
     <ClInclude Include="SonicUI.h">
       <Filter>Scene\MiniGames\SonicMiniGame</Filter>
     </ClInclude>
+    <ClInclude Include="WallFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="ShortWall.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="ShortWall420376.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="ShortWall420588.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="ShortWall420740.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="ShortWall420954.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="ShortWall421217.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="ShortWall421405.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="ShWallPipes420367ortWall.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallLong.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallLongDoor.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPanels.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPanels420377.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPanels420595.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPanels420744.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPanels420948.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPanels421219.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPanels421417.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPanels421568.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPanels421731.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPipes.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPipes420605.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPipes420745.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallPipes420956.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="Walls.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallShort.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallShortDoor.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallSpecial.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallSpecial420366.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallSpecial420600.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallSpecial420730.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallSpecial420958.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallSpecial421565.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallVent.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallVent420375.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallVent420596.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallVent420738.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallVent420952.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="WallVent421863.h">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorBeltCorner.h">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1182,6 +1302,126 @@
     </ClCompile>
     <ClCompile Include="SonicUI.cpp">
       <Filter>Scene\MiniGames\SonicMiniGame</Filter>
+    </ClCompile>
+    <ClCompile Include="WallFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="ShortWall.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="ShortWall420376.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="ShortWall420588.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="ShortWall420740.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="ShortWall420954.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="ShortWall421217.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="ShortWall421405.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="ShWallPipes420367ortWall.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallLong.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallLongDoor.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPanels.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPanels420377.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPanels420595.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPanels420744.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPanels420948.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPanels421219.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPanels421417.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPanels421568.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPanels421731.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPipes.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPipes420605.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPipes420745.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallPipes420956.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="Walls.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallShort.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallShortDoor.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallSpecial.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallSpecial420366.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallSpecial420600.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallSpecial420730.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallSpecial420958.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallSpecial421565.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallVent.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallVent420375.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallVent420596.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallVent420738.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallVent420952.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="WallVent421863.cpp">
+      <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorBeltCorner.cpp">
+      <Filter>GameObject\Tile\FloorTile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

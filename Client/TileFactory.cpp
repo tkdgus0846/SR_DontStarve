@@ -1,6 +1,5 @@
 #include "TileFactory.h"
 
-// Å¸ÀÏÇì´õ ÆÄÀÏ ¸ðÀ½
 #include "BeltTile.h"
 #include "BloodTile.h"
 #include "ElectricTile.h"
@@ -14,6 +13,7 @@
 #include "SwampTile.h"
 #include "DecoratorTile.h"
 
+#include "FloorBeltCorner.h"
 #include "FloorGrassS.h"
 #include "FloorGrassSE421553.h"
 #include "FloorGrassSW.h"
@@ -47,6 +47,9 @@ HRESULT CTileFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	HRESULT hResult = __super::Ready_Factory(pGraphicDev);
 
+
+	Register(CBeltTile::Tag(), &CBeltTile::Create);
+	Register(CFloorBeltCorner::Tag(), &CFloorBeltCorner::Create);
 	Register(CIceTile::Tag(), &CIceTile::Create);
 	Register(CGrassTile::Tag(), &CGrassTile::Create);
 	Register(CLavaTile::Tag(), &CLavaTile::Create);

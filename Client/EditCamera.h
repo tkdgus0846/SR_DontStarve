@@ -41,12 +41,13 @@ public:
 
 	void CreateMonster(CImInspector * pWindow);
 	void CreateTile(CImInspector * pWindow);
+	void CreateWall(CImInspector * pWindow);
 	void CreateMapObject(CImInspector * pWindow);
+	void RotationY_Tile();
 	void DeleteObject();
 
 private:
 	_bool SetClickInfo();
-
 	// Functions that fill in mouse click information
 	_bool IntersectRayRoom(const CRoom* pRoom, ClickInfo& tClickInfo);
 	_bool IntersectRayGameObject(ClickInfo& tClickInfo);

@@ -8,6 +8,7 @@
 #include "Floor.h"
 #include "TileFactory.h"
 #include "MonsterFactory.h"
+#include "WallFactory.h"
 #include "MapObjectFactory.h"
 #include "ImManager.h"
 #include "ImInspector.h"
@@ -107,6 +108,16 @@ void CEditCamera::CreateMapObject(CImInspector * pWindow)
 	pObj->m_pTransform->Set_Pos(vPos);
 }
 
+void CEditCamera::RotationY_Tile()
+{
+	CFloorTile* pFloorTile = dynamic_cast<CFloorTile*>(m_tPickInfo.pGameObj);
+
+	if (!pFloorTile)
+		return;
+	
+	pFloorTile->m_pTransform->Rot_Roll(90.f, 1.f);
+}
+
 HRESULT CEditCamera::Add_Component()
 {
 	CCamera* pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
@@ -140,15 +151,21 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 
 		CImInspector* pWindow = dynamic_cast<CImInspector*>(CImManager::GetInstance()->FindByTag(L"Inspector"));
 		CreateTile(pWindow);
+		CreateWall(pWindow);
 		CreateMonster(pWindow);
 		CreateMapObject(pWindow);
-
 	}
 
 	if (Engine::Mouse_Down(DIM_RB))
 	{
 		if (!SetClickInfo()) return;
 		DeleteObject();
+	}
+
+	if (Engine::Key_Down(DIK_R))
+	{
+		if (!SetClickInfo()) return;
+		RotationY_Tile();
 	}
 }
 
@@ -420,22 +437,9 @@ void CEditCamera::CreateTile(CImInspector * pWindow)
 {
 	if (PICK_TILE != pWindow->Get_PickType())
 		return;
-	
-	enum FLAG
-	{
-		FLAG_FLOOR,
-		FLAG_WALL,
-		FLAG_END
-	};
-	FLAG eFlag;
 
-	if (dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
-		eFlag = FLAG_FLOOR;
-	else if (dynamic_cast<CWall*>(m_tPickInfo.pGameObj))
-		eFlag = FLAG_WALL;
-	else
+	if (!dynamic_cast<CFloor*>(m_tPickInfo.pGameObj))
 		return;
-
 
 	// IMGUI 콤보박스 정보 가져옴.
 	CImInspector* pInspector = static_cast<CImInspector*>(IM_MGR->FindByTag(L"Inspector"));
@@ -449,24 +453,38 @@ void CEditCamera::CreateTile(CImInspector * pWindow)
 	// 타일 위치 정해주기.
 	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
 	
-	switch (eFlag)
-	{
-	case FLAG_FLOOR:
-		vPos.y += 0.01f;
-		break;
-	case FLAG_WALL:
-		pObj->m_pTransform->m_vInfo[INFO_RIGHT] = m_tPickInfo.pGameObj->m_pTransform->m_vInfo[INFO_RIGHT];
-		pObj->m_pTransform->m_vInfo[INFO_LOOK] = m_tPickInfo.pGameObj->m_pTransform->m_vInfo[INFO_LOOK];
-		pObj->m_pTransform->m_vInfo[INFO_UP] = m_tPickInfo.pGameObj->m_pTransform->m_vInfo[INFO_UP];
-		vPos += pObj->m_pTransform->m_vInfo[INFO_LOOK] * 0.01f;
-
-		break;
-	default:
-		break;
-	}
+	vPos.y += 0.01f;
 
 	pObj->m_pTransform->Set_Pos(vPos);
+}
 
+void CEditCamera::CreateWall(CImInspector * pWindow)
+{
+	if (PICK_WALL != pWindow->Get_PickType())
+		return;
+
+	if (!dynamic_cast<CWall*>(m_tPickInfo.pGameObj))
+		return;
+
+	// IMGUI 콤보박스 정보 가져옴.
+	CImInspector* pInspector = static_cast<CImInspector*>(IM_MGR->FindByTag(L"Inspector"));
+	//wstring CurTileItem = TO_WSTR(pInspector->Get_CurTileItem());
+
+	// 타일 생성
+	CTile* pObj = dynamic_cast<CTile*>(WALL_FACTORY->CreateObject(pWindow->Get_CurTag()));
+	if (!pObj) return;
+	ROOM_MGR->Get_CurRoom()->PushBack_GameObj(pObj);
+
+	// 타일 위치 정해주기.
+	_vec3 vPos = CalcMiddlePoint(m_tPickInfo.tri);
+
+	pObj->m_pTransform->m_vInfo[INFO_RIGHT] = m_tPickInfo.pGameObj->m_pTransform->m_vInfo[INFO_RIGHT];
+	pObj->m_pTransform->m_vInfo[INFO_LOOK] = m_tPickInfo.pGameObj->m_pTransform->m_vInfo[INFO_LOOK];
+	pObj->m_pTransform->m_vInfo[INFO_UP] = m_tPickInfo.pGameObj->m_pTransform->m_vInfo[INFO_UP];
+	vPos += pObj->m_pTransform->m_vInfo[INFO_LOOK] * 0.01f;
+
+
+	pObj->m_pTransform->Set_Pos(vPos);
 }
 
 void CEditCamera::DeleteObject()

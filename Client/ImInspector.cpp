@@ -22,7 +22,7 @@
 #include "TileFactory.h"
 #include "MonsterFactory.h"
 #include "MapObjectFactory.h"
-
+#include "WallFactory.h"
 
 CImInspector::CImInspector(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CImWindow(pGraphicDev)
@@ -42,6 +42,7 @@ CImInspector::~CImInspector()
 HRESULT CImInspector::Ready_ImWindow()
 {
 	items.push_back({ "Tile", TILE_FACTORY });
+	items.push_back({ "Wall", WALL_FACTORY });
 	items.push_back({ "Monster", MONSTER_FACTORY });
 	items.push_back({ "MapObject", MAPOBJ_FACTORY });
 
