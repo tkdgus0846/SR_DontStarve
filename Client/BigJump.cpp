@@ -3,12 +3,16 @@
 #include "Export_Function.h"
 
 CBigJump::CBigJump(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CBehavior(pGraphicDev), m_bStop(false)
+	: CBehavior(pGraphicDev), m_bStop(false)
+	, m_fTime(0.f), m_fForce(0.f), m_fInit(0.f)
+	, m_bSetStop(false), m_bJump(true)
 {
 }
 
 CBigJump::CBigJump(const CBigJump & rhs)
 	: CBehavior(rhs), m_bStop(rhs.m_bStop)
+	, m_fTime(rhs.m_fTime), m_fForce(rhs.m_fForce), m_fInit(rhs.m_fInit)
+	, m_bSetStop(rhs.m_bSetStop), m_bJump(rhs.m_bJump)
 {
 }
 
@@ -19,22 +23,16 @@ CBigJump::~CBigJump()
 HRESULT CBigJump::Ready_Behavior()
 {
 	m_fInit = m_pGameObject->m_pTransform->m_vScale.y;
-	m_fCurTime = 0.f;
-	m_fPreTime = 0.f;
 	return S_OK;
 }
 
 _int CBigJump::Update_Component(const _float & fTimeDelta)
 {
-	static _bool bJump = true;
 	CAnimation* pAnimation = dynamic_cast<CAnimation*>(m_pGameObject->Get_Component(L"Animation", ID_ALL));
 	if (pAnimation)
 		pAnimation->SelectState(ANIM_JUMP);
 
-	_float fSpeed = 0.f;
-	m_pBlackBoard->Get_Type(L"fSpeed", fSpeed);
-
-	if(bJump)
+	if(m_bJump)
 		m_fTime += fTimeDelta * 7.f;
 	
 	_float fY = m_fForce * m_fTime - 4.9f * m_fTime * m_fTime;
@@ -45,22 +43,22 @@ _int CBigJump::Update_Component(const _float & fTimeDelta)
 		m_pGameObject->m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 		m_fCurTime = Get_WorldTime();
 
-		if (bJump)
+		if (m_bJump)
 		{
-			bJump = false;
+			m_bJump = false;
 			return BEHAVIOR_SUCCES;
 		}
 
 		if (m_fCurTime - m_fPreTime >= m_fTimer)
 		{
-			bJump = true;
+			m_bJump = true;
 			m_bStop = false;
 		}
 	}
 	else
 		m_fPreTime = Get_WorldTime();
 
-	if(bJump)
+	if(m_bJump)
 		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
 
 	if (m_fInit > m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y)

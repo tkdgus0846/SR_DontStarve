@@ -23,6 +23,11 @@ public:
 	HRESULT Get_Type(IN const _tchar* pTypename, OUT _vec3& pOut);
 	HRESULT Get_Type(IN const _tchar* pTypename, OUT CGameObject* pOut);
 
+	HRESULT Set_Type(IN const _tchar* pTypename, IN _int& iType);
+	HRESULT Set_Type(IN const _tchar* pTypename, IN _float& fType);
+	HRESULT Set_Type(IN const _tchar* pTypename, IN _bool& bType);
+	HRESULT Set_Type(IN const _tchar* pTypename, IN _vec3& vType);
+
 private:
 	map<const _tchar*, _int&>			m_mapInt;
 	map<const _tchar*, _float&>			m_mapFloat;

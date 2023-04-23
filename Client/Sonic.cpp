@@ -1,16 +1,22 @@
 #include "Sonic.h"
 #include "Export_Function.h"
+#include "SonicGround.h"
+#include "SonicUI.h"
+#include "..\Engine\SoundMgr.h"
 
 CSonic::CSonic(LPDIRECT3DDEVICE9 pGraphicDev) :
-	CGameObject(pGraphicDev)
+	CGameObject(pGraphicDev),
+	m_fMaxJumpTime(2.f)
 {
 	Set_LayerID(LAYER_PLAYER);
 	Set_ObjTag(L"Sonic");
 
 	m_pTransform->Set_MoveType(CTransform::MOVETYPE::AIRCRAFT);
 
-	m_fTime = 0.f;
+	m_fJumpTime = 0.f;
 	m_fForce = 0.f;
+	m_bJumped = false;
+	m_bFirstJump = true;
 }
 
 CSonic::~CSonic()
@@ -19,11 +25,13 @@ CSonic::~CSonic()
 
 _int CSonic::Update_GameObject(const _float & fTimeDelta)
 {
+	if (GetDead()) return OBJ_DEAD;
+
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 	Add_RenderGroup(RENDER_ALPHA, this);
 
 	Key_Input(fTimeDelta);
-
+	
 	Jump(fTimeDelta);
 	
 	return __super::Update_GameObject(fTimeDelta);
@@ -44,31 +52,88 @@ void CSonic::Render_GameObject(void)
 
 void CSonic::Key_Input(const _float& fTimeDelta)
 {
-	if (Key_Down(DIK_SPACE))
+	if (Key_Up(DIK_SPACE))
 	{
-		m_pAnimation->SelectState(ANIM_RUN);
-
-		m_fForce = 3.0f;
-		m_fTime = 0.f;
-
-		m_pTransform->Rot_Roll(9.f, 1.f);
 	}
+
+	if (Key_Pressing(DIK_SPACE))
+	{
+
+		if (m_bFirstJump == true)
+		{
+			m_pGround->Game_Start();
+			m_pUI->Start_Game();
+			m_bFirstJump = false;
+			/*STOP_ALL_BGM;
+			PLAY_BGM(L"SonicBGM.wav", SOUND_BGM, 0.5f);*/
+		}
+		
+		if (m_bJumped == false)
+		{
+			STOP_PLAY_SOUND(L"SonicJump.wav", SOUND_EFFECT, 1.f);
+			m_pUI->Add_Score(10);
+			m_pAnimation->SelectState(ANIM_RUN);
+
+			m_bJumped = true;
+
+			m_fForce = 6.0f;
+			m_fJumpTime = 0.f;
+		}
+		/*else
+		{
+			m_fJumpTime += fTimeDelta;
+		}*/
+		
+	}
+
+	if (Engine::Key_Down((DIK_C))) Engine::Toggle_ColliderRender();
 	
+	//if (Key_Pressing(DIK_F)) m_pUI->Add_Score();
 }
 
 void CSonic::Jump(const _float& fTimeDelta)
 {
-	m_fTime += fTimeDelta;
+	if (m_bJumped == true)
+	{
+		m_fJumpTime += fTimeDelta;
+		_float fY = m_fForce  * m_fJumpTime - 9.9f * m_fJumpTime * m_fJumpTime;
 
-	_float fY = m_fForce * m_fTime - 2.9f * m_fTime * m_fTime;
+		m_pTransform->m_vInfo[INFO_POS].y += fY;
 
-	if (fY < 0.f)
-		m_pTransform->Rot_Roll(-70.f, fTimeDelta);
-	m_pTransform->m_vInfo[INFO_POS].y += fY;
+		if (m_pTransform->m_vInfo[INFO_POS].y < 0.f)
+		{
+			m_pTransform->m_vInfo[INFO_POS].y = 0.f;
+			m_bJumped = false;
+			m_pAnimation->SelectState(ANIM_WALK);
+			return;
+		}
+	}
+	
+}
+
+void CSonic::Set_Ground(CGameObject* obj)
+{
+	m_pGround = dynamic_cast<CSonicGround*>(obj);
+}
+
+void CSonic::Set_UI(CGameObject* obj)
+{
+	m_pUI = dynamic_cast<CSonicUI*>(obj);
+}
+
+void CSonic::OnCollisionStay(const class Collision* collision)
+{
+	PLAY_SOUND(L"sfxBreak.wav", SOUND_ENEMY, 1.f);
+	SetDead();
 }
 
 HRESULT CSonic::Add_Component()
 {
+	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_PLAYER));
+	NULL_CHECK_RETURN(pCollider);
+	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
+	pCollider->Set_BoundingBox({ 5.f,7.f,10.f });
+
 	CRcTex* RcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(RcTex, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", RcTex });
@@ -98,12 +163,7 @@ HRESULT CSonic::Add_Component()
 
 	m_pAnimation->SelectState(ANIM_WALK);
 
-
-	_vec3 eye = { 0.f,0.f,0.f }, at = { 0.f,0.f,1.f }, up = {0.f,1.f,0.f};
-	m_ViewMat.LookAtLH(&eye, &at, &up);
-	//m_ViewMat.Identity();
-	//m_Projmat.PerspectiveFovLH();
-	//m_Projmat.Identity();
+	m_ViewMat.Identity();
 	D3DXMatrixPerspectiveFovLH(&m_Projmat, D3DXToRadian(60.f), ((_float)WINCX / WINCY), 0.f, 1000.f);
 
 	m_pTransform->Set_Pos({ -30.f,0.f,100.f });

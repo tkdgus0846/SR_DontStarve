@@ -62,6 +62,9 @@ _int CSelector::Update_Component(const _float & fTimeDelta)
 		}
 		else
 			return BEHAVIOR_RUNNING;
+
+	case BEHAVIOR_ERROR:
+		return BEHAVIOR_ERROR;
 	}
 
 	return BEHAVIOR_FAIL;

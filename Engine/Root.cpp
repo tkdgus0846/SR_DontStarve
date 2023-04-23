@@ -36,8 +36,19 @@ HRESULT CRoot::Ready_Behavior(void)
 
 _int CRoot::Update_Component(const _float & fTimeDelta)
 {
-	__super::Update_Component(fTimeDelta);
-	return 0;
+	_int iResult = 0;
+
+	for (_int i = 0; i < ID_END; ++i)
+	{
+		for (auto iter : m_VecComponents[i])
+		{
+			iResult = iter.pComponent->Update_Component(fTimeDelta);
+			if (iResult == BEHAVIOR_ERROR)
+				return E_FAIL;
+		}
+	}
+
+	return S_OK;
 }
 
 void CRoot::LateUpdate_Component(void)

@@ -62,6 +62,9 @@ _int CSequence::Update_Component(const _float & fTimeDelta)
 	case BEHAVIOR_FAIL:
 		m_iterPreComponent = m_VecComponents[ID_UPDATE].begin();
 		return BEHAVIOR_FAIL;
+
+	case BEHAVIOR_ERROR:
+		return BEHAVIOR_ERROR;
 	}
 
 	return BEHAVIOR_FAIL;

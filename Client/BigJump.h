@@ -22,6 +22,7 @@ private:
 	_float m_fInit;
 	_bool m_bStop;
 	_bool m_bSetStop;
+	_bool m_bJump;
 
 public:
 	static CBigJump* Create(LPDIRECT3DDEVICE9 pGraphicDev);

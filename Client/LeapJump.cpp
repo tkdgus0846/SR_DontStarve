@@ -37,7 +37,7 @@ _int CLeapJump::Update_Component(const _float & fTimeDelta)
 		pAnimation->SelectState(ANIM_JUMP);
 
 	_float fSpeed = 0.f;
-	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", fSpeed), BEHAVIOR_FAIL);
+	FAILED_CHECK_RETURN(m_pBlackBoard->Get_Type(L"fSpeed", fSpeed), BEHAVIOR_ERROR);
 
 	m_fTime += fTimeDelta * 7.f;
 

@@ -1,6 +1,8 @@
 #include "MiniGame.h"
 #include "Layer.h"
 
+#include "Export_Function.h"
+
 
 CMiniGame::CMiniGame(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CScene(pGraphicDev)

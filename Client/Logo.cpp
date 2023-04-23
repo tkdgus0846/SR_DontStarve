@@ -58,13 +58,16 @@ _int CLogo::Update_Scene(const _float & fTimeDelta)
 	{
 		if (m_pBackGround->Get_GameMode() == GAMEMODE_EDITOR)
 		{
+			Start_WorldTimer();
 			CScene* nextLoadingScene = CLoadingScene::Create(m_pGraphicDev, LOADING_EDITSTAGE);
 			FAILED_CHECK_RETURN(Engine::Set_Scene(nextLoadingScene), E_FAIL);
 		}
 		else if (m_pBackGround->Get_GameMode() == GAMEMODE_STARTGAME)
 		{
 			CScene* nextLoadingScene = CLoadingScene::Create(m_pGraphicDev, LOADING_STAGE);
-			FAILED_CHECK_RETURN(Engine::Set_Scene(nextLoadingScene), E_FAIL);
+
+			Start_WorldTimer();
+			FAILED_CHECK_RETURN(Engine::Set_Scene(nextLoadingScene, true), E_FAIL);
 		}	
 	}	
 
@@ -96,10 +99,27 @@ HRESULT CLogo::Ready_Proto(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 
-	/////////////////// Sonic Texture ¡ﬂø‰«‘ /////////////// §æ
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RcTex_Dynamic", CRcTex::Create(m_pGraphicDev, VB_DYNAMIC)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collider", CCollider::Create(m_pGraphicDev)), E_FAIL);
+  
+  ////////////////////////////////////////////////////////// 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SonicWalk_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Sonic_Walk_%d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SonicRun_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Sonic_Run_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SonicDead_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Sonic_Dead.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Cactus_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Cactus%d.png", 6)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BigCactus_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/BigCactus%d.png", 2)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Score_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Score%d.png", 10)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Bird_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Bird%d.png", 2)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Cloud_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Cloud.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gameover_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/GameOver.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Ground_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/Ground.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HI_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sonic/HI.png")), E_FAIL);
+	////////////////////////////////////////////////////////////
+
+	
 
 	return S_OK;
 }
