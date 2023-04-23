@@ -1,5 +1,6 @@
 #include "FloorTile.h"
 #include "Export_Function.h"
+#include "RoomMgr.h"
 
 
 CFloorTile::CFloorTile(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -58,4 +59,24 @@ _int CFloorTile::Update_GameObject(const _float & fTimeDelta)
 
 void CFloorTile::InteractGameObject(const InteractInfo* tInteractInfo)
 {
+}
+
+void CFloorTile::SetDead(_bool bDead /*= true*/)
+{
+	__super::SetDead(bDead);
+
+	if (GetDead())
+	{
+		_vec3 pos = m_pTransform->m_vInfo[INFO_POS];
+
+		_int x = round(pos.x);
+		_int z = round(pos.z);
+
+		x %= (VTXCNTX - 1) * VTXITV;
+		z %= (VTXCNTZ - 1) * VTXITV;
+		x /= VTXITV;
+		z /= VTXITV;
+
+		ROOM_MGR->Get_CurRoom()->SetNullFloorTile(x, z);
+	}
 }

@@ -57,10 +57,8 @@ _int CRedLaserBullet::Update_GameObject(const _float & fTimeDelta)
 		m_pTransform->Rot_Pitch(-90.f, 1.f);
 		m_bShot = true;
 	}
-
 	m_vDir = -m_pTransform->m_vInfo[INFO_UP];
 	m_pTransform->m_vInfo[INFO_POS] += m_vDir * m_fSpeed * fTimeDelta;
-
 	__super::Update_GameObject(fTimeDelta);
 
 	Add_RenderGroup(RENDER_ALPHA, this);
@@ -153,7 +151,7 @@ HRESULT CRedLaserBullet::Add_Component()
 	m_uMapComponent[ID_RENDER].emplace(L"RcTex", pBufferCom);
 
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMYBULLET));
-	pCollider->Set_BoundingBox({ 0.5f, 0.5f, 0.5f });
+	pCollider->Set_BoundingBox({ 1.f, 1.f, 1.f });
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
 
 	return S_OK;

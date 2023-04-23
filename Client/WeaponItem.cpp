@@ -87,8 +87,10 @@ void CWeaponItem::OnCollisionStay(const Collision * collision)
 	if (pPlayer == nullptr) return;
 
 	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
-	{		
-		PLAY_SOUND(L"sfxpickup.wav", SOUND_LOOT, 1.f);
+	{	
+		
+		CSoundMgr::GetInstance()->SetVolumeCurBGM(0.1f);
+		STOP_PLAY_SOUND(L"Secret.wav", SOUND_LOOT, 1.f);
 		pPlayer->Gain_Weapon(m_eID);
 	}
 

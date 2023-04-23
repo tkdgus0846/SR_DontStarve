@@ -1,5 +1,6 @@
 #pragma once
 #include "Monster.h"
+
 class CNubBoss : public CMonster
 {
 private:
@@ -13,12 +14,11 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
+	virtual void	Get_Damaged(_int Damage) final;
 	virtual HRESULT Add_Component() override;
 
 public:
 	static CNubBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
-
-	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;

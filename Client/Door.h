@@ -28,15 +28,16 @@ public:
 	virtual void OnCollisionEnter(const class Collision* collsion);
 	CRoom* Get_Room() { return m_pRoom; }
 	DOOR_DIR Get_Door_Dir() { return m_eDir; }
-	void Door_Open() { m_bIsOpen = true; }
-	void Door_Close() { m_bIsOpen = false; }
+	void Door_Open() { m_bCurDoorState = true; }
+	void Door_Close() { m_bCurDoorState = false; }
 
 private:
 	virtual HRESULT Add_Component() override;
 	void Set_Door_State();
 
 private:
-	_bool					m_bIsOpen;
+	_bool					m_bCurDoorState; // True == Open, False == Close
+	_bool					m_bPreDoorState;
 	CRoom*					m_pRoom;	// ���� ���� �����ִ� ���� ������
 	CTennel*				m_pInTennel;	// �������� �ͳ�������
 	CTennel*				m_pOutTennel;	// �������� �ͳ�������

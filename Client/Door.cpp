@@ -14,7 +14,7 @@
 CDoor::CDoor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_pRoom(nullptr)
 	, m_pInTennel(nullptr), m_pOutTennel(nullptr)
-	, m_bIsOpen(false)
+	, m_bCurDoorState(false), m_bPreDoorState(true)
 {
 	Set_LayerID(LAYER_TRIGGER);
 	Set_ObjTag(L"Door");
@@ -48,17 +48,20 @@ _int CDoor::Update_GameObject(const _float & fTimeDelta)
 		m_pOutTennel = SECTION_MGR->Get_Tennel(1);*/
 	}
 
-	if (m_bIsOpen)
+	if (m_bCurDoorState != m_bPreDoorState)
 	{
-		m_pAnimation->SetInverse(false);
-		m_pCollider->Set_Enable(m_bIsOpen);
+		if (m_bCurDoorState == true)
+		{
+			// Open
+		}
+		else
+		{
+			// Close
+		}
+		m_pAnimation->SetInverse(!m_bCurDoorState);
+		m_pCollider->Set_Enable(m_bCurDoorState);
+		m_bPreDoorState = m_bCurDoorState;
 	}
-	else
-	{
-		m_pAnimation->SetInverse(true);
-		m_pCollider->Set_Enable(m_bIsOpen);
-	}
-
 
 	if (GetDead()) return OBJ_DEAD;
 
