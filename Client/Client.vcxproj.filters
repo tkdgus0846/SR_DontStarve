@@ -782,6 +782,9 @@
     <ClInclude Include="WallVent421863.h">
       <Filter>GameObject\Tile\WallTile</Filter>
     </ClInclude>
+    <ClInclude Include="FloorBeltCorner.h">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1416,6 +1419,9 @@
     </ClCompile>
     <ClCompile Include="WallVent421863.cpp">
       <Filter>GameObject\Tile\WallTile</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorBeltCorner.cpp">
+      <Filter>GameObject\Tile\FloorTile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

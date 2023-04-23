@@ -276,6 +276,7 @@
     <ClInclude Include="CoolTime.h" />
     <ClInclude Include="CrossHair.h" />
     <ClInclude Include="DecoratorTile.h" />
+    <ClInclude Include="FloorBeltCorner.h" />
     <ClInclude Include="LookAtPlayer.h" />
     <ClInclude Include="MoveY.h" />
     <ClInclude Include="Disc.h" />
@@ -499,6 +500,7 @@
     <ClCompile Include="CoolTime.cpp" />
     <ClCompile Include="CrossHair.cpp" />
     <ClCompile Include="DecoratorTile.cpp" />
+    <ClCompile Include="FloorBeltCorner.cpp" />
     <ClCompile Include="LookAtPlayer.cpp" />
     <ClCompile Include="MoveY.cpp" />
     <ClCompile Include="Disc.cpp" />
