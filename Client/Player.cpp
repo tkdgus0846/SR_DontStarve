@@ -98,6 +98,8 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	
 	//cout << ROOM_MGR->Get_Room(3)->m_vecLayer[LAYER_NPC]->Get_GameObject(L"ShopNpc")->m_pTransform->m_vInfo[INFO_POS].x << endl;
 	/*cout << ROOM_MGR->Get_Room(3)->m_vecLayer[LAYER_NPC]->Get_ObjectSize() << endl;*/
+
+	cout << ROOM_MGR->Is_In_Tennel() << endl;
 	Key_Input(fTimeDelta);
 
 	if (m_bAimHack)

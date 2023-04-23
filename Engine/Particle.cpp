@@ -50,6 +50,11 @@ void CParticle::Render_GameObject(void)
 	__super::Render_GameObject();
 }
 
+void CParticle::SetBoundingSize(const _vec3& size)
+{
+	m_Particle->SetBoundingSize(size);
+}
+
 void CParticle::Reset()
 {
 	m_Particle->Reset();
@@ -75,6 +80,7 @@ CParticle* CParticle::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* Partic
 	particle->m_ParticleNum = ParticleNum;
 	particle->m_Origin = Origin;
 	particle->m_pTransform->m_vInfo[INFO_POS] = Pos;
+	
 
 	particle->Ready_GameObject();
 
