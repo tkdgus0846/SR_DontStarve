@@ -1,12 +1,13 @@
 #include "WalkerBoss.h"
 
+#include "ItemManager.h"
+#include "EffectManager.h"
 #include "Export_Function.h"
 
 CWalkerBoss::CWalkerBoss(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CMonster(pGraphicDev)
+	:CMonster(pGraphicDev), m_bIsDead(false)
 {
 	Set_LayerID(LAYER_BOSS);
-	Set_ObjTag(L"WalkerBoss");
 }
 
 CWalkerBoss::~CWalkerBoss()
@@ -17,11 +18,11 @@ HRESULT CWalkerBoss::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 20.f;
 	m_iAttack = 1;
-	m_iHp = 100;
+	m_iHp = 1;
 	m_iMaxHp = 100;
 
 	m_pTransform->m_vScale = { 3.f, 3.f, 3.f };
-	m_pTransform->m_vInfo[INFO_POS] = {25.f, 0.f, 145.f};
+	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	HRESULT result = __super::Ready_GameObject();
@@ -33,18 +34,29 @@ HRESULT CWalkerBoss::Ready_GameObject(const _vec3 & vPos)
 
 _int CWalkerBoss::Update_GameObject(const _float & fTimeDelta)
 {
-	__super::Update_GameObject(fTimeDelta);
-	if (GetDead()) return OBJ_DEAD;
+	if (m_bIsDead)
+	{
+		Dead_Production();
+		return OBJ_NOEVENT;
+	}
+
+	if (GetDead())
+		return OBJ_DEAD;
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-	
-	return 0;
+
+	__super::Update_GameObject(fTimeDelta);
+
+	return OBJ_NOEVENT;
 }
 
 void CWalkerBoss::LateUpdate_GameObject(void)
 {
+	if (GetDead())
+		return;
+
 	__super::LateUpdate_GameObject();
 }
 
@@ -83,6 +95,15 @@ void CWalkerBoss::Render_GameObject(void)
 
 	m_pTextureCom->Render_Component();
 	m_pShadow->Render_Component();
+}
+
+void CWalkerBoss::SetDead(_bool bDead)
+{
+	if (bDead == true)
+	{
+
+		__super::SetDead(true);
+	}
 }
 
 HRESULT CWalkerBoss::Add_Component()
@@ -130,18 +151,6 @@ HRESULT CWalkerBoss::Add_Component()
 	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;
-}
-
-CGameObject * CWalkerBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	CWalkerBoss* pInstance = new CWalkerBoss(pGraphicDev);
-
-	if (FAILED(pInstance->Ready_GameObject({})))
-	{
-		Safe_Release(pInstance);
-		return nullptr;
-	}
-	return pInstance;
 }
 
 CWalkerBoss * CWalkerBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)

@@ -12,7 +12,7 @@ public:
 	virtual HRESULT Ready_Behavior() override;
 	virtual _int Update_Component(const _float & fTimeDelta) override;
 	virtual void LateUpdate_Component(void) override;
-	virtual void Render_Component(void) override {};
+	virtual void Render_Component(void) override;
 
 	void Set_Dir_Up(const _float& fY = 4.f) { m_bIsUp = true; m_fDest = fY; }
 	void Set_Dir_Down(const _float& fY = -10.f) { m_bIsUp = false; m_fDest = fY; }
