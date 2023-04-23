@@ -44,7 +44,7 @@ HRESULT CMiniMap::Ready_GameObject(void)
 
 _int CMiniMap::Update_GameObject(const _float & fTimeDelta)
 {
-	Engine::Add_RenderGroup(RENDER_AFTER_ALPHA_UI, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
 	
 	__super::Update_GameObject(fTimeDelta);
 
@@ -74,7 +74,7 @@ void CMiniMap::Render_GameObject(void)
 				continue;
 			}
 			case MINIMAPPOS:
-				Set_ViewMatrix_UI(320.f, -210.f, 16.f, 16.f, m_PlayerAngle);
+				Set_ViewMatrix_UI(300.f, -210.f, 16.f, 16.f, m_PlayerAngle);
 				break;
 			case MINIMAPBLANKBLACK:
 				Set_ViewMatrix_UI();
@@ -103,7 +103,7 @@ void CMiniMap::Set_ViewMatrix_UI()
 
 	_matrix matTrans;
 	D3DXMatrixScaling(&matView, 76.f, 92.f, 0.f);
-	matTrans.Translation(320.f, -200.f, 1.f);
+	matTrans.Translation(300.f, -200.f, 1.f);
 	D3DXMatrixMultiply(&matView, &matView, &matTrans);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
@@ -134,7 +134,7 @@ void CMiniMap::Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float
 
 	_vec3 vecRot;
 	D3DXVec3TransformNormal(&vecRot, &vecRot, &pPlayerWorld);
-	_float fAngleZ = -atan2f(vecRot.x, vecRot.z) + D3DXToRadian(-135.f);
+	_float fAngleZ = -atan2f(vecRot.x, vecRot.z);
 
 	_matrix matRot, matTrans;
 	matRot.RotationZ(fAngleZ);
@@ -151,13 +151,9 @@ void CMiniMap::ESWN()
 	_matrix pPlayerWorld = *Engine::Get_Player()->m_pTransform->Get_WorldMatrixPointer();
 	_vec3 vecRot;
 	D3DXVec3TransformNormal(&vecRot, &vecRot, &pPlayerWorld);
-	_float fAngleZ = -atan2f(vecRot.x, vecRot.z) / 6.7f + D3DXToRadian(-27.f);;
-	//_float fAngleZ = -atan2f(vecRot.x, vecRot.z) + D3DXToRadian(-27.f);;
-
-	m_pBufferCom->Edit_U(-fAngleZ);
-	Set_ViewMatrix_UI(320.f, -130.f, 76.f, 10.f);
-
-	//cout << fAngleZ << endl;
+	_float fAngleZ = -atan2f(vecRot.x, vecRot.z) / 6.f;
+	m_pBufferCom->Edit_U(fAngleZ);
+	Set_ViewMatrix_UI(300.f, -130.f, 76.f, 10.f);
 }
 
 CMiniMap * CMiniMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)

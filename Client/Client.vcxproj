@@ -351,7 +351,6 @@
     <ClInclude Include="ImPickBox.h" />
     <ClInclude Include="OnlyCollisionObj.h" />
     <ClInclude Include="OnPlayer.h" />
-    <ClInclude Include="Scope.h" />
     <ClInclude Include="SellItem.h" />
     <ClInclude Include="Serializable.h" />
     <ClInclude Include="IsNotRangeInPlayer.h" />
@@ -562,7 +561,6 @@
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="QuickSandTile.cpp" />
     <ClCompile Include="SandTile.cpp" />
-    <ClCompile Include="Scope.cpp" />
     <ClCompile Include="SellItem.cpp" />
     <ClCompile Include="ShopNpc.cpp" />
     <ClCompile Include="Rub.cpp" />

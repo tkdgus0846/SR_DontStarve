@@ -47,7 +47,7 @@ void CUI::Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scal
 
 	_matrix matTrans;
 	D3DXMatrixScaling(&matView, scaleX, scaleY, 0.f);
-	matTrans.Translation(posX, posY, 0.1f);
+	matTrans.Translation(posX, posY, 0.f);
 	D3DXMatrixMultiply(&matView, &matView, &matTrans);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
