@@ -1,5 +1,6 @@
 #include "MoveY.h"
 
+#include "EffectManager.h"
 #include "Export_Function.h"
 
 CMoveY::CMoveY(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -65,8 +66,17 @@ _int CMoveY::Update_Component(const _float & fTimeDelta)
 
 void CMoveY::LateUpdate_Component(void)
 {
-	if(m_bIsUp)
-		Shake_Camera(SHAKE_Y, 0.2f, 1.f);
+	_vec3 vPos = m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
+	if (m_bIsUp)
+	{
+		Shake_Camera(SHAKE_Y, 0.2f, 1.f); 
+		CEffect* pBurst = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"SandBurst", _vec3(vPos.x, 0.f, vPos.z), _vec3(2.3f, 2.3f, 2.3f), 0.1f, false, 5.f);
+		Add_GameObject(pBurst);
+	}
+}
+
+void CMoveY::Render_Component(void)
+{
 }
 
 CMoveY * CMoveY::Create(LPDIRECT3DDEVICE9 pGraphicDev)

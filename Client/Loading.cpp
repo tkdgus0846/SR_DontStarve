@@ -167,6 +167,8 @@ _uint CLoading::Loading_ForStage(void)
 	// Effect 텍스쳐
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Explosion_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/explosion_%d.png", 5)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ExplosionBlue", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/ExplosionBlue_%d.png", 5)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SandBurst", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/sandburst_%d.png", 5)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SandBurst_Move", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/sandburst_%d.png", 2)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RedBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/redblood_%d.png", 4)), E_FAIL);
 
@@ -468,7 +470,8 @@ _uint CLoading::Loading_ForStage(void)
 
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"BulletItem");
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"CoinItem");
-	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"HeartItem");
+	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"HeartItem"); 
+	CEffectManager::GetInstance()->Reserve(m_pGraphicDev, 20, L"Explosion_Texture");
 
 	Set_String(L"Factory Loading..........");
 
@@ -484,8 +487,8 @@ _uint CLoading::Loading_ForStage(void)
 
 	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -4.f, 25.f }));
+	ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	
 	//CFileSystem::Load(L"as.dat");
 	m_bFinish = true;

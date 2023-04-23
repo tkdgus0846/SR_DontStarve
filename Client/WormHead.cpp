@@ -83,7 +83,7 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 	if (!Get_Player())
 		return OBJ_NOEVENT;
 
-	if (GetDead()) 
+	if (GetDead())
 		return OBJ_DEAD;
 
 	if (Key_Down(DIK_SPACE))

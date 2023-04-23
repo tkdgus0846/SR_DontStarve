@@ -1,5 +1,6 @@
 #include "NubBoss.h"
 
+#include "ItemManager.h"
 #include "Export_Function.h"
 
 CNubBoss::CNubBoss(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -54,6 +55,19 @@ void CNubBoss::Render_GameObject(void)
 	__super::Render_GameObject();
 }
 
+void CNubBoss::Get_Damaged(_int Damage)
+{
+	__super::Get_Damaged(Damage);
+
+	_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
+	pSpawnPos.y += 3.f;
+	CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
+	Add_GameObject(item);
+	item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"CoinItem", pSpawnPos);
+	Add_GameObject(item);
+
+}
+
 HRESULT CNubBoss::Add_Component()
 {
 	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_NubBoss_Texture", this));
@@ -93,19 +107,6 @@ CNubBoss * CNubBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 	CNubBoss* pInstance = new CNubBoss(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
-	{
-		Safe_Release(pInstance);
-		return nullptr;
-	}
-
-	return pInstance;
-}
-
-CGameObject * CNubBoss::Create(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	CNubBoss* pInstance = new CNubBoss(pGraphicDev);
-
-	if (FAILED(pInstance->Ready_GameObject({})))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

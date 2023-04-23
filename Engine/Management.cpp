@@ -82,6 +82,7 @@ void CManagement::LateUpdate_Management()
 		Engine::Check_Collision(COL_PLAYERBULLET, COL_ENVIRONMENT);
 		Engine::Check_Collision(COL_PLAYERBULLET, COL_OBJ);
 		Engine::Check_Collision(COL_ENEMYBULLET, COL_PLAYER);
+		Engine::Check_Collision(COL_ENEMYBULLET, COL_ENVIRONMENT);
 
 		Engine::Check_Collision(COL_PLAYER, COL_OBJ);
 		Engine::Check_Collision(COL_PLAYER, COL_ITEM);
