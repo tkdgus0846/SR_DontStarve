@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Snow.h"
+#include "Export_Utility.h"
 
 
 
@@ -8,9 +9,9 @@ CSnow::CSnow(LPDIRECT3DDEVICE9 pGraphicDev) :
 {
 	m_BoundingBox = BoundingBox();
 	m_Size = 0.8f;
-	m_VBSize = 2048;
+	m_VBSize = 500;
 	m_VBOffset = 0;
-	m_VBBatchSize = 512;
+	m_VBBatchSize = 125;
 }
 
 CSnow::CSnow(const CSnow& rhs) :
@@ -18,6 +19,9 @@ CSnow::CSnow(const CSnow& rhs) :
 {
 	for (auto it = rhs.m_Particles.begin(); it != rhs.m_Particles.end(); it++)
 		m_Particles.push_back(*it);
+
+	m_Texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Snow_Texture", nullptr));
+	m_Texture->Set_Texture_Num(0);
 }
 
 CSnow::~CSnow()

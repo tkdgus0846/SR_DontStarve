@@ -34,7 +34,8 @@ HRESULT CMonster::Ready_GameObject(void)
 
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
-	if (GetDead()) return OBJ_DEAD;
+	if (GetDead()) 
+		return OBJ_DEAD;
 
 	_matrix view;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &view);
@@ -127,7 +128,6 @@ void CMonster::SetDead(_bool bDead /*= true*/)
 		_vec3 scale = m_pTransform->Get_Scale();
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"Explosion_Texture", pos, scale, 0.1f);
 		Add_GameObject(effect);
-
 
 		_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
 		pSpawnPos.y += 3.f;
@@ -520,8 +520,8 @@ CSequence * CMonster::Make_BossPattern3_2(const _float & fCoolTime)
 	CSequence* pSQPattern = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
 	NULL_CHECK_RETURN(pSQPattern, nullptr);
 
-	CMoveY* pTskMoveY = dynamic_cast<CMoveY*>(Engine::Clone_Proto(L"TSK_MoveY", this));
-	NULL_CHECK_RETURN(pTskMoveY, nullptr);
+	CMoveY* pTskMoveUp = dynamic_cast<CMoveY*>(Engine::Clone_Proto(L"TSK_MoveY", this));
+	NULL_CHECK_RETURN(pTskMoveUp, nullptr);
 	CLookAtPlayer* pTskLookAt = dynamic_cast<CLookAtPlayer*>(Engine::Clone_Proto(L"TSK_LookAtPlayer", this));
 	NULL_CHECK_RETURN(pTskLookAt, nullptr);
 	CMoveY* pTskMoveDown = dynamic_cast<CMoveY*>(Engine::Clone_Proto(L"TSK_MoveY", this));
@@ -535,11 +535,11 @@ CSequence * CMonster::Make_BossPattern3_2(const _float & fCoolTime)
 	// 부품 초기설정
 	pDecCoolTime->Set_Timer(fCoolTime);
 	pTskLookAt->Set_Timer(16.f);
-	pTskMoveY->Set_Dir_Up();
+	pTskMoveUp->Set_Dir_Up();
 	pTskMoveDown->Set_Dir_Down();
 
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime), nullptr);
-	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveUp", pTskMoveY), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveUp", pTskMoveUp), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_FollowPlayer", pTskLookAt), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MoveDown", pTskMoveDown), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_MovePoint", pTskMovePoint), nullptr);
@@ -575,6 +575,7 @@ CSequence * CMonster::Make_BossPattern2(const _float & fCoolTime)
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_SpreadShot", Make_BossPattern2_2()), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_BigJump", pTskBigJump), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_LookAt", pTskLook), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_LastJump", Make_JumpAI(7.f)), nullptr);
 
 	return pSQPattern;
 }
@@ -641,7 +642,7 @@ CSequence * CMonster::Make_BossPattern2_2(const _float & fCoolTime)
 	NULL_CHECK_RETURN(pTskWait);
 
 	// 부품 초기설정
-	pTskLook->Set_IsLook_Aircraft(false);
+	pTskLook->Set_IsLook_Aircraft(true);
 	pTskAttack->Set_BulletKey(L"RedLaserBullet");
 	pTskAttack->Set_Scale(_vec3(3.f, 6.f, 3.f));
 	pTskAttack->Set_BulletSpeed(2000.f);
@@ -657,6 +658,7 @@ CSequence * CMonster::Make_BossPattern2_2(const _float & fCoolTime)
 		FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"Tsk_Wait", pTskWait), nullptr);
 	}
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_OnPlayer", pTskOnPlayer), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_LookAt", pTskLook), nullptr);
 
 	return pSQPattern;
 }
@@ -859,7 +861,7 @@ HRESULT CMonster::Set_Boss3_AI()
 	NULL_CHECK_RETURN(pLook, E_FAIL);
 
 	// 부품 초기설정
-
+	
 	// 부품 조립
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 

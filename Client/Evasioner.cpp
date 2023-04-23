@@ -4,7 +4,8 @@
 #include "Export_Function.h"
 
 CEvasioner::CEvasioner(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CEnemy(pGraphicDev)
+	:CEnemy(pGraphicDev),
+	m_bInHole(false)
 {
 	Set_ObjTag(Tag());
 }
@@ -20,7 +21,7 @@ HRESULT CEvasioner::Ready_GameObject(const _vec3 & vPos)
 	m_pTransform->m_vScale = { 1.5f, 1.5f, 1.5f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
-
+	
 	HRESULT result = __super::Ready_GameObject();
 
 	return result;
@@ -31,7 +32,9 @@ _int CEvasioner::Update_GameObject(const _float & fTimeDelta)
 	if (GetDead()) 
 		return OBJ_DEAD;
 
-	m_pTransform->m_vInfo[INFO_POS].y = 1.5f;
+	if (m_bInHole == false)
+		m_pTransform->m_vInfo[INFO_POS].y = 1.5f;
+
 	__super::Update_GameObject(fTimeDelta);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
@@ -93,6 +96,11 @@ HRESULT CEvasioner::Add_Component()
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"EvasBullet", pCollider });
 	pCollider->Set_BoundingBox({ 8.f, 8.f, 8.f });
+
+	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"HoleCollider", this, COL_OBJ));
+	NULL_CHECK_RETURN(pCollider, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"HoleCollider", pCollider });
+	pCollider->Set_BoundingBox({ 3.f, 2.f, 3.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
 	FAILED_CHECK_RETURN(Set_EvasionAndAttack(), E_FAIL);

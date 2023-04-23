@@ -13,6 +13,7 @@
 #include "Door.h"
 #include "Serializable.h"
 #include "TileFactory.h"
+#include "WallFactory.h"
 #include "MonsterFactory.h"
 #include "MapObjectFactory.h"
 #include "ShopNpc.h"
@@ -411,6 +412,9 @@ _bool CRoom::ReadRoomFile(HANDLE hFile, DWORD & dwByte)
 		if (0 == lstrcmp(tag, L"Stop"))
 			break;
 		CGameObject* pGameObj = TILE_FACTORY->CreateObject(tag);
+
+		if (!pGameObj)
+			pGameObj = WALL_FACTORY->CreateObject(tag);
 
 		if (!pGameObj)
 			pGameObj = MONSTER_FACTORY->CreateObject(tag);

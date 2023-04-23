@@ -47,6 +47,7 @@ public:
 		m_iCoin -= coin; 
 		return true;
 	}
+	_vec3			GetDeltaVec();
 	void			Gain_Disc(_int disc = 1) { m_iDisc += disc; }
 	_int			Get_Disc() { return m_iDisc; }
 	void			Gain_Hp(_int Hp = 1) { m_iHp += Hp; }
@@ -57,10 +58,10 @@ public:
 	void			AimHack();
 	void			Fix_Aim(CCollider* pCollider);
 	_vec3			Tactical_Bullet_Dir();
-
+	
 	bool IsObjectInFOV(_float fDistance, _float fRadius, _float fFov);
 	void			IsOnIceTile(_bool _IsOnIceTile) {
-		m_bIsOnTile = _IsOnIceTile;	}
+		m_bIsOnIceTile = _IsOnIceTile;	}
 
 private:
 	virtual HRESULT Add_Component() override;
@@ -87,9 +88,9 @@ private:
 	WEAPONTYPE							m_eCurWeaponType;
 
 	vector<CGameObject*>				m_vecMonster;
+	list<_vec3>							m_PosList;
 
-	_bool				m_bIsOnTile = false;
-		;
+	_bool				m_bIsOnIceTile = false;
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

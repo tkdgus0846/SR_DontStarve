@@ -31,6 +31,8 @@ private:
 
 	CAnimation* Ani;
 	vector<CSellItem*> m_ItemList;
+	_int				m_SellNum;
+	_float				m_fPlayBGMTime;
 
 public:
 	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

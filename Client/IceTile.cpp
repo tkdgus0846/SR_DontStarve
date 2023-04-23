@@ -49,7 +49,7 @@ void CIceTile::OnCollisionEnter(const Collision * collision)
 	{
 		//if (IntersectPoint(&pPlayer->m_pTransform->m_vInfo[INFO_POS]))
 		//	Set_Trigger(true);
-
+		
 
 
 	}
@@ -71,17 +71,36 @@ void CIceTile::InteractGameObject(const InteractInfo* tInteractInfo)
 	if (pPlayer)
 	{
 		CCollider* pCol = dynamic_cast<CCollider*>(pPlayer->Get_Component(L"BodyCollider", ID_ALL));
-		
+
 		if (!pCol)
 			return;
 
 		for (auto& Object : pCol->Get_CollisionList())
 			if (dynamic_cast<CPyramid*>(Object.second.OtherGameObject))
 				return;
-		
+
 		pPlayer->IsOnIceTile(true);
-		_vec3 vDir = pPlayer->m_pTransform->GetDeltaVec();
+		_vec3 vDir = pPlayer->GetDeltaVec();
+		cout << vDir.x << "\t" << vDir.y << "\t" << vDir.z << endl;
 		vDir.Normalize();
-		pPlayer->m_pTransform->Move_WalkWithVec(vDir, 3.f, tInteractInfo->_fTimeDelta);
+
+		if (fabs(vDir.x) <= 0.001f && fabs(vDir.y) <= 0.001f && fabs(vDir.z) <= 0.001f)
+			vDir = pPlayer->m_pTransform->m_vInfo[INFO_LOOK];
+
+		// 방향 구하는 코드.
+		_vec3 comp[4] = { _vec3::Look(), -_vec3::Look(), _vec3::Right(), -_vec3::Right() };
+		_vec3 vMinDir = {};
+		float fMinDegree = FLT_MAX;
+		for (_int i = 0; i < 4; ++i)
+		{
+			float fDegree = vDir.Degree(comp[i]);
+			if (fMinDegree > fDegree)
+			{
+				fMinDegree = fDegree;
+				vMinDir = comp[i];
+			}
+		}
+		
+		pPlayer->m_pTransform->Move_WalkWithVec(vMinDir, 10.f, tInteractInfo->_fTimeDelta);
 	}
 }

@@ -1,9 +1,14 @@
 #include "LavaTile.h"
 #include "Export_Function.h"
 #include "Creature.h"
+#include "..\Engine\ParticleMgr.h"
+#include "IceBullet.h"
+#include "..\Engine\SoundMgr.h"
 
-CLavaTile::CLavaTile(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CFloorTile(pGraphicDev)
+CLavaTile::CLavaTile(LPDIRECT3DDEVICE9 pGraphicDev) : 
+	CFloorTile(pGraphicDev),
+	m_fTime(0.f),
+	m_fMaxTime(1.f)
 {
 	Set_ObjTag(Tag());
 }
@@ -29,6 +34,13 @@ CGameObject * CLavaTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
 	return Create(pGraphicDev);
 }
 
+void CLavaTile::SetDead(_bool bDead /*= true*/)
+{
+	__super::SetDead(bDead);
+
+	STOP_PLAY_SOUND(L"sfxTeeth.wav", SOUND_ENVIRONMENT, 1.f);
+}
+
 HRESULT CLavaTile::Add_Component()
 {
 	HRESULT result = __super::Add_Component();
@@ -50,6 +62,14 @@ HRESULT CLavaTile::Add_Component()
 
 void CLavaTile::OnCollisionStay(const Collision * collision)
 {
+
+	if (dynamic_cast<CIceBullet*>(collision->OtherGameObject) != nullptr)
+	{
+		SetDead();
+		return;
+	}
+
+
 	CCreature* creature = dynamic_cast<CCreature*>(collision->OtherGameObject);
 	if (creature && IsBodyCollider(collision))
 	{
@@ -77,4 +97,22 @@ void CLavaTile::OnCollisionStay(const Collision * collision)
 			break;
 		}
 	}
+}
+
+_int CLavaTile::Update_GameObject(const _float& fTimeDelta)
+{
+	if (GetDead()) return OBJ_DEAD;
+
+	m_fTime += fTimeDelta;
+
+	if (m_fTime > m_fMaxTime)
+	{
+		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"UpSmoke_Particle", 1, m_pTransform->m_vInfo[INFO_POS], { 0.f,1.f,0.f });
+		Add_GameObject(particle);
+
+		m_fTime = 0.f;
+	}
+	
+
+	return __super::Update_GameObject(fTimeDelta);
 }

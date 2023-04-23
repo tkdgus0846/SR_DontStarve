@@ -44,7 +44,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_bFix(true)
 	, m_eCurWeaponType(WEAPONEND)
 	, m_pCurWeapon(nullptr)
-	, m_iCoin(0)
+	, m_iCoin(100)
 {
 	Set_LayerID(LAYER_PLAYER);
 	Set_ObjTag(L"Player");
@@ -87,8 +87,12 @@ HRESULT CPlayer::Ready_GameObject(void)
 _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
 	if (GetDead()) return OBJ_DEAD;
+	m_PosList.push_back(m_pTransform->m_vInfo[INFO_POS]);
+	if (m_PosList.size() > 2) m_PosList.pop_front();
+
 	InteractTile(fTimeDelta);
 	/*cout << m_pTransform->m_vInfo[INFO_LOOK].x << " " << m_pTransform->m_vInfo[INFO_LOOK].y << " " << m_pTransform->m_vInfo[INFO_LOOK].z << endl;*/
+
 	//cout << m_pTransform->m_vInfo[INFO_POS].y << endl;
 	/*cout << ROOM_MGR->Get_Tennel(0) << " " << ROOM_MGR->Get_Tennel(1) << endl;*/
 	
@@ -332,7 +336,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	m_pTransform->Get_Info(INFO_LOOK, &vDir);
 	m_pTransform->Get_Info(INFO_RIGHT, &vRight);
 
-	if (!m_bIsOnTile)
+	if (!m_bIsOnIceTile)
 	{
 		if (Engine::Key_Pressing(DIK_W)) m_pTransform->Move_Walk(m_fSpeed, fTimeDelta);
 		if (Engine::Key_Pressing(DIK_S))	m_pTransform->Move_Walk(-m_fSpeed, fTimeDelta);
@@ -463,6 +467,15 @@ bool CPlayer::IsObjectInFOV(_float fDistance, _float fRadius, _float fFov)
 	_float fAngle = atanf(fDiagonal / fDistance);
 
 	return fAngle >= (fFov / 2.f);
+}
+
+_vec3 CPlayer::GetDeltaVec()
+{
+	if (m_PosList.empty())
+		return _vec3();
+
+	_vec3 DeltaPos = m_pTransform->m_vInfo[INFO_POS] - m_PosList.front();
+	return DeltaPos;
 }
 
 void CPlayer::AimHack()

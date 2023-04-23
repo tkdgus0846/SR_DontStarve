@@ -51,6 +51,8 @@ _int CBigJump::Update_Component(const _float & fTimeDelta)
 
 		if (m_fCurTime - m_fPreTime >= m_fTimer)
 		{
+			m_pGameObject->m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
+			m_pGameObject->m_pTransform->Set_Dir(_vec3(1.f, 0.f, 0.f));
 			m_bJump = true;
 			m_bStop = false;
 		}
@@ -63,7 +65,6 @@ _int CBigJump::Update_Component(const _float & fTimeDelta)
 
 	if (m_fInit > m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y)
 	{
-		m_pGameObject->m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 		m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y = m_fInit;
 		m_fPreTime = m_fCurTime;
 		m_fTime = 0.f;

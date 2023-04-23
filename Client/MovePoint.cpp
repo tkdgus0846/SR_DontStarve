@@ -40,7 +40,7 @@ _int CMovePoint::Update_Component(const _float & fTimeDelta)
 		m_fFstSpeed = fSpeed;
 		fSpeed *= 2.f;
 		FAILED_CHECK_RETURN(m_pBlackBoard->Set_Type(L"fSpeed", fSpeed), BEHAVIOR_ERROR);
-		m_vDest = { _float(iX) + GetRandomFloat(-5.f, 55.f) , -4.f, GetRandomFloat(-5.f, 55.f) };
+		m_vDest = { _float(iX) + GetRandomFloat(2.f, 48.f) , -4.f, GetRandomFloat(2.f, 48.f) };
 		m_bStart = true;
 	}
 
