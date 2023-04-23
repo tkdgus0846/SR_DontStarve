@@ -74,9 +74,22 @@ void CMiniMapBack::LateUpdate_GameObject(void)
 
 void CMiniMapBack::Render_GameObject(void)
 {
+	m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
 
-	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
-	Set_ViewMatrix_UI(m_fPosX + 50, m_fPosY + 50, 137.f, 137.f);
+	m_pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
+	m_pGraphicDev->SetRenderState(D3DRS_STENCILREF, 1);
+	m_pGraphicDev->SetRenderState(D3DRS_STENCILMASK, 0xffffffff);
+	m_pGraphicDev->SetRenderState(D3DRS_STENCILWRITEMASK, 0xffffffff);
+	m_pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
+
+	CUI::Set_ViewMatrix_UI(320.f, -200.f, 75.0f, 85.f);
+	m_pTexture->Render_Texture(15);
+	m_pRcTex->Render_Component();
+
+	m_pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
+	m_pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
+
+	CUI::Set_ViewMatrix_UI(m_fPosX + 50, m_fPosY + 50, 200.f, 200.f);
 	m_pTexture->Render_Texture(17);
 	m_pRcTex->Render_Component();
 
@@ -86,33 +99,27 @@ void CMiniMapBack::Render_GameObject(void)
 		{
 			if (m_arrMapInfo[i * ROOMY + j].m_bCheck == true)
 			{
-				Set_ViewMatrix_UI(m_fPosX + j * 48, m_fPosY + i * 48, m_vScale.x, m_vScale.y);
+				CUI::Set_ViewMatrix_UI(m_fPosX + j * 48, m_fPosY + i * 48, m_vScale.x, m_vScale.y);
 				m_pTexture->Render_Texture(m_arrMapInfo[i * ROOMY + j].m_iTextureNum);
 				m_arrMap[i * ROOMY + j]->Render_Component();
 			}
 			else if (m_arrMapInfo[i * ROOMY + j].m_bInRange == true)
 			{
-				Set_ViewMatrix_UI(m_fPosX + j * 48, m_fPosY + i * 48, m_vScale.x, m_vScale.y);
+				CUI::Set_ViewMatrix_UI(m_fPosX + j * 48, m_fPosY + i * 48, m_vScale.x, m_vScale.y);
 				m_pTexture->Render_Texture(16);
 				m_arrMap[i * ROOMY + j]->Render_Component();
 			}
 			else
 			{
-				Set_ViewMatrix_UI(m_fPosX + j * 48, m_fPosY + i * 48, m_vScale.x, m_vScale.y);
+				CUI::Set_ViewMatrix_UI(m_fPosX + j * 48, m_fPosY + i * 48, m_vScale.x, m_vScale.y);
 				m_pTexture->Render_Texture(15);
 				m_arrMap[i * ROOMY + j]->Render_Component();
 			}
 		}
 	}
 
-
-	Set_ViewMatrix_UI(m_fPosX + 150, m_fPosY + 50, 10000.0f, 1000000.f);
-	m_pTexture->Render_Texture(18);
-	m_pRcTex->Render_Component();
-
 	__super::Render_GameObject();
-	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
-
+	m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 }
 
 
@@ -246,4 +253,19 @@ void CMiniMapBack::Free(void)
 	Safe_Release(m_pTexture);
 
 	__super::Free();
+}
+
+
+void CMiniMapBack::Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scaleY)
+{
+	D3DXMatrixIdentity(&matWorld);
+	D3DXMatrixIdentity(&matView);
+
+	_matrix matTrans;
+	D3DXMatrixScaling(&matView, scaleX, scaleY, 0.f);
+	matTrans.Translation(posX, posY, 0.1f);
+	D3DXMatrixMultiply(&matView, &matView, &matTrans);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
 }
