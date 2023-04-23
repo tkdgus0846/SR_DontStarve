@@ -108,6 +108,16 @@ void CEditCamera::CreateMapObject(CImInspector * pWindow)
 	pObj->m_pTransform->Set_Pos(vPos);
 }
 
+void CEditCamera::RotationY_Tile()
+{
+	CFloorTile* pFloorTile = dynamic_cast<CFloorTile*>(m_tPickInfo.pGameObj);
+
+	if (!pFloorTile)
+		return;
+	
+	pFloorTile->m_pTransform->Rot_Roll(90.f, 1.f);
+}
+
 HRESULT CEditCamera::Add_Component()
 {
 	CCamera* pCamera = dynamic_cast<CCamera*>(Engine::Clone_Proto(L"Camera", this));
@@ -150,6 +160,12 @@ void CEditCamera::Key_Input(const _float & fTimeDelta)
 	{
 		if (!SetClickInfo()) return;
 		DeleteObject();
+	}
+
+	if (Engine::Key_Down(DIK_R))
+	{
+		if (!SetClickInfo()) return;
+		RotationY_Tile();
 	}
 }
 

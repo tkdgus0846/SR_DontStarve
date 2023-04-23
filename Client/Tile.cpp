@@ -20,6 +20,7 @@ HRESULT CTile::Ready_GameObject()
 
 	m_pTransform->m_vScale *= VTXITV * 0.5f;
 	m_pTransform->Rot_Pitch(90.f, 1);
+	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 	
 	return result;
 }
