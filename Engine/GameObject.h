@@ -73,6 +73,7 @@ public:
 	OBJ_INFO						Get_ObjInfo() { return m_ObjInfo; }
 	
 	list<CGameObject*>* Get_Static_GameObject_List() { return &m_StaticObjectList; }
+	_int				Get_Static_GameObject_Size() { return m_StaticObjectList.size(); }
 
 	// 하위 객체가 죽었을때 처리해주기 위함이다.
 	void			Remove_InOwnerObject();

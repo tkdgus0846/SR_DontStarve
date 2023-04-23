@@ -16,6 +16,9 @@ protected:
 public:
 	virtual void InteractGameObject(const InteractInfo* tInteractInfo);
 
+
+	virtual void SetDead(_bool bDead = true) override;
+
 protected:
 	_bool	m_bTrigger = false;
 };

@@ -26,6 +26,10 @@ public:
 	virtual void Render_GameObject(void) override;
 
 	CFloorTile* GetCurFloorTile(CGameObject* pGameObject);
+	void		SetNullFloorTile(_int x, _int z)
+	{
+		m_pTileArray[z][x] = nullptr;
+	}
 	CDoor* Get_Door(DOOR_DIR eDir) { return m_apDoor[eDir].second; }
 	DOOR_TYPE Get_DoorType() { return m_eDoorType; }
 	CFloor* GetFloor() const { return m_pFloor; }
