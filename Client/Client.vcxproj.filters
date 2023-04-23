@@ -785,6 +785,9 @@
     <ClInclude Include="FloorBeltCorner.h">
       <Filter>GameObject\Tile\FloorTile</Filter>
     </ClInclude>
+    <ClInclude Include="Scope.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1422,6 +1425,9 @@
     </ClCompile>
     <ClCompile Include="FloorBeltCorner.cpp">
       <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClCompile>
+    <ClCompile Include="Scope.cpp">
+      <Filter>GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
