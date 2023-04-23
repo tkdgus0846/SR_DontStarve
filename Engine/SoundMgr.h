@@ -19,15 +19,21 @@ public:
 public:
 	void PlayGameSound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume);
 	void PlayBGM(const TCHAR* pSoundKey, CHANNELID eID, float fVolume);
+	void SetVolumeCurBGM(_float fVolume);
+
 	void StopSound(CHANNELID eID);
 	void StopAll();
 	void SetChannelVolume(CHANNELID eID, float fVolume);
 	void StopAllBGM();
 
+
 	bool IsPlaying(CHANNELID eID);
 
 private:
 	void LoadSoundFile(); 
+
+	const _tchar*		m_CurBGM;
+	CHANNELID			m_CurBGMChannel;
 
 private:
 

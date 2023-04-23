@@ -172,6 +172,9 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RedBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/redblood_%d.png", 4)), E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Snow.png")), E_FAIL);
+
+
 	// Collision Texture for the Debug
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Green.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Red_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Red.png")), E_FAIL);
@@ -323,7 +326,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorElectric", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorElectric_%d.png", 3)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLava", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorLava_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorOil", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorOil_%d.png", 4)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorQuicksand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorQuicksand_%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorQuicksand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorQuicksand_%d.png", 1)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSwamp", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorSwamp_%d.png", 4)), E_FAIL);
 
 	// Wall Texture
@@ -473,6 +476,8 @@ _uint CLoading::Loading_ForStage(void)
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"HeartItem"); 
 	CEffectManager::GetInstance()->Reserve(m_pGraphicDev, 20, L"Explosion_Texture");
 
+	CEffectManager::GetInstance()->Reserve(m_pGraphicDev, 20, L"Explosion_Texture");
+
 	Set_String(L"Factory Loading..........");
 
 	TILE_FACTORY->Ready_Factory(m_pGraphicDev);
@@ -487,10 +492,15 @@ _uint CLoading::Loading_ForStage(void)
 
 	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+
 	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -4.f, 25.f }));
 	ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+
+	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -3.f, 25.f }));
+	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+
 	
-	//CFileSystem::Load(L"as.dat");
+	CFileSystem::Load(L"as.dat");
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");
 
@@ -506,7 +516,8 @@ _uint CLoading::Loading_ForStage2(void)
 	ROOM_MGR->Create_Default_Room(STAGE2); // 여기서 룸들을 싹다 만든다.
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
-	//CFileSystem::Load(L"as.dat");
+
+	CFileSystem::Load(L"as.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
 	m_bFinish = true;
@@ -521,7 +532,8 @@ _uint CLoading::Loading_ForStage3(void)
 	ROOM_MGR->Create_Default_Room(STAGE3); // 여기서 룸들을 싹다 만든다.
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
-	//CFileSystem::Load(L"as.dat");
+	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -3.f, 25.f }));
+	CFileSystem::Load(L"as.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
 	m_bFinish = true;
@@ -537,7 +549,7 @@ _uint CLoading::Loading_ForStage4(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 
-	//CFileSystem::Load(L"as.dat");
+	CFileSystem::Load(L"as.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
 	m_bFinish = true;

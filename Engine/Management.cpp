@@ -98,6 +98,7 @@ void CManagement::LateUpdate_Management()
 		Engine::Check_Collision(COL_ENEMY, COL_ENVIRONMENT);
 		Engine::Check_Collision(COL_ENEMY, COL_OBJ);
 
+		Engine::Check_Collision(COL_OBJ, COL_TRIGGER);
 		Engine::Check_Collision(COL_OBJ, COL_ENVIRONMENT);
 
 		//////////////////////// debug

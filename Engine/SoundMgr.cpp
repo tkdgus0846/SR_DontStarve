@@ -79,11 +79,20 @@ void CSoundMgr::PlayBGM(const TCHAR * pSoundKey, CHANNELID eID, float fVolume)
 	if (iter == m_mapSound.end())
 		return;
 
+	m_CurBGM = pSoundKey;
+	m_CurBGMChannel = eID;
+
 	FMOD_System_PlaySound(m_pSystem, FMOD_CHANNEL_FREE, iter->second, FALSE, &m_pChannelArr[eID]);
 	FMOD_Channel_SetMode(m_pChannelArr[eID], FMOD_LOOP_NORMAL);
 	FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
 	FMOD_System_Update(m_pSystem);
 }
+
+void Engine::CSoundMgr::SetVolumeCurBGM(_float fVolume)
+{
+	FMOD_Channel_SetVolume(m_pChannelArr[m_CurBGMChannel], fVolume);
+}
+
 
 void CSoundMgr::StopSound(CHANNELID eID)
 {
@@ -113,7 +122,6 @@ bool CSoundMgr::IsPlaying(CHANNELID eID)
 {
 	FMOD_BOOL bPlay;
 	FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlay);
-
 	
 	return bPlay;
 }

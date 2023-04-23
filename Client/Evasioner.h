@@ -20,8 +20,11 @@ public:
 	virtual void OnCollisionStay(const class Collision* collision);
 	virtual void OnCollisionExit(const class Collision* collision);
 
+	void		 SetInHole() { m_bInHole = true; }
+
 private:
 	CAnimation* m_pAnimation;
+	_bool		m_bInHole;
 
 private:
 	virtual HRESULT Add_Component() override;

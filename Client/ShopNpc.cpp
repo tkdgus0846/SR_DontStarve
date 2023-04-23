@@ -3,6 +3,7 @@
 #include "Export_Function.h"
 #include "Player.h"
 #include "SellItem.h"
+#include "..\Engine\SoundMgr.h"
 CShopNpc::CShopNpc(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev)
 {
@@ -10,6 +11,8 @@ CShopNpc::CShopNpc(LPDIRECT3DDEVICE9 pGraphicDev)
 	Set_ObjTag(Tag());
 
 	m_iHp = 1000;
+	m_SellNum = 0;
+	m_fPlayBGMTime = 0.f;
 }
 
 CShopNpc::~CShopNpc()
@@ -70,7 +73,7 @@ HRESULT CShopNpc::Ready_GameObject(void)
 	Add_Static_GameObject(item1);
 	Add_Static_GameObject(item2);
 	Add_Static_GameObject(item3);
-
+	m_SellNum = 3;
 
 	__super::Ready_GameObject();
 	return S_OK;
@@ -80,6 +83,22 @@ _int CShopNpc::Update_GameObject(const _float & fTimeDelta)
 {
 	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
+
+	if (Get_Static_GameObject_Size() < m_SellNum)
+	{
+		m_fPlayBGMTime += fTimeDelta;
+
+		if (m_fPlayBGMTime > 1.f)
+		{
+			CSoundMgr::GetInstance()->SetVolumeCurBGM(0.5f);
+			m_SellNum--;
+			m_fPlayBGMTime = 0.f;
+		}
+	}
+	
+	
+
+	
 	
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);

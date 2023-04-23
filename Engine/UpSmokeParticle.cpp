@@ -8,7 +8,10 @@
 CUpSmokeParticle::CUpSmokeParticle(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CSmokeParticle(pGraphicDev)
 {
-	m_Size = 1.2f;
+	m_Size = 1.5f;
+	m_VBSize = 3; // 파티클 한번소환할때 먹는 버퍼사이즈
+	m_VBOffset = 0;
+	m_VBBatchSize = 3; // 파티클당 먹는ㄷ\사이즈
 }
 
 CUpSmokeParticle::CUpSmokeParticle(const CUpSmokeParticle & rhs) :
@@ -31,7 +34,7 @@ void CUpSmokeParticle::ResetParticle(Particle * particle)
 	particle->fSpeed = GetRandomFloat(0.45f, 2.f);
 
 	particle->fAge = 0.f;
-	particle->fLifeTime = GetRandomFloat(0.2f, 1.f);
+	particle->fLifeTime = GetRandomFloat(1.0f, 2.f);
 }
 
 _int CUpSmokeParticle::Update_Component(const _float & fTimeDelta)

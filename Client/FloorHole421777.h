@@ -1,7 +1,8 @@
 #pragma once
 #include "FloorTile.h"
-class FloorHole421777 :
-	public CFloorTile
+
+// 기본 구멍 타일
+class FloorHole421777 : public CFloorTile
 {
 public:
 	FloorHole421777(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -44,7 +44,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_bFix(true)
 	, m_eCurWeaponType(WEAPONEND)
 	, m_pCurWeapon(nullptr)
-	, m_iCoin(0)
+	, m_iCoin(100)
 {
 	Set_LayerID(LAYER_PLAYER);
 	Set_ObjTag(L"Player");
