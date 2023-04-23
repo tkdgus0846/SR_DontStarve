@@ -482,10 +482,10 @@ _uint CLoading::Loading_ForStage(void)
 	ROOM_MGR->Create_Default_Room(STAGE1);	
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 
-	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+	ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 10.f }));
 	
 	//CFileSystem::Load(L"as.dat");
 	m_bFinish = true;
