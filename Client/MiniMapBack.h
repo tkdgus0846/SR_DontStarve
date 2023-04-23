@@ -34,6 +34,8 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
+
+    void Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scaleY);
 	D3DXMATRIX  matWorld, matView;
 
 	CRcTex* m_pRcTex;
@@ -42,7 +44,7 @@ private:
 	array<CComponent*, 3 * 3> m_arrMap;
 	array<MiniMapCheck, 3 * 3> m_arrMapInfo;
 
-	_float		m_fPosX = 300.f;
+	_float		m_fPosX = 320.f;
 	_float		m_fPosY = -200.f;
 
 	_float		m_pPlayerX = 0.f;
