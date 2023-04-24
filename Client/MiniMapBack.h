@@ -33,9 +33,14 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
-private:
+	void		MiniMapReset();
 
+private:
     void Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float scaleY);
+
+private:
+	STAGEINFO m_curStageInfo;
+
 	D3DXMATRIX  matWorld, matView;
 
 	CRcTex* m_pRcTex;
@@ -52,6 +57,11 @@ private:
 
 	_float		m_pPlayerMoveX = 0.1f;
 	_float		m_pPlayerMoveZ = 0.1f;
+
+	_float		m_pPlayerTunnelX = 0.f;
+	_float		m_pPlayerTunnelY = 0.f;
+
+	_float		m_bLevelUp = false;
 
 
 	void		MiniMapMove();

@@ -4,6 +4,7 @@
 
 CMiniMapBack::CMiniMapBack(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
+	, m_curStageInfo(STAGE1)
 {
 	Set_ObjTag(L"MiniMapBack");
 }
@@ -58,6 +59,12 @@ HRESULT CMiniMapBack::Ready_GameObject(void)
 
 _int CMiniMapBack::Update_GameObject(const _float & fTimeDelta)
 {
+	if (m_curStageInfo != ROOM_MGR->Get_CurStageInfo())
+	{
+		MiniMapReset();
+		m_curStageInfo = ROOM_MGR->Get_CurStageInfo();
+	}
+	
 	Engine::Add_RenderGroup(RENDER_ALPHA_UI, this);
 
 	__super::Update_GameObject(fTimeDelta);
@@ -66,6 +73,11 @@ _int CMiniMapBack::Update_GameObject(const _float & fTimeDelta)
 
 void CMiniMapBack::LateUpdate_GameObject(void)
 {
+	if (m_bLevelUp == true)
+	{
+		MiniMapReset();
+		m_bLevelUp = false;
+	}
 	MiniMapMove();
 	MiniMapCheck();
 	MiniMapInRange();
@@ -124,19 +136,55 @@ void CMiniMapBack::Render_GameObject(void)
 
 
 
+void CMiniMapBack::MiniMapReset()
+{
+	for (size_t i = 0; i < ROOMY; i++)
+	{
+		for (size_t j = 0; j < ROOMX; j++)
+		{
+			m_arrMapInfo[i * ROOMY + j].m_bCheck = false;
+			m_arrMapInfo[i * ROOMY + j].m_bInRange = false;
+		}
+	}
+}
+
 void CMiniMapBack::MiniMapMove()
 {
 	if (Engine::Get_Player() != nullptr)
 	{
-		m_pPlayerMoveX = Engine::Get_Player()->m_pTransform->m_vInfo[INFO_POS].x;
-		m_pPlayerMoveZ = Engine::Get_Player()->m_pTransform->m_vInfo[INFO_POS].z;
+		if (ROOM_MGR->Is_In_Tennel())
+		{
+			m_fPosX = -(m_pPlayerMoveX / 1.180555f) + 337.f;
+			m_fPosY = -(m_pPlayerMoveZ / 1.180555f) - 190.f;
+		}
+		else
+		{
+			m_pPlayerMoveX = Engine::Get_Player()->m_pTransform->m_vInfo[INFO_POS].x;
+			m_pPlayerMoveZ = Engine::Get_Player()->m_pTransform->m_vInfo[INFO_POS].z;
 
 
-		m_fPosX = -(m_pPlayerMoveX / 1.180555f) + 337.f;
-		m_fPosY = -(m_pPlayerMoveZ / 1.180555f) - 190.f;
-		
-		/*cout << m_pPlayerMoveX << "     " << m_pPlayerMoveZ << endl;
-		cout << m_fPosX << "     " << m_fPosY << endl;*/
+			if (m_pPlayerMoveZ > 120.f)
+			{
+				m_pPlayerMoveZ = m_pPlayerMoveZ - 17.f;
+			}
+			else if (m_pPlayerMoveX > 120.f)
+			{
+				m_pPlayerMoveX = m_pPlayerMoveX - 13.0f;
+			}
+			else if (m_pPlayerMoveZ > 60.f)
+			{
+				m_pPlayerMoveZ = m_pPlayerMoveZ - 10.f;
+			}		
+			if (m_pPlayerMoveX > 60.f)
+			{
+				m_pPlayerMoveX = m_pPlayerMoveX - 6.f;
+			}
+
+			m_fPosX = -(m_pPlayerMoveX / 1.180555f) + 337.f;
+			m_fPosY = -(m_pPlayerMoveZ / 1.180555f) - 190.f;
+			 
+			cout << m_pPlayerMoveZ << endl;
+		}
 	}
 }
 

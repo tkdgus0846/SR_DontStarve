@@ -30,6 +30,8 @@ public:
 	void Set_Door(CDoor* pRoom) { m_pDoor = pRoom; }
 	void Set_Tennel_Texture(STAGEINFO stageInfo);
 
+	STAGEINFO GetStageInfo() const { return m_eStageInfo; }
+
 private:
 	Engine::CCollider*		m_pCollider;
 	Engine::CTexture*		m_pTextureCom;

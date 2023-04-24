@@ -794,6 +794,9 @@
     <ClInclude Include="Bird.h">
       <Filter>GameObject\Monster\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="SkillUI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1440,6 +1443,9 @@
     </ClCompile>
     <ClCompile Include="Bird.cpp">
       <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillUI.cpp">
+      <Filter>GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

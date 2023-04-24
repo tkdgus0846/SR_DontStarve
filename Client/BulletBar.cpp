@@ -1,5 +1,5 @@
 #include "BulletBar.h"
-
+#include "Player.h"
 #include "Export_Function.h"
 
 
@@ -38,6 +38,9 @@ void CBulletBar::LateUpdate_GameObject(void)
 
 void CBulletBar::Render_GameObject(void)
 {
+	if (Engine::Get_Player() == nullptr) { return; }
+	if (dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_bAimHack() == true) { return; }
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	Set_ViewMatrix_UI(-238.f, -230.f);
 

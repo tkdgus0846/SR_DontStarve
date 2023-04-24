@@ -56,6 +56,7 @@ public:
 	_int			Get_UltiMaxGuage() { return m_fUltimateMax; }
 
 	void			AimHack();
+	_bool			Get_bAimHack() { return m_bAimHack; }
 	void			Fix_Aim(CCollider* pCollider);
 	_vec3			Tactical_Bullet_Dir();
 	

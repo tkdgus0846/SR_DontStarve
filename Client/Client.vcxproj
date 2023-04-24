@@ -396,6 +396,7 @@
     <ClInclude Include="ShortWall421217.h" />
     <ClInclude Include="ShortWall421405.h" />
     <ClInclude Include="ShWallPipes420367ortWall.h" />
+    <ClInclude Include="SkillUI.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="RoomMgr.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -623,6 +624,7 @@
     <ClCompile Include="ShortWall421217.cpp" />
     <ClCompile Include="ShortWall421405.cpp" />
     <ClCompile Include="ShWallPipes420367ortWall.cpp" />
+    <ClCompile Include="SkillUI.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="RoomMgr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

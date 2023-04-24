@@ -1,5 +1,6 @@
 #include "GunUI.h"
 #include "Export_Function.h"
+#include "Player.h"
 
 CGunUI::CGunUI(LPDIRECT3DDEVICE9 pGraphicDev) :
 	CUI(pGraphicDev)
@@ -47,6 +48,10 @@ void CGunUI::LateUpdate_GameObject(void)
 
 void CGunUI::Render_GameObject(void)
 {
+	if (Engine::Get_Player() == nullptr) { return; }
+
+	if (dynamic_cast<CPlayer*>(Engine::Get_Player())->Get_bAimHack() == true) { return; }
+
 	static _float posX = 200.f;
 	static _float incX = 1.9f;
 	static _float angle = -10.f;
