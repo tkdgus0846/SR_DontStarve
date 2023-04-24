@@ -267,6 +267,7 @@
     <ClInclude Include="BigJump.h" />
     <ClInclude Include="Bird.h" />
     <ClInclude Include="BloodTile.h" />
+    <ClInclude Include="BoolCheck.h" />
     <ClInclude Include="BossHp.h" />
     <ClInclude Include="Bub.h" />
     <ClInclude Include="Bullet.h" />
@@ -289,7 +290,9 @@
     <ClInclude Include="FloorVent421556.h" />
     <ClInclude Include="FloorVent421725.h" />
     <ClInclude Include="FloorVent421869.h" />
+    <ClInclude Include="Guppi.h" />
     <ClInclude Include="LookAtPlayer.h" />
+    <ClInclude Include="MiniGuppi.h" />
     <ClInclude Include="MoveY.h" />
     <ClInclude Include="Disc.h" />
     <ClInclude Include="DiscItem.h" />
@@ -365,6 +368,7 @@
     <ClInclude Include="ImPickBox.h" />
     <ClInclude Include="OnlyCollisionObj.h" />
     <ClInclude Include="OnPlayer.h" />
+    <ClInclude Include="RootAttack.h" />
     <ClInclude Include="Scope.h" />
     <ClInclude Include="SellItem.h" />
     <ClInclude Include="Serializable.h" />
@@ -393,6 +397,7 @@
     <ClInclude Include="Pyramid.h" />
     <ClInclude Include="QuickSandTile.h" />
     <ClInclude Include="SandTile.h" />
+    <ClInclude Include="ShockWave.h" />
     <ClInclude Include="ShopNpc.h" />
     <ClInclude Include="Rub.h" />
     <ClInclude Include="RapidWeapon.h" />
@@ -431,6 +436,7 @@
     <ClInclude Include="SonicGround.h" />
     <ClInclude Include="SonicUI.h" />
     <ClInclude Include="Speyeder.h" />
+    <ClInclude Include="SpreadShot.h" />
     <ClInclude Include="SpreadWeapon.h" />
     <ClInclude Include="SwampTile.h" />
     <ClInclude Include="SwordBullet.h" />
@@ -506,6 +512,7 @@
     <ClCompile Include="BigJump.cpp" />
     <ClCompile Include="Bird.cpp" />
     <ClCompile Include="BloodTile.cpp" />
+    <ClCompile Include="BoolCheck.cpp" />
     <ClCompile Include="BossHp.cpp" />
     <ClCompile Include="Bub.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -528,7 +535,9 @@
     <ClCompile Include="FloorVent421556.cpp" />
     <ClCompile Include="FloorVent421725.cpp" />
     <ClCompile Include="FloorVent421869.cpp" />
+    <ClCompile Include="Guppi.cpp" />
     <ClCompile Include="LookAtPlayer.cpp" />
+    <ClCompile Include="MiniGuppi.cpp" />
     <ClCompile Include="MoveY.cpp" />
     <ClCompile Include="Disc.cpp" />
     <ClCompile Include="DiscItem.cpp" />
@@ -629,9 +638,11 @@
     <ClCompile Include="OnPlayer.cpp" />
     <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="QuickSandTile.cpp" />
+    <ClCompile Include="RootAttack.cpp" />
     <ClCompile Include="SandTile.cpp" />
     <ClCompile Include="Scope.cpp" />
     <ClCompile Include="SellItem.cpp" />
+    <ClCompile Include="ShockWave.cpp" />
     <ClCompile Include="ShopNpc.cpp" />
     <ClCompile Include="Rub.cpp" />
     <ClCompile Include="RapidWeapon.cpp" />
@@ -669,6 +680,7 @@
     <ClCompile Include="SonicGround.cpp" />
     <ClCompile Include="SonicUI.cpp" />
     <ClCompile Include="Speyeder.cpp" />
+    <ClCompile Include="SpreadShot.cpp" />
     <ClCompile Include="SpreadWeapon.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">

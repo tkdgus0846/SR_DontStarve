@@ -19,7 +19,9 @@ CRush::~CRush()
 
 HRESULT CRush::Ready_Behavior()
 {
-	return S_OK;
+	HRESULT result = __super::Ready_Behavior();
+
+	return result;
 }
 
 _int CRush::Update_Component(const _float & fTimeDelta)

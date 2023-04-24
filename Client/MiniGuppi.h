@@ -1,15 +1,11 @@
 #pragma once
-#include "Monster.h"
+#include "Enemy.h"
 
-BEGIN(Engine)
-class CAnimation;
-END
-
-class CTreeBoss : public CMonster
+class CMiniGuppi : public CEnemy
 {
 private:
-	explicit CTreeBoss(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CTreeBoss();
+	explicit CMiniGuppi(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CMiniGuppi();
 
 public:
 	virtual HRESULT Ready_GameObject(const _vec3& vPos);
@@ -17,18 +13,16 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
-	void Change_State() { m_bIsSummon == true ? false : true; }
-
 private:
-	_vec3 m_vDefaultPos;
-	_bool m_bIsSummon;
-	CAnimation* m_pAnimation;
+	_bool m_bIsDamaged;
 
 private:
 	virtual HRESULT Add_Component() override;
 
 public:
-	static CTreeBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+	static CMiniGuppi*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static const _tchar* Tag() { return L"Guppi_Green"; }
 
 private:
 	virtual void Free(void) override;

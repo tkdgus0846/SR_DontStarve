@@ -131,6 +131,9 @@
     <Filter Include="GameObject\Tile\FloorTile\FloorVent">
       <UniqueIdentifier>{802eccf8-9674-4439-952d-3e8c7218cd4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Bullet\LandObject">
+      <UniqueIdentifier>{92bf026e-dee3-49ed-b91a-19153910bc10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -833,6 +836,24 @@
     <ClInclude Include="WaterTile.h">
       <Filter>GameObject\Tile\FloorTile</Filter>
     </ClInclude>
+    <ClInclude Include="SpreadShot.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="ShockWave.h">
+      <Filter>GameObject\Bullet\LandObject</Filter>
+    </ClInclude>
+    <ClInclude Include="RootAttack.h">
+      <Filter>GameObject\Bullet\LandObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Guppi.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BoolCheck.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniGuppi.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1515,6 +1536,24 @@
     </ClCompile>
     <ClCompile Include="WaterTile.cpp">
       <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClCompile>
+    <ClCompile Include="SpreadShot.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="ShockWave.cpp">
+      <Filter>GameObject\Bullet\LandObject</Filter>
+    </ClCompile>
+    <ClCompile Include="RootAttack.cpp">
+      <Filter>GameObject\Bullet\LandObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Guppi.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BoolCheck.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniGuppi.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

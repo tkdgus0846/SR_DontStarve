@@ -104,7 +104,6 @@ void CManagement::LateUpdate_Management()
 
 		//////////////////////// debug
 	}
-	
 }
 
 void CManagement::Render_Management(LPDIRECT3DDEVICE9 pGraphicDev)

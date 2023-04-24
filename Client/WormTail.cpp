@@ -56,11 +56,6 @@ _int CWormTail::Update_GameObject(const _float & fTimeDelta)
 
 	if (GetDead() && Dead_Production())
 		return OBJ_DEAD;
-	else if (GetDead())
-	{
-		//if (m_pFrontBody)
-			//m_pFrontBody->Chain_Back(nullptr);
-	}
 	else if (!GetDead())
 		m_fPreTime2 = Get_WorldTime();
 

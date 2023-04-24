@@ -12,7 +12,7 @@ CRedLaserBullet::CRedLaserBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CBullet(pGraphicDev), m_bShot(false), m_bPoint(false)
 {
 	Set_ObjTag(L"RedLaserBullet");
-	m_fSpeed = 50.f;
+	m_fSpeed = 1000.f;
 	m_fLifeSpan = 12.f;
 	m_fAge = 0.f;
 	m_Damage = 1;
@@ -50,6 +50,8 @@ _int CRedLaserBullet::Update_GameObject(const _float & fTimeDelta)
 	if (GetDead())
 		return OBJ_RETPOOL;
 
+	_float fRotSpeed = 360.f * 3.f;
+
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	if (!m_bShot)
@@ -57,8 +59,10 @@ _int CRedLaserBullet::Update_GameObject(const _float & fTimeDelta)
 		m_pTransform->Rot_Pitch(-90.f, 1.f);
 		m_bShot = true;
 	}
+
 	m_vDir = -m_pTransform->m_vInfo[INFO_UP];
 	m_pTransform->m_vInfo[INFO_POS] += m_vDir * m_fSpeed * fTimeDelta;
+	m_pTransform->Rot_Yaw(fRotSpeed, fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
 
 	Add_RenderGroup(RENDER_ALPHA, this);

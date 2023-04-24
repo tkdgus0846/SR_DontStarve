@@ -1,13 +1,13 @@
 #pragma once
 #include "Bullet.h"
 
-class CLaserBullet : public CBullet
+class CShockWave : public CBullet
 {
 	friend class CBulletMgr;
 	friend class CBulletPool;
 private:
-	explicit CLaserBullet(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CLaserBullet();
+	explicit CShockWave(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CShockWave();
 
 public:
 	virtual void SetDead(_bool bDead = true) override;
@@ -29,6 +29,6 @@ protected:
 
 private:
 	// 총알은 매니저를 통해서 생성할것.
-	static CLaserBullet*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CShockWave*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 };
 

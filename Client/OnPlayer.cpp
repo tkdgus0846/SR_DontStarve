@@ -19,7 +19,10 @@ COnPlayer::~COnPlayer()
 HRESULT COnPlayer::Ready_Behavior()
 {
 	m_fCurTime = 0.f;
-	return S_OK;
+
+	HRESULT result = __super::Ready_Behavior();
+
+	return result;
 }
 
 _int COnPlayer::Update_Component(const _float & fTimeDelta)

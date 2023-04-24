@@ -9,6 +9,8 @@
 #include "RedLaserBullet.h"
 #include "EnemyBullet.h"
 #include "SonicBird.h"
+#include "ShockWave.h"
+#include "RootAttack.h"
 
 IMPLEMENT_SINGLETON(CBulletMgr)
 
@@ -99,6 +101,14 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 		else if (name == L"SonicBird")
 		{
 			pBullet = CSonicBird::Create(pDevice);
+		}
+		else if (name == L"ShockWave")
+		{
+			pBullet = CShockWave::Create(pDevice);
+		}
+		else if (name == L"RootAttack")
+		{
+			pBullet = CRootAttack::Create(pDevice);
 		}
 		++m_iCreateCnt;
 		
@@ -202,6 +212,14 @@ void CBulletMgr::Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* nam
 		else if (name == L"EnemyBullet")
 		{
 			pBullet = CEnemyBullet::Create(pDevice);
+		}
+		else if (name == L"ShockWave")
+		{
+			pBullet = CShockWave::Create(pDevice);
+		}
+		else if (name == L"RootAttack")
+		{
+			pBullet = CRootAttack::Create(pDevice);
 		}
 		
 		if (m_BulletPool[name] == nullptr)

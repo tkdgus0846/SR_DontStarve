@@ -462,7 +462,7 @@ CSequence * CMonster::Make_BossPattern3(const _float & fCoolTime)
 	NULL_CHECK_RETURN(pTskMovePoint, nullptr);
 
 	CCoolTime* pDecCoolTime = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
-	NULL_CHECK_RETURN(pDecCoolTime);
+	NULL_CHECK_RETURN(pDecCoolTime, nullptr);
 
 	// 부품 초기설정
 	pDecCoolTime->Set_Timer(fCoolTime);
@@ -497,7 +497,7 @@ CSequence * CMonster::Make_BossPattern3_1(const _float & fCoolTime)
 	NULL_CHECK_RETURN(pTskMovePoint, nullptr);
 
 	CCoolTime* pDecCoolTime = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
-	NULL_CHECK_RETURN(pDecCoolTime);
+	NULL_CHECK_RETURN(pDecCoolTime, nullptr);
 
 	// 부품 초기설정
 	pDecCoolTime->Set_Timer(fCoolTime);
@@ -530,7 +530,7 @@ CSequence * CMonster::Make_BossPattern3_2(const _float & fCoolTime)
 	NULL_CHECK_RETURN(pTskMovePoint, nullptr);
 
 	CCoolTime* pDecCoolTime = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
-	NULL_CHECK_RETURN(pDecCoolTime);
+	NULL_CHECK_RETURN(pDecCoolTime, nullptr);
 
 	// 부품 초기설정
 	pDecCoolTime->Set_Timer(fCoolTime);
@@ -547,6 +547,30 @@ CSequence * CMonster::Make_BossPattern3_2(const _float & fCoolTime)
 	return pSQPattern;
 }
 
+// 플레이어를 향해 뿌리 공격
+CSequence * CMonster::Make_BossPattern4(const _float & fCoolTime)
+{
+	// 부품 생성
+	CSequence* pSQPattern = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQPattern, nullptr);
+
+	CSpreadShot* pTskSpreadLook = dynamic_cast<CSpreadShot*>(Engine::Clone_Proto(L"TSK_SpreadShot", this));
+	NULL_CHECK_RETURN(pTskSpreadLook, nullptr);
+
+	CCoolTime* pDecCoolTime = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
+	NULL_CHECK_RETURN(pDecCoolTime, nullptr);
+
+	// 부품 초기설정
+	pDecCoolTime->Set_Timer(fCoolTime);
+	pTskSpreadLook->Setting_Option(L"RootAttack", 13.f);
+	pTskSpreadLook->Setting_Spread_Option(SPRD_LOOK);
+
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_SpreadShot", pTskSpreadLook), nullptr);
+
+	return pSQPattern;
+}
+
 // 보스2번 빅점프 패턴
 CSequence * CMonster::Make_BossPattern2(const _float & fCoolTime)
 {
@@ -558,6 +582,12 @@ CSequence * CMonster::Make_BossPattern2(const _float & fCoolTime)
 	NULL_CHECK_RETURN(pTskBigJump, nullptr);
 	CLookAtTarget* pTskLook = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
 	NULL_CHECK_RETURN(pTskLook);
+	CSpreadShot* pTskSprdShot = dynamic_cast<CSpreadShot*>(Engine::Clone_Proto(L"TSK_SpreadShot", this));
+	NULL_CHECK_RETURN(pTskSprdShot);
+	CSpreadShot* pTskSprdShotPlus = dynamic_cast<CSpreadShot*>(Engine::Clone_Proto(L"TSK_SpreadShot", this));
+	NULL_CHECK_RETURN(pTskSprdShotPlus);
+	CSpreadShot* pTskSprdShotX = dynamic_cast<CSpreadShot*>(Engine::Clone_Proto(L"TSK_SpreadShot", this));
+	NULL_CHECK_RETURN(pTskSprdShotX);
 
 	CCoolTime* pDecCoolTime = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
 	NULL_CHECK_RETURN(pDecCoolTime, nullptr);
@@ -567,13 +597,22 @@ CSequence * CMonster::Make_BossPattern2(const _float & fCoolTime)
 	pTskBigJump->Set_Stop(true);
 	pTskBigJump->Set_Timer(15.f);
 	pDecCoolTime->Set_Timer(fCoolTime);
+	pTskSprdShot->Setting_Option(L"ShockWave", 30.f);
+	pTskSprdShot->Setting_Spread_Option(SPRD_TORNADO);
+	pTskSprdShotPlus->Setting_Option(L"ShockWave", 30.f);
+	pTskSprdShotPlus->Setting_Spread_Option(SPRD_PLUS);
+	pTskSprdShotX->Setting_Option(L"ShockWave", 30.f);
+	pTskSprdShotX->Setting_Spread_Option(SPRD_X);
 
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"SQ_Jump1", Make_JumpAI(12.f)), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_SpreadShot", pTskSprdShotPlus), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"SQ_Jump2", Make_BigJumpAI(16.f)), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_SpreadShot", pTskSprdShotX), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_BigJump", pTskBigJump), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_SpreadShot", Make_BossPattern2_2()), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_BigJump", pTskBigJump), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_SpreadShot", pTskSprdShot), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_LookAt", pTskLook), nullptr);
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_LastJump", Make_JumpAI(7.f)), nullptr);
 
@@ -603,7 +642,7 @@ CSequence * CMonster::Make_BossPattern2_1(const _float & fCoolTime)
 
 	// 부품 초기설정
 	pTskAttack->Set_BulletKey(L"RedLaserBullet");
-	pTskAttack->Set_BulletSpeed(50.f);
+	pTskAttack->Set_BulletSpeed(100.f);
 	pTskWait->Set_Timer(0.25f);
 	pDecCoolTime->Set_Timer(fCoolTime);
 	pTskWait->Set_ReturnValue(true);
@@ -682,10 +721,10 @@ HRESULT CMonster::Set_PatrolAndFollow_AI()
 	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
 	// 부품 조립
-	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI));
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI()));
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI()), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()), E_FAIL);
 
 	return S_OK;
 }
@@ -696,11 +735,11 @@ HRESULT CMonster::Set_PAF_JumpAI()
 	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
 	// 부품 조립
-	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI));
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)));
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Jump", Make_JumpAI(3.f)));
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Jump", Make_JumpAI(3.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()), E_FAIL);
 
 	return S_OK;
 }
@@ -711,11 +750,11 @@ HRESULT CMonster::Set_PAF_DBJumpAI()
 	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
 	// 부품 조립
-	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI));
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)));
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_DBJump", Make_DBJumpAI(9.f)));
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_DBJump", Make_DBJumpAI(9.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()), E_FAIL);
 
 	return S_OK;
 }
@@ -725,11 +764,11 @@ HRESULT CMonster::Set_PAF_AttckAI(const _tchar* pBulletKey)
 	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
 	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
 
-	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI));
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)));
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"TSK_Attack", Make_Attack(pBulletKey, 20.f, 5.f)));
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"TSK_Attack", Make_Attack(pBulletKey, 20.f, 5.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()), E_FAIL);
 
 	return S_OK;
 }
@@ -746,12 +785,51 @@ HRESULT CMonster::Set_PAF_LeapJumpAI()
 	pTaskWait->Set_Timer(0.2f);
 
 	// 부품 조립
-	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI));
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"TSK_Wait", pTaskWait), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_LeapJump", Make_LeapJumpAI(8.f, 3.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()), E_FAIL);
+
+	return S_OK;
+}
+
+HRESULT CMonster::Set_JumpFollowAI(const _float& fJumpTime, _bool bIsBoolCheck, const _tchar* pBindBoolTypename)
+{
+	CSequence* pSQRootAI = dynamic_cast<CSequence*>(Engine::Clone_Proto(L"Sequence", this));
+	NULL_CHECK_RETURN(pSQRootAI, E_FAIL);
+
+	CLookAtTarget* pTskLook = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
+	NULL_CHECK_RETURN(pTskLook, E_FAIL);
+	CBoolCheck* pDecBoolCheck = dynamic_cast<CBoolCheck*>(Engine::Clone_Proto(L"DEC_BoolCheck", this));
+	NULL_CHECK_RETURN(pDecBoolCheck, E_FAIL);
+	CWait* pTskWait = dynamic_cast<CWait*>(Engine::Clone_Proto(L"TSK_Wait", this));
+	NULL_CHECK_RETURN(pTskWait, E_FAIL);
+
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SQ_RootAI", pSQRootAI), E_FAIL);
+
+	if (bIsBoolCheck == true)
+	{
+		if (pBindBoolTypename == nullptr)
+		{
+			Safe_Release(pSQRootAI);
+			Safe_Release(pTskLook);
+			Safe_Release(pDecBoolCheck);
+			return E_FAIL;
+		}
+		pDecBoolCheck->Bind_Typename(pBindBoolTypename);
+		FAILED_CHECK_RETURN(pSQRootAI->Add_Component(ID_UPDATE, L"DEC_BoolCheck", pDecBoolCheck), E_FAIL);
+	}
+	else
+		Safe_Release(pDecBoolCheck);
+
+	pTskWait->Set_ReturnValue(true);
+	pTskWait->Set_Timer(fJumpTime);
+
+	FAILED_CHECK_RETURN(pSQRootAI->Add_Component(ID_UPDATE, L"TSK_LookAt", pTskLook), E_FAIL);
+	FAILED_CHECK_RETURN(pSQRootAI->Add_Component(ID_UPDATE, L"SQ_LeapJump", Make_LeapJumpAI(5.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSQRootAI->Add_Component(ID_UPDATE, L"SQ_LeapJump", pTskWait), E_FAIL);
 
 	return S_OK;
 }
@@ -768,7 +846,7 @@ HRESULT CMonster::Set_PAF_RushAI()
 	pTaskWait->Set_Timer(0.2f);
 
 	// 부품 조립
-	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI));
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"TSK_Wait", pTaskWait), E_FAIL);
@@ -836,6 +914,7 @@ HRESULT CMonster::Set_TurretAI(const _float& fCoolTime, _bool bIsCheckPlayer)
 	return S_OK;
 }
 
+// Nub_Boss
 HRESULT CMonster::Set_Boss1_AI()
 {
 	// 부품 생성
@@ -854,6 +933,7 @@ HRESULT CMonster::Set_Boss1_AI()
 	return S_OK;
 }
 
+//Walker_Boss
 HRESULT CMonster::Set_Boss2_AI()
 {
 	// 부품 생성
@@ -865,7 +945,7 @@ HRESULT CMonster::Set_Boss2_AI()
 	// 부품 조립
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
 
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern2", Make_BossPattern2(23.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern2", Make_BossPattern2(3.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern1", Make_BossPattern1(7.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern2_1", Make_BossPattern2_1(13.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(6.f)), E_FAIL);
@@ -873,6 +953,7 @@ HRESULT CMonster::Set_Boss2_AI()
 	return S_OK;
 }
 
+// Worm_Boss
 HRESULT CMonster::Set_Boss3_AI()
 {
 	// 부품 생성
@@ -890,6 +971,26 @@ HRESULT CMonster::Set_Boss3_AI()
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern3", Make_BossPattern3_2(10.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern2", Make_BossPattern3_1(6.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern1", Make_BossPattern3(12.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_PatternDefault", pLook), E_FAIL);
+
+	return S_OK;
+}
+
+// Tree_Boss
+HRESULT CMonster::Set_Boss4_AI()
+{
+	// 부품 생성
+	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
+	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
+
+	CLookAtTarget* pLook = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
+	NULL_CHECK_RETURN(pLook, E_FAIL);
+	// 부품 초기설정
+
+	// 부품 조립
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI), E_FAIL);
+
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SL_RootAI", Make_BossPattern4(10.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_PatternDefault", pLook), E_FAIL);
 
 	return S_OK;

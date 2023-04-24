@@ -11,6 +11,8 @@
 #include "Evasioner.h"
 #include "ShopNpc.h"
 #include "Bird.h"
+#include "Guppi.h"
+#include "MiniGuppi.h"
 
 IMPLEMENT_SINGLETON(CMonsterFactory)
 
@@ -40,6 +42,8 @@ HRESULT CMonsterFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CWalker::Tag(),	&CWalker::Create);
 	Register(CShopNpc::Tag(),	&CShopNpc::Create);
 	Register(CBird::Tag(),		&CBird::Create);
+	Register(CGuppi::Tag(),		&CGuppi::Create);
+	Register(CMiniGuppi::Tag(), &CMiniGuppi::Create);
 
 	ExtractTextureKey();
 

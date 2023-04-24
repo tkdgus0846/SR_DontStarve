@@ -19,7 +19,9 @@ CRandomLook::~CRandomLook()
 
 HRESULT CRandomLook::Ready_Behavior()
 {
-	return S_OK;
+	HRESULT result = __super::Ready_Behavior();
+
+	return result;
 }
 
 _int CRandomLook::Update_Component(const _float & fTimeDelta)
