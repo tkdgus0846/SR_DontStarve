@@ -63,6 +63,7 @@ protected:
 	CSequence*	Make_BossPattern3(const _float& fCoolTime = 12.f);
 	CSequence*	Make_BossPattern3_1(const _float& fCoolTime = 12.f);
 	CSequence*	Make_BossPattern3_2(const _float& fCoolTime = 12.f);
+	CSequence*	Make_BossPattern4(const _float& fCoolTime = 12.f);
 	
 	HRESULT		Set_AttackToPlayer(const _tchar* BulletKey, const _float& fSpeed, const _float& fCoolTime);
 	HRESULT		Set_PatrolAndFollow_AI();
@@ -70,12 +71,14 @@ protected:
 	HRESULT		Set_PAF_DBJumpAI();
 	HRESULT		Set_PAF_AttckAI(const _tchar* pBulletKey);
 	HRESULT		Set_PAF_LeapJumpAI();
+	HRESULT		Set_JumpFollowAI(const _float& fJumpTime, _bool bIsBoolCheck, const _tchar* pBindBoolTypename);
 	HRESULT		Set_PAF_RushAI();
 	HRESULT		Set_EvasionAndAttack();
 	HRESULT		Set_TurretAI(const _float& fCoolTime, _bool bIsCheckPlayer = true);
 	HRESULT		Set_Boss1_AI();
 	HRESULT		Set_Boss2_AI();
 	HRESULT		Set_Boss3_AI();
+	HRESULT		Set_Boss4_AI();
 
 private:
 	CRoot*		m_pRoot;	// 모든 몬스터는 하나의 ai를 가지는걸로 가정.

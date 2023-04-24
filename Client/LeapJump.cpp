@@ -22,7 +22,9 @@ HRESULT CLeapJump::Ready_Behavior()
 {
 	m_fInit = m_pGameObject->m_pTransform->m_vScale.y;
 
-	return S_OK;
+	HRESULT result = __super::Ready_Behavior();
+
+	return result;
 }
 
 _int CLeapJump::Update_Component(const _float & fTimeDelta)

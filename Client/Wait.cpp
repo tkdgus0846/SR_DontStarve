@@ -20,8 +20,9 @@ CWait::~CWait()
 
 HRESULT CWait::Ready_Behavior()
 {
-	__super::Ready_Composite();
-	return S_OK;
+	HRESULT result = __super::Ready_Behavior();
+
+	return result;
 }
 
 _int CWait::Update_Component(const _float & fTimeDelta)

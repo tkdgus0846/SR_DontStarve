@@ -19,7 +19,9 @@ CIsNotRangeInPlayer::~CIsNotRangeInPlayer()
 
 HRESULT CIsNotRangeInPlayer::Ready_Behavior()
 {
-	return S_OK;
+	HRESULT result = __super::Ready_Behavior();
+
+	return result;
 }
 
 _int CIsNotRangeInPlayer::Update_Component(const _float & fTimeDelta)

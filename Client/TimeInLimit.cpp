@@ -20,7 +20,10 @@ HRESULT CTimeInLimit::Ready_Behavior()
 {
 	m_fCurTime = Get_WorldTime();
 	m_fPreTime = Get_WorldTime();
-	return S_OK;
+
+	HRESULT result = __super::Ready_Behavior();
+
+	return result;
 }
 
 _int CTimeInLimit::Update_Component(const _float & fTimeDelta)

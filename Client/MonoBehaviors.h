@@ -25,3 +25,5 @@
 #include "LookAtPlayer.h"
 #include "AttackToPlayer.h"
 #include "WormMoveCtrl.h"
+#include "SpreadShot.h"
+#include "BoolCheck.h"

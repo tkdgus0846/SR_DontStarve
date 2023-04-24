@@ -18,7 +18,9 @@ CRangeCheck::~CRangeCheck()
 
 HRESULT CRangeCheck::Ready_Behavior()
 {
-	return S_OK;
+	HRESULT result = __super::Ready_Behavior();
+
+	return result;
 }
 
 _int CRangeCheck::Update_Component(const _float & fTimeDelta)

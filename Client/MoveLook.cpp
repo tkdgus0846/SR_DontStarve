@@ -19,9 +19,9 @@ CMoveLook::~CMoveLook()
 
 HRESULT CMoveLook::Ready_Behavior()
 {
-	__super::Ready_Composite();
+	HRESULT result = __super::Ready_Behavior();
 
-	return S_OK;
+	return result;
 }
 
 _int CMoveLook::Update_Component(const _float & fTimeDelta)

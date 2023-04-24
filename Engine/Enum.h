@@ -71,7 +71,15 @@ enum COLTYPE
 	COL_DYNAMIC
 };
 
-
+enum SPREAD_OPTION
+{
+	SPRD_X,			// X자로 발사
+	SPRD_PLUS,		// +자로 발사
+	SPRD_CIRCLE,	// 원형으로 발사
+	SPRD_TORNADO,	// 돌면서 발사
+	SPRD_LOOK,		// 룩 방향으로 산탄 발사
+	SPRD_END
+};
 
 enum COL_DIR
 {
