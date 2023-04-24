@@ -25,6 +25,9 @@ HRESULT CWalkerBoss::Ready_GameObject(const _vec3 & vPos)
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
+	m_fCurTime1 = Get_WorldTime();
+	m_fPreTime1 = Get_WorldTime();
+
 	HRESULT result = __super::Ready_GameObject();
 
 	m_pShadow->Set_RenderFlag();
@@ -37,7 +40,7 @@ _int CWalkerBoss::Update_GameObject(const _float & fTimeDelta)
 	if (GetDead() && Dead_Production())
 		return OBJ_DEAD;
 	else if(!GetDead())
-		m_fPreTime = Get_WorldTime();
+		m_fPreTime1 = Get_WorldTime();
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -96,8 +99,8 @@ void CWalkerBoss::Render_GameObject(void)
 _bool CWalkerBoss::Dead_Production()
 {
 	static _float fDest = 0.2f;
-	m_fCurTime = Get_WorldTime();
-	if (m_fCurTime - m_fPreTime < 3.5f)
+	m_fCurTime1 = Get_WorldTime();
+	if (m_fCurTime1 - m_fPreTime1 < 3.5f)
 	{
 		_vec3 vEPos{};
 		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
@@ -107,7 +110,7 @@ _bool CWalkerBoss::Dead_Production()
 		CEffect* pEffect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"Explosion_Texture", vPos, vEPos, 0.1f);
 		Add_GameObject(pEffect);
 
-		if (m_fCurTime - m_fPreTime > fDest)
+		if (m_fCurTime1 - m_fPreTime1 > fDest)
 		{
 			_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
 			pSpawnPos.y += 3.f;

@@ -31,6 +31,11 @@ HRESULT CWormTail::Ready_GameObject(const _vec3 & vPos)
 	m_pTransform->Set_BillMode(true);
 	m_pTransform->Rot_Bill(0.01f);
 
+	m_fCurTime1 = Get_WorldTime();
+	m_fPreTime1 = Get_WorldTime();
+	m_fCurTime2 = Get_WorldTime();
+	m_fPreTime2 = Get_WorldTime();
+
 	HRESULT result = __super::Ready_GameObject();
 
 	return result;
@@ -57,7 +62,7 @@ _int CWormTail::Update_GameObject(const _float & fTimeDelta)
 			m_pFrontBody->Chain_Back(nullptr);
 	}
 	else if (!GetDead())
-		m_fPreTime = Get_WorldTime();
+		m_fPreTime2 = Get_WorldTime();
 
 	m_fSpeed = m_pHead->Get_Speed();
 	if (m_pHead->Get_Move() != m_bMove)
@@ -161,16 +166,14 @@ void CWormTail::LateUpdate_GameObject(void)
 void CWormTail::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-	if (GetDead())
-		return;
 	__super::Render_GameObject();
 }
 
 _bool CWormTail::Dead_Production()
 {
 	static _float fDest = 0.3f;
-	m_fCurTime = Get_WorldTime();
-	if (m_fCurTime - m_fPreTime < 1.f)
+	m_fCurTime2 = Get_WorldTime();
+	if (m_fCurTime2 - m_fPreTime2 < 1.f)
 	{
 		_vec3 vEPos{};
 		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
@@ -180,7 +183,7 @@ _bool CWormTail::Dead_Production()
 		CEffect* pEffect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"Explosion_Texture", vPos, vEPos, 0.1f);
 		Add_GameObject(pEffect);
 
-		if (m_fCurTime - m_fPreTime > fDest)
+		if (m_fCurTime2 - m_fPreTime2 > fDest)
 		{
 			_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
 			pSpawnPos.y += 3.f;
