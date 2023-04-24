@@ -28,6 +28,7 @@ private:
 	void Show_RoomInfo();
 	void Show_Components();
 	void Show_PlaceMode();
+	void Show_MonsterList();
 
 private:
 	CRoom*			m_pCurRoom;
@@ -41,6 +42,9 @@ private:
 	wstring		m_CurTag;
 	CImPickBox*		m_pPickBox[PICK_END];
 	vector<pair<string, CFactory*>> items;
+
+	// ObjectList
+	class ListBox*	m_pObjListBox;
 
 public:
 	static CImInspector* Create(LPDIRECT3DDEVICE9 pGraphicDev);
