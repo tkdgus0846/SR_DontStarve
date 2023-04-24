@@ -38,6 +38,8 @@ _int CRoot::Update_Component(const _float & fTimeDelta)
 {
 	_int iResult = 0;
 
+	if (CManagement::GetInstance()->Get_TimeStopped()) return E_FAIL;
+
 	for (_int i = 0; i < ID_END; ++i)
 	{
 		for (auto iter : m_VecComponents[i])

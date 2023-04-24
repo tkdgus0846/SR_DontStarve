@@ -24,6 +24,11 @@
 #include "TreeBoss.h"
 #include "WormHead.h"
 #include "WalkerBoss.h"
+#include "..\Engine\ParticleMgr.h"
+
+#include "Snow.h"
+#include "..\Engine\SandStorm.h"
+#include "WaterTile.h"
 
 #define LEVEL1_EDIT_DATANAME L"Level1.dat"
 
@@ -177,8 +182,10 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RedBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/redblood_%d.png", 4)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Snow.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/wob_floor_4.png")), E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SandStorm_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/SandStorm.png")), E_FAIL);
+	
 
 	// Collision Texture for the Debug
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Collision_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/CollisionDebug/Green.png")), E_FAIL);
@@ -186,6 +193,9 @@ _uint CLoading::Loading_ForStage(void)
 
 	static vector<wstring> decoratTile;
 	// Tile Texture
+
+
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLarge #421865", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421865.png")), E_FAIL);
 	decoratTile.push_back(L"FloorLarge #421865");
 
@@ -330,6 +340,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorBlood_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorElectric", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorElectric_%d.png", 3)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLava", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorLava_%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorWater", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/Water_%d.png",4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorOil", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorOil_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorQuicksand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorQuicksand_%d.png", 1)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorSwamp", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Tile/FloorSwamp_%d.png", 4)), E_FAIL);
@@ -483,6 +494,8 @@ _uint CLoading::Loading_ForStage(void)
 	
 	/////////////////////////// 파티클
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Particle", CSnow::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SandStorm_Particle", CSandStorm::Create(m_pGraphicDev)), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Firework_Particle", CFirework::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Vortex_Particle", CVortexParticle::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"NormalBullet_Particle", CNormalBulletParticle::Create(m_pGraphicDev)), E_FAIL);
@@ -566,7 +579,7 @@ _uint CLoading::Loading_ForStage(void)
 	Set_String(L"Room Loading..........");
 	
 	ROOM_MGR->Create_Default_Room(STAGE1);	
-	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+	
 
 	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
@@ -578,6 +591,11 @@ _uint CLoading::Loading_ForStage(void)
 	
 	
 	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
+
+	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+
+	///////////////////////////////////
+
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 
 	m_bFinish = true;
@@ -596,6 +614,8 @@ _uint CLoading::Loading_ForStage2(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 
+	
+
 	CFileSystem::Load(L"Level2.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
@@ -609,6 +629,15 @@ _uint CLoading::Loading_ForStage3(void)
 	ROOM_MGR->Release_All_Room();
 	ROOM_MGR->Set_Tennel_Texture(STAGE3);
 	ROOM_MGR->Create_Default_Room(STAGE3); // 여기서 룸들을 싹다 만든다.
+
+
+	CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"SandStorm_Particle", 500, { 85.f,25.f,25.f }, { 0.f,0.f,0.f }, { 50.f,50.f,50.f }, true);
+
+	ROOM_MGR->Push_Back_Obj(1, particle);
+
+	particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"SandStorm_Particle", 500, { 85.f,25.f,85.f }, { 0.f,0.f,0.f }, { 50.f,50.f,50.f }, true);
+
+	ROOM_MGR->Push_Back_Obj(4, particle);
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 	ROOM_MGR->Push_Back_Obj(4, CWormHead::Create(m_pGraphicDev, { 85.f, -3.f, 85.f }));
@@ -627,6 +656,15 @@ _uint CLoading::Loading_ForStage4(void)
 	ROOM_MGR->Create_Default_Room(STAGE4); // 여기서 룸들을 싹다 만든다.
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+
+	CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"Snow_Particle", 80, { 85.f,25.f,25.f }, { 0.f,0.f,0.f }, { 50.f,50.f,50.f }, true);
+
+
+	ROOM_MGR->Push_Back_Obj(1, particle);
+
+	particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"Snow_Particle", 80, { 25.f,25.f,145.f }, { 0.f,0.f,0.f }, { 50.f,50.f,50.f }, true);
+
+	ROOM_MGR->Push_Back_Obj(6, particle);
 
 	ROOM_MGR->Push_Back_Obj(4, CWalkerBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 	CFileSystem::Load(L"Level4.dat");

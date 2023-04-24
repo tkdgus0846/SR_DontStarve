@@ -52,9 +52,9 @@ _int CFloorTile::Update_GameObject(const _float & fTimeDelta)
 	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
 	Set_Trigger(false);
-	__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
+	//__super::Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+	/*Engine::Add_RenderGroup(RENDER_NONALPHA, this);*/
 
 	return OBJ_NOEVENT;
 }

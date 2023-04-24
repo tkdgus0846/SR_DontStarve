@@ -797,6 +797,9 @@
     <ClInclude Include="SkillUI.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
+    <ClInclude Include="WaterTile.h">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1446,6 +1449,9 @@
     </ClCompile>
     <ClCompile Include="SkillUI.cpp">
       <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterTile.cpp">
+      <Filter>GameObject\Tile\FloorTile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

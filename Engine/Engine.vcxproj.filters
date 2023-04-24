@@ -226,6 +226,9 @@
     <ClInclude Include="SandDigParticle.h">
       <Filter>Component\ParticleSystem\SandParticles</Filter>
     </ClInclude>
+    <ClInclude Include="SandStorm.h">
+      <Filter>Component\ParticleSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -419,6 +422,9 @@
     </ClCompile>
     <ClCompile Include="SandDigParticle.cpp">
       <Filter>Component\ParticleSystem\SandParticles</Filter>
+    </ClCompile>
+    <ClCompile Include="SandStorm.cpp">
+      <Filter>Component\ParticleSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
