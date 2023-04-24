@@ -240,18 +240,45 @@ struct Triangle
 	_vec3 Normal()
 	{
 		_vec3 v0 = v[1] - v[0];
-		_vec3 v1 = v[2] - v[0];
-		_vec3 cross = v0.Cross(v1);
+		_vec3 _v1 = v[2] - v[0];
+		_vec3 cross = v0.Cross(_v1);
 		cross.Normalize();
 		return cross;
 	}
 	_vec3 v[3];
 };
 
-typedef struct Vertex4
+struct Vertex4
 {
-	_vec3 _v1; _vec3 _v2;
-	_vec3 _v3; _vec3 _v4;
+	_vec3 _v1, _v2, _v3, _v4;
+
+	float triangle_area(const D3DXVECTOR3& a, const D3DXVECTOR3& b, const D3DXVECTOR3& c) {
+		D3DXVECTOR3 ab, ac, cross_product;
+		D3DXVec3Subtract(&ab, &b, &a);
+		D3DXVec3Subtract(&ac, &c, &a);
+		D3DXVec3Cross(&cross_product, &ab, &ac);
+		return 0.5f * D3DXVec3Length(&cross_product);
+	}
+
+	bool is_upper_left_triangle(const D3DXVECTOR3& point) {
+		float triangle1_area = triangle_area(_v1, _v2, point);
+		float triangle2_area = triangle_area(_v2, _v3, point);
+		float triangle3_area = triangle_area(_v3, _v4, point);
+		float triangle4_area = triangle_area(_v4, _v1, point);
+
+		float total_area = triangle_area(_v1, _v2, _v3) + triangle_area(_v1, _v3, _v4);
+		float sum_of_triangle_areas = triangle1_area + triangle2_area + triangle3_area + triangle4_area;
+
+		// 주어진 점이 삼각형 내부에 있을 때, 삼각형들의 합이 정사각형의 넓이와 일치함
+		const float epsilon = 1e-6f;
+		if (fabs(total_area - sum_of_triangle_areas) < epsilon) {
+			// 주어진 점이 왼쪽 위 삼각형 내부에 있는지 판단
+			if (triangle1_area > epsilon && triangle2_area < epsilon) {
+				return true;
+			}
+		}
+		return false;
+	}
 };
 
 typedef struct tagInteractInfo

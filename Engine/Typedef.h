@@ -82,10 +82,10 @@ typedef	struct MyVec3 : public D3DXVECTOR3
 	}
 
 
-	static float Ratio(const MyVec3& start, const MyVec3& end, const MyVec3& position)
+	static float Ratio(const float& start, const float& end, const float& position)
 	{
-		float distanceAB = Distance(start, end);
-		float distanceAP = Distance(start, position);
+		float distanceAB = end - start;
+		float distanceAP = position - start;
 
 		if (distanceAB == 0.0f)
 		{
@@ -127,6 +127,14 @@ typedef	struct MyVec3 : public D3DXVECTOR3
 		D3DXVec3Cross(&vRight, &up, &look);
 		D3DXVec3Cross(&vUp, &look, &vRight);
 	}
+
+
+	//static _float linearInterpolation(const _vec3& p1, const _vec3& p2, float x) {
+	//	_float slope = (p2.z - p1.z) / (p2.x - p1.x);
+	//	_float z_intercept = p1.z - slope * p1.x;
+
+	//	return slope * x + z_intercept;
+	//}
 
 	static D3DXVECTOR3 Right() { return D3DXVECTOR3{ 1.f, 0.f, 0.f }; }
 	static D3DXVECTOR3 Up() { return    D3DXVECTOR3{ 0.f, 1.f, 0.f }; }

@@ -12,6 +12,8 @@ protected:
 	virtual ~CMapObj();
 	virtual void Render_GameObject(void) override;
 
+	virtual void OnCollisionStay(const class Collision* collision);
+
 	// ISerializable을(를) 통해 상속됨
 	virtual void Serialization(HANDLE hFile, DWORD & dwByte) override;
 	virtual void Deserialization(HANDLE hFile, DWORD & dwByte) override;
