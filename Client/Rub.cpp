@@ -16,7 +16,7 @@ HRESULT CRub::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
-	m_iHp = 5;
+	m_iHp = 15;
 
 	m_pTransform->m_vScale = { 2.4f, 2.4f, 2.4f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -29,7 +29,8 @@ HRESULT CRub::Ready_GameObject(const _vec3 & vPos)
 
 _int CRub::Update_GameObject(const _float & fTimeDelta)
 {
-	if (GetDead()) return OBJ_DEAD;
+	if (GetDead()) 
+		return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
@@ -78,7 +79,7 @@ HRESULT CRub::Add_Component()
 	pCollider->Set_BoundingBox({ 70.f, 10.f, 70.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
-	FAILED_CHECK_RETURN(Set_PatrolAndFollow_AI(), E_FAIL);
+	FAILED_CHECK_RETURN(Set_PAF_RushAI(), E_FAIL);
 	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;

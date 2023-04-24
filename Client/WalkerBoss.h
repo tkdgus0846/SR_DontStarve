@@ -18,10 +18,9 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
-	virtual void SetDead(_bool bDead = true) final;
+	virtual void SetDead(_bool bDead = true) final { CGameObject::SetDead(bDead); }
 
 private:
-	_bool m_bIsDead;
 	_bool Dead_Production();	// 보스 죽는 효과 끝나면 true 반환핢...
 	virtual HRESULT Add_Component() override;
 	CTexture* m_pTextureCom;
