@@ -46,6 +46,8 @@ private:
 	_float		m_fPreAngle;
 	_float		m_fCurTime1;
 	_float		m_fPreTime1;
+	_float		m_fCurTime2;
+	_float		m_fPreTime2;
 
 public:
 	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);

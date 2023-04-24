@@ -26,6 +26,9 @@ private:
 	CTexture* m_pTextureCom;
 	CRcTex* m_pShadow;
 
+	_float		m_fCurTime1;
+	_float		m_fPreTime1;
+
 public:
 	static CWalkerBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 
