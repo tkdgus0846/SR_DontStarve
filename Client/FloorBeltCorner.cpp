@@ -1,6 +1,7 @@
 #include "FloorBeltCorner.h"
 #include "Export_Function.h"
-
+#include "Player.h"
+#include "Enemy.h"
 
 
 CFloorBeltCorner::CFloorBeltCorner(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -26,6 +27,38 @@ CGameObject * CFloorBeltCorner::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
+
+void CFloorBeltCorner::InteractGameObject(const InteractInfo * tInteractInfo)
+{
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(tInteractInfo->pGameObject);
+
+	CEnemy* pEnemy = dynamic_cast<CEnemy*>(tInteractInfo->pGameObject);
+
+	
+	float fBeltSpeed = 3.f;
+	_vec3 vPos;
+	_vec3 vDir;
+	if (pPlayer)
+	{
+		vPos = pPlayer->m_pTransform->m_vInfo[INFO_POS];
+		Vertex4 vtx4 = Get_PlaneXZ();
+		
+		float fRatioX = _vec3::Ratio(vtx4._v1, vtx4._v2, vPos);
+		float fRatioZ = _vec3::Ratio(vtx4._v1, vtx4._v3, vPos);
+		fRatioX = fabs(fRatioX);
+		fRatioZ = fabs(fRatioZ);
+		
+		(fRatioX < fRatioZ) ? vDir = m_pTransform->m_vInfo[INFO_UP]
+			: vDir = m_pTransform->m_vInfo[INFO_RIGHT];
+
+		pPlayer->m_pTransform->Move_WalkWithVec(vDir, fBeltSpeed, tInteractInfo->_fTimeDelta);
+	}
+
+	if (pEnemy)
+	{
+		pEnemy->m_pTransform->Move_WalkWithVec(vDir, fBeltSpeed, tInteractInfo->_fTimeDelta);
+	}
+}
 
 HRESULT CFloorBeltCorner::Add_Component()
 {

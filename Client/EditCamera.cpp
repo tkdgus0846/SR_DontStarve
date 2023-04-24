@@ -280,7 +280,6 @@ _bool CEditCamera::SetClickInfo()
 	proj.PerspectiveFovLH();
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &proj);
 
-	
 	CRoom* pRoom = ROOM_MGR->Get_CurRoom();
 	// Variables for Output about InstersectRayRoom Method
 

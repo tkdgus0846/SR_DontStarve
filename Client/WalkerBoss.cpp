@@ -126,6 +126,11 @@ _bool CWalkerBoss::Dead_Production()
 	return true;
 }
 
+_bool CWalkerBoss::Dead_Production()
+{
+	return _bool();
+}
+
 HRESULT CWalkerBoss::Add_Component()
 {
 	CTexture* pTexture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_WalkerBoss_Walk_Texture", this));
