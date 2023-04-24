@@ -75,6 +75,27 @@ typedef	struct MyVec3 : public D3DXVECTOR3
 	// ********** 결과 lerpVec = {5.0f, 5.0f, 5.0f} ************* 
 	static MyVec3 Lerp(const D3DXVECTOR3& start, const D3DXVECTOR3& end, float t) { return (1.0f - t) * start + t * end; }
 
+	// 두 점 사이의 거리 공식.
+	static float Distance(const MyVec3& p1, const MyVec3& p2)
+	{
+		return std::sqrt(std::pow(p2.x - p1.x, 2) + std::pow(p2.y - p1.y, 2) + std::pow(p2.z - p1.z, 2));
+	}
+
+
+	static float Ratio(const MyVec3& start, const MyVec3& end, const MyVec3& position)
+	{
+		float distanceAB = Distance(start, end);
+		float distanceAP = Distance(start, position);
+
+		if (distanceAB == 0.0f)
+		{
+			return 0.0f; // 시작점과 끝점이 같은
+		}
+		float ratio = distanceAP / distanceAB; // 시작점과 끝점 사이의 거리에 대한 내 위치의 거리 비율을 계산합니다.
+		return ratio; // 계산된 비율을 반환합니다.		
+	}
+
+
 	// D3DXVec3TransformNormal을 래핑한 메서드입니다.
 	// ex) 
 	// MyVec3 vVec;

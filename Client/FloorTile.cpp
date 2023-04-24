@@ -45,6 +45,8 @@ _bool CFloorTile::IntersectPoint(const _vec3* vPoint)
 		&& Plane._v1.z >= vPoint->z) ? true : false;
 }
 
+
+
 _int CFloorTile::Update_GameObject(const _float & fTimeDelta)
 {
 	if (GetDead()) return OBJ_DEAD;

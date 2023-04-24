@@ -1,6 +1,7 @@
 #include "BeltTile.h"
 #include "Export_Function.h"
-
+#include "Player.h"
+#include "Enemy.h"
 CBeltTile::CBeltTile(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CFloorTile(pGraphicDev)
 {
@@ -21,6 +22,26 @@ CGameObject * CBeltTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		pInstance = nullptr;
 	}
 	return pInstance;
+}
+
+void CBeltTile::InteractGameObject(const InteractInfo * tInteractInfo)
+{
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(tInteractInfo->pGameObject);
+
+	CEnemy* pEnemy = dynamic_cast<CEnemy*>(tInteractInfo->pGameObject);
+
+	_vec3 vDir = m_pTransform->m_vInfo[INFO_UP];
+	float fBeltSpeed = 3.f;
+
+	if (pPlayer)
+	{
+		pPlayer->m_pTransform->Move_WalkWithVec(vDir, fBeltSpeed, tInteractInfo->_fTimeDelta);
+	}
+
+	if (pEnemy)
+	{
+		pEnemy->m_pTransform->Move_WalkWithVec(vDir, fBeltSpeed, tInteractInfo->_fTimeDelta);
+	}
 }
 
 HRESULT CBeltTile::Add_Component()
