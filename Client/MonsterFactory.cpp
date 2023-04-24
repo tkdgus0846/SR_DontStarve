@@ -5,10 +5,12 @@
 #include "Speyeder.h"
 #include "NubPilot.h"
 #include "Rub.h"
+#include "Nub.h"
 #include "Turret.h"
 #include "Walker.h"
 #include "Evasioner.h"
 #include "ShopNpc.h"
+#include "Bird.h"
 
 IMPLEMENT_SINGLETON(CMonsterFactory)
 
@@ -28,6 +30,7 @@ HRESULT CMonsterFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	Register(CBaller::Tag(),	&CBaller::Create);
 	Register(CBub::Tag(),		&CBub::Create);
+	Register(CNub::Tag(),		&CNub::Create);
 	Register(CCryder::Tag(),	&CCryder::Create);
 	Register(CNubPilot::Tag(),	&CNubPilot::Create);
 	Register(CSpeyeder::Tag(),	&CSpeyeder::Create);
@@ -36,6 +39,7 @@ HRESULT CMonsterFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CTurret::Tag(),	&CTurret::Create);
 	Register(CWalker::Tag(),	&CWalker::Create);
 	Register(CShopNpc::Tag(),	&CShopNpc::Create);
+	Register(CBird::Tag(),		&CBird::Create);
 
 	ExtractTextureKey();
 

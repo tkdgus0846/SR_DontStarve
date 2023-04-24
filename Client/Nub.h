@@ -1,11 +1,10 @@
 #pragma once
 #include "Enemy.h"
-
-class CNubPilot : public CEnemy
+class CNub : public CEnemy
 {
 private:
-	explicit CNubPilot(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CNubPilot();
+	explicit CNub(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CNub();
 
 public:
 	virtual HRESULT Ready_GameObject(const _vec3& vPos);
@@ -14,13 +13,12 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	_float m_fTime;
 	virtual HRESULT Add_Component() override;
 
 public:
-	static CNubPilot*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+	static CNub*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	static const _tchar* Tag() { return L"NubPilot"; }
+	static const _tchar* Tag() { return L"Nub"; }
 private:
 	virtual void Free(void) override;
 };

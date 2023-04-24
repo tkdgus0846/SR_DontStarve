@@ -16,7 +16,7 @@ HRESULT CCryder::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
-	m_iHp = 5;
+	m_iHp = 4;
 
 	m_pTransform->m_vScale = { 0.7f, 0.7f, 0.7f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;

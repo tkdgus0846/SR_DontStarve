@@ -49,9 +49,9 @@ public:
 	}
 	_vec3			GetDeltaVec();
 	void			Gain_Disc(_int disc = 1) { m_iDisc += disc; }
-	_int			Get_Disc() { return m_iDisc; }
 	void			Gain_Hp(_int Hp = 1) { m_iHp += Hp; }
 	void			Gain_UltiGuage(_int guage = 1) { m_fUltimateGuage += guage; }
+	_int			Get_Disc() { return m_iDisc; }
 	_int			Get_UltiGuage() { return m_fUltimateGuage; }
 	_int			Get_UltiMaxGuage() { return m_fUltimateMax; }
 

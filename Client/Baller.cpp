@@ -16,6 +16,7 @@ CBaller::~CBaller()
 HRESULT CBaller::Ready_GameObject(const _vec3& vPos)
 {
 	m_fSpeed = 10.f;
+	m_iHp = 5.f;
 
 	m_pTransform->m_vScale = { 1.f, 3.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -28,7 +29,8 @@ HRESULT CBaller::Ready_GameObject(const _vec3& vPos)
 
 _int CBaller::Update_GameObject(const _float & fTimeDelta)
 {
-	if (GetDead()) return OBJ_DEAD;
+	if (GetDead()) 
+		return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);

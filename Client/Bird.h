@@ -1,11 +1,10 @@
 #pragma once
 #include "Enemy.h"
-
-class CNubPilot : public CEnemy
+class CBird : public CEnemy
 {
 private:
-	explicit CNubPilot(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CNubPilot();
+	explicit CBird(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CBird();
 
 public:
 	virtual HRESULT Ready_GameObject(const _vec3& vPos);
@@ -18,9 +17,9 @@ private:
 	virtual HRESULT Add_Component() override;
 
 public:
-	static CNubPilot*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
+	static CBird*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);
 	static CGameObject*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	static const _tchar* Tag() { return L"NubPilot"; }
+	static const _tchar* Tag() { return L"Bird"; }
 private:
 	virtual void Free(void) override;
 };

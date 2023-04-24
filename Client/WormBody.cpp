@@ -25,8 +25,8 @@ HRESULT CWormBody::Ready_GameObject(const _vec3 & vPos)
 	m_iHp = 20;
 	m_iMaxHp = 20;
 
-	m_fCurTime = Get_WorldTime();
-	m_fPreTime = Get_WorldTime();
+	m_fCurTime1 = Get_WorldTime();
+	m_fPreTime1 = Get_WorldTime();
 
 	m_pTransform->m_vScale = { 1.5f, 1.5f, 1.5f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -101,7 +101,7 @@ void CWormBody::LateUpdate_GameObject(void)
 	if (!Get_Player())
 		return;
 
-	m_fCurTime = Get_WorldTime();
+	m_fCurTime1 = Get_WorldTime();
 
 	_vec3 vLook = m_pTransform->m_vInfo[INFO_LOOK];
 	_vec3 vLookXZ = { vLook.x, 0.f, vLook.z };
@@ -111,11 +111,11 @@ void CWormBody::LateUpdate_GameObject(void)
 
 	_float fResult = 0.f;
 
-	if (m_fCurTime - m_fPreTime > 0.1f)
+	if (m_fCurTime1 - m_fPreTime1 > 0.1f)
 	{
 		fResult = m_fCurAngle - m_fPreAngle;
 		m_fPreAngle = m_fCurAngle;
-		m_fPreTime = m_fCurTime;
+		m_fPreTime1 = m_fCurTime1;
 	}
 
 	if (!isnan(m_fCurAngle) && fResult != 0)
@@ -140,14 +140,32 @@ void CWormBody::LateUpdate_GameObject(void)
 		return;
 
 	if (fAngleRight < 45.f)
+	{
+		if (!isnan(m_fCurAngle) && fResult != 0)
+		{
+			if (fResult > 0)
+				m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
+			else
+				m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
+		}
 		m_pAnimation->SelectState(ANIM_SIDE);
+	}
 	else if (fAngleUp < 45.f)
 	{
 		m_pTransform->Rot_Bill(90.f);
 		m_pAnimation->SelectState(ANIM_TOP);
 	}
 	else if (fAngleLook < 45.f)
+	{
+		if (!isnan(m_fCurAngle) && fResult != 0)
+		{
+			if (fResult > 0)
+				m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
+			else
+				m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
+		}
 		m_pAnimation->SelectState(ANIM_FACE);
+	}
 
 	else if (fAngleRight > 135.f)
 	{
@@ -173,7 +191,10 @@ void CWormBody::LateUpdate_GameObject(void)
 		m_pAnimation->SelectState(ANIM_TOP);
 	}
 	else
+	{
+		m_pTransform->Rot_Bill(0.01f);
 		m_pAnimation->SelectState(ANIM_FACE);
+	}
 
 	__super::LateUpdate_GameObject();
 }

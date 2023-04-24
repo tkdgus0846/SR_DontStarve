@@ -8,7 +8,7 @@
 
 CWormTail::CWormTail(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_pFrontBody(nullptr), m_bMove(false), m_pHead(nullptr)
-	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime(0.f), m_fPreTime(0.f)
+	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime1(0.f), m_fPreTime1(0.f)
 {
 	ZeroMemory(m_vDest, sizeof(_vec3));
 }
@@ -81,7 +81,7 @@ void CWormTail::LateUpdate_GameObject(void)
 	if (!Get_Player())
 		return;
 
-	m_fCurTime = Get_WorldTime();
+	m_fCurTime1 = Get_WorldTime();
 
 	_vec3 vLook = m_pTransform->m_vInfo[INFO_LOOK];
 	_vec3 vLookXZ = { vLook.x, 0.f, vLook.z };
@@ -91,11 +91,11 @@ void CWormTail::LateUpdate_GameObject(void)
 
 	_float fResult = 0.f;
 
-	if (m_fCurTime - m_fPreTime > 0.1f)
+	if (m_fCurTime1 - m_fPreTime1 > 0.1f)
 	{
 		fResult = m_fCurAngle - m_fPreAngle;
 		m_fPreAngle = m_fCurAngle;
-		m_fPreTime = m_fCurTime;
+		m_fPreTime1 = m_fCurTime1;
 	}
 
 	if (!isnan(m_fCurAngle) && fResult != 0)
