@@ -31,7 +31,18 @@ typedef	 struct tagVertexCube
 
 }VTXCUBE;
 
+typedef	 struct tagVertexCubeNormal
+{
+	_vec3			vPos;		// 위치
+	_vec3			vNormal;
+	_vec3			vTexUV;		// 색상
+
+}VTXCUBENORMAL;
+
 const	_ulong		FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);
+
+const	_ulong		FVF_CUBENORMAL = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0) | D3DFVF_NORMAL;
+
 
 typedef VTXCOL PTCCOL;
 typedef VTXTEX PTCTEX;

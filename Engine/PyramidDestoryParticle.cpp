@@ -8,7 +8,7 @@ CPyramidDestoryParticle::CPyramidDestoryParticle(LPDIRECT3DDEVICE9 pGraphicDev) 
 	CColorParticle(pGraphicDev)
 {
 	m_Size = 0.3f;
-	m_VBSize = 200;
+	m_VBSize = 50;
 	m_VBOffset = 0;
 	m_VBBatchSize = 50;
 }

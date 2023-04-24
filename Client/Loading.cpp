@@ -25,6 +25,8 @@
 #include "WormHead.h"
 #include "WalkerBoss.h"
 
+#define LEVEL1_EDIT_DATANAME L"Level1.dat"
+
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_bFinish(false)
@@ -568,7 +570,8 @@ _uint CLoading::Loading_ForStage(void)
 	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -3.f, 25.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	
-	//CFileSystem::Load(L"Save.dat");
+	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
+
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");
 
@@ -585,7 +588,7 @@ _uint CLoading::Loading_ForStage2(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 
-	CFileSystem::Load(L"as.dat");
+	CFileSystem::Load(L"Level2.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
 	m_bFinish = true;
@@ -601,7 +604,7 @@ _uint CLoading::Loading_ForStage3(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -3.f, 25.f }));
-	CFileSystem::Load(L"as.dat");
+	CFileSystem::Load(L"Level3.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
 	m_bFinish = true;
@@ -617,7 +620,7 @@ _uint CLoading::Loading_ForStage4(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 
-	CFileSystem::Load(L"as.dat");
+	CFileSystem::Load(L"Level4.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
 	m_bFinish = true;

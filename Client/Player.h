@@ -63,6 +63,9 @@ public:
 	void			IsOnIceTile(_bool _IsOnIceTile) {
 		m_bIsOnIceTile = _IsOnIceTile;	}
 
+
+	virtual void Get_Damaged(_int Damage) override;
+
 private:
 	virtual HRESULT Add_Component() override;
 	void		Key_Input(const _float& fTimeDelta);
@@ -82,6 +85,8 @@ private:
 
 	_float					m_fUltimateMax = 100.f;
 	_float					m_fUltimateGuage = 0.f;
+
+	_bool					m_bInvicible;
 
 	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;
 	class CWeapon*						m_pCurWeapon;
