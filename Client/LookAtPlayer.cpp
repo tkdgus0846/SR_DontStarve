@@ -1,5 +1,6 @@
 #include "LookAtPlayer.h"
 
+#include "Player.h"
 #include "Export_Function.h"
 
 CLookAtPlayer::CLookAtPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -38,7 +39,7 @@ _int CLookAtPlayer::Update_Component(const _float & fTimeDelta)
 	if (!m_bStart)
 	{
 		m_fFstSpeed = fSpeed;
-		fSpeed = 11.3;
+		fSpeed = dynamic_cast<CPlayer*>(Get_Player())->Get_Speed() * 1.2f;
 		FAILED_CHECK_RETURN(m_pBlackBoard->Set_Type(L"fSpeed", fSpeed), BEHAVIOR_ERROR);
 		m_bStart = true;
 	}

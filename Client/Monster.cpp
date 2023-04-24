@@ -714,7 +714,7 @@ HRESULT CMonster::Set_PAF_DBJumpAI()
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI));
 
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)));
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_DBJump", Make_DBJumpAI(3.f)));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_DBJump", Make_DBJumpAI(9.f)));
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()));
 
 	return S_OK;
@@ -728,7 +728,7 @@ HRESULT CMonster::Set_PAF_AttckAI(const _tchar* pBulletKey)
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI));
 
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)));
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"TSK_Attack", Make_Attack(pBulletKey, 40.f, 5.f)));
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"TSK_Attack", Make_Attack(pBulletKey, 20.f, 5.f)));
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()));
 
 	return S_OK;
@@ -751,6 +751,28 @@ HRESULT CMonster::Set_PAF_LeapJumpAI()
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"TSK_Wait", pTaskWait), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_LeapJump", Make_LeapJumpAI(8.f, 3.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()), E_FAIL);
+
+	return S_OK;
+}
+
+HRESULT CMonster::Set_PAF_RushAI()
+{
+	CSelector* pSLRootAI = dynamic_cast<CSelector*>(Engine::Clone_Proto(L"Selector", this));
+	NULL_CHECK_RETURN(pSLRootAI, E_FAIL);
+
+	CWait* pTaskWait = dynamic_cast<CWait*>(Engine::Clone_Proto(L"TSK_Wait", this));
+	NULL_CHECK_RETURN(pTaskWait, E_FAIL);
+
+	// 부품 초기설정
+	pTaskWait->Set_Timer(0.2f);
+
+	// 부품 조립
+	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SL_RootAI", pSLRootAI));
+
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(4.f)), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"TSK_Wait", pTaskWait), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Rush", Make_BossPattern1(5.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Patrol", Make_Patrol_AI()), E_FAIL);
 
 	return S_OK;

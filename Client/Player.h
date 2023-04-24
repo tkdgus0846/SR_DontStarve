@@ -49,9 +49,9 @@ public:
 	}
 	_vec3			GetDeltaVec();
 	void			Gain_Disc(_int disc = 1) { m_iDisc += disc; }
-	_int			Get_Disc() { return m_iDisc; }
 	void			Gain_Hp(_int Hp = 1) { m_iHp += Hp; }
 	void			Gain_UltiGuage(_int guage = 1) { m_fUltimateGuage += guage; }
+	_int			Get_Disc() { return m_iDisc; }
 	_int			Get_UltiGuage() { return m_fUltimateGuage; }
 	_int			Get_UltiMaxGuage() { return m_fUltimateMax; }
 
@@ -62,6 +62,9 @@ public:
 	bool IsObjectInFOV(_float fDistance, _float fRadius, _float fFov);
 	void			IsOnIceTile(_bool _IsOnIceTile) {
 		m_bIsOnIceTile = _IsOnIceTile;	}
+
+
+	virtual void Get_Damaged(_int Damage) override;
 
 private:
 	virtual HRESULT Add_Component() override;
@@ -82,6 +85,8 @@ private:
 
 	_float					m_fUltimateMax = 100.f;
 	_float					m_fUltimateGuage = 0.f;
+
+	_bool					m_bInvicible;
 
 	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;
 	class CWeapon*						m_pCurWeapon;

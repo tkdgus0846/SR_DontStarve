@@ -1,5 +1,6 @@
 #include "NubBoss.h"
 
+#include "EffectManager.h"
 #include "ItemManager.h"
 #include "Export_Function.h"
 
@@ -34,8 +35,10 @@ _int CNubBoss::Update_GameObject(const _float & fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	if (GetDead()) 
+	if (GetDead() && Dead_Production())
 		return OBJ_DEAD;
+	else if (!GetDead())
+		m_fPreTime = Get_WorldTime();
 
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
@@ -46,6 +49,9 @@ _int CNubBoss::Update_GameObject(const _float & fTimeDelta)
 
 void CNubBoss::LateUpdate_GameObject(void)
 {
+	if (GetDead())
+		return;
+
 	__super::LateUpdate_GameObject();
 }
 
@@ -53,6 +59,36 @@ void CNubBoss::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
+}
+
+_bool CNubBoss::Dead_Production()
+{
+	static _float fDest = 0.2f;
+	m_fCurTime = Get_WorldTime();
+	if (m_fCurTime - m_fPreTime < 3.5f)
+	{
+		_vec3 vEPos{};
+		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
+		_vec3 vPos = m_pTransform->m_vInfo[INFO_POS] + vEPos;
+		GetRandomVector(&vEPos, &_vec3(1.f, 1.f, 1.f), &_vec3(1.7f, 1.7f, 1.7f));
+
+		CEffect* pEffect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"Explosion_Texture", vPos, vEPos, 0.1f);
+		Add_GameObject(pEffect);
+
+		if (m_fCurTime - m_fPreTime > fDest)
+		{
+			_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
+			pSpawnPos.y += 3.f;
+			CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
+			Add_GameObject(item);
+			item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"CoinItem", pSpawnPos);
+			Add_GameObject(item);
+			fDest += 0.2f;
+		}
+		return false;
+	}
+	__super::SetDead(true);
+	return true;
 }
 
 void CNubBoss::Get_Damaged(_int Damage)

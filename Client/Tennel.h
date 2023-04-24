@@ -33,9 +33,11 @@ public:
 private:
 	Engine::CCollider*		m_pCollider;
 	Engine::CTexture*		m_pTextureCom;
-	STAGEINFO				m_eStageInfo;
 
-	CDoor*		m_pDoor;	// Åë·Î¿Í ¿¬°áµÇ¾îÀÖ´Â ¹®ÀÇ Æ÷ÀÎÅÍ.
+	STAGEINFO				m_eStageInfo;
+	_bool					m_bInTennel;
+
+	CDoor*		m_pDoor;	// ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 
 public:
 	static CTennel*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

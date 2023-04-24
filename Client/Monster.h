@@ -70,6 +70,7 @@ protected:
 	HRESULT		Set_PAF_DBJumpAI();
 	HRESULT		Set_PAF_AttckAI(const _tchar* pBulletKey);
 	HRESULT		Set_PAF_LeapJumpAI();
+	HRESULT		Set_PAF_RushAI();
 	HRESULT		Set_EvasionAndAttack();
 	HRESULT		Set_TurretAI(const _float& fCoolTime, _bool bIsCheckPlayer = true);
 	HRESULT		Set_Boss1_AI();

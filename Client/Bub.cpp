@@ -19,9 +19,9 @@ HRESULT CBub::Ready_GameObject(const _vec3& vPos)
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
 
-	m_iHp = 10;
+	m_iHp = 2;
 
-	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
+	m_pTransform->m_vScale = { 0.8f, 0.8f, 0.8f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
@@ -74,7 +74,7 @@ HRESULT CBub::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox({ 2.f, 2.f, 2.f });
+	pCollider->Set_BoundingBox({ 1.6f, 1.6f, 1.6f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);

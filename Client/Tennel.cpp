@@ -11,7 +11,8 @@
 #include "SoundMgr.h"
 
 CTennel::CTennel(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev), m_pDoor(nullptr)
+	: CGameObject(pGraphicDev), m_pDoor(nullptr),
+	m_bInTennel(false)
 {
 	Set_LayerID(LAYER_TENNEL);
 	Set_ObjTag(L"Tennel");
@@ -65,6 +66,9 @@ void CTennel::OnCollisionEnter(const Collision * collsion)
 	{
 		_int iRoomIdx = m_pDoor->Get_Room()->Get_Room_Index();
 		CRoomMgr::GetInstance()->Set_CurRoom(iRoomIdx);
+
+		// 임의로 추가함
+		ROOM_MGR->Set_In_Tennel(false);
 
 		if ((*ROOM_MGR->Get_CurRoom()->GetLayerVec())[LAYER_NPC]->Get_ObjectSize() != 0)
 		{

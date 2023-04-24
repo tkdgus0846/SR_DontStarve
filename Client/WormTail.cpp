@@ -2,11 +2,13 @@
 
 #include "WormHead.h"
 #include "WormBody.h"
+#include "EffectManager.h"
+#include "ItemManager.h"
 #include "Export_Function.h"
 
 CWormTail::CWormTail(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_pFrontBody(nullptr), m_bMove(false), m_pHead(nullptr)
-	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime(0.f), m_fPreTime(0.f)
+	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime1(0.f), m_fPreTime1(0.f)
 {
 	ZeroMemory(m_vDest, sizeof(_vec3));
 }
@@ -47,13 +49,15 @@ _int CWormTail::Update_GameObject(const _float & fTimeDelta)
 		m_iMaxHp = m_iHp;
 	}
 
-	if (GetDead())
+	if (GetDead() && Dead_Production())
+		return OBJ_DEAD;
+	else if (GetDead())
 	{
 		if (m_pFrontBody)
 			m_pFrontBody->Chain_Back(nullptr);
-
-		return OBJ_DEAD;
 	}
+	else if (!GetDead())
+		m_fPreTime = Get_WorldTime();
 
 	m_fSpeed = m_pHead->Get_Speed();
 	if (m_pHead->Get_Move() != m_bMove)
@@ -77,7 +81,7 @@ void CWormTail::LateUpdate_GameObject(void)
 	if (!Get_Player())
 		return;
 
-	m_fCurTime = Get_WorldTime();
+	m_fCurTime1 = Get_WorldTime();
 
 	_vec3 vLook = m_pTransform->m_vInfo[INFO_LOOK];
 	_vec3 vLookXZ = { vLook.x, 0.f, vLook.z };
@@ -87,11 +91,11 @@ void CWormTail::LateUpdate_GameObject(void)
 
 	_float fResult = 0.f;
 
-	if (m_fCurTime - m_fPreTime > 0.1f)
+	if (m_fCurTime1 - m_fPreTime1 > 0.1f)
 	{
 		fResult = m_fCurAngle - m_fPreAngle;
 		m_fPreAngle = m_fCurAngle;
-		m_fPreTime = m_fCurTime;
+		m_fPreTime1 = m_fCurTime1;
 	}
 
 	if (!isnan(m_fCurAngle) && fResult != 0)
@@ -162,6 +166,36 @@ void CWormTail::Render_GameObject(void)
 	__super::Render_GameObject();
 }
 
+_bool CWormTail::Dead_Production()
+{
+	static _float fDest = 0.3f;
+	m_fCurTime = Get_WorldTime();
+	if (m_fCurTime - m_fPreTime < 1.f)
+	{
+		_vec3 vEPos{};
+		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
+		_vec3 vPos = m_pTransform->m_vInfo[INFO_POS] + vEPos;
+		GetRandomVector(&vEPos, &_vec3(1.f, 1.f, 1.f), &_vec3(1.7f, 1.7f, 1.7f));
+
+		CEffect* pEffect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"Explosion_Texture", vPos, vEPos, 0.1f);
+		Add_GameObject(pEffect);
+
+		if (m_fCurTime - m_fPreTime > fDest)
+		{
+			_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
+			pSpawnPos.y += 3.f;
+			CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
+			Add_GameObject(item);
+			item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"CoinItem", pSpawnPos);
+			Add_GameObject(item);
+			fDest += 0.3f;
+		}
+		return false;
+	}
+	__super::SetDead(true);
+	return true;
+}
+
 HRESULT CWormTail::Add_Component()
 {
 	m_pAnimation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
@@ -222,31 +256,6 @@ void CWormTail::Move(const _float & fTimeDelta)
 	}
 
 	m_pTransform->Set_Target(m_vDest);
-
-	m_fCurTime = Get_WorldTime();
-
-	_vec3 vLook = m_pTransform->m_vInfo[INFO_LOOK];
-	_vec3 vLookXZ = { vLook.x, 0.f, vLook.z };
-	vLook.Normalize();
-	vLookXZ.Normalize();
-	m_fCurAngle = vLook.Dot(vLookXZ);
-
-	_float fResult = 0.f;
-
-	if (m_fCurTime - m_fPreTime > 0.3f)
-	{
-		fResult = m_fCurAngle - m_fPreAngle;
-		m_fPreAngle = m_fCurAngle;
-		m_fPreTime = m_fCurTime;
-	}
-
-	if (!isnan(m_fCurAngle) && fResult != 0)
-	{
-		if (fResult > 0)
-			m_pTransform->Rot_Bill(D3DXToDegree(acosf(m_fCurAngle)));
-		else
-			m_pTransform->Rot_Bill(-D3DXToDegree(acosf(m_fCurAngle)));
-	}
 
 	if (fLength < 2.5f)
 		m_pTransform->Move_Walk(0.1f, fTimeDelta);

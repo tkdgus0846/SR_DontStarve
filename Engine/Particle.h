@@ -15,6 +15,7 @@ public:
 	virtual HRESULT Add_Component() override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void Render_GameObject(void) override;
+	void			SetBoundingSize(const _vec3& size);
 	
 	void	Reset();
 
@@ -24,6 +25,7 @@ protected:
 
 	_int			m_ParticleNum;
 	_vec3			m_Origin;
+	_vec3			m_BoundingSize;
 
 private:
 	virtual void	SetDead(_bool bDead = true) override;
