@@ -75,8 +75,6 @@ _int CWormTail::Update_GameObject(const _float & fTimeDelta)
 
 void CWormTail::LateUpdate_GameObject(void)
 {
-	if (GetDead())
-		return;
 
 	if (!Get_Player())
 		return;

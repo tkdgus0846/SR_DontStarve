@@ -263,7 +263,6 @@ _bool CEditCamera::Compute_RayCastHitGameObject(const Ray* pRay, ClickInfo& tCli
 			tClickInfo.index = indices[i];
 			tClickInfo.ClickedPos = ClickedPos;
 
-			cout << ClickedPos.x << "\t" << ClickedPos.y << "\t" << ClickedPos.z << endl;
 		}
 	}
 
@@ -283,7 +282,6 @@ _bool CEditCamera::SetClickInfo()
 
 	
 	CRoom* pRoom = ROOM_MGR->Get_CurRoom();
-	cout << pRoom << endl;
 	// Variables for Output about InstersectRayRoom Method
 
 	if (!IntersectRayRoom(pRoom, m_tPickInfo)) result = false;

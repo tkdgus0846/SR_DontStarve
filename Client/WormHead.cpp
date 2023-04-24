@@ -192,8 +192,6 @@ void CWormHead::LateUpdate_GameObject(void)
 
 void CWormHead::Render_GameObject(void)
 {
-	if (GetDead())
-		return;
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
