@@ -303,6 +303,32 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLarge #421204", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421204.png")), E_FAIL);
 		decoratTile.push_back(L"FloorLarge #421204");
 
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorStripes", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorStripes.png")), E_FAIL);
+		decoratTile.push_back(L"FloorStripes");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorVent #420959", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorVent #420959.png")), E_FAIL);
+		decoratTile.push_back(L"FloorVent #420959");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorVent #421222", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorVent #421222.png")), E_FAIL);
+		decoratTile.push_back(L"FloorVent #421222");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorVent #421406", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorVent #421406.png")), E_FAIL);
+		decoratTile.push_back(L"FloorVent #421406");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorVent #421556", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorVent #421556.png")), E_FAIL);
+		decoratTile.push_back(L"FloorVent #421556");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorVent #421725", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorVent #421725.png")), E_FAIL);
+		decoratTile.push_back(L"FloorVent #421725");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorVent #421869", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorVent #421869.png")), E_FAIL);
+		decoratTile.push_back(L"FloorVent #421869");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorVent", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorVent.png")), E_FAIL);
+		decoratTile.push_back(L"FloorVent");
+
+
+
 
 
 	// WallTexture
@@ -423,7 +449,9 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"HardPyramid_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Resource/Texture2D/Entities/HardPyramid.dds")), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Slider_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/slider.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Tall_Grass_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/tall_grass.png")), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Tree_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/tree.png")), E_FAIL);
 
 	// UI
@@ -593,8 +621,6 @@ _uint CLoading::Loading_ForStage(void)
 	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
-
-	///////////////////////////////////
 
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 

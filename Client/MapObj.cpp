@@ -18,6 +18,11 @@ void CMapObj::Render_GameObject(void)
 	__super::Render_GameObject();
 }
 
+void CMapObj::OnCollisionStay(const Collision * collision)
+{
+
+}
+
 void CMapObj::Serialization(HANDLE hFile, DWORD & dwByte)
 {
 	_tchar tmp[32];
@@ -31,4 +36,9 @@ void CMapObj::Serialization(HANDLE hFile, DWORD & dwByte)
 void CMapObj::Deserialization(HANDLE hFile, DWORD & dwByte)
 {
 	m_pTransform->ReadTransformFile(hFile, dwByte);
+
+	// 생명체들끼리 밀어내는 코드.
+	if (Get_WorldTime() < 3.f)
+		return;
+
 }

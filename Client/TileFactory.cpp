@@ -32,6 +32,14 @@
 #include "FloorSmall421723.h"
 #include "FloorSmall421733.h"
 
+#include "FloorStripes.h"
+#include "FloorVent.h"
+#include "FloorVent420959.h"
+#include "FloorVent421222.h"
+#include "FloorVent421406.h"
+#include "FloorVent421556.h"
+#include "FloorVent421725.h"
+#include "FloorVent421869.h"
 #include "WaterTile.h"
 
 IMPLEMENT_SINGLETON(CTileFactory)
@@ -79,7 +87,16 @@ HRESULT CTileFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(FloorSmall421572::Tag(),	FloorSmall421572::Create);
 	Register(FloorSmall421575::Tag(),	FloorSmall421575::Create);
 	Register(FloorSmall421723::Tag(),	FloorSmall421723::Create);
-	Register(FloorSmall421733::Tag(),	FloorSmall421733::Create);
+	Register(FloorSmall421733::Tag(), FloorSmall421733::Create);
+
+	Register(FloorStripes::Tag(), FloorStripes::Create);
+	Register(FloorVent::Tag(), FloorVent::Create);
+	Register(FloorVent420959::Tag(), FloorVent420959::Create);
+	Register(FloorVent421222::Tag(), FloorVent421222::Create);
+	Register(FloorVent421406::Tag(), FloorVent421406::Create);
+	Register(FloorVent421556::Tag(), FloorVent421556::Create);
+	Register(FloorVent421725::Tag(), FloorVent421725::Create);
+	Register(FloorVent421869::Tag(), FloorVent421869::Create);
 
 	Register(CWaterTile::Tag(), CWaterTile::Create);
 

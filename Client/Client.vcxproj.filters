@@ -128,6 +128,9 @@
     <Filter Include="Monobehaviours\Task\WormTask">
       <UniqueIdentifier>{92d9d8a8-9622-4a34-9786-00f66b5c1770}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Tile\FloorTile\FloorVent">
+      <UniqueIdentifier>{802eccf8-9674-4439-952d-3e8c7218cd4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -794,6 +797,36 @@
     <ClInclude Include="Bird.h">
       <Filter>GameObject\Monster\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="TallGrass.h">
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorVent421869.h">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorStripes.h">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorVent.h">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorVent420959.h">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorVent421222.h">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorVent421406.h">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorVent421556.h">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorVent421725.h">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClInclude>
     <ClInclude Include="SkillUI.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
@@ -1446,6 +1479,36 @@
     </ClCompile>
     <ClCompile Include="Bird.cpp">
       <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="TallGrass.cpp">
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorStripes.cpp">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorVent.cpp">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorVent420959.cpp">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorVent421222.cpp">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorVent421406.cpp">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorVent421556.cpp">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorVent421725.cpp">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorVent421869.cpp">
+      <Filter>GameObject\Tile\FloorTile\FloorVent</Filter>
     </ClCompile>
     <ClCompile Include="SkillUI.cpp">
       <Filter>GameObject\UI</Filter>
