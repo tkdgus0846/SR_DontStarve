@@ -11,7 +11,7 @@ CRapidWeapon::CRapidWeapon(LPDIRECT3DDEVICE9 pGraphicDev) :
 {
 	Set_ObjTag(L"RapidWeapon");
 
-	m_fCycle = 0.3f;
+	m_fCycle = 0.15f;
 	m_MaxBulletNum = 100;
 	m_CurBulletNum = 100;
 }

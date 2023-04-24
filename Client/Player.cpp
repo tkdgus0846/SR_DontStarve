@@ -45,6 +45,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_eCurWeaponType(WEAPONEND)
 	, m_pCurWeapon(nullptr)
 	, m_iCoin(100)
+	, m_bInvicible(true)
 {
 	Set_LayerID(LAYER_PLAYER);
 	Set_ObjTag(L"Player");
@@ -469,6 +470,13 @@ bool CPlayer::IsObjectInFOV(_float fDistance, _float fRadius, _float fFov)
 	_float fAngle = atanf(fDiagonal / fDistance);
 
 	return fAngle >= (fFov / 2.f);
+}
+
+void CPlayer::Get_Damaged(_int Damage)
+{
+	if (m_bInvicible == true) return;
+
+	__super::Get_Damaged(Damage);
 }
 
 _vec3 CPlayer::GetDeltaVec()
