@@ -14,6 +14,12 @@ CTree::~CTree()
 HRESULT CTree::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
+
+	m_pTransform->Set_Scale({ 6.f,6.f,1.f });
+	//m_pTransform->m_vInfo[INFO_POS].y += 5.f;
+
+	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
 	return S_OK;
 }
 
@@ -25,6 +31,8 @@ _int CTree::Update_GameObject(const _float & fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+
+	//m_pTransform->Rot_Bill(0.01f);
 
 	return OBJ_NOEVENT;
 }
@@ -56,7 +64,8 @@ HRESULT CTree::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_OBJ));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox(m_pTransform->Get_Scale() * 4.f);
+	pCollider->Set_BoundingBox({ 2.f,5.f,2.f });
+	//pCollider->Set_BoundingBox(m_pTransform->Get_Scale() * 4.f);
 }
 
 

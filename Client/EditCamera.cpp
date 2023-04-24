@@ -14,6 +14,8 @@
 #include "ImInspector.h"
 #include "FileSystem.h"
 #include "Creature.h"
+#include "Tree.h"
+#include "TallGrass.h"
 
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
@@ -104,6 +106,12 @@ void CEditCamera::CreateMapObject(CImInspector * pWindow)
 	default:
 		break;
 	}
+
+	if (dynamic_cast<CTree*>(pObj) || dynamic_cast<CTallGrass*>(pObj))
+	{
+		vPos.y += pObj->m_pTransform->Get_Scale().y;
+	}
+	
 
 	pObj->m_pTransform->Set_Pos(vPos);
 }

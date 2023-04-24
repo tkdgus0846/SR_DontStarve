@@ -229,6 +229,9 @@
     <ClInclude Include="SandStorm.h">
       <Filter>Component\ParticleSystem</Filter>
     </ClInclude>
+    <ClInclude Include="VentParticle.h">
+      <Filter>Component\ParticleSystem\VentParticles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -426,6 +429,9 @@
     <ClCompile Include="SandStorm.cpp">
       <Filter>Component\ParticleSystem</Filter>
     </ClCompile>
+    <ClCompile Include="VentParticle.cpp">
+      <Filter>Component\ParticleSystem\VentParticles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Base.inl">
@@ -543,6 +549,9 @@
     </Filter>
     <Filter Include="Component\ParticleSystem\SandParticles">
       <UniqueIdentifier>{51b59956-d973-4b03-94e1-1f0a7ea9ea92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ParticleSystem\VentParticles">
+      <UniqueIdentifier>{6afe8bf5-c1b0-4f4e-9c33-eec61b7cc44c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

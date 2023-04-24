@@ -30,7 +30,7 @@
 #include "..\Engine\SandStorm.h"
 #include "WaterTile.h"
 
-#define LEVEL1_EDIT_DATANAME L"Level1.dat"
+#define LEVEL1_EDIT_DATANAME L"Level2.dat"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -697,6 +697,9 @@ _uint CLoading::Loading_ForStage4(void)
 	particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"Snow_Particle", 80, { 25.f,25.f,145.f }, { 0.f,0.f,0.f }, { 50.f,50.f,50.f }, true);
 
 	ROOM_MGR->Push_Back_Obj(6, particle);
+
+	particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"Snow_Particle", 80, { 85.f,25.f,85.f }, { 0.f,0.f,0.f }, { 50.f,50.f,50.f }, true);
+	ROOM_MGR->Push_Back_Obj(4, particle);
 
 	ROOM_MGR->Push_Back_Obj(4, CWalkerBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 	CFileSystem::Load(L"Level4.dat");

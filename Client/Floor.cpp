@@ -24,16 +24,16 @@ HRESULT CFloor::Ready_GameObject(STAGEINFO stageInfo)
 	switch (stageInfo)
 	{
 	case STAGE1:
-		m_FloorTextureName = L"FloorLarge #421865";
+		m_FloorTextureName = L"FloorSmall";
 		break;
 	case STAGE2:
-		m_FloorTextureName = L"FloorLarge #421874";
+		m_FloorTextureName = L"FloorSmall #421572";
 		break;
 	case STAGE3:
-		m_FloorTextureName = L"FloorLarge #421871";
+		m_FloorTextureName = L"FloorSmall #421723";
 		break;
 	case STAGE4:
-		m_FloorTextureName = L"FloorLarge #421204";
+		m_FloorTextureName = L"FloorSmall #421201";
 		break;
 	default:
 		break;

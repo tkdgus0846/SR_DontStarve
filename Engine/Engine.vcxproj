@@ -103,6 +103,7 @@
     <ClInclude Include="TriCol.h" />
     <ClInclude Include="Typedef.h" />
     <ClInclude Include="UpSmokeParticle.h" />
+    <ClInclude Include="VentParticle.h" />
     <ClInclude Include="VIBuffer.h" />
     <ClInclude Include="VortexParticle.h" />
     <ClInclude Include="WallTex.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TriCol.cpp" />
     <ClCompile Include="UpSmokeParticle.cpp" />
+    <ClCompile Include="VentParticle.cpp" />
     <ClCompile Include="VIBuffer.cpp" />
     <ClCompile Include="VortexParticle.cpp" />
     <ClCompile Include="WallTex.cpp" />

@@ -15,6 +15,9 @@ HRESULT CTallGrass::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
 
+	m_pTransform->Set_Scale({ 3.f,5.f,1.f });
+	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
 	return S_OK;
 }
 
@@ -23,6 +26,7 @@ _int CTallGrass::Update_GameObject(const _float & fTimeDelta)
 	if (GetDead())
 		return OBJ_DEAD;
 
+	//m_pTransform->Rot_Bill(0.01f);
 	__super::Update_GameObject(fTimeDelta);
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);

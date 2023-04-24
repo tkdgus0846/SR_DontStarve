@@ -68,7 +68,7 @@ _int CWormBody::Update_GameObject(const _float & fTimeDelta)
 
 			if (m_pTail)
 				m_pTail->Chain_Front(m_pFrontBody);
-		}
+		}/*
 		else
 		{
 			if (m_pBackBody)
@@ -76,7 +76,7 @@ _int CWormBody::Update_GameObject(const _float & fTimeDelta)
 
 			if (m_pTail)
 				m_pTail->Chain_Front(nullptr);
-		}
+		}*/
 	}
 	else if (!GetDead())
 		m_fPreTime2 = Get_WorldTime();
