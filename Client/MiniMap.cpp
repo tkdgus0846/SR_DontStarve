@@ -1,6 +1,6 @@
 #include "MiniMap.h"
 #include "Export_Function.h"
-
+#include "RoomMgr.h"
 CMiniMap::CMiniMap(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CUI(pGraphicDev)
 {
@@ -134,13 +134,24 @@ void CMiniMap::Set_ViewMatrix_UI(_float posX, _float posY, _float scaleX, _float
 
 	_vec3 vecRot;
 	D3DXVec3TransformNormal(&vecRot, &vecRot, &pPlayerWorld);
-	_float fAngleZ = -atan2f(vecRot.x, vecRot.z) + D3DXToRadian(-135.f);
-
-	_matrix matRot, matTrans;
-	matRot.RotationZ(fAngleZ);
-	matTrans.Translation(posX, posY, 0.f);
-	D3DXMatrixMultiply(&matView, &matView, &matRot);
-	D3DXMatrixMultiply(&matView, &matView, &matTrans);
+	if (ROOM_MGR->Is_In_Tennel())
+	{
+		_matrix matRot, matTrans;
+		matRot.RotationZ(m_PlayerTunnelAngle);
+		matTrans.Translation(posX, posY, 0.f);
+		D3DXMatrixMultiply(&matView, &matView, &matRot);
+		D3DXMatrixMultiply(&matView, &matView, &matTrans);
+	}
+	else
+	{
+		_float fAngleZ = -atan2f(vecRot.x, vecRot.z) + D3DXToRadian(-135.f);
+		m_PlayerTunnelAngle = fAngleZ;
+		_matrix matRot, matTrans;
+		matRot.RotationZ(fAngleZ);
+		matTrans.Translation(posX, posY, 0.f);
+		D3DXMatrixMultiply(&matView, &matView, &matRot);
+		D3DXMatrixMultiply(&matView, &matView, &matTrans);
+	}
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
@@ -151,12 +162,20 @@ void CMiniMap::ESWN()
 	_matrix pPlayerWorld = *Engine::Get_Player()->m_pTransform->Get_WorldMatrixPointer();
 	_vec3 vecRot;
 	D3DXVec3TransformNormal(&vecRot, &vecRot, &pPlayerWorld);
-	_float fAngleZ = -atan2f(vecRot.x, vecRot.z) / 6.7f + D3DXToRadian(-27.f);;
-	//_float fAngleZ = -atan2f(vecRot.x, vecRot.z) + D3DXToRadian(-27.f);;
 
-	m_pBufferCom->Edit_U(-fAngleZ);
+	if (ROOM_MGR->Is_In_Tennel())
+	{
+		m_pBufferCom->Edit_U(-m_ESWNAngle);
+	}
+	else
+	{
+		_float fAngleZ = -atan2f(vecRot.x, vecRot.z) / 6.7f + D3DXToRadian(-27.f);;
+		//_float fAngleZ = -atan2f(vecRot.x, vecRot.z) + D3DXToRadian(-27.f);;
+		m_ESWNAngle = fAngleZ;
+		m_pBufferCom->Edit_U(-fAngleZ);
+	}
+
 	Set_ViewMatrix_UI(320.f, -130.f, 76.f, 10.f);
-
 }
 
 CMiniMap * CMiniMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)

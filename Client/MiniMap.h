@@ -40,6 +40,9 @@ private:
 	array<CComponent*, MINIMAPEND> m_arrMap;
 
 	_float		m_PlayerAngle = 0.f;
+	_float		m_PlayerTunnelAngle = 0.f;
+
+	_float		m_ESWNAngle = 0.f;
 public:
 	static CMiniMap*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

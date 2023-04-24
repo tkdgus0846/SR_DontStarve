@@ -31,6 +31,7 @@
 #include "HeartItem.h"
 #include "WeaponItem.h"
 #include "DiscItem.h"
+#include "Scope.h"
 
 #include "Tennel.h"
 #include "Pyramid.h"
@@ -89,6 +90,7 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CMiniMapBack::Create(m_pGraphicDev));
 	Add_GameObject(CMiniMap::Create(m_pGraphicDev));
 	Add_GameObject(CGunUI::Create(m_pGraphicDev));
+	Add_GameObject(CScope::Create(m_pGraphicDev));
 
 	// Tennel
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);

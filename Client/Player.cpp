@@ -106,7 +106,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	{
 		m_AimHackTime += fTimeDelta;
 		AimHack();
-		if (m_AimHackTime > 10.f)
+		if (m_AimHackTime > 7.f)
 		{
 			_vec3 lookDir = m_pTransform->m_vInfo[INFO_LOOK];
 			lookDir.y = 0.f;

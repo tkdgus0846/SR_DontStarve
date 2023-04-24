@@ -31,6 +31,10 @@ public:
 	void Set_In_Tennel(_bool state) 
 	{ m_bIsInTennel = state; }
 
+	STAGEINFO			Get_CurStageInfo();
+
+
+
 	_bool WriteMapFile(HANDLE hFile, DWORD& dwByte);
 	_bool ReadMapFile(HANDLE hFile, DWORD& dwByte);
 
