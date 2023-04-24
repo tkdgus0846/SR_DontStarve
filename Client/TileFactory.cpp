@@ -32,6 +32,8 @@
 #include "FloorSmall421723.h"
 #include "FloorSmall421733.h"
 
+#include "WaterTile.h"
+
 IMPLEMENT_SINGLETON(CTileFactory)
 
 CTileFactory::CTileFactory()
@@ -78,6 +80,8 @@ HRESULT CTileFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(FloorSmall421575::Tag(),	FloorSmall421575::Create);
 	Register(FloorSmall421723::Tag(),	FloorSmall421723::Create);
 	Register(FloorSmall421733::Tag(),	FloorSmall421733::Create);
+
+	Register(CWaterTile::Tag(), CWaterTile::Create);
 
 	ExtractTextureKey();
 

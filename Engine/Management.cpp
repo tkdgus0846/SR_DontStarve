@@ -9,7 +9,8 @@ CManagement::CManagement() :
 	m_pPlayer(nullptr),
 	m_fWorldTime(0.f),
 	m_bPlayingWorldTimer(false),
-	m_bChangeRoom(false)
+	m_bChangeRoom(false),
+	m_bTimeStopped(false)
 {
 }
 

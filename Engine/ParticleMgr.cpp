@@ -19,7 +19,7 @@ void CParticlePool::Push(CParticle* pObj)
 	m_ParticlePool.push_back(pObj);
 }
 
-CParticle * CParticlePool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleName, _int ParticleNum, const _vec3& vPos, const _vec3& Origin, const _vec3& boundingSize)
+CParticle * CParticlePool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleName, _int ParticleNum, const _vec3& vPos, const _vec3& Origin, const _vec3& boundingSize, _bool bIsInRoom)
 {
 	CParticle*		pParticle = nullptr;
 
@@ -41,6 +41,9 @@ CParticle * CParticlePool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* Particle
 	(pParticle)->Reset();
 	(pParticle)->SetDead(false);
 	(pParticle)->SetBoundingSize(boundingSize);
+
+	if (bIsInRoom == true)
+		(pParticle)->Set_LayerID(LAYER_ROOM_PARTICLE);
 
 	return pParticle;
 }
@@ -70,13 +73,13 @@ CParticleMgr::~CParticleMgr()
 	Free();
 }
 
-CParticle * CParticleMgr::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleName, _int ParticleNum, const _vec3& vPos, const _vec3& Origin, const _vec3& boundingSize)
+CParticle * CParticleMgr::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleName, _int ParticleNum, const _vec3& vPos, const _vec3& Origin, const _vec3& boundingSize, _bool bIsInRoom)
 {
 	if (m_ParticlePool[ParticleName] == nullptr)
 	{
 		m_ParticlePool[ParticleName] = CParticlePool::Create();
 	}
-	CParticle*		pParticle = m_ParticlePool[ParticleName]->Pop(pDevice, ParticleName, ParticleNum, vPos, Origin, boundingSize);
+	CParticle*		pParticle = m_ParticlePool[ParticleName]->Pop(pDevice, ParticleName, ParticleNum, vPos, Origin, boundingSize, bIsInRoom);
 	if (pParticle == nullptr)
 		return nullptr;
 

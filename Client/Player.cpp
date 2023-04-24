@@ -100,7 +100,6 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	//cout << ROOM_MGR->Get_Room(3)->m_vecLayer[LAYER_NPC]->Get_GameObject(L"ShopNpc")->m_pTransform->m_vInfo[INFO_POS].x << endl;
 	/*cout << ROOM_MGR->Get_Room(3)->m_vecLayer[LAYER_NPC]->Get_ObjectSize() << endl;*/
 
-	cout << ROOM_MGR->Is_In_Tennel() << endl;
 	Key_Input(fTimeDelta);
 
 	if (m_bAimHack)
@@ -385,12 +384,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			m_pCurWeapon->Shot();
 	}
 
-	if (Engine::Mouse_Pressing(DIM_RB))
+	/*if (Engine::Mouse_Pressing(DIM_RB))
 	{
 		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Component(L"Player_Camera", ID_UPDATE));
 
 		playerCamera->Set_FOV(D3DXToRadian(30.f));
-	}
+	}*/
 	
 	if (Engine::Mouse_Up(DIM_RB))
 	{

@@ -11,7 +11,7 @@ private:
 	CParticlePool();
 	~CParticlePool();
 
-	CParticle* CParticlePool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleName, _int ParticleNum, const _vec3& vPos, const _vec3& Origin, const _vec3& boundingSize = { 0.f,0.f,0.f });
+	CParticle* CParticlePool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleName, _int ParticleNum, const _vec3& vPos, const _vec3& Origin, const _vec3& boundingSize = { 0.f,0.f,0.f }, _bool bIsInRoom = false);
 
 	void		Push(CParticle* pObj);
 
@@ -33,7 +33,7 @@ private:
 public:
 	void Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name);
 
-	CParticle* CParticleMgr::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleName, _int ParticleNum, const _vec3& vPos, const _vec3& Origin = { 0.f,0.f,0.f }, const _vec3& boundingSize = { 0.f,0.f,0.f });
+	CParticle* CParticleMgr::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleName, _int ParticleNum, const _vec3& vPos, const _vec3& Origin = { 0.f,0.f,0.f }, const _vec3& boundingSize = { 0.f,0.f,0.f }, _bool bIsInRoom = false);
 
 	void		Push(const _tchar* name, CParticle* pParticle);
 

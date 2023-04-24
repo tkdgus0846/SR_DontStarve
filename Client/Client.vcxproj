@@ -474,6 +474,7 @@
     <ClInclude Include="WallVent420738.h" />
     <ClInclude Include="WallVent420952.h" />
     <ClInclude Include="WallVent421863.h" />
+    <ClInclude Include="WaterTile.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponItem.h" />
     <ClInclude Include="WeaponType.h" />
@@ -702,6 +703,7 @@
     <ClCompile Include="WallVent420738.cpp" />
     <ClCompile Include="WallVent420952.cpp" />
     <ClCompile Include="WallVent421863.cpp" />
+    <ClCompile Include="WaterTile.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WeaponItem.cpp" />
     <ClCompile Include="WeaponType.cpp" />

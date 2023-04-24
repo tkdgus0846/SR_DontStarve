@@ -39,6 +39,8 @@ public:
 	void				Stop_WorldTimer();
 	_float				Get_WorldTime() const { return m_fWorldTime; }
 	void				Reset_WorldTime() { m_fWorldTime = 0.f; }
+	void				Set_TimeStopped(_bool state = true) { m_bTimeStopped = state; }
+	_bool				Get_TimeStopped() const { return m_bTimeStopped; }
 
 	void				Set_StaticLayerArr_Management(vector<class CLayer*>* layerArr);
 private:
@@ -50,6 +52,7 @@ private:
 	_bool			m_bChangeRoom;
 
 	_bool			m_bChangingStage;
+	_bool			m_bTimeStopped;
 
 private:
 	virtual void	Free(void);

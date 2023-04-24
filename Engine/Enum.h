@@ -16,6 +16,7 @@ enum LAYERID
 	LAYER_MONSTER,
 	LAYER_BOSS,
 	LAYER_ROOM_ITEM,
+	LAYER_ROOM_PARTICLE,
 	LAYER_STATIC_END,
 
 	//////////////////////////////// 위는 방에서 가져올 게임오브젝트들 리스트이다.
