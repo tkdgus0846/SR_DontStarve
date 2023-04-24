@@ -13,6 +13,7 @@ public:
 	virtual void LateUpdate_GameObject(void) override;
 	virtual void Render_GameObject(void) override;
 
+	void		InteractTile(_float fTimeDelta);
 private:
 	virtual HRESULT Add_Component() override;
 	virtual void OnCollisionEnter(const struct Collision* collsion) override {}

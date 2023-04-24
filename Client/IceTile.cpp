@@ -34,9 +34,6 @@ HRESULT CIceTile::Add_Component()
 	m_uMapComponent[ID_STATIC].insert({ L"FloorIce", texture });
 	m_pAnimation->BindAnimation(ANIM_IDLE, texture);
 
-	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Collider", this, COL_ENVIRONMENT));
-	pCollider->Set_BoundingBox({ 10.f, 5.f, 10.f });
-	m_uMapComponent[ID_ALL].insert({ L"Collider", pCollider });
 	
 	return result;
 }

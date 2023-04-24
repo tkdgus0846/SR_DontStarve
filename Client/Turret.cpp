@@ -1,6 +1,7 @@
 #include "Turret.h"
 
 #include "Export_Function.h"
+#include "RoomMgr.h"
 
 CTurret::CTurret(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CEnemy(pGraphicDev)
@@ -32,7 +33,7 @@ _int CTurret::Update_GameObject(const _float & fTimeDelta)
 {
 	if (GetDead()) return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);
-
+	InteractTile(fTimeDelta);
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
@@ -51,6 +52,18 @@ void CTurret::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
+}
+
+void CTurret::InteractTile(_float fTimeDelta)
+{
+	CFloorTile* pTile = CRoomMgr::GetInstance()->Get_CurRoom()->GetCurFloorTile(this);
+
+	if (!pTile) return;
+
+	InteractInfo tInfo;
+	tInfo.pGameObject = this;
+	tInfo._fTimeDelta = fTimeDelta;
+	pTile->InteractGameObject(&tInfo);
 }
 
 HRESULT CTurret::Add_Component()
