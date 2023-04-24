@@ -29,6 +29,9 @@ CRoomMgr::CRoomMgr()
 {
 	for (auto iter : m_arrRoom)
 		iter = nullptr;
+
+	m_pTennel[0] = nullptr;
+	m_pTennel[1] = nullptr;
 }
 
 CRoomMgr::~CRoomMgr()
@@ -121,6 +124,11 @@ void CRoomMgr::Set_Tennel(CTennel* tennel, _int iIndex)
 		tennel->m_pTransform->Rot_Yaw(180.f, 1.f);
 }
 
+STAGEINFO CRoomMgr::Get_CurStageInfo()
+{
+	if (m_pTennel[0] == nullptr) return STAGE1;
+	return m_pTennel[0]->GetStageInfo();
+}
 _bool CRoomMgr::WriteMapFile(HANDLE hFile, DWORD& dwByte)
 {
 	_int iSize = m_arrRoom.size();

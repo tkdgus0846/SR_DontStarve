@@ -8,11 +8,18 @@ class CTexture;
 
 END
 
-class CScope : public CUI
+enum SKILLUI
+{
+	TIMESTOP,
+	GRAVITION,
+	TACTICAL
+};
+
+class CSkillUI : public CUI
 {
 protected:
-	explicit CScope(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CScope();
+	explicit CSkillUI(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CSkillUI();
 
 public:
 	virtual HRESULT Add_Component() override;
@@ -22,12 +29,10 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	Engine::CRcTex*			m_pBufferCom;
-	Engine::CTexture*		m_pTextureCom;
 	D3DXMATRIX  matWorld, matView;
 
 public:
-	static CScope*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CSkillUI*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;

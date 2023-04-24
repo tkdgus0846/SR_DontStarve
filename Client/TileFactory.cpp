@@ -40,6 +40,8 @@
 #include "FloorVent421556.h"
 #include "FloorVent421725.h"
 #include "FloorVent421869.h"
+#include "WaterTile.h"
+
 IMPLEMENT_SINGLETON(CTileFactory)
 
 CTileFactory::CTileFactory()
@@ -95,6 +97,8 @@ HRESULT CTileFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(FloorVent421556::Tag(), FloorVent421556::Create);
 	Register(FloorVent421725::Tag(), FloorVent421725::Create);
 	Register(FloorVent421869::Tag(), FloorVent421869::Create);
+
+	Register(CWaterTile::Tag(), CWaterTile::Create);
 
 	ExtractTextureKey();
 

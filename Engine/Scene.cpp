@@ -43,13 +43,14 @@ _int CScene::Update_Scene(const _float & fTimeDelta)
 		CLayer* curLayer = Get_Layer((LAYERID)i);
 		if (curLayer == nullptr) continue;
 
-		if (Engine::Key_Pressing(DIK_T))
+		if (Engine::Mouse_Pressing(DIM_RB))
 		{
 			Play_SlowTime(fTimeDelta);
 				
 		}
 		else
 		{
+			CManagement::GetInstance()->Set_TimeStopped(false);
 			Reset_SlowTime(fTimeDelta);
 		}
 
@@ -125,9 +126,11 @@ CGameObject * CScene::Get_GameObject(LAYERID LayerID, const _tchar * pObjTag)
 
 void CScene::Play_SlowTime(const _float & fTimeDelta)
 {
-	/*m_SlowTime -= 0.0007f * fTimeDelta;
-	if (m_SlowTime < 0.f) m_SlowTime = 0.f;*/
-	m_SlowTime = 0.0001f;
+	m_SlowTime -= 0.0005f * fTimeDelta;
+	if (m_SlowTime < 0.f) m_SlowTime = 0.f;
+
+	if (m_SlowTime == 0.f) CManagement::GetInstance()->Set_TimeStopped();
+	
 	PLAY_SOUND(L"sfxBootDown.wav", SOUND_ENVIRONMENT, 1.f);
 }
 
