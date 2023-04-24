@@ -13,7 +13,7 @@ CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_fTime = 0.f;
 
 	m_fAge = 0.f;
-	m_fLifeSpan = 3.f;
+	m_fLifeSpan = 5.f;
 
 	m_randNum = rand() % 360;
 	_matrix matRot;

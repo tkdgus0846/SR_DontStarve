@@ -2,11 +2,13 @@
 
 #include "WormBody.h"
 #include "WormTail.h"
+#include "EffectManager.h"
+#include "ItemManager.h"
 #include "Export_Function.h"
 
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
-	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime(0.f), m_fPreTime(0.f)
+	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime1(0.f), m_fPreTime1(0.f)
 {
 	Set_LayerID(LAYER_BOSS);
 	Set_ObjTag(L"WormHead");
@@ -27,6 +29,11 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 
 	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
 	_vec3 vBodyPos = m_pTransform->m_vInfo[INFO_POS];
+
+	m_fCurTime1 = Get_WorldTime();
+	m_fPreTime1 = Get_WorldTime();
+	m_fCurTime2 = Get_WorldTime();
+	m_fPreTime2 = Get_WorldTime();
 
 	for (_int i = 0; i < 10; ++i)
 		m_vecBody.push_back(dynamic_cast<CWormBody*>(CWormBody::Create(m_pGraphicDev, _vec3(vBodyPos.x + i + 1.f, vBodyPos.y, vBodyPos.z + i + 1.f))));
@@ -83,8 +90,10 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 	if (!Get_Player())
 		return OBJ_NOEVENT;
 
-	if (GetDead())
+	if (GetDead() && Dead_Production())
 		return OBJ_DEAD;
+	else if (!GetDead())
+		m_fPreTime2 = Get_WorldTime();
 
 	if (Key_Down(DIK_SPACE))
 		m_bMove = !m_bMove;
@@ -109,7 +118,7 @@ void CWormHead::LateUpdate_GameObject(void)
 	if (!Get_Player())
 		return;
 
-	m_fCurTime = Get_WorldTime();
+	m_fCurTime1 = Get_WorldTime();
 
 	_vec3 vLook = m_pTransform->m_vInfo[INFO_LOOK];
 	_vec3 vLookXZ = { vLook.x, 0.f, vLook.z };
@@ -119,11 +128,11 @@ void CWormHead::LateUpdate_GameObject(void)
 
 	_float fResult = 0.f;
 
-	if (m_fCurTime - m_fPreTime > 0.1f)
+	if (m_fCurTime1 - m_fPreTime1 > 0.1f)
 	{
 		fResult = m_fCurAngle - m_fPreAngle;
 		m_fPreAngle = m_fCurAngle;
-		m_fPreTime = m_fCurTime;
+		m_fPreTime1 = m_fCurTime1;
 	}
 
 	if (!isnan(m_fCurAngle) && fResult != 0)
@@ -188,12 +197,39 @@ void CWormHead::LateUpdate_GameObject(void)
 
 void CWormHead::Render_GameObject(void)
 {
-	if (GetDead())
-		return;
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
-
 	__super::Render_GameObject();
+}
+
+_bool CWormHead::Dead_Production()
+{
+	m_fSpeed = 0.f;
+	static _float fDest = 0.2f;
+	m_fCurTime2 = Get_WorldTime();
+	if (m_fCurTime2 - m_fPreTime2 < 3.5f)
+	{
+		_vec3 vEPos{};
+		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
+		_vec3 vPos = m_pTransform->m_vInfo[INFO_POS] + vEPos;
+		GetRandomVector(&vEPos, &_vec3(1.f, 1.f, 1.f), &_vec3(1.7f, 1.7f, 1.7f));
+
+		CEffect* pEffect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"Explosion_Texture", vPos, vEPos, 0.1f);
+		Add_GameObject(pEffect);
+
+		if (m_fCurTime2 - m_fPreTime2 > fDest)
+		{
+			_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
+			pSpawnPos.y += 3.f;
+			CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
+			Add_GameObject(item);
+			item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"CoinItem", pSpawnPos);
+			Add_GameObject(item);
+			fDest += 0.2f;
+		}
+		return false;
+	}
+	__super::SetDead(true);
+	return true;
 }
 
 HRESULT CWormHead::Add_Component()

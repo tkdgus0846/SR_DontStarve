@@ -16,7 +16,7 @@ CSpeyeder::~CSpeyeder()
 HRESULT CSpeyeder::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
-	m_iAttack = 1;
+	m_iAttack = 2;
 	m_iHp = 5;
 
 	m_pTransform->m_vScale = { 0.7f, 0.7f, 0.7f };
@@ -61,7 +61,7 @@ void CSpeyeder::OnCollisionStay(const Collision * collision)
 			m_fPreTime = Get_WorldTime();
 
 		m_fCurTime = Get_WorldTime();
-		//cout << m_fCurTime - m_fPreTime << endl;
+
 		__super::OnCollisionStay(collision);
 		m_pAnimation->SelectState(ANIM_ATTACK);
 		m_fSpeed = 0.f;

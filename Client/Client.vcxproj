@@ -147,6 +147,7 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ImGui|Win32'">
@@ -165,6 +166,7 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -223,6 +225,7 @@
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -262,6 +265,7 @@
     <ClInclude Include="Baller.h" />
     <ClInclude Include="BeltTile.h" />
     <ClInclude Include="BigJump.h" />
+    <ClInclude Include="Bird.h" />
     <ClInclude Include="BloodTile.h" />
     <ClInclude Include="BossHp.h" />
     <ClInclude Include="Bub.h" />
@@ -319,6 +323,7 @@
     <ClInclude Include="MoveCos.h" />
     <ClInclude Include="MovePoint.h" />
     <ClInclude Include="IInteractableTile.h" />
+    <ClInclude Include="Nub.h" />
     <ClInclude Include="NubPilot.h" />
     <ClInclude Include="HardPyramid.h" />
     <ClInclude Include="HeartItem.h" />
@@ -487,6 +492,7 @@
     <ClCompile Include="Baller.cpp" />
     <ClCompile Include="BeltTile.cpp" />
     <ClCompile Include="BigJump.cpp" />
+    <ClCompile Include="Bird.cpp" />
     <ClCompile Include="BloodTile.cpp" />
     <ClCompile Include="BossHp.cpp" />
     <ClCompile Include="Bub.cpp" />
@@ -543,6 +549,7 @@
     <ClCompile Include="GunUI.cpp" />
     <ClCompile Include="MoveCos.cpp" />
     <ClCompile Include="MovePoint.cpp" />
+    <ClCompile Include="Nub.cpp" />
     <ClCompile Include="NubPilot.cpp" />
     <ClCompile Include="HardPyramid.cpp" />
     <ClCompile Include="HeartItem.cpp" />

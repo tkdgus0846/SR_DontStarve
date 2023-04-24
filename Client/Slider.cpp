@@ -79,7 +79,6 @@ void CSlider::OnCollisionEnter(const Collision * collsion)
 {
 	if (dynamic_cast<CWall*>(collsion->OtherGameObject))
 	{
-		//cout << "Ãæµ¹ÇÔ" << endl;
 		m_pTransform->Reverse_Dir();
 	}
 

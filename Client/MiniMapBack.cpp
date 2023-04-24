@@ -89,7 +89,7 @@ void CMiniMapBack::Render_GameObject(void)
 	m_pGraphicDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
 	m_pGraphicDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
 
-	CUI::Set_ViewMatrix_UI(m_fPosX + 50, m_fPosY + 50, 200.f, 200.f);
+	CUI::Set_ViewMatrix_UI(320. + 50, -200 + 50, 200.f, 200.f);
 	m_pTexture->Render_Texture(17);
 	m_pRcTex->Render_Component();
 
@@ -131,11 +131,12 @@ void CMiniMapBack::MiniMapMove()
 		m_pPlayerMoveX = Engine::Get_Player()->m_pTransform->m_vInfo[INFO_POS].x;
 		m_pPlayerMoveZ = Engine::Get_Player()->m_pTransform->m_vInfo[INFO_POS].z;
 
-		m_fPosX += (m_pPlayerX - m_pPlayerMoveX) / 3.f;
-		m_fPosY += (m_pPlayerZ - m_pPlayerMoveZ) / 3.f;
 
-		m_pPlayerX = m_pPlayerMoveX;
-		m_pPlayerZ = m_pPlayerMoveZ;
+		m_fPosX = -(m_pPlayerMoveX / 1.180555f) + 337.f;
+		m_fPosY = -(m_pPlayerMoveZ / 1.180555f) - 190.f;
+		
+		/*cout << m_pPlayerMoveX << "     " << m_pPlayerMoveZ << endl;
+		cout << m_fPosX << "     " << m_fPosY << endl;*/
 	}
 }
 

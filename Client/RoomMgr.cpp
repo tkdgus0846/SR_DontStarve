@@ -24,7 +24,8 @@
 IMPLEMENT_SINGLETON(CRoomMgr)
 
 CRoomMgr::CRoomMgr()
-	: m_pCurRoom(nullptr)
+	: m_pCurRoom(nullptr),
+	m_bIsInTennel(false)
 {
 	for (auto iter : m_arrRoom)
 		iter = nullptr;

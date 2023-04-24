@@ -16,6 +16,8 @@ CTurret::~CTurret()
 HRESULT CTurret::Ready_GameObject(const _vec3& vPos)
 {
 	m_fSpeed = 10.f;
+	m_iHp = 2.f;
+	m_iAttack = 1.f;
 
 	m_pTransform->m_vScale = { 2.f, 2.f, 2.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -71,15 +73,15 @@ HRESULT CTurret::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox({ 1.6f, 4.f, 1.6f });
+	pCollider->Set_BoundingBox({ 5.f, 5.f, 5.f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
-	pCollider->Set_BoundingBox({ 50.f, 10.f, 50.f });
+	pCollider->Set_BoundingBox({ 60.f, 10.f, 60.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
-	FAILED_CHECK_RETURN(Set_TurretAI(1.f), E_FAIL);
+	FAILED_CHECK_RETURN(Set_TurretAI(3.f), E_FAIL);
 	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;

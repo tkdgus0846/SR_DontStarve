@@ -27,6 +27,9 @@ public:
 
 	class CTennel*		Get_Tennel(const _int i) { return m_pTennel[i]; }
 	void Set_Tennel(class CTennel* tennel, _int iIndex);
+	_bool Is_In_Tennel() { return m_bIsInTennel; }
+	void Set_In_Tennel(_bool state) 
+	{ m_bIsInTennel = state; }
 
 	_bool WriteMapFile(HANDLE hFile, DWORD& dwByte);
 	_bool ReadMapFile(HANDLE hFile, DWORD& dwByte);
@@ -45,6 +48,7 @@ private:
 	array<CRoom*, 9>	m_arrRoom;
 
 	class CTennel*		m_pTennel[2];	
+	_bool				m_bIsInTennel;
 
 
 	LPDIRECT3DDEVICE9	m_pGraphicDev;

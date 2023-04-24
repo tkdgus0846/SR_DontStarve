@@ -788,6 +788,12 @@
     <ClInclude Include="Scope.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Nub.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Bird.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1428,6 +1434,12 @@
     </ClCompile>
     <ClCompile Include="Scope.cpp">
       <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Nub.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Bird.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

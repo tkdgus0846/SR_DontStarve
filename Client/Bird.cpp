@@ -1,21 +1,20 @@
-#include "NubPilot.h"
+#include "Bird.h"
 
 #include "Export_Function.h"
 
-CNubPilot::CNubPilot(LPDIRECT3DDEVICE9 pGraphicDev)
+CBird::CBird(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CEnemy(pGraphicDev), m_fTime(0.f)
 {
-	Set_ObjTag(Tag());
 }
 
-CNubPilot::~CNubPilot()
+CBird::~CBird()
 {
 }
 
-HRESULT CNubPilot::Ready_GameObject(const _vec3& vPos)
+HRESULT CBird::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
-	m_iHp = 1.f;
+	m_iHp = 3.f;
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -26,9 +25,9 @@ HRESULT CNubPilot::Ready_GameObject(const _vec3& vPos)
 	return result;
 }
 
-_int CNubPilot::Update_GameObject(const _float & fTimeDelta)
+_int CBird::Update_GameObject(const _float & fTimeDelta)
 {
-	if (GetDead()) 
+	if (GetDead())
 		return OBJ_DEAD;
 
 	m_fTime += fTimeDelta;
@@ -44,27 +43,27 @@ _int CNubPilot::Update_GameObject(const _float & fTimeDelta)
 	return S_OK;
 }
 
-void CNubPilot::LateUpdate_GameObject(void)
+void CBird::LateUpdate_GameObject(void)
 {
 	__super::LateUpdate_GameObject();
 }
 
-void CNubPilot::Render_GameObject(void)
+void CBird::Render_GameObject(void)
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 }
 
-HRESULT CNubPilot::Add_Component()
+HRESULT CBird::Add_Component()
 {
 	CAnimation* animation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	NULL_CHECK_RETURN(animation, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"Animation", animation);
 	animation->SelectState(ANIM_WALK);
 
-	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Nub_Pilot_Texture", this));
+	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_Bird_Texture", this));
 	NULL_CHECK_RETURN(texture, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"Monster_Nub_Pilot_Texture", texture });
+	m_uMapComponent[ID_STATIC].insert({ L"Monster_Bird_Texture", texture });
 	animation->BindAnimation(ANIM_WALK, texture, 0.3f);
 
 	CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
@@ -82,15 +81,15 @@ HRESULT CNubPilot::Add_Component()
 	pCollider->Set_BoundingBox({ 70.f, 20.f, 70.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
-	FAILED_CHECK_RETURN(Set_PAF_AttckAI(L"EnemyBullet"), E_FAIL);
+	FAILED_CHECK_RETURN(Set_PatrolAndFollow_AI(), E_FAIL);
 	FAILED_CHECK_RETURN(Init_AI_Behaviours(), E_FAIL);
 
 	return S_OK;
 }
 
-CNubPilot * CNubPilot::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
+CBird * CBird::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3 & vPos)
 {
-	CNubPilot* pInstance = new CNubPilot(pGraphicDev);
+	CBird* pInstance = new CBird(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject(vPos)))
 	{
@@ -101,11 +100,11 @@ CNubPilot * CNubPilot::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos)
 	return pInstance;
 }
 
-CGameObject * CNubPilot::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CBird::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CNubPilot* pInstance = new CNubPilot(pGraphicDev);
+	CBird* pInstance = new CBird(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(_vec3{})))
+	if (FAILED(pInstance->Ready_GameObject(_vec3())))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
@@ -114,7 +113,7 @@ CGameObject * CNubPilot::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CNubPilot::Free(void)
+void CBird::Free(void)
 {
 	__super::Free();
 }

@@ -107,13 +107,13 @@ void CNormalBullet::OnCollisionStay(const Collision* collision)
 		
 		_vec3 pos = collision->intersectBox._max;
 		SetDead();
-		if (softPyramid != nullptr)
-		{
-			CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"PyramidDestory_Particle", 30, pos);
-			Add_GameObject(particle);
-			//softPyramid->SetDead();
-			return;
-		}
+		//if (softPyramid != nullptr)
+		//{
+		//	CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"PyramidDestory_Particle", 30, pos);
+		//	Add_GameObject(particle);
+		//	//softPyramid->SetDead();
+		//	return;
+		//}
 		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"NormalBullet_Particle", 4, pos);
 		STOP_PLAY_SOUND(L"sfxHurt.wav", SOUND_ENVIRONMENT, 1.f);
 		Add_GameObject(particle);

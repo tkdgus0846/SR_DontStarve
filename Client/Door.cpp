@@ -48,19 +48,30 @@ _int CDoor::Update_GameObject(const _float & fTimeDelta)
 		m_pOutTennel = SECTION_MGR->Get_Tennel(1);*/
 	}
 
-	if (m_bCurDoorState != m_bPreDoorState)
+	//if (m_bCurDoorState != m_bPreDoorState)
+	//{
+	//	if (m_bCurDoorState == true)
+	//	{
+	//		// Open
+	//	}
+	//	else
+	//	{
+	//		// Close
+	//	}
+	//	m_pAnimation->SetInverse(!m_bCurDoorState);
+	//	m_pCollider->Set_Enable(m_bCurDoorState);
+	//	m_bPreDoorState = m_bCurDoorState;
+	//}
+
+	if (m_bCurDoorState)
 	{
-		if (m_bCurDoorState == true)
-		{
-			// Open
-		}
-		else
-		{
-			// Close
-		}
-		m_pAnimation->SetInverse(!m_bCurDoorState);
+		m_pAnimation->SetInverse(false);
 		m_pCollider->Set_Enable(m_bCurDoorState);
-		m_bPreDoorState = m_bCurDoorState;
+	}
+	else
+	{
+		m_pAnimation->SetInverse(true);
+		m_pCollider->Set_Enable(m_bCurDoorState);
 	}
 
 	if (GetDead()) return OBJ_DEAD;
@@ -127,6 +138,9 @@ void CDoor::OnCollisionEnter(const Collision * collsion)
 
 		m_pInTennel->Set_Door(this);
 		m_pOutTennel->Set_Door(pNextDoor);
+
+		// ���Ƿ� �߰���
+		ROOM_MGR->Set_In_Tennel(true);
 
 		_vec3 vLook = pPlayer->m_pTransform->m_vInfo[INFO_LOOK];
 		vLook.Normalize();

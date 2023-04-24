@@ -7,6 +7,7 @@
 #include "Room.h"
 
 #include "ItemManager.h"
+#include "..\Engine\ParticleMgr.h"
 
 CSoftPyramid::CSoftPyramid(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CPyramid(pGraphicDev)
@@ -92,8 +93,14 @@ void CSoftPyramid::SetDead(_bool bDead)
 {
 	__super::SetDead(bDead);
 	_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
+	
 	pSpawnPos.y += 3.f;
+	_vec3 particlePos = pSpawnPos;
+	particlePos.y -= 1.5f;
 
+	CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"PyramidDestory_Particle", 30, particlePos);
+	Add_GameObject(particle);
+	//softPyramid->SetDead();
 	
 	CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
 	Add_GameObject(item);
