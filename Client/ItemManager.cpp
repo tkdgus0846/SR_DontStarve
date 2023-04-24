@@ -41,7 +41,7 @@ CItem * CItemPool::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar * name, const _ve
 		}
 		
 		++m_iCreateCnt;
-		//cout << m_iCreateCnt << endl;
+		
 	}
 	else
 	{

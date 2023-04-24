@@ -157,7 +157,6 @@ void CMiniMap::ESWN()
 	m_pBufferCom->Edit_U(-fAngleZ);
 	Set_ViewMatrix_UI(320.f, -130.f, 76.f, 10.f);
 
-	//cout << fAngleZ << endl;
 }
 
 CMiniMap * CMiniMap::Create(LPDIRECT3DDEVICE9 pGraphicDev)

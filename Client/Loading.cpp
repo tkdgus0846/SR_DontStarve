@@ -564,13 +564,15 @@ _uint CLoading::Loading_ForStage(void)
 	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 
-	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -15.f, 25.f }));
+	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -15.f, 25.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 
 	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -3.f, 25.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	
+	
 	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
+	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");
@@ -603,7 +605,7 @@ _uint CLoading::Loading_ForStage3(void)
 	ROOM_MGR->Create_Default_Room(STAGE3); // 여기서 룸들을 싹다 만든다.
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
-	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -3.f, 25.f }));
+	ROOM_MGR->Push_Back_Obj(4, CWormHead::Create(m_pGraphicDev, { 85.f, -3.f, 85.f }));
 	CFileSystem::Load(L"Level3.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
@@ -620,6 +622,7 @@ _uint CLoading::Loading_ForStage4(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 
+	ROOM_MGR->Push_Back_Obj(4, CWalkerBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 	CFileSystem::Load(L"Level4.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");

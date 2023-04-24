@@ -131,13 +131,12 @@ void CMiniMapBack::MiniMapMove()
 		m_pPlayerMoveX = Engine::Get_Player()->m_pTransform->m_vInfo[INFO_POS].x;
 		m_pPlayerMoveZ = Engine::Get_Player()->m_pTransform->m_vInfo[INFO_POS].z;
 
-		//cout << m_pPlayerMoveZ;
 
 		m_fPosX = -(m_pPlayerMoveX / 1.180555f) + 337.f;
 		m_fPosY = -(m_pPlayerMoveZ / 1.180555f) - 190.f;
 		
-		cout << m_pPlayerMoveX << "     " << m_pPlayerMoveZ << endl;
-		cout << m_fPosX << "     " << m_fPosY << endl;
+		/*cout << m_pPlayerMoveX << "     " << m_pPlayerMoveZ << endl;
+		cout << m_fPosX << "     " << m_fPosY << endl;*/
 	}
 }
 
