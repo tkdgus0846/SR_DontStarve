@@ -854,6 +854,17 @@
     <ClInclude Include="MiniGuppi.h">
       <Filter>GameObject\Monster\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="ListBox.h">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421865.h" />
+    <ClInclude Include="FloorLarge421204.h" />
+    <ClInclude Include="FloorLarge421409.h" />
+    <ClInclude Include="FloorLarge421559.h" />
+    <ClInclude Include="FloorLarge421721.h" />
+    <ClInclude Include="FloorLarge421871.h" />
+    <ClInclude Include="FloorLarge421874.h" />
+    <ClInclude Include="FloorLarge.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1555,6 +1566,17 @@
     <ClCompile Include="MiniGuppi.cpp">
       <Filter>GameObject\Monster\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="ListBox.cpp">
+      <Filter>IMGUI\ImWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421204.cpp" />
+    <ClCompile Include="FloorLarge421409.cpp" />
+    <ClCompile Include="FloorLarge421559.cpp" />
+    <ClCompile Include="FloorLarge421721.cpp" />
+    <ClCompile Include="FloorLarge421865.cpp" />
+    <ClCompile Include="FloorLarge421871.cpp" />
+    <ClCompile Include="FloorLarge421874.cpp" />
+    <ClCompile Include="FloorLarge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">

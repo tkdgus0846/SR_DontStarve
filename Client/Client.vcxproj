@@ -282,6 +282,14 @@
     <ClInclude Include="CrossHair.h" />
     <ClInclude Include="DecoratorTile.h" />
     <ClInclude Include="FloorBeltCorner.h" />
+    <ClInclude Include="FloorLarge.h" />
+    <ClInclude Include="FloorLarge421204.h" />
+    <ClInclude Include="FloorLarge421409.h" />
+    <ClInclude Include="FloorLarge421559.h" />
+    <ClInclude Include="FloorLarge421721.h" />
+    <ClInclude Include="FloorLarge421865.h" />
+    <ClInclude Include="FloorLarge421871.h" />
+    <ClInclude Include="FloorLarge421874.h" />
     <ClInclude Include="FloorStripes.h" />
     <ClInclude Include="FloorVent.h" />
     <ClInclude Include="FloorVent420959.h" />
@@ -291,6 +299,7 @@
     <ClInclude Include="FloorVent421725.h" />
     <ClInclude Include="FloorVent421869.h" />
     <ClInclude Include="Guppi.h" />
+    <ClInclude Include="ListBox.h" />
     <ClInclude Include="LookAtPlayer.h" />
     <ClInclude Include="MiniGuppi.h" />
     <ClInclude Include="MoveY.h" />
@@ -527,6 +536,14 @@
     <ClCompile Include="CrossHair.cpp" />
     <ClCompile Include="DecoratorTile.cpp" />
     <ClCompile Include="FloorBeltCorner.cpp" />
+    <ClCompile Include="FloorLarge.cpp" />
+    <ClCompile Include="FloorLarge421204.cpp" />
+    <ClCompile Include="FloorLarge421409.cpp" />
+    <ClCompile Include="FloorLarge421559.cpp" />
+    <ClCompile Include="FloorLarge421721.cpp" />
+    <ClCompile Include="FloorLarge421865.cpp" />
+    <ClCompile Include="FloorLarge421871.cpp" />
+    <ClCompile Include="FloorLarge421874.cpp" />
     <ClCompile Include="FloorStripes.cpp" />
     <ClCompile Include="FloorVent.cpp" />
     <ClCompile Include="FloorVent420959.cpp" />
@@ -536,6 +553,7 @@
     <ClCompile Include="FloorVent421725.cpp" />
     <ClCompile Include="FloorVent421869.cpp" />
     <ClCompile Include="Guppi.cpp" />
+    <ClCompile Include="ListBox.cpp" />
     <ClCompile Include="LookAtPlayer.cpp" />
     <ClCompile Include="MiniGuppi.cpp" />
     <ClCompile Include="MoveY.cpp" />

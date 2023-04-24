@@ -42,6 +42,15 @@
 #include "FloorVent421869.h"
 #include "WaterTile.h"
 
+#include "FloorLarge421204.h"
+#include "FloorLarge421409.h"
+#include "FloorLarge421559.h"
+#include "FloorLarge421721.h"
+#include "FloorLarge421865.h"
+#include "FloorLarge421871.h"
+#include "FloorLarge421874.h"
+#include "FloorLarge.h"
+
 IMPLEMENT_SINGLETON(CTileFactory)
 
 CTileFactory::CTileFactory()
@@ -99,6 +108,15 @@ HRESULT CTileFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(FloorVent421869::Tag(), FloorVent421869::Create);
 
 	Register(CWaterTile::Tag(), CWaterTile::Create);
+
+	Register(FloorLarge421204::Tag(), FloorLarge421204::Create);
+	Register(FloorLarge421409::Tag(), FloorLarge421409::Create);
+	Register(FloorLarge421559::Tag(), FloorLarge421559::Create);
+	Register(FloorLarge421721::Tag(), FloorLarge421721::Create);
+	Register(FloorLarge421865::Tag(), FloorLarge421865::Create);
+	Register(FloorLarge421871::Tag(), FloorLarge421871::Create);
+	Register(FloorLarge421874::Tag(), FloorLarge421874::Create);
+	Register(FloorLarge::Tag(), FloorLarge::Create);
 
 	ExtractTextureKey();
 

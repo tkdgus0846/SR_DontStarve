@@ -18,7 +18,8 @@ public:
 	virtual _int Update(float fTimeDelta) PURE;
 	_bool IsEnable() { return m_bEnable; }
 	void SetEnable(_bool bEnable) { m_bEnable = bEnable; }
-
+	_bool GetEnable() {
+		return m_bEnable;	}
 	void Toggle(bool& _bVariable);
 protected:
 	LPDIRECT3DDEVICE9	m_pGraphicDev;

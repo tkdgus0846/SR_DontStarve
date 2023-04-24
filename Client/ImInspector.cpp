@@ -8,6 +8,7 @@
 #include "RoomMgr.h"
 #include "FileSystem.h"
 #include "ImPickBox.h"
+#include "ListBox.h"
 
 // 몬스터 헤더파일
 #include "Baller.h"
@@ -50,6 +51,10 @@ HRESULT CImInspector::Ready_ImWindow()
 	{
 		m_pPickBox[i] = CImPickBox::Create(m_pGraphicDev, items[i].first, items[i].second);
 	}
+
+	// 오브젝트 리스트
+	//ROOM_MGR->Get_CurRoom()->
+	//m_pObjListBox = ListBox::Create(m_pGraphicDev, , "Object List in Room");
 	return S_OK;
 }
 
@@ -69,7 +74,7 @@ _int CImInspector::Update(float fTimeDelta)
 		Show_PlaceMode();
 
 	if (ImGui::CollapsingHeader("ObjectList"))
-		//Show_MonsterList();
+		Show_MonsterList();
 
 	if(ImGui::CollapsingHeader("Components"))
 		Show_Components();
@@ -248,6 +253,14 @@ void CImInspector::Show_PlaceMode()
 		ImGui::RadioButton("LeftDown", &m_radio, 3); ImGui::SameLine();
 		ImGui::RadioButton("RightDown", &m_radio, 4);
 	}
+}
+
+
+void CImInspector::Show_MonsterList()
+{
+	
+
+
 }
 
 CImInspector * CImInspector::Create(LPDIRECT3DDEVICE9 pGraphicDev)
