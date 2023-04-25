@@ -368,6 +368,7 @@
     <ClInclude Include="LoadingBackground.h" />
     <ClInclude Include="Parabola.h" />
     <ClInclude Include="NullFloorTile.h" />
+    <ClInclude Include="PlayerHitUI.h" />
     <ClInclude Include="RedLaserBullet.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
@@ -627,6 +628,7 @@
     <ClCompile Include="LaserWeapon.cpp" />
     <ClCompile Include="Parabola.cpp" />
     <ClCompile Include="NullFloorTile.cpp" />
+    <ClCompile Include="PlayerHitUI.cpp" />
     <ClCompile Include="RedLaserBullet.cpp" />
     <ClCompile Include="LavaTile.cpp" />
     <ClCompile Include="LeapJump.cpp" />

@@ -859,6 +859,9 @@
     <ClInclude Include="FloorLarge421871.h" />
     <ClInclude Include="FloorLarge421874.h" />
     <ClInclude Include="FloorLarge.h" />
+    <ClInclude Include="PlayerHitUI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
     <ClInclude Include="OnlyCollisionObj.h">
       <Filter>GameObject\ObjCamera</Filter>
     </ClInclude>
@@ -1598,6 +1601,9 @@
     <ClCompile Include="FloorLarge421871.cpp" />
     <ClCompile Include="FloorLarge421874.cpp" />
     <ClCompile Include="FloorLarge.cpp" />
+    <ClCompile Include="PlayerHitUI.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
     <ClCompile Include="BossRoomCamera.cpp">
       <Filter>GameObject\ObjCamera</Filter>
     </ClCompile>

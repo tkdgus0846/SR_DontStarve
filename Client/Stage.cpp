@@ -25,6 +25,8 @@
 #include "MiniMapBack.h"
 #include "BossHp.h"
 #include "UltimateUI.h"
+#include "SkillUI.h"
+#include "PlayerHitUI.h"
 
 #include "CoinItem.h"
 #include "BulletItem.h"
@@ -81,6 +83,7 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CBulletBar::Create(m_pGraphicDev));
 	Add_GameObject(CBossHp::Create(m_pGraphicDev));
 	Add_GameObject(CUltimateUI::Create(m_pGraphicDev));
+	Add_GameObject(CSkillUI::Create(m_pGraphicDev));
 
 	Add_GameObject(CCrossHair::Create(m_pGraphicDev));
 	Add_GameObject(CHp::Create(m_pGraphicDev));
@@ -91,6 +94,9 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CMiniMap::Create(m_pGraphicDev));
 	Add_GameObject(CGunUI::Create(m_pGraphicDev));
 	Add_GameObject(CScope::Create(m_pGraphicDev));
+
+	Add_GameObject(CPlayerHitUI::Create(m_pGraphicDev));
+
 
 	// Tennel
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);

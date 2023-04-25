@@ -58,15 +58,17 @@ void CUltimateUI::Render_GameObject(void)
 	_float Cur = pPlayer->Get_UltiGuage();
 	_float Max = pPlayer->Get_UltiMaxGuage();
 
-	if (Cur >= 1.f){ m_dRcTex->Edit_V(1.f);}
+	if (Cur / Max >= 1.f) { m_dRcTex->Edit_V(1.f); }
+	if (Cur / Max <= 0.f) { m_dRcTex->Edit_V(0.f); }
 	else { m_dRcTex->Edit_V(Cur / Max); }
 
-	Set_ViewMatrix_UI(-377.f, -231.f, 3.8f, 22.f);
+	Set_ViewMatrix_UI(-377.f, -231.f, 3.5f, 22.7f);
 	dynamic_cast<CTexture*>(m_arrMap[ULTIMATE_GUAGE])->Render_Texture();
 	m_dRcTex->Render_Component();
 
 	__super::Render_GameObject();
 }
+
 
 CUltimateUI * CUltimateUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

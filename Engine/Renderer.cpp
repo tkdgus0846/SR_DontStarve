@@ -36,6 +36,8 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
 	Render_UI(pGraphicDev);
+
+	Render_Pre_AlphaUI(pGraphicDev);
 	Render_AlphaUI(pGraphicDev);
 	Render_After_AlphaUI(pGraphicDev);
 
@@ -84,13 +86,19 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9 & pGraphicDev)
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
-void Engine::CRenderer::Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
+void CRenderer::Render_Pre_AlphaUI(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
+	for (auto& iter : m_RenderGroup[RENDER_PRE_ALPHA_UI])
+		iter->Render_GameObject();
+}
+
+void Engine::CRenderer::Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
+{
 	for (auto& iter : m_RenderGroup[RENDER_ALPHA_UI])
 		iter->Render_GameObject();	
 }
