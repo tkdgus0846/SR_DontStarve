@@ -102,6 +102,11 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	Key_Input(fTimeDelta);
 
+	if (m_fUltimateGuage < 100.f)
+	{
+		Gain_UltiGuage(fTimeDelta, 2.f);
+	}
+
 	if (m_bAimHack)
 	{
 		m_AimHackTime += fTimeDelta;
@@ -384,6 +389,12 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			m_pCurWeapon->Shot();
 	}
 
+	if (Engine::Mouse_Pressing(DIM_RB))
+	{
+		Is_SlowTime = true;
+		m_fUltimateGuage -= 0.2f;
+	}
+
 	/*if (Engine::Mouse_Pressing(DIM_RB))
 	{
 		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Component(L"Player_Camera", ID_UPDATE));
@@ -407,21 +418,24 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		Prev_Weapon();
 
 
-	if (Engine::Key_Down(DIK_F))
+	if (Engine::Key_Down(DIK_F) && m_fUltimateGuage >= 15.f)
 	{
 		CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"VortexBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS] + m_pTransform->m_vInfo[INFO_LOOK] * 1.3f, m_pTransform->m_vInfo[INFO_LOOK], { 1.f,1.f,1.f });
 		Add_GameObject(bullet);
+		Loss_UltiGuage(15.f);
 	}
 
-	if (Engine::Key_Down(DIK_G))
+	if (Engine::Key_Down(DIK_G) && m_fUltimateGuage >= 15.f)
 	{
 		m_bAimHack = true;
+		Loss_UltiGuage(15.f);
 	}
 
 	if (Engine::Key_Down(DIK_H))
 	{
 		m_bTactic = true;
 	}
+
 }
 
 void CPlayer::Mouse_Move(const _float& fTimeDelta)
@@ -473,7 +487,10 @@ bool CPlayer::IsObjectInFOV(_float fDistance, _float fRadius, _float fFov)
 
 void CPlayer::Get_Damaged(_int Damage)
 {
+	m_bDamaged = true;
+
 	if (m_bInvicible == true) return;
+
 
 	__super::Get_Damaged(Damage);
 }
@@ -485,6 +502,11 @@ _vec3 CPlayer::GetDeltaVec()
 
 	_vec3 DeltaPos = m_pTransform->m_vInfo[INFO_POS] - m_PosList.front();
 	return DeltaPos;
+}
+
+void CPlayer::Loss_UltiGuage(_float guage)
+{
+	m_fUltimateGuage -= guage;
 }
 
 void CPlayer::AimHack()
@@ -580,10 +602,16 @@ _vec3 CPlayer::Tactical_Bullet_Dir()
 	}
 }
 
+void CPlayer::Gain_UltiGuage(_float fTimeDelta, _float guage)
+{
+	m_fUltimateGuageHealTime += fTimeDelta;
+	if (m_fUltimateGuageHealTime > 1.f)
+	{
+		m_fUltimateGuage += guage;
+		m_fUltimateGuageHealTime = 0.f;
+	}
+}
 
-
-
-//
 //void CPlayer::AimHack()
 //{
 //	// 몬스터레이어의 오브젝트를 벡터에 저장.

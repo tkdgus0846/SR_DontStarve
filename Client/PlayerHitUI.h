@@ -3,26 +3,17 @@
 
 BEGIN(Engine)
 
+class CAnimation;
 class CRcTex;
-class CTexture;
 
 END
 
-enum SKILLUI
+class CPlayerHitUI :
+	public CUI
 {
-	TIMESTOP,
-	GRAVITION,
-	TACTICAL,
-	SKILLEND
-};
-
-
-class CSkillUI : public CUI
-{
-
-protected:
-	explicit CSkillUI(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CSkillUI();
+public:
+	explicit CPlayerHitUI(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CPlayerHitUI();
 
 public:
 	virtual HRESULT Add_Component() override;
@@ -32,13 +23,11 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	array<CComponent*, SKILLEND> m_arrMap;
 	D3DXMATRIX  matWorld, matView;
-
-	CRcTex* m_pRcTex = nullptr;
+	_float		m_fTime = 0.f;
 
 public:
-	static CSkillUI*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CPlayerHitUI*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free(void) override;

@@ -50,10 +50,12 @@ public:
 	_vec3			GetDeltaVec();
 	void			Gain_Disc(_int disc = 1) { m_iDisc += disc; }
 	void			Gain_Hp(_int Hp = 1) { m_iHp += Hp; }
-	void			Gain_UltiGuage(_int guage = 1) { m_fUltimateGuage += guage; }
+	void			Gain_UltiGuage(_float fTimeDelta, _float guage = 1);
 	_int			Get_Disc() { return m_iDisc; }
 	_int			Get_UltiGuage() { return m_fUltimateGuage; }
 	_int			Get_UltiMaxGuage() { return m_fUltimateMax; }
+
+	void			Loss_UltiGuage(_float guage);
 
 	void			AimHack();
 	_bool			Get_bAimHack() { return m_bAimHack; }
@@ -66,6 +68,8 @@ public:
 
 
 	virtual void Get_Damaged(_int Damage) override;
+	void	    	Set_bDamaged(_bool state) { m_bDamaged = state; }
+	_bool			Get_bDamaged() { return m_bDamaged; }
 
 private:
 	virtual HRESULT Add_Component() override;
@@ -73,8 +77,12 @@ private:
 	void		Mouse_Move(const _float& fTimeDelta);
 	void		Fix_Mouse();
 	void		InteractTile(_float fTimeDelta);
+
 private:
 	_bool					m_bFix;
+
+	_bool					Is_SlowTime = false;
+	_bool					m_bDamaged = false;
 
 	_bool					m_bAimHack = false;
 	_float					m_AimHackTime = 0.f;
@@ -85,7 +93,8 @@ private:
 	_int					m_iDisc = 0;
 
 	_float					m_fUltimateMax = 100.f;
-	_float					m_fUltimateGuage = 0.f;
+	_float					m_fUltimateGuage = 100.f;
+	_float					m_fUltimateGuageHealTime = 0.f;
 
 	_bool					m_bInvicible;
 
@@ -97,6 +106,8 @@ private:
 	list<_vec3>							m_PosList;
 
 	_bool				m_bIsOnIceTile = false;
+
+
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

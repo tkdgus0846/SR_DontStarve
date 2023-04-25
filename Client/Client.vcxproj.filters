@@ -865,6 +865,9 @@
     <ClInclude Include="FloorLarge421871.h" />
     <ClInclude Include="FloorLarge421874.h" />
     <ClInclude Include="FloorLarge.h" />
+    <ClInclude Include="PlayerHitUI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1577,6 +1580,9 @@
     <ClCompile Include="FloorLarge421871.cpp" />
     <ClCompile Include="FloorLarge421874.cpp" />
     <ClCompile Include="FloorLarge.cpp" />
+    <ClCompile Include="PlayerHitUI.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">

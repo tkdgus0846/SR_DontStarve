@@ -30,7 +30,7 @@
 #include "..\Engine\SandStorm.h"
 #include "WaterTile.h"
 
-#define LEVEL1_EDIT_DATANAME L"Level2.dat"
+#define LEVEL1_EDIT_DATANAME L"Level1.dat"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -185,7 +185,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"RedBlood", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/redblood_%d.png", 4)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/wob_floor_4.png")), E_FAIL);
-
+	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SandStorm_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/SandStorm.png")), E_FAIL);
 	
 
@@ -494,11 +494,13 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Weapon_lasershot_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Weapon_lasershot.png")), E_FAIL);
 	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Scope_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/ScopeEdit.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BloodScreen", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Effect/BloodScreen.png")), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Ultimate_List_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Ultimate_List.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TIMESTOP_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/TIMESTOP.png")), E_FAIL);
-	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"GRAVITION_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/GRAVITION.png")), E_FAIL);*/
-	/*FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TACTICAL_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/TACTICAL.png")), E_FAIL);*/
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Skill_List_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Skill_List.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TimeStop_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/TimeStop.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gravition_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Gravition.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Tactical_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Tactical.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MiniMap_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/hud_map.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MapPos_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Map/mapPos.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ESWN_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Map/ESWN.png")), E_FAIL);
