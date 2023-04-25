@@ -28,8 +28,54 @@ CVIBuffer::CVIBuffer(const CVIBuffer & rhs)
 	, m_dwIdxSize(rhs.m_dwIdxSize)
 	, m_IdxFmt(rhs.m_IdxFmt)
 {
-	m_pVB->AddRef();
-	m_pIB->AddRef();
+	//m_pVB->AddRef();
+	//m_pIB->AddRef();
+	//m_RenderOrder = 3;
+	//m_bRenderFlag = FALSE;
+
+	// Create a new vertex buffer
+	if (FAILED(m_pGraphicDev->CreateVertexBuffer(m_dwVtxCnt * m_dwVtxSize,
+		D3DUSAGE_DYNAMIC,
+		m_dwFVF,
+		D3DPOOL_DEFAULT,
+		&m_pVB,
+		0)))
+	{
+		MSG_BOX("CreateVertexBuffer Failed");
+		return;
+	}
+
+	// Copy the content of the original vertex buffer to the new one
+	void *pSrcData = nullptr, *pDstData = nullptr;
+	if (SUCCEEDED(rhs.m_pVB->Lock(0, 0, &pSrcData, D3DLOCK_READONLY)) &&
+		SUCCEEDED(m_pVB->Lock(0, 0, &pDstData, 0)))
+	{
+		memcpy(pDstData, pSrcData, m_dwVtxCnt * m_dwVtxSize);
+		m_pVB->Unlock();
+		rhs.m_pVB->Unlock();
+	}
+
+	// Create a new index buffer
+	if (FAILED(m_pGraphicDev->CreateIndexBuffer(m_dwIdxSize * m_dwTriCnt,
+		0,
+		m_IdxFmt,
+		D3DPOOL_MANAGED,
+		&m_pIB,
+		nullptr)))
+	{
+		MSG_BOX("CreateIndexBuffer Failed");
+		return;
+	}
+
+	// Copy the content of the original index buffer to the new one
+	if (SUCCEEDED(rhs.m_pIB->Lock(0, 0, &pSrcData, D3DLOCK_READONLY)) &&
+		SUCCEEDED(m_pIB->Lock(0, 0, &pDstData, 0)))
+	{
+		memcpy(pDstData, pSrcData, m_dwIdxSize * m_dwTriCnt);
+		m_pIB->Unlock();
+		rhs.m_pIB->Unlock();
+	}
+
 	m_RenderOrder = 3;
 	m_bRenderFlag = FALSE;
 }

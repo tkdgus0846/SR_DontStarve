@@ -78,7 +78,6 @@ void CIceTile::InteractGameObject(const InteractInfo* tInteractInfo)
 
 		pPlayer->IsOnIceTile(true);
 		_vec3 vDir = pPlayer->GetDeltaVec();
-		/*cout << vDir.x << "\t" << vDir.y << "\t" << vDir.z << endl;*/
 		vDir.Normalize();
 
 		if (fabs(vDir.x) <= 0.001f && fabs(vDir.y) <= 0.001f && fabs(vDir.z) <= 0.001f)

@@ -42,9 +42,12 @@ void CPyramid::LateUpdate_GameObject(void)
 
 void CPyramid::Render_GameObject(void)
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
+
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CPyramid::Add_Component()

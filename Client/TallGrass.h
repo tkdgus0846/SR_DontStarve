@@ -1,5 +1,10 @@
 #pragma once
+//#include "MapObj.h"
 #include "MapObj.h"
+BEGIN(Engine)
+class CRcTex;
+END
+
 class CTallGrass :
 	public CMapObj
 {
@@ -17,6 +22,15 @@ public:
 
 	static CGameObject*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	static const _tchar* Tag() { return L"TallGrass"; }
+
+	virtual void OnCollisionStay(const class Collision* collision);
+
+
+	void Burn(_float fTimeDelta);
+private:
+	_bool			m_bBurn = false;
+	Engine::CRcTex* m_pRcTex = nullptr;
+	_float			m_fV = 1.f;
 
 protected:
 	virtual void Free(void) override;

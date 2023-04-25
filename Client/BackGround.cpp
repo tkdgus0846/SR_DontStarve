@@ -2,6 +2,7 @@
 #include "BackGround.h"
 
 #include "Export_Function.h"
+#include "..\Engine\SoundMgr.h"
 
 #define STAR_NUM 30
 
@@ -45,12 +46,14 @@ _int CBackGround::Update_GameObject(const _float& fTimeDelta)
 	{
 		if (Engine::Key_Down(DIK_DOWNARROW))
 		{
+			STOP_PLAY_SOUND(L"sfxSelect.wav", SOUND_EFFECT, 1.f);
 			m_curSelectArrow += 1;
 			if (m_curSelectArrow > 2) m_curSelectArrow = 0;
 		}
 
 		if (Engine::Key_Down(DIK_UPARROW))
 		{
+			STOP_PLAY_SOUND(L"sfxSelect.wav", SOUND_EFFECT, 1.f);
 			m_curSelectArrow -= 1;
 			if (m_curSelectArrow < 0) m_curSelectArrow = 2;
 		}
@@ -58,7 +61,11 @@ _int CBackGround::Update_GameObject(const _float& fTimeDelta)
 		if (Engine::Key_Down(DIK_RETURN))
 		{
 			if (m_eGameMode == m_ePrevGameMode)
+			{
 				m_eGameMode = (SELECTGAMEMODE)m_curSelectArrow;
+				STOP_PLAY_SOUND(L"sfxStart.wav", SOUND_EFFECT, 1.f);
+			}
+				
 		}
 	}
 	

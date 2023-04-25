@@ -47,7 +47,8 @@ private:
 	CRcTex* m_dRcTex;
 	array<CComponent*, BOSS_MAP_END> m_arrMap;
 
-	_float m_CurHp = 0;
+	_float	m_CurHp = 0;
+	_bool	m_bStartPlayBGM;
 
 	vector<CGameObject*> vecBoss;
 

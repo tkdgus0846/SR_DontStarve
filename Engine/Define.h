@@ -8,6 +8,8 @@
 
 #define		COLLISON_IGNORE_TIME	0.5f
 
+#define		BGM_SOUND_VOLUME		0.5f
+
 #define		WINCX		800
 #define		WINCY		600
 

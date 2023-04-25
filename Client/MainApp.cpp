@@ -23,7 +23,6 @@ CMainApp::CMainApp()
 {
 }
 
-
 CMainApp::~CMainApp()
 {
 }
@@ -134,7 +133,6 @@ void CMainApp::Free(void)
 
 
 	// 룸 매니저에서 룸을 해제 하고 난뒤에 씬에서 해제하려면 문제가 있는가? 없음.
-	
 
 	FreeConsole();
 	Safe_Release(m_pGraphicDev);

@@ -865,6 +865,30 @@
     <ClInclude Include="BossRoomCamera.h">
       <Filter>GameObject\ObjCamera</Filter>
     </ClInclude>
+    <ClInclude Include="FloorLarge.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421204.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421409.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421559.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421721.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421865.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421871.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421874.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1576,6 +1600,30 @@
     <ClCompile Include="FloorLarge.cpp" />
     <ClCompile Include="BossRoomCamera.cpp">
       <Filter>GameObject\ObjCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421204.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421409.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421559.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421721.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421865.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421871.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421874.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
