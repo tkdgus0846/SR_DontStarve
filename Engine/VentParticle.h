@@ -18,5 +18,9 @@ public:
 
 
 	virtual void Reset() override;
+
+private:
+	_float		m_fUpPower;
+	
 };
 

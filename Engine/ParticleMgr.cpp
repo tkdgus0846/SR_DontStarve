@@ -89,7 +89,10 @@ CParticle * CParticleMgr::Pop(LPDIRECT3DDEVICE9 pDevice, const _tchar* ParticleN
 
 void CParticleMgr::Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name)
 {
-	
+	/*for (int i = 0; i < cnt; i++)
+	{
+		Pop(pDevice, name, cnt, { -500.f,-500.f,-500.f }, 0.001f, true, 0.001f);
+	}*/
 }
 
 void CParticleMgr::Push(const _tchar* name, CParticle* pParticle)
