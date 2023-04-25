@@ -426,7 +426,7 @@
     </ClInclude>
     <ClInclude Include="NormalBullet.h" />
     <ClInclude Include="NormalWeapon.h" />
-    <ClInclude Include="ObjCamera.h" />
+    <ClInclude Include="BossRoomCamera.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="BulletMgr.h" />
     <ClInclude Include="RandomLook.h" />
@@ -680,7 +680,7 @@
     </ClCompile>
     <ClCompile Include="NormalBullet.cpp" />
     <ClCompile Include="NormalWeapon.cpp" />
-    <ClCompile Include="ObjCamera.cpp" />
+    <ClCompile Include="BossRoomCamera.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="BulletMgr.cpp" />
     <ClCompile Include="RangeCheck.cpp" />

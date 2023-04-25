@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Camera.h"
 
+#include <chrono>
+#include <random>
 #include "Component.h"
 
 #include "Export_Function.h"
@@ -49,7 +51,6 @@ HRESULT CCamera::Ready_Camera(VIEWPARAMS& tViewParam, PROJPARAMS& tProjParam)
 
 _int CCamera::Update_Component(const _float & fTimeDelta)
 {
-
 	if (!m_bSwitch)
 		return 0;
 
@@ -114,6 +115,32 @@ void CCamera::Shake_Y(const _float & fTimeDelta)
 	}
 }
 
+void CCamera::Shake_LR(const _float & fTimeDelta)
+{
+	static _float fX = 0.f, fY = 0.f;
+
+	fX += fTimeDelta * 5.f;
+
+	fY = sinf(fX * 10.f) * sinf(fX * 10.f) * powf(0.4f, fX);
+
+	_vec3 vRight{};
+	_vec3 vLook = m_tViewParams.vAt - m_tViewParams.vEye;
+	vLook.RightUpFromLook(vRight, _vec3());
+	vRight.Normalize();
+
+	vRight *= fY;
+
+	m_tViewParams.vEye += vRight * m_fShakeForce;
+	m_tViewParams.vAt += vRight * m_fShakeForce;
+
+	if (fX > m_fShakeTime)
+	{
+		fX = 0.f;
+		fY = 0.f;
+		m_bShake = false;
+	}
+}
+
 void CCamera::Shake(const _float & fTimeDelta)
 {
 	switch (m_eType)
@@ -124,6 +151,10 @@ void CCamera::Shake(const _float & fTimeDelta)
 
 	case Engine::SHAKE_Y:
 		Shake_Y(fTimeDelta);
+		break;
+
+	case Engine::SHAKE_LR:
+		Shake_LR(fTimeDelta);
 		break;
 	}
 }

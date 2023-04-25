@@ -77,10 +77,12 @@ _int CSpreadShot::Spread_X(const _float & fTimeDelta)
 
 	_matrix matRot;
 	_vec3 vLook{};
+	_vec3 vPos = m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
+	vPos.y = 1.f;
 
 	for (_int i = 0; i < 4; ++i)
 	{
-		for (_int j = -12; j < 18; j += 6)
+		for (_int j = -18; j < 18; j += 6)
 		{
 			_float fAngle = D3DXToRadian((_float)m_iDegree + j);
 
@@ -89,14 +91,14 @@ _int CSpreadShot::Spread_X(const _float & fTimeDelta)
 
 			CBullet* bullet = CBulletMgr::GetInstance()->Pop(
 				m_pBulletTag, m_pGraphicDev,
-				m_pGameObject->m_pTransform->m_vInfo[INFO_POS],
-				vLook, m_vScale, true, m_fSpeed);
+				vPos, vLook, m_vScale, true, m_fSpeed);
 
 			Add_GameObject(bullet);
 		}
 		m_iDegree += 90;
 	}
 
+	m_iDegree = 0;
 	return BEHAVIOR_SUCCES;
 }
 
@@ -104,10 +106,12 @@ _int CSpreadShot::Spread_Plus(const _float & fTimeDelta)
 {
 	_matrix matRot;
 	_vec3 vLook{};
+	_vec3 vPos = m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
+	vPos.y = 1.f;
 
 	for (_int i = 0; i < 4; ++i)
 	{
-		for (_int j = -12; j < 18; j += 6)
+		for (_int j = -18; j < 18; j += 6)
 		{
 			_float fAngle = D3DXToRadian((_float)m_iDegree + j);
 
@@ -116,14 +120,14 @@ _int CSpreadShot::Spread_Plus(const _float & fTimeDelta)
 
 			CBullet* bullet = CBulletMgr::GetInstance()->Pop(
 				m_pBulletTag, m_pGraphicDev,
-				m_pGameObject->m_pTransform->m_vInfo[INFO_POS],
-				vLook, m_vScale, true, m_fSpeed);
+				vPos, vLook, m_vScale, true, m_fSpeed);
 
 			Add_GameObject(bullet);
 		}
 		m_iDegree += 90;
 	}
 
+	m_iDegree = 0;
 	return BEHAVIOR_SUCCES;
 }
 
@@ -131,6 +135,8 @@ _int CSpreadShot::Spread_Circle(const _float & fTimeDelta)
 {
 	_matrix matRot;
 	_vec3 vLook{};
+	_vec3 vPos = m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
+	vPos.y = 1.f;
 
 	while (m_iDegree < 360)
 	{
@@ -139,14 +145,14 @@ _int CSpreadShot::Spread_Circle(const _float & fTimeDelta)
 
 		CBullet* bullet = CBulletMgr::GetInstance()->Pop(
 			m_pBulletTag, m_pGraphicDev,
-			m_pGameObject->m_pTransform->m_vInfo[INFO_POS],
-			vLook, m_vScale, true, m_fSpeed);
+			vPos, vLook, m_vScale, true, m_fSpeed);
 
 		Add_GameObject(bullet);
 
 		m_iDegree += 6;
 	}
 
+	m_iDegree = 0;
 	return BEHAVIOR_SUCCES;
 }
 
@@ -160,13 +166,14 @@ _int CSpreadShot::Spread_Tornado(const _float & fTimeDelta)
 
 	_matrix matRot;
 	_vec3 vLook{};
+	_vec3 vPos = m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
+	vPos.y = 1.f;
 	D3DXMatrixRotationY(&matRot, D3DXToRadian((_float)m_iDegree));
 	D3DXVec3TransformNormal(&vLook, &_vec3(1.f, 0.f, 0.f), &matRot);
 
 	CBullet* bullet = CBulletMgr::GetInstance()->Pop(
 		m_pBulletTag, m_pGraphicDev,
-		m_pGameObject->m_pTransform->m_vInfo[INFO_POS],
-		vLook, m_vScale, true, m_fSpeed);
+		vPos, vLook, m_vScale, true, m_fSpeed);
 
 	if (bullet)
 		Add_GameObject(bullet);
@@ -181,7 +188,7 @@ _int CSpreadShot::Spread_Look(const _float & fTimeDelta)
 	_matrix matRot;
 	_vec3 vLook{};
 	_vec3 vPos = m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
-	vPos.y = 0.5f;
+	vPos.y = 1.f;
 
 	for (_int j = -12; j < 12; j += 6)
 	{
@@ -197,6 +204,7 @@ _int CSpreadShot::Spread_Look(const _float & fTimeDelta)
 		Add_GameObject(bullet);
 	}
 
+	m_iDegree = 0;
 	return BEHAVIOR_SUCCES;
 }
 
