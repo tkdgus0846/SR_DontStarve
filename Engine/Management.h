@@ -43,6 +43,7 @@ public:
 	_bool				Get_TimeStopped() const { return m_bTimeStopped; }
 
 	void				Set_StaticLayerArr_Management(vector<class CLayer*>* layerArr);
+
 private:
 	CScene*			m_pScene = nullptr;
 	class CGameObject*	m_pPlayer;

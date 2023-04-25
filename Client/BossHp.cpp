@@ -76,7 +76,7 @@ void CBossHp::Render_GameObject(void)
 		if (!IS_PLAYING(SOUND_BGM_BOSS))
 		{
 			STOP_ALL_BGM;
-			PLAY_BGM(L"finalboss4.wav", SOUND_BGM_BOSS, 0.5f);
+			PLAY_BGM(L"finalboss4.wav", SOUND_BGM_BOSS, BGM_SOUND_VOLUME);
 		}
 	}
 	else
@@ -84,7 +84,7 @@ void CBossHp::Render_GameObject(void)
 		if (!IS_PLAYING(SOUND_BGM_BOSS))
 		{
 			STOP_ALL_BGM;
-			PLAY_BGM(L"Boss.wav", SOUND_BGM_BOSS, 0.5f);
+			PLAY_BGM(L"Boss.wav", SOUND_BGM_BOSS, BGM_SOUND_VOLUME);
 		}
 	}
 

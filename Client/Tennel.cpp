@@ -76,7 +76,7 @@ void CTennel::OnCollisionEnter(const Collision * collsion)
 		if ((*ROOM_MGR->Get_CurRoom()->GetLayerVec())[LAYER_NPC]->Get_ObjectSize() != 0)
 		{
 			STOP_ALL_BGM;
-			PLAY_BGM(L"Shop.wav", SOUND_BGM_SHOP, 0.5f);
+			PLAY_BGM(L"Shop.wav", SOUND_BGM_SHOP, BGM_SOUND_VOLUME);
 		}
 		else
 		{
@@ -87,16 +87,16 @@ void CTennel::OnCollisionEnter(const Collision * collsion)
 				switch (m_eStageInfo)
 				{
 				case STAGE1:
-					PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD, 0.5f);
+					PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
 					break;
 				case STAGE2:
-					PLAY_BGM(L"Sector2.wav", SOUND_BGM_FIELD, 0.5f);
+					PLAY_BGM(L"Sector2.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
 					break;
 				case STAGE3:
-					PLAY_BGM(L"Sector3.wav", SOUND_BGM_FIELD, 0.5f);
+					PLAY_BGM(L"Sector3.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
 					break;
 				case STAGE4:
-					PLAY_BGM(L"Sector4.wav", SOUND_BGM_FIELD, 0.5f);
+					PLAY_BGM(L"Sector4.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
 					break;
 				}
 				

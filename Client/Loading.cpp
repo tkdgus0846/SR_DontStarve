@@ -29,8 +29,9 @@
 #include "Snow.h"
 #include "..\Engine\SandStorm.h"
 #include "WaterTile.h"
+#include "..\Engine\VentParticle.h"
 
-#define LEVEL1_EDIT_DATANAME L"Level4.dat"
+#define LEVEL1_EDIT_DATANAME L"Level1.dat"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -549,6 +550,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"UpSmoke_Particle", CUpSmokeParticle::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"JumpSmoke_Particle", CJumpSmokeParticle::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"PyramidDestory_Particle", CPyramidDestoryParticle::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Vent_Particle", CVentParticle::Create(m_pGraphicDev)), E_FAIL);
 
 	/////////////////////////// 파티클 텍스쳐 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Smoke_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Particle/smoke.png")), E_FAIL);
@@ -646,7 +648,7 @@ _uint CLoading::Loading_ForStage(void)
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");
