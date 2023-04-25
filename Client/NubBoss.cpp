@@ -69,6 +69,8 @@ _bool CNubBoss::Dead_Production()
 {
 	static _float fDest = 0.2f;
 	m_fCurTime1 = Get_WorldTime();
+
+	Engine::Shake_Camera(SHAKE_LR, 2.f, 3.4f);
 	if (m_fCurTime1 - m_fPreTime1 < 3.5f)
 	{
 		_vec3 vEPos{};

@@ -8,7 +8,7 @@
 #include "Walker.h"
 #include "Turret.h"
 #include "SkyBox.h"
-#include "BossRoomCamera.h"
+#include "CutSceneCamera.h"
 #include "Room.h"
 #include "RoomMgr.h"
 #include "ImManager.h"
@@ -55,6 +55,7 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
+	__super::Ready_Scene();
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
 
 	m_StageInfo = LOADING_STAGE;
@@ -76,7 +77,7 @@ HRESULT CStage::Ready_Scene(void)
 	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
 	/*Add_GameObject(LAYER_MONSTER, L"Monster_Guppi_Blue_Texture", CGuppi::Create(m_pGraphicDev));*/
 
-	Add_GameObject(CBossRoomCamera::Create(m_pGraphicDev));	
+	Add_GameObject(CCutSceneCamera::Create(m_pGraphicDev));	
 	
 	// UI
 	Add_GameObject(CBulletGauge::Create(m_pGraphicDev));

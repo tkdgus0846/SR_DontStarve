@@ -5,6 +5,7 @@
 IMPLEMENT_SINGLETON(CRenderer)
 
 CRenderer::CRenderer()
+	:m_bRenderUI_Switch(true)
 {
 }
 
@@ -35,11 +36,15 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Render_Priority(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
-	Render_UI(pGraphicDev);
 
-	Render_Pre_AlphaUI(pGraphicDev);
-	Render_AlphaUI(pGraphicDev);
-	Render_After_AlphaUI(pGraphicDev);
+	if (m_bRenderUI_Switch == true)
+	{
+		Render_UI(pGraphicDev);
+
+		Render_Pre_AlphaUI(pGraphicDev);
+		Render_AlphaUI(pGraphicDev);
+		Render_After_AlphaUI(pGraphicDev);
+	}
 
 	if (m_bColorInversion)
 		pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, prevColorArg1);

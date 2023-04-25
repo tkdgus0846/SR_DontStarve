@@ -131,26 +131,20 @@ void CManagement::Remove_GameObject(LAYERID layerID, CGameObject* obj)
 	m_pScene->Remove_GameObject(layerID, obj);
 }
 
-CGameObject * CManagement::Get_Player()
-{
-	//NULL_CHECK_RETURN_MSG(m_pPlayer, nullptr, L"�÷��̾ ���� �߰��� �� ����.");
-	return m_pPlayer;
-}
-
 void CManagement::Set_Player(CGameObject* player)
 {
 	if (m_pPlayer) MessageBox(NULL, L"�̹� �÷��̾ �����Ǿ� ����", L"System Message", MB_OK);
 	m_pPlayer = player;
 }
 
-void CManagement::Start_WorldTimer()
-{
-	m_bPlayingWorldTimer = true;
+void CManagement::Stop_SlowTime()
+{ 
+	m_pScene->Stop_SlowTime();
 }
 
-void CManagement::Stop_WorldTimer()
+void CManagement::Reset_SlowTime(const _float & fTimeDelta)
 {
-	m_bPlayingWorldTimer = false;
+	m_pScene->Reset_SlowTime(fTimeDelta);
 }
 
 void CManagement::Set_StaticLayerArr_Management(vector<CLayer*>* layerArr)

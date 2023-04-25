@@ -1,12 +1,12 @@
 #pragma once
 #include "Behavior.h"
 
-class CIsNotRangeInPlayer : public CBehavior
+class CRangeInPlayer : public CBehavior
 {
 private:
-	explicit CIsNotRangeInPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CIsNotRangeInPlayer(const CIsNotRangeInPlayer& rhs);
-	virtual ~CIsNotRangeInPlayer();
+	explicit CRangeInPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CRangeInPlayer(const CRangeInPlayer& rhs);
+	virtual ~CRangeInPlayer();
 
 public:
 	virtual HRESULT Ready_Behavior() override;
@@ -14,8 +14,13 @@ public:
 	virtual void LateUpdate_Component(void) override {}
 	virtual void Render_Component(void) override {}
 
+	void Set_ReturnVal(_bool bSwitch) { m_bReturn = bSwitch; }
+
+private:
+	_bool m_bReturn;
+
 public:
-	static CIsNotRangeInPlayer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CRangeInPlayer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;
 
 private:
