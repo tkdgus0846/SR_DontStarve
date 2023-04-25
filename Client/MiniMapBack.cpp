@@ -183,7 +183,6 @@ void CMiniMapBack::MiniMapMove()
 			m_fPosX = -(m_pPlayerMoveX / 1.180555f) + 337.f;
 			m_fPosY = -(m_pPlayerMoveZ / 1.180555f) - 190.f;
 			 
-			cout << m_pPlayerMoveZ << endl;
 		}
 	}
 }

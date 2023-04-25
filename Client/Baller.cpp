@@ -41,7 +41,7 @@ _int CBaller::Update_GameObject(const _float & fTimeDelta)
 	dynamic_cast<CCollider*>(Get_Component(L"BodyCollider", ID_ALL))->
 		Set_BoundingBox({ 2.f, 2.f, 2.f }, { 0.f, fVal, 0.f });
 
-	cout << fVal << endl;
+	/*cout << fVal << endl;*/
 	m_pTransform->m_vInfo[INFO_POS].y = 3.f;
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 
