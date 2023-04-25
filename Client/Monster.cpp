@@ -202,7 +202,7 @@ CSequence* CMonster::Make_Patrol_AI(const _float& fWaitTime, const _float& fMove
 	CWait* pTaskWait = dynamic_cast<CWait*>(Engine::Clone_Proto(L"TSK_Wait", this));
 	NULL_CHECK_RETURN(pTaskWait, nullptr);
 
-	CIsNotRangeInPlayer* pDecFunc = dynamic_cast<CIsNotRangeInPlayer*>(Engine::Clone_Proto(L"DEC_IsNotRangeInPlayer", this));
+	CRangeInPlayer* pDecFunc = dynamic_cast<CRangeInPlayer*>(Engine::Clone_Proto(L"DEC_RangeInPlayer", this));
 	NULL_CHECK_RETURN(pDecFunc, nullptr);
 
 	// 부품 초기설정
@@ -210,10 +210,10 @@ CSequence* CMonster::Make_Patrol_AI(const _float& fWaitTime, const _float& fMove
 	pTaskMovePatrol->Set_Timer(fMoveTime);
 	pTaskMovePatrol->Set_Magnifi();
 	pTaskRandomLook->Set_IsLook_Aircraft(false);
+	pDecFunc->Set_ReturnVal(false);
 
 	// 부품 조립
-	FAILED_CHECK_RETURN(pSQPatrol->Add_Decorator(pDecFunc), nullptr);
-
+	FAILED_CHECK_RETURN(pSQPatrol->Add_Component(ID_UPDATE, L"DEC_", pDecFunc), nullptr);
 	FAILED_CHECK_RETURN(pSQPatrol->Add_Component(ID_UPDATE, L"TSK_RandomLook", pTaskRandomLook), nullptr);
 	FAILED_CHECK_RETURN(pSQPatrol->Add_Component(ID_UPDATE, L"TSK_MovePatrol", pTaskMovePatrol), nullptr);
 	FAILED_CHECK_RETURN(pSQPatrol->Add_Component(ID_UPDATE, L"TSK_Wait", pTaskWait), nullptr);
@@ -232,7 +232,7 @@ CSequence* CMonster::Make_Follow_AI(const _float& fTimer, _bool bIsRangeCheck)
 	CLookAtTarget* pTskLookAtTarget = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
 	NULL_CHECK_RETURN(pTskLookAtTarget, nullptr);
 
-	CIsRangeInPlayer* pDecIsRangeInPlayer = dynamic_cast<CIsRangeInPlayer*>(Engine::Clone_Proto(L"DEC_IsRangeInPlayer", this));
+	CRangeInPlayer* pDecIsRangeInPlayer = dynamic_cast<CRangeInPlayer*>(Engine::Clone_Proto(L"DEC_RangeInPlayer", this));
 	NULL_CHECK_RETURN(pDecIsRangeInPlayer, nullptr);
 	CTimeInLimit* pDecTimeInLimit = dynamic_cast<CTimeInLimit*>(Engine::Clone_Proto(L"DEC_TimeInLimit", this));
 	NULL_CHECK_RETURN(pDecTimeInLimit, nullptr);
@@ -240,6 +240,7 @@ CSequence* CMonster::Make_Follow_AI(const _float& fTimer, _bool bIsRangeCheck)
 	// 부품 초기설정
 	pDecTimeInLimit->Set_Timer(fTimer);
 	pTskMovePlayer->Set_Magnifi();
+	pDecIsRangeInPlayer->Set_ReturnVal(true);
 
 	// 부품 조립
 	if (bIsRangeCheck)
@@ -942,13 +943,14 @@ HRESULT CMonster::Set_TurretAI(const _float& fCoolTime, _bool bIsCheckPlayer)
 	CAttack* pTskAttack = dynamic_cast<CAttack*>(Engine::Clone_Proto(L"TSK_Attack", this));
 	NULL_CHECK_RETURN(pTskAttack, E_FAIL);
 
-	CIsRangeInPlayer* pDecIsRangeInPlayer = dynamic_cast<CIsRangeInPlayer*>(Engine::Clone_Proto(L"DEC_IsRangeInPlayer", this));
+	CRangeInPlayer* pDecIsRangeInPlayer = dynamic_cast<CRangeInPlayer*>(Engine::Clone_Proto(L"DEC_RangeInPlayer", this));
 	NULL_CHECK_RETURN(pDecIsRangeInPlayer, E_FAIL);
 
 	// 부품 초기설정
 	pTskAttack->Set_BulletKey(L"EnemyBullet");
 	pTskAttack->Set_BulletSpeed(50.f);
-	pTskAttack->Set_Timer(fCoolTime);
+	pTskAttack->Set_Timer(fCoolTime); 
+	pDecIsRangeInPlayer->Set_ReturnVal(true);
 
 	// 부품 조립
 	FAILED_CHECK_RETURN(m_pRoot->Add_Component(ID_UPDATE, L"SQ_ChaseAtk", pSQChaseAtk), E_FAIL);

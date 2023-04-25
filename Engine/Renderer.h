@@ -29,15 +29,19 @@ public:
 	void		Render_UI(LPDIRECT3DDEVICE9& pGraphicDev);
 
 	void		ToggleColorInversionFlag();
+	void		ToggleRenderUI() { m_bRenderUI_Switch = m_bRenderUI_Switch == true ? false : true; }
 	_bool		GetColorInversion() { return m_bColorInversion; }
+	_bool		GetIsRenderUI() { return m_bRenderUI_Switch; }
 
 private:
 	list<CGameObject*>		m_RenderGroup[RENDER_END];
 
 private:
 	virtual void		Free(void);
+
 private:
 	_bool	m_bColorInversion = false;
+	_bool	m_bRenderUI_Switch;
 };
 
 END

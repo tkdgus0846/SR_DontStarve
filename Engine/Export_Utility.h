@@ -72,6 +72,8 @@ inline HRESULT			Set_Scene(CScene* pScene, _bool bChangingStage = false);
 inline _int			Update_Management(const _float& fTimeDelta);
 inline void			LateUpdate_Management();
 inline void			Render_Management(LPDIRECT3DDEVICE9 pGraphicDev);
+inline void			Stop_SlowTime();
+inline void			Reset_SlowTime(const _float & fTimeDelta);
 
 
 inline HRESULT		Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);

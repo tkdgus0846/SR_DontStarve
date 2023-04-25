@@ -83,6 +83,16 @@ void			Render_Management(LPDIRECT3DDEVICE9 pGraphicDev)
 	CManagement::GetInstance()->Render_Management(pGraphicDev);
 }
 
+void			Stop_SlowTime()
+{
+	CManagement::GetInstance()->Stop_SlowTime();
+}
+
+void			Reset_SlowTime(const _float & fTimeDelta)
+{
+	CManagement::GetInstance()->Reset_SlowTime(fTimeDelta);
+}
+
 HRESULT		Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 {
 	return CProtoMgr::GetInstance()->Ready_Proto(pProtoTag, pComponent);

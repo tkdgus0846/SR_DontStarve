@@ -382,8 +382,7 @@
     <ClInclude Include="Scope.h" />
     <ClInclude Include="SellItem.h" />
     <ClInclude Include="Serializable.h" />
-    <ClInclude Include="IsNotRangeInPlayer.h" />
-    <ClInclude Include="IsRangeInPlayer.h" />
+    <ClInclude Include="RangeInPlayer.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Jump.h" />
     <ClInclude Include="LavaTile.h" />
@@ -427,7 +426,7 @@
     </ClInclude>
     <ClInclude Include="NormalBullet.h" />
     <ClInclude Include="NormalWeapon.h" />
-    <ClInclude Include="BossRoomCamera.h" />
+    <ClInclude Include="CutSceneCamera.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="BulletMgr.h" />
     <ClInclude Include="RandomLook.h" />
@@ -619,8 +618,7 @@
     <ClCompile Include="ImMenuBar.cpp" />
     <ClCompile Include="ImTest.cpp" />
     <ClCompile Include="ImWindow.cpp" />
-    <ClCompile Include="IsNotRangeInPlayer.cpp" />
-    <ClCompile Include="IsRangeInPlayer.cpp" />
+    <ClCompile Include="RangeInPlayer.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="Jump.cpp" />
@@ -682,7 +680,7 @@
     </ClCompile>
     <ClCompile Include="NormalBullet.cpp" />
     <ClCompile Include="NormalWeapon.cpp" />
-    <ClCompile Include="BossRoomCamera.cpp" />
+    <ClCompile Include="CutSceneCamera.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="BulletMgr.cpp" />
     <ClCompile Include="RangeCheck.cpp" />

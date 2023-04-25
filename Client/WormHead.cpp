@@ -208,7 +208,7 @@ _bool CWormHead::Dead_Production()
 	static _float fDest = 0.2f;
 	m_fCurTime2 = Get_WorldTime();
 
-	Shake_Camera(SHAKE_X, 1.5f, 3.4f);
+	Engine::Shake_Camera(SHAKE_LR, 2.f, 3.4f);
 	if (m_fCurTime2 - m_fPreTime2 < 3.5f)
 	{
 		_vec3 vEPos{};

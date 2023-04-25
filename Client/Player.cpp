@@ -418,7 +418,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	{
 		CCamera* playerCamera = dynamic_cast<CCamera*>(Get_Component(L"Player_Camera", ID_UPDATE));
 
-		playerCamera->Set_FOV(D3DXToRadian(60.f));
+		playerCamera->Set_FOV(60.f);
 	}
 
 	if (Engine::Get_DIMouseMove(DIMS_Z) > 0.f)

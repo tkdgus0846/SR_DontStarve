@@ -582,8 +582,7 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_TimeInLimit", CTimeInLimit::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_RangeCheck", CRangeCheck::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_IsRangeInPlayer", CIsRangeInPlayer::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_IsNotRangeInPlayer", CIsNotRangeInPlayer::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_RangeInPlayer", CRangeInPlayer::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_NotCollisionWall", CNotCollisionWall::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_CoolTime", CCoolTime::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_BoolCheck", CBoolCheck::Create(m_pGraphicDev)), E_FAIL);
@@ -592,7 +591,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Selector", CSelector::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Root", CRoot::Create(m_pGraphicDev)), E_FAIL);
 
-	Set_String(L"Room Loading..........");	
+	Set_String(L"Room Loading..........");
 	// ==임시 코드==
 	const auto& uMapProto = Engine::CProtoMgr::GetInstance()->Get_ProtoMap();
 
@@ -630,25 +629,18 @@ _uint CLoading::Loading_ForStage(void)
 	Set_String(L"Room Loading..........");
 	
 	ROOM_MGR->Create_Default_Room(STAGE1);	
-	
 
-	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-
-	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-
-	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -3.f, 25.f }));
-	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-	
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 	
-	//임시로 한거임 사용하고 다시 밑에 주석으로 되돌리기.
-	//CFileSystem::Load(L"SH.dat");
-	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
+	//CFileSystem::Load(LEVEL1_EDIT_DATANAME);
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+
+	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+
 	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+
 
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");
@@ -666,7 +658,6 @@ _uint CLoading::Loading_ForStage2(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 
-	
 
 	CFileSystem::Load(L"Level2.dat");
 
