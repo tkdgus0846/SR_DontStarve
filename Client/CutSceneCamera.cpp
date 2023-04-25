@@ -28,13 +28,17 @@ HRESULT CCutSceneCamera::Ready_GameObject(void)
 
 _int CCutSceneCamera::Update_GameObject(const _float & fTimeDelta)
 {
-	if (Get_WorldTime() < 10.f)
+	if (Get_WorldTime() < 5.f)
 		m_bIsDone = false;
 
 	if (ROOM_MGR->Get_CurRoom()->Get_Room_Index() == 4)
 		CutScene();
 	else
-		On_Camera(L"Player_Camera");
+	{
+		// On_Camera(L"Player_Camera");
+		m_bIsDone = false;
+	}
+		
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -78,6 +82,7 @@ void CCutSceneCamera::CutScene()
 
 		Engine::Reset_SlowTime(fps60);
 		On_Camera(L"Player_Camera");
+		fTime = 0.f;
 		return;
 	}
 

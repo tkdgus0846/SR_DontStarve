@@ -92,6 +92,7 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	m_PosList.push_back(m_pTransform->m_vInfo[INFO_POS]);
 	if (m_PosList.size() > 2) m_PosList.pop_front();
 
+	cout << Get_WorldTime() << endl;
 	InteractTile(fTimeDelta);
 	/*cout << m_pTransform->m_vInfo[INFO_LOOK].x << " " << m_pTransform->m_vInfo[INFO_LOOK].y << " " << m_pTransform->m_vInfo[INFO_LOOK].z << endl;*/
 

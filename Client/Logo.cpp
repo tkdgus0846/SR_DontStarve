@@ -26,6 +26,8 @@ CLogo::~CLogo()
 
 HRESULT CLogo::Ready_Scene(void)
 {
+	m_SlowTime = 0.016;
+
 	FAILED_CHECK_RETURN(Ready_Proto(), E_FAIL);
 
 	m_pBackGround = CBackGround::Create(m_pGraphicDev);
