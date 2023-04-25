@@ -905,6 +905,15 @@
     <ClInclude Include="CutSceneCamera.h">
       <Filter>GameObject\ObjCamera</Filter>
     </ClInclude>
+    <ClInclude Include="SnowMan.h">
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowTree.h">
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowSoTree.h">
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1656,6 +1665,15 @@
     </ClCompile>
     <ClCompile Include="CutSceneCamera.cpp">
       <Filter>GameObject\ObjCamera</Filter>
+    </ClCompile>  
+    <ClCompile Include="SnowMan.cpp">
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SnowSoTree.cpp">
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SnowTree.cpp">
+      <Filter>GameObject\MapObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

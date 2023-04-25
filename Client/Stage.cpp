@@ -114,16 +114,18 @@ HRESULT CStage::Ready_Scene(void)
 
 	ROOM_MGR->Set_Tennel_Texture(STAGE1);
 
-	// ±¤¿ø ÃÊ±âÈ­
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 	D3DLIGHT9		tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tLightInfo.Direction = _vec3(0.f, -1.f, 0.f);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_NORMALIZENORMALS, true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ï¿½ï¿½ï¿½
 
 	STOP_ALL_BGM;
 	PLAY_BGM(L"finalboss4.wav", SOUND_BGM_BOSS, BGM_SOUND_VOLUME);
@@ -136,7 +138,7 @@ HRESULT CStage::Ready_Scene(void)
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
 	//if (m_bNextStageCondition == true) return 0;
-	/* ÀÓ½Ã Å×½ºÆ® ÄÚµåÀÓ. */
+	/* ï¿½Ó½ï¿½ ï¿½×½ï¿½Æ® ï¿½Úµï¿½ï¿½ï¿½. */
 	if (Key_Down(DIK_I))
 	{
 		Next_Stage();

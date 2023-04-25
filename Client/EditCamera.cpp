@@ -16,7 +16,10 @@
 #include "Creature.h"
 #include "Tree.h"
 #include "TallGrass.h"
-
+#include "SnowTree.h"
+#include "SnowSoTree.h"
+#include "Slider.h"
+#include "SnowMan.h"
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 	, m_fSpeed(0.f)
@@ -107,9 +110,15 @@ void CEditCamera::CreateMapObject(CImInspector * pWindow)
 		break;
 	}
 
-	if (dynamic_cast<CTree*>(pObj) || dynamic_cast<CTallGrass*>(pObj))
+	if (dynamic_cast<CTree*>(pObj) || dynamic_cast<CTallGrass*>(pObj)
+		|| dynamic_cast<CSnowSoTree*>(pObj) || dynamic_cast<CSlider*>(pObj)
+		|| dynamic_cast<CSnowMan*>(pObj))
 	{
 		vPos.y += pObj->m_pTransform->Get_Scale().y;
+	}
+	else if (dynamic_cast<CSnowTree*>(pObj))
+	{
+		vPos.y += 4.f;
 	}
 	
 

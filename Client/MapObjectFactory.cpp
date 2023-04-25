@@ -5,6 +5,10 @@
 #include "Slider.h"
 #include "TallGrass.h"
 #include "Tree.h"
+#include "SnowTree.h"
+#include "SnowSoTree.h"
+#include "SnowMan.h"
+
 IMPLEMENT_SINGLETON(CMapObjectFactory)
 
 CMapObjectFactory::CMapObjectFactory()
@@ -25,7 +29,10 @@ HRESULT CMapObjectFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CSoftPyramid::Tag(),	&CSoftPyramid::Create);
 	Register(CSlider::Tag(),		&CSlider::Create);
 	Register(CTallGrass::Tag(),		&CTallGrass::Create);
-	Register(CTree::Tag(),			&CTree::Create);
+	Register(CTree::Tag(), &CTree::Create);
+	Register(CSnowTree::Tag(), &CSnowTree::Create);
+	Register(CSnowSoTree::Tag(), &CSnowSoTree::Create);
+	Register(CSnowMan::Tag(), &CSnowMan::Create);
 
 	ExtractTextureKey();
 

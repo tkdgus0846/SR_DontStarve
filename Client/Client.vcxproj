@@ -435,7 +435,10 @@
     <ClInclude Include="Room.h" />
     <ClInclude Include="Rush.h" />
     <ClInclude Include="BootsItem.h" />
+    <ClInclude Include="SnowMan.h" />
+    <ClInclude Include="SnowSoTree.h" />
     <ClInclude Include="SnowTile.h" />
+    <ClInclude Include="SnowTree.h" />
     <ClInclude Include="SoftPyramid.h" />
     <ClInclude Include="Cryder.h" />
     <ClInclude Include="Sonic.h" />
@@ -688,7 +691,10 @@
     <ClCompile Include="RandomLook.cpp" />
     <ClCompile Include="Rush.cpp" />
     <ClCompile Include="BootsItem.cpp" />
+    <ClCompile Include="SnowMan.cpp" />
+    <ClCompile Include="SnowSoTree.cpp" />
     <ClCompile Include="SnowTile.cpp" />
+    <ClCompile Include="SnowTree.cpp" />
     <ClCompile Include="SoftPyramid.cpp" />
     <ClCompile Include="Cryder.cpp" />
     <ClCompile Include="Sonic.cpp" />
