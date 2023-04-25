@@ -20,6 +20,8 @@
 #include "TreeBoss.h"
 #include "WormHead.h"
 
+#include "CheckPoint.h"
+
 #include "NubBoss.h"
 #include "TreeBoss.h"
 #include "WormHead.h"
@@ -472,6 +474,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Tall_Grass_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/tall_grass.png")), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Tree_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/tree.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"CheckPoint_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/checkpoint_%d.png", 8)), E_FAIL);
 
 	// UI
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BulletBar_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/hud_secondary_ext_edit.png")), E_FAIL);
@@ -639,14 +642,15 @@ _uint CLoading::Loading_ForStage(void)
 	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
-	
+	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
+
 	//임시로 한거임 사용하고 다시 밑에 주석으로 되돌리기.
 	//CFileSystem::Load(L"SH.dat");
 	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");

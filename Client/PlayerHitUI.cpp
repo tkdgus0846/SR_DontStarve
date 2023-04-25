@@ -46,7 +46,7 @@ _int CPlayerHitUI::Update_GameObject(const _float & fTimeDelta)
 		m_fTime = 0.f;
 	}
 
-	Add_RenderGroup(RENDER_PRE_ALPHA_UI, this);
+	Add_RenderGroup(RENDER_FINAL_UI, this);
 
 	__super::Update_GameObject(fTimeDelta);
 

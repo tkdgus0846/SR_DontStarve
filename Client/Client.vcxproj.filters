@@ -908,6 +908,7 @@
     <ClInclude Include="FloorLarge421871.h">
       <Filter>GameObject\Tile\Deco</Filter>
     </ClInclude>
+    <ClInclude Include="CheckPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1663,6 +1664,7 @@
     <ClCompile Include="FloorLarge421874.cpp">
       <Filter>GameObject\Tile\Deco</Filter>
     </ClCompile>
+    <ClCompile Include="CheckPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">

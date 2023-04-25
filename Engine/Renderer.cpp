@@ -40,6 +40,7 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Render_Pre_AlphaUI(pGraphicDev);
 	Render_AlphaUI(pGraphicDev);
 	Render_After_AlphaUI(pGraphicDev);
+	Render_Final_AlphaUI(pGraphicDev);
 
 	if (m_bColorInversion)
 		pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, prevColorArg1);
@@ -106,6 +107,12 @@ void Engine::CRenderer::Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 void Engine::CRenderer::Render_After_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	for (auto& iter : m_RenderGroup[RENDER_AFTER_ALPHA_UI])
+		iter->Render_GameObject();
+}
+
+void CRenderer::Render_Final_AlphaUI(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	for (auto& iter : m_RenderGroup[RENDER_FINAL_UI])
 		iter->Render_GameObject();
 
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
