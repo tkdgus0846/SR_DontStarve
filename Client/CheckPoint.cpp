@@ -6,6 +6,7 @@
 CCheckPoint::CCheckPoint(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMapObj(pGraphicDev)
 {
+	Set_ObjTag(Tag());
 }
 
 CCheckPoint::~CCheckPoint()

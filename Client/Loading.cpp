@@ -641,7 +641,7 @@ _uint CLoading::Loading_ForStage(void)
 	ROOM_MGR->Create_Default_Room(STAGE1);	
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
-	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
+	/*ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));*/
 	
 	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
@@ -715,6 +715,10 @@ _uint CLoading::Loading_ForStage4(void)
 
 
 	ROOM_MGR->Push_Back_Obj(1, particle);
+
+	particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"Snow_Particle", 80, { 25.f,25.f,25.f }, { 0.f,0.f,0.f }, { 50.f,50.f,50.f }, true);
+
+	ROOM_MGR->Push_Back_Obj(0, particle);
 
 	particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"Snow_Particle", 80, { 25.f,25.f,145.f }, { 0.f,0.f,0.f }, { 50.f,50.f,50.f }, true);
 

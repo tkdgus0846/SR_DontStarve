@@ -33,6 +33,8 @@ CMyEdit::~CMyEdit()
 
 HRESULT CMyEdit::Ready_Scene(void)
 {
+	m_SlowTime = 0.016f;
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
 	//Add_GameObject(LAYER_ENVIRONMENT, L"Map", CRoomMgr::Create(m_pGraphicDev));
 	Add_GameObject(CSkyBox::Create(m_pGraphicDev));

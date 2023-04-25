@@ -24,7 +24,7 @@ public:
 	virtual void OnCollisionEnter(const class Collision* collsion);
 
 	static CGameObject*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	static const _tchar* Tag() { return L"Slider"; }
+	static const _tchar* Tag() { return L"CheckPoint"; }
 
 protected:
 	virtual void Free(void) override;
