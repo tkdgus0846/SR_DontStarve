@@ -473,6 +473,13 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Tree_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/tree.png")), E_FAIL);
 
+	// Snow Map Obj
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SnowSoTree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Snow/SnowSoTree.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SnowTree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Snow/SnowTree.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SnowMan", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Snow/SnowMan_%d.png", 4)), E_FAIL);
+
 	// UI
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BulletBar_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/hud_secondary_ext_edit.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BulletGauge_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/hud_ammo_3.png")), E_FAIL);

@@ -112,12 +112,15 @@ HRESULT CStage::Ready_Scene(void)
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tLightInfo.Direction = _vec3(0.f, -1.f, 0.f);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_NORMALIZENORMALS, true); // 법선계산 왜곡방지
 
+	// 배경음악 셑잉
 	STOP_ALL_SOUND;
 	PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD, 0.5f);
 

@@ -1,5 +1,4 @@
 #pragma once
-//#include "MapObj.h"
 #include "MapObj.h"
 BEGIN(Engine)
 class CRcTex;

@@ -44,6 +44,17 @@ void CPyramid::Render_GameObject(void)
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
+	D3DMATERIAL9			tMtrl;
+	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
+
+	tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
+	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
+	tMtrl.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&tMtrl);
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	__super::Render_GameObject();
 

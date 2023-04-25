@@ -26,12 +26,11 @@ _int CTallGrass::Update_GameObject(const _float & fTimeDelta)
 {
 	if (GetDead())
 		return OBJ_DEAD;
-	if (GetAsyncKeyState(VK_SPACE))
-		m_bBurn = true;
 
 	Burn(fTimeDelta);
-	//m_pTransform->Rot_Bill(0.01f);
+
 	__super::Update_GameObject(fTimeDelta);
+
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 

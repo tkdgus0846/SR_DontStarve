@@ -16,6 +16,7 @@ public:
 
 public:
 	static CFrustrumNormalTex*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
 	virtual CComponent*	Clone(void);
 private:
 	virtual void Free(void);

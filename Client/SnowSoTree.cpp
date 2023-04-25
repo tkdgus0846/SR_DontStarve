@@ -1,17 +1,18 @@
-#include "Tree.h"
+#include "SnowSoTree.h"
 #include "Export_Function.h"
 
-CTree::CTree(LPDIRECT3DDEVICE9 pGraphicDev)
+
+CSnowSoTree::CSnowSoTree(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMapObj(pGraphicDev)
 {
 	Set_ObjTag(Tag());
 }
 
-CTree::~CTree()
+CSnowSoTree::~CSnowSoTree()
 {
 }
 
-HRESULT CTree::Ready_GameObject(void)
+HRESULT CSnowSoTree::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
 
@@ -21,7 +22,7 @@ HRESULT CTree::Ready_GameObject(void)
 	return S_OK;
 }
 
-_int CTree::Update_GameObject(const _float & fTimeDelta)
+_int CSnowSoTree::Update_GameObject(const _float & fTimeDelta)
 {
 	if (GetDead())
 		return OBJ_DEAD;
@@ -34,42 +35,35 @@ _int CTree::Update_GameObject(const _float & fTimeDelta)
 	return OBJ_NOEVENT;
 }
 
-void CTree::LateUpdate_GameObject(void)
-{
-	__super::LateUpdate_GameObject();
-}
-
-void CTree::Render_GameObject(void)
+void CSnowSoTree::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
 	__super::Render_GameObject();
 }
 
-HRESULT CTree::Add_Component()
+HRESULT CSnowSoTree::Add_Component()
 {
 	CComponent *pComponent;
-
 	pComponent = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pComponent });
 
-	pComponent = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Tree_Texture", this));
+	pComponent = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"SnowSoTree", this));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"Tree_Texture", pComponent });
+	m_uMapComponent[ID_RENDER].insert({ L"SnowSoTree", pComponent });
 
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_OBJ));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox({ 2.f,5.f,2.f });
-	//pCollider->Set_BoundingBox(m_pTransform->Get_Scale() * 4.f);
+	pCollider->Set_BoundingBox(m_pTransform->Get_Scale() * 4.f);
+
+	return S_OK;
 }
 
-
-
-CGameObject * CTree::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject * CSnowSoTree::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CTree* pInstance = new CTree(pGraphicDev);
+	CSnowSoTree* pInstance = new CSnowSoTree(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -80,3 +74,6 @@ CGameObject * CTree::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
+void CSnowSoTree::OnCollisionStay(const Collision * collision)
+{
+}
