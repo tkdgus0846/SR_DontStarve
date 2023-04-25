@@ -30,7 +30,7 @@
 #include "..\Engine\SandStorm.h"
 #include "WaterTile.h"
 
-#define LEVEL1_EDIT_DATANAME L"Level1.dat"
+#define LEVEL1_EDIT_DATANAME L"Level4.dat"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)

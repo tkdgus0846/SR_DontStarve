@@ -46,6 +46,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pCurWeapon(nullptr)
 	, m_iCoin(100)
 	, m_bInvicible(true)
+	, m_bColorInversion(false)
 {
 	Set_LayerID(LAYER_PLAYER);
 	Set_ObjTag(L"Player");
@@ -389,10 +390,21 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			m_pCurWeapon->Shot();
 	}
 
+	
+
 	if (Engine::Mouse_Pressing(DIM_RB))
 	{
+		if (m_bColorInversion == false)
+			CRenderer::GetInstance()->ToggleColorInversionFlag();
+
+		m_bColorInversion = true;
 		Is_SlowTime = true;
 		m_fUltimateGuage -= 0.2f;
+	}
+	else if (Engine::Mouse_Up(DIM_RB))
+	{
+		m_bColorInversion = false;
+		CRenderer::GetInstance()->ToggleColorInversionFlag();
 	}
 
 	/*if (Engine::Mouse_Pressing(DIM_RB))

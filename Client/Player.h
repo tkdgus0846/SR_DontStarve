@@ -97,6 +97,7 @@ private:
 	_float					m_fUltimateGuageHealTime = 0.f;
 
 	_bool					m_bInvicible;
+	_bool					m_bColorInversion;
 
 
 	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;
