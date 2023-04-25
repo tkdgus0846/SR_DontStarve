@@ -224,9 +224,6 @@
     <ClInclude Include="BackGround.h">
       <Filter>GameObject\UI\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="ObjCamera.h">
-      <Filter>GameObject\ObjCamera</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>GameObject\Player</Filter>
     </ClInclude>
@@ -584,9 +581,6 @@
     <ClInclude Include="LaserWeapon.h">
       <Filter>GameObject\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="OnlyCollisionObj.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="MiniMapBack.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
@@ -868,6 +862,36 @@
     <ClInclude Include="PlayerHitUI.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
+    <ClInclude Include="OnlyCollisionObj.h">
+      <Filter>GameObject\ObjCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="BossRoomCamera.h">
+      <Filter>GameObject\ObjCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421204.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421409.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421559.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421721.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421865.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421871.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421874.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -941,9 +965,6 @@
     </ClCompile>
     <ClCompile Include="BackGround.cpp">
       <Filter>GameObject\UI\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjCamera.cpp">
-      <Filter>GameObject\ObjCamera</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>GameObject\Player</Filter>
@@ -1582,6 +1603,33 @@
     <ClCompile Include="FloorLarge.cpp" />
     <ClCompile Include="PlayerHitUI.cpp">
       <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BossRoomCamera.cpp">
+      <Filter>GameObject\ObjCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421204.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421409.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421559.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421721.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421865.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421871.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421874.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

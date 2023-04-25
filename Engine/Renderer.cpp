@@ -24,7 +24,14 @@ void CRenderer::Add_RenderGroup(RENDERID eID, CGameObject * pGameObject)
 
 void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
-	
+	DWORD prevColorOp, prevColorArg1;
+	if (m_bColorInversion)
+	{
+		pGraphicDev->GetTextureStageState(0, D3DTSS_COLORARG1, &prevColorArg1);
+		pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE | D3DTA_COMPLEMENT);
+	}
+
+	//----
 	Render_Priority(pGraphicDev);
 	Render_NonAlpha(pGraphicDev);
 	Render_Alpha(pGraphicDev);
@@ -33,6 +40,9 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 	Render_Pre_AlphaUI(pGraphicDev);
 	Render_AlphaUI(pGraphicDev);
 	Render_After_AlphaUI(pGraphicDev);
+
+	if (m_bColorInversion)
+		pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, prevColorArg1);
 
 	Clear_RenderGroup();
 }
@@ -126,6 +136,11 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 	for (auto& iter : m_RenderGroup[RENDER_UI])
 		iter->Render_GameObject(); 
+}
+
+void CRenderer::ToggleColorInversionFlag()
+{
+	m_bColorInversion = (m_bColorInversion == true) ? false : true;
 }
 
 void CRenderer::Free(void)

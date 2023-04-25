@@ -5,6 +5,7 @@
 #include "EffectManager.h"
 #include "ItemManager.h"
 #include "Export_Function.h"
+#include "..\Engine\SoundMgr.h"
 
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
@@ -206,6 +207,8 @@ _bool CWormHead::Dead_Production()
 	m_fSpeed = 0.f;
 	static _float fDest = 0.2f;
 	m_fCurTime2 = Get_WorldTime();
+
+	Shake_Camera(SHAKE_X, 1.5f, 3.4f);
 	if (m_fCurTime2 - m_fPreTime2 < 3.5f)
 	{
 		_vec3 vEPos{};
@@ -218,6 +221,7 @@ _bool CWormHead::Dead_Production()
 
 		if (m_fCurTime2 - m_fPreTime2 > fDest)
 		{
+			STOP_PLAY_SOUND(L"sfxExplode.wav", SOUND_ENEMY, 1.f);
 			_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
 			pSpawnPos.y += 3.f;
 			CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);

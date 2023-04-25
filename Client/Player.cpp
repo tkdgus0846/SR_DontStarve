@@ -351,11 +351,11 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		if (Engine::Key_Pressing(DIK_D))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
 	}
 		
+	if (Engine::Key_Down(DIK_F3))	Engine::Shake_Camera(SHAKE_LR, 2.f, 5.f);
 	if (Engine::Key_Down(DIK_Q))	Prev_Weapon();
 	if (Engine::Key_Down(DIK_E))	Next_Weapon();
 	if (Engine::Key_Down(DIK_P))	Get_Damaged(1);
 
-	if (Engine::Key_Down((DIK_F1))) 	Engine::On_Camera(L"Player_Camera");
 	if (Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
 	if (Engine::Key_Down((DIK_C))) Engine::Toggle_ColliderRender();
 
@@ -420,7 +420,9 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Key_Down(DIK_F) && m_fUltimateGuage >= 15.f)
 	{
-		CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"VortexBullet", m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS] + m_pTransform->m_vInfo[INFO_LOOK] * 1.3f, m_pTransform->m_vInfo[INFO_LOOK], { 1.f,1.f,1.f });
+		CBullet* bullet = CBulletMgr::GetInstance()->Pop(L"VortexBullet", 
+			m_pGraphicDev, m_pTransform->m_vInfo[INFO_POS] + m_pTransform->m_vInfo[INFO_LOOK] * 1.3f, 
+			m_pTransform->m_vInfo[INFO_LOOK], { 1.f,1.f,1.f });
 		Add_GameObject(bullet);
 		Loss_UltiGuage(15.f);
 	}

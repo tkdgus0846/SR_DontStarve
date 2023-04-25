@@ -2,11 +2,13 @@
 
 #include "EffectManager.h"
 #include "Export_Function.h"
+#include "..\Engine\SoundMgr.h"
 
 CMoveY::CMoveY(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBehavior(pGraphicDev), m_bIsUp(false)
 	, m_bStart(false), m_fTime(0.f), m_fFstSpeed(0.f)
 	, m_fDest(0.f)
+	, m_fMaxTime(0.2f)
 {
 }
 
@@ -14,6 +16,7 @@ CMoveY::CMoveY(const CMoveY & rhs)
 	: CBehavior(rhs), m_bIsUp(rhs.m_bIsUp)
 	, m_bStart(rhs.m_bStart), m_fTime(rhs.m_fTime)
 	, m_fFstSpeed(rhs.m_fFstSpeed), m_fDest(rhs.m_fDest)
+	, m_fMaxTime(rhs.m_fMaxTime)
 {
 }
 
@@ -69,6 +72,14 @@ void CMoveY::LateUpdate_Component(void)
 	_vec3 vPos = m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
 	if (m_bIsUp)
 	{
+		static _float fTime = 0.f;
+		fTime += Engine::Get_Timer(L"Timer_FPS60");
+
+		if (fTime > m_fMaxTime)
+		{
+			STOP_PLAY_SOUND(L"dig4.wav", SOUND_ENEMY, 1.f);
+			fTime = 0.f;
+		}
 		Shake_Camera(SHAKE_Y, 0.2f, 1.f); 
 		CEffect* pBurst = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"SandBurst", _vec3(vPos.x, 0.f, vPos.z), _vec3(2.3f, 2.3f, 2.3f), 0.1f, false, 5.f);
 		Add_GameObject(pBurst);

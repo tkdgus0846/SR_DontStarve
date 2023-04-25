@@ -5,11 +5,11 @@ BEGIN(Engine)
 class CCamera;
 END
 
-class CObjCamera : public CGameObject
+class CBossRoomCamera : public CGameObject
 {
 private:
-	explicit CObjCamera(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CObjCamera();
+	explicit CBossRoomCamera(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CBossRoomCamera();
 
 public:
 	virtual HRESULT Ready_GameObject(void) override;
@@ -19,13 +19,12 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
-	void		Key_Input(const _float& fTimeDelta);
 
 private:
 	Engine::CCamera*	m_pCamera;
 
 public:
-	static CObjCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CBossRoomCamera*	Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free() override;

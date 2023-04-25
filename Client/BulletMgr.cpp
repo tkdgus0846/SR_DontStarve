@@ -149,6 +149,8 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 		collider->Set_Enable(TRUE);
 		collider->Set_IsRender(bIsRender);
 
+		collider->Get_CollisionList().clear();
+
 		if (bIsEnemyBullet == true)
 		{
 			Engine::Change_ColGroup(collider, COL_ENEMYBULLET);
@@ -173,8 +175,6 @@ CBulletMgr::~CBulletMgr()
 {
 	Free();
 }
-
-
 
 void CBulletMgr::Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name)
 {
@@ -256,4 +256,3 @@ CBullet* CBulletMgr::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _v
 
 	return pBullet;
 }
-

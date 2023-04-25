@@ -25,7 +25,6 @@ HRESULT CTree::Ready_GameObject(void)
 
 _int CTree::Update_GameObject(const _float & fTimeDelta)
 {
-	cout << &m_pTransform->m_vInfo[INFO_POS].x << endl;
 	if (GetDead())
 		return OBJ_DEAD;
 	__super::Update_GameObject(fTimeDelta);

@@ -1,6 +1,7 @@
 #include "BigJump.h"
 
 #include "Export_Function.h"
+#include "..\Engine\SoundMgr.h"
 
 CBigJump::CBigJump(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBehavior(pGraphicDev), m_bStop(false)
@@ -38,7 +39,7 @@ _int CBigJump::Update_Component(const _float & fTimeDelta)
 	if(m_bJump)
 		m_fTime += fTimeDelta * 7.f;
 	
-	_float fY = m_fForce * m_fTime - 4.9f * m_fTime * m_fTime;
+	_float fY = m_fForce * m_fTime - 3.2f * m_fTime * m_fTime;
 
 	if (fY < 0 && m_bStop)
 	{
@@ -73,6 +74,7 @@ _int CBigJump::Update_Component(const _float & fTimeDelta)
 		m_fTime = 0.f;
 		m_bStop = m_bSetStop;
 		Shake_Camera(SHAKE_Y, 3.f, 6.f);
+		STOP_PLAY_SOUND(L"sfxvanquish.wav", SOUND_ENEMY, 1.f);
 		return BEHAVIOR_SUCCES;
 	}
 

@@ -8,7 +8,7 @@
 #include "Walker.h"
 #include "Turret.h"
 #include "SkyBox.h"
-#include "ObjCamera.h"
+#include "BossRoomCamera.h"
 #include "Room.h"
 #include "RoomMgr.h"
 #include "ImManager.h"
@@ -76,7 +76,7 @@ HRESULT CStage::Ready_Scene(void)
 	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
 	/*Add_GameObject(LAYER_MONSTER, L"Monster_Guppi_Blue_Texture", CGuppi::Create(m_pGraphicDev));*/
 
-	Add_GameObject(CObjCamera::Create(m_pGraphicDev));	
+	Add_GameObject(CBossRoomCamera::Create(m_pGraphicDev));	
 	
 	// UI
 	Add_GameObject(CBulletGauge::Create(m_pGraphicDev));
@@ -113,21 +113,20 @@ HRESULT CStage::Ready_Scene(void)
 
 	ROOM_MGR->Set_Tennel_Texture(STAGE1);
 
-	/*D3DLIGHT9		tLightInfo;
-
+	// ±¤¿ø ÃÊ±âÈ­
+	D3DLIGHT9		tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
-
 	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tLightInfo.Direction = _vec3(1.f, 1.f, 1.f);
-
-	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);*/
-	
+	//tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	//tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Direction = _vec3(0.f, -1.f, 0.f);
+	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
-	STOP_ALL_SOUND;
+	STOP_ALL_BGM;
+	PLAY_BGM(L"finalboss4.wav", SOUND_BGM_BOSS, 0.5f);
+	STOP_ALL_BGM;
 	PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD, 0.5f);
 
 	return S_OK;

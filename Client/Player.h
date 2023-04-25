@@ -98,6 +98,7 @@ private:
 
 	_bool					m_bInvicible;
 
+
 	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;
 	class CWeapon*						m_pCurWeapon;
 	WEAPONTYPE							m_eCurWeaponType;

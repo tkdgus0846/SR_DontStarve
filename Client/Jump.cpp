@@ -37,12 +37,12 @@ _int CJump::Update_Component(const _float & fTimeDelta)
 		return BEHAVIOR_FAIL;
 
 	CAnimation* pAnimation = dynamic_cast<CAnimation*>(m_pGameObject->Get_Component(L"Animation", ID_ALL));
-	if (pAnimation)
+	if (pAnimation) 
 		pAnimation->SelectState(ANIM_JUMP);
 
 	m_fTime += fTimeDelta * 7.f;
 
-	_float fY = m_fForce * m_fTime - 4.9f * m_fTime * m_fTime;
+	_float fY = m_fForce * m_fTime - 3.2f * m_fTime * m_fTime;
 
 	m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y += fY / 8.f;
 

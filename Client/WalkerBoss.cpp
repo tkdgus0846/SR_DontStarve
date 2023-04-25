@@ -3,11 +3,13 @@
 #include "ItemManager.h"
 #include "EffectManager.h"
 #include "Export_Function.h"
+#include "..\Engine\SoundMgr.h"
 
 CWalkerBoss::CWalkerBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
 	Set_LayerID(LAYER_BOSS);
+	Set_ObjTag(L"WalkerBoss");
 }
 
 CWalkerBoss::~CWalkerBoss()
@@ -18,7 +20,7 @@ HRESULT CWalkerBoss::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 20.f;
 	m_iAttack = 1;
-	m_iHp = 1;
+	m_iHp = 100;
 	m_iMaxHp = 100;
 
 	m_pTransform->m_vScale = { 3.f, 3.f, 3.f };
@@ -100,8 +102,11 @@ _bool CWalkerBoss::Dead_Production()
 {
 	static _float fDest = 0.2f;
 	m_fCurTime1 = Get_WorldTime();
+
+	Engine::Shake_Camera(SHAKE_LR, 2.f, 3.4f);
 	if (m_fCurTime1 - m_fPreTime1 < 3.5f)
 	{
+
 		_vec3 vEPos{};
 		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
 		_vec3 vPos = m_pTransform->m_vInfo[INFO_POS] + vEPos;
@@ -112,6 +117,7 @@ _bool CWalkerBoss::Dead_Production()
 
 		if (m_fCurTime1 - m_fPreTime1 > fDest)
 		{
+			STOP_PLAY_SOUND(L"sfxExplode.wav", SOUND_ENEMY, 1.f);
 			_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
 			pSpawnPos.y += 3.f;
 			CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);

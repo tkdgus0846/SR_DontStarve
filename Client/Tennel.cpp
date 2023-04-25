@@ -66,6 +66,9 @@ void CTennel::OnCollisionEnter(const Collision * collsion)
 	{
 		_int iRoomIdx = m_pDoor->Get_Room()->Get_Room_Index();
 		CRoomMgr::GetInstance()->Set_CurRoom(iRoomIdx);
+		CCollider* playerCol = dynamic_cast<CCollider*>(pPlayer->Get_Component(L"BodyCollider", ID_ALL));
+		if (playerCol != nullptr)
+			playerCol->Get_CollisionList().clear();
 
 		// 임의로 추가함
 		ROOM_MGR->Set_In_Tennel(false);

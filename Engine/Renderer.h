@@ -28,11 +28,16 @@ public:
 	void		Render_After_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_UI(LPDIRECT3DDEVICE9& pGraphicDev);
 
+	void		ToggleColorInversionFlag();
+	_bool		GetColorInversion() { return m_bColorInversion; }
+
 private:
 	list<CGameObject*>		m_RenderGroup[RENDER_END];
 
 private:
 	virtual void		Free(void);
+private:
+	_bool	m_bColorInversion = false;
 };
 
 END
