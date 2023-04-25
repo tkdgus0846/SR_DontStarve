@@ -83,6 +83,7 @@ _int CPyramidDestoryParticle::Update_Component(const _float & fTimeDelta)
 			it->bIsAlive = false;*/
 
 		}
+
 	}
 	return 0;
 }

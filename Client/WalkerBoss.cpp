@@ -3,11 +3,13 @@
 #include "ItemManager.h"
 #include "EffectManager.h"
 #include "Export_Function.h"
+#include "..\Engine\SoundMgr.h"
 
 CWalkerBoss::CWalkerBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
 	Set_LayerID(LAYER_BOSS);
+	Set_ObjTag(L"WalkerBoss");
 }
 
 CWalkerBoss::~CWalkerBoss()
@@ -102,6 +104,7 @@ _bool CWalkerBoss::Dead_Production()
 	m_fCurTime1 = Get_WorldTime();
 	if (m_fCurTime1 - m_fPreTime1 < 3.5f)
 	{
+
 		_vec3 vEPos{};
 		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
 		_vec3 vPos = m_pTransform->m_vInfo[INFO_POS] + vEPos;
@@ -112,6 +115,7 @@ _bool CWalkerBoss::Dead_Production()
 
 		if (m_fCurTime1 - m_fPreTime1 > fDest)
 		{
+			STOP_PLAY_SOUND(L"sfxExplode.wav", SOUND_ENEMY, 1.f);
 			_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
 			pSpawnPos.y += 3.f;
 			CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);

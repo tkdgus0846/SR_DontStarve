@@ -24,6 +24,8 @@ private:
 	_float m_fFstSpeed;
 	_float m_fDest;
 
+	const _float m_fMaxTime;
+
 public:
 	static CMoveY* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual CComponent * Clone(void) override;

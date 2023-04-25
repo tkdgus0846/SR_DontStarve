@@ -121,7 +121,9 @@ HRESULT CStage::Ready_Scene(void)
 	
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
-	STOP_ALL_SOUND;
+	STOP_ALL_BGM;
+	PLAY_BGM(L"finalboss4.wav", SOUND_BGM_BOSS, 0.5f);
+	STOP_ALL_BGM;
 	PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD, 0.5f);
 
 	return S_OK;

@@ -154,7 +154,7 @@ void CCoinItem::OnCollisionStay(const Collision * collision)
 
 	if (pPlayer && collision->MyCollider == Get_Component(L"Range", ID_ALL))
 	{
-		PLAY_SOUND(L"sfxpickup.wav", SOUND_LOOT, 1.f);
+		PLAY_SOUND(L"sfxCoin.wav", SOUND_LOOT, 1.f);
 	}
 
 	ItemMagnetic(pPlayer);

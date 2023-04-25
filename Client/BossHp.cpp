@@ -1,6 +1,8 @@
 #include "BossHp.h"
 #include "Export_Function.h"
 #include "Creature.h"
+#include "WalkerBoss.h"
+#include "..\Engine\SoundMgr.h"
 
 CBossHp::CBossHp(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CUI(pGraphicDev)
@@ -67,7 +69,24 @@ void CBossHp::Render_GameObject(void)
 	pLayer->Get_GameObject_ALL(&vecBoss);
 	if (vecBoss.empty()) { return; }
 
+
 	auto iter = *vecBoss.begin();
+	if (iter->Get_ObjTag() == L"WalkerBoss")
+	{
+		if (!IS_PLAYING(SOUND_BGM_BOSS))
+		{
+			STOP_ALL_BGM;
+			PLAY_BGM(L"finalboss4.wav", SOUND_BGM_BOSS, 0.5f);
+		}
+	}
+	else
+	{
+		if (!IS_PLAYING(SOUND_BGM_BOSS))
+		{
+			STOP_ALL_BGM;
+			PLAY_BGM(L"Boss.wav", SOUND_BGM_BOSS, 0.5f);
+		}
+	}
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 	for (size_t i = 0; i < BOSS_UI_END; i++)

@@ -857,14 +857,30 @@
     <ClInclude Include="ListBox.h">
       <Filter>IMGUI\ImWindow</Filter>
     </ClInclude>
-    <ClInclude Include="FloorLarge421865.h" />
-    <ClInclude Include="FloorLarge421204.h" />
-    <ClInclude Include="FloorLarge421409.h" />
-    <ClInclude Include="FloorLarge421559.h" />
-    <ClInclude Include="FloorLarge421721.h" />
-    <ClInclude Include="FloorLarge421871.h" />
-    <ClInclude Include="FloorLarge421874.h" />
-    <ClInclude Include="FloorLarge.h" />
+    <ClInclude Include="FloorLarge.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421204.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421409.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421559.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421721.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421865.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421871.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421874.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1569,14 +1585,30 @@
     <ClCompile Include="ListBox.cpp">
       <Filter>IMGUI\ImWindow</Filter>
     </ClCompile>
-    <ClCompile Include="FloorLarge421204.cpp" />
-    <ClCompile Include="FloorLarge421409.cpp" />
-    <ClCompile Include="FloorLarge421559.cpp" />
-    <ClCompile Include="FloorLarge421721.cpp" />
-    <ClCompile Include="FloorLarge421865.cpp" />
-    <ClCompile Include="FloorLarge421871.cpp" />
-    <ClCompile Include="FloorLarge421874.cpp" />
-    <ClCompile Include="FloorLarge.cpp" />
+    <ClCompile Include="FloorLarge.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421204.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421409.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421559.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421721.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421865.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421871.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421874.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">

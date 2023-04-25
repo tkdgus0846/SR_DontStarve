@@ -30,7 +30,7 @@
 #include "..\Engine\SandStorm.h"
 #include "WaterTile.h"
 
-#define LEVEL1_EDIT_DATANAME L"Level2.dat"
+#define LEVEL1_EDIT_DATANAME L"Level1.dat"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -646,6 +646,7 @@ _uint CLoading::Loading_ForStage(void)
 	//CFileSystem::Load(LEVEL1_EDIT_DATANAME);
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");

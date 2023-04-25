@@ -18,6 +18,8 @@ private:
 
 public:
 	void Set_MoveType(MOVETYPE eType = LANDOBJECT) { m_eMoveType = eType; }
+	MOVETYPE Get_MoveType() const { return m_eMoveType; }
+
 	const _matrix*		Get_WorldMatrixPointer() { return &m_matWorld; }
 	void				Get_Info(INFO eType, _vec3* pInfo)
 	{

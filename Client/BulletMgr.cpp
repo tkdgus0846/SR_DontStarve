@@ -149,6 +149,8 @@ CBullet* CBulletPool::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _
 		collider->Set_Enable(TRUE);
 		collider->Set_IsRender(bIsRender);
 
+		collider->Get_CollisionList().clear();
+
 		if (bIsEnemyBullet == true)
 		{
 			Engine::Change_ColGroup(collider, COL_ENEMYBULLET);

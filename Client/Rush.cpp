@@ -2,6 +2,7 @@
 
 #include "Bullet.h"
 #include "Export_Function.h"
+#include "..\Engine\SoundMgr.h"
 
 CRush::CRush(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CBehavior(pGraphicDev)
@@ -48,6 +49,7 @@ _int CRush::Update_Component(const _float & fTimeDelta)
 				return BEHAVIOR_RUNNING;
 		}
 		Engine::Shake_Camera(SHAKE_Y, 1.5f, 5.f);
+		STOP_PLAY_SOUND(L"sfxvanquish.wav", SOUND_ENEMY, 1.f);
 		return BEHAVIOR_SUCCES;
 	}
 
