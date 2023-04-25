@@ -44,7 +44,9 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 		Render_Pre_AlphaUI(pGraphicDev);
 		Render_AlphaUI(pGraphicDev);
 		Render_After_AlphaUI(pGraphicDev);
+    Render_Final_AlphaUI(pGraphicDev);
 	}
+
 
 	if (m_bColorInversion)
 		pGraphicDev->SetTextureStageState(0, D3DTSS_COLORARG1, prevColorArg1);
@@ -112,22 +114,28 @@ void Engine::CRenderer::Render_After_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	for (auto& iter : m_RenderGroup[RENDER_AFTER_ALPHA_UI])
 		iter->Render_GameObject();
+}
+
+void CRenderer::Render_Final_AlphaUI(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	for (auto& iter : m_RenderGroup[RENDER_FINAL_UI])
+		iter->Render_GameObject();
 
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
-	// ¾Æ·¡´Â ´Ù½Ã ¿ø·¡´ë·Î µÇµ¹¸®´Â ÄÚµå
+	// ì•„ë˜ëŠ” ë‹¤ì‹œ ì›ë˜ëŒ€ë¡œ ë˜ëŒë¦¬ëŠ” ì½”ë“œ
 	_matrix projMatrix;
 	projMatrix.PerspectiveFovLH(D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
-	// ¿ø±ÙÅõ¿µÀ¸·Î ¹Ù²ãÁÜ
+	// ì›ê·¼íˆ¬ì˜ìœ¼ë¡œ ë°”ê¿”ì¤Œ
 	_matrix* viewMatrix = nullptr;
 	if (Get_Player() != nullptr)
 		viewMatrix = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE))->Get_Camera_ViewMatrix();
 
 	if (viewMatrix != nullptr)
 		pGraphicDev->SetTransform(D3DTS_VIEW, viewMatrix);
-	// ¿ø±ÙÅõ¿µ Àû¿ë
-	// ÇÃ·¹ÀÌ¾î Ä«¸Ş¶óÀÇ ºäÇà·ÄÀ» µğ¹ÙÀÌ½º¿¡ µî·Ï
+	// ì›ê·¼íˆ¬ì˜ ì ìš©
+	// í”Œë ˆì´ì–´ ì¹´ë©”ë¼ì˜ ë·°í–‰ë ¬ì„ ë””ë°”ì´ìŠ¤ì— ë“±ë¡
 
 	pGraphicDev->SetRenderState(D3DRS_ZENABLE, true);
 }

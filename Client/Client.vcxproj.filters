@@ -914,6 +914,7 @@
     <ClInclude Include="SnowSoTree.h">
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
+    <ClInclude Include="CheckPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1675,6 +1676,7 @@
     <ClCompile Include="SnowTree.cpp">
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
+    <ClCompile Include="CheckPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">

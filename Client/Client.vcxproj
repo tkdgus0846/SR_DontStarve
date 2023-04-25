@@ -275,6 +275,7 @@
     <ClInclude Include="BulletGauge.h" />
     <ClInclude Include="BulletItem.h" />
     <ClInclude Include="Calculator.h" />
+    <ClInclude Include="CheckPoint.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinItem.h" />
@@ -532,6 +533,7 @@
     <ClCompile Include="BulletGauge.cpp" />
     <ClCompile Include="BulletItem.cpp" />
     <ClCompile Include="Calculator.cpp" />
+    <ClCompile Include="CheckPoint.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinItem.cpp" />
