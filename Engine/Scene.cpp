@@ -31,6 +31,9 @@ CComponent * CScene::Get_Component(LAYERID LayerID, const _tchar * pObjTag, cons
 
 HRESULT CScene::Ready_Scene(void)
 {
+	_float fps60 = Engine::Get_Timer(L"Timer_FPS60");
+	m_SlowTime = fps60;
+
 	return S_OK;
 }
 
@@ -46,9 +49,8 @@ _int CScene::Update_Scene(const _float & fTimeDelta)
 		if (Engine::Mouse_Pressing(DIM_RB))
 		{
 			Play_SlowTime(fTimeDelta);
-				
 		}
-		else
+		else if(Engine::Mouse_Up(DIM_RB))
 		{
 			CManagement::GetInstance()->Set_TimeStopped(false);
 			Reset_SlowTime(fTimeDelta);

@@ -344,9 +344,6 @@
     <ClInclude Include="RangeCheck.h">
       <Filter>Monobehaviours\Decorator</Filter>
     </ClInclude>
-    <ClInclude Include="IsRangeInPlayer.h">
-      <Filter>Monobehaviours\Decorator</Filter>
-    </ClInclude>
     <ClInclude Include="TimeInLimit.h">
       <Filter>Monobehaviours\Decorator</Filter>
     </ClInclude>
@@ -358,9 +355,6 @@
     </ClInclude>
     <ClInclude Include="Rush.h">
       <Filter>Monobehaviours\Task</Filter>
-    </ClInclude>
-    <ClInclude Include="IsNotRangeInPlayer.h">
-      <Filter>Monobehaviours\Decorator</Filter>
     </ClInclude>
     <ClInclude Include="BackJump.h">
       <Filter>Monobehaviours\Task</Filter>
@@ -857,56 +851,68 @@
     <ClInclude Include="OnlyCollisionObj.h">
       <Filter>GameObject\ObjCamera</Filter>
     </ClInclude>
-    <ClInclude Include="BossRoomCamera.h">
+    <ClInclude Include="FloorLarge.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421204.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421409.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421559.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421721.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421865.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421871.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421874.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421874.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421204.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421409.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421559.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421721.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421865.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="FloorLarge421871.h">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClInclude>
+    <ClInclude Include="RangeInPlayer.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="CutSceneCamera.h">
       <Filter>GameObject\ObjCamera</Filter>
     </ClInclude>
-    <ClInclude Include="FloorLarge.h">
-      <Filter>GameObject\Tile\Deco</Filter>
+    <ClInclude Include="SnowMan.h">
+      <Filter>GameObject\MapObject</Filter>
     </ClInclude>
-    <ClInclude Include="FloorLarge421204.h">
-      <Filter>GameObject\Tile\Deco</Filter>
+    <ClInclude Include="SnowTree.h">
+      <Filter>GameObject\MapObject</Filter>
     </ClInclude>
-    <ClInclude Include="FloorLarge421409.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421559.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421721.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421865.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421871.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421874.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421874.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421204.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421409.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421559.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421721.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421865.h">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClInclude>
-    <ClInclude Include="FloorLarge421871.h">
-      <Filter>GameObject\Tile\Deco</Filter>
+    <ClInclude Include="SnowSoTree.h">
+      <Filter>GameObject\MapObject</Filter>
     </ClInclude>
     <ClInclude Include="CheckPoint.h" />
   </ItemGroup>
@@ -1106,9 +1112,6 @@
     <ClCompile Include="RangeCheck.cpp">
       <Filter>Monobehaviours\Decorator</Filter>
     </ClCompile>
-    <ClCompile Include="IsRangeInPlayer.cpp">
-      <Filter>Monobehaviours\Decorator</Filter>
-    </ClCompile>
     <ClCompile Include="TimeInLimit.cpp">
       <Filter>Monobehaviours\Decorator</Filter>
     </ClCompile>
@@ -1120,9 +1123,6 @@
     </ClCompile>
     <ClCompile Include="Rush.cpp">
       <Filter>Monobehaviours\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="IsNotRangeInPlayer.cpp">
-      <Filter>Monobehaviours\Decorator</Filter>
     </ClCompile>
     <ClCompile Include="BackJump.cpp">
       <Filter>Monobehaviours\Task</Filter>
@@ -1613,56 +1613,68 @@
     <ClCompile Include="PlayerHitUI.cpp">
       <Filter>GameObject\UI</Filter>
     </ClCompile>
-    <ClCompile Include="BossRoomCamera.cpp">
+    <ClCompile Include="FloorLarge.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421204.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421409.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421559.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421721.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421865.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421871.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421874.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421204.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421409.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421559.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421721.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421865.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421871.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="FloorLarge421874.cpp">
+      <Filter>GameObject\Tile\Deco</Filter>
+    </ClCompile>
+    <ClCompile Include="RangeInPlayer.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="CutSceneCamera.cpp">
       <Filter>GameObject\ObjCamera</Filter>
+    </ClCompile>  
+    <ClCompile Include="SnowMan.cpp">
+      <Filter>GameObject\MapObject</Filter>
     </ClCompile>
-    <ClCompile Include="FloorLarge.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
+    <ClCompile Include="SnowSoTree.cpp">
+      <Filter>GameObject\MapObject</Filter>
     </ClCompile>
-    <ClCompile Include="FloorLarge421204.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421409.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421559.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421721.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421865.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421871.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421874.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421204.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421409.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421559.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421721.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421865.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421871.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
-    </ClCompile>
-    <ClCompile Include="FloorLarge421874.cpp">
-      <Filter>GameObject\Tile\Deco</Filter>
+    <ClCompile Include="SnowTree.cpp">
+      <Filter>GameObject\MapObject</Filter>
     </ClCompile>
     <ClCompile Include="CheckPoint.cpp" />
   </ItemGroup>

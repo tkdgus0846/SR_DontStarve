@@ -28,13 +28,14 @@ public:
 	void				Remove_GameObject(LAYERID layerID, class CGameObject* obj);
 
 	void				Reset_Scene();
-	HRESULT			Add_GameObject(class CGameObject* pObj);
+	HRESULT				Add_GameObject(class CGameObject* pObj);
 
 protected:
 	
 	CGameObject*	Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
 	void			Play_SlowTime(const _float & fTimeDelta);
 	void			Reset_SlowTime(const _float & fTimeDelta);
+	void			Stop_SlowTime() { m_SlowTime = 0.f; }
 
 public:
 	CLayer* Get_Layer(LAYERID LayerID);

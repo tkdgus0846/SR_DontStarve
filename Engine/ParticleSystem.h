@@ -27,7 +27,7 @@ public:
 	}
 	void SetEmitRate(const float& emitRate) { m_EmitRate = emitRate; }
 	void SetNumParticle(const int& numParticle);
-	
+	_int GetParticlesSize() { return m_Particles.size(); }
 
 	bool IsEmpty();
 	bool IsDead();

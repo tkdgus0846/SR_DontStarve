@@ -31,8 +31,9 @@
 #include "Snow.h"
 #include "..\Engine\SandStorm.h"
 #include "WaterTile.h"
+#include "..\Engine\VentParticle.h"
 
-#define LEVEL1_EDIT_DATANAME L"Level4.dat"
+#define LEVEL1_EDIT_DATANAME L"Level1.dat"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -476,6 +477,13 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Tree_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/tree.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"CheckPoint_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/checkpoint_%d.png", 8)), E_FAIL);
 
+	// Snow Map Obj
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SnowSoTree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Snow/SnowSoTree.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SnowTree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Snow/SnowTree.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SnowMan", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Snow/SnowMan_%d.png", 4)), E_FAIL);
+
 	// UI
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BulletBar_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/hud_secondary_ext_edit.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BulletGauge_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/hud_ammo_3.png")), E_FAIL);
@@ -552,6 +560,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"UpSmoke_Particle", CUpSmokeParticle::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"JumpSmoke_Particle", CJumpSmokeParticle::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"PyramidDestory_Particle", CPyramidDestoryParticle::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Vent_Particle", CVentParticle::Create(m_pGraphicDev)), E_FAIL);
 
 	/////////////////////////// 파티클 텍스쳐 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Smoke_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Particle/smoke.png")), E_FAIL);
@@ -583,8 +592,7 @@ _uint CLoading::Loading_ForStage(void)
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_TimeInLimit", CTimeInLimit::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_RangeCheck", CRangeCheck::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_IsRangeInPlayer", CIsRangeInPlayer::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_IsNotRangeInPlayer", CIsNotRangeInPlayer::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_RangeInPlayer", CRangeInPlayer::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_NotCollisionWall", CNotCollisionWall::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_CoolTime", CCoolTime::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_BoolCheck", CBoolCheck::Create(m_pGraphicDev)), E_FAIL);
@@ -593,7 +601,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Selector", CSelector::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Root", CRoot::Create(m_pGraphicDev)), E_FAIL);
 
-	Set_String(L"Room Loading..........");	
+	Set_String(L"Room Loading..........");
 	// ==임시 코드==
 	const auto& uMapProto = Engine::CProtoMgr::GetInstance()->Get_ProtoMap();
 
@@ -631,26 +639,19 @@ _uint CLoading::Loading_ForStage(void)
 	Set_String(L"Room Loading..........");
 	
 	ROOM_MGR->Create_Default_Room(STAGE1);	
-	
 
-	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-
-	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-
-	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -3.f, 25.f }));
-	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-	
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
-
-	//임시로 한거임 사용하고 다시 밑에 주석으로 되돌리기.
-	//CFileSystem::Load(L"SH.dat");
+	
 	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+
+	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+
 	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
+
 
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");
@@ -668,7 +669,6 @@ _uint CLoading::Loading_ForStage2(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 
-	
 
 	CFileSystem::Load(L"Level2.dat");
 

@@ -84,6 +84,8 @@ wstring CGameObject::Get_TextureKey()
 			}
 		}
 	}
+
+	// 텍스처 키를 추출하지 못하면 오류 뜸.
 	return nullptr;
 }
 

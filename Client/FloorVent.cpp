@@ -1,5 +1,6 @@
 #include "FloorVent.h"
 #include "Export_Function.h"
+#include "..\Engine\ParticleMgr.h"
 
 
 
@@ -34,4 +35,16 @@ HRESULT FloorVent::Add_Component()
 	m_pAnimation->BindAnimation(ANIM_IDLE, texture);
 
 	return S_OK;
+}
+
+_int FloorVent::Update_GameObject(const _float& fTimeDelta)
+{
+	m_fTime += fTimeDelta;
+	if (m_fTime >= 6.f)
+	{
+		CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"Vent_Particle", 100, m_pTransform->m_vInfo[INFO_POS]);
+		Add_GameObject(particle);
+		m_fTime = 0.f;
+	}
+	return __super::Update_GameObject(fTimeDelta);
 }

@@ -146,15 +146,15 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 				STOP_ALL_BGM;
 				if (m_eLoadingID == LOADING_STAGE2)
 				{
-					PLAY_BGM(L"Sector2.wav", SOUND_BGM_FIELD, 0.5f);
+					PLAY_BGM(L"Sector2.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
 				}
 				else if (m_eLoadingID == LOADING_STAGE3)
 				{	
-					PLAY_BGM(L"Sector3.wav", SOUND_BGM_FIELD, 0.5f);
+					PLAY_BGM(L"Sector3.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
 				}
 				else if (m_eLoadingID == LOADING_STAGE4)
 				{
-					PLAY_BGM(L"Sector4.wav", SOUND_BGM_FIELD, 0.5f);
+					PLAY_BGM(L"Sector4.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
 				}
 
 				m_pScene->Set_StaticLayerArr(ROOM_MGR->Get_CurLayerVec());

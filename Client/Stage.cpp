@@ -8,7 +8,7 @@
 #include "Walker.h"
 #include "Turret.h"
 #include "SkyBox.h"
-#include "BossRoomCamera.h"
+#include "CutSceneCamera.h"
 #include "Room.h"
 #include "RoomMgr.h"
 #include "ImManager.h"
@@ -55,6 +55,7 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene(void)
 {
+	__super::Ready_Scene();
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Camera", CCamera::Create(m_pGraphicDev)), E_FAIL);
 
 	m_StageInfo = LOADING_STAGE;
@@ -76,7 +77,7 @@ HRESULT CStage::Ready_Scene(void)
 	//Add_GameObject(LAYER_MONSTER, L"Monster_Bub", CBub::Create(m_pGraphicDev, {1.f, 1.f, 1.f}));
 	/*Add_GameObject(LAYER_MONSTER, L"Monster_Guppi_Blue_Texture", CGuppi::Create(m_pGraphicDev));*/
 
-	Add_GameObject(CBossRoomCamera::Create(m_pGraphicDev));	
+	Add_GameObject(CCutSceneCamera::Create(m_pGraphicDev));	
 	
 	// UI
 	Add_GameObject(CBulletGauge::Create(m_pGraphicDev));
@@ -113,21 +114,23 @@ HRESULT CStage::Ready_Scene(void)
 
 	ROOM_MGR->Set_Tennel_Texture(STAGE1);
 
-	// ±¤¿ø ÃÊ±âÈ­
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 	D3DLIGHT9		tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 	tLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	//tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tLightInfo.Direction = _vec3(0.f, -1.f, 0.f);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_NORMALIZENORMALS, true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ï¿½ï¿½ï¿½
 
 	STOP_ALL_BGM;
-	PLAY_BGM(L"finalboss4.wav", SOUND_BGM_BOSS, 0.5f);
+	PLAY_BGM(L"finalboss4.wav", SOUND_BGM_BOSS, BGM_SOUND_VOLUME);
 	STOP_ALL_BGM;
-	PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD, 0.5f);
+	PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
 
 	return S_OK;
 }
@@ -135,7 +138,7 @@ HRESULT CStage::Ready_Scene(void)
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
 	//if (m_bNextStageCondition == true) return 0;
-	/* ÀÓ½Ã Å×½ºÆ® ÄÚµåÀÓ. */
+	/* ï¿½Ó½ï¿½ ï¿½×½ï¿½Æ® ï¿½Úµï¿½ï¿½ï¿½. */
 	if (Key_Down(DIK_I))
 	{
 		Next_Stage();

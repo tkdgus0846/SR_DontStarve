@@ -18,7 +18,7 @@ CFrustrumNormalTex::~CFrustrumNormalTex()
 
 HRESULT CFrustrumNormalTex::Ready_Buffer(void)
 {
-	m_dwFVF = FVF_CUBE;
+	m_dwFVF = FVF_CUBENORMAL;
 	m_dwVtxSize = sizeof(VTXCUBENORMAL);
 	m_dwVtxCnt = 8;
 	m_dwTriCnt = 12;
@@ -71,7 +71,6 @@ HRESULT CFrustrumNormalTex::Ready_Buffer(void)
 	pVertex[7].vNormal = { 0.f, 0.f, 0.f };
 	pVertex[7].vTexUV = pVertex[7].vPos;
 
-
 	// 인덱스 버퍼
 
 	// x+
@@ -79,161 +78,80 @@ HRESULT CFrustrumNormalTex::Ready_Buffer(void)
 	pIndex[0]._1 = 5;
 	pIndex[0]._2 = 6;
 
-	vDest = pVertex[pIndex[0]._1].vPos - pVertex[pIndex[0]._0].vPos;
-	vSrc = pVertex[pIndex[0]._2].vPos - pVertex[pIndex[0]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[0]._0].vNormal += vNormal;
-	pVertex[pIndex[0]._1].vNormal += vNormal;
-	pVertex[pIndex[0]._2].vNormal += vNormal;
-
 	pIndex[1]._0 = 1;
 	pIndex[1]._1 = 6;
 	pIndex[1]._2 = 2;
-
-	vDest = pVertex[pIndex[1]._1].vPos - pVertex[pIndex[1]._0].vPos;
-	vSrc = pVertex[pIndex[1]._2].vPos - pVertex[pIndex[1]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[1]._0].vNormal += vNormal;
-	pVertex[pIndex[1]._1].vNormal += vNormal;
-	pVertex[pIndex[1]._2].vNormal += vNormal;
 
 	// x-
 	pIndex[2]._0 = 4;
 	pIndex[2]._1 = 0;
 	pIndex[2]._2 = 3;
 
-	vDest = pVertex[pIndex[2]._1].vPos - pVertex[pIndex[2]._0].vPos;
-	vSrc = pVertex[pIndex[2]._2].vPos - pVertex[pIndex[2]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[2]._0].vNormal += vNormal;
-	pVertex[pIndex[2]._1].vNormal += vNormal;
-	pVertex[pIndex[2]._2].vNormal += vNormal;
-
 	pIndex[3]._0 = 4;
 	pIndex[3]._1 = 3;
 	pIndex[3]._2 = 7;
-
-	vDest = pVertex[pIndex[3]._1].vPos - pVertex[pIndex[3]._0].vPos;
-	vSrc = pVertex[pIndex[3]._2].vPos - pVertex[pIndex[3]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[3]._0].vNormal += vNormal;
-	pVertex[pIndex[3]._1].vNormal += vNormal;
-	pVertex[pIndex[3]._2].vNormal += vNormal;
 
 	// y+
 	pIndex[4]._0 = 4;
 	pIndex[4]._1 = 5;
 	pIndex[4]._2 = 1;
 
-	vDest = pVertex[pIndex[4]._1].vPos - pVertex[pIndex[4]._0].vPos;
-	vSrc = pVertex[pIndex[4]._2].vPos - pVertex[pIndex[4]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[4]._0].vNormal += vNormal;
-	pVertex[pIndex[4]._1].vNormal += vNormal;
-	pVertex[pIndex[4]._2].vNormal += vNormal;
-
 	pIndex[5]._0 = 4;
 	pIndex[5]._1 = 1;
 	pIndex[5]._2 = 0;
-
-	vDest = pVertex[pIndex[5]._1].vPos - pVertex[pIndex[5]._0].vPos;
-	vSrc = pVertex[pIndex[5]._2].vPos - pVertex[pIndex[5]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[5]._0].vNormal += vNormal;
-	pVertex[pIndex[5]._1].vNormal += vNormal;
-	pVertex[pIndex[5]._2].vNormal += vNormal;
 
 	// y-
 	pIndex[6]._0 = 3;
 	pIndex[6]._1 = 2;
 	pIndex[6]._2 = 6;
 
-	vDest = pVertex[pIndex[6]._1].vPos - pVertex[pIndex[6]._0].vPos;
-	vSrc = pVertex[pIndex[6]._2].vPos - pVertex[pIndex[6]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[6]._0].vNormal += vNormal;
-	pVertex[pIndex[6]._1].vNormal += vNormal;
-	pVertex[pIndex[6]._2].vNormal += vNormal;
-
 	pIndex[7]._0 = 3;
 	pIndex[7]._1 = 6;
 	pIndex[7]._2 = 7;
-
-	vDest = pVertex[pIndex[7]._1].vPos - pVertex[pIndex[7]._0].vPos;
-	vSrc = pVertex[pIndex[7]._2].vPos - pVertex[pIndex[7]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[7]._0].vNormal += vNormal;
-	pVertex[pIndex[7]._1].vNormal += vNormal;
-	pVertex[pIndex[7]._2].vNormal += vNormal;
 
 	// z+
 	pIndex[8]._0 = 7;
 	pIndex[8]._1 = 6;
 	pIndex[8]._2 = 5;
 
-	vDest = pVertex[pIndex[8]._1].vPos - pVertex[pIndex[8]._0].vPos;
-	vSrc = pVertex[pIndex[8]._2].vPos - pVertex[pIndex[8]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[8]._0].vNormal += vNormal;
-	pVertex[pIndex[8]._1].vNormal += vNormal;
-	pVertex[pIndex[8]._2].vNormal += vNormal;
 
 	pIndex[9]._0 = 7;
 	pIndex[9]._1 = 5;
 	pIndex[9]._2 = 4;
-
-	vDest = pVertex[pIndex[9]._1].vPos - pVertex[pIndex[9]._0].vPos;
-	vSrc = pVertex[pIndex[9]._2].vPos - pVertex[pIndex[9]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[9]._0].vNormal += vNormal;
-	pVertex[pIndex[9]._1].vNormal += vNormal;
-	pVertex[pIndex[9]._2].vNormal += vNormal;
 
 	// z-
 	pIndex[10]._0 = 0;
 	pIndex[10]._1 = 1;
 	pIndex[10]._2 = 2;
 
-	vDest = pVertex[pIndex[10]._1].vPos - pVertex[pIndex[10]._0].vPos;
-	vSrc = pVertex[pIndex[10]._2].vPos - pVertex[pIndex[10]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[10]._0].vNormal += vNormal;
-	pVertex[pIndex[10]._1].vNormal += vNormal;
-	pVertex[pIndex[10]._2].vNormal += vNormal;
-
 	pIndex[11]._0 = 0;
 	pIndex[11]._1 = 2;
 	pIndex[11]._2 = 3;
 
-	vDest = pVertex[pIndex[11]._1].vPos - pVertex[pIndex[11]._0].vPos;
-	vSrc = pVertex[pIndex[11]._2].vPos - pVertex[pIndex[11]._1].vPos;
-	D3DXVec3Cross(&vNormal, &vDest, &vSrc);
-	pVertex[pIndex[11]._0].vNormal += vNormal;
-	pVertex[pIndex[11]._1].vNormal += vNormal;
-	pVertex[pIndex[11]._2].vNormal += vNormal;
-
-	std::vector<_vec3> normals(m_dwVtxCnt, { 0.0f, 0.0f, 0.0f });
-
-	for (int i = 0; i < m_dwTriCnt; ++i)
+	for (_int i = 0; i < m_dwTriCnt; ++i)
 	{
-		_ulong idx0 = pIndex[i]._0;
-		_ulong idx1 = pIndex[i]._1;
-		_ulong idx2 = pIndex[i]._2;
+		// 각 삼각형의 인덱스를 가져옵니다.
+		_int idx0 = pIndex[i]._0;
+		_int idx1 = pIndex[i]._1;
+		_int idx2 = pIndex[i]._2;
 
-		_vec3 vDest = pVertex[idx1].vPos - pVertex[idx0].vPos;
-		_vec3 vSrc = pVertex[idx2].vPos - pVertex[idx1].vPos;
+		// 각 인덱스에 해당하는 버텍스를 가져옵니다.
+		_vec3* p0 = &pVertex[idx0].vPos;
+		_vec3* p1 = &pVertex[idx1].vPos;
+		_vec3* p2 = &pVertex[idx2].vPos;
 
-		_vec3 vNormal;
-		D3DXVec3Cross(&vNormal, &vDest, &vSrc);
+		// ComputeNormal 함수를 사용하여 삼각형의 법선 벡터를 계산합니다.
+		_vec3 normal;
+		ComputeNormal(p0, p1, p2, &normal);
 
-		normals[idx0] += vNormal;
-		normals[idx1] += vNormal;
-		normals[idx2] += vNormal;
+		// 계산된 법선 벡터를 해당 삼각형의 모든 버텍스에 할당합니다.
+		pVertex[idx0].vNormal += normal;
+		pVertex[idx1].vNormal += normal;
+		pVertex[idx2].vNormal += normal;
 	}
-
-	for (_ulong i = 0; i < m_dwVtxCnt; ++i)
-	{
-		D3DXVec3Normalize(&pVertex[i].vNormal, &normals[i]);
+	// Normalize vertex normals
+	for (int i = 0; i < m_dwVtxCnt; i++) {
+		D3DXVec3Normalize(&pVertex[i].vNormal, &pVertex[i].vNormal);
 	}
 
 	m_pIB->Unlock();
@@ -269,6 +187,6 @@ void CFrustrumNormalTex::ComputeNormal(_vec3 * p0, _vec3 * p1, _vec3 * p2, _vec3
 	D3DXVECTOR3 u = *p1 - *p0;
 	D3DXVECTOR3 v = *p2 - *p0;
 
-	D3DXVec3Cross(out, &u, &v);
+	D3DXVec3Cross(out, &v, &u);
 	D3DXVec3Normalize(out, out);
 }

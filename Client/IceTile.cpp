@@ -46,9 +46,6 @@ void CIceTile::OnCollisionEnter(const Collision * collision)
 	{
 		//if (IntersectPoint(&pPlayer->m_pTransform->m_vInfo[INFO_POS]))
 		//	Set_Trigger(true);
-		
-
-
 	}
 }
 

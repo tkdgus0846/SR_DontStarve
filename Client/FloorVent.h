@@ -2,8 +2,7 @@
 #include "FloorTile.h"
 
 
-class FloorVent
-	: public CFloorTile
+class FloorVent : public CFloorTile
 {
 public:
 	FloorVent(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -14,5 +13,9 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
+protected:
+	virtual _int Update_GameObject(const _float& fTimeDelta) override;
+
+	_float		m_fTime;
 };
 
