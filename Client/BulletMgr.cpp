@@ -174,8 +174,6 @@ CBulletMgr::~CBulletMgr()
 	Free();
 }
 
-
-
 void CBulletMgr::Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar* name)
 {
 	for (int i = 0; i < cnt; i++)
@@ -256,4 +254,3 @@ CBullet* CBulletMgr::Pop(const _tchar* name, LPDIRECT3DDEVICE9 pDevice, const _v
 
 	return pBullet;
 }
-

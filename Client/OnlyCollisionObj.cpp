@@ -58,7 +58,6 @@ void COnlyCollisionObj::OnCollisionEnter(const Collision * collsion)
 
 void COnlyCollisionObj::OnCollisionStay(const Collision * collision)
 {
-	cout << "a" << endl;
 }
 
 void COnlyCollisionObj::OnCollisionExit(const Collision * collision)

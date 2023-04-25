@@ -1,5 +1,6 @@
 #include "TallGrass.h"
 #include "Export_Function.h"
+#include "FireBullet.h"
 
 CTallGrass::CTallGrass(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CMapObj(pGraphicDev)
@@ -25,7 +26,10 @@ _int CTallGrass::Update_GameObject(const _float & fTimeDelta)
 {
 	if (GetDead())
 		return OBJ_DEAD;
+	if (GetAsyncKeyState(VK_SPACE))
+		m_bBurn = true;
 
+	Burn(fTimeDelta);
 	//m_pTransform->Rot_Bill(0.01f);
 	__super::Update_GameObject(fTimeDelta);
 	Compute_ViewZ(&m_pTransform->m_vInfo[INFO_POS]);
@@ -50,9 +54,13 @@ HRESULT CTallGrass::Add_Component()
 {
 	CComponent *pComponent;
 
-	pComponent = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_uMapComponent[ID_RENDER].insert({ L"RcTex", pComponent });
+	//m_pRcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex_Dynamic", this));
+	//NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
+	//m_uMapComponent[ID_RENDER].insert({ L"RcTex_Dynamic", m_pRcTex });
+
+	m_pRcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex_Dynamic", this));
+	NULL_CHECK_RETURN(m_pRcTex, E_FAIL);
+	m_uMapComponent[ID_RENDER].insert({ L"RcTex_Dynamic", m_pRcTex });
 
 	pComponent = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Tall_Grass_Texture", this));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -61,12 +69,10 @@ HRESULT CTallGrass::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_OBJ));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox(m_pTransform->Get_Scale() * 4.f);
+	pCollider->Set_BoundingBox(m_pTransform->Get_Scale() * 4.f, _vec3{0.f, -5.f, 0.f});
 
 	return S_OK;
 }
-
-
 
 CGameObject * CTallGrass::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
@@ -79,6 +85,28 @@ CGameObject * CTallGrass::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 
 	return pInstance;
+}
+
+void CTallGrass::OnCollisionStay(const Collision * collision)
+{
+	if (dynamic_cast<CFireBullet*>(collision->OtherGameObject) &&
+		collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL) &&
+		collision->MyCollider == Get_Component(L"BodyCollider", ID_ALL))
+	{
+		m_bBurn = true;
+	}
+}
+
+void CTallGrass::Burn(_float fTimeDelta)
+{
+	if (!m_bBurn)
+		return;
+
+	m_fV -= fTimeDelta;
+	m_pRcTex->Edit_V(m_fV * 0.5f);
+
+	if (m_fV <= 0.f)
+		SetDead();
 }
 
 void CTallGrass::Free(void)
