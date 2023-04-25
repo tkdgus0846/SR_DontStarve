@@ -74,20 +74,20 @@ private:
 	void		Fix_Mouse();
 	void		InteractTile(_float fTimeDelta);
 private:
-	_bool					m_bFix;
-
-	_bool					m_bAimHack = false;
-	_float					m_AimHackTime = 0.f;
-	_bool					m_bTactic = false;
-	_float					m_TacticTime = 0.f;
-
-	_int					m_iCoin;
-	_int					m_iDisc = 0;
-
-	_float					m_fUltimateMax = 100.f;
-	_float					m_fUltimateGuage = 0.f;
-
-	_bool					m_bInvicible;
+	_bool		m_bFix;
+				
+	_bool		m_bAimHack = false;
+	_float		m_AimHackTime = 0.f;
+	_bool		m_bTactic = false;
+	_float		m_TacticTime = 0.f;
+				
+	_int		m_iCoin;
+	_int		m_iDisc = 0;
+				
+	_float		m_fUltimateMax = 100.f;
+	_float		m_fUltimateGuage = 0.f;
+				
+	_bool		m_bInvicible;
 
 	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;
 	class CWeapon*						m_pCurWeapon;

@@ -50,7 +50,7 @@ _int CMoveCos::Update_Component(const _float & fTimeDelta)
 
 	m_pGameObject->m_pTransform->Set_Dir(vDir);
 
-	if (m_fTime > 5.f)
+	if (m_fTime > 4.f)
 	{
 		FAILED_CHECK_RETURN(m_pBlackBoard->Set_Type(L"fSpeed", m_fFstSpeed), BEHAVIOR_ERROR);
 		m_fTime = 0.f;

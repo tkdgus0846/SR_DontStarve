@@ -39,7 +39,7 @@ _int CBigJump::Update_Component(const _float & fTimeDelta)
 	if(m_bJump)
 		m_fTime += fTimeDelta * 7.f;
 	
-	_float fY = m_fForce * m_fTime - 4.9f * m_fTime * m_fTime;
+	_float fY = m_fForce * m_fTime - 3.2f * m_fTime * m_fTime;
 
 	if (fY < 0 && m_bStop)
 	{

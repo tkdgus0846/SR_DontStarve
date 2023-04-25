@@ -33,6 +33,7 @@ private:
 	void			On_Shake(SHAKE_TYPE eType, const _float& fForce, const _float& fTime);
 	void			Shake_X(const _float & fTimeDelta);
 	void			Shake_Y(const _float & fTimeDelta);
+	void			Shake_LR(const _float & fTimeDelta);
 	void			Shake(const _float & fTimeDelta);
 
 private:

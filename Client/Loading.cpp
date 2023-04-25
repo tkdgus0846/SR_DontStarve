@@ -636,15 +636,13 @@ _uint CLoading::Loading_ForStage(void)
 	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, -3.f, 25.f }));
 	//ROOM_MGR->Push_Back_Obj(0, CWalkerBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	
-	
-	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
-
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 	
 	//임시로 한거임 사용하고 다시 밑에 주석으로 되돌리기.
 	//CFileSystem::Load(L"SH.dat");
-	//CFileSystem::Load(LEVEL1_EDIT_DATANAME);
+	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
+
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 	ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
 

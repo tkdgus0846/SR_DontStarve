@@ -7,7 +7,7 @@
 #include "Walker.h"
 #include "Turret.h"
 #include "SkyBox.h"
-#include "ObjCamera.h"
+#include "BossRoomCamera.h"
 #include "EditCamera.h"
 #include "Room.h"
 #include "RoomMgr.h"

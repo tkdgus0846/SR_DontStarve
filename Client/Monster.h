@@ -63,6 +63,7 @@ protected:
 	CSequence*	Make_BossPattern3(const _float& fCoolTime = 12.f);
 	CSequence*	Make_BossPattern3_1(const _float& fCoolTime = 12.f);
 	CSequence*	Make_BossPattern3_2(const _float& fCoolTime = 12.f);
+	CSequence*	Make_BossPattern3_3(const _float& fCoolTime = 12.f);
 	CSequence*	Make_BossPattern4(const _float& fCoolTime = 12.f);
 	
 	HRESULT		Set_AttackToPlayer(const _tchar* BulletKey, const _float& fSpeed, const _float& fCoolTime);
