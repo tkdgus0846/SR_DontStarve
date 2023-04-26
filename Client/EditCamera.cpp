@@ -20,6 +20,7 @@
 #include "SnowSoTree.h"
 #include "Slider.h"
 #include "SnowMan.h"
+#include "Cactus.h"
 CEditCamera::CEditCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 	, m_fSpeed(0.f)
@@ -117,6 +118,10 @@ void CEditCamera::CreateMapObject(CImInspector * pWindow)
 		vPos.y += pObj->m_pTransform->Get_Scale().y;
 	}
 	else if (dynamic_cast<CSnowTree*>(pObj))
+	{
+		vPos.y += 4.f;
+	}
+	else if (dynamic_cast<Cactus*>(pObj))
 	{
 		vPos.y += 4.f;
 	}

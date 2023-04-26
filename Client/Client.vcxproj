@@ -274,6 +274,12 @@
     <ClInclude Include="BulletBar.h" />
     <ClInclude Include="BulletGauge.h" />
     <ClInclude Include="BulletItem.h" />
+    <ClInclude Include="Cactus.h" />
+    <ClInclude Include="Cactus1.h" />
+    <ClInclude Include="Cactus2.h" />
+    <ClInclude Include="Cactus3.h" />
+    <ClInclude Include="Cactus4.h" />
+    <ClInclude Include="Cactus5.h" />
     <ClInclude Include="Calculator.h" />
     <ClInclude Include="CheckPoint.h" />
     <ClInclude Include="Client.h" />
@@ -381,6 +387,9 @@
     <ClInclude Include="OnlyCollisionObj.h" />
     <ClInclude Include="OnPlayer.h" />
     <ClInclude Include="RootAttack.h" />
+    <ClInclude Include="SandWaterArc.h" />
+    <ClInclude Include="SandWaterFill.h" />
+    <ClInclude Include="SandWaterLine.h" />
     <ClInclude Include="Scope.h" />
     <ClInclude Include="SellItem.h" />
     <ClInclude Include="Serializable.h" />
@@ -533,6 +542,12 @@
     <ClCompile Include="BulletBar.cpp" />
     <ClCompile Include="BulletGauge.cpp" />
     <ClCompile Include="BulletItem.cpp" />
+    <ClCompile Include="Cactus.cpp" />
+    <ClCompile Include="Cactus1.cpp" />
+    <ClCompile Include="Cactus2.cpp" />
+    <ClCompile Include="Cactus3.cpp" />
+    <ClCompile Include="Cactus4.cpp" />
+    <ClCompile Include="Cactus5.cpp" />
     <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="CheckPoint.cpp" />
     <ClCompile Include="Client.cpp" />
@@ -665,6 +680,9 @@
     <ClCompile Include="QuickSandTile.cpp" />
     <ClCompile Include="RootAttack.cpp" />
     <ClCompile Include="SandTile.cpp" />
+    <ClCompile Include="SandWaterArc.cpp" />
+    <ClCompile Include="SandWaterFill.cpp" />
+    <ClCompile Include="SandWaterLine.cpp" />
     <ClCompile Include="Scope.cpp" />
     <ClCompile Include="SellItem.cpp" />
     <ClCompile Include="ShockWave.cpp" />
