@@ -23,11 +23,6 @@ CGameObject * CSandTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CGameObject * CSandTile::LoadSaveTarget(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	return Create(pGraphicDev);
-}
-
 HRESULT CSandTile::Add_Component()
 {
 	HRESULT result = __super::Add_Component();

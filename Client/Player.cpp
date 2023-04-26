@@ -47,6 +47,8 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_iCoin(100)
 	, m_bInvicible(true)
 	, m_bColorInversion(false)
+	, m_bJumped(false)
+	, m_fJumpTime(0.f)
 {
 	Set_LayerID(LAYER_PLAYER);
 	Set_ObjTag(L"Player");
@@ -92,18 +94,10 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	m_PosList.push_back(m_pTransform->m_vInfo[INFO_POS]);
 	if (m_PosList.size() > 2) m_PosList.pop_front();
 
-
-	cout << typeid(this).name() << endl;
 	InteractTile(fTimeDelta);
-	/*cout << m_pTransform->m_vInfo[INFO_LOOK].x << " " << m_pTransform->m_vInfo[INFO_LOOK].y << " " << m_pTransform->m_vInfo[INFO_LOOK].z << endl;*/
-
-	//cout << m_pTransform->m_vInfo[INFO_POS].y << endl;
-	/*cout << ROOM_MGR->Get_Tennel(0) << " " << ROOM_MGR->Get_Tennel(1) << endl;*/
 	
-	//cout << ROOM_MGR->Get_Room(3)->m_vecLayer[LAYER_NPC]->Get_GameObject(L"ShopNpc")->m_pTransform->m_vInfo[INFO_POS].x << endl;
-	/*cout << ROOM_MGR->Get_Room(3)->m_vecLayer[LAYER_NPC]->Get_ObjectSize() << endl;*/
-
 	Key_Input(fTimeDelta);
+	Jump(fTimeDelta);
 
 	if (m_fUltimateGuage < 100.f)
 	{
@@ -177,6 +171,24 @@ void CPlayer::OnCollisionStay(const Collision * collision)
 
 void CPlayer::OnCollisionExit(const Collision * collision)
 {
+}
+
+void CPlayer::Jump(const _float& fTimeDelta)
+{
+	if (m_bJumped == false) return;
+
+	m_fJumpTime += fTimeDelta;
+	_float fY = 2  * m_fJumpTime - 4.9f * m_fJumpTime * m_fJumpTime;
+
+	m_pTransform->m_vInfo[INFO_POS].y += fY;
+
+	if (m_pTransform->m_vInfo[INFO_POS].y < 4.f)
+	{
+		m_pTransform->m_vInfo[INFO_POS].y = 4.f;
+		m_bJumped = false;
+		return;
+	}
+
 }
 
 void CPlayer::Change_Weapon(WEAPONTYPE eWeaponType)
@@ -353,6 +365,9 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		if (Engine::Key_Pressing(DIK_A))	m_pTransform->Move_Strafe(-m_fSpeed, fTimeDelta);
 		if (Engine::Key_Pressing(DIK_D))	m_pTransform->Move_Strafe(m_fSpeed, fTimeDelta);
 	}
+
+	if (Engine::Key_Down(DIK_I))
+		CManagement::GetInstance()->Next_Stage();
 		
 	if (Engine::Key_Down(DIK_F3))	Engine::Shake_Camera(SHAKE_LR, 2.f, 5.f);
 	if (Engine::Key_Down(DIK_Q))	Prev_Weapon();
@@ -361,6 +376,15 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 
 	if (Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
 	if (Engine::Key_Down((DIK_C))) Engine::Toggle_ColliderRender();
+
+	if (Engine::Key_Pressing(DIK_SPACE))
+	{
+		if (m_bJumped == false)
+		{
+			m_bJumped = true;
+			m_fJumpTime = 0.f;
+		}
+	}
 
 	if (Engine::Mouse_Pressing(DIM_LB))
 	{

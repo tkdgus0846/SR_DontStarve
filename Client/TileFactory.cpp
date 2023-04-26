@@ -51,6 +51,9 @@
 #include "FloorLarge421874.h"
 #include "FloorLarge.h"
 
+#include "SandWaterArc.h"
+#include "SandWaterFill.h"
+#include "SandWaterLine.h"
 IMPLEMENT_SINGLETON(CTileFactory)
 
 CTileFactory::CTileFactory()
@@ -117,6 +120,9 @@ HRESULT CTileFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(FloorLarge421871::Tag(), FloorLarge421871::Create);
 	Register(FloorLarge421874::Tag(), FloorLarge421874::Create);
 	Register(FloorLarge::Tag(), FloorLarge::Create);
+	Register(SandWaterArc::Tag(), SandWaterArc::Create);
+	Register(SandWaterFill::Tag(), SandWaterFill::Create);
+	Register(SandWaterLine::Tag(), SandWaterLine::Create);
 
 	ExtractTextureKey();
 

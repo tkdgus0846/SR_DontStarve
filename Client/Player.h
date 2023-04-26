@@ -32,6 +32,8 @@ public:
 	virtual void OnCollisionStay(const Collision* collision) override;
 	virtual void OnCollisionExit(const Collision* collision) override;
 
+	void			Jump(const _float& fTimeDelta);
+
 	void			Change_Weapon(WEAPONTYPE eWeaponType);
 	void			Next_Weapon();
 	void			Prev_Weapon();
@@ -98,6 +100,9 @@ private:
 
 	_bool					m_bInvicible;
 	_bool					m_bColorInversion;
+
+	_bool					m_bJumped;
+	_float					m_fJumpTime;
 
 
 	array<class CWeapon*, WEAPONEND>	m_MyWeaponList;

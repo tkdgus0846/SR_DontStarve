@@ -8,6 +8,7 @@
 
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
+	, m_bNextStage(false)
 {
 	m_pGraphicDev->AddRef();
 
@@ -52,8 +53,10 @@ _int CScene::Update_Scene(const _float & fTimeDelta)
 		}
 		else if(Engine::Mouse_Up(DIM_RB))
 		{
-			CManagement::GetInstance()->Set_TimeStopped(false);
-			Reset_SlowTime(fTimeDelta);
+			if (CManagement::GetInstance()->Get_TimeStopped() == true)
+				Reset_SlowTime(fTimeDelta);
+
+			CManagement::GetInstance()->Set_TimeStopped(false);	
 		}
 
 		if (i == LAYER_PLAYER || i == LAYER_UI)
@@ -129,15 +132,28 @@ CGameObject * CScene::Get_GameObject(LAYERID LayerID, const _tchar * pObjTag)
 void CScene::Play_SlowTime(const _float & fTimeDelta)
 {
 	m_SlowTime -= 0.0005f * fTimeDelta;
+
+	if (m_SlowTime >= fTimeDelta - 0.005f)
+		PLAY_SOUND(L"sfxBootDown.wav", SOUND_ENVIRONMENT, 1.f);
+
 	if (m_SlowTime < 0.f) m_SlowTime = 0.f;
 
 	if (m_SlowTime == 0.f) CManagement::GetInstance()->Set_TimeStopped();
 	
-	PLAY_SOUND(L"sfxBootDown.wav", SOUND_ENVIRONMENT, 1.f);
+
+	if (!IS_PLAYING(SOUND_BGM))
+	{
+		CSoundMgr::GetInstance()->SetVolumeCurBGM(0.01f);
+		PLAY_BGM(L"SlowMotion.wav", SOUND_BGM, 1.f);
+	}
+		
 }
 
 void CScene::Reset_SlowTime(const _float & fTimeDelta)
 {
+	CSoundMgr::GetInstance()->StopCurBGM();
+	CSoundMgr::GetInstance()->SetVolumePrevBGM(BGM_SOUND_VOLUME, true);
+	
 	m_SlowTime = fTimeDelta;
 }
 

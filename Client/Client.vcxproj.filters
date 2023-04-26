@@ -134,6 +134,12 @@
     <Filter Include="GameObject\Bullet\LandObject">
       <UniqueIdentifier>{92bf026e-dee3-49ed-b91a-19153910bc10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\MapObject\Cactus">
+      <UniqueIdentifier>{327d73d7-ba4a-4558-8b25-8d3de6079871}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portal">
+      <UniqueIdentifier>{5984d543-0981-4e4f-8028-8b463c825741}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -915,11 +921,43 @@
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
     <ClInclude Include="CheckPoint.h" />
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
     <ClInclude Include="DeadCheck.h">
       <Filter>Monobehaviours\Decorator</Filter>
     </ClInclude>
     <ClInclude Include="CutSceneCheck.h">
       <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="SandWaterLine.h">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClInclude>
+    <ClInclude Include="SandWaterFill.h">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClInclude>
+    <ClInclude Include="SandWaterArc.h">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClInclude>
+    <ClInclude Include="Cactus5.h">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClInclude>
+    <ClInclude Include="Cactus1.h">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClInclude>
+    <ClInclude Include="Cactus2.h">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClInclude>
+    <ClInclude Include="Cactus3.h">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClInclude>
+    <ClInclude Include="Cactus4.h">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClInclude>
+    <ClInclude Include="Cactus.h">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Portal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1683,11 +1721,43 @@
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
     <ClCompile Include="CheckPoint.cpp" />
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
     <ClCompile Include="DeadCheck.cpp">
       <Filter>Monobehaviours\Decorator</Filter>
     </ClCompile>
     <ClCompile Include="CutSceneCheck.cpp">
       <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="SandWaterLine.cpp">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClCompile>
+    <ClCompile Include="SandWaterFill.cpp">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClCompile>
+    <ClCompile Include="SandWaterArc.cpp">
+      <Filter>GameObject\Tile\FloorTile</Filter>
+    </ClCompile>
+    <ClCompile Include="Cactus1.cpp">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClCompile>
+    <ClCompile Include="Cactus2.cpp">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClCompile>
+    <ClCompile Include="Cactus3.cpp">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClCompile>
+    <ClCompile Include="Cactus4.cpp">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClCompile>
+    <ClCompile Include="Cactus5.cpp">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClCompile>
+    <ClCompile Include="Cactus.cpp">
+      <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Portal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

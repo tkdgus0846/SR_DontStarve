@@ -23,7 +23,6 @@ private:
 	_int				m_iPreRoomIdx;
 
 	LOADINGID			m_StageInfo;
-	_bool				m_bNextStageCondition;
 
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
