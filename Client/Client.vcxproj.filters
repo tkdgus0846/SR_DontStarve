@@ -926,9 +926,6 @@
     <ClInclude Include="CutSceneUI.h">
       <Filter>GameObject\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CheckPoint.h" />
-      <Filter>GameObject\MapObject</Filter>
-    </ClInclude>
     <ClInclude Include="DeadCheck.h">
       <Filter>Monobehaviours\Decorator</Filter>
     </ClInclude>
@@ -1731,9 +1728,6 @@
     </ClCompile>
     <ClCompile Include="CutSceneUI.cpp">
       <Filter>GameObject\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CheckPoint.cpp" />
-      <Filter>GameObject\MapObject</Filter>
     </ClCompile>
     <ClCompile Include="DeadCheck.cpp">
       <Filter>Monobehaviours\Decorator</Filter>
