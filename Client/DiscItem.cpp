@@ -94,7 +94,7 @@ void CDiscItem::SetDead(_bool bDead /*= true*/)
 	{
 		_vec3 discPos = m_pTransform->m_vInfo[INFO_POS];
 
-		CPortal* portal = CPortal::Create(m_pGraphicDev, {discPos.x, 4.f, discPos.z - 24.0f});
+		CPortal* portal = CPortal::Create(m_pGraphicDev, {85.f, 4.f, 61.f});
 		Add_GameObject(portal);
 	}
 }

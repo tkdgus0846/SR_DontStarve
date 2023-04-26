@@ -1,7 +1,7 @@
 #pragma once
 #include "FloorTile.h"
 class SandWaterLine
-	: CFloorTile
+	: public CFloorTile
 {
 private:
 	SandWaterLine(LPDIRECT3DDEVICE9 pGraphicDev);
