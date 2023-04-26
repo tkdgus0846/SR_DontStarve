@@ -49,6 +49,17 @@ HRESULT CSkillUI::Ready_GameObject(void)
 
 _int CSkillUI::Update_GameObject(const _float & fTimeDelta)
 {
+	if (Engine::Get_Player() == nullptr) { return 0; }
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
+
+	if (pPlayer->Get_bAimHack())
+	{
+		Ani2->Play_Animation();
+		m_bAimHack = true;
+		return 0;
+	}
+
+
 	Engine::Add_RenderGroup(RENDER_AFTER_ALPHA_UI, this);
 
 	__super::Update_GameObject(fTimeDelta);
