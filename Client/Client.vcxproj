@@ -287,6 +287,7 @@
     <ClInclude Include="CoinItem.h" />
     <ClInclude Include="CoolTime.h" />
     <ClInclude Include="CrossHair.h" />
+    <ClInclude Include="CutSceneUI.h" />
     <ClInclude Include="CutSceneCheck.h" />
     <ClInclude Include="DeadCheck.h" />
     <ClInclude Include="DecoratorTile.h" />
@@ -557,6 +558,7 @@
     <ClCompile Include="CoinItem.cpp" />
     <ClCompile Include="CoolTime.cpp" />
     <ClCompile Include="CrossHair.cpp" />
+    <ClCompile Include="CutSceneUI.cpp" />
     <ClCompile Include="CutSceneCheck.cpp" />
     <ClCompile Include="DeadCheck.cpp" />
     <ClCompile Include="DecoratorTile.cpp" />

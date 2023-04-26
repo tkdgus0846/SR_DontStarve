@@ -33,9 +33,9 @@ void CBullet::Free(void)
 }
 
 void CBullet::OnCollisionStay(const Collision * collision)
-{
+{/*
 	CMonster* monster = dynamic_cast<CMonster*>(collision->OtherGameObject);
 
 	if (monster && collision->OtherCollider == collision->OtherGameObject->Get_Component(L"BodyCollider", ID_ALL))
-		dynamic_cast<CPlayer*>(Engine::Get_Player())->Gain_UltiGuage(m_Damage);
+		dynamic_cast<CPlayer*>(Engine::Get_Player())->Gain_UltiGuage(m_Damage);*/
 }

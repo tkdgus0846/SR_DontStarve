@@ -5,6 +5,7 @@ BEGIN(Engine)
 
 class CRcTex;
 class CTexture;
+class CAnimation;
 
 END
 
@@ -13,6 +14,7 @@ enum SKILLUI
 	TIMESTOP,
 	GRAVITION,
 	TACTICAL,
+	COOLTIME,
 	SKILLEND
 };
 
@@ -32,10 +34,16 @@ public:
 	virtual void Render_GameObject(void) override;
 
 private:
-	array<CComponent*, SKILLEND> m_arrMap;
 	D3DXMATRIX  matWorld, matView;
 
 	CRcTex* m_pRcTex = nullptr;
+	CTexture* m_pTexture = nullptr;
+	CAnimation* Ani1 = nullptr;
+	CAnimation* Ani2 = nullptr;
+	CAnimation* Ani3 = nullptr;
+
+	_bool	m_bAimHack = false;
+	_bool	m_bGravition = false;
 
 public:
 	static CSkillUI*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

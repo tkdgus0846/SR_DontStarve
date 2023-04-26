@@ -27,6 +27,7 @@
 #include "UltimateUI.h"
 #include "SkillUI.h"
 #include "PlayerHitUI.h"
+#include "CutSceneUI.h"
 
 #include "CoinItem.h"
 #include "BulletItem.h"
@@ -98,6 +99,7 @@ HRESULT CStage::Ready_Scene(void)
 
 	Add_GameObject(CPlayerHitUI::Create(m_pGraphicDev));
 
+	Add_GameObject(CCutSceneUI::Create(m_pGraphicDev));
 
 	// Tennel
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);
