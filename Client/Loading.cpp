@@ -512,6 +512,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TimeStop_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/TimeStop.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gravition_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Gravition.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Tactical_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Tactical.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Reload_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Reload100_%d.png", 100)), E_FAIL);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MiniMap_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/hud_map.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MapPos_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Map/mapPos.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"ESWN_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Map/ESWN.png")), E_FAIL);
@@ -641,7 +643,7 @@ _uint CLoading::Loading_ForStage(void)
 	ROOM_MGR->Create_Default_Room(STAGE1);	
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
-	/*ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));*/
+	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
 	
 	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));

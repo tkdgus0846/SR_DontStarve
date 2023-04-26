@@ -59,6 +59,8 @@ public:
 
 	void			AimHack();
 	_bool			Get_bAimHack() { return m_bAimHack; }
+	void			Set_bGravition(_bool state) { m_bGravition = state; }
+	_bool			Get_bGravition() { return m_bGravition; }
 	void			Fix_Aim(CCollider* pCollider);
 	_vec3			Tactical_Bullet_Dir();
 	
@@ -84,6 +86,8 @@ private:
 	_bool					Is_SlowTime = false;
 	_bool					m_bDamaged = false;
 
+
+	_bool					m_bGravition = false;
 	_bool					m_bAimHack = false;
 	_float					m_AimHackTime = 0.f;
 	_bool					m_bTactic = false;

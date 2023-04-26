@@ -438,6 +438,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			m_pTransform->m_vInfo[INFO_LOOK], { 1.f,1.f,1.f });
 		Add_GameObject(bullet);
 		Loss_UltiGuage(15.f);
+		m_bGravition = true;
 	}
 
 	if (Engine::Key_Down(DIK_G) && m_fUltimateGuage >= 15.f)

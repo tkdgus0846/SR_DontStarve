@@ -914,7 +914,12 @@
     <ClInclude Include="SnowSoTree.h">
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
-    <ClInclude Include="CheckPoint.h" />
+    <ClInclude Include="CheckPoint.h">
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CutSceneUI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1666,7 +1671,7 @@
     </ClCompile>
     <ClCompile Include="CutSceneCamera.cpp">
       <Filter>GameObject\ObjCamera</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="SnowMan.cpp">
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
@@ -1676,7 +1681,12 @@
     <ClCompile Include="SnowTree.cpp">
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
-    <ClCompile Include="CheckPoint.cpp" />
+    <ClCompile Include="CheckPoint.cpp">
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CutSceneUI.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">

@@ -11,7 +11,6 @@ struct AnimFrame
 	_uint iMaxFrame;
 	_uint iFrame;
 	class CTexture* pTexture;
-	
 };
 
 class CAnimation : public CComponent

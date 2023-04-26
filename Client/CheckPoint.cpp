@@ -108,4 +108,5 @@ CGameObject * CCheckPoint::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CCheckPoint::Free(void)
 {
+	__super::Free();
 }
