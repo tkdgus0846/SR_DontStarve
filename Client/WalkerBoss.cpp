@@ -4,6 +4,7 @@
 #include "EffectManager.h"
 #include "Export_Function.h"
 #include "..\Engine\SoundMgr.h"
+#include "DiscItem.h"
 
 CWalkerBoss::CWalkerBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
@@ -106,7 +107,7 @@ _bool CWalkerBoss::Dead_Production()
 	Engine::Shake_Camera(SHAKE_LR, 2.f, 3.4f);
 	if (m_fCurTime1 - m_fPreTime1 < 3.5f)
 	{
-
+		STOP_ALL_BGM;
 		_vec3 vEPos{};
 		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
 		_vec3 vPos = m_pTransform->m_vInfo[INFO_POS] + vEPos;
@@ -128,6 +129,10 @@ _bool CWalkerBoss::Dead_Production()
 		}
 		return false;
 	}
+
+	CDiscItem* discItem = CDiscItem::Create(m_pGraphicDev);
+	Add_GameObject(discItem);
+
 	__super::SetDead(true);
 	return true;
 }

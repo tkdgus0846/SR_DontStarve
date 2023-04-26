@@ -134,6 +134,9 @@
     <Filter Include="GameObject\Bullet\LandObject">
       <UniqueIdentifier>{92bf026e-dee3-49ed-b91a-19153910bc10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Portal">
+      <UniqueIdentifier>{5984d543-0981-4e4f-8028-8b463c825741}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -915,6 +918,9 @@
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
     <ClInclude Include="CheckPoint.h" />
+    <ClInclude Include="Portal.h">
+      <Filter>Portal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1666,7 +1672,7 @@
     </ClCompile>
     <ClCompile Include="CutSceneCamera.cpp">
       <Filter>GameObject\ObjCamera</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="SnowMan.cpp">
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
@@ -1677,6 +1683,9 @@
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
     <ClCompile Include="CheckPoint.cpp" />
+    <ClCompile Include="Portal.cpp">
+      <Filter>Portal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">

@@ -370,6 +370,7 @@
     <ClInclude Include="Parabola.h" />
     <ClInclude Include="NullFloorTile.h" />
     <ClInclude Include="PlayerHitUI.h" />
+    <ClInclude Include="Portal.h" />
     <ClInclude Include="RedLaserBullet.h" />
     <ClInclude Include="LoadingScene.h" />
     <ClInclude Include="MapObjectFactory.h" />
@@ -623,6 +624,7 @@
     <ClCompile Include="ImMenuBar.cpp" />
     <ClCompile Include="ImTest.cpp" />
     <ClCompile Include="ImWindow.cpp" />
+    <ClCompile Include="Portal.cpp" />
     <ClCompile Include="RangeInPlayer.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemManager.cpp" />

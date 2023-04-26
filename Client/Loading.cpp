@@ -190,6 +190,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/wob_floor_4.png")), E_FAIL);
 	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SandStorm_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/SandStorm.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Portal_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Portal%d.png",3)), E_FAIL);
 	
 
 	// Collision Texture for the Debug

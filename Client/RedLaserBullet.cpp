@@ -121,14 +121,14 @@ void CRedLaserBullet::OnCollisionStay(const Collision * collision)
 	{
 		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"Explosion_Texture", vPos, { 1.7f, 1.7f, 1.7f }, 0.1f);
 		Add_GameObject(effect);
-		STOP_PLAY_SOUND(L"sfxKill.wav", SOUND_ENEMY, 1.f);
+		STOP_PLAY_SOUND(L"sfxKill.wav", SOUND_ENEMY_BULLET, 1.f);
 		SetDead();
 	}
 
 	if (pPlayer && collision->OtherCollider == pPlayer->Get_Component(L"BodyCollider", ID_ALL))
 	{
 		pPlayer->Get_Damaged(1);
-		STOP_PLAY_SOUND(L"sfxKill.wav", SOUND_ENEMY, 1.f);
+		STOP_PLAY_SOUND(L"sfxKill.wav", SOUND_ENEMY_BULLET, 1.f);
 		SetDead();
 	}
 }

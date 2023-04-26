@@ -2,6 +2,8 @@
 #include "Export_Function.h"
 #include "Player.h"
 #include "..\Engine\SoundMgr.h"
+#include "Portal.h"
+
 CDiscItem::CDiscItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
 {
@@ -48,20 +50,26 @@ HRESULT CDiscItem::Add_Component()
 
 HRESULT CDiscItem::Ready_GameObject(void)
 {
-	_vec3 vScale = { 1.f, 1.f, 0.f };
-	m_pTransform->Set_Pos(25.f, 1.f, 25.f);
+	_vec3 vScale = { 1.f, 1.f, 1.f };
+	Set_Pos({ 85.f, 10.f, 85.f });
 	m_pTransform->Set_Scale(vScale);
+
+	m_bDrop = true;
 	__super::Ready_GameObject();
 	return S_OK;
 }
 
 _int CDiscItem::Update_GameObject(const _float & fTimeDelta)
 {
-	if (m_bDrop == true) ItemPatrol(fTimeDelta);
-
-	__super::Update_GameObject(fTimeDelta);
-
 	if (GetDead()) return OBJ_DEAD;
+
+	m_pTransform->m_vInfo[INFO_POS].y -= 2.f * fTimeDelta;
+
+	if (m_pTransform->m_vInfo[INFO_POS].y < 3.f)
+		m_pTransform->m_vInfo[INFO_POS].y = 3.f;
+
+	//if (m_bDrop == true) ItemPatrol(fTimeDelta);
+	__super::Update_GameObject(fTimeDelta);	
 
 	return OBJ_NOEVENT;
 }
@@ -76,6 +84,19 @@ void CDiscItem::Render_GameObject(void)
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrixPointer());
 
 	__super::Render_GameObject();
+}
+
+void CDiscItem::SetDead(_bool bDead /*= true*/)
+{
+	__super::SetDead(bDead);
+
+	if (GetDead())
+	{
+		_vec3 discPos = m_pTransform->m_vInfo[INFO_POS];
+
+		CPortal* portal = CPortal::Create(m_pGraphicDev, {discPos.x, 4.f, discPos.z - 24.0f});
+		Add_GameObject(portal);
+	}
 }
 
 CDiscItem * CDiscItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)
