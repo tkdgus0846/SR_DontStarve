@@ -6,9 +6,10 @@
 #include "ItemManager.h"
 #include "Export_Function.h"
 #include "..\Engine\SoundMgr.h"
+#include "DiscItem.h"
 
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
+	: CMonster(pGraphicDev), m_bMove(true), m_pTail(nullptr)
 	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime1(0.f), m_fPreTime1(0.f)
 {
 	Set_LayerID(LAYER_BOSS);
@@ -83,6 +84,9 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 	Get_BlackBoard()->Add_Type(L"iIndexX", iIndexX);
 	Get_BlackBoard()->Add_Type(L"iIndexZ", iIndexZ);
 
+	m_bCutScene = true;
+
+	Get_BlackBoard()->Add_Type(L"bCutScene", m_bCutScene);
 	return result;
 }
 
@@ -95,9 +99,6 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 		return OBJ_DEAD;
 	else if (!GetDead())
 		m_fPreTime2 = Get_WorldTime();
-
-	if (Key_Down(DIK_SPACE))
-		m_bMove = !m_bMove;
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -211,6 +212,7 @@ _bool CWormHead::Dead_Production()
 	Engine::Shake_Camera(SHAKE_LR, 2.f, 3.4f);
 	if (m_fCurTime2 - m_fPreTime2 < 3.5f)
 	{
+		STOP_ALL_BGM;
 		_vec3 vEPos{};
 		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
 		_vec3 vPos = m_pTransform->m_vInfo[INFO_POS] + vEPos;
@@ -232,6 +234,10 @@ _bool CWormHead::Dead_Production()
 		}
 		return false;
 	}
+
+	CDiscItem* discItem = CDiscItem::Create(m_pGraphicDev);
+	Add_GameObject(discItem);
+
 	__super::SetDead(true);
 	return true;
 }

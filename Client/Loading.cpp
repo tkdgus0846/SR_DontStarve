@@ -33,7 +33,7 @@
 #include "WaterTile.h"
 #include "..\Engine\VentParticle.h"
 
-#define LEVEL1_EDIT_DATANAME L"Level1.dat"
+#define LEVEL1_EDIT_DATANAME L"Level2.dat"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -190,6 +190,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Snow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/wob_floor_4.png")), E_FAIL);
 	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SandStorm_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Level/SandStorm.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Portal_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Portal%d.png",3)), E_FAIL);
 	
 
 	// Collision Texture for the Debug
@@ -315,7 +317,14 @@ _uint CLoading::Loading_ForStage(void)
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"FloorLarge #421204", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/FloorLarge #421204.png")), E_FAIL);
 		decoratTile.push_back(L"FloorLarge #421204");
 
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SandWaterArc", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/SandWaterArc_%d.png", 2)), E_FAIL);
+		decoratTile.push_back(L"SandWaterArc");
 
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SandWaterFill", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/SandWaterFill_%d.png", 2)), E_FAIL);
+		decoratTile.push_back(L"SandWaterFill");
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SandWaterLine", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/Floor/SandWaterLine_%d.png", 2)), E_FAIL);
+		decoratTile.push_back(L"SandWaterLine");
 
 
 
@@ -477,12 +486,25 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Tree_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Texture2D/Level/tree.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"CheckPoint_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/checkpoint_%d.png", 8)), E_FAIL);
 
+
+
 	// Snow Map Obj
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SnowSoTree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Snow/SnowSoTree.png")), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SnowTree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Snow/SnowTree.png")), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"SnowMan", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Snow/SnowMan_%d.png", 4)), E_FAIL);
+
+	// Dessert Map Obj
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Cactus1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Dessert/Cactus1.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Cactus2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Dessert/Cactus2.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Cactus3", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Dessert/Cactus3.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Cactus4", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Dessert/Cactus4.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Cactus5", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/MapObject/Dessert/Cactus5.png")), E_FAIL);
 
 	// UI
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"BulletBar_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/hud_secondary_ext_edit.png")), E_FAIL);
@@ -598,6 +620,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_NotCollisionWall", CNotCollisionWall::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_CoolTime", CCoolTime::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_BoolCheck", CBoolCheck::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_DeadCheck", CDeadCheck::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_CutSceneCheck", CCutSceneCheck::Create(m_pGraphicDev)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Sequence", CSequence::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Selector", CSelector::Create(m_pGraphicDev)), E_FAIL);
@@ -640,12 +664,14 @@ _uint CLoading::Loading_ForStage(void)
 
 	Set_String(L"Room Loading..........");
 	
-	ROOM_MGR->Create_Default_Room(STAGE1);	
+	ROOM_MGR->Create_Default_Room(STAGE1);
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
 	
+
 	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
+	// ROOM_MGR->Push_Back_Obj(4, CWalkerBoss::Create(m_pGraphicDev, { 85.f, 0.f, 65.f }));
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));

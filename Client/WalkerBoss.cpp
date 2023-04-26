@@ -4,6 +4,7 @@
 #include "EffectManager.h"
 #include "Export_Function.h"
 #include "..\Engine\SoundMgr.h"
+#include "DiscItem.h"
 
 CWalkerBoss::CWalkerBoss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
@@ -30,8 +31,11 @@ HRESULT CWalkerBoss::Ready_GameObject(const _vec3 & vPos)
 	m_fCurTime1 = Get_WorldTime();
 	m_fPreTime1 = Get_WorldTime();
 
+	m_bCutScene = true;
+
 	HRESULT result = __super::Ready_GameObject();
 
+	Get_BlackBoard()->Add_Type(L"bCutScene", m_bCutScene);
 	m_pShadow->Set_RenderFlag();
 
 	return result;
@@ -106,7 +110,7 @@ _bool CWalkerBoss::Dead_Production()
 	Engine::Shake_Camera(SHAKE_LR, 2.f, 3.4f);
 	if (m_fCurTime1 - m_fPreTime1 < 3.5f)
 	{
-
+		STOP_ALL_BGM;
 		_vec3 vEPos{};
 		GetRandomVector(&vEPos, &_vec3(-3.f, -3.f, -3.f), &_vec3(3.f, 3.f, 3.f));
 		_vec3 vPos = m_pTransform->m_vInfo[INFO_POS] + vEPos;
@@ -128,6 +132,10 @@ _bool CWalkerBoss::Dead_Production()
 		}
 		return false;
 	}
+
+	CDiscItem* discItem = CDiscItem::Create(m_pGraphicDev);
+	Add_GameObject(discItem);
+
 	__super::SetDead(true);
 	return true;
 }
@@ -166,11 +174,6 @@ HRESULT CWalkerBoss::Add_Component()
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
 	pCollider->Set_BoundingBox({ 6.f, 6.f, 6.f });
-
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].emplace(L"Range", pCollider);
-	pCollider->Set_BoundingBox({ 100.f, 10.f, 100.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Boss2_AI(), E_FAIL);

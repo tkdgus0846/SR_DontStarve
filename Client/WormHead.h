@@ -33,6 +33,7 @@ private:
 	vector<CWormBody*>	m_vecBody;
 	CWormTail*			m_pTail;
 	_bool				m_bMove;
+	_bool				m_bCutScene;
 	_float				m_fCurAngle;
 	_float				m_fPreAngle;
 	_float				m_fCurTime1;

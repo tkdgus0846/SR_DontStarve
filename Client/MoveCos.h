@@ -14,9 +14,13 @@ public:
 	virtual void LateUpdate_Component(void) override {}
 	virtual void Render_Component(void) override {};
 
+	void Set_Follow() { m_bIsFollow = true; }
+	void Set_MoveTime(const _float& fTime = 4.f) { m_fTimer = fTime; }
+
 private:
 	_vec3 m_vDir;	// 한 축의 성분을 제외한 이동 방향.
 	_bool m_bStart;
+	_bool m_bIsFollow;
 	_float m_fTime;
 	_float m_fFstSpeed;
 

@@ -49,7 +49,7 @@ _int CAttack::Update_Component(const _float & fTimeDelta)
 
 		if (m_pKey == L"EnemyBullet")
 		{
-			PLAY_SOUND(L"sfxBigBullet.wav", SOUND_ENEMY, 1.f);
+			STOP_PLAY_SOUND(L"sfxBigBullet.wav", SOUND_ENEMY, 1.f);
 		}
 		else if (m_pKey == L"RedLaserBullet")
 		{	

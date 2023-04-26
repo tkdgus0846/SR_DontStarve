@@ -26,3 +26,5 @@
 #include "WormMoveCtrl.h"
 #include "SpreadShot.h"
 #include "BoolCheck.h"
+#include "DeadCheck.h"
+#include "CutSceneCheck.h"

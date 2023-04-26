@@ -64,7 +64,11 @@ protected:
 	CSequence*	Make_BossPattern3_1(const _float& fCoolTime = 12.f);
 	CSequence*	Make_BossPattern3_2(const _float& fCoolTime = 12.f);
 	CSequence*	Make_BossPattern3_3(const _float& fCoolTime = 12.f);
+	CSequence*	Make_BossPattern3_4(const _float& fCoolTime = 12.f);
 	CSequence*	Make_BossPattern4(const _float& fCoolTime = 12.f);
+	CSequence*	Make_NubBossCutScene();
+	CSequence*	Make_WormBossCutScene();
+	CSequence*	Make_WalkerBossCutScene();
 	
 	HRESULT		Set_AttackToPlayer(const _tchar* BulletKey, const _float& fSpeed, const _float& fCoolTime);
 	HRESULT		Set_PatrolAndFollow_AI();

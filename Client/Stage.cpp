@@ -140,9 +140,9 @@ HRESULT CStage::Ready_Scene(void)
 _int CStage::Update_Scene(const _float & fTimeDelta)
 {
 	//if (m_bNextStageCondition == true) return 0;
-	/* �ӽ� �׽�Ʈ �ڵ���. */
-	if (Key_Down(DIK_I))
+	if (m_bNextStage == true)
 	{
+		m_bNextStage = false;
 		Next_Stage();
 		return 0;
 	}

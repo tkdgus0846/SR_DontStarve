@@ -30,6 +30,8 @@ public:
 	void				Reset_Scene();
 	HRESULT				Add_GameObject(class CGameObject* pObj);
 
+	void				Set_NextStage(_bool state = true) { m_bNextStage = state; }
+
 protected:
 	
 	CGameObject*	Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
@@ -47,6 +49,7 @@ protected:
 	vector<CLayer*>		m_DynamicLayerArr;
 
 	_float				m_SlowTime;
+	_bool				m_bNextStage;
   
 protected:
 	virtual void	Free(void);
