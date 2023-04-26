@@ -57,6 +57,9 @@ _int CCutSceneCamera::Update_GameObject(const _float & fTimeDelta)
 		if (dynamic_cast<CNubBoss*>(pBoss))	// 현재 보스가 NubBoss이면
 			Nub_CutScene(dynamic_cast<CNubBoss*>(pBoss));					// Nub컷씬 실행
 
+		else if (dynamic_cast<CTreeBoss*>(pBoss))
+			Tree_CutScene(dynamic_cast<CTreeBoss*>(pBoss));
+
 		else if (dynamic_cast<CWormHead*>(pBoss))
 			Worm_CutScene(dynamic_cast<CWormHead*>(pBoss));
 
@@ -117,6 +120,28 @@ void CCutSceneCamera::Nub_CutScene(CNubBoss * pBoss)
 		m_pCamera->Set_FOV(m_fDegree);
 		m_fDegree -= 0.5f;
 	}
+}
+
+void CCutSceneCamera::Tree_CutScene(CTreeBoss * pBoss)
+{
+	_float fps60 = Get_Timer(L"Timer_FPS60");
+	m_fTime += fps60;
+
+	if (m_fTime > 4.f)
+	{
+		m_bIsDone = true;
+
+		if (CRenderer::GetInstance()->GetIsRenderUI() == false)
+			CRenderer::GetInstance()->ToggleRenderUI();
+
+		Engine::Reset_SlowTime(fps60);
+		On_Camera(L"Player_Camera");
+		m_fDegree = 60.f;
+		m_fTime = 0.f;
+		return;
+	}
+
+	m_pTransform->m_vInfo[INFO_LOOK] = pBoss->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
 }
 
 void CCutSceneCamera::Worm_CutScene(CWormHead * pBoss)

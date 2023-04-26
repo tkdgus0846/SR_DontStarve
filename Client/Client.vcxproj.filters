@@ -962,6 +962,12 @@
     <ClInclude Include="Portal.h">
       <Filter>Portal</Filter>
     </ClInclude>
+    <ClInclude Include="Lizard.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveUp.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1764,6 +1770,12 @@
     </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="Lizard.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveUp.cpp">
+      <Filter>Monobehaviours\Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

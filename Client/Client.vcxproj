@@ -310,8 +310,10 @@
     <ClInclude Include="FloorVent421869.h" />
     <ClInclude Include="Guppi.h" />
     <ClInclude Include="ListBox.h" />
+    <ClInclude Include="Lizard.h" />
     <ClInclude Include="LookAtPlayer.h" />
     <ClInclude Include="MiniGuppi.h" />
+    <ClInclude Include="MoveUp.h" />
     <ClInclude Include="MoveY.h" />
     <ClInclude Include="Disc.h" />
     <ClInclude Include="DiscItem.h" />
@@ -581,8 +583,10 @@
     <ClCompile Include="FloorVent421869.cpp" />
     <ClCompile Include="Guppi.cpp" />
     <ClCompile Include="ListBox.cpp" />
+    <ClCompile Include="Lizard.cpp" />
     <ClCompile Include="LookAtPlayer.cpp" />
     <ClCompile Include="MiniGuppi.cpp" />
+    <ClCompile Include="MoveUp.cpp" />
     <ClCompile Include="MoveY.cpp" />
     <ClCompile Include="Disc.cpp" />
     <ClCompile Include="DiscItem.cpp" />

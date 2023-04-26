@@ -122,7 +122,7 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 			}
 			break;
 			case LOADING_STAGE:
-			{			
+			{
 				m_pScene = CStage::Create(m_pGraphicDev);
 
 				NULL_CHECK_RETURN(m_pScene, -1);
@@ -140,7 +140,7 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 				return 0;
 			}
 			break;
-			// Stage 2 3 4 ·ÎµùÇØ¼­ ÀüÈ¯ ÇØÁÖ´Â ºÎºÐ.
+			// Stage 2 3 4 ï¿½Îµï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Îºï¿½.
 			default:
 			{
 				NULL_CHECK_RETURN(m_pScene, -1);

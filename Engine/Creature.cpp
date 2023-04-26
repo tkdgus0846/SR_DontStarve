@@ -44,7 +44,7 @@ void CCreature::OnCollisionEnter(const Collision * collsion)
 
 void CCreature::OnCollisionStay(const Collision * collision)
 {
-	// »ý¸íÃ¼µé³¢¸® ¹Ð¾î³»´Â ÄÚµå.
+	// ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½é³¢ï¿½ï¿½ ï¿½Ð¾î³»ï¿½ï¿½ ï¿½Úµï¿½.
 	if (Get_WorldTime() < 3.f) 
 		return;
 

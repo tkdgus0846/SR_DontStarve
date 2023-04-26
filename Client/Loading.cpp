@@ -118,7 +118,7 @@ _uint CLoading::Loading_ForStage(void)
 {
 	Set_String(L"Texture Loading....");
 
-	IDirect3DBaseTexture9*			redTexture;
+	IDirect3DBaseTexture9* redTexture;
 	FAILED_CHECK_RETURN(D3DXCreateTextureFromFile(m_pGraphicDev, L"../Resource/CollisionDebug/Red.png", (LPDIRECT3DTEXTURE9*)&redTexture), E_FAIL);
 	m_pGraphicDev->SetTexture(1, redTexture);
 
@@ -144,6 +144,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Rub_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/rub_%d.png", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Bird_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/robobird_%d.png", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Nub_Pilot_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/nub_pilot_%d.png", 3)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Lizard_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/SandLizard_%d.png", 3)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Blue_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_blue_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Guppi_Green_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/guppi_green_%d.png", 4)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Monster_Baller_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/Enemy/baller_%d.png", 14)), E_FAIL);
@@ -613,6 +614,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_ATKToPlayer", CAttackToPlayer::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_WormMoveCtrl", CWormMoveCtrl::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_SpreadShot", CSpreadShot::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TSK_MoveUp", CMoveUp::Create(m_pGraphicDev)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_TimeInLimit", CTimeInLimit::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_RangeCheck", CRangeCheck::Create(m_pGraphicDev)), E_FAIL);
@@ -668,18 +670,9 @@ _uint CLoading::Loading_ForStage(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
-	
 
 	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
-	// ROOM_MGR->Push_Back_Obj(4, CWalkerBoss::Create(m_pGraphicDev, { 85.f, 0.f, 65.f }));
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
-
-	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-
-	//ROOM_MGR->Push_Back_Obj(0, CNubBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-
-	//ROOM_MGR->Push_Back_Obj(0, CWormHead::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));
-
 
 	m_bFinish = true;
 	Set_String(L"Loading Complete!!!!!!!!");
@@ -697,6 +690,7 @@ _uint CLoading::Loading_ForStage2(void)
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 
+	ROOM_MGR->Push_Back_Obj(4, CTreeBoss::Create(m_pGraphicDev, { 85.f, -4.f, 85.f }));
 
 	CFileSystem::Load(L"Level2.dat");
 
@@ -722,7 +716,7 @@ _uint CLoading::Loading_ForStage3(void)
 	ROOM_MGR->Push_Back_Obj(4, particle);
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
-	ROOM_MGR->Push_Back_Obj(4, CWormHead::Create(m_pGraphicDev, { 85.f, -3.f, 85.f }));
+	ROOM_MGR->Push_Back_Obj(4, CWormHead::Create(m_pGraphicDev, { 85.f, -10.f, 65.f }));
 	CFileSystem::Load(L"Level3.dat");
 
 	Set_String(L"Loading Complete!!!!!!!!");
