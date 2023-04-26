@@ -13,6 +13,7 @@
 #include "Bird.h"
 #include "Guppi.h"
 #include "MiniGuppi.h"
+#include "Lizard.h"
 
 IMPLEMENT_SINGLETON(CMonsterFactory)
 
@@ -44,6 +45,7 @@ HRESULT CMonsterFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CBird::Tag(),		&CBird::Create);
 	Register(CGuppi::Tag(),		&CGuppi::Create);
 	Register(CMiniGuppi::Tag(), &CMiniGuppi::Create);
+	Register(CLizard::Tag(),	&CLizard::Create);
 
 	ExtractTextureKey();
 

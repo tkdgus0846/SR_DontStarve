@@ -67,6 +67,7 @@ protected:
 	CSequence*	Make_BossPattern3_4(const _float& fCoolTime = 12.f);
 	CSequence*	Make_BossPattern4(const _float& fCoolTime = 12.f);
 	CSequence*	Make_NubBossCutScene();
+	CSequence*	Make_TreeBossCutScene();
 	CSequence*	Make_WormBossCutScene();
 	CSequence*	Make_WalkerBossCutScene();
 	
@@ -79,6 +80,7 @@ protected:
 	HRESULT		Set_JumpFollowAI(const _float& fJumpTime, _bool bIsBoolCheck, const _tchar* pBindBoolTypename);
 	HRESULT		Set_PAF_RushAI();
 	HRESULT		Set_EvasionAndAttack();
+	HRESULT		Set_JumpFollow(const _float& fJumpTime, _bool bIsBoolCheck, const _tchar* pBindBoolTypename);
 	HRESULT		Set_TurretAI(const _float& fCoolTime, _bool bIsCheckPlayer = true);
 	HRESULT		Set_Boss1_AI();
 	HRESULT		Set_Boss2_AI();

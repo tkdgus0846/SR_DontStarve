@@ -28,3 +28,4 @@
 #include "BoolCheck.h"
 #include "DeadCheck.h"
 #include "CutSceneCheck.h"
+#include "MoveUp.h"

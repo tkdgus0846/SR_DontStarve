@@ -122,7 +122,7 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 			}
 			break;
 			case LOADING_STAGE:
-			{			
+			{
 				m_pScene = CStage::Create(m_pGraphicDev);
 
 				NULL_CHECK_RETURN(m_pScene, -1);
@@ -148,8 +148,6 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 				if (m_eLoadingID == LOADING_STAGE2)
 				{
 					PLAY_BGM(L"Sector2.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
-					CPortal* portal = CPortal::Create(m_pGraphicDev, { 85.f, 4.f, 85.f});
-					m_pScene->Add_GameObject(portal);
 				}
 				else if (m_eLoadingID == LOADING_STAGE3)
 				{	
