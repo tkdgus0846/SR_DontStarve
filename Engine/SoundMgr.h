@@ -19,12 +19,16 @@ public:
 public:
 	void PlayGameSound(const TCHAR* pSoundKey, CHANNELID eID, float fVolume);
 	void PlayBGM(const TCHAR* pSoundKey, CHANNELID eID, float fVolume);
-	void SetVolumeCurBGM(_float fVolume);
+	void PlayPrevBGM(float fVolume);
+	void SetVolumePrevBGM(float fVolume, bool bChange = false);
+	void SetVolumeCurBGM(float fVolume);
 
 	void StopSound(CHANNELID eID);
 	void StopAll();
 	void SetChannelVolume(CHANNELID eID, float fVolume);
 	void StopAllBGM();
+	void StopBGM(CHANNELID eID);
+	void StopCurBGM();
 
 
 	bool IsPlaying(CHANNELID eID);
@@ -34,6 +38,8 @@ private:
 
 	const _tchar*		m_CurBGM;
 	CHANNELID			m_CurBGMChannel;
+	const _tchar*		m_PrevBGM;
+	CHANNELID			m_PrevBGMChannel;
 
 private:
 

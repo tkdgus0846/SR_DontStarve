@@ -137,6 +137,9 @@
     <Filter Include="GameObject\MapObject\Cactus">
       <UniqueIdentifier>{327d73d7-ba4a-4558-8b25-8d3de6079871}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Portal">
+      <UniqueIdentifier>{5984d543-0981-4e4f-8028-8b463c825741}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -945,6 +948,9 @@
     <ClInclude Include="Cactus.h">
       <Filter>GameObject\MapObject\Cactus</Filter>
     </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Portal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1707,6 +1713,8 @@
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
     <ClCompile Include="CheckPoint.cpp" />
+      <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
     <ClCompile Include="SandWaterLine.cpp">
       <Filter>GameObject\Tile\FloorTile</Filter>
     </ClCompile>
@@ -1733,6 +1741,9 @@
     </ClCompile>
     <ClCompile Include="Cactus.cpp">
       <Filter>GameObject\MapObject\Cactus</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Portal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

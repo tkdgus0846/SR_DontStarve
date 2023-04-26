@@ -153,6 +153,11 @@ void CManagement::Set_StaticLayerArr_Management(vector<CLayer*>* layerArr)
 	m_bChangeRoom = true;
 }
 
+void CManagement::Next_Stage()
+{
+	m_pScene->Set_NextStage();
+}
+
 void CManagement::Free(void)
 {
 	Safe_Release(m_pScene);
