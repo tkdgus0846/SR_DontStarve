@@ -80,9 +80,6 @@ void CEnemyBullet::OnCollisionStay(const Collision * collision)
 
 	if (pPlayer && collision->OtherCollider == pPlayer->Get_Component(L"BodyCollider", ID_ALL))
 	{
-		CEffect* effect = CEffectManager::GetInstance()->Pop(m_pGraphicDev, L"RedBlood", vPos, { 0.7f,0.7f,0.7f }, 0.1f);
-		Add_GameObject(effect);
-
 		pPlayer->Get_Damaged(m_Damage);
 		SetDead();
 	}
