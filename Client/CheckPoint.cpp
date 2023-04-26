@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "Weapon.h"
+#include "..\Engine\SoundMgr.h"
 CCheckPoint::CCheckPoint(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMapObj(pGraphicDev)
 {
@@ -88,6 +89,7 @@ void CCheckPoint::OnCollisionEnter(const Collision * collsion)
 		CWeapon* pWeapon = pPlayer->Get_CurWeapon();
 		_float Max = pWeapon->Get_MaxBulletNum();
 		pWeapon->GainBullet(Max);
+		PLAY_SOUND(L"sfxStart.wav", SOUND_SUSTAIN, 1.f);
 	}
 
 	__super::OnCollisionEnter(collsion);

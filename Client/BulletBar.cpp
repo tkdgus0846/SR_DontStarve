@@ -78,7 +78,5 @@ CBulletBar * CBulletBar::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CBulletBar::Free(void)
 {
-	Safe_Release(m_pBufferCom);
-	Safe_Release(m_pTextureCom);
 	__super::Free();
 }

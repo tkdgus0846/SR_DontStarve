@@ -33,7 +33,7 @@
 #include "WaterTile.h"
 #include "..\Engine\VentParticle.h"
 
-#define LEVEL1_EDIT_DATANAME L"Level1.dat"
+#define LEVEL1_EDIT_DATANAME L"Level4.dat"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -668,7 +668,9 @@ _uint CLoading::Loading_ForStage(void)
 	
 	ROOM_MGR->Create_Default_Room(STAGE1);
 
-	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+	CShopNpc* npc = dynamic_cast<CShopNpc*>(CShopNpc::Create(m_pGraphicDev));
+	npc->Add_SellItem_Stage1();
+	ROOM_MGR->Push_Back_Obj(3, npc);
 	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
 
 	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
@@ -688,7 +690,10 @@ _uint CLoading::Loading_ForStage2(void)
 	ROOM_MGR->Set_Tennel_Texture(STAGE2);
 	ROOM_MGR->Create_Default_Room(STAGE2); // 여기서 룸들을 싹다 만든다.
 
-	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+	CShopNpc* npc = dynamic_cast<CShopNpc*>(CShopNpc::Create(m_pGraphicDev));
+	npc->Add_SellItem_Stage2();
+	ROOM_MGR->Push_Back_Obj(3, npc);
+	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
 
 	ROOM_MGR->Push_Back_Obj(4, CTreeBoss::Create(m_pGraphicDev, { 85.f, -4.f, 85.f }));
 
@@ -715,7 +720,11 @@ _uint CLoading::Loading_ForStage3(void)
 
 	ROOM_MGR->Push_Back_Obj(4, particle);
 
-	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+	CShopNpc* npc = dynamic_cast<CShopNpc*>(CShopNpc::Create(m_pGraphicDev));
+	npc->Add_SellItem_Stage3();
+	ROOM_MGR->Push_Back_Obj(3, npc);
+	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
+
 	ROOM_MGR->Push_Back_Obj(4, CWormHead::Create(m_pGraphicDev, { 85.f, -10.f, 65.f }));
 	CFileSystem::Load(L"Level3.dat");
 
@@ -731,7 +740,10 @@ _uint CLoading::Loading_ForStage4(void)
 	ROOM_MGR->Set_Tennel_Texture(STAGE4);
 	ROOM_MGR->Create_Default_Room(STAGE4); // 여기서 룸들을 싹다 만든다.
 
-	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
+	CShopNpc* npc = dynamic_cast<CShopNpc*>(CShopNpc::Create(m_pGraphicDev));
+	npc->Add_SellItem_Stage4();
+	ROOM_MGR->Push_Back_Obj(3, npc);
+	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
 
 	CParticle* particle = CParticleMgr::GetInstance()->Pop(m_pGraphicDev, L"Snow_Particle", 80, { 85.f,25.f,25.f }, { 0.f,0.f,0.f }, { 50.f,50.f,50.f }, true);
 

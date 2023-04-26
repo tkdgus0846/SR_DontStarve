@@ -57,24 +57,6 @@ HRESULT CShopNpc::Ready_GameObject(void)
 	m_pTransform->Set_Pos(_vec3{ 25.f, -5.f, 85.f });
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
-	_vec3 Pos = m_pTransform->m_vInfo[INFO_POS];
-	Pos.y += 6.f;
-	Pos.z -= 5.f;
-
-	//Pos.x += 5.5f;
-	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 30, FLAMESHOT);
-	Pos.x += 4.f;
-	
-	CSellItem* item2 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 50, SPREADSHOT);
-	Pos.x -= 8.f;
-
-	CSellItem* item3 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 100, FREEZESHOT);
-
-	Add_Static_GameObject(item1);
-	Add_Static_GameObject(item2);
-	Add_Static_GameObject(item3);
-	m_SellNum = 3;
-
 	__super::Ready_GameObject();
 	return S_OK;
 }
@@ -137,6 +119,91 @@ void CShopNpc::Get_Damaged(_int Damage)
 	__super::Get_Damaged(Damage);
 
 	Ani->SelectState(ANIM_DAMAGED);
+}
+
+void CShopNpc::Add_SellItem_Stage1()
+{
+	_vec3 Pos = m_pTransform->m_vInfo[INFO_POS];
+	Pos.y += 6.f;
+	Pos.z -= 5.f;
+	
+	//Pos.x += 5.5f;
+	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 1, RAPIDSHOT);
+	Pos.x += 4.f;
+
+	CSellItem* item2 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 30, SPREADSHOT);
+	Pos.x -= 8.f;
+
+	CSellItem* item3 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 500, LASERSHOT);
+
+	Add_Static_GameObject(item1);
+	Add_Static_GameObject(item2);
+	Add_Static_GameObject(item3);
+	m_SellNum = 3;
+
+}
+
+void CShopNpc::Add_SellItem_Stage2()
+{
+	_vec3 Pos = m_pTransform->m_vInfo[INFO_POS];
+	Pos.y += 6.f;
+	Pos.z -= 5.f;
+
+	//Pos.x += 5.5f;
+	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 50, FLAMESHOT);
+	Pos.x += 4.f;
+
+	CSellItem* item2 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 600, EXPLOSIVESHOT);
+	Pos.x -= 8.f;
+
+	CSellItem* item3 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 100, FREEZESHOT);
+
+	Add_Static_GameObject(item1);
+	Add_Static_GameObject(item2);
+	Add_Static_GameObject(item3);
+	m_SellNum = 3;
+}
+
+void CShopNpc::Add_SellItem_Stage3()
+{
+	_vec3 Pos = m_pTransform->m_vInfo[INFO_POS];
+	Pos.y += 6.f;
+	Pos.z -= 5.f;
+
+	//Pos.x += 5.5f;
+	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 40, FREEZESHOT);
+	Pos.x += 4.f;
+
+	CSellItem* item2 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 20, LASERSHOT);
+	Pos.x -= 8.f;
+
+	CSellItem* item3 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 60, EXPLOSIVESHOT);
+
+	Add_Static_GameObject(item1);
+	Add_Static_GameObject(item2);
+	Add_Static_GameObject(item3);
+	m_SellNum = 3;
+}
+
+void CShopNpc::Add_SellItem_Stage4()
+{
+	_vec3 Pos = m_pTransform->m_vInfo[INFO_POS];
+	Pos.y += 6.f;
+	Pos.z -= 5.f;
+
+	//Pos.x += 5.5f;
+	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 30, EXPLOSIVESHOT);
+	Pos.x += 4.f;
+
+	CSellItem* item2 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 50, SPREADSHOT);
+	Pos.x -= 8.f;
+
+	CSellItem* item3 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 100, FREEZESHOT);
+
+	Add_Static_GameObject(item1);
+	Add_Static_GameObject(item2);
+	Add_Static_GameObject(item3);
+	m_SellNum = 3;
 }
 
 void CShopNpc::OnCollisionEnter(const Collision * collsion)

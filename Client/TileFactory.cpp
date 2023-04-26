@@ -80,6 +80,7 @@ HRESULT CTileFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(CSandTile::Tag(), &CSandTile::Create);
 	Register(CSnowTile::Tag(), &CSnowTile::Create);
 	Register(CSwampTile::Tag(), &CSwampTile::Create);
+	Register(CElectricTile::Tag(), &CElectricTile::Create);
 
 	//Register(CDecoratorTile::Tag(), &CDecoratorTile::Create);
 

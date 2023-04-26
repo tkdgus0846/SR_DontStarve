@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "..\Engine\SoundMgr.h"
 #include "Portal.h"
+#include "RoomMgr.h"
 
 CDiscItem::CDiscItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
@@ -94,6 +95,8 @@ void CDiscItem::SetDead(_bool bDead /*= true*/)
 	{
 		_vec3 discPos = m_pTransform->m_vInfo[INFO_POS];
 
+		if (CRoomMgr::GetInstance()->Get_CurStageInfo() == STAGE4) return;
+		
 		CPortal* portal = CPortal::Create(m_pGraphicDev, {85.f, 4.f, 61.f});
 		Add_GameObject(portal);
 	}

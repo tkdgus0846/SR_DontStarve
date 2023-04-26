@@ -17,7 +17,7 @@ HRESULT CMiniGuppi::Ready_GameObject(const _vec3 & vPos)
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
 	m_iHp = 3;
-	m_iMaxHp = 5;
+	m_iMaxHp = 3;
 
 	m_pTransform->m_vScale = { 0.5f, 0.5f, 0.5f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
