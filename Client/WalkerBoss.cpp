@@ -30,8 +30,11 @@ HRESULT CWalkerBoss::Ready_GameObject(const _vec3 & vPos)
 	m_fCurTime1 = Get_WorldTime();
 	m_fPreTime1 = Get_WorldTime();
 
+	m_bCutScene = true;
+
 	HRESULT result = __super::Ready_GameObject();
 
+	Get_BlackBoard()->Add_Type(L"bCutScene", m_bCutScene);
 	m_pShadow->Set_RenderFlag();
 
 	return result;
@@ -166,11 +169,6 @@ HRESULT CWalkerBoss::Add_Component()
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].emplace(L"BodyCollider", pCollider);
 	pCollider->Set_BoundingBox({ 6.f, 6.f, 6.f });
-
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].emplace(L"Range", pCollider);
-	pCollider->Set_BoundingBox({ 100.f, 10.f, 100.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Boss2_AI(), E_FAIL);

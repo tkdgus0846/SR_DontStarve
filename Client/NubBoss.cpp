@@ -6,7 +6,7 @@
 #include "..\Engine\SoundMgr.h"
 
 CNubBoss::CNubBoss(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CMonster(pGraphicDev)
+	:CMonster(pGraphicDev), m_bCutScene(false)
 {
 	Set_LayerID(LAYER_BOSS);
 	Set_ObjTag(L"NubBoss");
@@ -29,10 +29,13 @@ HRESULT CNubBoss::Ready_GameObject(const _vec3 & vPos)
 	m_pTransform->m_vScale = { 2.4f, 2.4f, 2.4f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
+	m_bCutScene = true;
 
 	HRESULT result = __super::Ready_GameObject();
 
-	return S_OK;
+	Get_BlackBoard()->Add_Type(L"bCutScene", m_bCutScene);
+
+	return result;
 }
 
 _int CNubBoss::Update_GameObject(const _float & fTimeDelta)
@@ -113,16 +116,15 @@ void CNubBoss::Get_Damaged(_int Damage)
 
 HRESULT CNubBoss::Add_Component()
 {
+	CAnimation* animation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
+	NULL_CHECK_RETURN(animation, E_FAIL);
+	m_uMapComponent[ID_ALL].insert({ L"Animation", animation });
+	animation->SelectState(ANIM_WALK);
+
 	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Monster_NubBoss_Texture", this));
 	NULL_CHECK_RETURN(texture, E_FAIL);
 	m_uMapComponent[ID_STATIC].insert({ L"Monster_NubBoss_Texture", texture });
-
-	CAnimation* animation = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
-	NULL_CHECK_RETURN(animation, E_FAIL);
-
 	animation->BindAnimation(ANIM_WALK, texture, 0.25f);
-	animation->SelectState(ANIM_WALK);
-	m_uMapComponent[ID_ALL].insert({ L"Animation", animation });
 
 	CRcTex* rcTex = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"RcTex", this));
 	NULL_CHECK_RETURN(rcTex, E_FAIL);
@@ -132,11 +134,6 @@ HRESULT CNubBoss::Add_Component()
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
 	pCollider->Set_BoundingBox({ 4.8f, 4.8f, 4.8f });
-
-	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
-	NULL_CHECK_RETURN(pCollider, E_FAIL);
-	m_uMapComponent[ID_ALL].insert({ L"Range", pCollider });
-	pCollider->Set_BoundingBox({ 70.f, 10.f, 70.f });
 
 	FAILED_CHECK_RETURN(Create_Root_AI(), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Boss1_AI(), E_FAIL);

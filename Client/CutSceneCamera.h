@@ -19,10 +19,13 @@ public:
 
 private:
 	virtual HRESULT Add_Component() override;
-	void CutScene();
+	void Nub_CutScene(class CNubBoss* pBoss);
+	void Worm_CutScene(class CWormHead* pBoss);
+	void Walker_CutScene(class CWalkerBoss* pBoss);
 
 private:
 	Engine::CCamera*	m_pCamera;
+	_float	m_fTime;
 	_float	m_fDegree;
 	_bool	m_bIsDone;
 

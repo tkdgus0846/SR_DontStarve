@@ -121,7 +121,7 @@ void CRcTex::Edit_V(_float fY)
 
 	pVertex[3].vPos = { -1.f, -1.f, 0.f };
 	pVertex[3].vTexUV = { 0.f, 1.f };
-	cout << pVertex[0].vTexUV.y << endl;
+	//cout << pVertex[0].vTexUV.y << endl;
 	m_pVB->Unlock();
 
 	INDEX32*		pIndex = nullptr;

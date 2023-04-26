@@ -5,6 +5,7 @@
 CMoveCos::CMoveCos(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CBehavior(pGraphicDev), m_fTime(0.f)
 	, m_bStart(false), m_fFstSpeed(0.f)
+	, m_bIsFollow(false)
 {
 	ZeroMemory(&m_vDir, sizeof(_vec3));
 }
@@ -12,7 +13,7 @@ CMoveCos::CMoveCos(LPDIRECT3DDEVICE9 pGraphicDev)
 CMoveCos::CMoveCos(const CMoveCos & rhs)
 	: CBehavior(rhs), m_fTime(rhs.m_fTime)
 	, m_bStart(rhs.m_bStart), m_fFstSpeed(rhs.m_fFstSpeed)
-	, m_vDir(rhs.m_vDir)
+	, m_vDir(rhs.m_vDir), m_bIsFollow(rhs.m_bIsFollow)
 {
 }
 
@@ -39,9 +40,15 @@ _int CMoveCos::Update_Component(const _float & fTimeDelta)
 		m_fFstSpeed = fSpeed;
 		fSpeed *= 2.f;
 		FAILED_CHECK_RETURN(m_pBlackBoard->Set_Type(L"fSpeed", fSpeed), BEHAVIOR_ERROR);
+		m_bStart = true;
 		_vec3 vLook = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
 		m_vDir = _vec3(vLook.x, 0.f, vLook.z).Normalize();
-		m_bStart = true;
+	}
+
+	if (m_bIsFollow)
+	{
+		_vec3 vLook = Get_Player()->m_pTransform->m_vInfo[INFO_POS] - m_pGameObject->m_pTransform->m_vInfo[INFO_POS];
+		m_vDir = _vec3(vLook.x, 0.f, vLook.z).Normalize();
 	}
 
 	_float fVal = cosf(m_fTime * 4.f) * fSpeed - 2.f;
@@ -50,7 +57,7 @@ _int CMoveCos::Update_Component(const _float & fTimeDelta)
 
 	m_pGameObject->m_pTransform->Set_Dir(vDir);
 
-	if (m_fTime > 4.f)
+	if (m_fTime > m_fTimer)
 	{
 		FAILED_CHECK_RETURN(m_pBlackBoard->Set_Type(L"fSpeed", m_fFstSpeed), BEHAVIOR_ERROR);
 		m_fTime = 0.f;

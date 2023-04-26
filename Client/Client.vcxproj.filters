@@ -915,6 +915,12 @@
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
     <ClInclude Include="CheckPoint.h" />
+    <ClInclude Include="DeadCheck.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="CutSceneCheck.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1666,7 +1672,7 @@
     </ClCompile>
     <ClCompile Include="CutSceneCamera.cpp">
       <Filter>GameObject\ObjCamera</Filter>
-    </ClCompile>  
+    </ClCompile>
     <ClCompile Include="SnowMan.cpp">
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
@@ -1677,6 +1683,12 @@
       <Filter>GameObject\MapObject</Filter>
     </ClCompile>
     <ClCompile Include="CheckPoint.cpp" />
+    <ClCompile Include="DeadCheck.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="CutSceneCheck.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">

@@ -28,6 +28,7 @@ private:
 
 	_float		m_fCurTime1;
 	_float		m_fPreTime1;
+	_bool		m_bCutScene;
 
 public:
 	static CWalkerBoss*	Create(LPDIRECT3DDEVICE9 pGraphicDev, const _vec3& vPos);

@@ -5,6 +5,7 @@
 CBird::CBird(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CEnemy(pGraphicDev), m_fTime(0.f)
 {
+	Set_ObjTag(Tag());
 }
 
 CBird::~CBird()
