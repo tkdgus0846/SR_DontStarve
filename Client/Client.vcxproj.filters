@@ -921,6 +921,14 @@
       <Filter>GameObject\MapObject</Filter>
     </ClInclude>
     <ClInclude Include="CheckPoint.h" />
+      <Filter>GameObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadCheck.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="CutSceneCheck.h">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClInclude>
     <ClInclude Include="SandWaterLine.h">
       <Filter>GameObject\Tile\FloorTile</Filter>
     </ClInclude>
@@ -1714,6 +1722,12 @@
     </ClCompile>
     <ClCompile Include="CheckPoint.cpp" />
       <Filter>GameObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadCheck.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="CutSceneCheck.cpp">
+      <Filter>Monobehaviours\Decorator</Filter>
     </ClCompile>
     <ClCompile Include="SandWaterLine.cpp">
       <Filter>GameObject\Tile\FloorTile</Filter>

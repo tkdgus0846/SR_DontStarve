@@ -1,11 +1,16 @@
 #include "stdafx.h"
 #include "CutSceneCamera.h"
 
+#include "NubBoss.h"
+#include "TreeBoss.h"
+#include "WormHead.h"
+#include "WalkerBoss.h"
 #include "RoomMgr.h"
 #include "Export_Function.h"
 
 CCutSceneCamera::CCutSceneCamera(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev), m_fDegree(0.f), m_bIsDone(false)
+	: CGameObject(pGraphicDev), m_fDegree(0.f), m_bIsDone(false)
+	, m_fTime(0.f)
 {
 	Set_LayerID(LAYER_CAMERA);
 	Set_ObjTag(L"CutScene_Camera");
@@ -21,7 +26,7 @@ HRESULT CCutSceneCamera::Ready_GameObject(void)
 
 	m_fDegree = 60.f;
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
-	m_pTransform->m_vInfo[INFO_POS] = _vec3(85.f, 5.f, 100.f);
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(85.f, 4.f, 109.f);
 
 	return result;
 }
@@ -31,14 +36,33 @@ _int CCutSceneCamera::Update_GameObject(const _float & fTimeDelta)
 	if (Get_WorldTime() < 5.f)
 		m_bIsDone = false;
 
-	if (ROOM_MGR->Get_CurRoom()->Get_Room_Index() == 4)
-		CutScene();
-	else
+	if (false == m_bIsDone && ROOM_MGR->Get_CurRoom()->Get_Room_Index() == 4) // 컷씬이 진행 안됐고 보스방에 진입하면
 	{
-		// On_Camera(L"Player_Camera");
-		m_bIsDone = false;
+		On_Camera(L"CutScene_Camera");	// 카메라 컷씬으로 바꾸고
+
+		if (CRenderer::GetInstance()->GetIsRenderUI() == true) // UI 다 끄고
+			CRenderer::GetInstance()->ToggleRenderUI();
+
+		vector<CGameObject*> pVec;
+		CGameObject* pBoss = nullptr;
+
+		Get_Layer(LAYER_BOSS)->Get_GameObject_ALL(&pVec);	// 보스레이어에 보스 확인한다음
+
+		if (pVec.size())
+			pBoss = pVec.front();
+
+		if (pBoss == nullptr)
+			return OBJ_NOEVENT;
+
+		if (dynamic_cast<CNubBoss*>(pBoss))	// 현재 보스가 NubBoss이면
+			Nub_CutScene(dynamic_cast<CNubBoss*>(pBoss));					// Nub컷씬 실행
+
+		else if (dynamic_cast<CWormHead*>(pBoss))
+			Worm_CutScene(dynamic_cast<CWormHead*>(pBoss));
+
+		else if (dynamic_cast<CWalkerBoss*>(pBoss))
+			Walker_CutScene(dynamic_cast<CWalkerBoss*>(pBoss));
 	}
-		
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -64,16 +88,12 @@ HRESULT CCutSceneCamera::Add_Component(void)
 	return S_OK;
 }
 
-void CCutSceneCamera::CutScene()
+void CCutSceneCamera::Nub_CutScene(CNubBoss * pBoss)
 {
-	static _float fTime = 0.f;
-	if (m_bIsDone)
-		return;
-
 	_float fps60 = Get_Timer(L"Timer_FPS60");
-	fTime += fps60;
+	m_fTime += fps60;
 
-	if (fTime > 3.f)
+	if (m_fTime > 4.f)
 	{
 		m_bIsDone = true;
 
@@ -82,28 +102,66 @@ void CCutSceneCamera::CutScene()
 
 		Engine::Reset_SlowTime(fps60);
 		On_Camera(L"Player_Camera");
-		fTime = 0.f;
+		m_fDegree = 60.f;
+		m_fTime = 0.f;
 		return;
 	}
 
-	if (CRenderer::GetInstance()->GetIsRenderUI() == true)
-		CRenderer::GetInstance()->ToggleRenderUI();
+	m_pTransform->m_vInfo[INFO_LOOK] = pBoss->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
 
-	Engine::Stop_SlowTime();
+	if (m_fTime > 2.1f)
+	{
+		if (m_fDegree < 30.f)
+			m_fDegree = 30.f;
 
-	On_Camera(L"CutScene_Camera");
+		m_pCamera->Set_FOV(m_fDegree);
+		m_fDegree -= 0.5f;
+	}
+}
 
-	CGameObject* pBoss = Get_Layer(LAYER_BOSS)->Get_GameObject(L"NubBoss");
-	if (pBoss == nullptr)
+void CCutSceneCamera::Worm_CutScene(CWormHead * pBoss)
+{
+	_float fps60 = Get_Timer(L"Timer_FPS60");
+	m_fTime += fps60;
+
+	if (m_fTime > 5.f)
+	{
+		m_bIsDone = true;
+
+		if (CRenderer::GetInstance()->GetIsRenderUI() == false)
+			CRenderer::GetInstance()->ToggleRenderUI();
+
+		Engine::Reset_SlowTime(fps60);
+		On_Camera(L"Player_Camera");
+		m_fDegree = 60.f;
+		m_fTime = 0.f;
 		return;
+	}
+
+	m_pTransform->m_vInfo[INFO_LOOK] = Get_Player()->m_pTransform->m_vInfo[INFO_LOOK];
+}
+
+void CCutSceneCamera::Walker_CutScene(CWalkerBoss * pBoss)
+{
+	_float fps60 = Get_Timer(L"Timer_FPS60");
+	m_fTime += fps60;
+
+	if (m_fTime > 5.f)
+	{
+		m_bIsDone = true;
+
+		if (CRenderer::GetInstance()->GetIsRenderUI() == false)
+			CRenderer::GetInstance()->ToggleRenderUI();
+
+		Engine::Reset_SlowTime(fps60);
+		On_Camera(L"Player_Camera");
+		m_fDegree = 60.f;
+		m_fTime = 0.f;
+		return;
+	}
 
 	m_pTransform->m_vInfo[INFO_LOOK] = pBoss->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
 
-	if (m_fDegree < 30.f)
-		m_fDegree = 30.f;
-
-	m_pCamera->Set_FOV(m_fDegree);
-	m_fDegree -= 0.5f;
 }
 
 CCutSceneCamera * CCutSceneCamera::Create(LPDIRECT3DDEVICE9 pGraphicDev)

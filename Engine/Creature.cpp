@@ -17,7 +17,7 @@ CCreature::~CCreature()
 HRESULT CCreature::Ready_GameObject(void)
 {
 	__super::Ready_GameObject();
-
+	m_fSpeed = 0.f;
 	return S_OK;
 }
 

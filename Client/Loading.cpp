@@ -33,7 +33,7 @@
 #include "WaterTile.h"
 #include "..\Engine\VentParticle.h"
 
-#define LEVEL1_EDIT_DATANAME L"Level1.dat"
+#define LEVEL1_EDIT_DATANAME L"Level2.dat"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -618,6 +618,8 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_NotCollisionWall", CNotCollisionWall::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_CoolTime", CCoolTime::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_BoolCheck", CBoolCheck::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_DeadCheck", CDeadCheck::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"DEC_CutSceneCheck", CCutSceneCheck::Create(m_pGraphicDev)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Sequence", CSequence::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Selector", CSelector::Create(m_pGraphicDev)), E_FAIL);
@@ -660,12 +662,14 @@ _uint CLoading::Loading_ForStage(void)
 
 	Set_String(L"Room Loading..........");
 	
-	ROOM_MGR->Create_Default_Room(STAGE1);	
+	ROOM_MGR->Create_Default_Room(STAGE1);
 
 	ROOM_MGR->Push_Back_Obj(3, CShopNpc::Create(m_pGraphicDev));
 	/*ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));*/
 	
-	CFileSystem::Load(L"tmp.dat");
+
+	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
+	// ROOM_MGR->Push_Back_Obj(4, CWalkerBoss::Create(m_pGraphicDev, { 85.f, 0.f, 65.f }));
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 
 	//ROOM_MGR->Push_Back_Obj(0, CTreeBoss::Create(m_pGraphicDev, { 25.f, 0.f, 25.f }));

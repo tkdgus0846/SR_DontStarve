@@ -9,7 +9,7 @@
 #include "DiscItem.h"
 
 CWormHead::CWormHead(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CMonster(pGraphicDev), m_bMove(false), m_pTail(nullptr)
+	: CMonster(pGraphicDev), m_bMove(true), m_pTail(nullptr)
 	, m_fCurAngle(0.f), m_fPreAngle(0.f), m_fCurTime1(0.f), m_fPreTime1(0.f)
 {
 	Set_LayerID(LAYER_BOSS);
@@ -84,6 +84,9 @@ HRESULT CWormHead::Ready_GameObject(const _vec3 & vPos)
 	Get_BlackBoard()->Add_Type(L"iIndexX", iIndexX);
 	Get_BlackBoard()->Add_Type(L"iIndexZ", iIndexZ);
 
+	m_bCutScene = true;
+
+	Get_BlackBoard()->Add_Type(L"bCutScene", m_bCutScene);
 	return result;
 }
 
@@ -96,9 +99,6 @@ _int CWormHead::Update_GameObject(const _float & fTimeDelta)
 		return OBJ_DEAD;
 	else if (!GetDead())
 		m_fPreTime2 = Get_WorldTime();
-
-	if (Key_Down(DIK_SPACE))
-		m_bMove = !m_bMove;
 
 	__super::Update_GameObject(fTimeDelta);
 
