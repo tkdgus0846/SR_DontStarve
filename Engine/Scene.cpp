@@ -9,6 +9,7 @@
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_bNextStage(false)
+	, m_bEnding(false)
 {
 	m_pGraphicDev->AddRef();
 

@@ -1180,7 +1180,7 @@ HRESULT CMonster::Set_Boss2_AI()
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern2", Make_BossPattern2(23.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern1", Make_BossPattern1(7.f)), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Pattern2_1", Make_BossPattern2_1(13.f)), E_FAIL);
-	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_CutScene", Make_TreeBossCutScene()), E_FAIL);
+	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_CutScene", Make_WalkerBossCutScene()), E_FAIL);
 	FAILED_CHECK_RETURN(pSLRootAI->Add_Component(ID_UPDATE, L"SQ_Follow", Make_Follow_AI(0.f, false)), E_FAIL);
 
 	return S_OK;

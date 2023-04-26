@@ -45,8 +45,10 @@ HRESULT CTreeBoss::Ready_GameObject(const _vec3 & vPos)
 
 _int CTreeBoss::Update_GameObject(const _float & fTimeDelta)
 {
-	if (GetDead())
+	if (GetDead() && Dead_Production())
 		return OBJ_DEAD;
+	else if (!GetDead())
+		m_fPreTime1 = Get_WorldTime();
 
 	if (m_bIsSummon)
 		m_pAnimation->SetInverse(false);

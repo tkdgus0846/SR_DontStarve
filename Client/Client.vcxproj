@@ -291,6 +291,7 @@
     <ClInclude Include="CutSceneCheck.h" />
     <ClInclude Include="DeadCheck.h" />
     <ClInclude Include="DecoratorTile.h" />
+    <ClInclude Include="EndingBackground.h" />
     <ClInclude Include="FloorBeltCorner.h" />
     <ClInclude Include="FloorLarge.h" />
     <ClInclude Include="FloorLarge421204.h" />
@@ -564,6 +565,7 @@
     <ClCompile Include="CutSceneCheck.cpp" />
     <ClCompile Include="DeadCheck.cpp" />
     <ClCompile Include="DecoratorTile.cpp" />
+    <ClCompile Include="EndingBackground.cpp" />
     <ClCompile Include="FloorBeltCorner.cpp" />
     <ClCompile Include="FloorLarge.cpp" />
     <ClCompile Include="FloorLarge421204.cpp" />

@@ -24,6 +24,8 @@ private:
 
 	LOADINGID			m_StageInfo;
 
+	class CEndingBackground* m_pEndingBackground;
+
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
