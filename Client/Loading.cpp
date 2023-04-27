@@ -535,6 +535,7 @@ _uint CLoading::Loading_ForStage(void)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"TimeStop_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/TimeStop.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Gravition_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Gravition.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Tactical_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Tactical.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Jump_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Jump.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Reload_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/Reload100_%d.png", 100)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"MiniMap_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Resource/Sprite/GUI/hud_map.png")), E_FAIL);

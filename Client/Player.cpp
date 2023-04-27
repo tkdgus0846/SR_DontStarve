@@ -406,11 +406,6 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 			CSwordWeapon* weapon = dynamic_cast<CSwordWeapon*>(m_pCurWeapon);
 			weapon->Gather_Sword(fTimeDelta);
 		}
-		else if (m_eCurWeaponType == SPREADSHOT )
-		{
-			CSpreadWeapon* weapon = dynamic_cast<CSpreadWeapon*>(m_pCurWeapon);
-			weapon->Set_Input();
-		}
 		else
 		{
 			if (m_pCurWeapon->Get_TacticalScope())
@@ -428,8 +423,14 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		if (m_eCurWeaponType == EXPLOSIVESHOT)
 			m_pCurWeapon->Shot();
 	}
+	else
+	{
+		if (m_eCurWeaponType == SPREADSHOT)
+		{
+			dynamic_cast<CSpreadWeapon*>(m_pCurWeapon)->Set_bMainTain(false);
+		}
+	}
 
-	
 
 	if (Engine::Mouse_Pressing(DIM_RB))
 	{
