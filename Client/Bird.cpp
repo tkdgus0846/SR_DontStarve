@@ -15,7 +15,7 @@ CBird::~CBird()
 HRESULT CBird::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
-	m_iHp = 3.f;
+	m_iHp = 2.f;
 
 	m_pTransform->m_vScale = { 1.f, 1.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;

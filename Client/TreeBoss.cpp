@@ -22,8 +22,8 @@ HRESULT CTreeBoss::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
-	m_iHp = 100;
-	m_iMaxHp = 100;
+	m_iHp = 50;
+	m_iMaxHp = 50;
 
 	m_pTransform->m_vScale = { 4.f, 4.f, 4.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
@@ -45,8 +45,10 @@ HRESULT CTreeBoss::Ready_GameObject(const _vec3 & vPos)
 
 _int CTreeBoss::Update_GameObject(const _float & fTimeDelta)
 {
-	if (GetDead())
+	if (GetDead() && Dead_Production())
 		return OBJ_DEAD;
+	else if (!GetDead())
+		m_fPreTime1 = Get_WorldTime();
 
 	if (m_bIsSummon)
 		m_pAnimation->SetInverse(false);

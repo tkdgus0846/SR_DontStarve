@@ -17,7 +17,7 @@ CBaller::~CBaller()
 HRESULT CBaller::Ready_GameObject(const _vec3& vPos)
 {
 	m_fSpeed = 10.f;
-	m_iHp = 5.f;
+	m_iHp = 3.f;
 
 	m_pTransform->m_vScale = { 1.f, 3.f, 1.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;

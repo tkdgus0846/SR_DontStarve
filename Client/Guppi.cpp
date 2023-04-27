@@ -16,14 +16,17 @@ HRESULT CGuppi::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
-	m_iHp = 10;
-	m_iMaxHp = 10;
+	m_iHp = 6;
+	m_iMaxHp = 6;
 
 	m_pTransform->m_vScale = { 1.5f, 1.5f, 1.5f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
 	m_pTransform->Set_MoveType(CTransform::LANDOBJECT);
 
 	HRESULT result = __super::Ready_GameObject();
+
+	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.001f);
 
 	Get_BlackBoard()->Add_Type(L"bIsDamaged", m_bIsDamaged);
 	return result;

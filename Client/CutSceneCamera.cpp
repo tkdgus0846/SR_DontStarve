@@ -93,6 +93,7 @@ HRESULT CCutSceneCamera::Add_Component(void)
 
 void CCutSceneCamera::Nub_CutScene(CNubBoss * pBoss)
 {
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(85.f, 4.f, 109.f);
 	_float fps60 = Get_Timer(L"Timer_FPS60");
 	m_fTime += fps60;
 
@@ -124,6 +125,7 @@ void CCutSceneCamera::Nub_CutScene(CNubBoss * pBoss)
 
 void CCutSceneCamera::Tree_CutScene(CTreeBoss * pBoss)
 {
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(85.f, 4.f, 109.f);
 	_float fps60 = Get_Timer(L"Timer_FPS60");
 	m_fTime += fps60;
 
@@ -146,6 +148,7 @@ void CCutSceneCamera::Tree_CutScene(CTreeBoss * pBoss)
 
 void CCutSceneCamera::Worm_CutScene(CWormHead * pBoss)
 {
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(85.f, 4.f, 109.f);
 	_float fps60 = Get_Timer(L"Timer_FPS60");
 	m_fTime += fps60;
 
@@ -168,6 +171,7 @@ void CCutSceneCamera::Worm_CutScene(CWormHead * pBoss)
 
 void CCutSceneCamera::Walker_CutScene(CWalkerBoss * pBoss)
 {
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(85.f, 4.f, 100.f);
 	_float fps60 = Get_Timer(L"Timer_FPS60");
 	m_fTime += fps60;
 
