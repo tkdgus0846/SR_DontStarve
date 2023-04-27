@@ -99,7 +99,7 @@ private:
 	_float					m_TacticTime = 0.f;
 
 	_int					m_iCoin;
-	_int					m_iDisc = 0;
+	_int					m_iDisc = 1;
 
 	_float					m_fUltimateMax = 100.f;
 	_float					m_fUltimateGuage = 100.f;

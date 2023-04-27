@@ -48,11 +48,11 @@ _int CScene::Update_Scene(const _float & fTimeDelta)
 		CLayer* curLayer = Get_Layer((LAYERID)i);
 		if (curLayer == nullptr) continue;
 
-		if (Engine::Mouse_Pressing(DIM_RB))
+		if (Engine::Key_Pressing(DIK_LSHIFT))
 		{
 			Play_SlowTime(fTimeDelta);
 		}
-		else if(Engine::Mouse_Up(DIM_RB))
+		else if(Engine::Key_Up(DIK_LSHIFT))
 		{
 			if (CManagement::GetInstance()->Get_TimeStopped() == true)
 				Reset_SlowTime(fTimeDelta);

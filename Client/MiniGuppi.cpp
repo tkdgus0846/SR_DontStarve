@@ -83,7 +83,7 @@ HRESULT CMiniGuppi::Add_Component()
 	CCollider* pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"BodyCollider", this, COL_ENEMY));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);
 	m_uMapComponent[ID_ALL].insert({ L"BodyCollider", pCollider });
-	pCollider->Set_BoundingBox({ 1.f, 0.75f, 1.f }, { 0.f, 0.25f, 0.f });
+	pCollider->Set_BoundingBox({ 2.f, 0.75f, 2.f }, { 0.f, 0.25f, 0.f });
 
 	pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Collider", L"Range", this, COL_DETECTION));
 	NULL_CHECK_RETURN(pCollider, E_FAIL);

@@ -21,8 +21,8 @@ HRESULT CNubBoss::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
-	m_iHp = 100;
-	m_iMaxHp = 100;
+	m_iHp = 50;
+	m_iMaxHp = 50;
 
 	m_fCurTime1 = Get_WorldTime();
 	m_fPreTime1 = Get_WorldTime();

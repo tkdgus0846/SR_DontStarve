@@ -44,7 +44,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_bFix(true)
 	, m_eCurWeaponType(WEAPONEND)
 	, m_pCurWeapon(nullptr)
-	, m_iCoin(0)
+	, m_iCoin(98)
 	, m_bInvicible(true)
 	, m_bColorInversion(false)
 	, m_bJumped(false)
@@ -78,12 +78,12 @@ HRESULT CPlayer::Ready_GameObject(void)
 		m_MyWeaponList[i] = nullptr;
 
 	m_MyWeaponList[BIGSHOT] = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
-	/*m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
+//	m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[RAPIDSHOT] = CRapidWeapon::Create(m_pGraphicDev, m_pTransform);
-	m_MyWeaponList[EXPLOSIVESHOT] = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
-	m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
+//	m_MyWeaponList[EXPLOSIVESHOT] = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
+	//m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[SPREADSHOT] = CSpreadWeapon::Create(m_pGraphicDev, m_pTransform);
-	m_MyWeaponList[LASERSHOT] = CLaserWeapon::Create(m_pGraphicDev, m_pTransform);*/
+	//m_MyWeaponList[LASERSHOT] = CLaserWeapon::Create(m_pGraphicDev, m_pTransform);
 
 	Change_Weapon(BIGSHOT);
 
@@ -383,13 +383,13 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	if (Engine::Key_Down(DIK_I))
 		CManagement::GetInstance()->Next_Stage();
 		
-	if (Engine::Key_Down(DIK_F3))	Engine::Shake_Camera(SHAKE_LR, 2.f, 5.f);
+	//if (Engine::Key_Down(DIK_F3))	Engine::Shake_Camera(SHAKE_LR, 2.f, 5.f);
 	if (Engine::Key_Down(DIK_Q))	Prev_Weapon();
 	if (Engine::Key_Down(DIK_E))	Next_Weapon();
-	if (Engine::Key_Down(DIK_P))	Get_Damaged(1);
+	// if (Engine::Key_Down(DIK_P))	Get_Damaged(1);
 
-	if (Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
-	if (Engine::Key_Down((DIK_C))) Engine::Toggle_ColliderRender();
+	// if (Engine::Key_Down(DIK_1)) m_bFix = !m_bFix;
+	// if (Engine::Key_Down((DIK_C))) Engine::Toggle_ColliderRender();
 
 	if (Engine::Key_Pressing(DIK_SPACE))
 	{
@@ -433,7 +433,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 	}
 
 
-	if (Engine::Mouse_Pressing(DIM_RB))
+	if (Engine::Key_Pressing(DIK_LSHIFT))
 	{
 		if (m_bColorInversion == false)
 			CRenderer::GetInstance()->ToggleColorInversionFlag();
@@ -442,7 +442,7 @@ void CPlayer::Key_Input(const _float & fTimeDelta)
 		Is_SlowTime = true;
 		m_fUltimateGuage -= 0.2f;
 	}
-	else if (Engine::Mouse_Up(DIM_RB))
+	else if (Engine::Key_Up(DIK_LSHIFT))
 	{
 		m_bColorInversion = false;
 		CRenderer::GetInstance()->ToggleColorInversionFlag();
