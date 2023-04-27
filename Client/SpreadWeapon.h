@@ -12,6 +12,7 @@ public:
 	virtual void Shot();
 	CBullet*	Shot_Setting() { return nullptr; }
 	CBullet*	Shot_Setting(_float fAngle);
+	void		Set_bMainTain(_bool state) { m_bMaintain = state; }
 
 	void		Set_Input() { m_bInput = true; }
 	void		Init_Count() { m_iCount = 0; }
@@ -30,4 +31,5 @@ private:
 	_bool		m_bShoot = true;
 	_bool		m_bInput = false;
 	_int		m_iCount = 0;
+	_bool		m_bMaintain = false;
 };

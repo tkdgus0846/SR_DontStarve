@@ -35,4 +35,3 @@ public:
 private:
 	virtual void Free() override;
 };
-

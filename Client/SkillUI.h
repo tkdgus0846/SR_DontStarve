@@ -44,6 +44,9 @@ private:
 
 	_bool	m_bAimHack = false;
 	_bool	m_bGravition = false;
+	_bool	m_bJump = false;
+
+	_bool	m_bRenderEnable;
 
 public:
 	static CSkillUI*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

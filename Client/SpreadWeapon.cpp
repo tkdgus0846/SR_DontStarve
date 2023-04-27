@@ -22,12 +22,12 @@ CSpreadWeapon::~CSpreadWeapon()
 
 void CSpreadWeapon::Shot()
 {
-	if (CanShot() && m_fTime > 0.1f)
+	if (CanShot())
 	{
 		STOP_PLAY_SOUND(L"sfxBullet.wav", SOUND_EJECT, 1.f);
-		for (size_t j = 0; j < 3; j++)
+		for (size_t j = 0; j < 5; j++)
 		{
-			CBullet* bullet = Shot_Setting(j * 10.f - 10.f);
+			CBullet* bullet = Shot_Setting(j * 10.f - 20.f);
 
 			if (bullet)
 			{
@@ -35,15 +35,7 @@ void CSpreadWeapon::Shot()
 				SpendBullet();
 			}
 		}
-		m_fTime = 0.f;
-		m_iCount++;
-	}
-
-
-	if (m_iCount >= 3)
-	{
-		m_bInput = false;
-		m_iCount = 0;
+		m_bMaintain = true;
 		m_bShooted = true;
 		m_bEnableShot = false;
 	}
@@ -78,8 +70,18 @@ CBullet * CSpreadWeapon::Shot_Setting(_float fAngle)
 _int CSpreadWeapon::Update_GameObject(const _float & fTimeDelta)
 {
 	m_fTime += fTimeDelta;
-
-	if (m_bInput){ Shot(); }
+	if (m_bMaintain == true)
+	{
+		if (m_fCycle > 0.1f && m_fTime > 0.1f)
+		{
+			m_fCycle -= 0.01f;
+			m_fTime = 0.f;
+		}
+	}
+	else
+	{
+		m_fCycle = 1.f;
+	}
 
 	return __super::Update_GameObject(fTimeDelta);
 }
@@ -103,7 +105,6 @@ void CSpreadWeapon::Render_GameObject(void)
 {
 	__super::Render_GameObject();
 }
-
 
 CSpreadWeapon * CSpreadWeapon::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform * pOnwerTransform)
 {

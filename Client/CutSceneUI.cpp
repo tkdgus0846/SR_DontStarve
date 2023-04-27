@@ -34,7 +34,7 @@ HRESULT CCutSceneUI::Ready_GameObject(void)
 
 _int CCutSceneUI::Update_GameObject(const _float & fTimeDelta)
 {
-	Add_RenderGroup(RENDER_FINAL_UI, this);
+	Add_RenderGroup(RENDER_Scene_UI, this);
 
 	__super::Update_GameObject(fTimeDelta);
 

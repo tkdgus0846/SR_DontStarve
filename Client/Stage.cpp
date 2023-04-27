@@ -99,7 +99,6 @@ HRESULT CStage::Ready_Scene(void)
 
 	Add_GameObject(CPlayerHitUI::Create(m_pGraphicDev));
 
-	Add_GameObject(CCutSceneUI::Create(m_pGraphicDev));
 
 	// Tennel
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);

@@ -65,7 +65,8 @@ public:
 	_bool			Get_bGravition() { return m_bGravition; }
 	void			Fix_Aim(CCollider* pCollider);
 	_vec3			Tactical_Bullet_Dir();
-	
+	_bool			Get_bJumped() { return m_bJumped; }
+
 	bool IsObjectInFOV(_float fDistance, _float fRadius, _float fFov);
 	void			IsOnIceTile(_bool _IsOnIceTile) {
 		m_bIsOnIceTile = _IsOnIceTile;	}
@@ -87,7 +88,6 @@ private:
 
 	_bool					Is_SlowTime = false;
 	_bool					m_bDamaged = false;
-
 
 	_bool					m_bGravition = false;
 	_bool					m_bAimHack = false;

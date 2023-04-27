@@ -130,7 +130,7 @@ void CDisc::Redner_Disc()
 			break;
 		case 2:
 			Set_ViewMatrix_UI(330 + (25.f * i), 220.f);
-			m_pTextureCom->Render_Texture(29);
+			m_pTextureCom->Render_Texture(30);
 			m_vecRc[i]->Render_Component();
 			break;
 		}

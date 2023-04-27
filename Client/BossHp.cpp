@@ -155,7 +155,8 @@ void CBossHp::Free(void)
 		Safe_Release(*iter);
 	}
 
-	for_each(vecBoss.begin(), vecBoss.end(), CDeleteObj());
+	//for_each(vecBoss.begin(), vecBoss.end(), CDeleteObj());
+	vecBoss.clear();
 
 	__super::Free();
 }

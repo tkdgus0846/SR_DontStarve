@@ -44,8 +44,10 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9 & pGraphicDev)
 		Render_Pre_AlphaUI(pGraphicDev);
 		Render_AlphaUI(pGraphicDev);
 		Render_After_AlphaUI(pGraphicDev);
-    Render_Final_AlphaUI(pGraphicDev);
+		Render_Final_AlphaUI(pGraphicDev);
 	}
+
+	Render_Scene_AlphaUI(pGraphicDev);
 
 
 	if (m_bColorInversion)
@@ -123,6 +125,37 @@ void CRenderer::Render_Final_AlphaUI(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+	// 아래는 다시 원래대로 되돌리는 코드
+	_matrix projMatrix;
+	projMatrix.PerspectiveFovLH(D3DXToRadian(60.f), (_float)WINCX / WINCY, 1.f, 1000.f);
+	// 원근투영으로 바꿔줌
+	_matrix* viewMatrix = nullptr;
+	if (Get_Player() != nullptr)
+		viewMatrix = dynamic_cast<CCamera*>(Get_Player()->Get_Component(L"Player_Camera", ID_UPDATE))->Get_Camera_ViewMatrix();
+
+	if (viewMatrix != nullptr)
+		pGraphicDev->SetTransform(D3DTS_VIEW, viewMatrix);
+	// 원근투영 적용
+	// 플레이어 카메라의 뷰행렬을 디바이스에 등록
+
+	pGraphicDev->SetRenderState(D3DRS_ZENABLE, true);
+}
+
+void CRenderer::Render_Scene_AlphaUI(LPDIRECT3DDEVICE9 & pGraphicDev)
+{
+	D3DXMATRIX orthoProjectionMatrix;
+	D3DXMatrixOrthoLH(&orthoProjectionMatrix, (float)WINCX, (float)WINCY, 1.f, 0.f);
+	pGraphicDev->SetTransform(D3DTS_PROJECTION, &orthoProjectionMatrix);
+	pGraphicDev->SetRenderState(D3DRS_ZENABLE, false);
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+	for (auto& iter : m_RenderGroup[RENDER_Scene_UI])
+		iter->Render_GameObject();
 
 	// 아래는 다시 원래대로 되돌리는 코드
 	_matrix projMatrix;

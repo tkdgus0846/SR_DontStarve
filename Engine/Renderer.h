@@ -27,6 +27,7 @@ public:
 	void		Render_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_After_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_Final_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
+	void		Render_Scene_AlphaUI(LPDIRECT3DDEVICE9& pGraphicDev);
 	void		Render_UI(LPDIRECT3DDEVICE9& pGraphicDev);
 
 	void		ToggleColorInversionFlag();

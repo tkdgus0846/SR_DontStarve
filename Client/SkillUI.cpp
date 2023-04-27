@@ -3,6 +3,7 @@
 #include "Player.h"
 CSkillUI::CSkillUI(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CUI(pGraphicDev)
+	, m_bRenderEnable(true)
 {
 	Set_ObjTag(L"SkillUI");
 }
@@ -36,6 +37,12 @@ HRESULT CSkillUI::Add_Component()
 	Ani3->BindAnimation(ANIM_IDLE, m_pTexture, 0.2f, false);
 	Ani3->SelectState(ANIM_IDLE);
 
+	Ani1 = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
+	NULL_CHECK_RETURN(Ani1, E_FAIL);
+	m_uMapComponent[ID_UPDATE].insert({ L"Animation1", Ani1 });
+	Ani1->BindAnimation(ANIM_IDLE, m_pTexture, 0.05f, false);
+	Ani1->SelectState(ANIM_IDLE);
+
 	return S_OK;
 }
 
@@ -52,13 +59,14 @@ _int CSkillUI::Update_GameObject(const _float & fTimeDelta)
 	if (Engine::Get_Player() == nullptr) { return 0; }
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
 
-	if (pPlayer->Get_bAimHack())
+	if (!pPlayer->Get_bAimHack())
 	{
-		Ani2->Play_Animation();
-		m_bAimHack = true;
-		return 0;
+		m_bRenderEnable = true;
 	}
-
+	else
+	{
+		m_bRenderEnable = false;
+	}
 
 	Engine::Add_RenderGroup(RENDER_AFTER_ALPHA_UI, this);
 
@@ -69,6 +77,9 @@ _int CSkillUI::Update_GameObject(const _float & fTimeDelta)
 
 	if (Ani3->GetFinished()) 
 	{ m_bAimHack = false;	}
+
+	if (Ani1->GetFinished())
+	{ m_bJump = false; }
 
 	return 0;
 }
@@ -81,7 +92,11 @@ void CSkillUI::LateUpdate_GameObject(void)
 void CSkillUI::Render_GameObject(void)
 {
 	Set_ViewMatrix_UI(-200.f, -182.f);
-	__super::Render_GameObject();
+
+	if (m_bRenderEnable == true)
+	{
+		__super::Render_GameObject();
+	}
 
 	if (Engine::Get_Player() == nullptr) { return; }
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Engine::Get_Player());
@@ -91,8 +106,12 @@ void CSkillUI::Render_GameObject(void)
 		pPlayer->Set_bGravition(false);
 		m_bGravition = true;
 		Set_ViewMatrix_UI(-227.f, -182.f, 20.f, 19.f);
-		Ani2->Render_Component();
-		m_pRcTex->Render_Component();
+
+		if (m_bRenderEnable == true)
+		{
+			Ani2->Render_Component();
+			m_pRcTex->Render_Component();
+		}
 	}
 	else { Ani2->AnimationClear();}
 
@@ -101,10 +120,28 @@ void CSkillUI::Render_GameObject(void)
 		Ani3->SelectState(ANIM_IDLE);
 		m_bAimHack = true;
 		Set_ViewMatrix_UI(-172.f, -182.f, 20.f, 19.f);
-		Ani3->Render_Component();
-		m_pRcTex->Render_Component();
+
+		if (m_bRenderEnable == true)
+		{
+			Ani3->Render_Component();
+			m_pRcTex->Render_Component();
+		}	
 	}
 	else { Ani3->AnimationClear(); }
+
+	if (pPlayer->Get_bJumped() || m_bJump == true)
+	{
+		Ani1->SelectState(ANIM_IDLE);
+		m_bJump = true;
+		Set_ViewMatrix_UI(-117.f, -182.f, 20.f, 19.f);
+
+		if (m_bRenderEnable == true)
+		{
+			Ani1->Render_Component();
+			m_pRcTex->Render_Component();
+		}
+	}
+	else { Ani1->AnimationClear(); }
 }
 
 CSkillUI * CSkillUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)

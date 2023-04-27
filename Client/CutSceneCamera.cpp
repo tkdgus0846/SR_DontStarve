@@ -7,7 +7,7 @@
 #include "WalkerBoss.h"
 #include "RoomMgr.h"
 #include "Export_Function.h"
-
+#include "CutSceneUI.h"
 CCutSceneCamera::CCutSceneCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_fDegree(0.f), m_bIsDone(false)
 	, m_fTime(0.f)
@@ -92,6 +92,7 @@ void CCutSceneCamera::Nub_CutScene(CNubBoss * pBoss)
 {
 	_float fps60 = Get_Timer(L"Timer_FPS60");
 	m_fTime += fps60;
+	Add_GameObject(CCutSceneUI::Create(m_pGraphicDev));
 
 	if (m_fTime > 4.f)
 	{
@@ -99,6 +100,7 @@ void CCutSceneCamera::Nub_CutScene(CNubBoss * pBoss)
 
 		if (CRenderer::GetInstance()->GetIsRenderUI() == false)
 			CRenderer::GetInstance()->ToggleRenderUI();
+
 
 		Engine::Reset_SlowTime(fps60);
 		On_Camera(L"Player_Camera");
@@ -123,6 +125,7 @@ void CCutSceneCamera::Worm_CutScene(CWormHead * pBoss)
 {
 	_float fps60 = Get_Timer(L"Timer_FPS60");
 	m_fTime += fps60;
+	Add_GameObject(CCutSceneUI::Create(m_pGraphicDev));
 
 	if (m_fTime > 5.f)
 	{
@@ -145,6 +148,7 @@ void CCutSceneCamera::Walker_CutScene(CWalkerBoss * pBoss)
 {
 	_float fps60 = Get_Timer(L"Timer_FPS60");
 	m_fTime += fps60;
+	Add_GameObject(CCutSceneUI::Create(m_pGraphicDev));
 
 	if (m_fTime > 5.f)
 	{
