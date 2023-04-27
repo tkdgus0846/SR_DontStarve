@@ -45,10 +45,13 @@ HRESULT CHeartItem::Add_Component()
 
 HRESULT CHeartItem::Ready_GameObject(void)
 {
-	_vec3 vScale = { 0.5f, 0.5f, 0.f };
-	m_pTransform->Set_Pos(30.f, 1.f, 30.f);
+	_vec3 vScale = { 0.5f, 0.5f, 1.f };
+	m_pTransform->Set_Pos(20.f, 1.f, 20.f);
 	m_pTransform->Set_Scale(vScale);
 	__super::Ready_GameObject();
+
+	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
 	return S_OK;
 }
 

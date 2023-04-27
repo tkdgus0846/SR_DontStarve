@@ -156,7 +156,7 @@ void CShopNpc::Add_SellItem_Stage2()
 	CSellItem* item2 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 600, EXPLOSIVESHOT);
 	Pos.x -= 8.f;
 
-	CSellItem* item3 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 100, FREEZESHOT);
+	CSellItem* item3 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 70, FREEZESHOT);
 
 	Add_Static_GameObject(item1);
 	Add_Static_GameObject(item2);
@@ -171,13 +171,13 @@ void CShopNpc::Add_SellItem_Stage3()
 	Pos.z -= 5.f;
 
 	//Pos.x += 5.5f;
-	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 40, FREEZESHOT);
+	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 30, FREEZESHOT);
 	Pos.x += 4.f;
 
 	CSellItem* item2 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 20, LASERSHOT);
 	Pos.x -= 8.f;
 
-	CSellItem* item3 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 60, EXPLOSIVESHOT);
+	CSellItem* item3 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 30, EXPLOSIVESHOT);
 
 	Add_Static_GameObject(item1);
 	Add_Static_GameObject(item2);
@@ -192,7 +192,7 @@ void CShopNpc::Add_SellItem_Stage4()
 	Pos.z -= 5.f;
 
 	//Pos.x += 5.5f;
-	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 30, EXPLOSIVESHOT);
+	CSellItem* item1 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 10, EXPLOSIVESHOT);
 	Pos.x += 4.f;
 
 	CSellItem* item2 = CSellItem::Create(m_pGraphicDev, Pos, SELL_WEAPON, 50, SPREADSHOT);

@@ -25,7 +25,7 @@ HRESULT CMoveUp::Ready_Behavior()
 
 _int CMoveUp::Update_Component(const _float & fTimeDelta)
 {
-	cout << m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y << endl;
+	//cout << m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y << endl;
 	_float fY = m_pGameObject->m_pTransform->m_vInfo[INFO_POS].y;
 	if (fY <= 4.f)
 	{

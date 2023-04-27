@@ -40,7 +40,7 @@ HRESULT CSkillUI::Add_Component()
 	Ani1 = dynamic_cast<CAnimation*>(Engine::Clone_Proto(L"Animation", this));
 	NULL_CHECK_RETURN(Ani1, E_FAIL);
 	m_uMapComponent[ID_UPDATE].insert({ L"Animation1", Ani1 });
-	Ani1->BindAnimation(ANIM_IDLE, m_pTexture, 0.05f, false);
+	Ani1->BindAnimation(ANIM_IDLE, m_pTexture, 0.0002f, false);
 	Ani1->SelectState(ANIM_IDLE);
 
 	return S_OK;

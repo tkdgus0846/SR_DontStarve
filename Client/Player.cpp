@@ -78,12 +78,12 @@ HRESULT CPlayer::Ready_GameObject(void)
 		m_MyWeaponList[i] = nullptr;
 
 	m_MyWeaponList[BIGSHOT] = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
-	m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
+	/*m_MyWeaponList[FREEZESHOT] = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[RAPIDSHOT] = CRapidWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[EXPLOSIVESHOT] = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[FLAMESHOT] = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
 	m_MyWeaponList[SPREADSHOT] = CSpreadWeapon::Create(m_pGraphicDev, m_pTransform);
-	m_MyWeaponList[LASERSHOT] = CLaserWeapon::Create(m_pGraphicDev, m_pTransform);
+	m_MyWeaponList[LASERSHOT] = CLaserWeapon::Create(m_pGraphicDev, m_pTransform);*/
 
 	Change_Weapon(BIGSHOT);
 
@@ -271,6 +271,7 @@ void CPlayer::Gain_Weapon(WEAPONTYPE eWeaponType)
 			gainWeapon = CNormalWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		case EXPLOSIVESHOT:
+			gainWeapon = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		case FLAMESHOT:
 			gainWeapon = CFlameProjector::Create(m_pGraphicDev, m_pTransform);
@@ -285,7 +286,7 @@ void CPlayer::Gain_Weapon(WEAPONTYPE eWeaponType)
 			gainWeapon = CIceBeamWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		case LASERSHOT:
-			gainWeapon = CSwordWeapon::Create(m_pGraphicDev, m_pTransform);
+			gainWeapon = CLaserWeapon::Create(m_pGraphicDev, m_pTransform);
 			break;
 		default:
 			break;
@@ -551,7 +552,7 @@ void CPlayer::Get_Damaged(_int Damage)
 {
 	m_bDamaged = true;
 
-	if (m_bInvicible == true) return;
+	if (m_iHp < 5) return;
 
 
 	__super::Get_Damaged(Damage);
@@ -615,7 +616,6 @@ void CPlayer::Fix_Aim(CCollider* pCollider)
 	
 	m_pTransform->Set_Dir(vDir);
 
-	//cout << pCollider->Get_BoundCenter().x << " " << pCollider->Get_BoundCenter().y << " " << pCollider->Get_BoundCenter().z << endl;
 
 	m_vecMonster.clear();
 }

@@ -131,10 +131,31 @@ void CMonster::SetDead(_bool bDead /*= true*/)
 
 		_vec3 pSpawnPos = m_pTransform->m_vInfo[INFO_POS];
 		pSpawnPos.y += 3.f;
-		CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
-		Add_GameObject(item);
-		item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"CoinItem", pSpawnPos);
-		Add_GameObject(item);
+
+		_int randNum = rand() % 10;
+		
+		switch (randNum)
+		{
+		case 0:
+		{
+			CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
+			Add_GameObject(item);
+
+			item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"HeartItem", pSpawnPos);
+			Add_GameObject(item);
+			break;
+		}
+		default:
+		{
+			CItem* item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"BulletItem", pSpawnPos);
+			Add_GameObject(item);
+
+			item = CItemManager::GetInstance()->Pop(m_pGraphicDev, L"CoinItem", pSpawnPos);
+			Add_GameObject(item);
+			break;
+		}
+			
+		}
 	}
 }
 
@@ -430,6 +451,8 @@ CSequence * CMonster::Make_BossPattern1_1(const _float & fCoolTime)
 	CBackJump* pTskBackJump = dynamic_cast<CBackJump*>(Engine::Clone_Proto(L"TSK_BackJump", this));
 	NULL_CHECK_RETURN(pTskBackJump, nullptr);
 
+	CLookAtTarget* pTskLook = dynamic_cast<CLookAtTarget*>(Engine::Clone_Proto(L"TSK_LookAtTarget", this));
+
 	CCoolTime* pDecCoolTime = dynamic_cast<CCoolTime*>(Engine::Clone_Proto(L"DEC_CoolTime", this));
 	NULL_CHECK_RETURN(pDecCoolTime, nullptr);
 
@@ -439,7 +462,8 @@ CSequence * CMonster::Make_BossPattern1_1(const _float & fCoolTime)
 
 	// 부품 조립
 	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"DEC_CoolTime", pDecCoolTime), nullptr);
-	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"SQ_DBBackJump", Make_DBBackJumpAI(6.f)), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"TSK_LookAt", pTskLook), nullptr);
+	FAILED_CHECK_RETURN(pSQPattern->Add_Component(ID_UPDATE, L"SQ_LeapJump", Make_LeapJumpAI(6.f)), nullptr);
 
 	for (_uint i = 0; i < 5; ++i)
 	{
