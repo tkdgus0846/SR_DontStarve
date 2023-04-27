@@ -230,6 +230,7 @@ CLoadingScene * CLoadingScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID l
 
 void CLoadingScene::Free(void)
 {
+	//Safe_Release(m_pScene);
 	Safe_Release(m_pLoading);
 	Safe_Release(m_pMiniGame);
 	__super::Free();

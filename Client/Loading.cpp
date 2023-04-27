@@ -652,9 +652,8 @@ _uint CLoading::Loading_ForStage(void)
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"BulletItem");
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"CoinItem");
 	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"HeartItem"); 
-	CEffectManager::GetInstance()->Reserve(m_pGraphicDev, 20, L"Explosion_Texture");
+	/*CEffectManager::GetInstance()->Reserve(m_pGraphicDev, 20, L"Explosion_Texture");*/
 
-	CEffectManager::GetInstance()->Reserve(m_pGraphicDev, 20, L"Explosion_Texture");
 
 	Set_String(L"Factory Loading..........");
 

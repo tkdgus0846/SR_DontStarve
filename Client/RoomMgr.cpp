@@ -27,8 +27,8 @@ CRoomMgr::CRoomMgr()
 	: m_pCurRoom(nullptr),
 	m_bIsInTennel(false)
 {
-	for (auto iter : m_arrRoom)
-		iter = nullptr;
+	for (int i = 0; i < 9; i++)
+		m_arrRoom[i] = nullptr;
 
 	m_pTennel[0] = nullptr;
 	m_pTennel[1] = nullptr;
@@ -170,6 +170,8 @@ void CRoomMgr::Free()
 {
 	for (auto Room : m_arrRoom)
 	{
+		if (Room == nullptr) continue;
+
 		CManagement::GetInstance()->Set_StaticLayerArr_Management(Room->GetLayerVec());
 		for (int i = 0; i < COL_STATIC_END; i++)
 		{

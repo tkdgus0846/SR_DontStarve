@@ -141,5 +141,6 @@ CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CLogo::Free(void)
 {
+	Safe_Release(m_pBackGround);
 	__super::Free();
 }
