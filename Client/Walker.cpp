@@ -15,7 +15,7 @@ CWalker::~CWalker()
 HRESULT CWalker::Ready_GameObject(const _vec3& vPos)
 {
 	m_fSpeed = 10.f;
-	m_iHp = 10.f;
+	m_iHp = 8.f;
 
 	m_pTransform->m_vScale = { 2.5f, 2.5f, 2.5f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;
