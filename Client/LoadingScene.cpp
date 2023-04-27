@@ -122,7 +122,7 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 			}
 			break;
 			case LOADING_STAGE:
-			{			
+			{
 				m_pScene = CStage::Create(m_pGraphicDev);
 
 				NULL_CHECK_RETURN(m_pScene, -1);
@@ -140,7 +140,7 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 				return 0;
 			}
 			break;
-			// Stage 2 3 4 ·ÎµùÇØ¼­ ÀüÈ¯ ÇØÁÖ´Â ºÎºÐ.
+			// Stage 2 3 4 ï¿½Îµï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Îºï¿½.
 			default:
 			{
 				NULL_CHECK_RETURN(m_pScene, -1);
@@ -148,8 +148,8 @@ _int CLoadingScene::Update_Scene(const _float & fTimeDelta)
 				if (m_eLoadingID == LOADING_STAGE2)
 				{
 					PLAY_BGM(L"Sector2.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
-					CPortal* portal = CPortal::Create(m_pGraphicDev, { 85.f, 4.f, 85.f});
-					m_pScene->Add_GameObject(portal);
+					/*CPortal* portal = CPortal::Create(m_pGraphicDev, { 85.f, 4.f, 85.f});
+					m_pScene->Add_GameObject(portal);*/
 				}
 				else if (m_eLoadingID == LOADING_STAGE3)
 				{	
@@ -230,6 +230,7 @@ CLoadingScene * CLoadingScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID l
 
 void CLoadingScene::Free(void)
 {
+	//Safe_Release(m_pScene);
 	Safe_Release(m_pLoading);
 	Safe_Release(m_pMiniGame);
 	__super::Free();

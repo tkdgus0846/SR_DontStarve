@@ -962,6 +962,13 @@
     <ClInclude Include="Portal.h">
       <Filter>Portal</Filter>
     </ClInclude>
+    <ClInclude Include="Lizard.h">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveUp.h">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingBackground.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Loading.cpp">
@@ -1765,6 +1772,13 @@
     <ClCompile Include="Portal.cpp">
       <Filter>Portal</Filter>
     </ClCompile>
+    <ClCompile Include="Lizard.cpp">
+      <Filter>GameObject\Monster\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveUp.cpp">
+      <Filter>Monobehaviours\Task</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingBackground.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.natstepfilter">

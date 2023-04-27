@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "..\Engine\SoundMgr.h"
 #include "Portal.h"
+#include "RoomMgr.h"
 
 CDiscItem::CDiscItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev)
@@ -94,7 +95,27 @@ void CDiscItem::SetDead(_bool bDead /*= true*/)
 	{
 		_vec3 discPos = m_pTransform->m_vInfo[INFO_POS];
 
-		CPortal* portal = CPortal::Create(m_pGraphicDev, {discPos.x, 4.f, discPos.z - 24.0f});
+		if (CRoomMgr::GetInstance()->Get_CurStageInfo() == STAGE4)
+		{
+			CPlayer* player = dynamic_cast<CPlayer*>(CManagement::GetInstance()->Get_Player());
+
+			player->Set_FlyMode();
+
+			CCamera* camera = CCameraMgr::GetInstance()->Get_CurCamera();
+			camera->Set_ProjParams(
+				PROJPARAMS(
+				D3DXToRadian(60.f),
+				(_float)WINCX / WINCY,
+				1.0f, 1000.f));
+
+			STOP_ALL_BGM;
+			CRenderer::GetInstance()->ToggleRenderUI();
+			CManagement::GetInstance()->Set_Ending();
+
+			return;
+		}
+		
+		CPortal* portal = CPortal::Create(m_pGraphicDev, {85.f, 4.f, 61.f});
 		Add_GameObject(portal);
 	}
 }

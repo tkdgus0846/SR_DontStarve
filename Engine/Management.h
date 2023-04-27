@@ -47,6 +47,7 @@ public:
 	void				Set_StaticLayerArr_Management(vector<class CLayer*>* layerArr);
 
 	void				Next_Stage();
+	void				Set_Ending();
 
 private:
 	CScene*			m_pScene = nullptr;

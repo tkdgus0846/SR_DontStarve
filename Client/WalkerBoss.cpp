@@ -21,8 +21,8 @@ HRESULT CWalkerBoss::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 20.f;
 	m_iAttack = 1;
-	m_iHp = 100;
-	m_iMaxHp = 100;
+	m_iHp = 200;
+	m_iMaxHp = 200;
 
 	m_pTransform->m_vScale = { 3.f, 3.f, 3.f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;

@@ -232,6 +232,14 @@ void CBackGround::Make_Logo_Text(string msg, const _vec3& startPoint, const _flo
 
 void CBackGround::Free(void)
 {
+	Safe_Release(m_LogoBuffer);
+	Safe_Release(m_LogoTexture);
+	Safe_Release(m_BackgroundBuffer);
+	Safe_Release(m_BackgroundTexture);
+	Safe_Release(m_LogoTextTexture);
+	Safe_Release(m_SelectArrowTexture);
+	Safe_Release(m_SelectArrowBuffer);
+
 	for_each(m_StarBufferVec.begin(), m_StarBufferVec.end(), CDeleteObj());
 	for_each(m_StartAniVec.begin(), m_StartAniVec.end(), CDeleteObj());
 	for_each(m_LogoTextBufferVec.begin(), m_LogoTextBufferVec.end(), CDeleteObj());

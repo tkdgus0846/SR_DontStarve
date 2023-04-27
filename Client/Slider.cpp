@@ -16,6 +16,9 @@ CSlider::~CSlider()
 HRESULT CSlider::Ready_GameObject(void)
 {
 	HRESULT result = __super::Ready_GameObject();
+
+	m_pTransform->Set_BillMode(true);
+	m_pTransform->Rot_Bill(0.01f);
 	
 	return S_OK;
 }
@@ -30,16 +33,16 @@ _int CSlider::Update_GameObject(const _float & fTimeDelta)
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
-#ifdef _IMGUI
-	// IMGUI에서는 랜더그룹에만 넣어주고 움직임 로직을 막음.
-	return OBJ_NOEVENT;
-#endif
+//#ifdef _IMGUI
+//	// IMGUI에서는 랜더그룹에만 넣어주고 움직임 로직을 막음.
+//	return OBJ_NOEVENT;
+//#endif
 
 	_matrix viewMat;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &viewMat);
-	m_pTransform->Set_Billboard(&viewMat);
+	//m_pTransform->Set_Billboard(&viewMat);
 
-	m_pTransform->Move_Walk(1.f, fTimeDelta);
+	m_pTransform->Move_Walk(19.f, fTimeDelta);
 	return OBJ_NOEVENT;
 }
 

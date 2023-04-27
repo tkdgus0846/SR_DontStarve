@@ -16,7 +16,7 @@ HRESULT CRub::Ready_GameObject(const _vec3 & vPos)
 {
 	m_fSpeed = 10.f;
 	m_iAttack = 1;
-	m_iHp = 15;
+	m_iHp = 12;
 
 	m_pTransform->m_vScale = { 2.4f, 2.4f, 2.4f };
 	m_pTransform->m_vInfo[INFO_POS] = vPos;

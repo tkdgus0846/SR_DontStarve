@@ -71,6 +71,8 @@ public:
 	void			IsOnIceTile(_bool _IsOnIceTile) {
 		m_bIsOnIceTile = _IsOnIceTile;	}
 
+	void			Set_FlyMode();
+
 
 	virtual void Get_Damaged(_int Damage) override;
 	void	    	Set_bDamaged(_bool state) { m_bDamaged = state; }
@@ -85,6 +87,7 @@ private:
 
 private:
 	_bool					m_bFix;
+	_bool					m_bFlyMode;
 
 	_bool					Is_SlowTime = false;
 	_bool					m_bDamaged = false;

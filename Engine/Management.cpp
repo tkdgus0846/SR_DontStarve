@@ -158,6 +158,12 @@ void CManagement::Next_Stage()
 	m_pScene->Set_NextStage();
 }
 
+
+void CManagement::Set_Ending()
+{
+	m_pScene->Set_Ending();
+}
+
 void CManagement::Free(void)
 {
 	Safe_Release(m_pScene);

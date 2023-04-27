@@ -18,11 +18,16 @@ public:
 public:
 	virtual HRESULT Add_Component() override;
 	virtual HRESULT Ready_GameObject(void) override;
-	virtual _int Update_GameObject(const _float& fTimeDelta) override;
-	virtual void LateUpdate_GameObject(void) override;
-	virtual void Render_GameObject(void) override;
+	virtual _int	Update_GameObject(const _float& fTimeDelta) override;
+	virtual void	LateUpdate_GameObject(void) override;
+	virtual void	Render_GameObject(void) override;
 
-	virtual void Get_Damaged(_int Damage) override;
+	virtual void	Get_Damaged(_int Damage) override;
+
+	void			Add_SellItem_Stage1();
+	void			Add_SellItem_Stage2();
+	void			Add_SellItem_Stage3();
+	void			Add_SellItem_Stage4();
 
 private:
 	D3DXMATRIX  matWorld, matView;
@@ -30,7 +35,7 @@ private:
 	virtual void OnCollisionStay(const class Collision* collision) final;
 
 	CAnimation* Ani;
-	vector<CSellItem*> m_ItemList;
+
 	_int				m_SellNum;
 	_float				m_fPlayBGMTime;
 

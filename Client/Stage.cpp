@@ -44,6 +44,7 @@
 
 #include "ShopNpc.h"
 #include "LoadingScene.h"
+#include "EndingBackground.h"
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev), m_iCurRoomIdx(0)
 	, m_iPreRoomIdx(0)
@@ -100,6 +101,8 @@ HRESULT CStage::Ready_Scene(void)
 	Add_GameObject(CPlayerHitUI::Create(m_pGraphicDev));
 
 
+	//Add_GameObject(CCutSceneUI::Create(m_pGraphicDev));
+
 	// Tennel
 	CTennel* tennel1 = CTennel::Create(m_pGraphicDev);
 	CTennel* tennel2 = CTennel::Create(m_pGraphicDev);
@@ -133,6 +136,11 @@ HRESULT CStage::Ready_Scene(void)
 	STOP_ALL_BGM;
 	PLAY_BGM(L"Sector1.wav", SOUND_BGM_FIELD, BGM_SOUND_VOLUME);
 
+
+
+
+	m_pEndingBackground = CEndingBackground::Create(m_pGraphicDev);
+
 	return S_OK;
 }
 
@@ -144,6 +152,11 @@ _int CStage::Update_Scene(const _float & fTimeDelta)
 		m_bNextStage = false;
 		Next_Stage();
 		return 0;
+	}
+
+	if (m_bEnding == true)
+	{
+		m_pEndingBackground->Update_GameObject(fTimeDelta);
 	}
 
 	if(0 == (*m_StaticLayerArr)[LAYER_MONSTER]->Get_ObjectSize() &&
@@ -175,6 +188,10 @@ void CStage::LateUpdate_Scene(void)
 
 void CStage::Render_Scene(void)
 {
+	if (m_bEnding == true)
+	{
+		m_pEndingBackground->Render_GameObject();
+	}
 }
 
 void CStage::Next_Stage()
@@ -201,5 +218,6 @@ CStage * CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStage::Free(void)
 {
+	Safe_Release(m_pEndingBackground);
 	__super::Free();
 }

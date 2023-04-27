@@ -32,6 +32,8 @@ public:
 
 	void				Set_NextStage(_bool state = true) { m_bNextStage = state; }
 
+	void				Set_Ending() { m_bEnding = true; }
+
 protected:
 	
 	CGameObject*	Get_GameObject(LAYERID LayerID, const _tchar* pObjTag);
@@ -50,6 +52,7 @@ protected:
 
 	_float				m_SlowTime;
 	_bool				m_bNextStage;
+	_bool				m_bEnding;
   
 protected:
 	virtual void	Free(void);

@@ -44,11 +44,12 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_bFix(true)
 	, m_eCurWeaponType(WEAPONEND)
 	, m_pCurWeapon(nullptr)
-	, m_iCoin(100)
+	, m_iCoin(0)
 	, m_bInvicible(true)
 	, m_bColorInversion(false)
 	, m_bJumped(false)
 	, m_fJumpTime(0.f)
+	, m_bFlyMode(false)
 {
 	Set_LayerID(LAYER_PLAYER);
 	Set_ObjTag(L"Player");
@@ -98,6 +99,18 @@ _int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	
 	Key_Input(fTimeDelta);
 	Jump(fTimeDelta);
+
+	if (m_bFlyMode)
+	{
+		if (!IS_PLAYING(SOUND_BGM))
+		{
+			PLAY_BGM(L"Ending.wav", SOUND_BGM, BGM_SOUND_VOLUME);
+		}
+			
+
+		m_pTransform->m_vInfo[INFO_POS].y += 15.f * fTimeDelta;
+	}
+		
 
 	if (m_fUltimateGuage < 100.f)
 	{
@@ -525,6 +538,13 @@ bool CPlayer::IsObjectInFOV(_float fDistance, _float fRadius, _float fFov)
 	_float fAngle = atanf(fDiagonal / fDistance);
 
 	return fAngle >= (fFov / 2.f);
+}
+
+
+void CPlayer::Set_FlyMode()
+{
+	m_pTransform->Set_MoveType(CTransform::AIRCRAFT);
+	m_bFlyMode = true;
 }
 
 void CPlayer::Get_Damaged(_int Damage)

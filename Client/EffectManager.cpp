@@ -85,6 +85,14 @@ void CEffectManager::Reserve(LPDIRECT3DDEVICE9 pDevice, _uint cnt, const _tchar*
 {
 	for (int i = 0; i < cnt; i++)
 	{
+		/*CEffect* pEffect = CEffect::Create(pDevice, name, fAnimationTime, bEndByTime, fLifeSpan);*/
+		
+		if (m_EffectPool[name] == nullptr)
+		{
+			m_EffectPool[name] = CEffectPool::Create();
+
+			
+		}
 		Pop(pDevice, name, { 0.f,-50.f,0.f }, { 0.f,0.f,0.f }, 0.001f, true, 0.001f);
 	}
 }

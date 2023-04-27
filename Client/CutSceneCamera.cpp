@@ -57,6 +57,9 @@ _int CCutSceneCamera::Update_GameObject(const _float & fTimeDelta)
 		if (dynamic_cast<CNubBoss*>(pBoss))	// 현재 보스가 NubBoss이면
 			Nub_CutScene(dynamic_cast<CNubBoss*>(pBoss));					// Nub컷씬 실행
 
+		else if (dynamic_cast<CTreeBoss*>(pBoss))
+			Tree_CutScene(dynamic_cast<CTreeBoss*>(pBoss));
+
 		else if (dynamic_cast<CWormHead*>(pBoss))
 			Worm_CutScene(dynamic_cast<CWormHead*>(pBoss));
 
@@ -90,6 +93,7 @@ HRESULT CCutSceneCamera::Add_Component(void)
 
 void CCutSceneCamera::Nub_CutScene(CNubBoss * pBoss)
 {
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(85.f, 4.f, 109.f);
 	_float fps60 = Get_Timer(L"Timer_FPS60");
 	m_fTime += fps60;
 	Add_GameObject(CCutSceneUI::Create(m_pGraphicDev));
@@ -121,8 +125,32 @@ void CCutSceneCamera::Nub_CutScene(CNubBoss * pBoss)
 	}
 }
 
+void CCutSceneCamera::Tree_CutScene(CTreeBoss * pBoss)
+{
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(85.f, 4.f, 109.f);
+	_float fps60 = Get_Timer(L"Timer_FPS60");
+	m_fTime += fps60;
+
+	if (m_fTime > 4.f)
+	{
+		m_bIsDone = true;
+
+		if (CRenderer::GetInstance()->GetIsRenderUI() == false)
+			CRenderer::GetInstance()->ToggleRenderUI();
+
+		Engine::Reset_SlowTime(fps60);
+		On_Camera(L"Player_Camera");
+		m_fDegree = 60.f;
+		m_fTime = 0.f;
+		return;
+	}
+
+	m_pTransform->m_vInfo[INFO_LOOK] = pBoss->m_pTransform->m_vInfo[INFO_POS] - m_pTransform->m_vInfo[INFO_POS];
+}
+
 void CCutSceneCamera::Worm_CutScene(CWormHead * pBoss)
 {
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(85.f, 4.f, 109.f);
 	_float fps60 = Get_Timer(L"Timer_FPS60");
 	m_fTime += fps60;
 	Add_GameObject(CCutSceneUI::Create(m_pGraphicDev));
@@ -146,6 +174,7 @@ void CCutSceneCamera::Worm_CutScene(CWormHead * pBoss)
 
 void CCutSceneCamera::Walker_CutScene(CWalkerBoss * pBoss)
 {
+	m_pTransform->m_vInfo[INFO_POS] = _vec3(85.f, 4.f, 100.f);
 	_float fps60 = Get_Timer(L"Timer_FPS60");
 	m_fTime += fps60;
 	Add_GameObject(CCutSceneUI::Create(m_pGraphicDev));

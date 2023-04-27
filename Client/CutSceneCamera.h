@@ -20,6 +20,7 @@ public:
 private:
 	virtual HRESULT Add_Component() override;
 	void Nub_CutScene(class CNubBoss* pBoss);
+	void Tree_CutScene(class CTreeBoss* pBoss);
 	void Worm_CutScene(class CWormHead* pBoss);
 	void Walker_CutScene(class CWalkerBoss* pBoss);
 
