@@ -10,6 +10,7 @@ WallVent::WallVent(LPDIRECT3DDEVICE9 pGraphicDev)
 
 WallVent::~WallVent()
 {
+	int a = 0;
 }
 
 CGameObject * WallVent::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -26,12 +27,12 @@ CGameObject * WallVent::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 HRESULT WallVent::Add_Component()
 {
-	HRESULT result = __super::Add_Component();
+	//HRESULT result = __super::Add_Component();
 
-	CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"WallVent", this));
-	NULL_CHECK_RETURN(texture, E_FAIL);
-	m_uMapComponent[ID_STATIC].insert({ L"WallVent", texture });
-	m_pAnimation->BindAnimation(ANIM_IDLE, texture);
+	//CTexture* texture = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"WallVent", this));
+	//NULL_CHECK_RETURN(texture, E_FAIL);
+	//m_uMapComponent[ID_STATIC].insert({ L"WallVent", texture });
+	//m_pAnimation->BindAnimation(ANIM_IDLE, texture);
 
-	return result;
+	return S_OK;
 }

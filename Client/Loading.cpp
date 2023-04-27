@@ -641,27 +641,27 @@ _uint CLoading::Loading_ForStage(void)
 	}
 
 	Set_String(L"ObjectPool Loading..........");
-	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 25, L"NormalBullet");
-	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 30, L"FireBullet");
-	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"IceBullet");
-	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"LaserBullet");
-	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 15, L"EnemyBullet");
-	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 30, L"RedLaserBullet");
-	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"SwordBullet");
-	CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 60, L"ShockWave");
+	//CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 25, L"NormalBullet");
+	//CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 30, L"FireBullet");
+	//CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"IceBullet");
+	//CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"LaserBullet");
+	//CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 15, L"EnemyBullet");
+	//CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 30, L"RedLaserBullet");
+	//CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 10, L"SwordBullet");
+	//CBulletMgr::GetInstance()->Reserve(m_pGraphicDev, 60, L"ShockWave");
 
-	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"BulletItem");
-	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"CoinItem");
-	CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"HeartItem"); 
+	//CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"BulletItem");
+	//CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"CoinItem");
+	//CItemManager::GetInstance()->Reserve(m_pGraphicDev, 15, L"HeartItem"); 
 	/*CEffectManager::GetInstance()->Reserve(m_pGraphicDev, 20, L"Explosion_Texture");*/
 
 
 	Set_String(L"Factory Loading..........");
 
-	TILE_FACTORY->Ready_Factory(m_pGraphicDev);
+	//TILE_FACTORY->Ready_Factory(m_pGraphicDev);
 	WALL_FACTORY->Ready_Factory(m_pGraphicDev);
-	MONSTER_FACTORY->Ready_Factory(m_pGraphicDev);
-	MAPOBJ_FACTORY->Ready_Factory(m_pGraphicDev);
+	//MONSTER_FACTORY->Ready_Factory(m_pGraphicDev);
+	//MAPOBJ_FACTORY->Ready_Factory(m_pGraphicDev);
 	//CLoader::GetInstance()->Ready_Loader(m_pGraphicDev);
 
 	Set_String(L"Room Loading..........");
@@ -673,7 +673,7 @@ _uint CLoading::Loading_ForStage(void)
 	ROOM_MGR->Push_Back_Obj(3, npc);
 	ROOM_MGR->Push_Back_Obj(3, CCheckPoint::Create(m_pGraphicDev));
 
-	CFileSystem::Load(LEVEL1_EDIT_DATANAME);
+	//CFileSystem::Load(LEVEL1_EDIT_DATANAME);
 	ROOM_MGR->Push_Back_Obj(4, CNubBoss::Create(m_pGraphicDev, { 85.f, 0.f, 85.f }));
 
 	m_bFinish = true;

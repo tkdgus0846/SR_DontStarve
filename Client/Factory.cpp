@@ -15,7 +15,7 @@ void CFactory::Register(const wstring & objectType, CreateObjectFunc createFunc)
 {
 	// Create함수 주소 저장.
 	m_creationMap[objectType].CreateFunc = createFunc;
-	m_vecWstrTag.push_back(objectType.c_str());
+	m_vecWstrTag.push_back(objectType);
 	m_vecStrTag.push_back(CFileSystem::wstrToStr(objectType));
 }
 

@@ -12,6 +12,7 @@ CTile::CTile(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CTile::~CTile()
 {
+	int a = 0;
 }
 
 HRESULT CTile::Ready_GameObject()

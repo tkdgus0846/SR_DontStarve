@@ -16,7 +16,7 @@
 #include "MonsterFactory.h"
 #include "MapObjectFactory.h"
 #include "ItemManager.h"
-
+#include "WallFactory.h"
 // 주석 테스트용
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pManagementClass(nullptr), m_pGraphicDev(nullptr)
@@ -32,7 +32,6 @@ HRESULT CMainApp::Ready_MainApp(void)
 	srand((unsigned int)time(NULL));
 	FAILED_CHECK_RETURN(Ready_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Set_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
-
 
 	//SECTION_MGR->Ready_SectionMgr(m_pGraphicDev);
 
@@ -79,7 +78,7 @@ HRESULT CMainApp::Ready_DefaultSetting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	(*ppGraphicDev) = m_pDeviceClass->Get_GraphicDev();
 	(*ppGraphicDev)->AddRef();
 
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"바탕", 15, 20, FW_HEAVY), E_FAIL);
+	//FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"바탕", 15, 20, FW_HEAVY), E_FAIL);
 	/*FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"궁서", 15, 20, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Ganji", L"견고딕", 15, 20, FW_HEAVY), E_FAIL);*/
 
@@ -121,6 +120,7 @@ void CMainApp::Free(void)
 	CTileFactory::DestroyInstance();
 	CMonsterFactory::DestroyInstance();
 	CMapObjectFactory::DestroyInstance();
+	CWallFactory::DestroyInstance();
 	//CLoader::DestroyInstance();
 	CRoomMgr::DestroyInstance();
 	//CSectionMgr::DestroyInstance();

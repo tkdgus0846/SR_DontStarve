@@ -92,7 +92,7 @@ HRESULT CWallFactory::Ready_Factory(LPDIRECT3DDEVICE9 pGraphicDev)
 	Register(WallVent421863::Tag(), WallVent421863::Create);
 
 
-	ExtractTextureKey();
+	//ExtractTextureKey();
 
 	return hResult;
 }

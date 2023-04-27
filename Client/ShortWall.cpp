@@ -10,6 +10,7 @@ ShortWall::ShortWall(LPDIRECT3DDEVICE9 pGraphicDev)
 
 ShortWall::~ShortWall()
 {
+	int a = 0;
 }
 
 CGameObject * ShortWall::Create(LPDIRECT3DDEVICE9 pGraphicDev)
